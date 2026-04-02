@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import {
     Accordion,
+    AlertDialog,
     Badge,
     Button,
     Callout,
     Card,
     Checkbox,
     Divider,
+    DropdownMenu,
     EmptyState,
     Grid,
     IconButton,
     Input,
     Section,
+    Popover,
+    RadioGroup,
     Select,
     Skeleton,
     Stack,
@@ -23,6 +27,7 @@ import {
     Toast,
     Tooltip,
 } from '@/components/ui'
+import { useToast } from '@/hooks/useToast'
 
 const tabItems = [
     { label: 'Overview', value: 'overview' },
@@ -71,6 +76,9 @@ function CatalogCard({ name, description, children }) {
 
 export function ShowcaseCatalogSection() {
     const [activeTab, setActiveTab] = useState('overview')
+    const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false)
+    const [selectedPlan, setSelectedPlan] = useState('starter')
+    const { pushToast } = useToast()
 
     return (
         <Section id="catalog" surface className="stack-m">
@@ -155,6 +163,29 @@ export function ShowcaseCatalogSection() {
                     <Checkbox label="Recevoir les nouveautes" />
                 </CatalogCard>
 
+                <CatalogCard
+                    name="RadioGroup"
+                    description="Choix exclusif structure pour onboarding, pricing ou settings."
+                >
+                    <RadioGroup
+                        label="Plan"
+                        value={selectedPlan}
+                        onChange={setSelectedPlan}
+                        items={[
+                            {
+                                value: 'starter',
+                                label: 'Starter',
+                                description: 'Base rapide pour un petit projet ou prototype.',
+                            },
+                            {
+                                value: 'pro',
+                                label: 'Pro',
+                                description: 'Configuration plus complete pour un vrai produit.',
+                            },
+                        ]}
+                    />
+                </CatalogCard>
+
                 <CatalogCard name="Tooltip" description="Aide contextuelle concise.">
                     <Tooltip content="Information contextuelle">
                         <button type="button" className="ui-btn ui-btn--ghost ui-btn--sm">
@@ -163,11 +194,97 @@ export function ShowcaseCatalogSection() {
                     </Tooltip>
                 </CatalogCard>
 
-                <CatalogCard name="Toast" description="Feedback systeme, succes ou info.">
-                    <Toast
-                        title="Mise a jour disponible"
-                        description="Le composant est pret a etre integre."
+                <CatalogCard
+                    name="Popover"
+                    description="Panneau contextuel pour actions, aide ou mini details."
+                >
+                    <Popover
+                        trigger={
+                            <Button variant="ghost" size="sm">
+                                Ouvrir le panneau
+                            </Button>
+                        }
+                    >
+                        <Stack gap="s">
+                            <Text tone="strong" size="sm">
+                                Quick actions
+                            </Text>
+                            <Text tone="base" size="sm">
+                                Utilise un popover pour garder une action proche de son contexte.
+                            </Text>
+                            <div className="cluster">
+                                <Button size="sm">Confirmer</Button>
+                                <Button variant="ghost" size="sm">
+                                    Plus tard
+                                </Button>
+                            </div>
+                        </Stack>
+                    </Popover>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="DropdownMenu"
+                    description="Menu d'actions contextuelles pour toolbar, ligne ou carte."
+                >
+                    <DropdownMenu
+                        trigger={
+                            <Button variant="ghost" size="sm">
+                                Actions
+                            </Button>
+                        }
+                        items={[
+                            { value: 'edit', label: 'Modifier' },
+                            { value: 'duplicate', label: 'Dupliquer' },
+                            { type: 'separator' },
+                            { value: 'archive', label: 'Archiver' },
+                            { value: 'delete', label: 'Supprimer', danger: true },
+                        ]}
                     />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="AlertDialog"
+                    description="Confirmation stricte pour suppression ou action sensible."
+                >
+                    <>
+                        <Button
+                            size="sm"
+                            onClick={() => setIsAlertDialogOpen(true)}
+                        >
+                            Ouvrir la confirmation
+                        </Button>
+                        <AlertDialog
+                            open={isAlertDialogOpen}
+                            title="Supprimer ce modele ?"
+                            description="Cette action est irreversible. Le composant sert aux confirmations critiques."
+                            confirmLabel="Supprimer"
+                            cancelLabel="Annuler"
+                            onConfirm={() => setIsAlertDialogOpen(false)}
+                            onCancel={() => setIsAlertDialogOpen(false)}
+                        />
+                    </>
+                </CatalogCard>
+
+                <CatalogCard name="Toast" description="Feedback systeme, succes ou info.">
+                    <Stack gap="s">
+                        <Toast
+                            title="Mise a jour disponible"
+                            description="Le composant est pret a etre integre."
+                        />
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() =>
+                                pushToast({
+                                    title: 'Toast global',
+                                    description: 'Cette notification passe maintenant par le provider.',
+                                    tone: 'success',
+                                })
+                            }
+                        >
+                            Declencher un toast
+                        </Button>
+                    </Stack>
                 </CatalogCard>
 
                 <CatalogCard

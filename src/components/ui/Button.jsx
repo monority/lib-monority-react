@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 
 const variantClassName = {
@@ -12,7 +13,7 @@ const sizeClassName = {
     lg: 'ui-btn--lg',
 }
 
-export function Button({
+export const Button = forwardRef(function Button({
     as: Component = 'button',
     variant = 'primary',
     size = 'md',
@@ -25,11 +26,12 @@ export function Button({
     children,
     disabled,
     ...props
-}) {
+}, ref) {
     const isDisabled = disabled || loading
 
     return (
         <Component
+            ref={ref}
             className={cn(
                 'ui-btn',
                 variantClassName[variant],
@@ -49,4 +51,4 @@ export function Button({
             {iconTrailing ? <span className="ui-btn__icon">{iconTrailing}</span> : null}
         </Component>
     )
-}
+})
