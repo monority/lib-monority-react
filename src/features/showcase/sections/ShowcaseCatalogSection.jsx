@@ -7,12 +7,16 @@ import {
     Callout,
     Card,
     Checkbox,
+    CommandPalette,
+    Combobox,
     Divider,
     DropdownMenu,
+    Drawer,
     EmptyState,
     Grid,
     IconButton,
     Input,
+    Pagination,
     Section,
     Popover,
     RadioGroup,
@@ -20,6 +24,7 @@ import {
     Skeleton,
     Stack,
     Switch,
+    Table,
     Tabs,
     Text,
     Textarea,
@@ -58,6 +63,22 @@ const accordionItems = [
     },
 ]
 
+const tableColumns = [
+    { key: 'feature', header: 'Feature' },
+    { key: 'status', header: 'Status' },
+    {
+        key: 'coverage',
+        header: 'Coverage',
+        align: 'right',
+    },
+]
+
+const tableRows = [
+    { id: 'routing', feature: 'Routing', status: 'Stable', coverage: '100%' },
+    { id: 'theme', feature: 'Theme system', status: 'Stable', coverage: '100%' },
+    { id: 'ui-kit', feature: 'UI primitives', status: 'Active', coverage: '78%' },
+]
+
 function CatalogCard({ name, description, children }) {
     return (
         <Card padding="md" className="showcase-catalog-card stack-m">
@@ -77,8 +98,52 @@ function CatalogCard({ name, description, children }) {
 export function ShowcaseCatalogSection() {
     const [activeTab, setActiveTab] = useState('overview')
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false)
+    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false)
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const [currentPage, setCurrentPage] = useState(3)
+    const [selectedOwner, setSelectedOwner] = useState('alice')
     const [selectedPlan, setSelectedPlan] = useState('starter')
     const { pushToast } = useToast()
+
+    const commandItems = [
+        {
+            value: 'home',
+            label: 'Aller a l accueil',
+            description: 'Action de navigation ou raccourci produit.',
+            shortcut: 'G H',
+            keywords: 'home navigation accueil',
+            onSelect: () =>
+                pushToast({
+                    title: 'Commande executee',
+                    description: "La command palette est prete pour des vraies actions d'app.",
+                    tone: 'success',
+                }),
+        },
+        {
+            value: 'theme',
+            label: 'Changer le theme',
+            description: 'Exemple d action utilitaire globale.',
+            shortcut: 'T',
+            keywords: 'theme dark light',
+            onSelect: () =>
+                pushToast({
+                    title: 'Theme',
+                    description: 'Branche ici une vraie action globale.',
+                }),
+        },
+        {
+            value: 'docs',
+            label: 'Ouvrir la doc UI',
+            description: 'Commande de consultation ou de support interne.',
+            shortcut: 'D',
+            keywords: 'documentation ui composants',
+            onSelect: () =>
+                pushToast({
+                    title: 'Documentation',
+                    description: 'La palette peut piloter des liens, routes ou mutations.',
+                }),
+        },
+    ]
 
     return (
         <Section id="catalog" surface className="stack-m">
@@ -134,6 +199,34 @@ export function ShowcaseCatalogSection() {
                         <option value="light">Light</option>
                         <option value="dark">Dark</option>
                     </Select>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Combobox"
+                    description="Recherche et selection dans une liste d options."
+                >
+                    <Combobox
+                        label="Owner"
+                        value={selectedOwner}
+                        onChange={setSelectedOwner}
+                        items={[
+                            {
+                                value: 'alice',
+                                label: 'Alice Martin',
+                                description: 'Design system lead',
+                            },
+                            {
+                                value: 'bruno',
+                                label: 'Bruno Leroy',
+                                description: 'Frontend platform',
+                            },
+                            {
+                                value: 'claire',
+                                label: 'Claire Dupont',
+                                description: 'Product engineering',
+                            },
+                        ]}
+                    />
                 </CatalogCard>
 
                 <CatalogCard
@@ -265,6 +358,68 @@ export function ShowcaseCatalogSection() {
                     </>
                 </CatalogCard>
 
+                <CatalogCard
+                    name="CommandPalette"
+                    description="Recherche et execution rapide d actions globales."
+                >
+                    <>
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setIsCommandPaletteOpen(true)}
+                        >
+                            Ouvrir la palette
+                        </Button>
+                        <CommandPalette
+                            open={isCommandPaletteOpen}
+                            onClose={() => setIsCommandPaletteOpen(false)}
+                            title="Actions rapides"
+                            items={commandItems}
+                        />
+                    </>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Drawer"
+                    description="Panneau latéral ou bottom sheet pour mobile, filtres et settings."
+                >
+                    <>
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setIsDrawerOpen(true)}
+                        >
+                            Ouvrir le drawer
+                        </Button>
+                        <Drawer
+                            open={isDrawerOpen}
+                            title="Parametres rapides"
+                            onClose={() => setIsDrawerOpen(false)}
+                        >
+                            <Stack gap="m">
+                                <Text tone="base">
+                                    Utilise ce composant pour des filtres, un panneau de details ou
+                                    un flow secondaire sans quitter la page.
+                                </Text>
+                                <Switch label="Activer les previews" defaultChecked />
+                                <Checkbox label="Recevoir les changelogs" />
+                                <div className="cluster">
+                                    <Button size="sm" onClick={() => setIsDrawerOpen(false)}>
+                                        Enregistrer
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => setIsDrawerOpen(false)}
+                                    >
+                                        Fermer
+                                    </Button>
+                                </div>
+                            </Stack>
+                        </Drawer>
+                    </>
+                </CatalogCard>
+
                 <CatalogCard name="Toast" description="Feedback systeme, succes ou info.">
                     <Stack gap="s">
                         <Toast
@@ -350,6 +505,20 @@ export function ShowcaseCatalogSection() {
                     description="Contenu progressif pour FAQ, settings et details secondaires."
                 >
                     <Accordion items={accordionItems} defaultValue="architecture" />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Table"
+                    description="Affichage tabulaire simple pour admin, dashboard ou liste de suivi."
+                >
+                    <Table columns={tableColumns} rows={tableRows} />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Pagination"
+                    description="Navigation de pages pour listes, tables et vues catalogue."
+                >
+                    <Pagination page={currentPage} totalPages={8} onPageChange={setCurrentPage} />
                 </CatalogCard>
 
                 <CatalogCard
