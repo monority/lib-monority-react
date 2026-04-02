@@ -2,13 +2,16 @@ import { useState } from 'react'
 import {
     Accordion,
     AlertDialog,
+    Avatar,
     Badge,
+    Breadcrumb,
     Button,
     Callout,
     Card,
     Checkbox,
     CommandPalette,
     Combobox,
+    DataList,
     Divider,
     DropdownMenu,
     Drawer,
@@ -17,10 +20,13 @@ import {
     IconButton,
     Input,
     Pagination,
+    PageHeader,
     Section,
     Popover,
+    Progress,
     RadioGroup,
     Select,
+    Spinner,
     Skeleton,
     Stack,
     Switch,
@@ -78,6 +84,9 @@ const tableRows = [
     { id: 'theme', feature: 'Theme system', status: 'Stable', coverage: '100%' },
     { id: 'ui-kit', feature: 'UI primitives', status: 'Active', coverage: '78%' },
 ]
+
+const avatarPreviewSrc =
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="24" fill="%23d6e4ff"/><circle cx="48" cy="36" r="18" fill="%233a5ccc"/><path d="M18 84c3-16 15-26 30-26s27 10 30 26" fill="%233a5ccc"/></svg>'
 
 function CatalogCard({ name, description, children }) {
     return (
@@ -184,6 +193,35 @@ export function ShowcaseCatalogSection() {
 
                 <CatalogCard name="Badge" description="Meta courte, statut ou etiquette visuelle.">
                     <Badge>Stable</Badge>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Avatar"
+                    description="Identite visuelle compacte pour utilisateurs, assignations et activity feeds."
+                >
+                    <div className="cluster">
+                        <Avatar
+                            size="sm"
+                            name="Alice Martin"
+                            src={avatarPreviewSrc}
+                            alt="Alice Martin"
+                        />
+                        <Avatar size="md" name="Bruno Leroy" />
+                        <Avatar size="lg" name="Claire Dupont" />
+                    </div>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Breadcrumb"
+                    description="Repere de navigation pour dashboards, docs et espaces admin."
+                >
+                    <Breadcrumb
+                        items={[
+                            { label: 'Workspace', href: '#' },
+                            { label: 'UI Library', href: '#' },
+                            { label: 'Showcase' },
+                        ]}
+                    />
                 </CatalogCard>
 
                 <CatalogCard
@@ -465,6 +503,19 @@ export function ShowcaseCatalogSection() {
                 </CatalogCard>
 
                 <CatalogCard
+                    name="Spinner"
+                    description="Chargement court pour action async, bouton busy ou zone inline."
+                >
+                    <div className="cluster">
+                        <Spinner size="sm" />
+                        <Spinner size="md" tone="muted" />
+                        <Button size="sm" loading iconLeading={<Spinner size="sm" tone="inverse" />}>
+                            Publication
+                        </Button>
+                    </div>
+                </CatalogCard>
+
+                <CatalogCard
                     name="Card"
                     description="Surface reusable pour dashboard, liste ou bloc marketing."
                 >
@@ -515,10 +566,60 @@ export function ShowcaseCatalogSection() {
                 </CatalogCard>
 
                 <CatalogCard
+                    name="DataList"
+                    description="Lecture structuree pour fiche detail, meta projet ou resume de configuration."
+                >
+                    <DataList
+                        items={[
+                            { label: 'Owner', value: 'Alice Martin' },
+                            { label: 'Status', value: <Badge>Stable</Badge> },
+                            { label: 'Coverage', value: '100%' },
+                        ]}
+                    />
+                </CatalogCard>
+
+                <CatalogCard
                     name="Pagination"
                     description="Navigation de pages pour listes, tables et vues catalogue."
                 >
                     <Pagination page={currentPage} totalPages={8} onPageChange={setCurrentPage} />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="PageHeader"
+                    description="Pattern de page senior pour dashboard, liste admin, detail ou settings."
+                >
+                    <PageHeader
+                        eyebrow="Workspace"
+                        title="Design system"
+                        description="Pilote une page complete avec contexte, resume et actions principales."
+                        meta={
+                            <div className="cluster">
+                                <Badge>Stable</Badge>
+                                <Text tone="muted" size="sm">
+                                    v1.0
+                                </Text>
+                            </div>
+                        }
+                        actions={
+                            <div className="cluster">
+                                <Button size="sm" variant="ghost">
+                                    Preview
+                                </Button>
+                                <Button size="sm">Publier</Button>
+                            </div>
+                        }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Progress"
+                    description="Avancement visuel pour onboarding, upload, score ou tache en cours."
+                >
+                    <Stack gap="s">
+                        <Progress label="Setup du starter" value={78} tone="success" />
+                        <Progress label="Migration design system" value={42} tone="warning" />
+                    </Stack>
                 </CatalogCard>
 
                 <CatalogCard
