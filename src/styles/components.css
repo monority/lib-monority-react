@@ -1387,6 +1387,25 @@
         min-height: 100%;
     }
 
+    .ui-empty-state__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        background: var(--bg-control);
+        color: var(--text-strong);
+        font-size: 1.15rem;
+        font-weight: 700;
+        box-shadow: var(--shadow-xs);
+    }
+
+    .ui-empty-state__actions {
+        padding-top: var(--space-2);
+    }
+
     .ui-modal {
         position: fixed;
         inset: 0;

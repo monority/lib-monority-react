@@ -572,6 +572,13 @@ export function ShowcaseCatalogSection() {
                     <EmptyState
                         title="Aucun resultat"
                         description="Commence par ajouter une premiere ressource."
+                        icon={<span>+</span>}
+                        action={<Button size="sm">Ajouter</Button>}
+                        secondaryAction={
+                            <Button size="sm" variant="ghost">
+                                Importer
+                            </Button>
+                        }
                     />
                 </CatalogCard>
 
