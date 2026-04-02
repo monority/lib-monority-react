@@ -7,6 +7,10 @@ export const homeHeroContent = {
         "L'ancien hero conserve son role editorial. Le nouveau bloc vient a cote pour presenter la base technique sans casser la lecture ni le rythme de la page.",
     primaryActionLabel: 'Demarrer',
     secondaryActionLabel: 'Voir composant modal',
+    quickLinks: [
+        { label: 'Voir le showcase', to: '/showcase' },
+        { label: 'Lire la doc UI', to: '/docs' },
+    ],
     spotlight: {
         eyebrow: 'Nouveau bloc compatible',
         title: 'Socle feature-first, UI prete et conventions stables.',
@@ -34,6 +38,27 @@ export const homeFeatureItems = [
         description: 'Dark mode, responsive natif et base accessible.',
     },
 ]
+
+export const homeWhyContent = {
+    badge: 'Why',
+    title: 'Pourquoi cette base tient mieux dans le temps',
+    description:
+        "Le but n est pas seulement de demarrer vite, mais de rester propre quand le projet grossit et que les usages se multiplient.",
+    items: [
+        {
+            title: 'Architecture lisible',
+            description: 'Routes, layouts, providers et features sont deja separes avec une source de verite claire.',
+        },
+        {
+            title: 'Design system utile',
+            description: 'Les tokens et composants couvrent deja de vrais cas produit, pas seulement des demos de surface.',
+        },
+        {
+            title: 'Base verifiable',
+            description: 'Tests, build, lint et audit Lighthouse servent de garde-fous des le starter.',
+        },
+    ],
+}
 
 export const homeDesignSystemContent = {
     badge: 'Etape 5',
@@ -69,6 +94,59 @@ export const homePatternsContent = {
             title: 'Shells d application',
             description: 'Utilise `Topbar`, `Toolbar`, `FilterBar` et `CommandPalette` pour structurer les vues plus denses.',
             components: ['Topbar', 'Toolbar', 'FilterBar', 'CommandPalette'],
+        },
+    ],
+}
+
+export const homeExamplesContent = {
+    badge: 'Examples',
+    title: 'Exemples de pages a lancer depuis ce starter',
+    description:
+        "Quelques cas d usage concrets pour transformer la librairie et les patterns deja presents en vraies pages produit.",
+    items: [
+        {
+            title: 'Dashboard produit',
+            description: 'Overview metier avec KPI, tendances, resume de configuration et actions rapides.',
+            composition: ['PageHeader', 'MetricGrid', 'StatCard', 'DataList'],
+        },
+        {
+            title: 'Settings workspace',
+            description: 'Page de configuration avec navigation secondaire, formulaires structures et feedback inline.',
+            composition: ['SidebarLayout', 'FormSection', 'InlineAlert', 'Button'],
+        },
+        {
+            title: 'Liste admin',
+            description: 'Table, filtres actifs, pagination et actions contextuelles pour gerer une collection.',
+            composition: ['Toolbar', 'FilterBar', 'Table', 'Pagination', 'DropdownMenu'],
+        },
+    ],
+}
+
+export const homeChecklistContent = {
+    badge: 'Checklist',
+    title: 'Checklist de lancement rapide',
+    description:
+        "Une vue simple de ce qui est deja solide dans la base et de ce qu il reste typiquement a brancher pour un vrai projet.",
+    items: [
+        {
+            title: 'Architecture et navigation',
+            status: 'Ready',
+            description: 'Routes, layouts, providers et navigation principale sont deja poses.',
+        },
+        {
+            title: 'UI, theming et responsive',
+            status: 'Ready',
+            description: 'Tokens, composants et patterns de page couvrent deja un socle produit credible.',
+        },
+        {
+            title: 'Qualite et accessibilite',
+            status: 'Ready',
+            description: 'Lint, tests, build et audit Lighthouse servent deja de garde-fous.',
+        },
+        {
+            title: 'Metier et integrations',
+            status: 'A brancher',
+            description: 'Il reste a connecter tes services, auth, donnees et contraintes produit reelles.',
         },
     ],
 }
@@ -202,28 +280,24 @@ export const homeCtaContent = {
 
 export const homeRoadmapContent = {
     badge: 'Roadmap',
-    title: 'Reste a faire et propositions home',
+    title: 'Prochains paliers du starter',
     description:
-        "Cette section sert de todo visible directement dans le starter pour piloter les prochaines iterations produit et design system.",
+        "La base couvre deja un socle UI solide. Cette section sert maintenant a afficher les prochaines iterations les plus rentables.",
     remainingItems: [
-        'Construire InlineAlert pour les messages dans le flux de page',
-        'Construire Banner pour les annonces globales et onboarding',
-        'Enrichir EmptyState avec icones et actions secondaires',
-        'Construire MetricGrid pour les dashboards et pages overview',
-        'Construire FormSection pour les pages de formulaire plus serieuses',
-        'Construire SidebarLayout pour settings, docs et admin',
-        'Ajouter une vraie page de docs UI avec usages et variantes',
-        "Renforcer l'accessibilite et les tests sur les composants critiques",
+        'Brancher un vrai socle metier: auth, api client, gestion des erreurs et etats reseau',
+        'Ajouter des tests cibles sur les flows produit critiques et pas seulement les primitives',
+        'Introduire quelques patterns data plus riches: table headless evoluee, empty/error/loading states avances',
+        'Poser une strategie de formulaires plus complete avec validation et schemas',
+        'Ajouter une page exemple type admin ou dashboard complet pour montrer le starter en situation',
+        'Finaliser les conventions de docs et de contribution pour en faire une vraie base d equipe',
     ],
     homeIdeas: [
-        'Ajouter un hero encore plus structure avec CTA principal et secondaire',
-        'Creer une section Pourquoi cette base avec les points forts concrets',
-        'Ajouter une section Starter pret en production',
-        'Afficher une rangee de StatCard sur la home',
-        'Montrer des exemples de pages a lancer depuis ce starter',
-        'Ajouter une section workflow senior dev',
-        'Mieux rythmer les backgrounds entre les sections',
-        'Renforcer le footer avec liens utiles et conventions du starter',
+        'Ajouter une vraie page demo "Admin" ou "Dashboard" dans le routeur',
+        'Documenter une stack recommandee pour auth, data fetching et validation',
+        'Ajouter un mode docs plus detaille avec snippets d usage par composant',
+        'Introduire une page de changelog ou releases du starter',
+        'Ajouter une passe motion / reduced-motion plus visible sur les transitions clefs',
+        'Creuser les cas de personnalisation du theme pour plusieurs univers produit',
     ],
 }
 

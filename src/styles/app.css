@@ -105,6 +105,10 @@
         padding-top: var(--space-3);
     }
 
+    .hero-quick-links {
+        gap: var(--space-2);
+    }
+
     .hero-spotlight {
         position: relative;
         overflow: hidden;
@@ -165,6 +169,34 @@
 
     .home-pattern-card {
         min-height: 100%;
+    }
+
+    .home-why-card {
+        min-height: 100%;
+    }
+
+    .home-example-card {
+        min-height: 100%;
+    }
+
+    .home-example-card__chips {
+        gap: var(--space-2);
+    }
+
+    .home-checklist-card {
+        min-height: 100%;
+    }
+
+    .home-checklist-card__status--ready {
+        color: var(--success);
+        background: color-mix(in srgb, var(--success) 14%, var(--bg-control));
+        border-color: color-mix(in srgb, var(--success) 28%, var(--border-subtle));
+    }
+
+    .home-checklist-card__status--pending {
+        color: var(--warning);
+        background: color-mix(in srgb, var(--warning) 14%, var(--bg-control));
+        border-color: color-mix(in srgb, var(--warning) 28%, var(--border-subtle));
     }
 
     .home-pattern-card__chips {

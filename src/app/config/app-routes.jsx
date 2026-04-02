@@ -68,9 +68,12 @@ export const primaryNavigationItems = appRouteDefinitions
 
 export const homeSectionNavigationItems = [
     { label: 'Features', href: '#features' },
+    { label: 'Why', href: '#why' },
     { label: 'Tokens', href: '#tokens' },
     { label: 'Proof', href: '#proof' },
     { label: 'Patterns', href: '#patterns' },
+    { label: 'Examples', href: '#examples' },
+    { label: 'Checklist', href: '#checklist' },
     { label: 'Workflow', href: '#workflow' },
     { label: 'Explore', href: '#explore' },
     { label: 'Roadmap', href: '#roadmap' },

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button, Section, Text, Title } from '@/components/ui'
 
 export function HeroSection({ content, onOpenModal }) {
@@ -23,6 +24,13 @@ export function HeroSection({ content, onOpenModal }) {
                     <Button variant="ghost" size="lg" onClick={onOpenModal}>
                         {content.secondaryActionLabel}
                     </Button>
+                </div>
+                <div className="cluster hero-quick-links">
+                    {content.quickLinks.map((item) => (
+                        <Button key={item.to} as={Link} to={item.to} variant="subtle" size="sm">
+                            {item.label}
+                        </Button>
+                    ))}
                 </div>
             </div>
 
