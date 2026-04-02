@@ -25,6 +25,7 @@ npm run build
 src/
   app/
     App.jsx
+    config/
     layouts/
     providers/
   components/
@@ -42,6 +43,8 @@ src/
 ## Regles de structure
 
 - `app/`: bootstrap, layouts globaux, providers, orchestration de haut niveau
+- `app/config/app-routes.jsx`: source de verite pour les routes applicatives et la navigation principale
+- les pages sont chargees a la demande via le router pour garder un bootstrap leger
 - `features/`: blocs metier ou pages composees par domaine
 - `components/ui/`: primitives reutilisables et independantes du metier
 - `lib/`: helpers bas niveau sans logique d'interface
@@ -79,7 +82,10 @@ Convention :
 - `services/` pour les appels reseau et la transformation liee a la feature
 - `sections/` pour les blocs JSX lisibles et ciblables en test
 - `Page` pour l'orchestration
-- l'enregistrement de la route se fait dans `src/app/routes/route-config.jsx`
+- l'enregistrement de la route se fait dans `src/app/config/app-routes.jsx`
+
+Pour les pages classiques qui utilisent le shell global, preferer `src/app/layouts/AppPage.jsx`
+afin de mutualiser le theme, le header et le container principal.
 
 ## Pattern data layer
 

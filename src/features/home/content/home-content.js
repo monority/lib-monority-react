@@ -3,8 +3,21 @@ export const homeHeroContent = {
     title: 'Starter frontend pro, propre et reutilisable.',
     description:
         'Architecture claire, design system minimal et dark mode natif pour accelerer tes prochains produits.',
+    supportingCopy:
+        "L'ancien hero conserve son role editorial. Le nouveau bloc vient a cote pour presenter la base technique sans casser la lecture ni le rythme de la page.",
     primaryActionLabel: 'Demarrer',
     secondaryActionLabel: 'Voir composant modal',
+    spotlight: {
+        eyebrow: 'Nouveau bloc compatible',
+        title: 'Socle feature-first, UI prete et conventions stables.',
+        description:
+            "Le starter expose un panneau secondaire qui peut evoluer en dashboard, checklist projet ou tease produit selon le projet que tu lances.",
+        items: [
+            'Routing et navigation centralises',
+            'Theme global sans boilerplate par page',
+            'Sections compatibles desktop et mobile',
+        ],
+    },
 }
 
 export const homeFeatureItems = [

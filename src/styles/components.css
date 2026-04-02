@@ -1,4 +1,118 @@
 @layer components {
+    .ui-accordion {
+        display: grid;
+        gap: var(--space-3);
+    }
+
+    .ui-accordion__item {
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, var(--bg-surface-elevated), var(--bg-surface));
+        box-shadow: var(--shadow-xs);
+        overflow: clip;
+    }
+
+    .ui-accordion__heading {
+        margin: 0;
+    }
+
+    .ui-accordion__trigger {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-3);
+        width: 100%;
+        padding: var(--space-4) var(--space-5);
+        border: 0;
+        background: transparent;
+        color: var(--text-strong);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .ui-accordion__label {
+        font-size: var(--text-md);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+    }
+
+    .ui-accordion__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: var(--radius-full);
+        background: var(--bg-control);
+        color: var(--text-strong);
+        transition:
+            transform var(--duration-fast) var(--ease-standard),
+            background-color var(--duration-fast) var(--ease-standard);
+    }
+
+    .ui-accordion__item.is-open .ui-accordion__icon {
+        transform: rotate(45deg);
+        background: var(--bg-accent-soft);
+    }
+
+    .ui-accordion__panel {
+        padding-inline: var(--space-5);
+        padding-bottom: var(--space-4);
+    }
+
+    .ui-accordion__content {
+        padding-top: var(--space-1);
+        border-top: 1px solid var(--border-subtle);
+        color: var(--text-base);
+    }
+
+    .ui-callout {
+        display: grid;
+        gap: var(--space-2);
+        padding: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, var(--bg-surface-elevated), var(--bg-surface));
+        box-shadow: var(--shadow-xs);
+    }
+
+    .ui-callout__title {
+        color: var(--text-strong);
+        font-size: var(--text-sm);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+
+    .ui-callout__description {
+        margin: 0;
+        color: var(--text-base);
+        font-size: var(--text-sm);
+    }
+
+    .ui-callout--info {
+        border-color: color-mix(in srgb, var(--info) 38%, var(--border-subtle));
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--info) 8%, var(--bg-surface-elevated)), var(--bg-surface));
+    }
+
+    .ui-callout--success {
+        border-color: color-mix(in srgb, var(--success) 38%, var(--border-subtle));
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--success) 8%, var(--bg-surface-elevated)), var(--bg-surface));
+    }
+
+    .ui-callout--warning {
+        border-color: color-mix(in srgb, var(--warning) 38%, var(--border-subtle));
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--warning) 8%, var(--bg-surface-elevated)), var(--bg-surface));
+    }
+
+    .ui-callout--danger {
+        border-color: color-mix(in srgb, var(--danger) 38%, var(--border-subtle));
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--danger) 8%, var(--bg-surface-elevated)), var(--bg-surface));
+    }
+
     .ui-title {
         color: var(--text-strong);
         font-weight: 700;
@@ -95,16 +209,16 @@
     }
 
     .ui-btn--sm {
-        min-height: 2.4rem;
+        min-height: var(--control-size-sm);
         padding-inline: 0.9rem;
     }
 
     .ui-btn--md {
-        min-height: 2.75rem;
+        min-height: var(--control-size-md);
     }
 
     .ui-btn--lg {
-        min-height: 3.1rem;
+        min-height: var(--control-size-lg);
         padding-inline: 1.25rem;
         font-size: var(--text-md);
     }
@@ -140,7 +254,7 @@
 
     .ui-btn--ghost {
         border-color: var(--border-subtle);
-        background: color-mix(in srgb, var(--bg-surface-strong) 86%, transparent);
+        background: var(--bg-control);
         color: var(--text-strong);
     }
 
@@ -179,11 +293,11 @@
 
     .ui-input {
         width: min(22rem, 100%);
-        min-height: 3rem;
+        min-height: var(--control-size-md);
         padding-inline: 1rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-sm);
-        background: color-mix(in srgb, var(--bg-surface-strong) 90%, transparent);
+        background: var(--bg-control);
         color: var(--text-base);
         box-shadow: var(--shadow-xs);
         transition:
@@ -221,7 +335,7 @@
         min-height: 11rem;
         border-radius: var(--radius-lg);
         border: 1px solid var(--border-subtle);
-        background: linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-strong) 92%, transparent), color-mix(in srgb, var(--bg-surface) 86%, transparent));
+        background: linear-gradient(180deg, var(--bg-surface-strong), var(--bg-surface-elevated));
         box-shadow: var(--shadow-sm);
         backdrop-filter: blur(16px);
         transition:
@@ -257,7 +371,7 @@
         padding-inline: 0.75rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-sm);
-        background: color-mix(in srgb, var(--bg-surface-strong) 90%, transparent);
+        background: var(--bg-control);
         color: var(--text-muted);
         font-size: var(--text-xs);
         font-weight: 700;
@@ -269,7 +383,7 @@
         padding: 0.95rem 1rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-sm);
-        background: color-mix(in srgb, var(--bg-surface-strong) 88%, transparent);
+        background: var(--bg-control);
         color: var(--text-base);
         font-size: var(--text-sm);
     }
@@ -305,7 +419,7 @@
         padding: 0.125rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-full);
-        background: color-mix(in srgb, var(--bg-surface-strong) 88%, transparent);
+        background: var(--bg-control);
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);
@@ -340,7 +454,7 @@
         height: 1.1rem;
         border: 1px solid var(--border-strong);
         border-radius: var(--radius-xs);
-        background: color-mix(in srgb, var(--bg-surface-strong) 92%, transparent);
+        background: var(--bg-control);
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
@@ -360,7 +474,7 @@
         padding: 0.25rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
-        background: color-mix(in srgb, var(--bg-surface-strong) 84%, transparent);
+        background: var(--bg-surface-elevated);
         box-shadow: var(--shadow-xs);
     }
 
@@ -381,7 +495,7 @@
     }
 
     .ui-tabs__tab.is-active {
-        background: color-mix(in srgb, var(--bg-surface-strong) 96%, transparent);
+        background: var(--bg-control);
         color: var(--text-strong);
     }
 
@@ -439,7 +553,7 @@
         padding: 0.95rem 1rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
-        background: color-mix(in srgb, var(--bg-surface-strong) 94%, transparent);
+        background: var(--bg-surface-elevated);
         box-shadow: var(--shadow-sm);
     }
 
@@ -523,7 +637,7 @@
         padding: var(--space-5);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-lg);
-        background: color-mix(in srgb, var(--bg-surface-strong) 96%, transparent);
+        background: linear-gradient(180deg, var(--bg-surface-strong), var(--bg-surface-elevated));
         box-shadow: var(--shadow-md);
     }
 
@@ -536,6 +650,16 @@
 
     .ui-modal__body {
         margin-top: var(--space-4);
+    }
+
+    @media (max-width: 900px) {
+        .ui-accordion__trigger {
+            padding-inline: var(--space-4);
+        }
+
+        .ui-accordion__panel {
+            padding-inline: var(--space-4);
+        }
     }
 
     @keyframes skeleton-pulse {

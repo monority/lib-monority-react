@@ -7,12 +7,18 @@ import App from '@/app/App'
 import { AppErrorBoundary } from '@/app/errors/AppErrorBoundary'
 import { AppProviders } from '@/app/providers/AppProviders'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <AppErrorBoundary>
-      <AppProviders>
-        <App />
-      </AppProviders>
-    </AppErrorBoundary>
-  </StrictMode>,
+const rootElement = document.getElementById('root')
+
+if (!rootElement) {
+    throw new Error('Root element "#root" introuvable.')
+}
+
+createRoot(rootElement).render(
+    <StrictMode>
+        <AppErrorBoundary>
+            <AppProviders>
+                <App />
+            </AppProviders>
+        </AppErrorBoundary>
+    </StrictMode>,
 )

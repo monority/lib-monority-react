@@ -1,7 +1,6 @@
-import { AppShell } from '@/app/layouts/AppShell'
+import { AppPage } from '@/app/layouts/AppPage'
 import { homeSectionNavigationItems, primaryNavigationItems } from '@/app/config/navigation'
-import { Container, Modal, Stack, Text } from '@/components/ui'
-import { useTheme } from '@/hooks/useTheme'
+import { Modal, Text } from '@/components/ui'
 import {
     homeCtaContent,
     homeDesignSystemContent,
@@ -16,27 +15,17 @@ import { FeaturesSection } from './sections/FeaturesSection'
 import { HeroSection } from './sections/HeroSection'
 
 export function HomePage() {
-    const { isDark, toggleTheme } = useTheme()
     const { isModalOpen, openModal, closeModal } = useHomeUI()
 
     return (
-        <AppShell
-            isDark={isDark}
-            onToggleTheme={toggleTheme}
-            navigationItems={[...primaryNavigationItems, ...homeSectionNavigationItems]}
-        >
-            <Container size="lg">
-                <Stack gap="xl">
-                    <HeroSection content={homeHeroContent} onOpenModal={openModal} />
-                    <FeaturesSection items={homeFeatureItems} />
-                    <DesignSystemSection content={homeDesignSystemContent} />
-                    <CtaSection content={homeCtaContent} />
-                </Stack>
-            </Container>
-
+        <AppPage navigationItems={[...primaryNavigationItems, ...homeSectionNavigationItems]}>
+            <HeroSection content={homeHeroContent} onOpenModal={openModal} />
+            <FeaturesSection items={homeFeatureItems} />
+            <DesignSystemSection content={homeDesignSystemContent} />
+            <CtaSection content={homeCtaContent} />
             <Modal open={isModalOpen} title={homeModalContent.title} onClose={closeModal}>
                 <Text tone="base">{homeModalContent.body}</Text>
             </Modal>
-        </AppShell>
+        </AppPage>
     )
 }

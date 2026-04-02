@@ -15,7 +15,7 @@ export function CtaSection({ content }) {
                     hint={content.inputHint}
                     required
                 />
-                <Button size="lg">{content.actionLabel}</Button>
+                <Button className="cta-form__button">{content.actionLabel}</Button>
             </div>
         </Section>
     )

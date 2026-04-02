@@ -60,7 +60,7 @@
     .surface {
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-lg);
-        background: var(--bg-surface);
+        background: linear-gradient(180deg, var(--bg-surface-elevated), var(--bg-surface));
         box-shadow: var(--shadow-sm);
         backdrop-filter: blur(16px);
     }

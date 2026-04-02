@@ -1,10 +1,25 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { Button } from './Button'
 
 export function Modal({ open, title, children, onClose }) {
     const titleId = useId()
+    const panelRef = useRef(null)
+
+    useEffect(() => {
+        if (!open) {
+            return undefined
+        }
+
+        const { overflow } = document.body.style
+        document.body.style.overflow = 'hidden'
+        panelRef.current?.focus()
+
+        return () => {
+            document.body.style.overflow = overflow
+        }
+    }, [open])
 
     if (!open) {
         return null
@@ -14,6 +29,7 @@ export function Modal({ open, title, children, onClose }) {
         <div className="ui-modal" role="presentation">
             <div className="ui-modal__backdrop" onClick={onClose} aria-hidden="true" />
             <div
+                ref={panelRef}
                 className="ui-modal__panel"
                 role="dialog"
                 aria-modal="true"
@@ -35,7 +51,6 @@ export function Modal({ open, title, children, onClose }) {
                         size="sm"
                         onClick={onClose}
                         aria-label="Fermer la fenetre"
-                        autoFocus
                     >
                         Fermer
                     </Button>

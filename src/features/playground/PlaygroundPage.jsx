@@ -1,7 +1,6 @@
-import { AppShell } from '@/app/layouts/AppShell'
+import { AppPage } from '@/app/layouts/AppPage'
 import { primaryNavigationItems } from '@/app/config/navigation'
-import { Container, Divider, Stack, Text } from '@/components/ui'
-import { useTheme } from '@/hooks/useTheme'
+import { Divider, Text } from '@/components/ui'
 import { playgroundChecklistItems, playgroundHeroContent } from './content/playground-content'
 import { usePlaygroundMetrics } from './hooks/usePlaygroundMetrics'
 import { PlaygroundChecklistSection } from './sections/PlaygroundChecklistSection'
@@ -9,30 +8,21 @@ import { PlaygroundHeroSection } from './sections/PlaygroundHeroSection'
 import { PlaygroundMetricsSection } from './sections/PlaygroundMetricsSection'
 
 export function PlaygroundPage() {
-    const { isDark, toggleTheme } = useTheme()
     const { data, error, isError, isLoading } = usePlaygroundMetrics()
 
     return (
-        <AppShell
-            isDark={isDark}
-            onToggleTheme={toggleTheme}
-            navigationItems={primaryNavigationItems}
-        >
-            <Container size="lg">
-                <Stack gap="xl">
-                    <PlaygroundHeroSection content={playgroundHeroContent} />
-                    <Divider label="Feature blueprint" />
-                    <PlaygroundChecklistSection items={playgroundChecklistItems} />
-                    <PlaygroundMetricsSection
-                        metrics={data}
-                        isLoading={isLoading}
-                        isError={isError}
-                        errorMessage={error}
-                    />
-                    <SectionNote />
-                </Stack>
-            </Container>
-        </AppShell>
+        <AppPage navigationItems={primaryNavigationItems}>
+            <PlaygroundHeroSection content={playgroundHeroContent} />
+            <Divider label="Feature blueprint" />
+            <PlaygroundChecklistSection items={playgroundChecklistItems} />
+            <PlaygroundMetricsSection
+                metrics={data}
+                isLoading={isLoading}
+                isError={isError}
+                errorMessage={error}
+            />
+            <SectionNote />
+        </AppPage>
     )
 }
 

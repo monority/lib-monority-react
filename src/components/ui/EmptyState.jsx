@@ -5,7 +5,7 @@ import { Title } from './Title'
 
 export function EmptyState({ title, description, action, className }) {
     return (
-        <div className={cn('ui-empty-state ui-card', className)}>
+        <div className={cn('ui-empty-state ui-card ui-card--md', className)}>
             <Stack gap="s">
                 <Title as="h3" size="sm">
                     {title}

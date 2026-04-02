@@ -5,7 +5,9 @@ function getNavigationLinkClassName({ isActive }) {
     return isActive ? 'app-nav__link is-active' : 'app-nav__link'
 }
 
-export function AppShell({ isDark, onToggleTheme, navigationItems = [], children }) {
+export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], children }) {
+    const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
+
     return (
         <div className="app-shell">
             <header className="app-header">
@@ -28,8 +30,14 @@ export function AppShell({ isDark, onToggleTheme, navigationItems = [], children
                         )}
                     </nav>
 
-                    <Button variant="ghost" size="sm" onClick={onToggleTheme} aria-pressed={isDark}>
-                        {isDark ? 'Light' : 'Dark'}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={onToggleTheme}
+                        aria-label={`Activer le theme ${nextThemeLabel}`}
+                        aria-pressed={isDark}
+                    >
+                        Theme: {theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}
                     </Button>
                 </Container>
             </header>

@@ -27,19 +27,16 @@ export function usePlaygroundMetrics() {
     const [state, dispatch] = useReducer(reducer, createAsyncState())
 
     useEffect(() => {
-        let isCancelled = false
+        const controller = new AbortController()
 
         async function load() {
             dispatch({ type: 'load/start' })
 
             try {
-                const data = await getPlaygroundMetrics()
-
-                if (!isCancelled) {
-                    dispatch({ type: 'load/success', payload: data })
-                }
+                const data = await getPlaygroundMetrics({ signal: controller.signal })
+                dispatch({ type: 'load/success', payload: data })
             } catch (error) {
-                if (!isCancelled) {
+                if (error.name !== 'AbortError') {
                     dispatch({ type: 'load/error', payload: error.message })
                 }
             }
@@ -48,7 +45,7 @@ export function usePlaygroundMetrics() {
         load()
 
         return () => {
-            isCancelled = true
+            controller.abort()
         }
     }, [])
 
