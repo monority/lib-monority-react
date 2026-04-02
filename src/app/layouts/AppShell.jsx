@@ -1,11 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Button, Container } from '@/components/ui'
+import { useAuth } from '@/hooks/useAuth'
 
 function getNavigationLinkClassName({ isActive }) {
     return isActive ? 'app-nav__link is-active' : 'app-nav__link'
 }
 
 export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], children }) {
+    const { user, workspace, isAuthenticated, isLoading, signOut } = useAuth()
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
 
     return (
@@ -30,15 +32,35 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                         )}
                     </nav>
 
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={onToggleTheme}
-                        aria-label={`Theme: ${theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'} - activer le theme ${nextThemeLabel}`}
-                        aria-pressed={isDark}
-                    >
-                        Theme: {theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}
-                    </Button>
+                    <div className="cluster app-header__controls">
+                        {isLoading ? (
+                            <span className="app-session-chip">Session...</span>
+                        ) : isAuthenticated ? (
+                            <div className="cluster app-session">
+                                <span className="app-session-chip">
+                                    {workspace?.name} · {workspace?.plan}
+                                </span>
+                                <span className="app-session-chip">
+                                    {user?.name} · {user?.role}
+                                </span>
+                                <Button variant="ghost" size="sm" onClick={signOut}>
+                                    Sign out
+                                </Button>
+                            </div>
+                        ) : (
+                            <span className="app-session-chip">Mode demo</span>
+                        )}
+
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={onToggleTheme}
+                            aria-label={`Theme: ${theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'} - activer le theme ${nextThemeLabel}`}
+                            aria-pressed={isDark}
+                        >
+                            Theme: {theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}
+                        </Button>
+                    </div>
                 </Container>
             </header>
 

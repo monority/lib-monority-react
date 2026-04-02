@@ -11,6 +11,28 @@ const appRouteDefinitions = [
         includeInPrimaryNavigation: true,
     },
     {
+        key: 'dashboard',
+        label: 'Dashboard',
+        path: '/dashboard',
+        lazy: async () => {
+            const module = await import('@/features/dashboard/DashboardPage')
+
+            return { Component: module.DashboardPage }
+        },
+        includeInPrimaryNavigation: true,
+    },
+    {
+        key: 'admin',
+        label: 'Admin',
+        path: '/admin',
+        lazy: async () => {
+            const module = await import('@/features/admin/AdminPage')
+
+            return { Component: module.AdminPage }
+        },
+        includeInPrimaryNavigation: true,
+    },
+    {
         key: 'playground',
         label: 'Playground',
         path: '/playground',
