@@ -21,7 +21,7 @@ export function Spinner({
     return (
         <span className={cn('ui-spinner', sizeClassName[size], toneClassName[tone], className)}>
             <span className="ui-spinner__ring" aria-hidden="true" />
-            <span className="sr-only">{label}</span>
+            <span className="visually-hidden">{label}</span>
         </span>
     )
 }

@@ -30,6 +30,7 @@ import {
     Progress,
     RadioGroup,
     Select,
+    SidebarLayout,
     Spinner,
     Skeleton,
     Stack,
@@ -206,12 +207,13 @@ export function ShowcaseCatalogSection() {
                     description="Annonce visible pour onboarding, nouveaute, maintenance ou message produit."
                 >
                     <Banner
+                        className="showcase-banner"
                         tone="info"
                         eyebrow="Update"
                         title="Starter 2026 pret"
                         description="Le socle UI et les patterns senior dev sont maintenant bien avances."
                         actions={
-                            <div className="cluster">
+                            <div className="cluster showcase-actions-compact">
                                 <Button size="sm" variant="ghost">
                                     Lire
                                 </Button>
@@ -544,10 +546,15 @@ export function ShowcaseCatalogSection() {
                     name="Spinner"
                     description="Chargement court pour action async, bouton busy ou zone inline."
                 >
-                    <div className="cluster">
+                    <div className="cluster showcase-spinner-row">
                         <Spinner size="sm" />
                         <Spinner size="md" tone="muted" />
-                        <Button size="sm" loading iconLeading={<Spinner size="sm" tone="inverse" />}>
+                        <Button
+                            size="sm"
+                            loading
+                            iconLeading={<Spinner size="sm" tone="inverse" />}
+                            className="showcase-spinner-button"
+                        >
                             Publication
                         </Button>
                     </div>
@@ -589,11 +596,12 @@ export function ShowcaseCatalogSection() {
                     description="Bloc de formulaire structure pour settings, profil, checkout ou admin."
                 >
                     <FormSection
+                        className="showcase-form-section"
                         title="Project settings"
                         description="Regroupe les champs, aides et actions dans un bloc plus senior."
                         meta={<Badge>Draft</Badge>}
                         actions={
-                            <div className="cluster">
+                            <div className="cluster showcase-actions-compact">
                                 <Button size="sm" variant="ghost">
                                     Cancel
                                 </Button>
@@ -662,11 +670,12 @@ export function ShowcaseCatalogSection() {
                     description="Pattern de page senior pour dashboard, liste admin, detail ou settings."
                 >
                     <PageHeader
+                        className="showcase-page-header"
                         eyebrow="Workspace"
                         title="Design system"
                         description="Pilote une page complete avec contexte, resume et actions principales."
                         meta={
-                            <div className="cluster">
+                            <div className="cluster showcase-meta-row">
                                 <Badge>Stable</Badge>
                                 <Text tone="muted" size="sm">
                                     v1.0
@@ -674,7 +683,7 @@ export function ShowcaseCatalogSection() {
                             </div>
                         }
                         actions={
-                            <div className="cluster">
+                            <div className="cluster showcase-actions-compact">
                                 <Button size="sm" variant="ghost">
                                     Preview
                                 </Button>
@@ -734,6 +743,7 @@ export function ShowcaseCatalogSection() {
                     description="Rangee de KPI prete a poser sur une home, un dashboard ou une page overview."
                 >
                     <MetricGrid
+                        className="showcase-metric-grid"
                         items={[
                             {
                                 label: 'Components',
@@ -756,6 +766,47 @@ export function ShowcaseCatalogSection() {
                             },
                         ]}
                     />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="SidebarLayout"
+                    description="Layout de page pour settings, docs, profil ou espace admin."
+                >
+                    <SidebarLayout
+                        className="showcase-sidebar-layout"
+                        sidebar={
+                            <Stack gap="s">
+                                <Button size="sm" variant="ghost" fullWidth>
+                                    General
+                                </Button>
+                                <Button size="sm" variant="ghost" fullWidth>
+                                    Members
+                                </Button>
+                                <Button size="sm" variant="ghost" fullWidth>
+                                    Billing
+                                </Button>
+                            </Stack>
+                        }
+                        header={
+                            <PageHeader
+                                className="showcase-page-header"
+                                title="Workspace settings"
+                                description="Exemple de page structuree avec navigation laterale."
+                                actions={<Button size="sm">Save changes</Button>}
+                            />
+                        }
+                    >
+                        <FormSection
+                            className="showcase-form-section"
+                            title="Preferences"
+                            description="Ajuste ici les options principales de ton workspace."
+                        >
+                            <Stack gap="m">
+                                <Input label="Workspace name" placeholder="Model Studio" />
+                                <Switch label="Enable activity digest" defaultChecked />
+                            </Stack>
+                        </FormSection>
+                    </SidebarLayout>
                 </CatalogCard>
 
                 <CatalogCard

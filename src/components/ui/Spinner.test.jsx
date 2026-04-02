@@ -6,7 +6,7 @@ describe('Spinner', () => {
     it('renders an accessible label', () => {
         render(<Spinner label="Chargement des donnees" />)
 
-        expect(screen.getByText('Chargement des donnees')).toHaveClass('sr-only')
+        expect(screen.getByText('Chargement des donnees')).toHaveClass('visually-hidden')
     })
 
     it('renders the visual ring', () => {

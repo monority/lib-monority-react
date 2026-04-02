@@ -203,6 +203,11 @@
         display: grid;
         gap: var(--space-3);
         align-content: start;
+        min-width: 0;
+    }
+
+    .showcase-catalog-card__preview > * {
+        min-width: 0;
     }
 
     .showcase-toolbar__input {
@@ -211,6 +216,48 @@
 
     .showcase-toolbar__select {
         width: min(10rem, 100%);
+    }
+
+    .showcase-actions-compact {
+        gap: var(--space-2);
+    }
+
+    .showcase-meta-row {
+        gap: var(--space-2);
+    }
+
+    .showcase-banner,
+    .showcase-page-header,
+    .showcase-form-section,
+    .showcase-sidebar-layout {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .showcase-banner .ui-banner__description,
+    .showcase-page-header .ui-page-header__description {
+        max-width: 32rem;
+    }
+
+    .showcase-spinner-row {
+        align-items: center;
+    }
+
+    .showcase-spinner-button {
+        min-width: 0;
+    }
+
+    .showcase-metric-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .showcase-sidebar-layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .showcase-sidebar-layout .ui-sidebar-layout__sidebar {
+        position: static;
     }
 
     .feature-card {
@@ -294,6 +341,10 @@
 
         .showcase-toolbar__input,
         .showcase-toolbar__select {
+            width: 100%;
+        }
+
+        .showcase-actions-compact > * {
             width: 100%;
         }
     }
