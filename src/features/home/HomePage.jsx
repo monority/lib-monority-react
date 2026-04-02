@@ -7,12 +7,14 @@ import {
     homeFeatureItems,
     homeHeroContent,
     homeModalContent,
+    homeRoadmapContent,
 } from './content/home-content'
 import { useHomeUI } from './hooks/useHomeUI'
 import { CtaSection } from './sections/CtaSection'
 import { DesignSystemSection } from './sections/DesignSystemSection'
 import { FeaturesSection } from './sections/FeaturesSection'
 import { HeroSection } from './sections/HeroSection'
+import { RoadmapSection } from './sections/RoadmapSection'
 
 export function HomePage() {
     const { isModalOpen, openModal, closeModal } = useHomeUI()
@@ -22,6 +24,7 @@ export function HomePage() {
             <HeroSection content={homeHeroContent} onOpenModal={openModal} />
             <FeaturesSection items={homeFeatureItems} />
             <DesignSystemSection content={homeDesignSystemContent} />
+            <RoadmapSection content={homeRoadmapContent} />
             <CtaSection content={homeCtaContent} />
             <Modal open={isModalOpen} title={homeModalContent.title} onClose={closeModal}>
                 <Text tone="base">{homeModalContent.body}</Text>

@@ -163,6 +163,38 @@
         align-items: stretch;
     }
 
+    .roadmap-panel {
+        min-height: 100%;
+        padding: clamp(var(--space-4), 2vw, var(--space-5));
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(180deg, var(--bg-surface-strong), var(--bg-surface-elevated));
+        box-shadow: var(--shadow-xs);
+    }
+
+    .roadmap-item {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: var(--space-3);
+        align-items: start;
+        padding: var(--space-3) 0;
+        border-top: 1px solid color-mix(in srgb, var(--border-subtle) 88%, transparent);
+    }
+
+    .roadmap-item:first-child {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .roadmap-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .roadmap-item__badge {
+        min-width: 2rem;
+        padding-inline: 0.5rem;
+    }
+
     .showcase-catalog-card {
         min-height: 100%;
     }
@@ -171,6 +203,14 @@
         display: grid;
         gap: var(--space-3);
         align-content: start;
+    }
+
+    .showcase-toolbar__input {
+        width: min(16rem, 100%);
+    }
+
+    .showcase-toolbar__select {
+        width: min(10rem, 100%);
     }
 
     .feature-card {
@@ -249,6 +289,11 @@
         }
 
         .cta-form__button {
+            width: 100%;
+        }
+
+        .showcase-toolbar__input,
+        .showcase-toolbar__select {
             width: 100%;
         }
     }

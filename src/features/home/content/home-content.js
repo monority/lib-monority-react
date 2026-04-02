@@ -59,6 +59,33 @@ export const homeCtaContent = {
     actionLabel: 'Continuer',
 }
 
+export const homeRoadmapContent = {
+    badge: 'Roadmap',
+    title: 'Reste a faire et propositions home',
+    description:
+        "Cette section sert de todo visible directement dans le starter pour piloter les prochaines iterations produit et design system.",
+    remainingItems: [
+        'Construire InlineAlert pour les messages dans le flux de page',
+        'Construire Banner pour les annonces globales et onboarding',
+        'Enrichir EmptyState avec icones et actions secondaires',
+        'Construire MetricGrid pour les dashboards et pages overview',
+        'Construire FormSection pour les pages de formulaire plus serieuses',
+        'Construire SidebarLayout pour settings, docs et admin',
+        'Ajouter une vraie page de docs UI avec usages et variantes',
+        "Renforcer l'accessibilite et les tests sur les composants critiques",
+    ],
+    homeIdeas: [
+        'Ajouter un hero encore plus structure avec CTA principal et secondaire',
+        'Creer une section Pourquoi cette base avec les points forts concrets',
+        'Ajouter une section Starter pret en production',
+        'Afficher une rangee de StatCard sur la home',
+        'Montrer des exemples de pages a lancer depuis ce starter',
+        'Ajouter une section workflow senior dev',
+        'Mieux rythmer les backgrounds entre les sections',
+        'Renforcer le footer avec liens utiles et conventions du starter',
+    ],
+}
+
 export const homeModalContent = {
     title: 'Exemple modal',
     body: "Cette modal sert d'exemple de composant reutilisable avec une API plus solide, un rendu portal et un habillage coherent avec le design system.",

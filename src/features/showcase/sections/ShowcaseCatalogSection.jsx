@@ -4,6 +4,7 @@ import {
     AlertDialog,
     Avatar,
     Badge,
+    Banner,
     Breadcrumb,
     Button,
     Callout,
@@ -18,6 +19,7 @@ import {
     EmptyState,
     Grid,
     IconButton,
+    InlineAlert,
     Input,
     Pagination,
     PageHeader,
@@ -29,11 +31,13 @@ import {
     Spinner,
     Skeleton,
     Stack,
+    StatCard,
     Switch,
     Table,
     Tabs,
     Text,
     Textarea,
+    Toolbar,
     Title,
     Toast,
     Tooltip,
@@ -193,6 +197,26 @@ export function ShowcaseCatalogSection() {
 
                 <CatalogCard name="Badge" description="Meta courte, statut ou etiquette visuelle.">
                     <Badge>Stable</Badge>
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Banner"
+                    description="Annonce visible pour onboarding, nouveaute, maintenance ou message produit."
+                >
+                    <Banner
+                        tone="info"
+                        eyebrow="Update"
+                        title="Starter 2026 pret"
+                        description="Le socle UI et les patterns senior dev sont maintenant bien avances."
+                        actions={
+                            <div className="cluster">
+                                <Button size="sm" variant="ghost">
+                                    Lire
+                                </Button>
+                                <Button size="sm">Continuer</Button>
+                            </div>
+                        }
+                    />
                 </CatalogCard>
 
                 <CatalogCard
@@ -492,6 +516,18 @@ export function ShowcaseCatalogSection() {
                 </CatalogCard>
 
                 <CatalogCard
+                    name="InlineAlert"
+                    description="Feedback compact dans le flux pour forms, settings et pages admin."
+                >
+                    <InlineAlert
+                        tone="warning"
+                        title="Configuration incomplete"
+                        description="Ajoute tes variables d environnement avant de passer en production."
+                        actionLabel="Verifier"
+                    />
+                </CatalogCard>
+
+                <CatalogCard
                     name="Skeleton"
                     description="Chargement visuel avant les vraies donnees."
                 >
@@ -608,6 +644,51 @@ export function ShowcaseCatalogSection() {
                                 </Button>
                                 <Button size="sm">Publier</Button>
                             </div>
+                        }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Toolbar"
+                    description="Barre d actions et filtres pour listes, tables, admin ou recherche."
+                >
+                    <Toolbar
+                        leading={
+                            <div className="cluster">
+                                <Input placeholder="Rechercher..." inputClassName="showcase-toolbar__input" />
+                                <Select defaultValue="all" selectClassName="showcase-toolbar__select">
+                                    <option value="all">Tous</option>
+                                    <option value="stable">Stable</option>
+                                    <option value="active">Active</option>
+                                </Select>
+                            </div>
+                        }
+                        trailing={
+                            <div className="cluster">
+                                <Button size="sm" variant="ghost">
+                                    Filtrer
+                                </Button>
+                                <Button size="sm">Nouveau</Button>
+                            </div>
+                        }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="StatCard"
+                    description="Carte KPI pour dashboard, overview produit ou recap equipe."
+                >
+                    <StatCard
+                        label="Release velocity"
+                        value="24"
+                        trend="+12%"
+                        trendTone="positive"
+                        description="Deploys this month"
+                        icon={<span>↗</span>}
+                        footer={
+                            <Text tone="muted" size="sm">
+                                Compared with last month
+                            </Text>
                         }
                     />
                 </CatalogCard>

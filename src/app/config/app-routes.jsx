@@ -58,5 +58,6 @@ export const primaryNavigationItems = appRouteDefinitions
 export const homeSectionNavigationItems = [
     { label: 'Features', href: '#features' },
     { label: 'Tokens', href: '#tokens' },
+    { label: 'Roadmap', href: '#roadmap' },
     { label: 'Start', href: '#cta' },
 ]
