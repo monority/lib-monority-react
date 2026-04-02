@@ -34,7 +34,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                         variant="ghost"
                         size="sm"
                         onClick={onToggleTheme}
-                        aria-label={`Activer le theme ${nextThemeLabel}`}
+                        aria-label={`Theme: ${theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'} - activer le theme ${nextThemeLabel}`}
                         aria-pressed={isDark}
                     >
                         Theme: {theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}

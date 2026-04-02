@@ -17,10 +17,12 @@ import {
     DropdownMenu,
     Drawer,
     EmptyState,
+    FormSection,
     Grid,
     IconButton,
     InlineAlert,
     Input,
+    MetricGrid,
     Pagination,
     PageHeader,
     Section,
@@ -582,6 +584,33 @@ export function ShowcaseCatalogSection() {
                     />
                 </CatalogCard>
 
+                <CatalogCard
+                    name="FormSection"
+                    description="Bloc de formulaire structure pour settings, profil, checkout ou admin."
+                >
+                    <FormSection
+                        title="Project settings"
+                        description="Regroupe les champs, aides et actions dans un bloc plus senior."
+                        meta={<Badge>Draft</Badge>}
+                        actions={
+                            <div className="cluster">
+                                <Button size="sm" variant="ghost">
+                                    Cancel
+                                </Button>
+                                <Button size="sm">Save</Button>
+                            </div>
+                        }
+                    >
+                        <Stack gap="m">
+                            <Input label="Project name" placeholder="Model Starter" />
+                            <Textarea
+                                label="Description"
+                                placeholder="Describe the intent of this project..."
+                            />
+                        </Stack>
+                    </FormSection>
+                </CatalogCard>
+
                 <CatalogCard name="Divider" description="Separation legere entre contenus.">
                     <Stack gap="s">
                         <Text tone="base" size="sm">
@@ -697,6 +726,35 @@ export function ShowcaseCatalogSection() {
                                 Compared with last month
                             </Text>
                         }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="MetricGrid"
+                    description="Rangee de KPI prete a poser sur une home, un dashboard ou une page overview."
+                >
+                    <MetricGrid
+                        items={[
+                            {
+                                label: 'Components',
+                                value: '40+',
+                                trend: '+8',
+                                trendTone: 'positive',
+                                description: 'Primitives and patterns',
+                            },
+                            {
+                                label: 'Coverage',
+                                value: '100%',
+                                trend: 'Stable',
+                                description: 'Core build checks',
+                            },
+                            {
+                                label: 'Themes',
+                                value: '3',
+                                trend: 'Ready',
+                                description: 'Light, dark, system',
+                            },
+                        ]}
                     />
                 </CatalogCard>
 
