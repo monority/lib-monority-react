@@ -1,3 +1,5 @@
+import { ApiError } from '@/services/http/ApiError'
+
 function waitWithSignal(duration, signal) {
     if (signal?.aborted) {
         return Promise.reject(new DOMException('Request aborted', 'AbortError'))
@@ -18,11 +20,22 @@ function waitWithSignal(duration, signal) {
     })
 }
 
-export async function fakeHttpClient({ data, delay = 240, shouldFail = false, signal } = {}) {
+export async function fakeHttpClient({
+    data,
+    delay = 240,
+    shouldFail = false,
+    signal,
+    errorMessage = 'La requete de demonstration a echoue.',
+    errorCode = 'demo_request_failed',
+    errorStatus = 500,
+} = {}) {
     await waitWithSignal(delay, signal)
 
     if (shouldFail) {
-        throw new Error('La requete de demonstration a echoue.')
+        throw new ApiError(errorMessage, {
+            code: errorCode,
+            status: errorStatus,
+        })
     }
 
     return data
