@@ -33,6 +33,17 @@ const appRouteDefinitions = [
         includeInPrimaryNavigation: true,
     },
     {
+        key: 'docs',
+        label: 'Docs',
+        path: '/docs',
+        lazy: async () => {
+            const module = await import('@/features/docs/DocsPage')
+
+            return { Component: module.DocsPage }
+        },
+        includeInPrimaryNavigation: true,
+    },
+    {
         key: 'not-found',
         path: '*',
         lazy: async () => {
@@ -58,6 +69,11 @@ export const primaryNavigationItems = appRouteDefinitions
 export const homeSectionNavigationItems = [
     { label: 'Features', href: '#features' },
     { label: 'Tokens', href: '#tokens' },
+    { label: 'Proof', href: '#proof' },
+    { label: 'Patterns', href: '#patterns' },
+    { label: 'Workflow', href: '#workflow' },
+    { label: 'Explore', href: '#explore' },
     { label: 'Roadmap', href: '#roadmap' },
     { label: 'Start', href: '#cta' },
+    { label: 'Footer', href: '#footer' },
 ]

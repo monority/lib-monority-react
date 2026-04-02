@@ -49,6 +49,147 @@ export const homeDesignSystemContent = {
     dividerLabel: 'Starter UI primitives',
 }
 
+export const homePatternsContent = {
+    badge: 'Ready to ship',
+    title: 'Patterns deja prets pour des pages serieuses',
+    description:
+        "Le starter ne se limite plus a des primitives. Il embarque deja des patterns de page reutilisables pour accelerer une vraie base produit.",
+    items: [
+        {
+            title: 'Pages dashboard',
+            description: 'Compose `PageHeader`, `MetricGrid`, `StatCard` et `DataList` pour poser une overview propre rapidement.',
+            components: ['PageHeader', 'MetricGrid', 'StatCard', 'DataList'],
+        },
+        {
+            title: 'Pages settings',
+            description: 'Assemble `SidebarLayout`, `FormSection`, `InlineAlert` et `Button` pour des flows de configuration lisibles.',
+            components: ['SidebarLayout', 'FormSection', 'InlineAlert', 'Button'],
+        },
+        {
+            title: 'Shells d application',
+            description: 'Utilise `Topbar`, `Toolbar`, `FilterBar` et `CommandPalette` pour structurer les vues plus denses.',
+            components: ['Topbar', 'Toolbar', 'FilterBar', 'CommandPalette'],
+        },
+    ],
+}
+
+export const homeMetricsContent = {
+    badge: 'Proof',
+    title: 'Starter pret pour du vrai travail produit',
+    description:
+        "Le socle embarque deja des garanties concretes cote UI, qualite et experience de developpement.",
+    items: [
+        {
+            label: 'Composants UI',
+            value: '40+',
+            trend: 'Large',
+            description: 'Primitives, feedback, navigation, layouts et patterns',
+        },
+        {
+            label: 'Tests',
+            value: '37',
+            trend: 'Green',
+            trendTone: 'positive',
+            description: 'Couverture de base sur les composants critiques',
+        },
+        {
+            label: 'Lighthouse',
+            value: '100',
+            trend: 'SEO / A11y',
+            trendTone: 'positive',
+            description: 'Audit desktop repasse au vert sur les categories majeures',
+        },
+        {
+            label: 'Themes',
+            value: '3',
+            trend: 'Ready',
+            description: 'Light, dark et system avec tokens semantiques',
+        },
+    ],
+}
+
+export const homeQuickLinksContent = {
+    badge: 'Explore',
+    title: 'Acces rapides vers les zones utiles du starter',
+    description:
+        "La home devient un vrai point d entree pour explorer la base, verifier les composants et consulter les conventions d usage.",
+    items: [
+        {
+            title: 'Showcase',
+            description: 'Parcourir tous les composants individuellement et valider leur rendu.',
+            to: '/showcase',
+            actionLabel: 'Ouvrir le catalogue',
+        },
+        {
+            title: 'Docs UI',
+            description: 'Retrouver les familles, guidelines et recettes d assemblage de la librairie.',
+            to: '/docs',
+            actionLabel: 'Lire la doc',
+        },
+        {
+            title: 'Playground',
+            description: 'Tester les patterns async, les hooks et les comportements de base de l app.',
+            to: '/playground',
+            actionLabel: 'Lancer le playground',
+        },
+    ],
+}
+
+export const homeWorkflowContent = {
+    badge: 'Workflow',
+    title: 'Workflow senior dev, simple a reprendre',
+    description:
+        "Le starter est pense pour avancer vite sans perdre la lisibilite du projet quand il commence a grossir.",
+    steps: [
+        {
+            title: '1. Poser la structure',
+            description: 'Brancher la route, la feature et la page sans reintroduire de logique globale inutile.',
+        },
+        {
+            title: '2. Composer les patterns',
+            description: 'Assembler les primitives et layouts deja presents avant de construire un composant specifique.',
+        },
+        {
+            title: '3. Solidifier',
+            description: 'Ajouter les tests utiles, verifier l accessibilite et garder le design system coherent.',
+        },
+    ],
+}
+
+export const homeFooterContent = {
+    badge: 'Starter guide',
+    title: 'Continuer depuis une base claire',
+    description:
+        "Utilise la home comme hub pour naviguer entre composants, documentation, playground et conventions de travail.",
+    columns: [
+        {
+            title: 'Explorer',
+            links: [
+                { label: 'Catalogue composants', to: '/showcase' },
+                { label: 'Documentation UI', to: '/docs' },
+                { label: 'Playground', to: '/playground' },
+            ],
+        },
+        {
+            title: 'Sections home',
+            links: [
+                { label: 'Tokens', href: '#tokens' },
+                { label: 'Proof', href: '#proof' },
+                { label: 'Patterns', href: '#patterns' },
+            ],
+        },
+        {
+            title: 'Conventions',
+            items: [
+                'Feature-first',
+                'Tokens semantiques',
+                'Tests verts',
+                'A11y par defaut',
+            ],
+        },
+    ],
+}
+
 export const homeCtaContent = {
     title: 'Base prete pour tes prochains projets',
     description:

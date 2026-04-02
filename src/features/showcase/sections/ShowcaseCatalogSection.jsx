@@ -17,6 +17,7 @@ import {
     DropdownMenu,
     Drawer,
     EmptyState,
+    FilterBar,
     FormSection,
     Grid,
     IconButton,
@@ -41,6 +42,7 @@ import {
     Text,
     Textarea,
     Toolbar,
+    Topbar,
     Title,
     Toast,
     Tooltip,
@@ -716,6 +718,60 @@ export function ShowcaseCatalogSection() {
                                 <Button size="sm">Nouveau</Button>
                             </div>
                         }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="Topbar"
+                    description="Barre haute d application pour navigation, contexte workspace et actions globales."
+                >
+                    <Topbar
+                        className="showcase-topbar"
+                        brand={<span>Model App</span>}
+                        navigation={
+                            <div className="cluster showcase-actions-compact">
+                                <Button size="sm" variant="ghost">
+                                    Dashboard
+                                </Button>
+                                <Button size="sm" variant="ghost">
+                                    Docs
+                                </Button>
+                                <Button size="sm" variant="ghost">
+                                    Settings
+                                </Button>
+                            </div>
+                        }
+                        meta={<Badge className="showcase-topbar__badge">Workspace pro</Badge>}
+                        actions={
+                            <div className="cluster showcase-actions-compact">
+                                <IconButton label="Rechercher" variant="ghost">
+                                    <span aria-hidden="true">/</span>
+                                </IconButton>
+                                <Button size="sm">Invite</Button>
+                            </div>
+                        }
+                    />
+                </CatalogCard>
+
+                <CatalogCard
+                    name="FilterBar"
+                    description="Barre de filtres active avec chips, compteur et reset rapide."
+                >
+                    <FilterBar
+                        className="showcase-filter-bar"
+                        leading={
+                            <Input
+                                placeholder="Search in UI library..."
+                                inputClassName="showcase-toolbar__input"
+                            />
+                        }
+                        filters={[
+                            { label: 'Active' },
+                            { label: 'Design system' },
+                            { label: 'Ready' },
+                        ]}
+                        resultsCount={12}
+                        onReset={() => {}}
                     />
                 </CatalogCard>
 

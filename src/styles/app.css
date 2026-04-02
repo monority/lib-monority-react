@@ -163,6 +163,45 @@
         align-items: stretch;
     }
 
+    .home-pattern-card {
+        min-height: 100%;
+    }
+
+    .home-pattern-card__chips {
+        gap: var(--space-2);
+    }
+
+    .home-quick-link-card {
+        min-height: 100%;
+    }
+
+    .home-workflow-card {
+        min-height: 100%;
+    }
+
+    .home-footer-card {
+        min-height: 100%;
+    }
+
+    .home-footer-link {
+        color: var(--text-base);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .home-footer-link:hover,
+    .home-footer-link:focus-visible {
+        color: var(--text-strong);
+    }
+
+    .home-footer-item {
+        padding: 0.7rem 0.85rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        background: var(--bg-control);
+    }
+
     .roadmap-panel {
         min-height: 100%;
         padding: clamp(var(--space-4), 2vw, var(--space-5));
@@ -218,6 +257,43 @@
         width: min(10rem, 100%);
     }
 
+    .docs-chip {
+        text-transform: none;
+        letter-spacing: 0;
+        white-space: normal;
+    }
+
+    .docs-hero-nav {
+        gap: var(--space-2);
+    }
+
+    .docs-prop-row {
+        padding: 0.7rem 0.85rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        background: var(--bg-control);
+    }
+
+    .docs-family-card {
+        min-width: 0;
+    }
+
+    .docs-family-card__chips {
+        gap: var(--space-2);
+    }
+
+    .docs-guideline-card {
+        min-width: 0;
+    }
+
+    .docs-recipe-card {
+        min-width: 0;
+    }
+
+    .docs-recipe-card__chips {
+        gap: var(--space-2);
+    }
+
     .showcase-actions-compact {
         gap: var(--space-2);
     }
@@ -229,9 +305,30 @@
     .showcase-banner,
     .showcase-page-header,
     .showcase-form-section,
-    .showcase-sidebar-layout {
+    .showcase-sidebar-layout,
+    .showcase-topbar {
         width: 100%;
         min-width: 0;
+    }
+
+    .showcase-page-header.ui-page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+
+    .showcase-page-header .ui-page-header__actions {
+        justify-content: flex-start;
+    }
+
+    .showcase-form-section .ui-form-section__header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+
+    .showcase-form-section .ui-form-section__actions {
+        justify-content: flex-start;
     }
 
     .showcase-banner .ui-banner__description,
@@ -258,6 +355,54 @@
 
     .showcase-sidebar-layout .ui-sidebar-layout__sidebar {
         position: static;
+        order: 2;
+    }
+
+    .showcase-sidebar-layout .ui-sidebar-layout__main {
+        order: 1;
+    }
+
+    .showcase-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .showcase-filter-bar .ui-filter-bar__main,
+    .showcase-filter-bar .ui-filter-bar__meta {
+        width: 100%;
+    }
+
+    .showcase-filter-bar .ui-filter-bar__meta {
+        justify-content: space-between;
+    }
+
+    .showcase-topbar.ui-topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+
+    .showcase-topbar .ui-topbar__brand,
+    .showcase-topbar .ui-topbar__navigation,
+    .showcase-topbar .ui-topbar__meta,
+    .showcase-topbar .ui-topbar__actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .showcase-topbar .ui-topbar__navigation,
+    .showcase-topbar .ui-topbar__actions {
+        gap: var(--space-2);
+    }
+
+    .showcase-topbar .ui-topbar__actions > * {
+        flex-shrink: 0;
+    }
+
+    .showcase-topbar__badge {
+        width: fit-content;
+        white-space: normal;
+        text-align: center;
     }
 
     .feature-card {
