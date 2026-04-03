@@ -1,4 +1,5 @@
-import { Section, Text, Title } from '@/components/ui'
+import { Badge, Button, Section, Text, Title } from '@/components/ui'
+import { showcaseSections } from '../content/showcase-content'
 
 export function ShowcaseHeroSection({ content }) {
     return (
@@ -12,6 +13,21 @@ export function ShowcaseHeroSection({ content }) {
             <Text tone="base" size="lg">
                 {content.description}
             </Text>
+            <div className="stack-s content-width">
+                {content.quickFacts.map((item) => (
+                    <Text key={item} tone="base">
+                        {item}
+                    </Text>
+                ))}
+            </div>
+            <div className="cluster docs-hero-nav">
+                {showcaseSections.map((section) => (
+                    <Button key={section.id} as="a" href={`#${section.id}`} variant="subtle" size="sm">
+                        {section.label}
+                    </Button>
+                ))}
+            </div>
+            <Badge className="docs-chip">Catalogue interactif des primitives et patterns UI</Badge>
         </Section>
     )
 }

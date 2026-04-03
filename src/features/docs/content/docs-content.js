@@ -3,6 +3,11 @@ export const docsHeroContent = {
     title: 'Documentation d usage de la librairie UI',
     description:
         "Une page de reference rapide pour comprendre comment utiliser les primitives, les patterns et les conventions du starter sans se limiter a une simple galerie visuelle.",
+    supportingPoints: [
+        'Comprendre les conventions de la librairie avant de composer une page',
+        'Choisir les bons composants selon le niveau de complexite de l interface',
+        'Eviter les erreurs de densite, de priorisation et de feedback',
+    ],
     sections: [
         { label: 'Principes', href: '#principles' },
         { label: 'Patterns', href: '#patterns' },
@@ -10,6 +15,30 @@ export const docsHeroContent = {
         { label: 'Guidelines', href: '#guidelines' },
         { label: 'Recettes', href: '#recipes' },
         { label: 'Reference', href: '#reference' },
+    ],
+}
+
+export const docsGettingStartedContent = {
+    badge: 'Start here',
+    title: 'Comment utiliser cette documentation efficacement',
+    description:
+        "Cette page sert de repere rapide pour choisir un composant, valider une composition de page et garder une interface coherente.",
+    items: [
+        {
+            title: 'Commencer par le besoin',
+            description:
+                'Identifier si tu cherches une action, un champ, un feedback ou un layout avant de choisir un composant.',
+        },
+        {
+            title: 'Valider la densite',
+            description:
+                'Regarder les guidelines et les recettes avant d empiler plusieurs primitives dans un meme espace.',
+        },
+        {
+            title: 'Composer puis tester',
+            description:
+                'Assembler les patterns existants, puis verifier clavier, loading, erreurs et responsive.',
+        },
     ],
 }
 

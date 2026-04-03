@@ -12,6 +12,13 @@ export function DocsHeroSection({ content }) {
             <Text tone="base" size="lg" className="content-width">
                 {content.description}
             </Text>
+            <div className="stack-s content-width">
+                {content.supportingPoints.map((item) => (
+                    <Text key={item} tone="base">
+                        {item}
+                    </Text>
+                ))}
+            </div>
             <div className="cluster docs-hero-nav">
                 {content.sections.map((section) => (
                     <Button

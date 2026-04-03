@@ -3,6 +3,11 @@ export const showcaseHeroContent = {
     title: 'Showcase des composants UI',
     description:
         'Une vitrine claire des primitives du starter, pensee comme une mini doc interne a la shadcn ou Forge UI.',
+    quickFacts: [
+        'Composants individuels pour scanner vite la librairie',
+        'Etats et interactions utiles pour une vraie app produit',
+        'Base de reference pour harmoniser les futures features',
+    ],
 }
 
 export const showcaseSections = [
@@ -37,3 +42,10 @@ export const showcaseSections = [
         description: 'Cards, etats vides, separateurs et layout.',
     },
 ]
+
+export const showcaseBrowseContent = {
+    badge: 'Browse',
+    title: 'Parcours rapide dans le showcase',
+    description:
+        'Utilise cette page comme un catalogue pratique pour retrouver un composant, comprendre son intention et valider son rendu.',
+}

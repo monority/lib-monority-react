@@ -11,6 +11,15 @@ import { ShowcaseSurfacesSection } from './sections/ShowcaseSurfacesSection'
 import { ShowcaseTypographySection } from './sections/ShowcaseTypographySection'
 
 export function ShowcasePage() {
+    const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Showcase des composants UI',
+        description:
+            'Showcase interactif des composants UI du starter pour parcourir les primitives, patterns et etats d interface disponibles.',
+        inLanguage: 'fr-FR',
+    }
+
     return (
         <AppPage
             navigationItems={primaryNavigationItems}
@@ -18,6 +27,7 @@ export function ShowcasePage() {
                 title: 'Showcase composants UI',
                 description:
                     'Showcase interactif des composants UI du starter pour parcourir les primitives, patterns et etats d interface disponibles.',
+                structuredData,
             }}
         >
             <ShowcaseHeroSection content={showcaseHeroContent} />
