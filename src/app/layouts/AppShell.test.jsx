@@ -16,7 +16,7 @@ vi.mock('@/hooks/useToast', () => ({
     useToast,
 }))
 
-function renderAppShell(overrides = {}) {
+function renderAppShell(overrides = {}, navigationItems = []) {
     const pushToast = vi.fn()
     const signOut = vi.fn().mockResolvedValue(undefined)
 
@@ -34,7 +34,12 @@ function renderAppShell(overrides = {}) {
 
     render(
         <MemoryRouter>
-            <AppShell isDark={false} theme="light" onToggleTheme={vi.fn()} navigationItems={[]}>
+            <AppShell
+                isDark={false}
+                theme="light"
+                onToggleTheme={vi.fn()}
+                navigationItems={navigationItems}
+            >
                 <div>Content</div>
             </AppShell>
         </MemoryRouter>,
@@ -97,5 +102,25 @@ describe('AppShell', () => {
                 tone: 'danger',
             })
         })
+    })
+
+    it('regroupe les liens de navigation dans des menus deroulants', () => {
+        renderAppShell(
+            {},
+            [
+                { label: 'Accueil', to: '/' },
+                { label: 'Dashboard', to: '/dashboard' },
+                { label: 'Admin', to: '/admin' },
+                { label: 'Playground', to: '/playground' },
+                { label: 'Showcase', to: '/showcase' },
+                { label: 'Docs', to: '/docs' },
+                { label: 'Features', href: '#features' },
+            ],
+        )
+
+        expect(screen.getByRole('link', { name: 'Accueil' })).toBeInTheDocument()
+        expect(screen.getByText('Produit')).toBeInTheDocument()
+        expect(screen.getByText('Ressources')).toBeInTheDocument()
+        expect(screen.getByText('Sections')).toBeInTheDocument()
     })
 })

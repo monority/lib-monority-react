@@ -22,6 +22,8 @@
 
     .app-header__inner {
         min-height: 5rem;
+        flex-wrap: wrap;
+        gap: var(--space-3);
     }
 
     .app-header__controls,
@@ -47,6 +49,8 @@
 
     .app-nav {
         align-items: center;
+        gap: var(--space-2);
+        flex-wrap: wrap;
         padding: 0.25rem;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
@@ -55,6 +59,11 @@
         color: var(--text-muted);
         font-size: var(--text-sm);
         font-weight: 600;
+    }
+
+    .app-nav__direct {
+        gap: var(--space-1);
+        flex-wrap: wrap;
     }
 
     .app-nav__link {
@@ -71,6 +80,76 @@
     .app-nav__link:hover {
         color: var(--text-strong);
         background: color-mix(in srgb, var(--bg-surface-strong) 92%, transparent);
+    }
+
+    .app-nav__dropdown {
+        position: relative;
+    }
+
+    .app-nav__dropdown[open] .app-nav__trigger,
+    .app-nav__dropdown.is-active .app-nav__trigger {
+        color: var(--text-strong);
+        background: color-mix(in srgb, var(--bg-surface-strong) 92%, transparent);
+    }
+
+    .app-nav__trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 0.85rem;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        list-style: none;
+        transition:
+            color var(--duration-fast) var(--ease-standard),
+            background-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .app-nav__trigger::-webkit-details-marker {
+        display: none;
+    }
+
+    .app-nav__caret {
+        font-size: 0.72rem;
+        transition: transform var(--duration-fast) var(--ease-standard);
+    }
+
+    .app-nav__dropdown[open] .app-nav__caret {
+        transform: rotate(180deg);
+    }
+
+    .app-nav__menu {
+        position: absolute;
+        top: calc(100% + 0.55rem);
+        left: 0;
+        display: grid;
+        gap: 0.3rem;
+        min-width: 13rem;
+        padding: 0.45rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        background: color-mix(in srgb, var(--bg-surface-strong) 96%, transparent);
+        box-shadow: var(--shadow-md);
+    }
+
+    .app-nav__menu-link {
+        display: block;
+        padding: 0.7rem 0.8rem;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        white-space: nowrap;
+        transition:
+            color var(--duration-fast) var(--ease-standard),
+            background-color var(--duration-fast) var(--ease-standard);
+    }
+
+    .app-nav__menu-link:hover,
+    .app-nav__menu-link:focus-visible,
+    .app-nav__menu-link.is-active {
+        color: var(--text-strong);
+        background: var(--bg-control);
     }
 
     .brand {
@@ -576,7 +655,27 @@
         .app-nav {
             width: 100%;
             justify-content: flex-start;
-            overflow-x: auto;
+            overflow: visible;
+        }
+
+        .app-nav__direct {
+            width: 100%;
+        }
+
+        .app-nav__dropdown {
+            width: calc(50% - (var(--space-2) / 2));
+            min-width: min(12rem, 100%);
+        }
+
+        .app-nav__trigger {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .app-nav__menu {
+            left: 0;
+            right: auto;
+            min-width: 100%;
         }
 
         .app-header__controls,
