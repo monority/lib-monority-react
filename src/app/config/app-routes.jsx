@@ -98,6 +98,7 @@ export const homeSectionNavigationItems = [
     { label: 'Checklist', href: '#checklist' },
     { label: 'Workflow', href: '#workflow' },
     { label: 'Explore', href: '#explore' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Roadmap', href: '#roadmap' },
     { label: 'Start', href: '#cta' },
     { label: 'Footer', href: '#footer' },

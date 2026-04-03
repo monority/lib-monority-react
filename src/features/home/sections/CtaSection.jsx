@@ -7,7 +7,7 @@ export function CtaSection({ content }) {
                 {content.title}
             </Title>
             <Text tone="base">{content.description}</Text>
-            <div className="cluster cta-form">
+            <form className="cluster cta-form" onSubmit={(event) => event.preventDefault()}>
                 <Input
                     label={content.inputLabel}
                     type="email"
@@ -15,8 +15,10 @@ export function CtaSection({ content }) {
                     hint={content.inputHint}
                     required
                 />
-                <Button className="cta-form__button">{content.actionLabel}</Button>
-            </div>
+                <Button type="submit" className="cta-form__button">
+                    {content.actionLabel}
+                </Button>
+            </form>
         </Section>
     )
 }

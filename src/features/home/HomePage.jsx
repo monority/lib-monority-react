@@ -7,6 +7,7 @@ import {
     homeCtaContent,
     homeDesignSystemContent,
     homeExamplesContent,
+    homeFaqContent,
     homeFeatureItems,
     homeFooterContent,
     homeHeroContent,
@@ -23,6 +24,7 @@ import { useHomeUI } from './hooks/useHomeUI'
 import { CtaSection } from './sections/CtaSection'
 import { DesignSystemSection } from './sections/DesignSystemSection'
 import { ExamplesSection } from './sections/ExamplesSection'
+import { FaqSection } from './sections/FaqSection'
 import { FeaturesSection } from './sections/FeaturesSection'
 import { FooterSection } from './sections/FooterSection'
 import { HeroSection } from './sections/HeroSection'
@@ -37,12 +39,27 @@ export function HomePage() {
     const { isModalOpen, openModal, closeModal } = useHomeUI()
     const structuredData = {
         '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Model Starter',
-        url: buildAbsoluteUrl('/'),
-        inLanguage: 'fr-FR',
-        description:
-            'Starter frontend React + Vite avec architecture feature-first, design system et base de qualite pour des projets pros.',
+        '@graph': [
+            {
+                '@type': 'WebSite',
+                name: 'Model Starter',
+                url: buildAbsoluteUrl('/'),
+                inLanguage: 'fr-FR',
+                description:
+                    'Starter frontend React + Vite avec architecture feature-first, design system et base de qualite pour des projets pros.',
+            },
+            {
+                '@type': 'FAQPage',
+                mainEntity: homeFaqContent.items.map((item) => ({
+                    '@type': 'Question',
+                    name: item.question,
+                    acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: item.answer,
+                    },
+                })),
+            },
+        ],
     }
 
     return (
@@ -65,6 +82,7 @@ export function HomePage() {
             <ChecklistSection content={homeChecklistContent} />
             <WorkflowSection content={homeWorkflowContent} />
             <QuickLinksSection content={homeQuickLinksContent} />
+            <FaqSection content={homeFaqContent} />
             <RoadmapSection content={homeRoadmapContent} />
             <CtaSection content={homeCtaContent} />
             <FooterSection content={homeFooterContent} />

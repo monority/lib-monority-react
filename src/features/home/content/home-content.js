@@ -213,6 +213,39 @@ export const homeQuickLinksContent = {
     ],
 }
 
+export const homeFaqContent = {
+    badge: 'FAQ',
+    title: 'Questions frequentes avant de repartir de ce starter',
+    description:
+        "Les points les plus utiles a verifier avant de reutiliser la base pour un vrai produit ou une nouvelle mission frontend.",
+    items: [
+        {
+            value: 'faq-architecture',
+            question: 'A qui sert ce starter ?',
+            answer:
+                'A une equipe ou un freelance qui veut demarrer vite sans sacrifier la structure du projet, la qualite UI et la maintenabilite.',
+        },
+        {
+            value: 'faq-production',
+            question: 'Est-ce une simple demo UI ou une vraie base de projet ?',
+            answer:
+                'La base va plus loin qu une demo visuelle: routing, theming, architecture feature-first, composants reutilisables, tests et etats async sont deja poses.',
+        },
+        {
+            value: 'faq-customization',
+            question: 'Que reste-t-il a brancher avant une mise en production ?',
+            answer:
+                'La partie metier: vraies APIs, authentification reelle, analytics, contenu editorial final, URL de production et contraintes specifiques au produit.',
+        },
+        {
+            value: 'faq-seo',
+            question: 'Le SEO est-il deja traite ?',
+            answer:
+                'Oui, la base gere maintenant les metadonnees par page, le canonical, Open Graph, Twitter, robots et un sitemap genere au build.',
+        },
+    ],
+}
+
 export const homeWorkflowContent = {
     badge: 'Workflow',
     title: 'Workflow senior dev, simple a reprendre',
