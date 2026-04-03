@@ -50,8 +50,8 @@ import {
 import { useToast } from '@/hooks/useToast'
 
 const tabItems = [
-    { label: 'Overview', value: 'overview' },
-    { label: 'Preview', value: 'preview' },
+    { label: 'Vue d ensemble', value: 'overview' },
+    { label: 'Apercu', value: 'preview' },
     { label: 'Code', value: 'code' },
 ]
 
@@ -79,19 +79,19 @@ const accordionItems = [
 ]
 
 const tableColumns = [
-    { key: 'feature', header: 'Feature' },
-    { key: 'status', header: 'Status' },
+    { key: 'feature', header: 'Element' },
+    { key: 'status', header: 'Statut' },
     {
         key: 'coverage',
-        header: 'Coverage',
+        header: 'Couverture',
         align: 'right',
     },
 ]
 
 const tableRows = [
     { id: 'routing', feature: 'Routing', status: 'Stable', coverage: '100%' },
-    { id: 'theme', feature: 'Theme system', status: 'Stable', coverage: '100%' },
-    { id: 'ui-kit', feature: 'UI primitives', status: 'Active', coverage: '78%' },
+    { id: 'theme', feature: 'Theme systeme', status: 'Stable', coverage: '100%' },
+    { id: 'ui-kit', feature: 'Primitives UI', status: 'Active', coverage: '78%' },
 ]
 
 const avatarPreviewSrc =
@@ -184,9 +184,9 @@ export function ShowcaseCatalogSection() {
                     description="Action principale, secondaire ou de confirmation."
                 >
                     <div className="cluster">
-                        <Button size="sm">Primary</Button>
+                        <Button size="sm">Principal</Button>
                         <Button size="sm" variant="ghost">
-                            Ghost
+                            Secondaire
                         </Button>
                     </div>
                 </CatalogCard>
@@ -248,7 +248,7 @@ export function ShowcaseCatalogSection() {
                     <Breadcrumb
                         items={[
                             { label: 'Workspace', href: '#' },
-                            { label: 'UI Library', href: '#' },
+                            { label: 'Bibliotheque UI', href: '#' },
                             { label: 'Showcase' },
                         ]}
                     />
@@ -263,9 +263,9 @@ export function ShowcaseCatalogSection() {
 
                 <CatalogCard name="Select" description="Choix parmi plusieurs options.">
                     <Select label="Theme" defaultValue="system">
-                        <option value="system">System</option>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
+                        <option value="system">Systeme</option>
+                        <option value="light">Clair</option>
+                        <option value="dark">Sombre</option>
                     </Select>
                 </CatalogCard>
 
@@ -274,19 +274,19 @@ export function ShowcaseCatalogSection() {
                     description="Recherche et selection dans une liste d options."
                 >
                     <Combobox
-                        label="Owner"
+                        label="Responsable"
                         value={selectedOwner}
                         onChange={setSelectedOwner}
                         items={[
                             {
                                 value: 'alice',
                                 label: 'Alice Martin',
-                                description: 'Design system lead',
+                                description: 'Lead design system',
                             },
                             {
                                 value: 'bruno',
                                 label: 'Bruno Leroy',
-                                description: 'Frontend platform',
+                                description: 'Plateforme frontend',
                             },
                             {
                                 value: 'claire',
@@ -368,7 +368,7 @@ export function ShowcaseCatalogSection() {
                     >
                         <Stack gap="s">
                             <Text tone="strong" size="sm">
-                                Quick actions
+                                Actions rapides
                             </Text>
                             <Text tone="base" size="sm">
                                 Utilise un popover pour garder une action proche de son contexte.
@@ -499,7 +499,7 @@ export function ShowcaseCatalogSection() {
                             variant="ghost"
                             onClick={() =>
                                 pushToast({
-                                    title: 'Toast global',
+                                    title: 'Notification globale',
                                     description: 'Cette notification passe maintenant par le provider.',
                                     tone: 'success',
                                 })
@@ -599,23 +599,23 @@ export function ShowcaseCatalogSection() {
                 >
                     <FormSection
                         className="showcase-form-section"
-                        title="Project settings"
+                        title="Parametres du projet"
                         description="Regroupe les champs, aides et actions dans un bloc plus senior."
                         meta={<Badge>Draft</Badge>}
                         actions={
                             <div className="cluster showcase-actions-compact">
                                 <Button size="sm" variant="ghost">
-                                    Cancel
+                                    Annuler
                                 </Button>
-                                <Button size="sm">Save</Button>
+                                <Button size="sm">Enregistrer</Button>
                             </div>
                         }
                     >
                         <Stack gap="m">
-                            <Input label="Project name" placeholder="Model Starter" />
+                            <Input label="Nom du projet" placeholder="Model Starter" />
                             <Textarea
                                 label="Description"
-                                placeholder="Describe the intent of this project..."
+                                placeholder="Decris ici l intention du projet..."
                             />
                         </Stack>
                     </FormSection>
@@ -653,9 +653,9 @@ export function ShowcaseCatalogSection() {
                 >
                     <DataList
                         items={[
-                            { label: 'Owner', value: 'Alice Martin' },
-                            { label: 'Status', value: <Badge>Stable</Badge> },
-                            { label: 'Coverage', value: '100%' },
+                            { label: 'Responsable', value: 'Alice Martin' },
+                            { label: 'Statut', value: <Badge>Stable</Badge> },
+                            { label: 'Couverture', value: '100%' },
                         ]}
                     />
                 </CatalogCard>
@@ -687,7 +687,7 @@ export function ShowcaseCatalogSection() {
                         actions={
                             <div className="cluster showcase-actions-compact">
                                 <Button size="sm" variant="ghost">
-                                    Preview
+                                    Apercu
                                 </Button>
                                 <Button size="sm">Publier</Button>
                             </div>
@@ -737,7 +737,7 @@ export function ShowcaseCatalogSection() {
                                     Docs
                                 </Button>
                                 <Button size="sm" variant="ghost">
-                                    Settings
+                                    Parametres
                                 </Button>
                             </div>
                         }
@@ -747,7 +747,7 @@ export function ShowcaseCatalogSection() {
                                 <IconButton label="Rechercher" variant="ghost">
                                     <span aria-hidden="true">/</span>
                                 </IconButton>
-                                <Button size="sm">Invite</Button>
+                                <Button size="sm">Inviter</Button>
                             </div>
                         }
                     />
@@ -761,14 +761,14 @@ export function ShowcaseCatalogSection() {
                         className="showcase-filter-bar"
                         leading={
                             <Input
-                                placeholder="Search in UI library..."
+                                placeholder="Rechercher dans la librairie UI..."
                                 inputClassName="showcase-toolbar__input"
                             />
                         }
                         filters={[
                             { label: 'Active' },
                             { label: 'Design system' },
-                            { label: 'Ready' },
+                            { label: 'Pret' },
                         ]}
                         resultsCount={12}
                         onReset={() => {}}
@@ -780,15 +780,15 @@ export function ShowcaseCatalogSection() {
                     description="Carte KPI pour dashboard, overview produit ou recap equipe."
                 >
                     <StatCard
-                        label="Release velocity"
+                        label="Vitesse de release"
                         value="24"
                         trend="+12%"
                         trendTone="positive"
-                        description="Deploys this month"
+                        description="Deploys ce mois-ci"
                         icon={<span>↗</span>}
                         footer={
                             <Text tone="muted" size="sm">
-                                Compared with last month
+                                Compare au mois dernier
                             </Text>
                         }
                     />
@@ -802,23 +802,23 @@ export function ShowcaseCatalogSection() {
                         className="showcase-metric-grid"
                         items={[
                             {
-                                label: 'Components',
+                                label: 'Composants',
                                 value: '40+',
                                 trend: '+8',
                                 trendTone: 'positive',
-                                description: 'Primitives and patterns',
+                                description: 'Primitives et patterns',
                             },
                             {
-                                label: 'Coverage',
+                                label: 'Couverture',
                                 value: '100%',
                                 trend: 'Stable',
-                                description: 'Core build checks',
+                                description: 'Checks critiques du build',
                             },
                             {
                                 label: 'Themes',
                                 value: '3',
-                                trend: 'Ready',
-                                description: 'Light, dark, system',
+                                trend: 'Pret',
+                                description: 'Clair, sombre, systeme',
                             },
                         ]}
                     />
@@ -836,19 +836,19 @@ export function ShowcaseCatalogSection() {
                                     General
                                 </Button>
                                 <Button size="sm" variant="ghost" fullWidth>
-                                    Members
+                                    Membres
                                 </Button>
                                 <Button size="sm" variant="ghost" fullWidth>
-                                    Billing
+                                    Facturation
                                 </Button>
                             </Stack>
                         }
                         header={
                             <PageHeader
                                 className="showcase-page-header"
-                                title="Workspace settings"
+                                title="Parametres du workspace"
                                 description="Exemple de page structuree avec navigation laterale."
-                                actions={<Button size="sm">Save changes</Button>}
+                                actions={<Button size="sm">Enregistrer</Button>}
                             />
                         }
                     >
@@ -858,8 +858,8 @@ export function ShowcaseCatalogSection() {
                             description="Ajuste ici les options principales de ton workspace."
                         >
                             <Stack gap="m">
-                                <Input label="Workspace name" placeholder="Model Studio" />
-                                <Switch label="Enable activity digest" defaultChecked />
+                                <Input label="Nom du workspace" placeholder="Model Studio" />
+                                <Switch label="Activer le digest d activite" defaultChecked />
                             </Stack>
                         </FormSection>
                     </SidebarLayout>
@@ -881,7 +881,7 @@ export function ShowcaseCatalogSection() {
                 >
                     <Stack gap="s">
                         <Title as="h4" size="sm">
-                            Heading
+                            Titre
                         </Title>
                         <Text tone="base" size="sm">
                             Texte courant pour decrire une zone produit.

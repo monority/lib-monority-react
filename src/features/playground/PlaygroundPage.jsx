@@ -25,7 +25,7 @@ export function PlaygroundPage() {
             }}
         >
             <PlaygroundHeroSection content={playgroundHeroContent} />
-            <Divider label="Feature blueprint" />
+            <Divider label="Blueprint de feature" />
             <PlaygroundChecklistSection items={playgroundChecklistItems} />
             <PlaygroundMetricsSection
                 metrics={data}

@@ -1,5 +1,5 @@
 export const showcaseHeroContent = {
-    eyebrow: 'Component Library',
+    eyebrow: 'Bibliotheque UI',
     title: 'Showcase des composants UI',
     description:
         'Une vitrine claire des primitives du starter, pensee comme une mini doc interne a la shadcn ou Forge UI.',
@@ -19,7 +19,7 @@ export const showcaseSections = [
     },
     {
         id: 'typography',
-        label: 'Typography',
+        label: 'Typographie',
         title: 'Typographie et contenu',
         description: 'Titres, textes et hierarchie de lecture.',
     },
@@ -31,7 +31,7 @@ export const showcaseSections = [
     },
     {
         id: 'forms',
-        label: 'Forms',
+        label: 'Formulaires',
         title: 'Champs et saisie',
         description: 'Inputs, selects et textareas coherents.',
     },
@@ -44,7 +44,7 @@ export const showcaseSections = [
 ]
 
 export const showcaseBrowseContent = {
-    badge: 'Browse',
+    badge: 'Parcours',
     title: 'Parcours rapide dans le showcase',
     description:
         'Utilise cette page comme un catalogue pratique pour retrouver un composant, comprendre son intention et valider son rendu.',

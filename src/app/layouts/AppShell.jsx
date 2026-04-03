@@ -193,7 +193,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                                     {user?.name} / {user?.role}
                                 </span>
                                 <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                                    Sign out
+                                    Se deconnecter
                                 </Button>
                             </div>
                         ) : (
@@ -206,10 +206,10 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                             variant="ghost"
                             size="sm"
                             onClick={onToggleTheme}
-                            aria-label={`Theme: ${theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'} - activer le theme ${nextThemeLabel}`}
+                            aria-label={`Theme: ${theme === 'system' ? 'Systeme' : isDark ? 'Sombre' : 'Clair'} - activer le theme ${nextThemeLabel === 'dark' ? 'sombre' : 'clair'}`}
                             aria-pressed={isDark}
                         >
-                            Theme: {theme === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}
+                            Theme: {theme === 'system' ? 'Systeme' : isDark ? 'Sombre' : 'Clair'}
                         </Button>
                     </div>
                 </Container>

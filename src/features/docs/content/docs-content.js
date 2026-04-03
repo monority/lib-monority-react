@@ -19,7 +19,7 @@ export const docsHeroContent = {
 }
 
 export const docsGettingStartedContent = {
-    badge: 'Start here',
+    badge: 'Commencer ici',
     title: 'Comment utiliser cette documentation efficacement',
     description:
         "Cette page sert de repere rapide pour choisir un composant, valider une composition de page et garder une interface coherente.",

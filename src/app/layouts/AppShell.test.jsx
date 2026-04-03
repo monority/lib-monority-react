@@ -57,7 +57,7 @@ describe('AppShell', () => {
     it('declenche un toast de succes apres la deconnexion', async () => {
         const { pushToast, signOut } = renderAppShell()
 
-        fireEvent.click(screen.getByRole('button', { name: 'Sign out' }))
+        fireEvent.click(screen.getByRole('button', { name: 'Se deconnecter' }))
 
         await waitFor(() => {
             expect(signOut).toHaveBeenCalledTimes(1)
@@ -76,7 +76,7 @@ describe('AppShell', () => {
             signOut: vi.fn().mockRejectedValue(error),
         })
 
-        fireEvent.click(screen.getByRole('button', { name: 'Sign out' }))
+        fireEvent.click(screen.getByRole('button', { name: 'Se deconnecter' }))
 
         await waitFor(() => {
             expect(pushToast).toHaveBeenCalledWith({
