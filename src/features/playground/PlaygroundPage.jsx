@@ -16,7 +16,14 @@ export function PlaygroundPage() {
     })
 
     return (
-        <AppPage navigationItems={primaryNavigationItems}>
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            seo={{
+                title: 'Playground de feature',
+                description:
+                    'Playground reutilisable pour tester des patterns de feature, des hooks et des metriques dans une architecture feature-first.',
+            }}
+        >
             <PlaygroundHeroSection content={playgroundHeroContent} />
             <Divider label="Feature blueprint" />
             <PlaygroundChecklistSection items={playgroundChecklistItems} />

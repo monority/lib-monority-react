@@ -19,7 +19,14 @@ import { DocsRecipesSection } from './sections/DocsRecipesSection'
 
 export function DocsPage() {
     return (
-        <AppPage navigationItems={primaryNavigationItems}>
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            seo={{
+                title: 'Documentation UI',
+                description:
+                    'Documentation d usage de la librairie UI du starter: principes, familles de composants, guidelines et recettes de composition.',
+            }}
+        >
             <DocsHeroSection content={docsHeroContent} />
             <DocsPrinciplesSection items={docsPrinciples} />
             <DocsPatternsSection items={docsApiPatterns} />

@@ -5,7 +5,15 @@ import { Button, Section, Text, Title } from '@/components/ui'
 
 export function NotFoundPage() {
     return (
-        <AppPage navigationItems={primaryNavigationItems} containerSize="md">
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            containerSize="md"
+            seo={{
+                title: 'Page introuvable',
+                description: 'La page demandee est introuvable sur Model Starter.',
+                robots: 'noindex,nofollow',
+            }}
+        >
             <Section spacing="lg" className="stack-l">
                 <div className="surface not-found stack-m">
                     <Text className="eyebrow" tone="strong">

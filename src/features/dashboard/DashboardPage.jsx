@@ -14,7 +14,14 @@ export function DashboardPage() {
     })
 
     return (
-        <AppPage navigationItems={primaryNavigationItems}>
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            seo={{
+                title: 'Dashboard de demonstration',
+                description:
+                    'Exemple de dashboard produit avec KPI, alertes, tableau et etats asynchrones accessibles dans le starter.',
+            }}
+        >
             <AsyncStateNotice
                 isLoading={isLoading}
                 isError={isError}

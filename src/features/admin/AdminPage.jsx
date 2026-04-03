@@ -14,7 +14,14 @@ export function AdminPage() {
     })
 
     return (
-        <AppPage navigationItems={primaryNavigationItems}>
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            seo={{
+                title: 'Espace admin de demonstration',
+                description:
+                    'Exemple de page admin avec filtres, tableau, indicateurs lateraux et gestion des etats de chargement ou d erreur.',
+            }}
+        >
             <AsyncStateNotice
                 isLoading={isLoading}
                 isError={isError}

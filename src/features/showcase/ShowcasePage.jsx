@@ -12,7 +12,14 @@ import { ShowcaseTypographySection } from './sections/ShowcaseTypographySection'
 
 export function ShowcasePage() {
     return (
-        <AppPage navigationItems={primaryNavigationItems}>
+        <AppPage
+            navigationItems={primaryNavigationItems}
+            seo={{
+                title: 'Showcase composants UI',
+                description:
+                    'Showcase interactif des composants UI du starter pour parcourir les primitives, patterns et etats d interface disponibles.',
+            }}
+        >
             <ShowcaseHeroSection content={showcaseHeroContent} />
             <ShowcaseCatalogSection />
             <ShowcaseTypographySection />

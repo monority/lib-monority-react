@@ -19,6 +19,21 @@ npm run lint
 npm run build
 ```
 
+## SEO
+
+Le starter gere maintenant un SEO de base par page.
+
+- `src/app/seo/usePageSeo.js` pilote le `title`, la `description`, le canonical, Open Graph, Twitter et `robots`
+- `src/app/layouts/AppPage.jsx` centralise l'appel pour toutes les pages qui utilisent le shell global
+- `public/robots.txt` sert de base statique pour l'indexation
+- `vite.config.js` genere automatiquement `sitemap.xml` au build a partir de `VITE_SITE_URL`
+
+Pour une URL de production correcte, definir `VITE_SITE_URL` avant le build.
+
+```bash
+VITE_SITE_URL=https://ton-domaine.example
+```
+
 ## Architecture
 
 ```text

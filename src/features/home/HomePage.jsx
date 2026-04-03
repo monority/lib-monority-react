@@ -1,5 +1,6 @@
 import { AppPage } from '@/app/layouts/AppPage'
 import { homeSectionNavigationItems, primaryNavigationItems } from '@/app/config/navigation'
+import { buildAbsoluteUrl } from '@/app/seo/site-config'
 import { Modal, Text } from '@/components/ui'
 import {
     homeChecklistContent,
@@ -34,9 +35,26 @@ import { WhySection } from './sections/WhySection'
 
 export function HomePage() {
     const { isModalOpen, openModal, closeModal } = useHomeUI()
+    const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Model Starter',
+        url: buildAbsoluteUrl('/'),
+        inLanguage: 'fr-FR',
+        description:
+            'Starter frontend React + Vite avec architecture feature-first, design system et base de qualite pour des projets pros.',
+    }
 
     return (
-        <AppPage navigationItems={[...primaryNavigationItems, ...homeSectionNavigationItems]}>
+        <AppPage
+            navigationItems={[...primaryNavigationItems, ...homeSectionNavigationItems]}
+            seo={{
+                title: 'Starter frontend React + Vite',
+                description:
+                    'Starter frontend React + Vite avec architecture feature-first, design system, dark mode, tests et patterns UI reutilisables.',
+                structuredData,
+            }}
+        >
             <HeroSection content={homeHeroContent} onOpenModal={openModal} />
             <FeaturesSection items={homeFeatureItems} />
             <WhySection content={homeWhyContent} />
