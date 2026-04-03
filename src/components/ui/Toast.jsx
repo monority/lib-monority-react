@@ -8,8 +8,10 @@ const toneClassName = {
 }
 
 export function Toast({ title, description, tone = 'neutral', className, onClose }) {
+    const role = tone === 'danger' ? 'alert' : 'status'
+
     return (
-        <div className={cn('ui-toast', toneClassName[tone], className)} role="status">
+        <div className={cn('ui-toast', toneClassName[tone], className)} role={role} aria-live="polite">
             <div className="stack-s">
                 <div className="ui-toast__header">
                     <strong className="ui-toast__title">{title}</strong>

@@ -1,6 +1,7 @@
 import { AppPage } from '@/app/layouts/AppPage'
 import { primaryNavigationItems } from '@/app/config/navigation'
 import { Divider, Text } from '@/components/ui'
+import { useErrorToast } from '@/hooks/useErrorToast'
 import { playgroundChecklistItems, playgroundHeroContent } from './content/playground-content'
 import { usePlaygroundMetrics } from './hooks/usePlaygroundMetrics'
 import { PlaygroundChecklistSection } from './sections/PlaygroundChecklistSection'
@@ -9,6 +10,10 @@ import { PlaygroundMetricsSection } from './sections/PlaygroundMetricsSection'
 
 export function PlaygroundPage() {
     const { data, errorMessage, isError, isLoading } = usePlaygroundMetrics()
+    useErrorToast({
+        title: 'Playground indisponible',
+        errorMessage: isError ? errorMessage : null,
+    })
 
     return (
         <AppPage navigationItems={primaryNavigationItems}>

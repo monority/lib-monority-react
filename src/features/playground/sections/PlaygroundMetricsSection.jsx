@@ -1,4 +1,4 @@
-import { AsyncStateNotice, Card, Grid, Section, Text, Title } from '@/components/ui'
+import { AsyncStateNotice, Card, Grid, Section, Skeleton, Text, Title } from '@/components/ui'
 
 export function PlaygroundMetricsSection({ metrics, isLoading, isError, errorMessage }) {
     return (
@@ -16,6 +16,7 @@ export function PlaygroundMetricsSection({ metrics, isLoading, isError, errorMes
                 isError={isError}
                 loadingMessage="Chargement des metriques de demonstration..."
                 errorMessage={errorMessage}
+                loadingContent={<PlaygroundMetricsSkeleton />}
             />
 
             {metrics?.length ? (
@@ -34,5 +35,20 @@ export function PlaygroundMetricsSection({ metrics, isLoading, isError, errorMes
                 </Grid>
             ) : null}
         </Section>
+    )
+}
+
+function PlaygroundMetricsSkeleton() {
+    return (
+        <Grid cols={3} gap="md" aria-hidden="true">
+            {Array.from({ length: 3 }, (_, index) => (
+                <Card key={`playground-skeleton-${index}`} padding="sm" className="stack-s">
+                    <Skeleton style={{ width: '8rem', height: '1rem' }} />
+                    <Skeleton style={{ width: '6rem', height: '1.75rem' }} />
+                    <Skeleton style={{ width: '100%', height: '1rem' }} />
+                    <Skeleton style={{ width: '80%', height: '1rem' }} />
+                </Card>
+            ))}
+        </Grid>
     )
 }
