@@ -34,10 +34,13 @@ src/
   features/
     home/
     playground/
+    dashboard/
+    admin/
   hooks/
   lib/
   styles/
   assets/
+  services/
 ```
 
 ## Regles de structure
@@ -50,6 +53,7 @@ src/
 - `lib/`: helpers bas niveau sans logique d'interface
 - `config/`: constantes et configuration partagee
 - `styles/`: couches globales CSS (`tokens`, `base`, `utilities`, `components`, `app`)
+- `services/`: infrastructure partagee pour HTTP, auth et normalisation des erreurs
 
 ## Regles de qualite
 
@@ -77,7 +81,7 @@ src/features/ma-feature/
 
 Convention :
 
-- `content/` pour le texte, les donnees de demo et les constantes de composition
+- `content/` pour le texte, les constantes editoriales et la composition statique
 - `hooks/` pour l'etat local de la feature
 - `services/` pour les appels reseau et la transformation liee a la feature
 - `sections/` pour les blocs JSX lisibles et ciblables en test
@@ -93,10 +97,12 @@ Pattern recommande pour une feature qui charge des donnees :
 
 ```text
 features/ma-feature/
-  content/
   hooks/
     useMaFeatureData.js
   services/
+    maFeatureApi.js
+    maFeatureData.js
+    maFeatureMappers.js
     maFeatureService.js
   sections/
   MaFeaturePage.jsx
@@ -104,10 +110,25 @@ features/ma-feature/
 
 Regle pratique :
 
-- `services/` encapsule l'acces aux donnees
+- `services/*Api.js` decrit le contrat de requete et les messages d'erreur
+- `services/*Data.js` contient les payloads mock ou fixtures de demonstration
+- `services/*Mappers.js` adapte le format transport au format UI
+- `services/*Service.js` compose `apiClient`, les fixtures et les mappers
 - `hooks/` gere l'etat async et l'orchestration React
-- `sections/` ne recoit que des props prêtes a afficher
+- `sections/` ne recoit que des props pretes a afficher
 - `lib/` contient les helpers generiques reutilisables partout
+
+Quand plusieurs features partagent le meme cycle de chargement, preferer un hook partage
+dans `src/hooks/` plutot que de dupliquer `useEffect` et `useReducer`.
+
+## Services partages
+
+Les briques communes de la couche data vivent dans `src/services/`.
+
+- `services/http/` contient le client HTTP, les erreurs et les helpers de normalisation
+- `services/auth/` contient les contrats et mappers lies a l'authentification
+- `hooks/useAsyncResource.js` mutualise le chargement async simple pour les features
+- `components/ui/AsyncStateNotice.jsx` mutualise le rendu `loading/error`
 
 ## Theming
 
@@ -123,4 +144,5 @@ Le theme supporte `light`, `dark` et `system`.
 - theme `light | dark | system`
 - routing applicatif avec page `NotFound`
 - base de tests avec Vitest
-- exemple concret de feature reusable avec `home/` et `playground/`
+- exemples data-driven avec `playground/`, `dashboard/` et `admin/`
+- couche service mock structuree autour de `api`, `data`, `mappers` et `service`

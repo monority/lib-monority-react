@@ -1,5 +1,6 @@
 export { Accordion } from './Accordion'
 export { AlertDialog } from './AlertDialog'
+export { AsyncStateNotice } from './AsyncStateNotice'
 export { Avatar } from './Avatar'
 export { Badge } from './Badge'
 export { Banner } from './Banner'

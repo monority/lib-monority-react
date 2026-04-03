@@ -1,4 +1,4 @@
-import { Card, Grid, Section, Text, Title } from '@/components/ui'
+import { AsyncStateNotice, Card, Grid, Section, Text, Title } from '@/components/ui'
 
 export function PlaygroundMetricsSection({ metrics, isLoading, isError, errorMessage }) {
     return (
@@ -11,11 +11,12 @@ export function PlaygroundMetricsSection({ metrics, isLoading, isError, errorMes
                 logique reseau, l&apos;etat async et le rendu.
             </Text>
 
-            {isLoading ? (
-                <Text tone="base">Chargement des metriques de demonstration...</Text>
-            ) : null}
-
-            {isError ? <Text tone="strong">{errorMessage}</Text> : null}
+            <AsyncStateNotice
+                isLoading={isLoading}
+                isError={isError}
+                loadingMessage="Chargement des metriques de demonstration..."
+                errorMessage={errorMessage}
+            />
 
             {metrics?.length ? (
                 <Grid cols={3} gap="md">
