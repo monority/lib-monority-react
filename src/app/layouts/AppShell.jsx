@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Button, Container } from '@/components/ui'
+import { Button, Container, Drawer } from '@/components/ui'
 import { useAuth } from '@/hooks/useAuth'
 import { useErrorToast } from '@/hooks/useErrorToast'
 import { useToast } from '@/hooks/useToast'
@@ -62,6 +63,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
     const { user, workspace, isAuthenticated, isLoading, signOut, errorMessage } = useAuth()
     const { pushToast } = useToast()
     const location = useLocation()
+    const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false)
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
     const { directItems, groupedItems } = buildNavigationStructure(navigationItems)
 
@@ -164,6 +166,16 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                         ))}
                     </nav>
 
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="app-nav-toggle"
+                        onClick={() => setIsMobileNavigationOpen(true)}
+                        aria-label="Ouvrir le menu principal"
+                    >
+                        Menu
+                    </Button>
+
                     <div className="cluster app-header__controls">
                         {isLoading ? (
                             <span className="app-session-chip">Session...</span>
@@ -197,6 +209,80 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                     </div>
                 </Container>
             </header>
+
+            <Drawer
+                open={isMobileNavigationOpen}
+                title="Navigation"
+                onClose={() => setIsMobileNavigationOpen(false)}
+            >
+                <div className="stack-s">
+                    <div className="stack-xs">
+                        {directItems.map((item) =>
+                            item.to ? (
+                                <NavLink
+                                    key={item.label}
+                                    to={item.to}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? 'app-mobile-nav__link is-active'
+                                            : 'app-mobile-nav__link'
+                                    }
+                                    onClick={() => setIsMobileNavigationOpen(false)}
+                                >
+                                    {item.label}
+                                </NavLink>
+                            ) : (
+                                <a
+                                    key={item.label}
+                                    className="app-mobile-nav__link"
+                                    href={item.href}
+                                    onClick={() => setIsMobileNavigationOpen(false)}
+                                >
+                                    {item.label}
+                                </a>
+                            ),
+                        )}
+                    </div>
+
+                    {groupedItems.map((group) => (
+                        <div key={group.label} className="stack-xs">
+                            <span className="app-mobile-nav__eyebrow">{group.label}</span>
+                            <div className="stack-xs">
+                                {group.items.map((item) =>
+                                    item.to ? (
+                                        <NavLink
+                                            key={item.label}
+                                            to={item.to}
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'app-mobile-nav__link is-active'
+                                                    : 'app-mobile-nav__link'
+                                            }
+                                            onClick={() => setIsMobileNavigationOpen(false)}
+                                        >
+                                            {item.label}
+                                        </NavLink>
+                                    ) : (
+                                        <a
+                                            key={item.label}
+                                            className={cn(
+                                                'app-mobile-nav__link',
+                                                location.pathname === '/' &&
+                                                    location.hash === item.href &&
+                                                    'is-active',
+                                            )}
+                                            href={item.href}
+                                            onClick={() => setIsMobileNavigationOpen(false)}
+                                        >
+                                            {item.label}
+                                        </a>
+                                    ),
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </Drawer>
 
             <main>{children}</main>
         </div>

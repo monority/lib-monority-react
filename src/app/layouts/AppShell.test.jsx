@@ -123,4 +123,20 @@ describe('AppShell', () => {
         expect(screen.getByText('Ressources')).toBeInTheDocument()
         expect(screen.getByText('Sections')).toBeInTheDocument()
     })
+
+    it('ouvre une navigation mobile dans un drawer', () => {
+        renderAppShell(
+            {},
+            [
+                { label: 'Accueil', to: '/' },
+                { label: 'Dashboard', to: '/dashboard' },
+                { label: 'Docs', to: '/docs' },
+            ],
+        )
+
+        fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le menu principal' }))
+
+        expect(screen.getByRole('dialog', { name: 'Navigation' })).toBeInTheDocument()
+        expect(screen.getAllByText('Dashboard')[0]).toBeInTheDocument()
+    })
 })
