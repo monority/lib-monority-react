@@ -20,6 +20,26 @@
         backdrop-filter: blur(20px);
     }
 
+    .app-skip-link {
+        position: absolute;
+        top: 0.75rem;
+        left: 1rem;
+        z-index: calc(var(--z-elevated) + 1);
+        padding: 0.7rem 0.9rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        background: var(--bg-surface-strong);
+        color: var(--text-strong);
+        font-weight: 700;
+        transform: translateY(-150%);
+        transition: transform var(--duration-fast) var(--ease-standard);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .app-skip-link:focus {
+        transform: translateY(0);
+    }
+
     .app-header__inner {
         min-height: 5rem;
         flex-wrap: wrap;

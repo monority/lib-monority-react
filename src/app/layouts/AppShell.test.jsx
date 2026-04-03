@@ -124,6 +124,16 @@ describe('AppShell', () => {
         expect(screen.getByText('Sections')).toBeInTheDocument()
     })
 
+    it('expose un skip link vers le contenu principal', () => {
+        renderAppShell()
+
+        expect(screen.getByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute(
+            'href',
+            '#main-content',
+        )
+        expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
+    })
+
     it('ouvre une navigation mobile dans un drawer', () => {
         renderAppShell(
             {},

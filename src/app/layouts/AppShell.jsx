@@ -91,6 +91,10 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
 
     return (
         <div className="app-shell">
+            <a className="app-skip-link" href="#main-content">
+                Aller au contenu principal
+            </a>
+
             <header className="app-header">
                 <Container size="lg" className="cluster between app-header__inner">
                     <Link className="brand" to="/" aria-label="Model starter">
@@ -288,7 +292,9 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                 </div>
             </Drawer>
 
-            <main>{children}</main>
+            <main id="main-content" tabIndex={-1}>
+                {children}
+            </main>
         </div>
     )
 }
