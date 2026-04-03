@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from 'react'
 import { asyncStatus, createAsyncState } from '@/lib/createAsyncState'
+import { getErrorMessage, isAbortError } from '@/services/http/httpErrorUtils'
 import { getPlaygroundMetrics } from '../services/playgroundService'
 
 function reducer(state, action) {
@@ -36,8 +37,8 @@ export function usePlaygroundMetrics() {
                 const data = await getPlaygroundMetrics({ signal: controller.signal })
                 dispatch({ type: 'load/success', payload: data })
             } catch (error) {
-                if (error.name !== 'AbortError') {
-                    dispatch({ type: 'load/error', payload: error.message })
+                if (!isAbortError(error)) {
+                    dispatch({ type: 'load/error', payload: error })
                 }
             }
         }
@@ -55,5 +56,6 @@ export function usePlaygroundMetrics() {
         isLoading: state.status === asyncStatus.loading,
         isSuccess: state.status === asyncStatus.success,
         isError: state.status === asyncStatus.error,
+        errorMessage: getErrorMessage(state.error),
     }
 }

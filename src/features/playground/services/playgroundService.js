@@ -1,10 +1,14 @@
 import { apiClient } from '@/services/http/apiClient'
-import { playgroundMetricsData } from '../content/playground-metrics'
+import { playgroundApi } from './playgroundApi'
+import { playgroundMetricsData } from './playgroundMetricsData'
+import { mapPlaygroundMetricsResponse } from './playgroundMappers'
 
 export async function getPlaygroundMetrics({ signal } = {}) {
-    return apiClient.request({
+    const metrics = await apiClient.request({
+        ...playgroundApi.metrics,
         data: playgroundMetricsData,
         signal,
-        errorMessage: 'Impossible de charger les metriques du playground.',
     })
+
+    return mapPlaygroundMetricsResponse(metrics)
 }

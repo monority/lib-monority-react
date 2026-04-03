@@ -7,7 +7,7 @@ function getNavigationLinkClassName({ isActive }) {
 }
 
 export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], children }) {
-    const { user, workspace, isAuthenticated, isLoading, signOut } = useAuth()
+    const { user, workspace, isAuthenticated, isLoading, signOut, errorMessage } = useAuth()
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
 
     return (
@@ -48,7 +48,9 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                                 </Button>
                             </div>
                         ) : (
-                            <span className="app-session-chip">Mode demo</span>
+                            <span className="app-session-chip">
+                                {errorMessage ? 'Mode demo indisponible' : 'Mode demo'}
+                            </span>
                         )}
 
                         <Button

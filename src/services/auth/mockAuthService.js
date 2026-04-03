@@ -1,29 +1,22 @@
-import { fakeHttpClient } from '@/services/http/fakeHttpClient'
-
-const mockSession = {
-    user: {
-        id: 'user-1',
-        name: 'Alice Martin',
-        email: 'alice@model.app',
-        role: 'Admin',
-    },
-    workspace: {
-        id: 'workspace-1',
-        name: 'Model Workspace',
-        plan: 'Pro',
-    },
-}
+import { apiClient } from '@/services/http/apiClient'
+import { authApi } from '@/services/auth/authApi'
+import { mapSessionResponse } from '@/services/auth/authMappers'
+import { mockSession } from '@/services/auth/mockSession'
 
 export async function fetchMockSession({ signal } = {}) {
-    return fakeHttpClient({
+    const session = await apiClient.request({
+        ...authApi.session,
         data: mockSession,
         delay: 180,
         signal,
     })
+
+    return mapSessionResponse(session)
 }
 
 export async function signOutMockSession({ signal } = {}) {
-    return fakeHttpClient({
+    return apiClient.request({
+        ...authApi.signOut,
         data: { success: true },
         delay: 140,
         signal,

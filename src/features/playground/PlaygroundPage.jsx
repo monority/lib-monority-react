@@ -8,7 +8,7 @@ import { PlaygroundHeroSection } from './sections/PlaygroundHeroSection'
 import { PlaygroundMetricsSection } from './sections/PlaygroundMetricsSection'
 
 export function PlaygroundPage() {
-    const { data, error, isError, isLoading } = usePlaygroundMetrics()
+    const { data, errorMessage, isError, isLoading } = usePlaygroundMetrics()
 
     return (
         <AppPage navigationItems={primaryNavigationItems}>
@@ -19,7 +19,7 @@ export function PlaygroundPage() {
                 metrics={data}
                 isLoading={isLoading}
                 isError={isError}
-                errorMessage={error}
+                errorMessage={errorMessage}
             />
             <SectionNote />
         </AppPage>

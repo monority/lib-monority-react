@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchMockSession, signOutMockSession } from '@/services/auth/mockAuthService'
+import { getErrorMessage, isAbortError } from '@/services/http/httpErrorUtils'
 import { AuthContext } from './auth-context'
 
 export function AuthProvider({ children }) {
     const [session, setSession] = useState(null)
     const [status, setStatus] = useState('loading')
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         const controller = new AbortController()
@@ -14,11 +16,13 @@ export function AuthProvider({ children }) {
                 const nextSession = await fetchMockSession({ signal: controller.signal })
                 setSession(nextSession)
                 setStatus('authenticated')
+                setError(null)
             } catch (error) {
-                if (error?.name === 'AbortError') {
+                if (isAbortError(error)) {
                     return
                 }
 
+                setError(error)
                 setStatus('anonymous')
             }
         }
@@ -37,8 +41,9 @@ export function AuthProvider({ children }) {
             await signOutMockSession({ signal: controller.signal })
             setSession(null)
             setStatus('anonymous')
+            setError(null)
         } catch (error) {
-            if (error?.name !== 'AbortError') {
+            if (!isAbortError(error)) {
                 throw error
             }
         }
@@ -50,11 +55,13 @@ export function AuthProvider({ children }) {
             user: session?.user ?? null,
             workspace: session?.workspace ?? null,
             status,
+            error,
+            errorMessage: getErrorMessage(error),
             isAuthenticated: status === 'authenticated',
             isLoading: status === 'loading',
             signOut,
         }),
-        [session, signOut, status],
+        [error, session, signOut, status],
     )
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
