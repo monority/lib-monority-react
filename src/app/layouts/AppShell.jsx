@@ -1,6 +1,8 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Button, Container } from '@/components/ui'
 import { useAuth } from '@/hooks/useAuth'
+import { useErrorToast } from '@/hooks/useErrorToast'
+import { useToast } from '@/hooks/useToast'
 
 function getNavigationLinkClassName({ isActive }) {
     return isActive ? 'app-nav__link is-active' : 'app-nav__link'
@@ -8,7 +10,29 @@ function getNavigationLinkClassName({ isActive }) {
 
 export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], children }) {
     const { user, workspace, isAuthenticated, isLoading, signOut, errorMessage } = useAuth()
+    const { pushToast } = useToast()
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
+    useErrorToast({
+        title: 'Session demo indisponible',
+        errorMessage,
+    })
+
+    async function handleSignOut() {
+        try {
+            await signOut()
+            pushToast({
+                title: 'Session fermee',
+                description: 'La deconnexion de demonstration a ete effectuee.',
+                tone: 'success',
+            })
+        } catch (error) {
+            pushToast({
+                title: 'Deconnexion impossible',
+                description: error?.message ?? 'Une erreur est survenue pendant la deconnexion.',
+                tone: 'danger',
+            })
+        }
+    }
 
     return (
         <div className="app-shell">
@@ -43,7 +67,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                                 <span className="app-session-chip">
                                     {user?.name} · {user?.role}
                                 </span>
-                                <Button variant="ghost" size="sm" onClick={signOut}>
+                                <Button variant="ghost" size="sm" onClick={handleSignOut}>
                                     Sign out
                                 </Button>
                             </div>

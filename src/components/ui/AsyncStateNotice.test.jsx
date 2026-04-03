@@ -14,6 +14,7 @@ describe('AsyncStateNotice', () => {
         )
 
         expect(screen.getByText('Chargement en cours')).toBeInTheDocument()
+        expect(screen.getByRole('status')).toHaveAttribute('aria-busy', 'true')
     })
 
     it('affiche le message d erreur quand le chargement est termine', () => {
@@ -27,6 +28,22 @@ describe('AsyncStateNotice', () => {
         )
 
         expect(screen.getByText('Erreur')).toBeInTheDocument()
+        expect(screen.getByRole('alert')).toBeInTheDocument()
+    })
+
+    it('affiche un rendu de chargement personnalise quand il est fourni', () => {
+        render(
+            <AsyncStateNotice
+                isLoading
+                isError={false}
+                loadingMessage="Chargement en cours"
+                errorMessage="Erreur"
+                loadingContent={<div>Skeleton custom</div>}
+            />,
+        )
+
+        expect(screen.getByText('Skeleton custom')).toBeInTheDocument()
+        expect(screen.getByText('Chargement en cours')).toHaveClass('visually-hidden')
     })
 
     it('n affiche rien en etat neutre', () => {
