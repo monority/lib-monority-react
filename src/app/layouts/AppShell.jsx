@@ -122,6 +122,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                             >
                                 <summary className="app-nav__trigger">
                                     <span>{group.label}</span>
+                                    <span className="app-nav__count">{group.items.length}</span>
                                     <span className="app-nav__caret" aria-hidden="true">
                                         v
                                     </span>
@@ -245,8 +246,11 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                     </div>
 
                     {groupedItems.map((group) => (
-                        <div key={group.label} className="stack-xs">
-                            <span className="app-mobile-nav__eyebrow">{group.label}</span>
+                        <div key={group.label} className="stack-xs app-mobile-nav__group">
+                            <div className="cluster between app-mobile-nav__group-header">
+                                <span className="app-mobile-nav__eyebrow">{group.label}</span>
+                                <span className="app-mobile-nav__count">{group.items.length}</span>
+                            </div>
                             <div className="stack-xs">
                                 {group.items.map((item) =>
                                     item.to ? (

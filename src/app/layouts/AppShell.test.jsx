@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AppShell } from './AppShell'
@@ -136,7 +136,29 @@ describe('AppShell', () => {
 
         fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le menu principal' }))
 
-        expect(screen.getByRole('dialog', { name: 'Navigation' })).toBeInTheDocument()
-        expect(screen.getAllByText('Dashboard')[0]).toBeInTheDocument()
+        const dialog = screen.getByRole('dialog', { name: 'Navigation' })
+
+        expect(dialog).toBeInTheDocument()
+        expect(within(dialog).getByText('Dashboard')).toBeInTheDocument()
+    })
+
+    it('referme le drawer mobile apres une navigation', async () => {
+        renderAppShell(
+            {},
+            [
+                { label: 'Accueil', to: '/' },
+                { label: 'Dashboard', to: '/dashboard' },
+                { label: 'Docs', to: '/docs' },
+            ],
+        )
+
+        fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le menu principal' }))
+
+        const dialog = screen.getByRole('dialog', { name: 'Navigation' })
+        fireEvent.click(within(dialog).getByText('Dashboard'))
+
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', { name: 'Navigation' })).not.toBeInTheDocument()
+        })
     })
 })

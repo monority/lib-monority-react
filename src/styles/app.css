@@ -115,6 +115,22 @@
         display: none;
     }
 
+    .app-nav__count,
+    .app-mobile-nav__count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.35rem;
+        min-height: 1.35rem;
+        padding-inline: 0.35rem;
+        border-radius: var(--radius-full);
+        background: color-mix(in srgb, var(--text-strong) 10%, transparent);
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
     .app-nav__caret {
         font-size: 0.72rem;
         transition: transform var(--duration-fast) var(--ease-standard);
@@ -162,6 +178,14 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+    }
+
+    .app-mobile-nav__group {
+        padding-top: var(--space-1);
+    }
+
+    .app-mobile-nav__group-header {
+        align-items: center;
     }
 
     .app-mobile-nav__link {
