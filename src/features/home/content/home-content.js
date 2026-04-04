@@ -186,6 +186,33 @@ export const homeMetricsContent = {
     ],
 }
 
+export const homeReleaseNotesContent = {
+    badge: 'Release notes',
+    title: 'Ce que le starter sait deja faire aujourd hui',
+    description:
+        "Une vue courte et concrete des fondations deja livrees pour aider a evaluer si la base est assez mature pour ton prochain projet.",
+    items: [
+        {
+            version: 'v0.1',
+            title: 'Shell, theming et navigation',
+            summary:
+                'Theme clair, sombre et systeme, navigation rangee, header plus lisible et experience mobile via drawer.',
+        },
+        {
+            version: 'v0.2',
+            title: 'Etats async et feedback',
+            summary:
+                'Skeletons, erreurs asynchrones centralisees et toasts plus robustes sur les pages principales.',
+        },
+        {
+            version: 'v0.3',
+            title: 'SEO et structure de contenu',
+            summary:
+                'Metadonnees par page, sitemap genere au build, manifest, FAQ home et parcours de lecture mieux structures.',
+        },
+    ],
+}
+
 export const homeQuickLinksContent = {
     badge: 'Explore',
     title: 'Acces rapides vers les zones utiles du starter',
@@ -209,6 +236,18 @@ export const homeQuickLinksContent = {
             description: 'Tester les patterns async, les hooks et les comportements de base de l app.',
             to: '/playground',
             actionLabel: 'Lancer le playground',
+        },
+        {
+            title: 'Dashboard',
+            description: 'Voir une page de pilotage deja composee avec KPI, alertes et table.',
+            to: '/dashboard',
+            actionLabel: 'Ouvrir le dashboard',
+        },
+        {
+            title: 'Admin',
+            description: 'Parcourir une page admin avec filtres, table et etats de chargement.',
+            to: '/admin',
+            actionLabel: 'Ouvrir l admin',
         },
     ],
 }

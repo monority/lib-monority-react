@@ -15,6 +15,7 @@ import {
     homeModalContent,
     homePatternsContent,
     homeQuickLinksContent,
+    homeReleaseNotesContent,
     homeRoadmapContent,
     homeWorkflowContent,
     homeWhyContent,
@@ -31,6 +32,7 @@ import { HeroSection } from './sections/HeroSection'
 import { MetricsSection } from './sections/MetricsSection'
 import { PatternsSection } from './sections/PatternsSection'
 import { QuickLinksSection } from './sections/QuickLinksSection'
+import { ReleaseNotesSection } from './sections/ReleaseNotesSection'
 import { RoadmapSection } from './sections/RoadmapSection'
 import { WorkflowSection } from './sections/WorkflowSection'
 import { WhySection } from './sections/WhySection'
@@ -77,6 +79,7 @@ export function HomePage() {
             <WhySection content={homeWhyContent} />
             <DesignSystemSection content={homeDesignSystemContent} />
             <MetricsSection content={homeMetricsContent} />
+            <ReleaseNotesSection content={homeReleaseNotesContent} />
             <PatternsSection content={homePatternsContent} />
             <ExamplesSection content={homeExamplesContent} />
             <ChecklistSection content={homeChecklistContent} />

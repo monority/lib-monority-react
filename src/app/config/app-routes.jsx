@@ -93,6 +93,7 @@ export const homeSectionNavigationItems = [
     { label: 'Why', href: '#why' },
     { label: 'Tokens', href: '#tokens' },
     { label: 'Proof', href: '#proof' },
+    { label: 'Notes', href: '#proof-notes' },
     { label: 'Patterns', href: '#patterns' },
     { label: 'Examples', href: '#examples' },
     { label: 'Checklist', href: '#checklist' },
