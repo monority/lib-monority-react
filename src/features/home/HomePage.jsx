@@ -15,6 +15,7 @@ import {
     homeMetricsContent,
     homeModalContent,
     homePatternsContent,
+    homeProductionReadinessContent,
     homeQuickLinksContent,
     homeReleaseNotesContent,
     homeRoadmapContent,
@@ -33,6 +34,7 @@ import { FooterSection } from './sections/FooterSection'
 import { HeroSection } from './sections/HeroSection'
 import { MetricsSection } from './sections/MetricsSection'
 import { PatternsSection } from './sections/PatternsSection'
+import { ProductionReadinessSection } from './sections/ProductionReadinessSection'
 import { QuickLinksSection } from './sections/QuickLinksSection'
 import { ReleaseNotesSection } from './sections/ReleaseNotesSection'
 import { RoadmapSection } from './sections/RoadmapSection'
@@ -85,6 +87,7 @@ export function HomePage() {
             <EntryPointsSection content={homeEntryPointsContent} />
             <PatternsSection content={homePatternsContent} />
             <ExamplesSection content={homeExamplesContent} />
+            <ProductionReadinessSection content={homeProductionReadinessContent} />
             <ChecklistSection content={homeChecklistContent} />
             <WorkflowSection content={homeWorkflowContent} />
             <QuickLinksSection content={homeQuickLinksContent} />

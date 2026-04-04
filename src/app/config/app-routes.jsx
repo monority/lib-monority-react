@@ -97,6 +97,7 @@ export const homeSectionNavigationItems = [
     { label: 'Parcours', href: '#entry-points' },
     { label: 'Patterns', href: '#patterns' },
     { label: 'Examples', href: '#examples' },
+    { label: 'Prod', href: '#production-readiness' },
     { label: 'Checklist', href: '#checklist' },
     { label: 'Workflow', href: '#workflow' },
     { label: 'Explore', href: '#explore' },

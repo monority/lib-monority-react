@@ -184,6 +184,25 @@ export const homeChecklistContent = {
     ],
 }
 
+export const homeProductionReadinessContent = {
+    badge: 'Avant la prod',
+    title: 'Ce qui est pret, ce qui reste a brancher',
+    description:
+        "Une vue honnete pour evaluer rapidement si la base suffit a lancer ton prochain projet ou s il faut encore poser quelques briques critiques.",
+    readyItems: [
+        'Architecture feature-first et navigation deja structurees',
+        'Theme clair, sombre et systeme deja branches',
+        'Composants UI, patterns de page et feedback de base disponibles',
+        'Lint, build, tests et base SEO deja en place',
+    ],
+    remainingItems: [
+        'Brancher la vraie URL de production via `VITE_SITE_URL`',
+        'Connecter auth, API, analytics et erreurs metier reelles',
+        'Verifier les flows critiques sur les donnees de production',
+        'Adapter le contenu editorial, les integrations et les contraintes du produit',
+    ],
+}
+
 export const homeMetricsContent = {
     badge: 'Proof',
     title: 'Starter pret pour du vrai travail produit',
