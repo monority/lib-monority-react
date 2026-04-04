@@ -119,9 +119,9 @@ describe('AppShell', () => {
         )
 
         expect(screen.getByRole('link', { name: 'Accueil' })).toBeInTheDocument()
-        expect(screen.getByText('Produit')).toBeInTheDocument()
-        expect(screen.getByText('Ressources')).toBeInTheDocument()
-        expect(screen.getByText('Sections')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /Produit/ })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /Ressources/ })).toBeInTheDocument()
+        expect(screen.queryByText('Sections')).not.toBeInTheDocument()
     })
 
     it('expose un skip link vers le contenu principal', () => {

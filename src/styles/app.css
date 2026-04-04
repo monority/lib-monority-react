@@ -110,7 +110,7 @@
         position: relative;
     }
 
-    .app-nav__dropdown[open] .app-nav__trigger,
+    .app-nav__dropdown.is-open .app-nav__trigger,
     .app-nav__dropdown.is-active .app-nav__trigger {
         color: var(--text-strong);
         background: color-mix(in srgb, var(--bg-surface-strong) 92%, transparent);
@@ -121,18 +121,16 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 0.85rem;
+        border: none;
         border-radius: var(--radius-sm);
+        background: none;
         color: var(--text-muted);
+        font: inherit;
         cursor: pointer;
-        list-style: none;
         transition:
             color var(--duration-fast) var(--ease-standard),
             background-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
-    }
-
-    .app-nav__trigger::-webkit-details-marker {
-        display: none;
     }
 
     .app-nav__count,
@@ -152,11 +150,11 @@
     }
 
     .app-nav__caret {
-        font-size: 0.72rem;
+        flex-shrink: 0;
         transition: transform var(--duration-fast) var(--ease-standard);
     }
 
-    .app-nav__dropdown[open] .app-nav__caret {
+    .app-nav__dropdown.is-open .app-nav__caret {
         transform: rotate(180deg);
     }
 

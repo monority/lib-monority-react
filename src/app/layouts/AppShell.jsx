@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Button, Container, Drawer } from '@/components/ui'
 import { useAuth } from '@/hooks/useAuth'
@@ -64,6 +64,8 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
     const { pushToast } = useToast()
     const location = useLocation()
     const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false)
+    const [openGroup, setOpenGroup] = useState(null)
+    const navRef = useRef(null)
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
     const { directItems, groupedItems } = buildNavigationStructure(navigationItems)
 
@@ -71,6 +73,33 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
         title: 'Session demo indisponible',
         errorMessage,
     })
+
+    useEffect(() => {
+        function handlePointerDown(event) {
+            if (navRef.current && !navRef.current.contains(event.target)) {
+                setOpenGroup(null)
+            }
+        }
+        function handleKeyDown(event) {
+            if (event.key === 'Escape') {
+                setOpenGroup(null)
+            }
+        }
+        document.addEventListener('pointerdown', handlePointerDown)
+        document.addEventListener('keydown', handleKeyDown)
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown)
+            document.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [])
+
+    useEffect(() => {
+        setOpenGroup(null)
+    }, [location.pathname, location.hash])
+
+    function toggleGroup(label) {
+        setOpenGroup((prev) => (prev === label ? null : label))
+    }
 
     async function handleSignOut() {
         try {
@@ -101,7 +130,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                         Model Starter
                     </Link>
 
-                    <nav className="cluster app-nav" aria-label="Navigation principale">
+                    <nav ref={navRef} className="cluster app-nav" aria-label="Navigation principale">
                         <div className="cluster app-nav__direct">
                             {directItems.map((item) =>
                                 item.to ? (
@@ -116,59 +145,78 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                             )}
                         </div>
 
-                        {groupedItems.map((group) => (
-                            <details
-                                key={group.label}
-                                className={cn(
-                                    'app-nav__dropdown',
-                                    isGroupActive(group.items, location) && 'is-active',
-                                )}
-                            >
-                                <summary className="app-nav__trigger">
-                                    <span>{group.label}</span>
-                                    <span className="app-nav__count">{group.items.length}</span>
-                                    <span className="app-nav__caret" aria-hidden="true">
-                                        v
-                                    </span>
-                                </summary>
+                        {groupedItems
+                            .filter((group) => group.items.some((item) => item.to))
+                            .map((group) => (
+                                <div
+                                    key={group.label}
+                                    className={cn(
+                                        'app-nav__dropdown',
+                                        openGroup === group.label && 'is-open',
+                                        isGroupActive(group.items, location) && 'is-active',
+                                    )}
+                                >
+                                    <button
+                                        className="app-nav__trigger"
+                                        onClick={() => toggleGroup(group.label)}
+                                        aria-expanded={openGroup === group.label}
+                                        aria-haspopup="true"
+                                    >
+                                        <span>{group.label}</span>
+                                        <span className="app-nav__count">{group.items.length}</span>
+                                        <svg
+                                            className="app-nav__caret"
+                                            aria-hidden="true"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 12 12"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M2.5 4.5L6 8L9.5 4.5"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
 
-                                <div className="app-nav__menu">
-                                    {group.items.map((item) =>
-                                        item.to ? (
-                                            <NavLink
-                                                key={item.label}
-                                                to={item.to}
-                                                className={({ isActive }) =>
-                                                    isActive
-                                                        ? 'app-nav__menu-link is-active'
-                                                        : 'app-nav__menu-link'
-                                                }
-                                            >
-                                                {item.label}
-                                            </NavLink>
-                                        ) : (
-                                            <a
-                                                key={item.label}
-                                                className={cn(
-                                                    'app-nav__menu-link',
-                                                    location.pathname === '/' &&
-                                                        location.hash === item.href &&
-                                                        'is-active',
-                                                )}
-                                                href={item.href}
-                                                onClick={(event) => {
-                                                    event.currentTarget
-                                                        .closest('details')
-                                                        ?.removeAttribute('open')
-                                                }}
-                                            >
-                                                {item.label}
-                                            </a>
-                                        ),
+                                    {openGroup === group.label && (
+                                        <div className="app-nav__menu">
+                                            {group.items.map((item) =>
+                                                item.to ? (
+                                                    <NavLink
+                                                        key={item.label}
+                                                        to={item.to}
+                                                        className={({ isActive }) =>
+                                                            isActive
+                                                                ? 'app-nav__menu-link is-active'
+                                                                : 'app-nav__menu-link'
+                                                        }
+                                                    >
+                                                        {item.label}
+                                                    </NavLink>
+                                                ) : (
+                                                    <a
+                                                        key={item.label}
+                                                        className={cn(
+                                                            'app-nav__menu-link',
+                                                            location.pathname === '/' &&
+                                                                location.hash === item.href &&
+                                                                'is-active',
+                                                        )}
+                                                        href={item.href}
+                                                        onClick={() => setOpenGroup(null)}
+                                                    >
+                                                        {item.label}
+                                                    </a>
+                                                ),
+                                            )}
+                                        </div>
                                     )}
                                 </div>
-                            </details>
-                        ))}
+                            ))}
                     </nav>
 
                     <Button
