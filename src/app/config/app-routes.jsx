@@ -94,6 +94,7 @@ export const homeSectionNavigationItems = [
     { label: 'Tokens', href: '#tokens' },
     { label: 'Proof', href: '#proof' },
     { label: 'Notes', href: '#proof-notes' },
+    { label: 'Parcours', href: '#entry-points' },
     { label: 'Patterns', href: '#patterns' },
     { label: 'Examples', href: '#examples' },
     { label: 'Checklist', href: '#checklist' },

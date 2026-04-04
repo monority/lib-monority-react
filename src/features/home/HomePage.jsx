@@ -6,6 +6,7 @@ import {
     homeChecklistContent,
     homeCtaContent,
     homeDesignSystemContent,
+    homeEntryPointsContent,
     homeExamplesContent,
     homeFaqContent,
     homeFeatureItems,
@@ -24,6 +25,7 @@ import { ChecklistSection } from './sections/ChecklistSection'
 import { useHomeUI } from './hooks/useHomeUI'
 import { CtaSection } from './sections/CtaSection'
 import { DesignSystemSection } from './sections/DesignSystemSection'
+import { EntryPointsSection } from './sections/EntryPointsSection'
 import { ExamplesSection } from './sections/ExamplesSection'
 import { FaqSection } from './sections/FaqSection'
 import { FeaturesSection } from './sections/FeaturesSection'
@@ -80,6 +82,7 @@ export function HomePage() {
             <DesignSystemSection content={homeDesignSystemContent} />
             <MetricsSection content={homeMetricsContent} />
             <ReleaseNotesSection content={homeReleaseNotesContent} />
+            <EntryPointsSection content={homeEntryPointsContent} />
             <PatternsSection content={homePatternsContent} />
             <ExamplesSection content={homeExamplesContent} />
             <ChecklistSection content={homeChecklistContent} />

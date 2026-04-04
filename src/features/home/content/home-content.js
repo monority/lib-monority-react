@@ -122,6 +122,39 @@ export const homeExamplesContent = {
     ],
 }
 
+export const homeEntryPointsContent = {
+    badge: 'Choisir sa page',
+    title: 'Ou aller selon le besoin du moment',
+    description:
+        "Quand on decouvre le starter, le plus utile est souvent de savoir quelle page ouvre le bon niveau de detail ou de preuve.",
+    items: [
+        {
+            title: 'Verifier la qualite UI',
+            description: 'Commence par le showcase pour scanner rapidement les composants et leurs etats.',
+            destination: '/showcase',
+            actionLabel: 'Explorer le showcase',
+        },
+        {
+            title: 'Comprendre les conventions',
+            description: 'Passe par la doc UI pour comprendre les patterns, guidelines et recettes de composition.',
+            destination: '/docs',
+            actionLabel: 'Lire la documentation',
+        },
+        {
+            title: 'Voir un cas d usage concret',
+            description: 'Ouvre le dashboard ou l admin pour voir la base en situation sur des pages plus produit.',
+            destination: '/dashboard',
+            actionLabel: 'Voir le dashboard',
+        },
+        {
+            title: 'Tester les patterns async',
+            description: 'Le playground montre comment brancher les hooks, les etats et la composition de feature.',
+            destination: '/playground',
+            actionLabel: 'Lancer le playground',
+        },
+    ],
+}
+
 export const homeChecklistContent = {
     badge: 'Checklist',
     title: 'Checklist de lancement rapide',
