@@ -206,6 +206,16 @@
         align-items: center;
     }
 
+    .app-mobile-nav__actions {
+        padding-top: var(--space-3);
+        border-top: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
+    }
+
+    .app-mobile-nav__button {
+        width: 100%;
+        justify-content: center;
+    }
+
     .app-mobile-nav__link {
         display: block;
         padding: 0.85rem 0.95rem;
@@ -736,11 +746,8 @@
             display: inline-flex;
         }
 
-        .app-header__controls,
-        .app-session {
-            width: 100%;
-            justify-content: flex-start;
-            flex-wrap: wrap;
+        .app-header__controls {
+            display: none;
         }
 
         .hero-split {

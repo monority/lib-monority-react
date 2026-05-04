@@ -68,6 +68,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
     const navRef = useRef(null)
     const nextThemeLabel = theme === 'system' ? 'dark' : isDark ? 'light' : 'dark'
     const { directItems, groupedItems } = buildNavigationStructure(navigationItems)
+    const closeMobileNavigation = () => setIsMobileNavigationOpen(false)
 
     useErrorToast({
         title: 'Session demo indisponible',
@@ -95,6 +96,10 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
 
     useEffect(() => {
         setOpenGroup(null)
+    }, [location.pathname, location.hash])
+
+    useEffect(() => {
+        setIsMobileNavigationOpen(false)
     }, [location.pathname, location.hash])
 
     function toggleGroup(label) {
@@ -145,86 +150,85 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                             )}
                         </div>
 
-                        {groupedItems
-                            .filter((group) => group.items.some((item) => item.to))
-                            .map((group) => (
-                                <div
-                                    key={group.label}
-                                    className={cn(
-                                        'app-nav__dropdown',
-                                        openGroup === group.label && 'is-open',
-                                        isGroupActive(group.items, location) && 'is-active',
-                                    )}
+                        {groupedItems.map((group) => (
+                            <div
+                                key={group.label}
+                                className={cn(
+                                    'app-nav__dropdown',
+                                    openGroup === group.label && 'is-open',
+                                    isGroupActive(group.items, location) && 'is-active',
+                                )}
+                            >
+                                <button
+                                    className="app-nav__trigger"
+                                    onClick={() => toggleGroup(group.label)}
+                                    aria-expanded={openGroup === group.label}
+                                    aria-haspopup="true"
                                 >
-                                    <button
-                                        className="app-nav__trigger"
-                                        onClick={() => toggleGroup(group.label)}
-                                        aria-expanded={openGroup === group.label}
-                                        aria-haspopup="true"
+                                    <span>{group.label}</span>
+                                    <span className="app-nav__count">{group.items.length}</span>
+                                    <svg
+                                        className="app-nav__caret"
+                                        aria-hidden="true"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
                                     >
-                                        <span>{group.label}</span>
-                                        <span className="app-nav__count">{group.items.length}</span>
-                                        <svg
-                                            className="app-nav__caret"
-                                            aria-hidden="true"
-                                            width="12"
-                                            height="12"
-                                            viewBox="0 0 12 12"
-                                            fill="none"
-                                        >
-                                            <path
-                                                d="M2.5 4.5L6 8L9.5 4.5"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </button>
+                                        <path
+                                            d="M2.5 4.5L6 8L9.5 4.5"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </button>
 
-                                    {openGroup === group.label && (
-                                        <div className="app-nav__menu">
-                                            {group.items.map((item) =>
-                                                item.to ? (
-                                                    <NavLink
-                                                        key={item.label}
-                                                        to={item.to}
-                                                        className={({ isActive }) =>
-                                                            isActive
-                                                                ? 'app-nav__menu-link is-active'
-                                                                : 'app-nav__menu-link'
-                                                        }
-                                                    >
-                                                        {item.label}
-                                                    </NavLink>
-                                                ) : (
-                                                    <a
-                                                        key={item.label}
-                                                        className={cn(
-                                                            'app-nav__menu-link',
-                                                            location.pathname === '/' &&
-                                                                location.hash === item.href &&
-                                                                'is-active',
-                                                        )}
-                                                        href={item.href}
-                                                        onClick={() => setOpenGroup(null)}
-                                                    >
-                                                        {item.label}
-                                                    </a>
-                                                ),
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                {openGroup === group.label && (
+                                    <div className="app-nav__menu">
+                                        {group.items.map((item) =>
+                                            item.to ? (
+                                                <NavLink
+                                                    key={item.label}
+                                                    to={item.to}
+                                                    className={({ isActive }) =>
+                                                        isActive
+                                                            ? 'app-nav__menu-link is-active'
+                                                            : 'app-nav__menu-link'
+                                                    }
+                                                >
+                                                    {item.label}
+                                                </NavLink>
+                                            ) : (
+                                                <a
+                                                    key={item.label}
+                                                    className={cn(
+                                                        'app-nav__menu-link',
+                                                        location.pathname === '/' &&
+                                                            location.hash === item.href &&
+                                                            'is-active',
+                                                    )}
+                                                    href={item.href}
+                                                    onClick={() => setOpenGroup(null)}
+                                                >
+                                                    {item.label}
+                                                </a>
+                                            ),
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                     </nav>
 
                     <Button
                         variant="ghost"
                         size="sm"
                         className="app-nav-toggle"
-                        onClick={() => setIsMobileNavigationOpen(true)}
-                        aria-label="Ouvrir le menu principal"
+                        onClick={() => setIsMobileNavigationOpen((prev) => !prev)}
+                        aria-label={isMobileNavigationOpen ? 'Fermer le menu principal' : 'Ouvrir le menu principal'}
+                        aria-expanded={isMobileNavigationOpen}
                     >
                         Menu
                     </Button>
@@ -266,10 +270,11 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
             <Drawer
                 open={isMobileNavigationOpen}
                 title="Navigation"
-                onClose={() => setIsMobileNavigationOpen(false)}
+                onClose={closeMobileNavigation}
             >
-                <div className="stack-s">
+                <div className="stack-m">
                     <div className="stack-xs">
+                        <span className="app-mobile-nav__eyebrow">Navigation</span>
                         {directItems.map((item) =>
                             item.to ? (
                                 <NavLink
@@ -280,7 +285,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                                             ? 'app-mobile-nav__link is-active'
                                             : 'app-mobile-nav__link'
                                     }
-                                    onClick={() => setIsMobileNavigationOpen(false)}
+                                    onClick={closeMobileNavigation}
                                 >
                                     {item.label}
                                 </NavLink>
@@ -289,7 +294,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                                     key={item.label}
                                     className="app-mobile-nav__link"
                                     href={item.href}
-                                    onClick={() => setIsMobileNavigationOpen(false)}
+                                    onClick={closeMobileNavigation}
                                 >
                                     {item.label}
                                 </a>
@@ -337,6 +342,41 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                             </div>
                         </div>
                     ))}
+
+                    <div className="stack-xs app-mobile-nav__group app-mobile-nav__actions">
+                        <span className="app-mobile-nav__eyebrow">Compte</span>
+
+                        {isLoading ? (
+                            <span className="app-session-chip">Session...</span>
+                        ) : isAuthenticated ? (
+                            <div className="stack-xs">
+                                <span className="app-session-chip">
+                                    {workspace?.name} / {workspace?.plan}
+                                </span>
+                                <span className="app-session-chip">
+                                    {user?.name} / {user?.role}
+                                </span>
+                                <Button variant="ghost" size="sm" onClick={handleSignOut} className="app-mobile-nav__button">
+                                    Se deconnecter
+                                </Button>
+                            </div>
+                        ) : (
+                            <span className="app-session-chip">
+                                {errorMessage ? 'Mode demo indisponible' : 'Mode demo'}
+                            </span>
+                        )}
+
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={onToggleTheme}
+                            aria-label={`Theme: ${theme === 'system' ? 'Systeme' : isDark ? 'Sombre' : 'Clair'} - activer le theme ${nextThemeLabel === 'dark' ? 'sombre' : 'clair'}`}
+                            aria-pressed={isDark}
+                            className="app-mobile-nav__button"
+                        >
+                            Theme: {theme === 'system' ? 'Systeme' : isDark ? 'Sombre' : 'Clair'}
+                        </Button>
+                    </div>
                 </div>
             </Drawer>
 

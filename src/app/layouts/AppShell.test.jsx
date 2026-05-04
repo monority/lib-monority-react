@@ -121,7 +121,7 @@ describe('AppShell', () => {
         expect(screen.getByRole('link', { name: 'Accueil' })).toBeInTheDocument()
         expect(screen.getByRole('button', { name: /Produit/ })).toBeInTheDocument()
         expect(screen.getByRole('button', { name: /Ressources/ })).toBeInTheDocument()
-        expect(screen.queryByText('Sections')).not.toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /Sections/ })).toBeInTheDocument()
     })
 
     it('expose un skip link vers le contenu principal', () => {
@@ -150,6 +150,8 @@ describe('AppShell', () => {
 
         expect(dialog).toBeInTheDocument()
         expect(within(dialog).getByText('Dashboard')).toBeInTheDocument()
+        expect(within(dialog).getByRole('button', { name: /Theme:/ })).toBeInTheDocument()
+        expect(within(dialog).getByRole('button', { name: 'Se deconnecter' })).toBeInTheDocument()
     })
 
     it('referme le drawer mobile apres une navigation', async () => {

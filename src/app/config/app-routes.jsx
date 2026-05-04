@@ -22,17 +22,6 @@ const appRouteDefinitions = [
         includeInPrimaryNavigation: true,
     },
     {
-        key: 'admin',
-        label: 'Admin',
-        path: '/admin',
-        lazy: async () => {
-            const module = await import('@/features/admin/AdminPage')
-
-            return { Component: module.AdminPage }
-        },
-        includeInPrimaryNavigation: true,
-    },
-    {
         key: 'playground',
         label: 'Playground',
         path: '/playground',
@@ -44,13 +33,13 @@ const appRouteDefinitions = [
         includeInPrimaryNavigation: true,
     },
     {
-        key: 'showcase',
-        label: 'Showcase',
-        path: '/showcase',
+        key: 'admin',
+        label: 'Admin',
+        path: '/admin',
         lazy: async () => {
-            const module = await import('@/features/showcase/ShowcasePage')
+            const module = await import('@/features/admin/AdminPage')
 
-            return { Component: module.ShowcasePage }
+            return { Component: module.AdminPage }
         },
         includeInPrimaryNavigation: true,
     },
@@ -62,6 +51,17 @@ const appRouteDefinitions = [
             const module = await import('@/features/docs/DocsPage')
 
             return { Component: module.DocsPage }
+        },
+        includeInPrimaryNavigation: true,
+    },
+    {
+        key: 'showcase',
+        label: 'Showcase',
+        path: '/showcase',
+        lazy: async () => {
+            const module = await import('@/features/showcase/ShowcasePage')
+
+            return { Component: module.ShowcasePage }
         },
         includeInPrimaryNavigation: true,
     },
