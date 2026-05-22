@@ -1,37 +1,40 @@
 {
-  "name": "model-app",
+  "name": "monority",
+  "version": "0.0.1",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tooling/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@fontsource-variable/geist": "^5.2.8",
-    "@fontsource-variable/geist-mono": "^5.2.7",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.2"
+    "dev": "pnpm --filter @monority/web dev",
+    "dev:docs": "pnpm --filter @monority/docs dev",
+    "build": "turbo run build",
+    "build:ui": "pnpm --filter @monority/ui build",
+    "build:web": "pnpm --filter @monority/web build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "turbo run typecheck",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "turbo run build && changeset publish",
+    "generate:component": "pnpm --filter @monority/generators generate:component",
+    "validate": "node tooling/scripts/validate.js"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "jsdom": "^29.0.1",
-    "vite": "^8.0.1",
-    "vitest": "^4.1.2"
+    "@biomejs/biome": "^1.9.0",
+    "@changesets/cli": "^2.27.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20"
   }
 }

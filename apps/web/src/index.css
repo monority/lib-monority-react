@@ -1,0 +1,6 @@
+/* Import styles from @monority/ui package */
+@import '@monority/ui/index.css';
+
+@import './docs/index.css';
+
+/* App-specific styles (if any) */

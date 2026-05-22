@@ -1,0 +1,12 @@
+﻿{
+  "name": "@monority/generators",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "generate-component": "./scripts/generate-component.js"
+  },
+  "scripts": {
+    "generate:component": "node scripts/generate-component.js"
+  }
+}

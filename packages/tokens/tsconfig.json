@@ -1,0 +1,8 @@
+{
+  "extends": "@monority/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "resolveJsonModule": true
+  },
+  "include": ["src"]
+}

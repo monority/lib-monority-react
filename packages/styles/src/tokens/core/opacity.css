@@ -1,0 +1,13 @@
+:root {
+  --ui-opacity-0: 0;
+  --ui-opacity-10: 0.1;
+  --ui-opacity-20: 0.2;
+  --ui-opacity-30: 0.3;
+  --ui-opacity-40: 0.4;
+  --ui-opacity-50: 0.5;
+  --ui-opacity-60: 0.6;
+  --ui-opacity-70: 0.7;
+  --ui-opacity-80: 0.8;
+  --ui-opacity-90: 0.9;
+  --ui-opacity-100: 1;
+}

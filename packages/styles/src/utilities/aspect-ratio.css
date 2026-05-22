@@ -1,0 +1,3 @@
+.aspect-square { aspect-ratio: var(--ui-aspect-square); }
+.aspect-video { aspect-ratio: var(--ui-aspect-video); }
+.aspect-landscape { aspect-ratio: var(--ui-asport-landscape); }

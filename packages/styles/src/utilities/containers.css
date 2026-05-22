@@ -1,0 +1,8 @@
+.container-sm, .container, .container-md, .container-lg, .container-fluid { width: 100%; margin-inline: auto; }
+.container-sm { max-width: var(--ui-container-sm); }
+.container, .container-md { max-width: var(--ui-container-md); }
+.container-lg { max-width: var(--ui-container-lg); }
+.container-fluid { max-width: 100%; }
+.container-gutter-sm { padding-inline: var(--ui-space-3); }
+.container-gutter-md { padding-inline: var(--ui-space-4); }
+.container-gutter-lg { padding-inline: var(--ui-space-5); }

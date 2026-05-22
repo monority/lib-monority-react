@@ -1,0 +1,23 @@
+@import './layers/index.css';
+
+@import './base/reset.css' layer(reset);
+@import './base/normalize.css' layer(reset);
+@import './tokens/index.css' layer(tokens);
+@import './base/root.css' layer(base);
+@import './base/typography.css' layer(base);
+@import './base/accessibility.css' layer(base);
+@import './base/interactions.css' layer(base);
+@import './base/focus.css' layer(base);
+@import './base/selection.css' layer(base);
+@import './base/scrollbar.css' layer(base);
+@import './base/viewport.css' layer(base);
+@import './base/reduced-motion.css' layer(base);
+@import './base/print.css' layer(base);
+@import './base/direction.css' layer(base);
+@import './base/color-scheme.css' layer(base);
+@import './themes/index.css' layer(base);
+@import './recipes/index.css' layer(recipes);
+/* components are imported by the ui package */
+@import './utilities/index.css' layer(utilities);
+@import './vendors/index.css' layer(overrides);
+@import './debug/index.css' layer(overrides);

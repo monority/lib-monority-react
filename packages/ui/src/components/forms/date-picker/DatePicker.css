@@ -1,0 +1,4 @@
+@layer components {
+.ui-date-picker { width: min(16rem, 100%); }
+
+}

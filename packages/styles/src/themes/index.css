@@ -1,0 +1,5 @@
+@import './modes/dark.css' layer(base);
+@import './modes/oled.css' layer(base);
+@import './modes/light.css' layer(base);
+@import './modes/dim.css' layer(base);
+@import './modes/high-contrast.css' layer(base);

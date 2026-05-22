@@ -1,0 +1,7 @@
+:root {
+  --ui-surface-default: linear-gradient(180deg, var(--ui-bg-surface-elevated), var(--ui-bg-surface));
+  --ui-surface-strong: linear-gradient(180deg, var(--ui-bg-surface-strong), var(--ui-bg-surface-elevated));
+  --ui-surface-control: var(--ui-bg-control);
+  --ui-hero-glow-1: rgba(255, 255, 255, 0.7);
+  --ui-hero-glow-2: rgba(0, 0, 0, 0.03);
+}

@@ -1,0 +1,10 @@
+:root {
+  --ui-dur-0: 0ms;
+  --ui-dur-100: 100ms;
+  --ui-dur-150: 150ms;
+  --ui-dur-200: 200ms;
+  --ui-dur-300: 300ms;
+  --ui-dur-500: 500ms;
+  --ui-dur-700: 700ms;
+  --ui-dur-1000: 1000ms;
+}

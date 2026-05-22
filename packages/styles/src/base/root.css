@@ -1,0 +1,13 @@
+body {
+  background:
+    radial-gradient(circle at top left, var(--ui-hero-glow-1), transparent 28%),
+    radial-gradient(circle at top right, var(--ui-hero-glow-2), transparent 24%),
+    var(--ui-bg-canvas);
+  color: var(--ui-fg-base);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-md);
+  line-height: var(--ui-leading-base);
+  transition:
+    background-color var(--ui-duration-base) var(--ui-ease-standard),
+    color var(--ui-duration-fast) var(--ui-ease-standard);
+}

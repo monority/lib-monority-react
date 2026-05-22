@@ -1,0 +1,21 @@
+.ui-card {
+  --ui-card-radius: var(--ui-radius-lg);
+  --ui-card-padding: clamp(var(--ui-space-4), 2vw, var(--ui-space-5));
+  --ui-card-bg: linear-gradient(180deg, var(--ui-bg-surface-elevated), var(--ui-bg-surface));
+  --ui-card-shadow: var(--ui-shadow-xs);
+
+  display: grid;
+  gap: var(--ui-space-4);
+  width: 100%;
+  min-width: 0;
+  padding: var(--ui-card-padding);
+  border: 1px solid var(--ui-border-subtle);
+  border-radius: var(--ui-card-radius);
+  background: var(--ui-card-bg);
+  box-shadow: var(--ui-card-shadow);
+}
+
+.ui-card:hover {
+  border-color: var(--ui-border-strong);
+  box-shadow: var(--ui-shadow-sm);
+}

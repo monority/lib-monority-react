@@ -1,0 +1,4 @@
+::selection {
+  color: var(--ui-fg-inverse);
+  background: var(--ui-accent);
+}

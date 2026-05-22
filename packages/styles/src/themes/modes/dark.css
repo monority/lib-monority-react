@@ -1,0 +1,36 @@
+:root[data-theme='dark'],
+.monority-theme-root[data-theme='dark'] {
+  color-scheme: dark;
+  --ui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --ui-shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.28);
+  --ui-shadow-md: 0 24px 64px rgba(0, 0, 0, 0.34);
+  --ui-shadow-focus: 0 0 0 4px rgba(255, 255, 255, 0.08);
+  --ui-bg-canvas: #09090b;
+  --ui-bg-canvas-rgb: 9, 9, 11;
+  --ui-bg-subtle: #131318;
+  --ui-bg-surface: rgba(24, 24, 27, 0.8);
+  --ui-bg-surface-elevated: rgba(31, 31, 35, 0.9);
+  --ui-bg-surface-strong: rgba(36, 36, 41, 0.96);
+  --ui-bg-control: rgba(40, 40, 46, 0.94);
+  --ui-bg-inverse: #fafafa;
+  --ui-bg-accent-soft: rgba(255, 255, 255, 0.08);
+  --ui-bg-accent-strong: linear-gradient(180deg, #fafafa 0%, #e4e4e7 100%);
+  --ui-fg-strong: #fafafa;
+  --ui-fg-base: #d4d4d8;
+  --ui-fg-muted: #a1a1aa;
+  --ui-fg-inverse: #09090b;
+  --ui-fg-accent: #fafafa;
+  --ui-border-subtle: rgba(255, 255, 255, 0.12);
+  --ui-border-strong: rgba(255, 255, 255, 0.22);
+  --ui-border-accent: rgba(255, 255, 255, 0.18);
+  --ui-accent: #fafafa;
+  --ui-accent-strong: #ffffff;
+  --ui-accent-contrast: #09090b;
+  --ui-accent-soft: rgba(255, 255, 255, 0.08);
+  --ui-info: #60a5fa;
+  --ui-success: #4ade80;
+  --ui-warning: #fb923c;
+  --ui-danger: #f87171;
+  --ui-hero-glow-1: rgba(255, 255, 255, 0.06);
+  --ui-hero-glow-2: rgba(255, 255, 255, 0.03);
+}

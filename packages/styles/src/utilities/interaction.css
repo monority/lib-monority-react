@@ -1,0 +1,3 @@
+.pointer { cursor: pointer; }
+.not-allowed { cursor: not-allowed; }
+.select-none { user-select: none; }

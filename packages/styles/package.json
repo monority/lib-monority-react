@@ -1,0 +1,13 @@
+{
+  "name": "@monority/styles",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "typecheck": "echo 'no types'"
+  }
+}

@@ -1,0 +1,18 @@
+:root[data-theme='dim'] {
+  color-scheme: dark;
+  --ui-bg-canvas: #1a1a2e;
+  --ui-bg-canvas-rgb: 26, 26, 46;
+  --ui-bg-subtle: #16213e;
+  --ui-bg-surface: rgba(22, 33, 62, 0.85);
+  --ui-bg-surface-elevated: rgba(30, 42, 74, 0.9);
+  --ui-bg-surface-strong: rgba(40, 52, 86, 0.96);
+  --ui-bg-control: rgba(50, 62, 96, 0.94);
+  --ui-bg-inverse: #e2e2e8;
+  --ui-fg-strong: #e2e2e8;
+  --ui-fg-base: #b8b8c8;
+  --ui-fg-muted: #88889a;
+  --ui-border-subtle: rgba(255, 255, 255, 0.08);
+  --ui-border-strong: rgba(255, 255, 255, 0.16);
+  --ui-accent: #818cf8;
+  --ui-accent-strong: #a5b4fc;
+}

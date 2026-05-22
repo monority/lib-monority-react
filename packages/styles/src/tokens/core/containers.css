@@ -1,0 +1,10 @@
+:root {
+  --ui-page-max-width: 100rem;
+  --ui-content-max-width: 72ch;
+  --ui-container-sm: min(720px, calc(100% - 2rem));
+  --ui-container-md: min(960px, calc(100% - 2rem));
+  --ui-container-lg: min(var(--ui-page-max-width), calc(100% - 2rem));
+  --ui-control-size-sm: 2.4rem;
+  --ui-control-size-md: 3rem;
+  --ui-control-size-lg: 3.1rem;
+}

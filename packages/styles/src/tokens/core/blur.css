@@ -1,0 +1,8 @@
+:root {
+  --ui-blur-none: 0;
+  --ui-blur-sm: 4px;
+  --ui-blur-md: 8px;
+  --ui-blur-lg: 12px;
+  --ui-blur-xl: 18px;
+  --ui-blur-2xl: 24px;
+}

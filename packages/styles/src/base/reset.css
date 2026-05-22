@@ -1,0 +1,35 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.monority-theme-root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote {
+  margin: 0;
+}

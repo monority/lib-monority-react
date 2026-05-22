@@ -1,0 +1,4 @@
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.max-w-content { max-width: var(--ui-content-max-width); }
+.max-w-page { max-width: var(--ui-page-max-width); }

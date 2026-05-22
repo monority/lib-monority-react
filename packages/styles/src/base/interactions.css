@@ -1,0 +1,5 @@
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ui-fg-muted);
+  }
+}

@@ -1,6 +1,0 @@
-@import './styles/tokens.css' layer(tokens);
-@import './styles/base.css' layer(base);
-@import './styles/utilities.css' layer(utilities);
-@import './styles/components.css' layer(components);
-@import './styles/app.css' layer(app);
-@import './styles/overrides.css' layer(overrides);

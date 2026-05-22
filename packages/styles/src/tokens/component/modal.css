@@ -1,0 +1,5 @@
+:root {
+  --ui-modal-radius: var(--ui-radius-lg);
+  --ui-modal-width: min(42rem, calc(100% - 2rem));
+  --ui-modal-padding: var(--ui-space-5);
+}

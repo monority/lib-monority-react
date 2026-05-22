@@ -1,0 +1,5 @@
+:root {
+  --ui-input-radius: var(--ui-radius-sm);
+  --ui-input-height: var(--ui-control-size-md);
+  --ui-input-width: min(22rem, 100%);
+}

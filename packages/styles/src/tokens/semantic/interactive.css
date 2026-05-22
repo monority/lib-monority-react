@@ -1,0 +1,7 @@
+:root {
+  --ui-accent: #111111;
+  --ui-accent-strong: #09090b;
+  --ui-accent-contrast: #fafafa;
+  --ui-accent-foreground: var(--ui-accent-contrast);
+  --ui-accent-soft: rgba(17, 24, 39, 0.08);
+}

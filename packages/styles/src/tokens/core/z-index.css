@@ -1,0 +1,8 @@
+:root {
+  --ui-z-base: 1;
+  --ui-z-elevated: 4;
+  --ui-z-overlay: 8;
+  --ui-z-modal: 16;
+  --ui-z-toast: 24;
+  --ui-z-tooltip: 32;
+}

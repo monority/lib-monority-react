@@ -1,0 +1,36 @@
+:root[data-theme='oled'],
+.monority-theme-root[data-theme='oled'] {
+  color-scheme: dark;
+  --ui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ui-shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.4);
+  --ui-shadow-md: 0 24px 64px rgba(0, 0, 0, 0.5);
+  --ui-shadow-focus: 0 0 0 4px rgba(255, 255, 255, 0.06);
+  --ui-bg-canvas: #000000;
+  --ui-bg-canvas-rgb: 0, 0, 0;
+  --ui-bg-subtle: #0a0a0a;
+  --ui-bg-surface: rgba(10, 10, 10, 0.85);
+  --ui-bg-surface-elevated: rgba(18, 18, 18, 0.92);
+  --ui-bg-surface-strong: rgba(24, 24, 24, 0.97);
+  --ui-bg-control: rgba(30, 30, 30, 0.95);
+  --ui-bg-inverse: #ffffff;
+  --ui-bg-accent-soft: rgba(255, 255, 255, 0.06);
+  --ui-bg-accent-strong: linear-gradient(180deg, #ffffff 0%, #e4e4e7 100%);
+  --ui-fg-strong: #ffffff;
+  --ui-fg-base: #d4d4d8;
+  --ui-fg-muted: #a1a1aa;
+  --ui-fg-inverse: #000000;
+  --ui-fg-accent: #ffffff;
+  --ui-border-subtle: rgba(255, 255, 255, 0.08);
+  --ui-border-strong: rgba(255, 255, 255, 0.18);
+  --ui-border-accent: rgba(255, 255, 255, 0.14);
+  --ui-accent: #ffffff;
+  --ui-accent-strong: #ffffff;
+  --ui-accent-contrast: #000000;
+  --ui-accent-soft: rgba(255, 255, 255, 0.06);
+  --ui-info: #60a5fa;
+  --ui-success: #4ade80;
+  --ui-warning: #fb923c;
+  --ui-danger: #f87171;
+  --ui-hero-glow-1: rgba(255, 255, 255, 0.04);
+  --ui-hero-glow-2: transparent;
+}

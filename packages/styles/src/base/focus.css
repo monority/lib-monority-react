@@ -1,0 +1,4 @@
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ui-shadow-focus);
+}

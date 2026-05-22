@@ -1,0 +1,156 @@
+/* button.recipe.css */
+
+@layer recipes {
+  .ui-button {
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--button-gap);
+
+    height: var(--button-height);
+    padding-inline: var(--button-padding-x);
+
+    border-radius: var(--button-radius);
+    border: 1px solid transparent;
+
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    line-height: 1;
+
+    white-space: nowrap;
+    user-select: none;
+    vertical-align: middle;
+
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease,
+      box-shadow 120ms ease,
+      opacity 120ms ease,
+      transform 120ms ease;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ui-button:disabled,
+  .ui-button[data-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .ui-button:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--ui-bg),
+      0 0 0 4px var(--ui-ring);
+  }
+
+  .ui-button[data-loading="true"] {
+    cursor: wait;
+  }
+
+  .ui-button[data-full-width="true"] {
+    width: 100%;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Variants
+  |--------------------------------------------------------------------------
+  */
+
+  .ui-button[data-variant="default"] {
+    background: var(--ui-primary);
+    color: var(--ui-primary-foreground);
+  }
+
+  .ui-button[data-variant="default"]:hover {
+    background: color-mix(in srgb,
+        var(--ui-primary) 90%,
+        black);
+  }
+
+  .ui-button[data-variant="destructive"] {
+    background: var(--ui-destructive);
+    color: var(--ui-destructive-foreground);
+  }
+
+  .ui-button[data-variant="destructive"]:hover {
+    opacity: 0.92;
+  }
+
+  .ui-button[data-variant="outline"] {
+    border-color: var(--ui-border);
+    background: var(--ui-background);
+    color: var(--ui-foreground);
+  }
+
+  .ui-button[data-variant="outline"]:hover {
+    background: var(--ui-accent);
+    color: var(--ui-accent-foreground);
+  }
+
+  .ui-button[data-variant="secondary"] {
+    background: var(--ui-secondary);
+    color: var(--ui-secondary-foreground);
+  }
+
+  .ui-button[data-variant="secondary"]:hover {
+    opacity: 0.9;
+  }
+
+  .ui-button[data-variant="ghost"] {
+    background: transparent;
+    color: var(--ui-foreground);
+  }
+
+  .ui-button[data-variant="ghost"]:hover {
+    background: var(--ui-accent);
+    color: var(--ui-accent-foreground);
+  }
+
+  .ui-button[data-variant="link"] {
+    height: auto;
+    padding-inline: 0;
+    background: transparent;
+    color: var(--ui-primary);
+    text-underline-offset: 4px;
+  }
+
+  .ui-button[data-variant="link"]:hover {
+    text-decoration: underline;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Sizes
+  |--------------------------------------------------------------------------
+  */
+
+  .ui-button[data-size="sm"] {
+    --button-height: 2rem;
+    --button-padding-x: 0.75rem;
+    --button-font-size: 0.8125rem;
+  }
+
+  .ui-button[data-size="md"] {
+    --button-height: 2.5rem;
+    --button-padding-x: 1rem;
+    --button-font-size: 0.875rem;
+  }
+
+  .ui-button[data-size="lg"] {
+    --button-height: 2.75rem;
+    --button-padding-x: 1.5rem;
+    --button-font-size: 0.9375rem;
+  }
+
+  .ui-button[data-size="icon"] {
+    width: var(--button-height);
+    padding-inline: 0;
+  }
+}

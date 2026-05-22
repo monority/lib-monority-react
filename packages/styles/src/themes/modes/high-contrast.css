@@ -1,0 +1,5 @@
+:root[data-theme='high-contrast'] {
+  --ui-border-subtle: rgba(17, 24, 39, 0.4);
+  --ui-border-strong: rgba(17, 24, 39, 0.6);
+  --ui-fg-muted: #52525b;
+}
