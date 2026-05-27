@@ -1,0 +1,22 @@
+@layer recipes {
+  .mr-popover {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .mr-popover__content {
+    position: fixed;
+    z-index: var(--mr-z-overlay);
+    padding: var(--mr-space-3);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-shadow-md);
+    border: 1px solid var(--mr-border-subtle);
+    min-width: 12rem;
+    max-width: 20rem;
+  }
+
+  .mr-popover[data-open='true'] {
+    /* open state */
+  }
+}

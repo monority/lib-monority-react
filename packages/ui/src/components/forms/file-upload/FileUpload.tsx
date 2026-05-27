@@ -1,23 +1,111 @@
-import { useId, useMemo, useState } from 'react'
+import { forwardRef, useId, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
-import type { InputHTMLAttributes } from 'react'
-import './FileUpload.css'
+import type { FileUploadProps } from './FileUpload.types'
 
-function formatAccept(accept: string | undefined): string | undefined { if (!accept) return undefined; return accept.split(',').map((i) => i.trim()).filter(Boolean).join(', ') }
+const fileUploadVariants = cva({
+  base: 'mr-file-upload',
+  variants: {
+    size: {
+      sm: 'mr-file-upload--sm',
+      md: 'mr-file-upload--md',
+      lg: 'mr-file-upload--lg',
+    },
+  },
+  defaultVariants: { size: 'md' },
+})
 
-interface FileUploadProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> { label?: React.ReactNode; hint?: React.ReactNode; error?: React.ReactNode; id?: string; className?: string; inputClassName?: string; required?: boolean; accept?: string; multiple?: boolean; actionLabel?: string; description?: React.ReactNode }
+export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
+  function FileUpload(
+    {
+      size,
+      label,
+      hint,
+      error,
+      id,
+      className,
+      inputClassName,
+      accept,
+      placeholder,
+      multiple,
+      disabled = false,
+      required = false,
+      onChange,
+      ...props
+    },
+    ref,
+  ) {
+    const [fileNames, setFileNames] = useState<string[]>([])
+    const generatedId = useId()
+    const inputId = id || generatedId
+    const hintId = hint ? `${inputId}-hint` : undefined
+    const errorId = error ? `${inputId}-error` : undefined
+    const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+    const resolvedSize = size ?? 'md'
+    const isInvalid = Boolean(error)
 
-export function FileUpload({ label, hint, error, id, className, inputClassName, required = false, accept, multiple = false, actionLabel = 'Choisir un fichier', description, onChange, ...props }: FileUploadProps) {
-  const [fileNames, setFileNames] = useState<string[]>([]); const generatedId = useId(); const inputId = id || generatedId
-  const hintId = hint ? `${inputId}-hint` : undefined; const errorId = error ? `${inputId}-error` : undefined; const descriptionId = description ? `${inputId}-description` : undefined
-  const describedBy = [descriptionId, hintId, errorId].filter(Boolean).join(' ') || undefined; const acceptedTypes = useMemo(() => formatAccept(accept), [accept])
-  const fileSummary = fileNames.length ? fileNames.join(', ') : 'Aucun fichier selectionne'
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) { setFileNames([...(event.target.files || [])].map((f) => f.name)); onChange?.(event) }
-  return <Field className={className} htmlFor={inputId} label={label} hint={hint} error={error} required={required} hintId={hintId} errorId={errorId}>
-    <label className={cn('ui-file-upload', error ? 'ui-file-upload--error' : undefined)}>
-      <span className="ui-file-upload__content"><span className="ui-file-upload__icon" aria-hidden="true">+</span><span className="ui-file-upload__body"><span className="ui-file-upload__action">{actionLabel}</span>{description ? <span className="ui-file-upload__description" id={descriptionId}>{description}</span> : null}{acceptedTypes ? <span className="ui-file-upload__meta">Formats: {acceptedTypes}</span> : null}<span className="ui-file-upload__meta" aria-live="polite">{fileSummary}</span></span></span>
-      <input className={cn('ui-file-upload__input', inputClassName)} id={inputId} type="file" accept={accept} multiple={multiple} aria-invalid={Boolean(error)} aria-describedby={describedBy} required={required} onChange={handleChange} {...props} />
-    </label>
-  </Field>
-}
+    const acceptString = useMemo(
+      () => (Array.isArray(accept) ? accept.join(',') : accept),
+      [accept],
+    )
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+      const files = Array.from(event.target.files ?? [])
+      setFileNames(files.map((f) => f.name))
+      onChange?.(event)
+    }
+
+    return (
+      <Field
+        className={cn('mr-file-upload-field', className)}
+        htmlFor={inputId}
+        label={label}
+        hint={hint}
+        error={error}
+        required={required}
+        hintId={hintId}
+        errorId={errorId}
+      >
+        <div className="mr-file-upload__dropzone">
+          <input
+            ref={ref}
+            id={inputId}
+            type="file"
+            className={cn(
+              fileUploadVariants({ size: resolvedSize }),
+              disabled && 'mr-file-upload--disabled',
+              isInvalid && 'mr-file-upload--error',
+              inputClassName,
+            )}
+            accept={acceptString}
+            multiple={multiple}
+            disabled={disabled}
+            required={required}
+            aria-invalid={isInvalid || undefined}
+            aria-describedby={describedBy}
+            data-size={resolvedSize}
+            data-disabled={disabled ? true : undefined}
+            data-invalid={isInvalid ? true : undefined}
+            data-required={required ? true : undefined}
+            data-multiple={multiple ? true : undefined}
+            onChange={handleChange}
+            {...props}
+          />
+          <span className="mr-file-upload__label-text">
+            {fileNames.length > 0 ? fileNames.join(', ') : (placeholder || 'Choose files...')}
+          </span>
+        </div>
+        {fileNames.length > 0 ? (
+          <div className="mr-file-upload__files" aria-live="polite">
+            {fileNames.map((name, i) => (
+              <span key={i} className="mr-file-upload__file">{name}</span>
+            ))}
+          </div>
+        ) : null}
+      </Field>
+    )
+  },
+)
+
+export type { FileUploadProps, FileUploadSize } from './FileUpload.types'

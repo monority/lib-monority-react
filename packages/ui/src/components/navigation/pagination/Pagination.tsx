@@ -1,14 +1,65 @@
-import { Button } from '@/components/actions/button/Button'
+import { forwardRef, useMemo } from 'react'
 import { cn } from '@/lib/cn'
+import type { PaginationProps } from './Pagination.types'
 
-function buildPages(cp: number, tp: number) { return [...new Set([1, tp, cp - 1, cp, cp + 1])].filter((p) => p >= 1 && p <= tp).sort((a, b) => a - b) }
-interface PaginationProps { page?: number; totalPages?: number; onPageChange?: (page: number) => void; className?: string }
-
-export function Pagination({ page = 1, totalPages = 1, onPageChange, className }: PaginationProps) {
-  const pages = buildPages(page, totalPages)
-  return <nav className={cn('ui-pagination', className)} aria-label="Pagination">
-    <Button variant="ghost" size="sm" disabled={page <= 1} onClick={() => onPageChange?.(page - 1)}>Precedent</Button>
-    <div className="ui-pagination__pages">{pages.map((itemPage, index) => { const prev = pages[index - 1]; const gap = prev && itemPage - prev > 1; return <div key={itemPage} className="ui-pagination__slot">{gap ? <span className="ui-pagination__ellipsis" aria-hidden="true">...</span> : null}<button type="button" className={cn('ui-pagination__page', itemPage === page && 'is-active')} aria-current={itemPage === page ? 'page' : undefined} onClick={() => onPageChange?.(itemPage)}>{itemPage}</button></div> })}</div>
-    <Button variant="ghost" size="sm" disabled={page >= totalPages} onClick={() => onPageChange?.(page + 1)}>Suivant</Button>
-  </nav>
+function buildPages(current: number, total: number): (number | 'ellipsis')[] {
+  const t = Math.max(1, total)
+  const pages = new Set([1, t, current - 1, current, current + 1])
+  const sorted = Array.from(pages).filter((p): p is number => p >= 1 && p <= t).sort((a, b) => a - b)
+  const result: (number | 'ellipsis')[] = []
+  let prev: number | undefined
+  for (const p of sorted) {
+    if (prev !== undefined && p - prev > 1) result.push('ellipsis')
+    result.push(p)
+    prev = p
+  }
+  return result
 }
+
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(
+  function Pagination({ page = 1, totalPages = 1, onPageChange, className, ...props }, ref) {
+    const pages = useMemo(() => buildPages(page, totalPages), [page, totalPages])
+
+    return (
+      <nav ref={ref} className={cn('mr-pagination', className)} aria-label="Pagination" {...props}>
+        <button
+          type="button"
+          className="mr-pagination__btn"
+          disabled={page <= 1}
+          onClick={() => onPageChange?.(page - 1)}
+          aria-label="Previous page"
+        >
+          ← Prev
+        </button>
+        {pages.map((p, i) =>
+          p === 'ellipsis' ? (
+            <span key={`e-${i}`} className="mr-pagination__ellipsis" aria-hidden="true">
+              …
+            </span>
+          ) : (
+            <button
+              key={p}
+              type="button"
+              className={cn('mr-pagination__btn', p === page && 'mr-pagination__btn--active')}
+              aria-current={p === page ? 'page' : undefined}
+              onClick={() => onPageChange?.(p)}
+            >
+              {p}
+            </button>
+          ),
+        )}
+        <button
+          type="button"
+          className="mr-pagination__btn"
+          disabled={page >= totalPages}
+          onClick={() => onPageChange?.(page + 1)}
+          aria-label="Next page"
+        >
+          Next →
+        </button>
+      </nav>
+    )
+  },
+)
+
+export type { PaginationProps } from './Pagination.types'

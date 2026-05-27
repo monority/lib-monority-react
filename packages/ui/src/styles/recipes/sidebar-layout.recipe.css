@@ -1,0 +1,41 @@
+@layer recipes {
+  .mr-sidebar-layout {
+    display: flex;
+    min-height: 100%;
+  }
+
+  .mr-sidebar-layout__sidebar {
+    border-right: 1px solid var(--mr-border-subtle);
+    background: var(--mr-bg-surface-soft);
+    flex-shrink: 0;
+  }
+
+  .mr-sidebar-layout[data-sidebar-width='sm'] .mr-sidebar-layout__sidebar {
+    width: 16rem;
+  }
+
+  .mr-sidebar-layout[data-sidebar-width='md'] .mr-sidebar-layout__sidebar {
+    width: 20rem;
+  }
+
+  .mr-sidebar-layout[data-sidebar-width='lg'] .mr-sidebar-layout__sidebar {
+    width: 24rem;
+  }
+
+  .mr-sidebar-layout__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: auto;
+  }
+
+  .mr-sidebar-layout__header {
+    border-bottom: 1px solid var(--mr-border-subtle);
+  }
+
+  .mr-sidebar-layout__content {
+    flex: 1;
+    padding: var(--mr-space-6);
+  }
+}

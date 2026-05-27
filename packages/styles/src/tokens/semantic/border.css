@@ -1,5 +1,5 @@
 :root {
-  --ui-border-subtle: rgba(17, 24, 39, 0.1);
-  --ui-border-strong: rgba(17, 24, 39, 0.18);
-  --ui-border-accent: rgba(17, 24, 39, 0.14);
+  --mr-border-subtle: rgba(17, 24, 39, 0.1);
+  --mr-border-strong: rgba(17, 24, 39, 0.18);
+  --mr-border-accent: rgba(17, 24, 39, 0.14);
 }

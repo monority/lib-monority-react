@@ -1,0 +1,8 @@
+@layer recipes {
+  .mr-divider {
+    border: none;
+    border-top: 1px solid var(--mr-border-subtle);
+    margin: var(--mr-space-4) 0;
+    width: 100%;
+  }
+}

@@ -8,6 +8,6 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ui-border-subtle);
-  border-radius: var(--ui-radius-full);
+  background: var(--mr-border-subtle);
+  border-radius: var(--mr-radius-full);
 }

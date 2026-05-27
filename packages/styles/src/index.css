@@ -16,8 +16,8 @@
 @import './base/direction.css' layer(base);
 @import './base/color-scheme.css' layer(base);
 @import './themes/index.css' layer(base);
+@import './components/index.css';
 @import './recipes/index.css' layer(recipes);
-/* components are imported by the ui package */
 @import './utilities/index.css' layer(utilities);
 @import './vendors/index.css' layer(overrides);
 @import './debug/index.css' layer(overrides);

@@ -1,1 +1,2 @@
-export { Card, type CardProps, type CardPadding } from './Card'
+export { Card } from './Card'
+export type { CardPadding, CardProps } from './Card.types'

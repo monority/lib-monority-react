@@ -1,0 +1,44 @@
+@layer recipes {
+  .mr-number-input {
+    width: min(16rem, 100%);
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-input-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-base);
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+  }
+
+  .mr-number-input:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-number-input--sm,
+  .mr-number-input[data-size='sm'] {
+    min-height: 2rem;
+    font-size: var(--mr-text-xs);
+    padding-inline: 0.5rem;
+  }
+
+  .mr-number-input--lg,
+  .mr-number-input[data-size='lg'] {
+    min-height: 3rem;
+    font-size: var(--mr-text-md);
+    padding-inline: 1rem;
+  }
+
+  .mr-number-input--disabled,
+  .mr-number-input[data-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .mr-number-input--error,
+  .mr-number-input[data-invalid='true'] {
+    border-color: var(--mr-danger);
+  }
+}

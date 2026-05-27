@@ -1,18 +1,41 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import './Spinner.css'
+import { cva } from '@/lib/variants'
+import type { SpinnerProps } from './Spinner.types'
 
-type SpinnerSize = 'sm' | 'md' | 'lg'
-type SpinnerTone = 'base' | 'muted' | 'inverse'
+const spinnerVariants = cva({
+  base: 'mr-spinner',
+  variants: {
+    size: {
+      sm: 'mr-spinner--sm',
+      md: 'mr-spinner--md',
+      lg: 'mr-spinner--lg',
+    },
+    tone: {
+      base: 'mr-spinner--base',
+      muted: 'mr-spinner--muted',
+      inverse: 'mr-spinner--inverse',
+    },
+  },
+  defaultVariants: { size: 'md', tone: 'base' },
+})
 
-const sizeClassName: Record<SpinnerSize, string> = { sm: 'ui-spinner--sm', md: 'ui-spinner--md', lg: 'ui-spinner--lg' }
-const toneClassName: Record<SpinnerTone, string> = { base: 'ui-spinner--base', muted: 'ui-spinner--muted', inverse: 'ui-spinner--inverse' }
+export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
+  function Spinner({ size = 'md', tone = 'base', className, ...props }, ref) {
+    return (
+      <span
+        ref={ref}
+        className={cn(spinnerVariants({ size, tone }), className)}
+        role="status"
+        aria-label="Loading"
+        data-size={size}
+        data-tone={tone}
+        {...props}
+      >
+        <span className="mr-spinner__ring" />
+      </span>
+    )
+  },
+)
 
-interface SpinnerProps { size?: SpinnerSize; tone?: SpinnerTone; className?: string }
-
-export function Spinner({ size = 'md', tone = 'base', className }: SpinnerProps) {
-  return <span className={cn('ui-spinner', sizeClassName[size], toneClassName[tone], className)} aria-label="Loading" role="status">
-    <span className="ui-spinner__ring" />
-  </span>
-}
-
-export type { SpinnerProps, SpinnerSize, SpinnerTone }
+export type { SpinnerProps, SpinnerSize, SpinnerTone } from './Spinner.types'

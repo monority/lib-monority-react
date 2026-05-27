@@ -1,6 +1,7 @@
 {
-  "extends": "@monority/typescript-config/base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "noEmit": true,
     "outDir": "dist",
     "resolveJsonModule": true
   },

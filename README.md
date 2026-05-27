@@ -1,8 +1,82 @@
 # Monority
 
-A premium React component library with design system, dark mode, and beautiful UI components.
+[![npm version](https://img.shields.io/npm/v/@monority/ui)](https://www.npmjs.com/package/@monority/ui)
+[![CI](https://github.com/monority/ui/actions/workflows/ci.yml/badge.svg)](https://github.com/monority/ui/actions)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## Structure
+A premium React component library with design system, dark mode, and 48 beautifully crafted UI components.
+
+## Installation
+
+```bash
+pnpm add @monority/ui
+```
+
+### Import components
+
+```tsx
+import { Button, Modal, Tabs } from '@monority/ui'
+```
+
+### Import styles
+
+```tsx
+import '@monority/ui/styles.css'
+```
+
+### Tree-shaking
+
+```tsx
+import { Button } from '@monority/ui/button'
+```
+
+## Components
+
+### Actions (3)
+`Button` `CopyButton` `IconButton`
+
+### Forms (16)
+`Checkbox` `Combobox` `DatePicker` `DateRangePicker` `Field` `FileUpload` `FormSection` `Input` `NumberInput` `PasswordInput` `RadioGroup` `SearchInput` `Select` `Slider` `Switch` `Textarea`
+
+### Typography (2)
+`Text` `Title`
+
+### Display (6)
+`Accordion` `Avatar` `Card` `MetricGrid` `StatCard` `Table`
+
+### Data Display (2)
+`DataList` `DataTable`
+
+### Feedback (10)
+`AsyncStateNotice` `Badge` `Banner` `Callout` `EmptyState` `InlineAlert` `Progress` `Skeleton` `Spinner` `Toast`
+
+### Layout (7)
+`Container` `Divider` `Grid` `PageHeader` `Section` `Stack` `Toolbar`
+
+### Navigation (6)
+`Breadcrumb` `FilterBar` `Pagination` `SidebarLayout` `Tabs` `Topbar`
+
+### Overlays (7)
+`AlertDialog` `CommandPalette` `Drawer` `DropdownMenu` `Modal` `Popover` `Tooltip`
+
+### Experimental (1)
+`InfiniteScroll`
+
+## Design Philosophy
+
+Monority follows a **utility-first design token system** — every visual property is defined by a token, not a hardcoded value. Components are built with `cva` (class-variance-authority) for variants, `data-*` attributes for CSS targeting, and `forwardRef` for form library compatibility. Dark mode is supported out of the box via CSS custom properties.
+
+## Quick Start
+
+```bash
+pnpm install
+pnpm dev          # Start documentation site
+pnpm build        # Build all packages
+pnpm test         # Run all tests
+pnpm lint         # Lint all packages
+```
+
+## Project Structure
 
 ```
 monority/
@@ -12,51 +86,23 @@ monority/
 ├── packages/
 │   ├── ui/           # Core component library
 │   ├── tokens/       # Design tokens
-│   ├── icons/        # Icon library
+│   ├── styles/       # CSS source (recipes, base, themes)
 │   ├── eslint-config/
-│   ├── typescript-config/
-│   └── tailwind-config/
-└── tooling/
-    ├── scripts/      # Utility scripts
-    ├── generators/   # Component generators
-    └── codemods/     # Code transformations
+│   └── typescript-config/
+├── tooling/
+│   ├── generators/   # Component generator
+│   └── scripts/      # Utility scripts
+└── docs/             # Conventions & release guide
 ```
 
-## Quick Start
+## Documentation
 
-```bash
-# Install dependencies
-pnpm install
-
-# Start development
-pnpm dev
-
-# Build all packages
-pnpm build
-
-# Run tests
-pnpm test
-```
-
-## Packages
-
-### @monority/ui
-
-The core component library.
-
-```bash
-pnpm add @monority/ui
-```
-
-## Scripts
-
-- `pnpm dev` - Start development server
-- `pnpm build` - Build all packages
-- `pnpm test` - Run all tests
-- `pnpm lint` - Lint all packages
-- `pnpm generate:component <Name>` - Generate a new component
+- [Component docs](https://monority.dev) (local: `pnpm dev`)
+- [Conventions](./docs/conventions.md) — engineering standards
+- [Release checklist](./docs/release-checklist.md) — pre-release process
 
 ## Requirements
 
 - Node.js >= 20
 - pnpm >= 9.0.0
+- React >= 19

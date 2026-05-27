@@ -1,1 +1,1 @@
-.surface { border: 1px solid var(--ui-border-subtle); border-radius: var(--ui-radius-lg); background: linear-gradient(180deg, var(--ui-bg-surface-elevated), var(--ui-bg-surface)); box-shadow: var(--ui-shadow-sm); backdrop-filter: blur(16px); }
+.surface { border: 1px solid var(--mr-border-subtle); border-radius: var(--mr-radius-lg); background: linear-gradient(180deg, var(--mr-bg-surface-elevated), var(--mr-bg-surface)); box-shadow: var(--mr-shadow-sm); backdrop-filter: blur(16px); }

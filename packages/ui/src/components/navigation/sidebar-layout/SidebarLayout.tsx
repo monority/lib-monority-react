@@ -1,9 +1,24 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import type { SidebarLayoutProps } from './SidebarLayout.types'
 
-type SidebarWidth = 'sm' | 'md' | 'lg'
-const swCN: Record<SidebarWidth, string> = { sm: 'ui-sidebar-layout--sidebar-sm', md: 'ui-sidebar-layout--sidebar-md', lg: 'ui-sidebar-layout--sidebar-lg' }
-interface SidebarLayoutProps { sidebar?: React.ReactNode; header?: React.ReactNode; children?: React.ReactNode; sidebarWidth?: SidebarWidth; className?: string }
+export const SidebarLayout = forwardRef<HTMLDivElement, SidebarLayoutProps>(
+  function SidebarLayout({ sidebar, header, children, sidebarWidth = 'md', className, ...props }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={cn('mr-sidebar-layout', className)}
+        data-sidebar-width={sidebarWidth}
+        {...props}
+      >
+        <aside className="mr-sidebar-layout__sidebar">{sidebar}</aside>
+        <div className="mr-sidebar-layout__main">
+          {header ? <div className="mr-sidebar-layout__header">{header}</div> : null}
+          <div className="mr-sidebar-layout__content">{children}</div>
+        </div>
+      </div>
+    )
+  },
+)
 
-export function SidebarLayout({ sidebar, header, children, sidebarWidth = 'md', className }: SidebarLayoutProps) {
-  return <div className={cn('ui-sidebar-layout', swCN[sidebarWidth], className)}><aside className="ui-sidebar-layout__sidebar">{sidebar}</aside><div className="ui-sidebar-layout__main">{header ? <div className="ui-sidebar-layout__header">{header}</div> : null}<div className="ui-sidebar-layout__content">{children}</div></div></div>
-}
+export type { SidebarLayoutProps, SidebarWidth } from './SidebarLayout.types'

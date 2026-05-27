@@ -1,18 +1,35 @@
-import { type HTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
-import './Badge.css'
-
-interface BadgeProps extends HTMLAttributes<HTMLSpanElement> { variant?: 'default' | 'primary' | 'success' | 'danger' }
+import type { BadgeProps } from './Badge.types'
 
 const badgeVariants = cva({
-  base: 'ui-badge',
-  variants: { variant: { default: '', primary: 'ui-badge--primary', success: 'ui-badge--success', danger: 'ui-badge--danger' } },
+  base: 'mr-badge',
+  variants: {
+    variant: {
+      default: '',
+      primary: 'mr-badge--primary',
+      success: 'mr-badge--success',
+      danger: 'mr-badge--danger',
+    },
+  },
   defaultVariants: { variant: 'default' },
 })
 
-export function Badge({ className, variant, ...props }: BadgeProps) {
-  return <span className={cn(badgeVariants({ variant }), className)} {...props} />
-}
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
+  { className, variant, ...props },
+  ref,
+) {
+  const resolvedVariant = variant ?? 'default'
 
-export type { BadgeProps }
+  return (
+    <span
+      ref={ref}
+      className={cn(badgeVariants({ variant: resolvedVariant }), className)}
+      {...props}
+      data-variant={resolvedVariant}
+    />
+  )
+})
+
+export type { BadgeProps, BadgeVariant } from './Badge.types'

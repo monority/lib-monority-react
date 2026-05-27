@@ -45,17 +45,6 @@ function createAdminPage() {
     }
 }
 
-function createDocsPage() {
-    return function DocsPage() {
-        return (
-            <section style={{ padding: '2rem' }}>
-                <h1>Documentation</h1>
-                <p>Documentation des composants.</p>
-            </section>
-        )
-    }
-}
-
 function createShowcasePage() {
     return function ShowcasePage() {
         return (
@@ -82,7 +71,6 @@ const HomePage = createHomePage()
 const DashboardPage = createDashboardPage()
 const PlaygroundPage = createPlaygroundPage()
 const AdminPage = createAdminPage()
-const DocsPage = createDocsPage()
 const ShowcasePage = createShowcasePage()
 const NotFoundPage = createNotFoundPage()
 
@@ -134,133 +122,12 @@ const appRouteDefinitions: AppRouteDefinition[] = [
     {
         key: 'docs',
         label: 'Docs',
-        path: '/docs',
+        path: '/docs/*',
         lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { Introduction } = await import('@/docs/Introduction')
-            return { Component: () => <DocsLayout><Introduction /></DocsLayout> }
+            const { DocsPage } = await import('@/docs/DocsPage')
+            return { Component: DocsPage }
         },
         includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'docs-button',
-        label: 'Button Docs',
-        path: '/docs/button',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { ButtonDocs } = await import('@/docs/components/ButtonDocs')
-            return { Component: () => <DocsLayout><ButtonDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-input',
-        label: 'Input Docs',
-        path: '/docs/input',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { InputDocs } = await import('@/docs/components/InputDocs')
-            return { Component: () => <DocsLayout><InputDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-card',
-        label: 'Card Docs',
-        path: '/docs/card',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { CardDocs } = await import('@/docs/components/CardDocs')
-            return { Component: () => <DocsLayout><CardDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-modal',
-        label: 'Modal Docs',
-        path: '/docs/modal',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { ModalDocs } = await import('@/docs/components/ModalDocs')
-            return { Component: () => <DocsLayout><ModalDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-toast',
-        label: 'Toast Docs',
-        path: '/docs/toast',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { ToastDocs } = await import('@/docs/components/ToastDocs')
-            return { Component: () => <DocsLayout><ToastDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-badge',
-        label: 'Badge Docs',
-        path: '/docs/badge',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { BadgeDocs } = await import('@/docs/components/BadgeDocs')
-            return { Component: () => <DocsLayout><BadgeDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-avatar',
-        label: 'Avatar Docs',
-        path: '/docs/avatar',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { AvatarDocs } = await import('@/docs/components/AvatarDocs')
-            return { Component: () => <DocsLayout><AvatarDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-table',
-        label: 'Table Docs',
-        path: '/docs/table',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { TableDocs } = await import('@/docs/components/TableDocs')
-            return { Component: () => <DocsLayout><TableDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-select',
-        label: 'Select Docs',
-        path: '/docs/select',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { SelectDocs } = await import('@/docs/components/SelectDocs')
-            return { Component: () => <DocsLayout><SelectDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-checkbox',
-        label: 'Checkbox Docs',
-        path: '/docs/checkbox',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { CheckboxDocs } = await import('@/docs/components/CheckboxDocs')
-            return { Component: () => <DocsLayout><CheckboxDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-tabs',
-        label: 'Tabs Docs',
-        path: '/docs/tabs',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { TabsDocs } = await import('@/docs/components/TabsDocs')
-            return { Component: () => <DocsLayout><TabsDocs /></DocsLayout> }
-        },
-    },
-    {
-        key: 'docs-spinner',
-        label: 'Spinner Docs',
-        path: '/docs/spinner',
-        lazy: async () => {
-            const { DocsLayout } = await import('@/docs/DocsLayout')
-            const { SpinnerDocs } = await import('@/docs/components/SpinnerDocs')
-            return { Component: () => <DocsLayout><SpinnerDocs /></DocsLayout> }
-        },
     },
     {
         key: 'showcase',
@@ -290,7 +157,7 @@ export const primaryNavigationItems = appRouteDefinitions
     .filter((route) => route.includeInPrimaryNavigation)
     .map(({ label, path }) => ({
         label,
-        to: path,
+        to: path === '/docs/*' ? '/docs' : path,
     }))
 
 export const homeSectionNavigationItems = [

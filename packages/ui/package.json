@@ -1,6 +1,10 @@
 {
   "name": "@monority/ui",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -15,6 +19,366 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./button": {
+      "types": "./dist/button.d.ts",
+      "development": "./src/components/actions/button/index.ts",
+      "import": "./dist/button.js",
+      "default": "./dist/button.js"
+    },
+    "./input": {
+      "types": "./dist/input.d.ts",
+      "development": "./src/components/forms/input/index.ts",
+      "import": "./dist/input.js",
+      "default": "./dist/input.js"
+    },
+    "./badge": {
+      "types": "./dist/badge.d.ts",
+      "development": "./src/components/feedback/badge/index.ts",
+      "import": "./dist/badge.js",
+      "default": "./dist/badge.js"
+    },
+    "./card": {
+      "types": "./dist/card.d.ts",
+      "development": "./src/components/display/card/index.ts",
+      "import": "./dist/card.js",
+      "default": "./dist/card.js"
+    },
+    "./modal": {
+      "types": "./dist/modal.d.ts",
+      "development": "./src/components/overlays/modal/index.ts",
+      "import": "./dist/modal.js",
+      "default": "./dist/modal.js"
+    },
+    "./command-palette": {
+      "types": "./dist/commandPalette.d.ts",
+      "development": "./src/components/overlays/command-palette/index.ts",
+      "import": "./dist/commandPalette.js",
+      "default": "./dist/commandPalette.js"
+    },
+    "./dropdown-menu": {
+      "types": "./dist/dropdownMenu.d.ts",
+      "development": "./src/components/overlays/dropdown-menu/index.ts",
+      "import": "./dist/dropdownMenu.js",
+      "default": "./dist/dropdownMenu.js"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "development": "./src/components/overlays/popover/index.ts",
+      "import": "./dist/popover.js",
+      "default": "./dist/popover.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox.d.ts",
+      "development": "./src/components/forms/checkbox/index.ts",
+      "import": "./dist/checkbox.js",
+      "default": "./dist/checkbox.js"
+    },
+    "./combobox": {
+      "types": "./dist/combobox.d.ts",
+      "development": "./src/components/forms/combobox/index.ts",
+      "import": "./dist/combobox.js",
+      "default": "./dist/combobox.js"
+    },
+    "./switch": {
+      "types": "./dist/switch.d.ts",
+      "development": "./src/components/forms/switch/index.ts",
+      "import": "./dist/switch.js",
+      "default": "./dist/switch.js"
+    },
+    "./textarea": {
+      "types": "./dist/textarea.d.ts",
+      "development": "./src/components/forms/textarea/index.ts",
+      "import": "./dist/textarea.js",
+      "default": "./dist/textarea.js"
+    },
+    "./radio-group": {
+      "types": "./dist/radio-group.d.ts",
+      "development": "./src/components/forms/radio-group/index.ts",
+      "import": "./dist/radio-group.js",
+      "default": "./dist/radio-group.js"
+    },
+    "./slider": {
+      "types": "./dist/slider.d.ts",
+      "development": "./src/components/forms/slider/index.ts",
+      "import": "./dist/slider.js",
+      "default": "./dist/slider.js"
+    },
+    "./number-input": {
+      "types": "./dist/number-input.d.ts",
+      "development": "./src/components/forms/number-input/index.ts",
+      "import": "./dist/number-input.js",
+      "default": "./dist/number-input.js"
+    },
+    "./password-input": {
+      "types": "./dist/password-input.d.ts",
+      "development": "./src/components/forms/password-input/index.ts",
+      "import": "./dist/password-input.js",
+      "default": "./dist/password-input.js"
+    },
+    "./select": {
+      "types": "./dist/select.d.ts",
+      "development": "./src/components/forms/select/index.ts",
+      "import": "./dist/select.js",
+      "default": "./dist/select.js"
+    },
+    "./search-input": {
+      "types": "./dist/searchInput.d.ts",
+      "development": "./src/components/forms/search-input/index.ts",
+      "import": "./dist/searchInput.js",
+      "default": "./dist/searchInput.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs.d.ts",
+      "development": "./src/components/navigation/tabs/index.ts",
+      "import": "./dist/tabs.js",
+      "default": "./dist/tabs.js"
+    },
+    "./form-section": {
+      "types": "./dist/formSection.d.ts",
+      "development": "./src/components/forms/form-section/index.ts",
+      "import": "./dist/formSection.js",
+      "default": "./dist/formSection.js"
+    },
+    "./file-upload": {
+      "types": "./dist/fileUpload.d.ts",
+      "development": "./src/components/forms/file-upload/index.ts",
+      "import": "./dist/fileUpload.js",
+      "default": "./dist/fileUpload.js"
+    },
+    "./copy-button": {
+      "types": "./dist/copyButton.d.ts",
+      "development": "./src/components/actions/copy-button/index.ts",
+      "import": "./dist/copyButton.js",
+      "default": "./dist/copyButton.js"
+    },
+    "./data-list": {
+      "types": "./dist/dataList.d.ts",
+      "development": "./src/components/data-display/data-list/index.ts",
+      "import": "./dist/dataList.js",
+      "default": "./dist/dataList.js"
+    },
+    "./data-table": {
+      "types": "./dist/dataTable.d.ts",
+      "development": "./src/components/data-display/data-table/index.ts",
+      "import": "./dist/dataTable.js",
+      "default": "./dist/dataTable.js"
+    },
+    "./empty-state": {
+      "types": "./dist/emptyState.d.ts",
+      "development": "./src/components/feedback/empty-state/index.ts",
+      "import": "./dist/emptyState.js",
+      "default": "./dist/emptyState.js"
+    },
+    "./field": {
+      "types": "./dist/field.d.ts",
+      "development": "./src/components/forms/field/index.ts",
+      "import": "./dist/field.js",
+      "default": "./dist/field.js"
+    },
+    "./async-state-notice": {
+      "types": "./dist/asyncStateNotice.d.ts",
+      "development": "./src/components/feedback/async-state-notice/index.ts",
+      "import": "./dist/asyncStateNotice.js",
+      "default": "./dist/asyncStateNotice.js"
+    },
+    "./banner": {
+      "types": "./dist/banner.d.ts",
+      "development": "./src/components/feedback/banner/index.ts",
+      "import": "./dist/banner.js",
+      "default": "./dist/banner.js"
+    },
+    "./callout": {
+      "types": "./dist/callout.d.ts",
+      "development": "./src/components/feedback/callout/index.ts",
+      "import": "./dist/callout.js",
+      "default": "./dist/callout.js"
+    },
+    "./icon-button": {
+      "types": "./dist/iconButton.d.ts",
+      "development": "./src/components/actions/icon-button/index.ts",
+      "import": "./dist/iconButton.js",
+      "default": "./dist/iconButton.js"
+    },
+    "./inline-alert": {
+      "types": "./dist/inlineAlert.d.ts",
+      "development": "./src/components/feedback/inline-alert/index.ts",
+      "import": "./dist/inlineAlert.js",
+      "default": "./dist/inlineAlert.js"
+    },
+    "./infinite-scroll": {
+      "types": "./dist/infiniteScroll.d.ts",
+      "development": "./src/components/experimental/infinite-scroll/index.ts",
+      "import": "./dist/infiniteScroll.js",
+      "default": "./dist/infiniteScroll.js"
+    },
+    "./progress": {
+      "types": "./dist/progress.d.ts",
+      "development": "./src/components/feedback/progress/index.ts",
+      "import": "./dist/progress.js",
+      "default": "./dist/progress.js"
+    },
+    "./skeleton": {
+      "types": "./dist/skeleton.d.ts",
+      "development": "./src/components/feedback/skeleton/index.ts",
+      "import": "./dist/skeleton.js",
+      "default": "./dist/skeleton.js"
+    },
+    "./spinner": {
+      "types": "./dist/spinner.d.ts",
+      "development": "./src/components/feedback/spinner/index.ts",
+      "import": "./dist/spinner.js",
+      "default": "./dist/spinner.js"
+    },
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "development": "./src/components/feedback/toast/index.ts",
+      "import": "./dist/toast.js",
+      "default": "./dist/toast.js"
+    },
+    "./text": {
+      "types": "./dist/text.d.ts",
+      "development": "./src/components/typography/text/index.ts",
+      "import": "./dist/text.js",
+      "default": "./dist/text.js"
+    },
+    "./title": {
+      "types": "./dist/title.d.ts",
+      "development": "./src/components/typography/title/index.ts",
+      "import": "./dist/title.js",
+      "default": "./dist/title.js"
+    },
+    "./accordion": {
+      "types": "./dist/accordion.d.ts",
+      "development": "./src/components/display/accordion/index.ts",
+      "import": "./dist/accordion.js",
+      "default": "./dist/accordion.js"
+    },
+    "./alert-dialog": {
+      "types": "./dist/alertDialog.d.ts",
+      "development": "./src/components/overlays/alert-dialog/index.ts",
+      "import": "./dist/alertDialog.js",
+      "default": "./dist/alertDialog.js"
+    },
+    "./avatar": {
+      "types": "./dist/avatar.d.ts",
+      "development": "./src/components/display/avatar/index.ts",
+      "import": "./dist/avatar.js",
+      "default": "./dist/avatar.js"
+    },
+    "./metric-grid": {
+      "types": "./dist/metricGrid.d.ts",
+      "development": "./src/components/display/metric-grid/index.ts",
+      "import": "./dist/metricGrid.js",
+      "default": "./dist/metricGrid.js"
+    },
+    "./stat-card": {
+      "types": "./dist/statCard.d.ts",
+      "development": "./src/components/display/stat-card/index.ts",
+      "import": "./dist/statCard.js",
+      "default": "./dist/statCard.js"
+    },
+    "./table": {
+      "types": "./dist/table.d.ts",
+      "development": "./src/components/display/table/index.ts",
+      "import": "./dist/table.js",
+      "default": "./dist/table.js"
+    },
+    "./container": {
+      "types": "./dist/container.d.ts",
+      "development": "./src/components/layout/container/index.ts",
+      "import": "./dist/container.js",
+      "default": "./dist/container.js"
+    },
+    "./divider": {
+      "types": "./dist/divider.d.ts",
+      "development": "./src/components/layout/divider/index.ts",
+      "import": "./dist/divider.js",
+      "default": "./dist/divider.js"
+    },
+    "./drawer": {
+      "types": "./dist/drawer.d.ts",
+      "development": "./src/components/overlays/drawer/index.ts",
+      "import": "./dist/drawer.js",
+      "default": "./dist/drawer.js"
+    },
+    "./grid": {
+      "types": "./dist/grid.d.ts",
+      "development": "./src/components/layout/grid/index.ts",
+      "import": "./dist/grid.js",
+      "default": "./dist/grid.js"
+    },
+    "./page-header": {
+      "types": "./dist/page-header.d.ts",
+      "development": "./src/components/layout/page-header/index.ts",
+      "import": "./dist/page-header.js",
+      "default": "./dist/page-header.js"
+    },
+    "./section": {
+      "types": "./dist/section.d.ts",
+      "development": "./src/components/layout/section/index.ts",
+      "import": "./dist/section.js",
+      "default": "./dist/section.js"
+    },
+    "./stack": {
+      "types": "./dist/stack.d.ts",
+      "development": "./src/components/layout/stack/index.ts",
+      "import": "./dist/stack.js",
+      "default": "./dist/stack.js"
+    },
+    "./toolbar": {
+      "types": "./dist/toolbar.d.ts",
+      "development": "./src/components/layout/toolbar/index.ts",
+      "import": "./dist/toolbar.js",
+      "default": "./dist/toolbar.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
+      "development": "./src/components/overlays/tooltip/index.ts",
+      "import": "./dist/tooltip.js",
+      "default": "./dist/tooltip.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb.d.ts",
+      "development": "./src/components/navigation/breadcrumb/index.ts",
+      "import": "./dist/breadcrumb.js",
+      "default": "./dist/breadcrumb.js"
+    },
+    "./filter-bar": {
+      "types": "./dist/filterBar.d.ts",
+      "development": "./src/components/navigation/filter-bar/index.ts",
+      "import": "./dist/filterBar.js",
+      "default": "./dist/filterBar.js"
+    },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "development": "./src/components/navigation/pagination/index.ts",
+      "import": "./dist/pagination.js",
+      "default": "./dist/pagination.js"
+    },
+    "./sidebar-layout": {
+      "types": "./dist/sidebarLayout.d.ts",
+      "development": "./src/components/navigation/sidebar-layout/index.ts",
+      "import": "./dist/sidebarLayout.js",
+      "default": "./dist/sidebarLayout.js"
+    },
+    "./topbar": {
+      "types": "./dist/topbar.d.ts",
+      "development": "./src/components/navigation/topbar/index.ts",
+      "import": "./dist/topbar.js",
+      "default": "./dist/topbar.js"
+    },
+    "./date-picker": {
+      "types": "./dist/datePicker.d.ts",
+      "development": "./src/components/forms/date-picker/index.ts",
+      "import": "./dist/datePicker.js",
+      "default": "./dist/datePicker.js"
+    },
+    "./date-range-picker": {
+      "types": "./dist/dateRangePicker.d.ts",
+      "development": "./src/components/forms/date-range-picker/index.ts",
+      "import": "./dist/dateRangePicker.js",
+      "default": "./dist/dateRangePicker.js"
+    },
     "./index.css": {
       "development": "./src/styles/globals.css",
       "import": "./dist/index.css",
@@ -22,8 +386,8 @@
     },
     "./styles.css": {
       "development": "./src/styles/globals.css",
-      "import": "./dist/styles.css",
-      "default": "./dist/styles.css"
+      "import": "./dist/index.css",
+      "default": "./dist/index.css"
     }
   },
   "files": [

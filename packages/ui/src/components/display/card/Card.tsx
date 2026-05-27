@@ -1,12 +1,20 @@
-import { type HTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import './Card.css'
+import type { CardProps } from './Card.types'
 
-type CardPadding = 'sm' | 'md' | 'lg'
-interface CardProps extends HTMLAttributes<HTMLDivElement> { padding?: CardPadding; interactive?: boolean }
+export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
+  { padding = 'md', interactive = false, className, ...props },
+  ref,
+) {
+  return (
+    <div
+      ref={ref}
+      className={cn('mr-card', `mr-card--${padding}`, interactive && 'mr-card--interactive', className)}
+      {...props}
+      data-padding={padding}
+      data-interactive={interactive ? true : undefined}
+    />
+  )
+})
 
-export function Card({ padding = 'md', interactive = false, className, ...props }: CardProps) {
-  return <div className={cn('ui-card', `ui-card--${padding}`, interactive && 'ui-card--interactive', className)} {...props} />
-}
-
-export type { CardProps, CardPadding }
+export type { CardPadding, CardProps } from './Card.types'

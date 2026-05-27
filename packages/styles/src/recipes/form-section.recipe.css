@@ -1,0 +1,21 @@
+@layer recipes {
+  .mr-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-4);
+  }
+  .mr-form-section__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--mr-space-4);
+  }
+  .mr-form-section__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-1);
+  }
+  .mr-form-section__header-meta { flex-shrink: 0; }
+  .mr-form-section__actions { display: flex; gap: var(--mr-space-3); }
+  .mr-form-section__body { display: flex; flex-direction: column; gap: var(--mr-space-6); }
+}

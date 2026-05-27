@@ -1,22 +1,67 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
+import type { ToastProps, ToastTone } from './Toast.types'
 
-type ToastTone = 'neutral' | 'success' | 'danger'
-const toneClassName: Record<ToastTone, string> = { neutral: 'ui-toast--neutral', success: 'ui-toast--success', danger: 'ui-toast--danger' }
+const toastVariants = cva({
+  base: 'mr-toast',
+  variants: {
+    tone: {
+      neutral: 'mr-toast--neutral',
+      success: 'mr-toast--success',
+      danger: 'mr-toast--danger',
+    },
+  },
+  defaultVariants: { tone: 'neutral' },
+})
 
-interface ToastProps { title?: React.ReactNode; description?: React.ReactNode; tone?: ToastTone; className?: string; onClose?: () => void }
+const roleByTone: Record<ToastTone, string> = {
+  neutral: 'status',
+  success: 'status',
+  danger: 'alert',
+}
 
-export function Toast({ title, description, tone = 'neutral', className, onClose }: ToastProps) {
-  const role = tone === 'danger' ? 'alert' : 'status'
+const ariaLiveByTone: Record<ToastTone, 'polite' | 'assertive'> = {
+  neutral: 'polite',
+  success: 'polite',
+  danger: 'assertive',
+}
+
+export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
+  { tone, title, description, onClose, className, ...props },
+  ref,
+) {
+  const resolvedTone = tone ?? 'neutral'
+
   return (
-    <div className={cn('ui-toast', toneClassName[tone], className)} role={role} aria-live={tone === 'danger' ? 'assertive' : 'polite'}>
-      <div className="stack-s">
-        <div className="ui-toast__header">
-          <strong className="ui-toast__title">{title}</strong>
-          {onClose ? <Button variant="ghost" size="sm" className="ui-toast__close" onClick={onClose} aria-label="Fermer la notification">×</Button> : null}
+    <div
+      ref={ref}
+      className={cn(toastVariants({ tone: resolvedTone }), className)}
+      role={roleByTone[resolvedTone]}
+      aria-live={ariaLiveByTone[resolvedTone]}
+      data-tone={resolvedTone}
+      {...props}
+    >
+      <div className="mr-toast__body">
+        <div className="mr-toast__header">
+          <strong className="mr-toast__title">{title}</strong>
+          {onClose ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="mr-toast__close"
+              onClick={onClose}
+              aria-label="Close notification"
+            >
+              ×
+            </Button>
+          ) : null}
         </div>
-        {description ? <p className="ui-toast__description">{description}</p> : null}
+        {description ? <p className="mr-toast__description">{description}</p> : null}
       </div>
     </div>
   )
-}
+})
+
+export type { ToastProps, ToastTone } from './Toast.types'

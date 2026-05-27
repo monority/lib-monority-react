@@ -1,6 +1,6 @@
 .stack, .stack-xs, .stack-s, .stack-m, .stack-l, .stack-xl { display: grid; }
-.stack-xs { gap: var(--ui-space-2); }
-.stack-s { gap: var(--ui-space-3); }
-.stack-m { gap: var(--ui-space-4); }
-.stack-l { gap: var(--ui-space-6); }
-.stack-xl { gap: var(--ui-space-8); }
+.stack-xs { gap: var(--mr-space-2); }
+.stack-s { gap: var(--mr-space-3); }
+.stack-m { gap: var(--mr-space-4); }
+.stack-l { gap: var(--mr-space-6); }
+.stack-xl { gap: var(--mr-space-8); }

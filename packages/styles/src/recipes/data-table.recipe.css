@@ -1,0 +1,12 @@
+@layer recipes {
+  .mr-data-table-wrap { width: 100%; overflow-x: auto; }
+  .mr-data-table { width: 100%; border-collapse: collapse; }
+  .mr-data-table__caption { padding: var(--mr-space-2) var(--mr-space-4); font-size: var(--mr-text-sm); color: var(--mr-fg-muted); text-align: left; }
+  .mr-data-table th { padding: var(--mr-space-3) var(--mr-space-4); font-size: var(--mr-text-xs); font-weight: 600; color: var(--mr-fg-muted); text-transform: uppercase; letter-spacing: 0.05em; text-align: left; border-bottom: 2px solid var(--mr-border-subtle); }
+  .mr-data-table td { padding: var(--mr-space-3) var(--mr-space-4); font-size: var(--mr-text-sm); color: var(--mr-fg-base); border-bottom: 1px solid var(--mr-border-subtle); }
+  .mr-data-table tbody tr:hover { background: var(--mr-bg-control); }
+  .mr-data-table__select-cell { width: 3rem; text-align: center; }
+  .mr-data-table__checkbox { width: 1rem; height: 1rem; cursor: pointer; }
+  .mr-data-table__sort { display: inline-flex; align-items: center; gap: var(--mr-space-1); border: none; background: none; cursor: pointer; font-family: inherit; font-size: inherit; font-weight: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; padding: 0; }
+  .mr-data-table__sort:hover { color: var(--mr-fg-base); }
+}

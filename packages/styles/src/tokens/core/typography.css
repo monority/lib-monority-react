@@ -1,14 +1,14 @@
 :root {
-  --ui-font-body: 'Geist Variable', 'Segoe UI', sans-serif;
-  --ui-font-display: 'Geist Variable', 'Segoe UI', sans-serif;
-  --ui-font-mono: 'Geist Mono Variable', Consolas, monospace;
-  --ui-text-xs: 0.75rem;
-  --ui-text-sm: 0.875rem;
-  --ui-text-md: 1rem;
-  --ui-text-lg: 1.125rem;
-  --ui-text-xl: clamp(1.25rem, 1.02rem + 0.95vw, 1.8rem);
-  --ui-text-display: clamp(3rem, 2.45rem + 2.6vw, 5.5rem);
-  --ui-leading-tight: 1.08;
-  --ui-leading-snug: 1.2;
-  --ui-leading-base: 1.65;
+  --mr-font-body: 'Geist Variable', 'Segoe UI', sans-serif;
+  --mr-font-display: 'Geist Variable', 'Segoe UI', sans-serif;
+  --mr-font-mono: 'JetBrains Mono', 'Geist Mono Variable', Consolas, monospace;
+  --mr-text-xs: 0.75rem;
+  --mr-text-sm: 0.875rem;
+  --mr-text-md: 1rem;
+  --mr-text-lg: 1.125rem;
+  --mr-text-xl: clamp(1.25rem, 1.02rem + 0.95vw, 1.8rem);
+  --mr-text-display: clamp(3rem, 2.45rem + 2.6vw, 5.5rem);
+  --mr-leading-tight: 1.08;
+  --mr-leading-snug: 1.2;
+  --mr-leading-base: 1.65;
 }

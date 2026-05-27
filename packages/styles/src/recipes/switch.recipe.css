@@ -1,0 +1,152 @@
+@layer recipes {
+  .mr-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+    color: var(--mr-fg-base);
+    user-select: none;
+  }
+
+  .mr-switch__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .mr-switch__control {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: var(--mr-switch-track-width);
+    height: var(--mr-switch-track-height);
+    padding: var(--mr-switch-padding);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+    background: var(--mr-bg-control);
+    transition:
+      background-color var(--mr-dur-150) var(--mr-ease-in-out),
+      border-color var(--mr-dur-150) var(--mr-ease-in-out),
+      box-shadow var(--mr-dur-150) var(--mr-ease-in-out);
+  }
+
+  .mr-switch__thumb {
+    width: var(--mr-switch-thumb-size);
+    height: var(--mr-switch-thumb-size);
+    border-radius: var(--mr-radius-full);
+    background: var(--mr-fg-strong);
+    transition: transform var(--mr-dur-150) var(--mr-ease-in-out);
+    transform: translateX(0);
+  }
+
+  .mr-switch__label {
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+  }
+
+  .mr-switch__input:focus-visible + .mr-switch__control {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-switch--checked .mr-switch__control,
+  .mr-switch[data-checked='true'] .mr-switch__control {
+    background: var(--mr-accent);
+    border-color: var(--mr-accent);
+  }
+
+  .mr-switch--checked .mr-switch__thumb,
+  .mr-switch[data-checked='true'] .mr-switch__thumb {
+    transform: translateX(calc(var(--mr-switch-track-width) - var(--mr-switch-thumb-size) - 2 * var(--mr-switch-padding)));
+    background: var(--mr-accent-contrast);
+  }
+
+  .mr-switch--disabled,
+  .mr-switch[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .mr-switch--invalid .mr-switch__control,
+  .mr-switch[data-invalid='true'] .mr-switch__control {
+    border-color: var(--mr-danger);
+    box-shadow: 0 0 0 1px var(--mr-danger);
+  }
+
+  .mr-switch--checked.mr-switch--accent .mr-switch__control,
+  .mr-switch[data-checked='true'][data-tone='accent'] .mr-switch__control {
+    background: var(--mr-accent);
+    border-color: var(--mr-accent);
+  }
+
+  .mr-switch--neutral .mr-switch__control,
+  .mr-switch[data-tone='neutral'] .mr-switch__control {
+    border-color: var(--mr-border-strong);
+    background: var(--mr-bg-surface);
+  }
+
+  .mr-switch--checked.mr-switch--neutral .mr-switch__control,
+  .mr-switch[data-checked='true'][data-tone='neutral'] .mr-switch__control {
+    background: var(--mr-fg-strong);
+    border-color: var(--mr-fg-strong);
+  }
+
+  .mr-switch--checked.mr-switch--neutral .mr-switch__thumb,
+  .mr-switch[data-checked='true'][data-tone='neutral'] .mr-switch__thumb {
+    background: var(--mr-fg-inverse);
+  }
+
+  .mr-switch--danger .mr-switch__control,
+  .mr-switch[data-tone='danger'] .mr-switch__control {
+    border-color: color-mix(in srgb, var(--mr-danger) 50%, var(--mr-border-subtle));
+  }
+
+  .mr-switch--checked.mr-switch--danger .mr-switch__control,
+  .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__control {
+    background: var(--mr-danger);
+    border-color: var(--mr-danger);
+  }
+
+  .mr-switch--checked.mr-switch--danger .mr-switch__thumb,
+  .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__thumb {
+    background: var(--mr-accent-contrast);
+  }
+
+  .mr-switch--sm,
+  .mr-switch[data-size='sm'] {
+    --mr-switch-track-width: 2rem;
+    --mr-switch-track-height: 1.125rem;
+    --mr-switch-padding: 0.1rem;
+    --mr-switch-thumb-size: 0.875rem;
+    gap: var(--mr-space-1);
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-switch--md,
+  .mr-switch[data-size='md'] {
+    --mr-switch-track-width: 2.75rem;
+    --mr-switch-track-height: 1.5rem;
+    --mr-switch-padding: 0.125rem;
+    --mr-switch-thumb-size: 1.15rem;
+  }
+
+  .mr-switch--lg,
+  .mr-switch[data-size='lg'] {
+    --mr-switch-track-width: 3.5rem;
+    --mr-switch-track-height: 1.875rem;
+    --mr-switch-padding: 0.175rem;
+    --mr-switch-thumb-size: 1.4rem;
+    gap: var(--mr-space-3);
+    font-size: var(--mr-text-md);
+  }
+}

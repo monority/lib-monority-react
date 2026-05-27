@@ -1,0 +1,36 @@
+@layer recipes {
+  .mr-grid {
+    display: grid;
+    gap: var(--mr-space-4);
+  }
+
+  .mr-grid--1,
+  .mr-grid[data-columns='1'] {
+    grid-template-columns: 1fr;
+  }
+
+  .mr-grid--2,
+  .mr-grid[data-columns='2'] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mr-grid--3,
+  .mr-grid[data-columns='3'] {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mr-grid--4,
+  .mr-grid[data-columns='4'] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .mr-grid--auto-fit,
+  .mr-grid[data-columns='auto-fit'] {
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  }
+
+  .mr-grid--auto-fill,
+  .mr-grid[data-columns='auto-fill'] {
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  }
+}

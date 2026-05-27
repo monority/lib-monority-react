@@ -1,7 +1,7 @@
 :root {
-  --ui-direction: ltr;
+  --mr-direction: ltr;
 }
 
 :root[dir="rtl"] {
-  --ui-direction: rtl;
+  --mr-direction: rtl;
 }

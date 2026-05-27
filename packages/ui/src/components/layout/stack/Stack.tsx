@@ -1,8 +1,31 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import type { HTMLAttributes } from 'react'
+import { cva } from '@/lib/variants'
+import type { StackProps } from './Stack.types'
 
-type StackGap = 'xs' | 's' | 'm' | 'l' | 'xl'
-const gapCN: Record<StackGap, string> = { xs: 'stack-xs', s: 'stack-s', m: 'stack-m', l: 'stack-l', xl: 'stack-xl' }
-interface StackProps extends HTMLAttributes<HTMLDivElement> { gap?: StackGap }
+const stackVariants = cva({
+  base: 'mr-stack',
+  variants: {
+    gap: {
+      xs: 'mr-stack--xs',
+      sm: 'mr-stack--sm',
+      md: 'mr-stack--md',
+      lg: 'mr-stack--lg',
+      xl: 'mr-stack--xl',
+    },
+  },
+  defaultVariants: { gap: 'md' },
+})
 
-export function Stack({ gap = 'm', className, ...props }: StackProps) { return <div className={cn('stack', gapCN[gap], className)} {...props} /> }
+export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
+  { gap = 'md', className, children, ...props },
+  ref,
+) {
+  return (
+    <div ref={ref} className={cn(stackVariants({ gap }), className)} data-gap={gap} {...props}>
+      {children}
+    </div>
+  )
+})
+
+export type { StackProps, StackGap } from './Stack.types'

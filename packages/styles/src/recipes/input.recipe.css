@@ -1,28 +1,37 @@
-.ui-input {
-  width: var(--ui-input-width);
-  min-height: var(--ui-input-height);
-  padding-inline: 1rem;
-  border: 1px solid var(--ui-border-subtle);
-  border-radius: var(--ui-input-radius);
-  background: var(--ui-bg-control);
-  color: var(--ui-fg-base);
-  box-shadow: var(--ui-shadow-xs);
-  transition:
-    border-color var(--ui-duration-fast) var(--ui-ease-standard),
-    background-color var(--ui-duration-fast) var(--ui-ease-standard),
-    box-shadow var(--ui-duration-fast) var(--ui-ease-standard);
-}
+@layer recipes {
+  .mr-input {
+    width: var(--mr-input-width);
+    min-height: var(--mr-input-height);
+    padding-inline: 1rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-input-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-base);
+    box-shadow: var(--mr-shadow-xs);
+    transition:
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+  }
 
-.ui-input::placeholder {
-  color: var(--ui-fg-muted);
-}
+  .mr-input::placeholder {
+    color: var(--mr-fg-muted);
+  }
 
-.ui-input:hover,
-.ui-input:focus-visible {
-  border-color: var(--ui-border-strong);
-  box-shadow: var(--ui-shadow-focus);
-}
+  .mr-input:hover,
+  .mr-input:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
 
-.ui-input--error {
-  border-color: color-mix(in srgb, var(--ui-danger) 44%, var(--ui-border-subtle));
+  .mr-input--error,
+  .mr-input[data-invalid='true'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-input:disabled,
+  .mr-input[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }

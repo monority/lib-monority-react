@@ -1,251 +1,481 @@
 #!/usr/bin/env node
 
-/**
- * Component Generator for Monority UI
- * 
- * Usage: node scripts/generate-component.js <ComponentName> [options]
- * 
- * Options:
- *   --no-test        Skip test file generation
- *   --no-showcase    Skip showcase section generation
- *   --help, -h       Show help
- * 
- * Examples:
- *   node scripts/generate-component.js Button
- *   node scripts/generate-component.js DatePicker --no-test
- */
-
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT_DIR = path.resolve(__dirname, '..')
+const ROOT_DIR = findRepoRoot(__dirname)
 
-// Parse arguments
 const args = process.argv.slice(2)
-const componentName = args.find(arg => !arg.startsWith('--'))
-const options = {
-    noTest: args.includes('--no-test'),
-    noShowcase: args.includes('--no-showcase'),
-    help: args.includes('--help') || args.includes('-h'),
+const componentName = args.find((arg) => !arg.startsWith('--'))
+const options = parseOptions(args)
+
+if (options.help || !componentName) {
+  printHelp()
+  process.exit(0)
 }
 
-// Help
-if (options.help || !componentName) {
-    console.log(`
+if (!/^[A-Z][a-zA-Z0-9]*$/.test(componentName)) {
+  fail('Component name must be PascalCase, e.g. Button or DatePicker.')
+}
+
+const category = options.category
+const slug = kebabCase(componentName)
+const cssBlock = `mr-${slug}`
+
+const componentDir = path.join(ROOT_DIR, 'packages/ui/src/components', category, slug)
+const categoryIndexFile = path.join(ROOT_DIR, 'packages/ui/src/components', category, 'index.ts')
+const docsDir = path.join(ROOT_DIR, 'apps/web/src/docs/components', slug)
+const docsRegistryFile = path.join(ROOT_DIR, 'apps/web/src/docs/components/registry.ts')
+const recipeFile = path.join(ROOT_DIR, 'packages/styles/src/recipes', `${slug}.recipe.css`)
+
+const files = [
+  {
+    path: path.join(componentDir, `${componentName}.types.ts`),
+    content: typesTemplate(componentName),
+  },
+  {
+    path: path.join(componentDir, `${componentName}.tsx`),
+    content: componentTemplate(componentName, cssBlock),
+  },
+  {
+    path: path.join(componentDir, `${componentName}.test.tsx`),
+    content: testTemplate(componentName, cssBlock),
+  },
+  {
+    path: path.join(componentDir, 'index.ts'),
+    content: indexTemplate(componentName),
+  },
+  {
+    path: path.join(docsDir, `${componentName}.meta.ts`),
+    content: docsMetaTemplate(componentName, category),
+  },
+  {
+    path: path.join(docsDir, `${componentName}.examples.tsx`),
+    content: docsExamplesTemplate(componentName),
+  },
+  {
+    path: path.join(docsDir, `${componentName}.docs.tsx`),
+    content: docsPageTemplate(componentName),
+  },
+  {
+    path: path.join(docsDir, 'index.ts'),
+    content: docsIndexTemplate(componentName),
+  },
+  {
+    path: recipeFile,
+    content: recipeTemplate(cssBlock),
+  },
+]
+
+if (fs.existsSync(componentDir)) {
+  fail(`Component already exists: ${relative(componentDir)}`)
+}
+
+for (const file of files) {
+  writeFile(file.path, file.content)
+}
+
+appendExport(categoryIndexFile, `export * from './${slug}'`)
+appendDocsRegistry(docsRegistryFile, { category, componentName, slug })
+
+// --- Auto-update sub-path exports, tsup entries, recipe imports ---
+addSubpathExport(
+  path.join(ROOT_DIR, 'packages/ui/package.json'),
+  slug,
+  category,
+)
+
+addTsupEntry(
+  path.join(ROOT_DIR, 'packages/ui/tsup.config.ts'),
+  componentName,
+  slug,
+  category,
+)
+
+addRecipeImport(
+  path.join(ROOT_DIR, 'packages/styles/src/recipes/index.css'),
+  slug,
+)
+
+log(`Generated ${componentName} in ${relative(componentDir)}`)
+log(`Category: ${category}`)
+if (options.dryRun) {
+  log('Dry run only. No files written.')
+}
+
+function parseOptions(argv) {
+  const categoryArg = argv.find((arg) => arg.startsWith('--category='))
+  const categoryValue = categoryArg?.split('=')[1] ?? readOptionValue(argv, '--category') ?? 'display'
+
+  return {
+    category: categoryValue,
+    dryRun: argv.includes('--dry-run'),
+    help: argv.includes('--help') || argv.includes('-h'),
+  }
+}
+
+function readOptionValue(argv, name) {
+  const index = argv.indexOf(name)
+  if (index === -1) return undefined
+  return argv[index + 1]
+}
+
+function printHelp() {
+  console.log(`
 Component Generator for Monority UI
 
-Usage: node scripts/generate-component.js <ComponentName> [options]
+Usage:
+  node scripts/generate-component.js ComponentName --category actions
 
 Options:
-  --no-test        Skip test file generation
-  --no-showcase    Skip showcase section generation
-  --help, -h       Show help
+  --category <name>   Component category. Default: display
+  --dry-run           Print actions without writing files
+  --help, -h          Show help
 
 Examples:
-  node scripts/generate-component.js Button
-  node scripts/generate-component.js DatePicker --no-test
+  pnpm generate:component Button --category actions
+  pnpm generate:component DatePicker --category forms
 `)
-    process.exit(0)
 }
 
-// Validate component name
-if (!/^[A-Z][a-zA-Z0-9]*$/.test(componentName)) {
-    console.error(`Error: Component name must be PascalCase (e.g., Button, DatePicker)`)
-    process.exit(1)
+function findRepoRoot(startDir) {
+  let current = startDir
+
+  while (current !== path.dirname(current)) {
+    const packageJson = path.join(current, 'package.json')
+    if (fs.existsSync(packageJson)) {
+      const pkg = JSON.parse(fs.readFileSync(packageJson, 'utf8').replace(/^\uFEFF/, ''))
+      if (pkg.name === 'monority') return current
+    }
+    current = path.dirname(current)
+  }
+
+  fail('Could not find repo root package.json.')
 }
 
-// Paths
-const uiComponentsDir = path.join(ROOT_DIR, 'packages/monority-ui/src/components/ui')
-const showcaseSectionsDir = path.join(ROOT_DIR, 'packages/monority-web/src/features/showcase/sections')
-const showcaseContentFile = path.join(ROOT_DIR, 'packages/monority-web/src/features/showcase/content/showcase-content.js')
-const uiIndexFile = path.join(ROOT_DIR, 'packages/monority-ui/src/components/ui/index.js')
+function writeFile(filePath, content) {
+  if (options.dryRun) {
+    log(`Would create ${relative(filePath)}`)
+    return
+  }
 
-// Check if component already exists
-const componentFile = path.join(uiComponentsDir, `${componentName}.jsx`)
-if (fs.existsSync(componentFile)) {
-    console.error(`Error: Component ${componentName} already exists at ${componentFile}`)
-    process.exit(1)
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
+  fs.writeFileSync(filePath, content)
+  log(`Created ${relative(filePath)}`)
 }
 
-// Templates
-const componentTemplate = `import { forwardRef } from 'react'
+function appendExport(indexPath, exportLine) {
+  if (options.dryRun) {
+    log(`Would update ${relative(indexPath)} with: ${exportLine}`)
+    return
+  }
+
+  const current = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : ''
+  if (current.includes(exportLine)) return
+
+  const next = current.trimEnd() ? `${current.trimEnd()}\n${exportLine}\n` : `${exportLine}\n`
+  fs.writeFileSync(indexPath, next)
+  log(`Updated ${relative(indexPath)}`)
+}
+
+function appendDocsRegistry(registryPath, { category, componentName, slug }) {
+  const registryEntry = `  { category: '${category}', label: '${componentName}', path: '/docs/${slug}', slug: '${slug}', status: 'draft' },`
+  const marker = '  // generator:component-registry'
+
+  if (options.dryRun) {
+    log(`Would update ${relative(registryPath)} with: ${registryEntry.trim()}`)
+    return
+  }
+
+  if (!fs.existsSync(registryPath)) {
+    writeFile(registryPath, docsRegistryTemplate(registryEntry))
+    return
+  }
+
+  const current = fs.readFileSync(registryPath, 'utf8')
+  if (current.includes(`slug: '${slug}'`)) return
+
+  const next = current.includes(marker)
+    ? current.replace(marker, `${registryEntry}\n${marker}`)
+    : current.replace(/\]\s*$/, `${registryEntry}\n]\n`)
+
+  fs.writeFileSync(registryPath, next)
+  log(`Updated ${relative(registryPath)}`)
+}
+
+function typesTemplate(name) {
+  return `import type { ButtonHTMLAttributes, ReactNode } from 'react'
+
+export type ${name}Variant = 'primary' | 'secondary'
+export type ${name}Size = 'sm' | 'md' | 'lg'
+
+export interface ${name}Props extends React.ComponentPropsWithoutRef<'button'> {
+  variant?: ${name}Variant
+  size?: ${name}Size
+  children?: ReactNode
+}
+`
+}
+
+function componentTemplate(name, cssBlock) {
+  const camelName = camelCase(name)
+  return `import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import type { ${name}Props } from './${name}.types'
 
-export const ${componentName} = forwardRef(function ${componentName}(
-    { className, ...props },
-    ref
+const ${camelName}Variants = cva({
+  base: '${cssBlock}',
+  variants: {
+    variant: {
+      primary: '${cssBlock}--primary',
+      secondary: '${cssBlock}--secondary',
+    },
+    size: {
+      sm: '${cssBlock}--sm',
+      md: '${cssBlock}--md',
+      lg: '${cssBlock}--lg',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+    size: 'md',
+  },
+})
+
+export const ${name} = forwardRef<HTMLButtonElement, ${name}Props>(function ${name}(
+  { variant, size, className, children, ...props },
+  ref,
 ) {
-    return (
-        <div
-            ref={ref}
-            className={cn('${kebabCase(componentName)}', className)}
-            {...props}
-        >
-            {/* TODO: Implement ${componentName} */}
-        </div>
-    )
+  return (
+    <button
+      ref={ref}
+      className={cn(${camelName}Variants({ variant, size }), className)}
+      data-variant={variant}
+      data-size={size}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+})
+
+export type { ${name}Props, ${name}Variant, ${name}Size } from './${name}.types'
+`
+}
+
+function testTemplate(name, cssBlock) {
+  return `import { act } from 'react'
+import { createRoot, type Root } from 'react-dom/client'
+import type { ReactElement } from 'react'
+import { afterEach, describe, expect, it } from 'vitest'
+import { ${name} } from './${name}'
+
+let container: HTMLDivElement | null = null
+let root: Root | null = null
+
+function render(ui: ReactElement) {
+  container = document.createElement('div')
+  document.body.appendChild(container)
+  root = createRoot(container)
+  act(() => { root?.render(ui) })
+  return container
+}
+
+afterEach(() => {
+  act(() => { root?.unmount() })
+  container?.remove()
+  root = null
+  container = null
+})
+
+describe('${name}', () => {
+  it('renders children with default button semantics and className', () => {
+    const view = render(<${name}>Click me</${name}>)
+    const btn = view.querySelector('button.${cssBlock}')
+    expect(btn?.textContent).toBe('Click me')
+    expect(btn?.className).toContain('${cssBlock}')
+  })
+
+  it('maps variant, size to stable class hooks', () => {
+    const view = render(<${name} variant="secondary" size="lg">Styled</${name}>)
+    const btn = view.querySelector('button')
+    expect(btn?.className).toContain('${cssBlock}--secondary')
+    expect(btn?.className).toContain('${cssBlock}--lg')
+    expect(btn?.getAttribute('data-variant')).toBe('secondary')
+    expect(btn?.getAttribute('data-size')).toBe('lg')
+  })
+
+  it('forwards refs', () => {
+    const ref = { current: null as HTMLButtonElement | null }
+    render(<${name} ref={ref}>Ref</${name}>)
+    expect(ref.current?.tagName).toBe('BUTTON')
+  })
 })
 `
+}
 
-const testTemplate = `import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { ${componentName} } from './${componentName}'
-
-describe('${componentName}', () => {
-    it('renders children correctly', () => {
-        render(<${componentName}>Test content</${componentName}>)
-        expect(screen.getByText('Test content')).toBeInTheDocument()
-    })
-
-    it('applies custom className', () => {
-        render(<${componentName} className="custom-class">Content</${componentName}>)
-        const element = screen.getByText('Content')
-        expect(element).toHaveClass('custom-class')
-    })
-})
+function indexTemplate(name) {
+  return `export { ${name} } from './${name}'
+export type { ${name}Props } from './${name}.types'
 `
+}
 
-const showcaseSectionTemplate = `import { ${componentName}, Section, Text, Title } from '@monority/ui'
-
-export function Showcase${componentName}Section() {
-    return (
-        <Section>
-            <Title>${componentName}</Title>
-            <Text>Examples of the ${componentName} component.</Text>
-            
-            <div className="showcase-${kebabCase(componentName)}-examples">
-                {/* Basic example */}
-                <${componentName}>
-                    Basic ${componentName}
-                </${componentName}>
-            </div>
-        </Section>
-    )
+function docsMetaTemplate(name, category) {
+  const slug = kebabCase(name)
+  return `export const ${camelCase(name)}Meta = {
+  title: '${name}',
+  status: 'draft',
+  package: '@monority/ui/${slug}',
+  import: "import { ${name} } from '@monority/ui/${slug}'",
+  category: '${category}',
+  anatomy: ['root'],
+  accessibility: [],
 }
 `
-
-// Helper: PascalCase to kebab-case
-function kebabCase(str) {
-    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 
-// Helper: Append export to index.js
-function appendExport(indexPath, exportName, relativePath) {
-    const content = fs.readFileSync(indexPath, 'utf-8')
-    const exportLine = `export { ${exportName} } from './${relativePath}'`
+function docsExamplesTemplate(name) {
+  return `import { ${name} } from '@monority/ui'
 
-    if (content.includes(exportLine)) {
-        return false
-    }
-
-    // Find the last export line and append after it
-    const lines = content.split('\n')
-    const lastExportIndex = lines.findLastIndex(line => line.startsWith('export '))
-
-    if (lastExportIndex === -1) {
-        // No exports found, append at end
-        lines.push(exportLine)
-    } else {
-        lines.splice(lastExportIndex + 1, 0, exportLine)
-    }
-
-    fs.writeFileSync(indexPath, lines.join('\n') + '\n')
-    return true
+export function ${name}BasicExample() {
+  return <${name}>Basic ${name}</${name}>
+}
+`
 }
 
-// Helper: Update showcase content to include new section
-function updateShowcaseContent(contentFile, componentName) {
-    const content = fs.readFileSync(contentFile, 'utf-8')
+function docsPageTemplate(name) {
+  return `import { ComponentDocsPage } from '../componentDocs'
+import { ${camelCase(name)}Meta } from './${name}.meta'
 
-    // Check if already imported
-    if (content.includes(`Showcase${componentName}Section`)) {
-        return false
-    }
-
-    // Add import
-    const importLine = `import { Showcase${componentName}Section } from '../sections/Showcase${componentName}Section.jsx'`
-    const updatedContent = content.replace(
-        /(import.*from.*showcase-content\.js'\n)/,
-        `$1${importLine}\n`
-    )
-
-    // Add to showcaseSections array
-    const finalContent = updatedContent.replace(
-        /(export const showcaseSections = \[[\s\S]*?)(\])/,
-        `$1    { id: '${kebabCase(componentName)}', title: '${componentName}' },\n$2`
-    )
-
-    fs.writeFileSync(contentFile, finalContent)
-    return true
+export function ${name}Docs() {
+  return <ComponentDocsPage slug="${kebabCase(name)}" />
+}
+`
 }
 
-// Helper: Update ShowcasePage to render the new section
-function updateShowcasePage(componentName) {
-    const showcasePageFile = path.join(ROOT_DIR, 'packages/monority-web/src/features/showcase/ShowcasePage.jsx')
-    const content = fs.readFileSync(showcasePageFile, 'utf-8')
-
-    // Check if already imported
-    if (content.includes(`Showcase${componentName}Section`)) {
-        return false
-    }
-
-    // Add import
-    const importLine = `import { Showcase${componentName}Section } from './sections/Showcase${componentName}Section.jsx'`
-    const updatedContent = content.replace(
-        /(import.*ShowcaseHeroSection.*\n)/,
-        `$1${importLine}\n`
-    )
-
-    // Add section to render
-    const finalContent = updatedContent.replace(
-        /(<\/AppPage>)/,
-        `            <Showcase${componentName}Section />\n        $1`
-    )
-
-    fs.writeFileSync(showcasePageFile, finalContent)
-    return true
+function docsIndexTemplate(name) {
+  return `export { ${name}Docs } from './${name}.docs'
+export { ${name}BasicExample } from './${name}.examples'
+export { ${camelCase(name)}Meta } from './${name}.meta'
+`
 }
 
-// Execute
-console.log(`\n🚀 Generating component: ${componentName}\n`)
-
-// 1. Create component file
-fs.writeFileSync(componentFile, componentTemplate)
-console.log(`✅ Created: packages/monority-ui/src/components/ui/${componentName}.jsx`)
-
-// 2. Create test file
-if (!options.noTest) {
-    const testFile = path.join(uiComponentsDir, `${componentName}.test.jsx`)
-    fs.writeFileSync(testFile, testTemplate)
-    console.log(`✅ Created: packages/monority-ui/src/components/ui/${componentName}.test.jsx`)
+function docsRegistryTemplate(registryEntry) {
+  return `export interface DocsComponentRegistryItem {
+  category: string
+  label: string
+  path: string
+  slug: string
+  status: 'draft' | 'stable'
 }
 
-// 3. Update UI index.js
-appendExport(uiIndexFile, componentName, componentName)
-console.log(`✅ Updated: packages/monority-ui/src/components/ui/index.js`)
-
-// 4. Create showcase section
-if (!options.noShowcase) {
-    const showcaseFile = path.join(showcaseSectionsDir, `Showcase${componentName}Section.jsx`)
-    fs.writeFileSync(showcaseFile, showcaseSectionTemplate)
-    console.log(`✅ Created: packages/monority-web/src/features/showcase/sections/Showcase${componentName}Section.jsx`)
-
-    // Update showcase content and page
-    updateShowcaseContent(showcaseContentFile, componentName)
-    console.log(`✅ Updated: packages/monority-web/src/features/showcase/content/showcase-content.js`)
-
-    updateShowcasePage(componentName)
-    console.log(`✅ Updated: packages/monority-web/src/features/showcase/ShowcasePage.jsx`)
+export const docsComponentRegistry: DocsComponentRegistryItem[] = [
+${registryEntry}
+  // generator:component-registry
+]
+`
 }
 
-console.log(`\n✨ Component ${componentName} generated successfully!\n`)
-console.log(`Next steps:`)
-console.log(`  1. Implement the component logic in ${componentName}.jsx`)
-console.log(`  2. Add styles to packages/monority-ui/src/styles/components.css`)
-console.log(`  3. Update the showcase section with meaningful examples`)
-if (!options.noTest) {
-    console.log(`  4. Write comprehensive tests in ${componentName}.test.jsx`)
+function recipeTemplate(cssBlock) {
+  return `@layer recipes {
+  .${cssBlock} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .${cssBlock}--primary {}
+  .${cssBlock}--secondary {}
+  .${cssBlock}--sm {}
+  .${cssBlock}--md {}
+  .${cssBlock}--lg {}
 }
-console.log()
+`
+}
+
+function addSubpathExport(packageJsonPath, slug, category) {
+  if (options.dryRun) {
+    log(`Would update package.json exports with ./${slug}`)
+    return
+  }
+
+  const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
+  const exportKey = `./${slug}`
+  if (pkg.exports[exportKey]) return // already exists
+
+  const exportEntry = slug.replace(/-/g, '')
+  const exportConfig = {
+    types: `./dist/${exportEntry}.d.ts`,
+    development: `./src/components/${category}/${slug}/index.ts`,
+    import: `./dist/${exportEntry}.js`,
+    default: `./dist/${exportEntry}.js`,
+  }
+
+  pkg.exports[exportKey] = exportConfig
+  fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
+  log(`Updated package.json exports with ./${slug}`)
+}
+
+function addTsupEntry(tsupPath, componentName, slug, category) {
+  if (options.dryRun) {
+    const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+    log(`Would update tsup.config.ts entry: ${entryKey}`)
+    return
+  }
+
+  let content = fs.readFileSync(tsupPath, 'utf8')
+  const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+  const entryPath = `src/components/${category}/${slug}/index.ts`
+  const entryLine = `    ${entryKey}: '${entryPath}',`
+
+  if (content.includes(entryPath)) return // already exists
+
+  // Insert before the closing brace of the entry object
+  const closingBraceIndex = content.lastIndexOf('  },\n  format:')
+  if (closingBraceIndex === -1) return
+  content = content.slice(0, closingBraceIndex) + `${entryLine}\n` + content.slice(closingBraceIndex)
+  fs.writeFileSync(tsupPath, content)
+  log(`Updated tsup.config.ts entry: ${entryKey}`)
+}
+
+function addRecipeImport(recipesIndexPath, slug) {
+  if (options.dryRun) {
+    log(`Would update recipes/index.css with ${slug}`)
+    return
+  }
+
+  const importLine = `@import './${slug}.recipe.css';`
+  const content = fs.readFileSync(recipesIndexPath, 'utf8')
+  if (content.includes(importLine)) return
+
+  // Append as last import, in alphabetical order
+  const lines = content.trim().split('\n')
+  lines.push(importLine)
+  lines.sort()
+  fs.writeFileSync(recipesIndexPath, lines.join('\n') + '\n')
+  log(`Updated recipes/index.css with ${slug}`)
+}
+
+function kebabCase(value) {
+  return value.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+}
+
+function camelCase(value) {
+  return `${value[0].toLowerCase()}${value.slice(1)}`
+}
+
+function relative(filePath) {
+  return path.relative(ROOT_DIR, filePath).replaceAll(path.sep, '/')
+}
+
+function log(message) {
+  console.log(message)
+}
+
+function fail(message) {
+  console.error(`Error: ${message}`)
+  process.exit(1)
+}

@@ -1,10 +1,22 @@
-import { cloneElement, isValidElement, useId } from 'react'
+import { forwardRef, useId, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/cn'
+import type { TooltipProps } from './Tooltip.types'
 
-interface TooltipProps { content: React.ReactNode; children: React.ReactNode; className?: string }
+export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
+  function Tooltip({ content, children, className, ...props }, ref) {
+    const generatedId = useId()
 
-export function Tooltip({ content, children, className }: TooltipProps) {
-  const tooltipId = useId()
-  const trigger = isValidElement(children) ? cloneElement(children as React.ReactElement, { 'aria-describedby': tooltipId } as React.HTMLAttributes<HTMLElement>) : children
-  return <span className={cn('ui-tooltip', className)}><span className="ui-tooltip__trigger">{trigger}</span><span className="ui-tooltip__content" id={tooltipId} role="tooltip">{content}</span></span>
-}
+    return (
+      <div ref={ref} className={cn('mr-tooltip', className)} {...props}>
+        {isValidElement(children)
+          ? cloneElement(children, { 'aria-describedby': generatedId } as Record<string, unknown>)
+          : children}
+        <div className="mr-tooltip__content" id={generatedId} role="tooltip">
+          {content}
+        </div>
+      </div>
+    )
+  },
+)
+
+export type { TooltipProps } from './Tooltip.types'

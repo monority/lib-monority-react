@@ -36,8 +36,26 @@ pnpm --filter @monority/ui typecheck
 | Path | Description |
 |---|---|
 | `.` | Component entry point |
+| `./button` | Button component |
+| `./input` | Input component |
+| `./badge` | Badge component |
+| `./card` | Card component |
+| `./modal` | Modal component |
 | `./styles.css` | All styles (tokens + base + components) |
-| `./index.css` | Bundled styles from component imports |
+| `./index.css` | Compatibility CSS export |
+
+```tsx
+import { Button } from '@monority/ui/button'
+import { Input } from '@monority/ui/input'
+import '@monority/ui/styles.css'
+```
+
+## Styling Contract
+
+- Import one CSS file once in the app entry.
+- Component CSS is owned by `@monority/styles` and published through this package.
+- Public CSS hooks use the `mr-` prefix.
+- Prefer stable `data-*` hooks for variants and states.
 
 ## Publishing
 

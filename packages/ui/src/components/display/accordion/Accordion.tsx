@@ -1,15 +1,109 @@
-import { useId, useState } from 'react'
+import { forwardRef, useCallback, useId, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import type { AccordionProps, AccordionItem } from './Accordion.types'
 
-interface AccordionItem { value?: string; label: React.ReactNode; content: React.ReactNode }
-interface AccordionProps { items?: AccordionItem[]; defaultValue?: string | string[]; value?: string | string[]; onChange?: (value: string | string[] | null) => void; allowMultiple?: boolean; collapsible?: boolean; className?: string }
+const accordionVariants = cva({
+  base: 'mr-accordion',
+  variants: {
+    size: {
+      sm: 'mr-accordion--sm',
+      md: 'mr-accordion--md',
+      lg: 'mr-accordion--lg',
+    },
+  },
+  defaultVariants: { size: 'md' },
+})
 
-export function Accordion({ items = [], defaultValue, value, onChange, allowMultiple = false, collapsible = true, className }: AccordionProps) {
-  const gid = useId(); const controlled = value !== undefined; const [iv, setIv] = useState<string | string[] | null>(() => { if (allowMultiple) return Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : []; return typeof defaultValue === 'string' ? defaultValue : null })
-  const cv = controlled ? value : iv
-  const isOpen = (v: string): boolean => { if (allowMultiple) return Array.isArray(cv) && cv.includes(v); return cv === v }
-  const up = (nv: string | string[] | null) => { if (!controlled) setIv(nv); onChange?.(nv) }
-  const toggle = (v: string) => { if (allowMultiple) { const vals = Array.isArray(cv) ? cv : []; up(vals.includes(v) ? vals.filter((x) => x !== v) : [...vals, v]); return } up(cv === v ? (collapsible ? null : v) : v) }
-  return <div className={cn('ui-accordion', className)}>{items.map((item, index) => { const iv = item.value ?? `${gid}-item-${index}`; const tid = `${gid}-trigger-${index}`; const pid = `${gid}-panel-${index}`; const open = isOpen(iv)
-    return <div key={iv} className={cn('ui-accordion__item', open && 'is-open')}><h3 className="ui-accordion__heading"><button id={tid} type="button" className="ui-accordion__trigger" aria-expanded={open} aria-controls={pid} onClick={() => toggle(iv)}><span className="ui-accordion__label">{item.label}</span><span className="ui-accordion__icon" aria-hidden="true">+</span></button></h3><div id={pid} role="region" aria-labelledby={tid} className="ui-accordion__panel" hidden={!open}><div className="ui-accordion__content">{item.content}</div></div></div> })}</div>
-}
+export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
+  function Accordion(
+    {
+      items = [],
+      defaultValue,
+      value: controlledValue,
+      onChange,
+      allowMultiple = false,
+      collapsible = false,
+      size,
+      className,
+      ...props
+    },
+    ref,
+  ) {
+    const [internalValue, setInternalValue] = useState<string[]>(() => {
+      if (defaultValue === undefined) return []
+      return Array.isArray(defaultValue) ? defaultValue : [defaultValue]
+    })
+
+    const isControlled = controlledValue !== undefined
+    const openValues = isControlled
+      ? Array.isArray(controlledValue)
+        ? controlledValue
+        : [controlledValue]
+      : internalValue
+
+    const generatedId = useId()
+
+    const toggle = useCallback(
+      (itemValue: string) => {
+        const newValues = openValues.includes(itemValue)
+          ? openValues.filter((v) => v !== itemValue)
+          : allowMultiple
+            ? [...openValues, itemValue]
+            : [itemValue]
+
+        if (!isControlled) setInternalValue(newValues)
+        const result = allowMultiple ? newValues : (newValues[0] ?? '')
+        onChange?.(result as string | string[])
+      },
+      [openValues, allowMultiple, isControlled, onChange],
+    )
+
+    return (
+      <div
+        ref={ref}
+        className={cn(accordionVariants({ size }), className)}
+        data-size={size}
+        {...props}
+      >
+        {items.map((item: AccordionItem) => {
+          const isOpen = openValues.includes(item.value)
+          const panelId = `${generatedId}-panel-${item.value}`
+          const triggerId = `${generatedId}-trigger-${item.value}`
+
+          return (
+            <div
+              key={item.value}
+              className="mr-accordion__item"
+              data-open={isOpen ? true : undefined}
+            >
+              <button
+                id={triggerId}
+                type="button"
+                className="mr-accordion__trigger"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() =>
+                  collapsible || !isOpen ? toggle(item.value) : undefined
+                }
+              >
+                {item.title}
+              </button>
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={triggerId}
+                className="mr-accordion__panel"
+                hidden={!isOpen}
+              >
+                {item.content}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  },
+)
+
+export type { AccordionProps, AccordionItem, AccordionSize } from './Accordion.types'

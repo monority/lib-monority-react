@@ -7,8 +7,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: ['./src/test/setup.js'],
-    include: ['src/**/*.{test,spec}.{js,jsx}'],
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
     deps: {
       optimizer: {
         web: {
@@ -18,9 +18,9 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: [
-      { find: '@/', replacement: path.resolve(__dirname, './src') },
-    ],
-    conditions: ['development'],
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@monority/ui': path.resolve(__dirname, '../../packages/ui/dist/index.js'),
+    },
   },
 })

@@ -1,0 +1,11 @@
+@layer recipes {
+  .mr-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    padding: var(--mr-space-2);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-soft);
+  }
+}

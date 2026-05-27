@@ -1,16 +1,36 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { Card } from '@/components/display/card/Card'
-import { Text } from '@/components/typography/text/Text'
 import { Title } from '@/components/typography/title/Title'
+import { Text } from '@/components/typography/text/Text'
+import type { FormSectionProps } from './FormSection.types'
 
-interface FormSectionProps { title?: React.ReactNode; description?: React.ReactNode; meta?: React.ReactNode; actions?: React.ReactNode; className?: string; children?: React.ReactNode }
+export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
+  function FormSection({ title, description, meta, actions, children, className }, ref) {
+    return (
+      <div ref={ref} className={cn('mr-form-section', className)} data-mr-form-section="">
+        <Card>
+          {title || description || meta ? (
+            <div className="mr-form-section__header">
+              <div className="mr-form-section__header-text">
+                {title ? <Title as="h3">{title}</Title> : null}
+                {description ? <Text tone="muted">{description}</Text> : null}
+              </div>
+              <div className="mr-form-section__header-meta">
+                {meta}
+              </div>
+            </div>
+          ) : null}
+          {actions ? (
+            <div className="mr-form-section__actions">{actions}</div>
+          ) : null}
+          {children ? (
+            <div className="mr-form-section__body">{children}</div>
+          ) : null}
+        </Card>
+      </div>
+    )
+  },
+)
 
-export function FormSection({ title, description, meta, actions, className, children }: FormSectionProps) {
-  return <Card padding="lg" className={cn('ui-form-section', className)}>
-    <div className="ui-form-section__header">
-      <div className="ui-form-section__heading">{title ? <Title as="h3" size="sm">{title}</Title> : null}{description ? <Text tone="base">{description}</Text> : null}{meta ? <div className="ui-form-section__meta">{meta}</div> : null}</div>
-      {actions ? <div className="ui-form-section__actions">{actions}</div> : null}
-    </div>
-    <div className="ui-form-section__body">{children}</div>
-  </Card>
-}
+export type { FormSectionProps } from './FormSection.types'

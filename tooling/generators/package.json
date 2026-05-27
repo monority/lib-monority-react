@@ -1,12 +1,16 @@
-﻿{
-  "name": "@monority/generators",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "bin": {
-    "generate-component": "./scripts/generate-component.js"
-  },
-  "scripts": {
-    "generate:component": "node scripts/generate-component.js"
-  }
+{
+    "name":  "@monority/generators",
+    "version":  "0.0.1",
+    "private":  true,
+    "type":  "module",
+    "bin":  {
+                "generate-component":  "./scripts/generate-component.js"
+            },
+    "scripts":  {
+                    "generate:component":  "node scripts/generate-component.js",
+                    "smoke":  "node scripts/generate-component.js SmokeProbe --category feedback --dry-run",
+                    "validate":  "node scripts/validate.js",
+                    "sync:showcase":  "node scripts/sync-showcase.js",
+                    "smoke:full":  "node scripts/smoke-test.js"
+                }
 }

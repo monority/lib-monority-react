@@ -1,19 +1,57 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
+import type { InlineAlertProps, InlineAlertTone } from './InlineAlert.types'
 
-type InlineAlertTone = 'info' | 'success' | 'warning' | 'danger'
-const toneClassName: Record<InlineAlertTone, string> = { info: 'ui-inline-alert--info', success: 'ui-inline-alert--success', warning: 'ui-inline-alert--warning', danger: 'ui-inline-alert--danger' }
-const roleByTone: Record<InlineAlertTone, string> = { info: 'status', success: 'status', warning: 'alert', danger: 'alert' }
+const inlineAlertVariants = cva({
+  base: 'mr-inline-alert',
+  variants: {
+    tone: {
+      info: 'mr-inline-alert--info',
+      success: 'mr-inline-alert--success',
+      warning: 'mr-inline-alert--warning',
+      danger: 'mr-inline-alert--danger',
+    },
+  },
+  defaultVariants: { tone: 'info' },
+})
 
-interface InlineAlertProps { tone?: InlineAlertTone; title?: React.ReactNode; description?: React.ReactNode; actionLabel?: React.ReactNode; onAction?: () => void; className?: string }
-
-export function InlineAlert({ tone = 'info', title, description, actionLabel, onAction, className }: InlineAlertProps) {
-  return <div className={cn('ui-inline-alert', toneClassName[tone], className)} role={roleByTone[tone]}>
-    <div className="ui-inline-alert__marker" aria-hidden="true" />
-    <div className="ui-inline-alert__body">
-      {title ? <strong className="ui-inline-alert__title">{title}</strong> : null}
-      {description ? <p className="ui-inline-alert__description">{description}</p> : null}
-    </div>
-    {actionLabel ? <Button size="sm" variant="ghost" onClick={onAction} className="ui-inline-alert__action">{actionLabel}</Button> : null}
-  </div>
+const roleByTone: Record<InlineAlertTone, string> = {
+  info: 'status',
+  success: 'status',
+  warning: 'alert',
+  danger: 'alert',
 }
+
+export const InlineAlert = forwardRef<HTMLDivElement, InlineAlertProps>(
+  function InlineAlert(
+    { tone, title, description, actionLabel, onAction, className, ...props },
+    ref,
+  ) {
+    const resolvedTone = tone ?? 'info'
+
+    return (
+      <div
+        ref={ref}
+        className={cn(inlineAlertVariants({ tone: resolvedTone }), className)}
+        role={roleByTone[resolvedTone]}
+        data-tone={resolvedTone}
+        {...props}
+      >
+        <div className="mr-inline-alert__marker" aria-hidden="true" />
+        <div className="mr-inline-alert__body">
+          {title ? <strong className="mr-inline-alert__title">{title}</strong> : null}
+          {description ? <p className="mr-inline-alert__description">{description}</p> : null}
+        </div>
+        {actionLabel ? (
+          <Button size="sm" variant="ghost" onClick={onAction} className="mr-inline-alert__action">
+            {actionLabel}
+          </Button>
+        ) : null}
+      </div>
+    )
+  },
+)
+
+export type { InlineAlertProps, InlineAlertTone } from './InlineAlert.types'

@@ -1,9 +1,27 @@
-import { Text } from '@/components/typography/text/Text'
+import { forwardRef } from 'react'
+import type { AsyncStateNoticeProps } from './AsyncStateNotice.types'
 
-interface AsyncStateNoticeProps { isLoading?: boolean; isError?: boolean; loadingMessage?: React.ReactNode; errorMessage?: React.ReactNode; loadingContent?: React.ReactNode | null }
+export const AsyncStateNotice = forwardRef<HTMLDivElement, AsyncStateNoticeProps>(
+  function AsyncStateNotice(
+    { isLoading, isError, loadingMessage = 'Loading...', errorMessage = 'An error occurred', loadingContent, ...props },
+    ref,
+  ) {
+    if (isLoading) {
+      return (
+        <div ref={ref} role="status" aria-live="polite" aria-busy="true" {...props}>
+          {loadingContent ?? <span>{loadingMessage}</span>}
+        </div>
+      )
+    }
+    if (isError) {
+      return (
+        <div ref={ref} role="alert" aria-live="assertive" {...props}>
+          {errorMessage}
+        </div>
+      )
+    }
+    return null
+  },
+)
 
-export function AsyncStateNotice({ isLoading, isError, loadingMessage, errorMessage, loadingContent = null }: AsyncStateNoticeProps) {
-  if (isLoading) return <div role="status" aria-live="polite" aria-busy="true">{loadingContent ?? <Text tone="base">{loadingMessage}</Text>}{loadingContent ? <span className="visually-hidden">{loadingMessage}</span> : null}</div>
-  if (isError) return <div role="alert" aria-live="assertive"><Text tone="strong">{errorMessage}</Text></div>
-  return null
-}
+export type { AsyncStateNoticeProps } from './AsyncStateNotice.types'

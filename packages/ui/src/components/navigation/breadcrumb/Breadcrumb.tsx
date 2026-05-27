@@ -1,10 +1,34 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import type { BreadcrumbProps } from './Breadcrumb.types'
 
-interface BreadcrumbItem { label: string; href?: string }
-interface BreadcrumbProps { items?: BreadcrumbItem[]; className?: string }
+export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
+  function Breadcrumb({ items = [], className, ...props }, ref) {
+    return (
+      <nav ref={ref} className={cn('mr-breadcrumb', className)} aria-label="Breadcrumb" {...props}>
+        <ol className="mr-breadcrumb__list">
+          {items.map((item, index) => (
+            <li key={index} className="mr-breadcrumb__item">
+              {item.href ? (
+                <a href={item.href} className="mr-breadcrumb__link">
+                  {item.label}
+                </a>
+              ) : (
+                <span className="mr-breadcrumb__current" aria-current="page">
+                  {item.label}
+                </span>
+              )}
+              {index < items.length - 1 ? (
+                <span className="mr-breadcrumb__separator" aria-hidden="true">
+                  /
+                </span>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )
+  },
+)
 
-export function Breadcrumb({ items = [], className }: BreadcrumbProps) {
-  return <nav className={cn('ui-breadcrumb', className)} aria-label="Fil d'Ariane">
-    <ol className="ui-breadcrumb__list">{items.map((item, index) => <li key={index} className="ui-breadcrumb__item">{item.href ? <a className="ui-breadcrumb__link" href={item.href}>{item.label}</a> : <span className="ui-breadcrumb__current" aria-current="page">{item.label}</span>}</li>)}</ol>
-  </nav>
-}
+export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb.types'

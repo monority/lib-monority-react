@@ -1,0 +1,12 @@
+@layer recipes {
+  .mr-accordion { display: flex; flex-direction: column; border: 1px solid var(--mr-border-subtle); border-radius: var(--mr-radius-md); overflow: hidden; }
+  .mr-accordion__item { border-bottom: 1px solid var(--mr-border-subtle); }
+  .mr-accordion__item:last-child { border-bottom: none; }
+  .mr-accordion__trigger { display: flex; width: 100%; padding: var(--mr-space-3) var(--mr-space-4); border: none; background: transparent; font-family: inherit; font-size: var(--mr-text-sm); font-weight: 600; color: var(--mr-fg-strong); cursor: pointer; text-align: left; }
+  .mr-accordion__trigger:hover { background: var(--mr-bg-control); }
+  .mr-accordion__panel { padding: 0 var(--mr-space-4) var(--mr-space-3); font-size: var(--mr-text-sm); color: var(--mr-fg-base); }
+  .mr-accordion--sm .mr-accordion__trigger { padding: var(--mr-space-2) var(--mr-space-3); font-size: var(--mr-text-xs); }
+  .mr-accordion--sm .mr-accordion__panel { padding: 0 var(--mr-space-3) var(--mr-space-2); }
+  .mr-accordion--lg .mr-accordion__trigger { padding: var(--mr-space-4) var(--mr-space-5); font-size: var(--mr-text-md); }
+  .mr-accordion--lg .mr-accordion__panel { padding: 0 var(--mr-space-5) var(--mr-space-4); }
+}

@@ -1,0 +1,54 @@
+@layer recipes {
+  .mr-dropdown {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .mr-dropdown__content {
+    position: fixed;
+    z-index: var(--mr-z-overlay);
+    padding: var(--mr-space-1);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-shadow-md);
+    border: 1px solid var(--mr-border-subtle);
+    min-width: 12rem;
+  }
+
+  .mr-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    width: 100%;
+    padding: var(--mr-space-2) var(--mr-space-3);
+    border: none;
+    border-radius: var(--mr-radius-sm);
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    color: var(--mr-fg-base);
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .mr-dropdown__item:hover,
+  .mr-dropdown__item[data-active='true'] {
+    background: var(--mr-bg-control);
+  }
+
+  .mr-dropdown__item[data-danger='true'] {
+    color: var(--mr-danger);
+  }
+
+  .mr-dropdown__item:disabled,
+  .mr-dropdown__item[data-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .mr-dropdown__separator {
+    height: 1px;
+    margin: var(--mr-space-1) 0;
+    background: var(--mr-border-subtle);
+  }
+}

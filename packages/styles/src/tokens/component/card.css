@@ -1,4 +1,4 @@
 :root {
-  --ui-card-radius: var(--ui-radius-lg);
-  --ui-card-padding: clamp(var(--ui-space-4), 2vw, var(--ui-space-5));
+  --mr-card-radius: var(--mr-radius-lg);
+  --mr-card-padding: clamp(var(--mr-space-4), 2vw, var(--mr-space-5));
 }

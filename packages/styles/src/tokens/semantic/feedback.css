@@ -1,6 +1,6 @@
 :root {
-  --ui-info: #2563eb;
-  --ui-success: #15803d;
-  --ui-warning: #c2410c;
-  --ui-danger: #dc2626;
+  --mr-info: #2563eb;
+  --mr-success: #15803d;
+  --mr-warning: #c2410c;
+  --mr-danger: #dc2626;
 }

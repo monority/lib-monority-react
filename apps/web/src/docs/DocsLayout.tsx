@@ -1,46 +1,75 @@
-import { Outlet, useLocation } from 'react-router-dom'
-
-const docsNav = [
-    { label: 'Introduction', path: '/docs' },
-    { label: 'Button', path: '/docs/button' },
-    { label: 'Input', path: '/docs/input' },
-    { label: 'Card', path: '/docs/card' },
-    { label: 'Modal', path: '/docs/modal' },
-    { label: 'Toast', path: '/docs/toast' },
-    { label: 'Badge', path: '/docs/badge' },
-    { label: 'Avatar', path: '/docs/avatar' },
-    { label: 'Table', path: '/docs/table' },
-    { label: 'Select', path: '/docs/select' },
-    { label: 'Checkbox', path: '/docs/checkbox' },
-    { label: 'Tabs', path: '/docs/tabs' },
-    { label: 'Spinner', path: '/docs/spinner' },
-]
+import { useMemo, useState, type ReactNode } from 'react'
+import { Outlet, useLocation, Link } from 'react-router-dom'
+import { docsComponentRegistry } from './components/registry'
 
 interface DocsLayoutProps {
-    children?: React.ReactNode
+  children?: ReactNode
 }
 
-export function DocsLayout({ children }: DocsLayoutProps) {
-    const location = useLocation()
+const introductionItem = { label: 'Introduction', path: '/docs', status: 'stable' as const }
 
-    return (
-        <div className="docs-layout">
-            <aside className="docs-sidebar">
-                <nav className="docs-nav">
-                    {docsNav.map((item) => (
-                        <a
-                            key={item.path}
-                            href={item.path}
-                            className={`docs-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                        >
-                            {item.label}
-                        </a>
-                    ))}
-                </nav>
-            </aside>
-            <main className="docs-content">
-                {children || <Outlet />}
-            </main>
-        </div>
+export function DocsLayout({ children }: DocsLayoutProps) {
+  const location = useLocation()
+  const [query, setQuery] = useState('')
+
+  const groupedItems = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase()
+    const items = docsComponentRegistry.filter((item) =>
+      normalizedQuery ? `${item.label} ${item.category}`.toLowerCase().includes(normalizedQuery) : true,
     )
+
+    return items.reduce<Record<string, typeof docsComponentRegistry>>((groups, item) => {
+      groups[item.category] = [...(groups[item.category] ?? []), item]
+      return groups
+    }, {})
+  }, [query])
+
+  return (
+    <div className="docs-layout">
+      <aside className="docs-sidebar">
+        <div className="docs-sidebar__header">
+          <span className="docs-kicker">Monority UI</span>
+          <h2>Docs</h2>
+        </div>
+        <input
+          className="docs-search"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search components"
+          aria-label="Search components"
+        />
+        <nav className="docs-nav" aria-label="Documentation">
+          <Link
+            to={introductionItem.path}
+            className={`docs-nav-link ${location.pathname === introductionItem.path ? 'active' : ''}`}
+          >
+            <span>{introductionItem.label}</span>
+            <span className="docs-status" data-status={introductionItem.status}>
+              {introductionItem.status}
+            </span>
+          </Link>
+
+          {Object.entries(groupedItems).map(([category, items]) => (
+            <section className="docs-nav-group" key={category}>
+              <h3>{category}</h3>
+              {items.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`docs-nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                >
+                  <span>{item.label}</span>
+                  <span className="docs-status" data-status={item.status}>
+                    {item.status}
+                  </span>
+                </Link>
+              ))}
+            </section>
+          ))}
+        </nav>
+      </aside>
+      <main className="docs-content">{children || <Outlet />}</main>
+    </div>
+  )
 }

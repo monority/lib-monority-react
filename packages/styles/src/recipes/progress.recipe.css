@@ -1,0 +1,12 @@
+@layer recipes {
+  .mr-progress { display: flex; flex-direction: column; gap: var(--mr-space-2); width: 100%; }
+  .mr-progress__meta { display: flex; justify-content: space-between; align-items: center; gap: var(--mr-space-2); }
+  .mr-progress__label { font-size: var(--mr-text-xs); color: var(--mr-fg-muted); }
+  .mr-progress__value { font-size: var(--mr-text-xs); font-weight: 600; color: var(--mr-fg-strong); }
+  .mr-progress__track { width: 100%; height: 0.5rem; border-radius: var(--mr-radius-full); background: var(--mr-bg-surface-strong); overflow: hidden; }
+  .mr-progress__bar { height: 100%; border-radius: var(--mr-radius-full); transition: width var(--mr-dur-300) var(--mr-ease-out); }
+  .mr-progress--neutral .mr-progress__bar, .mr-progress[data-tone='neutral'] .mr-progress__bar { background: var(--mr-accent); }
+  .mr-progress--success .mr-progress__bar, .mr-progress[data-tone='success'] .mr-progress__bar { background: var(--mr-success); }
+  .mr-progress--warning .mr-progress__bar, .mr-progress[data-tone='warning'] .mr-progress__bar { background: var(--mr-warning); }
+  .mr-progress--danger .mr-progress__bar, .mr-progress[data-tone='danger'] .mr-progress__bar { background: var(--mr-danger); }
+}

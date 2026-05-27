@@ -1,0 +1,7 @@
+@layer recipes {
+  .mr-table { width: 100%; overflow-x: auto; }
+  .mr-table__table { width: 100%; border-collapse: collapse; }
+  .mr-table__th { padding: var(--mr-space-3) var(--mr-space-4); font-size: var(--mr-text-xs); font-weight: 600; color: var(--mr-fg-muted); text-transform: uppercase; letter-spacing: 0.05em; text-align: left; border-bottom: 2px solid var(--mr-border-subtle); }
+  .mr-table__td { padding: var(--mr-space-3) var(--mr-space-4); font-size: var(--mr-text-sm); color: var(--mr-fg-base); border-bottom: 1px solid var(--mr-border-subtle); }
+  .mr-table__tr:hover { background: var(--mr-bg-control); }
+}

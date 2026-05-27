@@ -1,0 +1,87 @@
+@layer recipes {
+  .mr-command-palette__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--mr-z-overlay);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    background: color-mix(in srgb, var(--mr-bg-base) 60%, transparent);
+  }
+
+  .mr-command-palette__panel {
+    display: flex;
+    flex-direction: column;
+    width: min(32rem, 90vw);
+    max-height: 60vh;
+    border-radius: var(--mr-radius-lg);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-shadow-lg);
+    overflow: hidden;
+  }
+
+  .mr-command-palette__input {
+    width: 100%;
+    padding: var(--mr-space-4);
+    border: none;
+    border-bottom: 1px solid var(--mr-border-subtle);
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--mr-text-md);
+    color: var(--mr-fg-strong);
+    outline: none;
+  }
+
+  .mr-command-palette__list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--mr-space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-1);
+  }
+
+  .mr-command-palette__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-3);
+    padding: var(--mr-space-2) var(--mr-space-3);
+    border-radius: var(--mr-radius-sm);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    color: var(--mr-fg-base);
+    background: transparent;
+    border: none;
+    text-align: left;
+    width: 100%;
+  }
+
+  .mr-command-palette__item:hover,
+  .mr-command-palette__item[data-active='true'] {
+    background: var(--mr-bg-control);
+  }
+
+  .mr-command-palette__item-label {
+    font-weight: 500;
+  }
+
+  .mr-command-palette__item-description {
+    font-size: var(--mr-text-xs);
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-command-palette__shortcut {
+    margin-left: auto;
+    font-size: var(--mr-text-xs);
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-command-palette__empty {
+    padding: var(--mr-space-6);
+    text-align: center;
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-sm);
+  }
+}

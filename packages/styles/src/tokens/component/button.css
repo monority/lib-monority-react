@@ -1,9 +1,9 @@
 :root {
-  --ui-btn-radius: var(--ui-radius-sm);
+  --mr-btn-radius: var(--mr-radius-sm);
 
-  --ui-btn-height-sm: var(--ui-control-size-sm);
-  --ui-btn-height-md: var(--ui-control-size-md);
-  --ui-btn-height-lg: var(--ui-control-size-lg);
+  --mr-btn-height-sm: var(--mr-control-size-sm);
+  --mr-btn-height-md: var(--mr-control-size-md);
+  --mr-btn-height-lg: var(--mr-control-size-lg);
 
-  --ui-btn-padding-x: 1rem;
+  --mr-btn-padding-x: 1rem;
 }

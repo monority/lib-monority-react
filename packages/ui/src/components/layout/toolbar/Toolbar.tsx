@@ -1,5 +1,16 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import type { HTMLAttributes } from 'react'
+import type { ToolbarProps } from './Toolbar.types'
 
-interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {}
-export function Toolbar({ className, ...props }: ToolbarProps) { return <div className={cn('ui-toolbar', className)} {...props} /> }
+export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
+  { className, children, ...props },
+  ref,
+) {
+  return (
+    <div ref={ref} className={cn('mr-toolbar', className)} role="toolbar" {...props}>
+      {children}
+    </div>
+  )
+})
+
+export type { ToolbarProps } from './Toolbar.types'

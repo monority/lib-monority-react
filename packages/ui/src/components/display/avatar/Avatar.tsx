@@ -1,14 +1,60 @@
-import { useMemo, useState } from 'react'
+import { forwardRef, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import type { AvatarProps } from './Avatar.types'
 
-type AvatarSize = 'sm' | 'md' | 'lg'
-const szCN: Record<AvatarSize, string> = { sm: 'ui-avatar--sm', md: 'ui-avatar--md', lg: 'ui-avatar--lg' }
-function getInitials(name?: string): string { if (!name) return '?'; const p = name.trim().split(/\s+/).filter(Boolean); if (!p.length) return '?'; if (p.length === 1) return p[0].slice(0, 2).toUpperCase(); return `${p[0][0] ?? ''}${p[1][0] ?? ''}`.toUpperCase() }
-interface AvatarProps { src?: string; alt?: string; name?: string; size?: AvatarSize; className?: string }
+const avatarVariants = cva({
+  base: 'mr-avatar',
+  variants: {
+    size: {
+      sm: 'mr-avatar--sm',
+      md: 'mr-avatar--md',
+      lg: 'mr-avatar--lg',
+    },
+  },
+  defaultVariants: { size: 'md' },
+})
 
-export function Avatar({ src, alt, name, size = 'md', className }: AvatarProps) {
-  const [hasError, setHasError] = useState(false); const initials = useMemo(() => getInitials(name || alt), [alt, name]); const shouldRenderImage = Boolean(src) && !hasError
-  return <span className={cn('ui-avatar', szCN[size], className)} aria-label={alt || name || 'Avatar'}>
-    {shouldRenderImage ? <img className="ui-avatar__image" src={src} alt={alt || name || ''} onError={() => setHasError(true)} /> : <span className="ui-avatar__fallback" aria-hidden="true">{initials}</span>}
-  </span>
+function getInitials(name?: string): string {
+  if (!name) return '?'
+  return name
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
 }
+
+export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+  function Avatar({ src, alt = '', name, size, className, ...props }, ref) {
+    const [imgError, setImgError] = useState(false)
+    const initials = useMemo(() => getInitials(name), [name])
+    const showImage = src && !imgError
+
+    return (
+      <div
+        ref={ref}
+        className={cn(avatarVariants({ size }), className)}
+        data-size={size}
+        role={alt ? 'img' : undefined}
+        aria-label={alt || undefined}
+        {...props}
+      >
+        {showImage ? (
+          <img
+            className="mr-avatar__img"
+            src={src}
+            alt={alt}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span className="mr-avatar__initials" aria-hidden="true">
+            {initials}
+          </span>
+        )}
+      </div>
+    )
+  },
+)
+
+export type { AvatarProps, AvatarSize } from './Avatar.types'

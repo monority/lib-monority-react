@@ -1,14 +1,41 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import type { CalloutProps, CalloutTone } from './Callout.types'
 
-type CalloutTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-const toneClassName: Record<CalloutTone, string> = { neutral: 'ui-callout--neutral', info: 'ui-callout--info', success: 'ui-callout--success', warning: 'ui-callout--warning', danger: 'ui-callout--danger' }
+const calloutVariants = cva({
+  base: 'mr-callout',
+  variants: {
+    tone: {
+      neutral: 'mr-callout--neutral',
+      info: 'mr-callout--info',
+      success: 'mr-callout--success',
+      warning: 'mr-callout--warning',
+      danger: 'mr-callout--danger',
+    },
+  },
+  defaultVariants: { tone: 'neutral' },
+})
 
-interface CalloutProps { title?: React.ReactNode; description?: React.ReactNode; tone?: CalloutTone; className?: string; children?: React.ReactNode }
+export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout(
+  { tone, title, description, children, className, ...props },
+  ref,
+) {
+  const resolvedTone = tone ?? 'neutral'
 
-export function Callout({ title, description, tone = 'neutral', className, children }: CalloutProps) {
-  return <div className={cn('ui-callout', toneClassName[tone], className)} role="note">
-    {title ? <strong className="ui-callout__title">{title}</strong> : null}
-    {description ? <p className="ui-callout__description">{description}</p> : null}
-    {children}
-  </div>
-}
+  return (
+    <div
+      ref={ref}
+      className={cn(calloutVariants({ tone: resolvedTone }), className)}
+      role="note"
+      data-tone={resolvedTone}
+      {...props}
+    >
+      {title ? <strong className="mr-callout__title">{title}</strong> : null}
+      {description ? <p className="mr-callout__description">{description}</p> : null}
+      {children}
+    </div>
+  )
+})
+
+export type { CalloutProps, CalloutTone } from './Callout.types'

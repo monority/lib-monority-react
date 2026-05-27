@@ -1,0 +1,49 @@
+@layer recipes {
+  .mr-callout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-2);
+    padding: var(--mr-space-4);
+    border-radius: var(--mr-radius-md);
+    border: 1px solid var(--mr-border-subtle);
+  }
+
+  .mr-callout--neutral,
+  .mr-callout[data-tone='neutral'] {
+    background: var(--mr-bg-surface-soft);
+  }
+
+  .mr-callout--info,
+  .mr-callout[data-tone='info'] {
+    background: color-mix(in srgb, var(--mr-accent) 6%, transparent);
+    border-color: color-mix(in srgb, var(--mr-accent) 16%, transparent);
+  }
+
+  .mr-callout--success,
+  .mr-callout[data-tone='success'] {
+    background: color-mix(in srgb, var(--mr-success) 6%, transparent);
+    border-color: color-mix(in srgb, var(--mr-success) 16%, transparent);
+  }
+
+  .mr-callout--warning,
+  .mr-callout[data-tone='warning'] {
+    background: color-mix(in srgb, var(--mr-warning) 6%, transparent);
+    border-color: color-mix(in srgb, var(--mr-warning) 16%, transparent);
+  }
+
+  .mr-callout--danger,
+  .mr-callout[data-tone='danger'] {
+    background: color-mix(in srgb, var(--mr-danger) 6%, transparent);
+    border-color: color-mix(in srgb, var(--mr-danger) 16%, transparent);
+  }
+
+  .mr-callout__title {
+    font-weight: 600;
+    font-size: var(--mr-text-sm);
+  }
+
+  .mr-callout__description {
+    font-size: var(--mr-text-sm);
+    color: var(--mr-fg-base);
+  }
+}

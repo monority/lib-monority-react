@@ -1,0 +1,38 @@
+@layer recipes {
+  .mr-breadcrumb {
+    font-size: var(--mr-text-sm);
+  }
+
+  .mr-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mr-breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-1);
+  }
+
+  .mr-breadcrumb__link {
+    color: var(--mr-accent);
+    text-decoration: none;
+  }
+
+  .mr-breadcrumb__link:hover {
+    text-decoration: underline;
+  }
+
+  .mr-breadcrumb__current {
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-breadcrumb__separator {
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-xs);
+  }
+}

@@ -1,51 +1,44 @@
-.ui-modal {
-  --ui-modal-radius: var(--ui-radius-lg);
-  --ui-modal-width: min(42rem, calc(100% - 2rem));
-  --ui-modal-padding: var(--ui-space-5);
+@layer recipes {
+  .mr-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--mr-z-overlay);
+    display: grid;
+    place-items: center;
+    padding: var(--mr-space-4);
+  }
 
-  display: grid;
-  width: var(--ui-modal-width);
-  max-height: min(90vh, 48rem);
-  border: 1px solid var(--ui-border-subtle);
-  border-radius: var(--ui-modal-radius);
-  background: linear-gradient(180deg, var(--ui-bg-surface-strong), var(--ui-bg-surface-elevated));
-  box-shadow: var(--ui-shadow-md);
-  overflow: hidden;
-}
+  .mr-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+    backdrop-filter: blur(18px);
+  }
 
-.ui-modal__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: var(--ui-z-overlay);
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-}
+  .mr-modal__panel {
+    position: relative;
+    width: min(36rem, 100%);
+    padding: var(--mr-space-5);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-lg);
+    background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+    box-shadow: var(--mr-shadow-md);
+  }
 
-.ui-modal__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--ui-space-3);
-  padding: var(--ui-modal-padding);
-  border-bottom: 1px solid var(--ui-border-subtle);
-}
+  .mr-modal__title {
+    color: var(--mr-fg-strong);
+    font-weight: 700;
+    letter-spacing: 0;
+  }
 
-.ui-modal__title {
-  font-size: var(--ui-text-lg);
-  font-weight: 700;
-  color: var(--ui-fg-strong);
-}
+  .mr-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mr-space-3);
+  }
 
-.ui-modal__body {
-  padding: var(--ui-modal-padding);
-  overflow-y: auto;
-}
-
-.ui-modal__footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--ui-space-3);
-  padding: var(--ui-modal-padding);
-  border-top: 1px solid var(--ui-border-subtle);
+  .mr-modal__body {
+    margin-top: var(--mr-space-4);
+  }
 }

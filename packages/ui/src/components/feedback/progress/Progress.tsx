@@ -1,19 +1,71 @@
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import type { ProgressProps, ProgressTone } from './Progress.types'
 
-type ProgressTone = 'neutral' | 'success' | 'warning' | 'danger'
-const toneClassName: Record<ProgressTone, string> = { neutral: 'ui-progress--neutral', success: 'ui-progress--success', warning: 'ui-progress--warning', danger: 'ui-progress--danger' }
-const clampValue = (value: number): number => Math.min(100, Math.max(0, value))
+const progressVariants = cva({
+  base: 'mr-progress',
+  variants: {
+    tone: {
+      neutral: 'mr-progress--neutral',
+      success: 'mr-progress--success',
+      warning: 'mr-progress--warning',
+      danger: 'mr-progress--danger',
+    },
+  },
+  defaultVariants: { tone: 'neutral' },
+})
 
-interface ProgressProps { value?: number; label?: string; showValue?: boolean; tone?: ProgressTone; className?: string; barClassName?: string }
-
-export function Progress({ value = 0, label, showValue = true, tone = 'neutral', className, barClassName }: ProgressProps) {
-  const safeValue = clampValue(value)
-  return (
-    <div className={cn('ui-progress', toneClassName[tone], className)}>
-      {label || showValue ? <div className="ui-progress__meta">{label ? <span className="ui-progress__label">{label}</span> : <span />}{showValue ? <span className="ui-progress__value">{safeValue}%</span> : null}</div> : null}
-      <div className="ui-progress__track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={safeValue} aria-label={label || 'Progression'}>
-        <div className={cn('ui-progress__bar', barClassName)} style={{ width: `${safeValue}%` }} />
-      </div>
-    </div>
-  )
+function clamp(value: number): number {
+  return Math.min(100, Math.max(0, value))
 }
+
+export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
+  function Progress(
+    {
+      value = 0,
+      label,
+      showValue = true,
+      tone,
+      className,
+      barClassName,
+      ...props
+    },
+    ref,
+  ) {
+    const safeValue = clamp(value)
+    const resolvedTone = tone ?? 'neutral'
+
+    return (
+      <div
+        ref={ref}
+        className={cn(progressVariants({ tone: resolvedTone }), className)}
+        data-tone={resolvedTone}
+        data-value={safeValue}
+        {...props}
+      >
+        {label || showValue ? (
+          <div className="mr-progress__meta">
+            {label ? <span className="mr-progress__label">{label}</span> : <span />}
+            {showValue ? <span className="mr-progress__value">{safeValue}%</span> : null}
+          </div>
+        ) : null}
+        <div
+          className="mr-progress__track"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={safeValue}
+          aria-label={typeof label === 'string' ? label : 'Progress'}
+        >
+          <div
+            className={cn('mr-progress__bar', barClassName)}
+            style={{ width: `${safeValue}%` }}
+          />
+        </div>
+      </div>
+    )
+  },
+)
+
+export type { ProgressProps, ProgressTone } from './Progress.types'

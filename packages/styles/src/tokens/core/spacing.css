@@ -1,12 +1,12 @@
 :root {
-  --ui-space-0: 0;
-  --ui-space-1: 0.25rem;
-  --ui-space-2: 0.5rem;
-  --ui-space-3: 0.75rem;
-  --ui-space-4: 1rem;
-  --ui-space-5: 1.5rem;
-  --ui-space-6: 2rem;
-  --ui-space-7: 3rem;
-  --ui-space-8: 4rem;
-  --ui-space-9: 6rem;
+  --mr-space-0: 0;
+  --mr-space-1: 0.25rem;
+  --mr-space-2: 0.5rem;
+  --mr-space-3: 0.75rem;
+  --mr-space-4: 1rem;
+  --mr-space-5: 1.5rem;
+  --mr-space-6: 2rem;
+  --mr-space-7: 3rem;
+  --mr-space-8: 4rem;
+  --mr-space-9: 6rem;
 }

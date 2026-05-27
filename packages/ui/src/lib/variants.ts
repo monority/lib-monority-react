@@ -10,12 +10,14 @@ type CompoundVariant<T extends Variants> = {
   [K in keyof T]?: keyof T[K]
 } & { className: string }
 
+type VariantFn<T extends Variants> = (props?: Props<T>) => string
+
 function cva<T extends Variants>(schema: {
   base?: string
   variants: T
   defaultVariants?: Partial<Props<T>>
   compoundVariants?: CompoundVariant<T>[]
-}) {
+}): VariantFn<T> {
   return (props?: Props<T>): string => {
     const resolved = { ...schema.defaultVariants, ...props } as Record<string, string | undefined>
     const classes: string[] = schema.base ? [schema.base] : []
@@ -24,9 +26,8 @@ function cva<T extends Variants>(schema: {
       for (const key of Object.keys(schema.variants)) {
         const value = resolved[key]
         const map = schema.variants[key]
-        if (value && map[value]) {
-          classes.push(map[value])
-        }
+        const className = value != null ? map?.[value] : undefined
+        if (className) classes.push(className)
       }
     }
 
@@ -34,7 +35,7 @@ function cva<T extends Variants>(schema: {
       for (const compound of schema.compoundVariants) {
         const { className, ...matches } = compound
         const match = Object.entries(matches).every(
-          ([key, val]) => resolved[key] === val
+          ([key, val]) => resolved[key] === val,
         )
         if (match) classes.push(className)
       }
@@ -45,3 +46,4 @@ function cva<T extends Variants>(schema: {
 }
 
 export { cva }
+export type { VariantFn, Props as VariantProps, Variants as VariantMap }

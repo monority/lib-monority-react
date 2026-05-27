@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchMockSession, signOutMockSession } from '@/services/auth/mockAuthService'
 import { getErrorMessage, isAbortError } from '@/services/http/httpErrorUtils'
-import { AuthContext } from './auth-context'
+import { AuthContext, type AuthSession } from './auth-context'
 
 interface AuthProviderProps {
     children: React.ReactNode
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [session, setSession] = useState<any>(null)
+    const [session, setSession] = useState<AuthSession | null>(null)
     const [status, setStatus] = useState<'loading' | 'authenticated' | 'anonymous'>('loading')
     const [error, setError] = useState<Error | null>(null)
 
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             workspace: session?.workspace ?? null,
             status,
             error,
-            errorMessage: getErrorMessage(error),
+            errorMessage: error ? getErrorMessage(error) : null,
             isAuthenticated: status === 'authenticated',
             isLoading: status === 'loading',
             signOut,

@@ -1,21 +1,37 @@
-.ui-card {
-  --ui-card-radius: var(--ui-radius-lg);
-  --ui-card-padding: clamp(var(--ui-space-4), 2vw, var(--ui-space-5));
-  --ui-card-bg: linear-gradient(180deg, var(--ui-bg-surface-elevated), var(--ui-bg-surface));
-  --ui-card-shadow: var(--ui-shadow-xs);
+@layer recipes {
+  .mr-card {
+    min-height: 11rem;
+    border-radius: var(--mr-radius-lg);
+    border: 1px solid var(--mr-border-subtle);
+    background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+    box-shadow: var(--mr-shadow-sm);
+    backdrop-filter: blur(16px);
+    transition:
+      transform var(--mr-duration-base) var(--mr-ease-standard),
+      border-color var(--mr-duration-base) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-base) var(--mr-ease-standard),
+      background-color var(--mr-duration-base) var(--mr-ease-standard);
+  }
 
-  display: grid;
-  gap: var(--ui-space-4);
-  width: 100%;
-  min-width: 0;
-  padding: var(--ui-card-padding);
-  border: 1px solid var(--ui-border-subtle);
-  border-radius: var(--ui-card-radius);
-  background: var(--ui-card-bg);
-  box-shadow: var(--ui-card-shadow);
-}
+  .mr-card--sm,
+  .mr-card[data-padding='sm'] {
+    padding: var(--mr-space-4);
+  }
 
-.ui-card:hover {
-  border-color: var(--ui-border-strong);
-  box-shadow: var(--ui-shadow-sm);
+  .mr-card--md,
+  .mr-card[data-padding='md'] {
+    padding: clamp(var(--mr-space-4), 2vw, var(--mr-space-5));
+  }
+
+  .mr-card--lg,
+  .mr-card[data-padding='lg'] {
+    padding: clamp(var(--mr-space-5), 2.4vw, var(--mr-space-6));
+  }
+
+  .mr-card--interactive:hover,
+  .mr-card[data-interactive='true']:hover {
+    transform: translateY(-3px);
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-md);
+  }
 }

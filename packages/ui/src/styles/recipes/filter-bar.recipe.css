@@ -1,0 +1,9 @@
+@layer recipes {
+  .mr-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-3);
+    padding: var(--mr-space-2) 0;
+    flex-wrap: wrap;
+  }
+}
