@@ -1,6 +1,7 @@
-import { forwardRef, useId, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
+import { FormControl, useFormControl } from '@/primitives/form-control'
 import { Field } from '@/components/forms/field/Field'
 import type { RadioGroupProps } from './RadioGroup.types'
 
@@ -21,36 +22,28 @@ const radioGroupVariants = cva({
   defaultVariants: { tone: 'accent', size: 'md' },
 })
 
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
+const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroupInner(
   {
     tone,
     size,
     label,
     hint,
     error,
-    id,
     className,
     items = [],
     value,
     defaultValue,
     onChange,
-    required = false,
-    disabled = false,
-    invalid = false,
     name,
     ...props
   },
   ref,
 ) {
-  const generatedId = useId()
-  const groupId = id || generatedId
-  const groupName = name || `${groupId}-name`
-  const hintId = hint ? `${groupId}-hint` : undefined
-  const errorId = error ? `${groupId}-error` : undefined
-  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+  const ctx = useFormControl()
+  const groupName = name || `${ctx.inputId}-name`
   const resolvedTone = tone ?? 'accent'
   const resolvedSize = size ?? 'md'
-  const isInvalid = invalid || Boolean(error)
+  const isInvalid = ctx.isInvalid
   const isControlled = value !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue ?? '')
   const selectedValue = isControlled ? value : internalValue
@@ -66,31 +59,28 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
       label={label}
       hint={hint}
       error={error}
-      required={required}
-      hintId={hintId}
-      errorId={errorId}
     >
       <div
         ref={ref}
         className={cn(
           radioGroupVariants({ tone: resolvedTone, size: resolvedSize }),
-          disabled && 'mr-radio-group--disabled',
+          ctx.isDisabled && 'mr-radio-group--disabled',
           isInvalid && 'mr-radio-group--invalid',
         )}
         role="radiogroup"
         aria-invalid={isInvalid || undefined}
-        aria-describedby={describedBy}
+        aria-describedby={ctx.describedBy}
         data-tone={resolvedTone}
         data-size={resolvedSize}
-        data-disabled={disabled ? true : undefined}
+        data-disabled={ctx.isDisabled ? true : undefined}
         data-invalid={isInvalid ? true : undefined}
-        data-required={required ? true : undefined}
+        data-required={ctx.isRequired ? true : undefined}
         {...props}
       >
         {items.map((item) => {
-          const itemId = `${groupId}-${item.value}`
+          const itemId = `${ctx.inputId}-${item.value}`
           const checked = selectedValue === item.value
-          const isItemDisabled = disabled || item.disabled
+          const isItemDisabled = ctx.isDisabled || item.disabled
 
           return (
             <label
@@ -111,7 +101,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
                 type="radio"
                 value={item.value}
                 checked={checked}
-                required={required}
+                required={ctx.isRequired}
                 onChange={() => handleChange(item.value)}
                 disabled={isItemDisabled}
               />
@@ -127,6 +117,15 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
         })}
       </div>
     </Field>
+  )
+})
+
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(props, ref) {
+  const { id, hint, error, disabled, required, invalid, ...rest } = props
+  return (
+    <FormControl id={id} hint={!!hint} error={!!error} disabled={disabled} required={required} invalid={invalid}>
+      <RadioGroupInner ref={ref} {...rest} />
+    </FormControl>
   )
 })
 

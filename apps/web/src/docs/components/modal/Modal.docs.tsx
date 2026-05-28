@@ -1,5 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { ModalBasicExample } from './Modal.examples'
+import {
+  ModalBasicExample,
+  ModalWithFormExample,
+  ModalScrollableExample,
+} from './Modal.examples'
 
 const docData: DocPageData = {
   title: 'Modal',
@@ -9,6 +13,10 @@ const docData: DocPageData = {
   Dialog content
 </Modal>`,
   preview: () => <ModalBasicExample />,
+  examples: [
+    { title: 'With form', content: <ModalWithFormExample /> },
+    { title: 'Scrollable content', content: <ModalScrollableExample /> },
+  ],
   props: [
     { name: 'open', type: `boolean`, defaultValue: "-", description: 'Controls mounted dialog state.' },
     { name: 'title', type: `string`, defaultValue: "-", description: 'Dialog label.' },

@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { DataList } from '@monority/ui'
-import { DataListBasicExample } from './DataList.examples'
+import {
+  DataListBasicExample,
+  DataListWithItemsExample,
+  DataListSplitExample,
+} from './DataList.examples'
 
 const docData: DocPageData = {
   title: 'DataList',
@@ -11,10 +14,24 @@ const docData: DocPageData = {
   { label: 'Role', value: 'Developer' },
 ]} />`,
   preview: () => <DataListBasicExample />,
+  examples: [
+    { title: 'With items', content: <DataListWithItemsExample /> },
+    { title: 'Split layout', content: <DataListSplitExample /> },
+  ],
   props: [
     { name: 'items', type: `{ key?: string; label: ReactNode; value: ReactNode; render?: (value, item, index) => ReactNode }[]`, defaultValue: "[]", description: "Key-value pairs." },
     { name: 'columns', type: `'auto' | 'split'`, defaultValue: "-", description: "Column layout mode." },
     { name: 'className', type: `string`, defaultValue: "-", description: "Additional class name." }
+  ],
+  cssHooks: [
+    '.mr-data-list', '.mr-data-list__item', '.mr-data-list__label', '.mr-data-list__value',
+  ],
+  tokens: [
+    '--mr-border-subtle', '--mr-text-sm', '--mr-fg-muted',
+  ],
+  a11y: [
+    'Definition list pattern.',
+    'Associated label-value pairs.',
   ],
 }
 

@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Table } from '@monority/ui'
-import { TableBasicExample } from './Table.examples'
+import {
+  TableBasicExample,
+  TableWithDataExample,
+  TableEmptyExample,
+} from './Table.examples'
 
 const docData: DocPageData = {
   title: 'Table',
@@ -18,10 +21,26 @@ const rows = [
 
 <Table columns={columns} rows={rows} />`,
   preview: () => <TableBasicExample />,
+  examples: [
+    { title: 'With data', content: <TableWithDataExample /> },
+    { title: 'Empty state', content: <TableEmptyExample /> },
+  ],
   props: [
     { name: 'columns', type: `Column[]`, defaultValue: "[]", description: "Column definitions" },
     { name: 'rows', type: `Record<string, ReactNode>[]`, defaultValue: "[]", description: "Table data" },
     { name: 'emptyState', type: `ReactNode`, defaultValue: "Built-in empty state", description: "Custom empty state content" }
+  ],
+  cssHooks: [
+    '.mr-table', '.mr-table__header', '.mr-table__row', '.mr-table__cell',
+  ],
+  tokens: [
+    '--mr-border-subtle', '--mr-bg-surface', '--mr-bg-surface-strong',
+    '--mr-fg-base', '--mr-text-sm',
+  ],
+  a11y: [
+    'Native <table> semantics.',
+    'Scope attributes on headers.',
+    'Caption for context if needed.',
   ],
 }
 

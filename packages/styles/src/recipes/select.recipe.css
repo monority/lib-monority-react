@@ -1,57 +1,28 @@
 @layer recipes {
+  /* Select component-specific styles.
+     Base styles (border, padding, background-color, color, font-size,
+     line-height, transitions) are provided by .mr-input-base in
+     input-base.recipe.css. */
+
   .mr-select {
     appearance: none;
-    width: var(--mr-input-width);
-    min-height: var(--mr-input-height);
-    padding-inline: 2.5rem 1rem;
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-input-radius);
-    background-color: var(--mr-bg-control);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23666' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
-    color: var(--mr-fg-base);
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    line-height: 1.5;
     cursor: pointer;
-    box-shadow: var(--mr-shadow-xs);
-    transition:
-      border-color var(--mr-dur-150) var(--mr-ease-in-out),
-      background-color var(--mr-dur-150) var(--mr-ease-in-out),
-      box-shadow var(--mr-dur-150) var(--mr-ease-in-out);
-  }
-
-  .mr-select:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
-    border-color: var(--mr-border-strong);
-  }
-
-  .mr-select:hover:not(:disabled):not([data-disabled='true']) {
-    border-color: var(--mr-border-strong);
-  }
-
-  .mr-select--disabled,
-  .mr-select[data-disabled='true'] {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  .mr-select--invalid,
-  .mr-select[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+    /* Extra padding-inline-end for chevron space — overrides input-base */
+    padding-inline-end: 2.5rem;
   }
 
   .mr-select--accent,
   .mr-select[data-tone='accent'] {
-    border-color: var(--mr-accent-soft);
+    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
   }
 
   .mr-select--accent:focus-visible,
   .mr-select[data-tone='accent']:focus-visible {
-    border-color: var(--mr-accent);
-    box-shadow: 0 0 0 1px var(--mr-accent);
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-select--danger,
@@ -61,26 +32,24 @@
 
   .mr-select--danger:focus-visible,
   .mr-select[data-tone='danger']:focus-visible {
-    border-color: var(--mr-danger);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--mr-danger) 50%, transparent);
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-select--sm,
   .mr-select[data-size='sm'] {
-    --mr-input-height: 2rem;
-    padding-inline: 2rem 0.75rem;
-    font-size: var(--mr-text-xs);
+    padding-inline-end: 2rem;
+    background-position: right 0.5rem center;
   }
 
   .mr-select--md,
   .mr-select[data-size='md'] {
-    --mr-input-height: 2.5rem;
+    /* default */
   }
 
   .mr-select--lg,
   .mr-select[data-size='lg'] {
-    --mr-input-height: 3rem;
-    padding-inline: 2.75rem 1.25rem;
-    font-size: var(--mr-text-md);
+    padding-inline-end: 2.75rem;
+    background-position: right 0.75rem center;
   }
 }

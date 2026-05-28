@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { CommandPalette } from '@monority/ui'
-import { CommandPaletteBasicExample } from './CommandPalette.examples'
+import {
+  CommandPaletteBasicExample,
+  CommandPaletteWithGroupsExample,
+  CommandPaletteWithShortcutsExample,
+} from './CommandPalette.examples'
 
 const docData: DocPageData = {
   title: 'CommandPalette',
@@ -15,6 +18,10 @@ const docData: DocPageData = {
   ]}
 />`,
   preview: () => <CommandPaletteBasicExample />,
+  examples: [
+    { title: 'With groups', content: <CommandPaletteWithGroupsExample /> },
+    { title: 'With shortcuts', content: <CommandPaletteWithShortcutsExample /> },
+  ],
   props: [
     { name: 'open', type: `boolean`, defaultValue: "-", description: "Controls open state." },
     { name: 'onClose', type: `() => void`, defaultValue: "-", description: "Close callback." },
@@ -22,6 +29,20 @@ const docData: DocPageData = {
     { name: 'title', type: `string`, defaultValue: "-", description: "Palette title." },
     { name: 'placeholder', type: `string`, defaultValue: "-", description: "Search placeholder." },
     { name: 'emptyLabel', type: `string`, defaultValue: "-", description: "Empty results message." }
+  ],
+  cssHooks: [
+    '.mr-command-palette', '.mr-command-palette__input', '.mr-command-palette__list', '.mr-command-palette__item',
+    '[data-open]', '[data-selected]',
+  ],
+  tokens: [
+    '--mr-bg-surface-elevated', '--mr-shadow-xl', '--mr-radius-lg',
+    '--mr-bg-overlay', '--mr-text-sm', '--mr-space-*',
+  ],
+  a11y: [
+    'Combobox ARIA pattern.',
+    'role="dialog" with aria-modal.',
+    'Keyboard navigation (arrows, enter, escape).',
+    'aria-activedescendant for active option.',
   ],
 }
 

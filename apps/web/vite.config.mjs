@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url'
+﻿import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import fs from 'node:fs'
 import { defineConfig } from 'vite'
@@ -9,7 +9,26 @@ const webSrc = path.resolve(webDir, './src')
 const monorepoRoot = path.resolve(webDir, '../..')
 const uiSrc = path.resolve(monorepoRoot, 'packages/ui/src')
 const exts = ['.tsx', '.ts', '.jsx', '.js', '.mjs', '.json', '.css']
+
 const isFile = (p) => { try { return fs.statSync(p).isFile() } catch { return false } }
+const isDir = (p) => { try { return fs.statSync(p).isDirectory() } catch { return false } }
+
+function tryResolve(basePath) {
+  if (isFile(basePath)) return basePath
+  for (const ext of exts) {
+    const candidate = basePath + ext
+    if (isFile(candidate)) return candidate
+    const tsFromJs = basePath.replace(/\.js$/, ext)
+    if (tsFromJs !== basePath && isFile(tsFromJs)) return tsFromJs
+  }
+  if (isDir(basePath)) {
+    for (const ext of exts) {
+      const indexFile = path.join(basePath, 'index' + ext)
+      if (isFile(indexFile)) return indexFile
+    }
+  }
+  return null
+}
 
 export default defineConfig({
   plugins: [
@@ -20,29 +39,7 @@ export default defineConfig({
       resolveId(source) {
         if (!source.startsWith('@/')) return null
         const relative = source.slice(2)
-
-        // Try web src first, then UI package src as fallback
-        const webPath = path.resolve(webSrc, relative)
-        if (isFile(webPath)) return webPath
-
-        for (const ext of exts) {
-          const candidate = webPath + ext
-          if (isFile(candidate)) return candidate
-          const tsFromJs = webPath.replace(/\.js$/, ext)
-          if (tsFromJs !== webPath && isFile(tsFromJs)) return tsFromJs
-        }
-
-        const uiPath = path.resolve(uiSrc, relative)
-        if (isFile(uiPath)) return uiPath
-
-        for (const ext of exts) {
-          const candidate = uiPath + ext
-          if (isFile(candidate)) return candidate
-          const tsFromJs = uiPath.replace(/\.js$/, ext)
-          if (tsFromJs !== uiPath && isFile(tsFromJs)) return tsFromJs
-        }
-
-        return null
+        return tryResolve(path.resolve(webSrc, relative)) || tryResolve(path.resolve(uiSrc, relative)) || null
       },
     },
   ],

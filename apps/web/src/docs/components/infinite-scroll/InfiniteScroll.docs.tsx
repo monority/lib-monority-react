@@ -1,5 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { InfiniteScrollBasicExample } from './InfiniteScroll.examples'
+import {
+  InfiniteScrollBasicExample,
+  InfiniteScrollErrorExample,
+  InfiniteScrollEndMessageExample,
+} from './InfiniteScroll.examples'
 
 const docData: DocPageData = {
   title: 'InfiniteScroll',
@@ -11,6 +15,10 @@ const docData: DocPageData = {
   ))}
 </InfiniteScroll>`,
   preview: () => <InfiniteScrollBasicExample />,
+  examples: [
+    { title: 'Error state', content: <InfiniteScrollErrorExample /> },
+    { title: 'End message', content: <InfiniteScrollEndMessageExample /> },
+  ],
   props: [
     { name: 'onLoadMore', type: `() => void`, defaultValue: "-", description: 'Callback triggered when sentinel enters viewport.' },
     { name: 'hasMore', type: `boolean`, defaultValue: "true", description: 'Whether more items can be loaded.' },
@@ -19,6 +27,12 @@ const docData: DocPageData = {
     { name: 'error', type: `ReactNode`, defaultValue: "-", description: 'Error content shown on load failure.' },
     { name: 'onRetry', type: `() => void`, defaultValue: "-", description: 'Retry callback for error state.' },
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: 'List items to render.' },
+  ],
+  cssHooks: [
+    '.mr-infinite-scroll', '.mr-infinite-scroll__trigger',
+  ],
+  tokens: [
+    '--mr-space-*',
   ],
   a11y: ['IntersectionObserver-based loading', 'Sentinel is aria-hidden', 'Loading/error states announced via aria-live'],
 }

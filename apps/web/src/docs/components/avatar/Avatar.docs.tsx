@@ -1,6 +1,10 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Avatar } from '@monority/ui'
-import { AvatarBasicExample } from './Avatar.examples'
+import {
+  AvatarBasicExample,
+  AvatarSizesExample,
+  AvatarWithImageExample,
+  AvatarGroupExample,
+} from './Avatar.examples'
 
 const docData: DocPageData = {
   title: 'Avatar',
@@ -10,11 +14,29 @@ const docData: DocPageData = {
 <Avatar size="md" name="Alice B" />
 <Avatar size="lg" name="Alice B" />`,
   preview: () => <AvatarBasicExample />,
+  examples: [
+    { title: 'Sizes', content: <AvatarSizesExample /> },
+    { title: 'With image', content: <AvatarWithImageExample /> },
+    { title: 'Group', content: <AvatarGroupExample /> },
+  ],
   props: [
     { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: "'md'", description: "Size of the avatar" },
     { name: 'src', type: `string`, defaultValue: "-", description: "Image source URL" },
     { name: 'alt', type: `string`, defaultValue: "-", description: "Alt text for image" },
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Initials or fallback content" }
+  ],
+  cssHooks: [
+    '.mr-avatar', '.mr-avatar--sm', '.mr-avatar--md', '.mr-avatar--lg',
+    '[data-size]', '[data-status]',
+  ],
+  tokens: [
+    '--mr-radius-full', '--mr-bg-surface-strong', '--mr-fg-base',
+    '--mr-text-xs', '--mr-avatar-size',
+  ],
+  a11y: [
+    'img role="presentation" for decorative avatars.',
+    'aria-label for user avatars.',
+    'Status indicator with aria-label.',
   ],
 }
 

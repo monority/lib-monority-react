@@ -1,22 +1,41 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { DateRangePicker } from '@monority/ui'
-import { DateRangePickerBasicExample } from './DateRangePicker.examples'
+import {
+  DateRangePickerBasicExample,
+  DateRangePickerWithErrorExample,
+  DateRangePickerWithHintExample,
+  DateRangePickerDisabledExample,
+} from './DateRangePicker.examples'
 
 const docData: DocPageData = {
   title: 'DateRangePicker',
-  description: "Two native date inputs (from / to) wrapped in a single Field group.",
+  description: 'Two custom DatePicker components with calendar popovers, bound together with a visual separator.',
   importCode: "import { DateRangePicker } from '@monority/ui'",
-  usageCode: `<DateRangePicker label="Period" />`,
+  usageCode: `<DateRangePicker fromLabel="Start" toLabel="End" />`,
   preview: () => <DateRangePickerBasicExample />,
+  examples: [
+    { title: 'With error', content: <DateRangePickerWithErrorExample /> },
+    { title: 'With hint', content: <DateRangePickerWithHintExample /> },
+    { title: 'Disabled', content: <DateRangePickerDisabledExample /> },
+  ],
   props: [
-    { name: 'fromLabel', type: `string`, defaultValue: "'From'", description: "Label for the \"from\" input." },
-    { name: 'toLabel', type: `string`, defaultValue: "'To'", description: "Label for the \"to\" input." },
-    { name: 'label', type: `ReactNode`, defaultValue: "-", description: "Field label." },
-    { name: 'hint', type: `ReactNode`, defaultValue: "-", description: "Helpful description." },
-    { name: 'error', type: `ReactNode`, defaultValue: "-", description: "Error message." },
-    { name: 'required', type: `boolean`, defaultValue: "false", description: "Required field indicator." },
-    { name: 'fromProps', type: `object`, defaultValue: "-", description: "Props forwarded to the from DatePicker." },
-    { name: 'toProps', type: `object`, defaultValue: "-", description: "Props forwarded to the to DatePicker." }
+    { name: 'fromLabel', type: `string`, defaultValue: "'From'", description: "Label for the start DatePicker." },
+    { name: 'toLabel', type: `string`, defaultValue: "'To'", description: "Label for the end DatePicker." },
+    { name: 'fromProps', type: `Partial<DatePickerProps>`, defaultValue: "-", description: "Props forwarded to the start DatePicker (except label)." },
+    { name: 'toProps', type: `Partial<DatePickerProps>`, defaultValue: "-", description: "Props forwarded to the end DatePicker (except label)." },
+  ],
+  cssHooks: [
+    '.mr-date-range-picker', '.mr-date-range-picker__from', '.mr-date-range-picker__to',
+    '.mr-date-range-picker__separator',
+  ],
+  tokens: [
+    '--mr-border-subtle', '--mr-bg-control', '--mr-fg-base', '--mr-fg-muted',
+    '--mr-input-height', '--mr-radius-md', '--mr-text-sm', '--mr-space-*',
+  ],
+  a11y: [
+    'Native form element semantics.',
+    'Supports disabled/required/aria-invalid.',
+    'Visible focus ring.',
+    'Associated labels for screen readers.',
   ],
 }
 

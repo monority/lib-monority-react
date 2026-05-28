@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { DropdownMenu } from '@monority/ui'
-import { DropdownMenuBasicExample } from './DropdownMenu.examples'
+import {
+  DropdownMenuBasicExample,
+  DropdownMenuWithDisabledExample,
+  DropdownMenuWithCallbacksExample,
+} from './DropdownMenu.examples'
 
 const docData: DocPageData = {
   title: 'DropdownMenu',
@@ -15,6 +18,10 @@ const docData: DocPageData = {
   ]}
 />`,
   preview: () => <DropdownMenuBasicExample />,
+  examples: [
+    { title: 'With disabled items', content: <DropdownMenuWithDisabledExample /> },
+    { title: 'With callbacks', content: <DropdownMenuWithCallbacksExample /> },
+  ],
   props: [
     { name: 'trigger', type: `ReactNode`, defaultValue: "-", description: "Element that opens the menu." },
     { name: 'items', type: `{ value: string; label: string; type?: 'item' | 'separator'; disabled?: boolean; danger?: boolean; onSelect?: (value: string) => void }[]`, defaultValue: "[]", description: "Menu items." },

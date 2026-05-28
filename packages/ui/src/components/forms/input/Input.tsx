@@ -1,5 +1,7 @@
-import { forwardRef, useId } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { InputProps } from './Input.types'
 
@@ -14,41 +16,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       inputClassName,
       required = false,
       disabled = false,
+      size: _htmlSize,
       ...props
     },
     ref,
   ) {
-    const generatedId = useId()
-    const inputId = id || generatedId
-    const hintId = hint ? `${inputId}-hint` : undefined
-    const errorId = error ? `${inputId}-error` : undefined
-    const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
-
     return (
-      <Field
-        className={className}
-        htmlFor={inputId}
-        label={label}
-        hint={hint}
-        error={error}
-        required={required}
-        hintId={hintId}
-        errorId={errorId}
-      >
-        <input
-          ref={ref}
-          className={cn('mr-input', error ? 'mr-input--error' : undefined, inputClassName)}
-          {...props}
-          id={inputId}
-          aria-invalid={Boolean(error)}
-          aria-describedby={describedBy}
-          required={required}
-          disabled={disabled}
-          data-invalid={error ? true : undefined}
-          data-required={required ? true : undefined}
-          data-disabled={disabled ? true : undefined}
-        />
-      </Field>
+      <FormControl id={id} hint={!!hint} error={!!error} disabled={disabled} required={required}>
+        <Field className={className} label={label} hint={hint} error={error}>
+          <InputBase
+            as="input"
+            ref={ref}
+            className={cn('mr-input', error ? 'mr-input--error' : undefined, inputClassName)}
+            {...props}
+          />
+        </Field>
+      </FormControl>
     )
   },
 )

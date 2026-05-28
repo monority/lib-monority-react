@@ -1,6 +1,11 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Combobox } from '@monority/ui'
-import { ComboboxBasicExample } from './Combobox.examples'
+import {
+  ComboboxBasicExample,
+  ComboboxWithDescriptionsExample,
+  ComboboxDisabledExample,
+  ComboboxWithErrorExample,
+  ComboboxSizesExample,
+} from './Combobox.examples'
 
 const docData: DocPageData = {
   title: 'Combobox',
@@ -20,6 +25,12 @@ const items = [
   label="Framework"
 />`,
   preview: () => <ComboboxBasicExample />,
+  examples: [
+    { title: 'With descriptions', content: <ComboboxWithDescriptionsExample /> },
+    { title: 'Disabled', content: <ComboboxDisabledExample /> },
+    { title: 'Error state', content: <ComboboxWithErrorExample /> },
+    { title: 'Sizes', content: <ComboboxSizesExample /> },
+  ],
   props: [
     { name: 'items', type: `{ value: string; label: string; description?: string; keywords?: string }[]`, defaultValue: "[]", description: "Items for the dropdown." },
     { name: 'value', type: `string`, defaultValue: "-", description: "Controlled selected value." },
@@ -31,6 +42,20 @@ const items = [
     { name: 'hint', type: `ReactNode`, defaultValue: "-", description: "Helpful description." },
     { name: 'error', type: `ReactNode`, defaultValue: "-", description: "Error message." },
     { name: 'required', type: `boolean`, defaultValue: "false", description: "Required field indicator." }
+  ],
+  cssHooks: [
+    '.mr-combobox', '.mr-combobox__trigger', '.mr-combobox__menu', '.mr-combobox__option',
+    '[data-size]', '[data-disabled]', '[data-invalid]', '[data-open]', '[data-selected]',
+  ],
+  tokens: [
+    '--mr-bg-surface-elevated', '--mr-bg-control', '--mr-border-subtle',
+    '--mr-fg-base', '--mr-fg-muted', '--mr-shadow-lg', '--mr-radius-md', '--mr-text-sm',
+  ],
+  a11y: [
+    'Combobox ARIA pattern (role="combobox", aria-expanded, aria-activedescendant).',
+    'Keyboard navigation (arrows, enter, escape).',
+    'Listbox role for options menu.',
+    'Visible focus ring.',
   ],
 }
 

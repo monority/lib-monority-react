@@ -1,37 +1,14 @@
 @layer recipes {
+  /* Input component-specific overrides.
+     Base styles (border, padding, background, transitions, etc.)
+     are provided by .mr-input-base in input-base.recipe.css. */
+
   .mr-input {
-    width: var(--mr-input-width);
-    min-height: var(--mr-input-height);
-    padding-inline: 1rem;
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-input-radius);
-    background: var(--mr-bg-control);
-    color: var(--mr-fg-base);
-    box-shadow: var(--mr-shadow-xs);
-    transition:
-      border-color var(--mr-duration-fast) var(--mr-ease-standard),
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+    /* Inherits from .mr-input-base; add component-specific overrides here */
   }
 
-  .mr-input::placeholder {
-    color: var(--mr-fg-muted);
-  }
-
-  .mr-input:hover,
-  .mr-input:focus-visible {
-    border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
-  }
-
-  .mr-input--error,
-  .mr-input[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
-  }
-
-  .mr-input:disabled,
-  .mr-input[data-disabled='true'] {
-    cursor: not-allowed;
-    opacity: 0.5;
+  .mr-input--error {
+    /* Error state is handled by [data-invalid='true'] in input-base,
+       but keep this class for backward compatibility with cn() usage */
   }
 }

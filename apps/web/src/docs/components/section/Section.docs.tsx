@@ -1,6 +1,8 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Section } from '@monority/ui'
-import { SectionBasicExample } from './Section.examples'
+import {
+  SectionBasicExample,
+  SectionSpacingExample,
+} from './Section.examples'
 
 const docData: DocPageData = {
   title: 'Section',
@@ -10,8 +12,21 @@ const docData: DocPageData = {
   <h2>Content section</h2>
 </Section>`,
   preview: () => <SectionBasicExample />,
+  examples: [
+    { title: 'Spacing variants', content: <SectionSpacingExample /> },
+  ],
   props: [
     { name: 'spacing', type: `'sm' | 'md' | 'lg' | 'xl'`, defaultValue: "-", description: "Vertical spacing preset." }
+  ],
+  cssHooks: [
+    '.mr-section', '.mr-section__header', '.mr-section__title', '.mr-section__description',
+  ],
+  tokens: [
+    '--mr-space-*', '--mr-text-*',
+  ],
+  a11y: [
+    'Section landmark.',
+    'aria-labelledby for header.',
   ],
 }
 

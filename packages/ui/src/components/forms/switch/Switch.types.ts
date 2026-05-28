@@ -8,6 +8,8 @@ export interface SwitchProps
   tone?: SwitchTone
   size?: SwitchSize
   label?: ReactNode
+  hint?: ReactNode
+  error?: ReactNode
   className?: string
   invalid?: boolean
 }

@@ -39,7 +39,7 @@ describe('Input', () => {
     expect(input?.className).toContain('mr-input')
     expect(input?.getAttribute('id')).toBe('email')
     expect(input?.getAttribute('placeholder')).toBe('you@example.com')
-    expect(input?.getAttribute('aria-invalid')).toBe('false')
+    expect(input?.getAttribute('aria-invalid')).toBeNull()
   })
 
   it('maps hint, error, required and disabled state to stable hooks', () => {

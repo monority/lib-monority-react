@@ -4,6 +4,21 @@ import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
 import type { PasswordInputProps } from './PasswordInput.types'
 
+const EyeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path d="M10 4.5C5.5 4.5 2 10 2 10C2 10 5.5 15.5 10 15.5C14.5 15.5 18 10 18 10C18 10 14.5 4.5 10 4.5Z" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/>
+  </svg>
+)
+
+const EyeOffIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path d="M10 4.5C5.5 4.5 2 10 2 10C2 10 5.5 15.5 10 15.5C14.5 15.5 18 10 18 10C18 10 14.5 4.5 10 4.5Z" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="3.5" y1="3.5" x2="16.5" y2="16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+)
+
 const passwordInputVariants = cva({
   base: 'mr-password-input',
   variants: {
@@ -83,7 +98,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               onClick={() => setShowPassword((prev) => !prev)}
               tabIndex={-1}
             >
-              {showPassword ? '🙈' : '👁'}
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
             </button>
           ) : null}
         </div>

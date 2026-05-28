@@ -1,10 +1,13 @@
-import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ComboboxProps, ComboboxItem } from './Combobox.types'
+import type { ComboboxTone, ComboboxSize } from './Combobox.types'
 
 const comboboxVariants = cva({
   base: 'mr-combobox',
@@ -48,9 +51,6 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
   ) {
     const generatedId = useId()
     const inputId = id || generatedId
-    const hintId = hint ? `${inputId}-hint` : undefined
-    const errorId = error ? `${inputId}-error` : undefined
-    const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
 
     const rootRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -66,9 +66,15 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     const selectedValue = isControlled ? value : internalValue
     const portalTarget = usePortalTarget()
 
-    const resolvedTone = tone ?? 'neutral'
-    const resolvedSize = size ?? 'md'
+    const resolvedTone: ComboboxTone = tone ?? 'neutral'
+    const resolvedSize: ComboboxSize = size ?? 'md'
     const isInvalid = invalid || Boolean(error)
+
+    const handleRef = useCallback((node: HTMLInputElement | null) => {
+      inputRef.current = node
+      if (typeof ref === 'function') ref(node)
+      else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+    }, [ref])
 
     const selectedItem = useMemo(
       () => items.find((item) => item.value === selectedValue) ?? null,
@@ -151,124 +157,110 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     }
 
     return (
-      <Field
-        className={className}
-        htmlFor={inputId}
-        label={label}
-        hint={hint}
-        error={error}
-        required={required}
-        hintId={hintId}
-        errorId={errorId}
-      >
-        <div
-          ref={rootRef}
-          className={comboboxVariants({ tone: resolvedTone, size: resolvedSize })}
-          data-tone={resolvedTone}
-          data-size={resolvedSize}
-          data-open={open ? true : undefined}
-          data-invalid={isInvalid ? true : undefined}
-          data-disabled={disabled ? true : undefined}
-          data-required={required ? true : undefined}
+      <FormControl id={inputId} hint={!!hint} error={!!error} disabled={disabled} required={required}>
+        <Field
+          className={className}
+          label={label}
+          hint={hint}
+          error={error}
         >
-          <input
-            ref={(node) => {
-              inputRef.current = node
-              if (typeof ref === 'function') ref(node)
-              else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
-            }}
-            className={cn(
-              'mr-combobox__input',
-              isInvalid && 'mr-combobox__input--invalid',
-              disabled && 'mr-combobox__input--disabled',
-            )}
-            id={inputId}
-            type="text"
-            role="combobox"
-            aria-expanded={open}
-            aria-controls={`${inputId}-list`}
-            aria-activedescendant={
-              filteredItems[activeIndex]
-                ? `${inputId}-item-${filteredItems[activeIndex].value}`
-                : undefined
-            }
-            aria-autocomplete="list"
-            autoComplete="off"
-            value={
-              open
-                ? query
-                : selectedItem?.label ?? selectedValue
-            }
-            onChange={(e) => {
-              setQuery(e.target.value)
-              setActiveIndex(0)
-              setOpen(true)
-            }}
-            onFocus={() => {
-              setQuery('')
-              setOpen(true)
-            }}
-            onKeyDown={handleKeyDown}
-            aria-label={typeof label === 'string' ? label : undefined}
-            aria-invalid={isInvalid || undefined}
-            aria-describedby={describedBy}
-            required={required}
-            disabled={disabled}
-            placeholder={placeholder}
-            {...props}
-          />
-          {open && portalTarget
-            ? createPortal(
-                <div
-                  ref={listRef}
-                  id={`${inputId}-list`}
-                  className="mr-combobox__list"
-                  role="listbox"
-                  aria-label={typeof label === 'string' ? label : undefined}
-                  style={{
-                    position: 'fixed',
-                    top: `${position.top}px`,
-                    left: `${position.left}px`,
-                    width: `${position.width}px`,
-                  }}
-                >
-                  {filteredItems.length
-                    ? filteredItems.map((item, index) => {
-                        const isActive = index === activeIndex
-                        const isSelected = item.value === selectedValue
-                        return (
-                          <button
-                            key={item.value}
-                            type="button"
-                            id={`${inputId}-item-${item.value}`}
-                            role="option"
-                            aria-selected={isSelected}
-                            data-active={isActive ? true : undefined}
-                            data-selected={isSelected ? true : undefined}
-                            className={cn(
-                              'mr-combobox__item',
-                              isActive && 'is-active',
-                              isSelected && 'is-selected',
-                            )}
-                            onMouseEnter={() => setActiveIndex(index)}
-                            onClick={() => selectItem(item)}
-                          >
-                            <span className="mr-combobox__item-label">{item.label}</span>
-                            {item.description ? (
-                              <span className="mr-combobox__item-description">
-                                {item.description}
-                              </span>
-                            ) : null}
-                          </button>
-                        )
-                      })
-                    : <div className="mr-combobox__empty">{emptyLabel}</div>}
-                </div>,
-                portalTarget,
-              )
-            : null}
-        </div>
-      </Field>
+          <div
+            ref={rootRef}
+            className={comboboxVariants({ tone: resolvedTone, size: resolvedSize })}
+            data-tone={resolvedTone}
+            data-size={resolvedSize}
+            data-open={open ? true : undefined}
+            data-invalid={isInvalid ? true : undefined}
+            data-disabled={disabled ? true : undefined}
+            data-required={required ? true : undefined}
+          >
+            <InputBase
+              as="input"
+              ref={handleRef}
+              type="text"
+              role="combobox"
+              className={cn(
+                'mr-combobox__input',
+                isInvalid && 'mr-combobox__input--invalid',
+                disabled && 'mr-combobox__input--disabled',
+              )}
+              aria-expanded={open}
+              aria-controls={`${inputId}-list`}
+              aria-activedescendant={
+                filteredItems[activeIndex]
+                  ? `${inputId}-item-${filteredItems[activeIndex].value}`
+                  : undefined
+              }
+              aria-autocomplete="list"
+              autoComplete="off"
+              placeholder={placeholder}
+              value={open ? query : selectedItem?.label ?? selectedValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setQuery(e.target.value)
+                setActiveIndex(0)
+                setOpen(true)
+              }}
+              onFocus={() => {
+                setQuery('')
+                setOpen(true)
+              }}
+              onKeyDown={handleKeyDown}
+              aria-label={typeof label === 'string' ? label : undefined}
+              {...props}
+            />
+            {open && portalTarget
+              ? createPortal(
+                  <div
+                    ref={listRef}
+                    id={`${inputId}-list`}
+                    className="mr-combobox__list"
+                    role="listbox"
+                    aria-label={typeof label === 'string' ? label : undefined}
+                    style={{
+                      position: 'fixed',
+                      top: `${position.top}px`,
+                      left: `${position.left}px`,
+                      width: `${position.width}px`,
+                    }}
+                  >
+                    {filteredItems.length
+                      ? filteredItems.map((item, index) => {
+                          const isActive = index === activeIndex
+                          const isSelected = item.value === selectedValue
+                          return (
+                            <button
+                              key={item.value}
+                              type="button"
+                              id={`${inputId}-item-${item.value}`}
+                              role="option"
+                              aria-selected={isSelected}
+                              data-active={isActive ? true : undefined}
+                              data-selected={isSelected ? true : undefined}
+                              className={cn(
+                                'mr-combobox__item',
+                                isActive && 'is-active',
+                                isSelected && 'is-selected',
+                              )}
+                              onMouseEnter={() => setActiveIndex(index)}
+                              onClick={() => selectItem(item)}
+                            >
+                              <span className="mr-combobox__item-label">{item.label}</span>
+                              {item.description ? (
+                                <span className="mr-combobox__item-description">
+                                  {item.description}
+                                </span>
+                              ) : null}
+                            </button>
+                          )
+                        })
+                      : <div className="mr-combobox__empty">{emptyLabel}</div>}
+                  </div>,
+                  portalTarget,
+                )
+              : null}
+          </div>
+        </Field>
+      </FormControl>
     )
   },
 )

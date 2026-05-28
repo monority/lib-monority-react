@@ -35,9 +35,9 @@
     border-radius: var(--mr-radius-full);
     background: var(--mr-bg-control);
     transition:
-      background-color var(--mr-dur-150) var(--mr-ease-in-out),
-      border-color var(--mr-dur-150) var(--mr-ease-in-out),
-      box-shadow var(--mr-dur-150) var(--mr-ease-in-out);
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-switch__thumb {
@@ -45,14 +45,11 @@
     height: var(--mr-switch-thumb-size);
     border-radius: var(--mr-radius-full);
     background: var(--mr-fg-strong);
-    transition: transform var(--mr-dur-150) var(--mr-ease-in-out);
+    transition: transform var(--mr-duration-fast) var(--mr-ease-standard);
     transform: translateX(0);
   }
 
-  .mr-switch__label {
-    font-size: var(--mr-text-sm);
-    line-height: 1.5;
-  }
+  /* .mr-switch__label removed — label now rendered by Field wrapper */
 
   .mr-switch__input:focus-visible + .mr-switch__control {
     outline: 2px solid var(--mr-accent);

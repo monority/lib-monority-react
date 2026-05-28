@@ -1,6 +1,8 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { MetricGrid } from '@monority/ui'
-import { MetricGridBasicExample } from './MetricGrid.examples'
+import {
+  MetricGridBasicExample,
+  MetricGridWithItemsExample,
+} from './MetricGrid.examples'
 
 const docData: DocPageData = {
   title: 'MetricGrid',
@@ -11,8 +13,23 @@ const docData: DocPageData = {
   { label: 'Users', value: '1,234', trend: '+8%', trendTone: 'success' },
 ]} />`,
   preview: () => <MetricGridBasicExample />,
+  examples: [
+    { title: 'With items', content: <MetricGridWithItemsExample /> },
+  ],
   props: [
     { name: 'items', type: `{ key: string; label: ReactNode; value: ReactNode; trend?: ReactNode; trendTone?: 'neutral' | 'success' | 'warning' | 'danger'; description?: ReactNode; icon?: ReactNode; footer?: ReactNode }[]`, defaultValue: "[]", description: "KPI card data." }
+  ],
+  cssHooks: [
+    '.mr-metric-grid', '[data-direction]',
+  ],
+  tokens: [
+    '--mr-fg-base', '--mr-fg-muted', '--mr-text-*', '--mr-space-*',
+    '--mr-success', '--mr-danger',
+  ],
+  a11y: [
+    'Summary/statistics pattern.',
+    'aria-label for metric groups.',
+    'Trend direction announced via text (not just color).',
   ],
 }
 

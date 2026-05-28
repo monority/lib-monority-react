@@ -1,6 +1,8 @@
-import { forwardRef, useId } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { SelectProps } from './Select.types'
 
@@ -38,48 +40,36 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   },
   ref,
 ) {
-  const generatedId = useId()
-  const selectId = id || generatedId
-  const hintId = hint ? `${selectId}-hint` : undefined
-  const errorId = error ? `${selectId}-error` : undefined
-  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
   const resolvedTone = tone ?? 'neutral'
   const resolvedSize = size ?? 'md'
   const isInvalid = invalid || Boolean(error)
 
   return (
-    <Field
-      className={className}
-      htmlFor={selectId}
-      label={label}
-      hint={hint}
-      error={error}
+    <FormControl
+      id={id}
+      hint={!!hint}
+      error={!!error}
+      disabled={disabled}
       required={required}
-      hintId={hintId}
-      errorId={errorId}
+      tone={resolvedTone}
+      size={resolvedSize}
+      invalid={isInvalid}
     >
-      <select
-        ref={ref}
-        id={selectId}
-        className={cn(
-          selectVariants({ tone: resolvedTone, size: resolvedSize }),
-          disabled && 'mr-select--disabled',
-          isInvalid && 'mr-select--invalid',
-        )}
-        aria-invalid={isInvalid || undefined}
-        aria-describedby={describedBy}
-        disabled={disabled}
-        required={required}
-        data-tone={resolvedTone}
-        data-size={resolvedSize}
-        data-disabled={disabled ? true : undefined}
-        data-invalid={isInvalid ? true : undefined}
-        data-required={required ? true : undefined}
-        {...props}
-      >
-        {children}
-      </select>
-    </Field>
+      <Field className={className} label={label} hint={hint} error={error}>
+        <InputBase
+          as="select"
+          ref={ref}
+          className={cn(
+            selectVariants({ tone: resolvedTone, size: resolvedSize }),
+            disabled && 'mr-select--disabled',
+            isInvalid && 'mr-select--invalid',
+          )}
+          {...props}
+        >
+          {children}
+        </InputBase>
+      </Field>
+    </FormControl>
   )
 })
 

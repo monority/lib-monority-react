@@ -1,6 +1,8 @@
-import { forwardRef, useId } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { TextareaProps } from './Textarea.types'
 
@@ -33,52 +35,95 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     invalid = false,
     disabled = false,
     required = false,
-    rows = 5,
+    resize = 'vertical',
+    value,
+    defaultValue,
+    onChange,
+    maxLength,
     ...props
   },
   ref,
 ) {
-  const generatedId = useId()
-  const textareaId = id || generatedId
-  const hintId = hint ? `${textareaId}-hint` : undefined
-  const errorId = error ? `${textareaId}-error` : undefined
-  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
   const resolvedTone = tone ?? 'neutral'
   const resolvedSize = size ?? 'md'
   const isInvalid = invalid || Boolean(error)
+  const isControlled = value !== undefined
+
+  // Track char count for uncontrolled
+  const [charCount, setCharCount] = useState(
+    isControlled
+      ? String(value ?? '').length
+      : String(defaultValue ?? '').length,
+  )
+
+  // Inner ref for auto-resize
+  const innerRef = useRef<HTMLTextAreaElement | null>(null)
+  const mergedRef = useCallback(
+    (node: HTMLTextAreaElement | null) => {
+      innerRef.current = node
+      if (typeof ref === 'function') ref(node)
+      else if (ref) ref.current = node
+    },
+    [ref],
+  )
+
+  const adjustHeight = useCallback(() => {
+    const el = innerRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }, [])
+
+  // Adjust on mount and when value/children change
+  useEffect(() => {
+    adjustHeight()
+  }, [adjustHeight, value])
+
+  function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    if (!isControlled) {
+      setCharCount(e.target.value.length)
+    }
+    onChange?.(e)
+    // Adjust height after state settles
+    requestAnimationFrame(adjustHeight)
+  }
+
+  const currentLength = isControlled ? String(value ?? '').length : charCount
 
   return (
-    <Field
-      className={className}
-      htmlFor={textareaId}
-      label={label}
-      hint={hint}
-      error={error}
+    <FormControl
+      id={id}
+      hint={!!hint}
+      error={!!error}
+      disabled={disabled}
       required={required}
-      hintId={hintId}
-      errorId={errorId}
+      tone={resolvedTone}
+      size={resolvedSize}
+      invalid={isInvalid}
     >
-      <textarea
-        ref={ref}
-        id={textareaId}
-        rows={rows}
-        className={cn(
-          textareaVariants({ tone: resolvedTone, size: resolvedSize }),
-          disabled && 'mr-textarea--disabled',
-          isInvalid && 'mr-textarea--invalid',
-        )}
-        aria-invalid={isInvalid || undefined}
-        aria-describedby={describedBy}
-        disabled={disabled}
-        required={required}
-        data-tone={resolvedTone}
-        data-size={resolvedSize}
-        data-disabled={disabled ? true : undefined}
-        data-invalid={isInvalid ? true : undefined}
-        data-required={required ? true : undefined}
-        {...props}
-      />
-    </Field>
+      <Field className={className} label={label} hint={hint} error={error}>
+        <InputBase
+          as="textarea"
+          ref={mergedRef}
+          className={cn(
+            textareaVariants({ tone: resolvedTone, size: resolvedSize }),
+            disabled && 'mr-textarea--disabled',
+            isInvalid && 'mr-textarea--invalid',
+          )}
+          data-resize={resize}
+          value={value}
+          defaultValue={defaultValue}
+          onChange={handleChange}
+          maxLength={maxLength}
+          {...props}
+        />
+        {typeof maxLength !== 'undefined' && maxLength > 0 ? (
+          <span className="mr-textarea__counter" aria-live="polite">
+            {currentLength} / {maxLength}
+          </span>
+        ) : null}
+      </Field>
+    </FormControl>
   )
 })
 

@@ -1,17 +1,22 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import { Input } from '@monority/ui/input'
-import { InputBasicExample } from './Input.examples'
+import { InputBasicExample, InputSearchExample, InputNumberExample, InputPasswordExample } from './Input.examples'
 
 const docData: DocPageData = {
   title: 'Input',
-  description: 'Form field primitive with label, hint, error, required, and disabled state hooks.',
-  importCode: "import { Input } from '@monority/ui/input'",
+  description: 'Form field primitive with label, hint, error, required, and disabled state hooks. Includes search, number and password variants.',
+  importCode: "import { Input, NumberInput, PasswordInput } from '@monority/ui'",
   usageCode: `<Input
   label="Email"
   hint="Use your work email."
   placeholder="you@company.com"
 />`,
   preview: () => <InputBasicExample />,
+  examples: [
+    { title: 'Search', content: <InputSearchExample /> },
+    { title: 'Number', content: <InputNumberExample /> },
+    { title: 'Password', content: <InputPasswordExample /> },
+  ],
   props: [
     { name: 'label', type: `ReactNode`, defaultValue: "-", description: 'Visible label rendered through Field.' },
     { name: 'hint', type: `ReactNode`, defaultValue: "-", description: 'Helpful description linked with aria-describedby.' },
@@ -27,7 +32,7 @@ const docData: DocPageData = {
     '--mr-duration-fast', '--mr-ease-standard',
     '--mr-danger',
   ],
-  a11y: ['Label uses htmlFor.', 'Hint/error IDs feed aria-describedby.', 'Errors set aria-invalid.'],
+  a11y: ['Label uses htmlFor.', 'Hint/error IDs feed aria-describedby.', 'Errors set aria-invalid.', 'Search inputs use type="search".'],
 }
 
 export function InputDocs() {

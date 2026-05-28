@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Card } from '@monority/ui/card'
-import { CardBasicExample } from './Card.examples'
+import {
+  CardBasicExample,
+  CardPaddingExample,
+  CardInteractiveExample,
+} from './Card.examples'
 
 const docData: DocPageData = {
   title: 'Card',
@@ -11,6 +14,10 @@ const docData: DocPageData = {
   <p>Stable release candidate.</p>
 </Card>`,
   preview: () => <CardBasicExample />,
+  examples: [
+    { title: 'Padding sizes', content: <CardPaddingExample /> },
+    { title: 'Interactive', content: <CardInteractiveExample /> },
+  ],
   props: [
     { name: 'padding', type: `'sm' | 'md' | 'lg'`, defaultValue: "'md'", description: 'Interior spacing.' },
     { name: 'interactive', type: `boolean`, defaultValue: "false", description: 'Adds hover affordance for clickable cards.' },

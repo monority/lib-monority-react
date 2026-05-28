@@ -42,3 +42,6 @@ npm-debug.log*
 
 # Misc
 *.tsbuildinfo
+CLAUDE.md
+.cline/config.json
+.continue/config.json

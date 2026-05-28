@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { FormSection } from '@monority/ui'
-import { FormSectionBasicExample } from './FormSection.examples'
+import {
+  FormSectionBasicExample,
+  FormSectionWithoutActionsExample,
+  FormSectionWithMetaExample,
+} from './FormSection.examples'
 
 const docData: DocPageData = {
   title: 'FormSection',
@@ -13,6 +16,10 @@ const docData: DocPageData = {
   <Input label="Full name" />
 </FormSection>`,
   preview: () => <FormSectionBasicExample />,
+  examples: [
+    { title: 'Without actions', content: <FormSectionWithoutActionsExample /> },
+    { title: 'With meta', content: <FormSectionWithMetaExample /> },
+  ],
   props: [
     { name: 'title', type: `ReactNode`, defaultValue: "-", description: "Section title." },
     { name: 'description', type: `ReactNode`, defaultValue: "-", description: "Section description." },
@@ -22,7 +29,8 @@ const docData: DocPageData = {
   ],
   cssHooks: [
     '.mr-form-section', '.mr-form-section__header', '.mr-form-section__header-text',
-    '.mr-form-section__header-meta', '.mr-form-section__actions', '.mr-form-section__body',
+    '.mr-form-section__header-meta', '.mr-form-section__header-end', '.mr-form-section__header-actions',
+    '.mr-form-section__body', '.mr-form-section__actions',
     '[data-mr-form-section]'
   ],
   tokens: [

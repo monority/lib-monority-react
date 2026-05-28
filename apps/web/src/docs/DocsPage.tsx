@@ -12,6 +12,8 @@ function getDocComponent(slug: string) {
   const redirects: Record<string, string> = {
     'copy-button': 'button',
     'icon-button': 'button',
+    'number-input': 'input',
+    'password-input': 'input',
   }
   const resolvedSlug = redirects[slug] ?? slug
 

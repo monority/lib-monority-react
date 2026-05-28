@@ -12,4 +12,5 @@ export interface TextareaProps
   error?: ReactNode
   className?: string
   invalid?: boolean
+  resize?: 'none' | 'vertical' | 'both'
 }

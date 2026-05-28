@@ -23,12 +23,10 @@ afterEach(() => {
 })
 
 describe('DateRangePicker', () => {
-  it('renders two date inputs', () => {
-    const view = render(<DateRangePicker label="Period" />)
-    const inputs = view.querySelectorAll('input')
-    expect(inputs.length).toBe(2)
-    expect(inputs[0].type).toBe('date')
-    expect(inputs[1].type).toBe('date')
+  it('renders two datepicker wrappers', () => {
+    const view = render(<DateRangePicker />)
+    const datepickers = view.querySelectorAll('.mr-datepicker')
+    expect(datepickers.length).toBe(2)
   })
 
   it('renders from and to labels', () => {
@@ -48,10 +46,9 @@ describe('DateRangePicker', () => {
     expect(ref.current?.tagName).toBe('DIV')
   })
 
-  it('renders error with aria-invalid', () => {
-    const view = render(<DateRangePicker error="Invalid range" />)
-    view.querySelectorAll('input').forEach((input) => {
-      expect(input.getAttribute('aria-invalid')).toBe('true')
-    })
+  it('accepts DatePicker props via fromProps/toProps', () => {
+    const view = render(<DateRangePicker fromProps={{ minDate: new Date(2025, 0, 1) }} />)
+    const datepickers = view.querySelectorAll('.mr-datepicker')
+    expect(datepickers.length).toBe(2)
   })
 })

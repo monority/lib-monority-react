@@ -15,7 +15,6 @@ const docData: DocPageData = {
   description: 'A unified action component. Supports text, icons, loading, copy-to-clipboard, and icon-only modes.',
   importCode: "import { Button } from '@monority/ui/button'",
   usageCode: '<Button>Button</Button>',
-  previewLabel: 'button.tsx',
   preview: () => <ButtonBasicPreview />,
   examples: [
     { title: 'Variants', content: <ButtonVariantsExample /> },

@@ -1,6 +1,8 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Grid } from '@monority/ui'
-import { GridBasicExample } from './Grid.examples'
+import {
+  GridBasicExample,
+  GridColumnsExample,
+} from './Grid.examples'
 
 const docData: DocPageData = {
   title: 'Grid',
@@ -13,8 +15,21 @@ const docData: DocPageData = {
   <div>Item 4</div>
 </Grid>`,
   preview: () => <GridBasicExample />,
+  examples: [
+    { title: 'Column counts', content: <GridColumnsExample /> },
+  ],
   props: [
     { name: 'columns', type: `1 | 2 | 3 | 4 | 'auto-fit' | 'auto-fill'`, defaultValue: "2", description: "Number of grid columns." }
+  ],
+  cssHooks: [
+    '.mr-grid', '[data-cols]', '[data-gap]',
+  ],
+  tokens: [
+    '--mr-space-*',
+  ],
+  a11y: [
+    'Structural layout component.',
+    'No interactive semantics by default.',
   ],
 }
 

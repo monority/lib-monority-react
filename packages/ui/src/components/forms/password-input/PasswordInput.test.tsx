@@ -78,4 +78,10 @@ describe('PasswordInput', () => {
     expect(describedBy).toContain('-hint')
     expect(describedBy).toContain('-error')
   })
+
+  it('toggle button contains SVG icon', () => {
+    const view = render(<PasswordInput />)
+    const toggle = view.querySelector('button')
+    expect(toggle?.querySelector('svg')).toBeTruthy()
+  })
 })

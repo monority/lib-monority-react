@@ -1,15 +1,13 @@
 import type { ReactNode } from 'react'
+import type { DatePickerProps } from '@/components/forms/date-picker/DatePicker.types'
 
 export type DateRangePickerSize = 'sm' | 'md' | 'lg'
 
 export interface DateRangePickerProps {
   size?: DateRangePickerSize
-  label?: ReactNode
-  hint?: ReactNode
-  error?: ReactNode
   className?: string
   fromLabel?: string
   toLabel?: string
-  fromProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>
-  toProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>
+  fromProps?: Omit<Partial<DatePickerProps>, 'label'>
+  toProps?: Omit<Partial<DatePickerProps>, 'label'>
 }

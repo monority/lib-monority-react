@@ -1,6 +1,11 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Tabs } from '@monority/ui'
-import { TabsBasicExample } from './Tabs.examples'
+import {
+  TabsBasicExample,
+  TabsTonesExample,
+  TabsSizesExample,
+  TabsDisabledExample,
+  TabsFullWidthExample,
+} from './Tabs.examples'
 
 const docData: DocPageData = {
   title: 'Tabs',
@@ -17,6 +22,12 @@ const docData: DocPageData = {
     onChange={setValue}
 />`,
   preview: () => <TabsBasicExample />,
+  examples: [
+    { title: 'Tones', content: <TabsTonesExample /> },
+    { title: 'Sizes', content: <TabsSizesExample /> },
+    { title: 'Disabled', content: <TabsDisabledExample /> },
+    { title: 'Full width', content: <TabsFullWidthExample /> },
+  ],
   props: [
     { name: 'items', type: `{ value: string; label: string }[]`, defaultValue: "[]", description: "Tab definitions" },
     { name: 'value', type: `string`, defaultValue: "-", description: "Currently selected value" },

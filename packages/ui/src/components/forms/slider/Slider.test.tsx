@@ -1,7 +1,7 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Slider } from './Slider'
 
 let container: HTMLDivElement | null = null
@@ -27,22 +27,23 @@ describe('Slider', () => {
     const view = render(<Slider label="Volume" />)
     const input = view.querySelector('input')
     const output = view.querySelector('output')
+
     expect(input?.type).toBe('range')
     expect(input?.getAttribute('data-size')).toBe('md')
-    expect(input?.className).toContain('mr-slider--md')
+    expect(input?.className).toContain('mr-slider')
     expect(output?.textContent).toBe('50')
   })
 
   it('maps disabled, required and error states', () => {
     const view = render(<Slider label="Gain" disabled required error="Out of range" />)
     const input = view.querySelector('input')
+
     expect(input?.disabled).toBe(true)
     expect(input?.required).toBe(true)
     expect(input?.getAttribute('aria-invalid')).toBe('true')
     expect(input?.getAttribute('data-disabled')).toBe('true')
     expect(input?.getAttribute('data-required')).toBe('true')
     expect(input?.getAttribute('data-invalid')).toBe('true')
-    expect(input?.className).toContain('mr-slider--disabled')
     expect(input?.className).toContain('mr-slider--error')
   })
 
@@ -56,11 +57,9 @@ describe('Slider', () => {
   it('applies sm and lg sizes with correct data-size', () => {
     const viewSm = render(<Slider size="sm" />)
     expect(viewSm.querySelector('input')?.getAttribute('data-size')).toBe('sm')
-    expect(viewSm.querySelector('input')?.className).toContain('mr-slider--sm')
 
     const viewLg = render(<Slider size="lg" />)
     expect(viewLg.querySelector('input')?.getAttribute('data-size')).toBe('lg')
-    expect(viewLg.querySelector('input')?.className).toContain('mr-slider--lg')
   })
 
   it('hides the value output when showValue is false', () => {
@@ -69,9 +68,30 @@ describe('Slider', () => {
   })
 
   it('renders hint and error with correct aria-describedby', () => {
-    const view = render(<Slider hint="0-100" error="Too high" />)
+    const view = render(<Slider id="slider" hint="0-100" error="Too high" />)
     const describedBy = view.querySelector('input')?.getAttribute('aria-describedby')
-    expect(describedBy).toContain('-hint')
-    expect(describedBy).toContain('-error')
+    expect(describedBy).toContain('slider-hint')
+    expect(describedBy).toContain('slider-error')
+  })
+
+  it('calls onValueChange when value changes', () => {
+    const onValueChange = vi.fn()
+    const view = render(<Slider onValueChange={onValueChange} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    act(() => {
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        'value',
+      )?.set
+      nativeInputValueSetter?.call(input, '75')
+      input.dispatchEvent(new Event('input', { bubbles: true }))
+    })
+    expect(onValueChange).toHaveBeenCalledWith('75')
+  })
+
+  it('passes className to the wrapper', () => {
+    const view = render(<Slider className="custom" />)
+    const wrapper = view.querySelector('.mr-field')
+    expect(wrapper?.className).toContain('custom')
   })
 })

@@ -20,7 +20,7 @@ import {
   // Navigation
   Breadcrumb, FilterBar, Pagination, SidebarLayout, Tabs, Topbar,
   // Forms
-  Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, SearchInput, Select, Slider, Switch, Textarea, Field,
+  Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, Select, Slider, Switch, Textarea, Field,
   // Overlays
   AlertDialog, Drawer, DropdownMenu, Modal, Popover, Tooltip, CommandPalette,
   // Experimental
@@ -36,7 +36,7 @@ describe('root barrel import (@monority/ui)', () => {
     DataList, DataTable,
     Container, Divider, Grid, PageHeader, Section, Stack, Toolbar,
     Breadcrumb, FilterBar, Pagination, SidebarLayout, Tabs, Topbar,
-    Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, SearchInput, Select, Slider, Switch, Textarea, Field,
+    Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, Select, Slider, Switch, Textarea, Field,
     AlertDialog, Drawer, DropdownMenu, Modal, Popover, Tooltip, CommandPalette,
     InfiniteScroll,
   }
@@ -255,11 +255,6 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
   it('imports RadioGroup from @monority/ui/radio-group', async () => {
     const { RadioGroup } = await import('@monority/ui/radio-group')
     expect(RadioGroup).toBeDefined()
-  })
-
-  it('imports SearchInput from @monority/ui/search-input', async () => {
-    const { SearchInput } = await import('@monority/ui/search-input')
-    expect(SearchInput).toBeDefined()
   })
 
   it('imports Section from @monority/ui/section', async () => {

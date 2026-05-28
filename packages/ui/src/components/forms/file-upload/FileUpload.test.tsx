@@ -28,7 +28,8 @@ describe('FileUpload', () => {
     const input = view.querySelector('input')
     expect(input?.type).toBe('file')
     expect(input?.getAttribute('data-size')).toBe('md')
-    expect(input?.className).toContain('mr-file-upload--md')
+    expect(input?.className).toContain('mr-input-base')
+    expect(input?.className).toContain('mr-file-upload')
   })
 
   it('maps disabled, required and error states', () => {

@@ -1,6 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { FilterBar } from '@monority/ui'
-import { FilterBarBasicExample } from './FilterBar.examples'
+import {
+  FilterBarBasicExample,
+  FilterBarWithControlsExample,
+  FilterBarWithResetExample,
+} from './FilterBar.examples'
 
 const docData: DocPageData = {
   title: 'FilterBar',
@@ -11,8 +14,23 @@ const docData: DocPageData = {
   <Input placeholder="Search..." />
 </FilterBar>`,
   preview: () => <FilterBarBasicExample />,
+  examples: [
+    { title: 'With controls', content: <FilterBarWithControlsExample /> },
+    { title: 'With reset', content: <FilterBarWithResetExample /> },
+  ],
   props: [
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Filter controls." }
+  ],
+  cssHooks: [
+    '.mr-filter-bar', '.mr-filter-bar__item', '.mr-filter-bar__reset',
+  ],
+  tokens: [
+    '--mr-space-*', '--mr-border-subtle',
+  ],
+  a11y: [
+    'Toolbar ARIA pattern (role="toolbar").',
+    'aria-label for the toolbar.',
+    'Focus management between filters.',
   ],
 }
 

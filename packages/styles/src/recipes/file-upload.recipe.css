@@ -1,5 +1,13 @@
 @layer recipes {
-  .mr-file-upload { display: none; }
+  .mr-file-upload {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
   .mr-file-upload__dropzone {
     position: relative;
     display: flex;
@@ -10,12 +18,13 @@
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-soft);
     cursor: pointer;
+    overflow: hidden;
     transition: border-color var(--mr-dur-150) var(--mr-ease-in-out), background var(--mr-dur-150) var(--mr-ease-in-out);
   }
   .mr-file-upload__dropzone:hover { border-color: var(--mr-border-strong); background: var(--mr-bg-control); }
+  .mr-file-upload__dropzone[data-disabled='true'] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+  .mr-file-upload__dropzone[data-invalid='true'] { border-color: var(--mr-danger); }
   .mr-file-upload__label-text { color: var(--mr-fg-muted); font-size: var(--mr-text-sm); pointer-events: none; }
-  .mr-file-upload--disabled { opacity: 0.5; cursor: not-allowed; }
-  .mr-file-upload--error ~ .mr-file-upload__dropzone, .mr-file-upload[data-invalid='true'] ~ .mr-file-upload__dropzone { border-color: var(--mr-danger); }
   .mr-file-upload__files { display: flex; flex-wrap: wrap; gap: var(--mr-space-2); margin-top: var(--mr-space-2); }
   .mr-file-upload__file {
     display: inline-flex;

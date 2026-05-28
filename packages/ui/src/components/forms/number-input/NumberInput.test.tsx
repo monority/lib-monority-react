@@ -1,7 +1,7 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { NumberInput } from './NumberInput'
 
 let container: HTMLDivElement | null = null
@@ -24,55 +24,88 @@ afterEach(() => {
 
 describe('NumberInput', () => {
   it('renders with default md size', () => {
-    const view = render(<NumberInput label="Count" />)
+    const view = render(<NumberInput label="Quantity" />)
     const input = view.querySelector('input')
-    expect(input?.type).toBe('number')
+    expect(input).not.toBeNull()
+    expect(input?.type).toBe('text')
+    expect(input?.getAttribute('inputMode')).toBe('decimal')
     expect(input?.getAttribute('data-size')).toBe('md')
-    expect(input?.className).toContain('mr-number-input--md')
   })
 
-  it('maps disabled, required and error states', () => {
-    const view = render(<NumberInput label="Qty" disabled required error="Invalid" />)
-    const input = view.querySelector('input')
-    expect(input?.disabled).toBe(true)
-    expect(input?.required).toBe(true)
-    expect(input?.getAttribute('aria-invalid')).toBe('true')
-    expect(input?.getAttribute('data-disabled')).toBe('true')
-    expect(input?.getAttribute('data-required')).toBe('true')
-    expect(input?.getAttribute('data-invalid')).toBe('true')
-    expect(input?.className).toContain('mr-number-input--disabled')
-    expect(input?.className).toContain('mr-number-input--error')
+  it('renders increment and decrement buttons', () => {
+    const view = render(<NumberInput label="Qty" />)
+    const buttons = view.querySelectorAll('button')
+    expect(buttons.length).toBe(2)
+    expect(buttons[0].getAttribute('aria-label')).toBe('Decrement')
+    expect(buttons[1].getAttribute('aria-label')).toBe('Increment')
   })
 
-  it('forwards ref to the native input', () => {
+  it('increments value on + button click', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={5} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    expect(input.value).toBe('5')
+    const incBtn = view.querySelector('[aria-label="Increment"]') as HTMLButtonElement
+    act(() => incBtn?.click())
+    expect(input.value).toBe('6')
+  })
+
+  it('decrements value on - button click', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={5} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    expect(input.value).toBe('5')
+    const decBtn = view.querySelector('[aria-label="Decrement"]') as HTMLButtonElement
+    act(() => decBtn?.click())
+    expect(input.value).toBe('4')
+  })
+
+  it('clamps to min value', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={0} min={0} />)
+    const decBtn = view.querySelector('[aria-label="Decrement"]') as HTMLButtonElement
+    act(() => decBtn?.click())
+    const input = view.querySelector('input') as HTMLInputElement
+    expect(input.value).toBe('0')
+  })
+
+  it('clamps to max value', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={10} max={10} />)
+    const incBtn = view.querySelector('[aria-label="Increment"]') as HTMLButtonElement
+    act(() => incBtn?.click())
+    const input = view.querySelector('input') as HTMLInputElement
+    expect(input.value).toBe('10')
+  })
+
+  it('calls onChange with numeric value', () => {
+    const handleChange = vi.fn()
+    const view = render(<NumberInput label="Qty" defaultValue={5} onChange={handleChange} />)
+    const incBtn = view.querySelector('[aria-label="Increment"]') as HTMLButtonElement
+    act(() => incBtn?.click())
+    expect(handleChange).toHaveBeenCalled()
+    const event = handleChange.mock.calls[0][0]
+    expect(event.target.value).toBe('6')
+  })
+
+  it('forwards ref to native input', () => {
     const ref = createRef<HTMLInputElement>()
-    render(<NumberInput ref={ref} />)
+    render(<NumberInput label="Qty" ref={ref} />)
     expect(ref.current?.tagName).toBe('INPUT')
-    expect(ref.current?.type).toBe('number')
+    expect(ref.current?.type).toBe('text')
   })
 
-  it('applies sm and lg sizes with correct data-size', () => {
-    const sm = render(<NumberInput size="sm" />)
-    expect(sm.querySelector('input')?.getAttribute('data-size')).toBe('sm')
-    expect(sm.querySelector('input')?.className).toContain('mr-number-input--sm')
-
-    const lg = render(<NumberInput size="lg" />)
-    expect(lg.querySelector('input')?.getAttribute('data-size')).toBe('lg')
-    expect(lg.querySelector('input')?.className).toContain('mr-number-input--lg')
+  it('handles keyboard ArrowUp increment', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={5} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    act(() => {
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }))
+    })
+    expect(input.value).toBe('6')
   })
 
-  it('renders hint and error with correct aria-describedby', () => {
-    const view = render(<NumberInput hint="0-100" error="Too high" />)
-    const describedBy = view.querySelector('input')?.getAttribute('aria-describedby')
-    expect(describedBy).toContain('-hint')
-    expect(describedBy).toContain('-error')
-  })
-
-  it('accepts number-specific props', () => {
-    const view = render(<NumberInput min={0} max={10} step={0.5} />)
-    const input = view.querySelector('input')
-    expect(input?.min).toBe('0')
-    expect(input?.max).toBe('10')
-    expect(input?.step).toBe('0.5')
+  it('handles keyboard ArrowDown decrement', () => {
+    const view = render(<NumberInput label="Qty" defaultValue={5} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    act(() => {
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }))
+    })
+    expect(input.value).toBe('4')
   })
 })
