@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, type ElementType } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { SectionProps } from './Section.types'
@@ -12,19 +12,37 @@ const sectionVariants = cva({
       lg: 'mr-section--lg',
       xl: 'mr-section--xl',
     },
+    variant: {
+      default: '',
+      bordered: 'mr-section--bordered',
+      muted: 'mr-section--muted',
+      card: 'mr-section--card',
+    },
   },
-  defaultVariants: { spacing: 'md' },
+  defaultVariants: {
+    spacing: 'md',
+    variant: 'default',
+  },
 })
 
 export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
-  { spacing = 'md', className, children, ...props },
+  { className, spacing = 'md', variant = 'default', as, title, children, ...props },
   ref,
 ) {
+  const Component = (as ?? 'section') as ElementType
+
   return (
-    <section ref={ref} className={cn(sectionVariants({ spacing }), className)} data-spacing={spacing} {...props}>
+    <Component
+      ref={ref}
+      className={cn(sectionVariants({ spacing, variant }), className)}
+      data-spacing={spacing}
+      data-variant={variant}
+      {...props}
+    >
+      {title && <h2 className="mr-section__title">{title}</h2>}
       {children}
-    </section>
+    </Component>
   )
 })
 
-export type { SectionProps, SectionSpacing } from './Section.types'
+export type { SectionProps, SectionSpacing, SectionVariant, SectionElement } from './Section.types'

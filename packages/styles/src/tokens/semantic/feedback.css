@@ -1,6 +1,14 @@
 :root {
-  --mr-info: #2563eb;
-  --mr-success: #15803d;
+  --mr-info: #1e40af;
+  --mr-info-soft: rgba(30, 64, 175, 0.10);
+  --mr-info-contrast: #ffffff;
+  --mr-success: #14532d;
+  --mr-success-soft: rgba(20, 83, 45, 0.10);
+  --mr-success-contrast: #ffffff;
   --mr-warning: #c2410c;
-  --mr-danger: #dc2626;
+  --mr-warning-soft: rgba(194, 65, 12, 0.10);
+  --mr-warning-contrast: #ffffff;
+  --mr-danger: #991b1b;
+  --mr-danger-soft: rgba(153, 27, 27, 0.10);
+  --mr-danger-contrast: #ffffff;
 }

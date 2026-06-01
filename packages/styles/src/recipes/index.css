@@ -68,8 +68,9 @@
 @import './textarea.recipe.css';
 @import './title.recipe.css';
 @import './toast.recipe.css';
-@import './toggle-group.recipe.css';
 @import './toggle.recipe.css';
+@import './toggle-group.recipe.css';
 @import './toolbar.recipe.css';
 @import './topbar.recipe.css';
 @import './tooltip.recipe.css';
+

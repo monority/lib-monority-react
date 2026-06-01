@@ -1,9 +1,10 @@
-﻿{
+{
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "orchestrator",
+  "permission": "allow",
   "agent": {
     "orchestrator": {
-      "description": "Orchestrateur du pipeline Plan → Build → Review",
+      "description": "Orchestrateur du pipeline Plan ? Build ? Review",
       "mode": "all",
       "model": "opencode-go/qwen3.5-plus",
       "temperature": 0,
@@ -41,9 +42,9 @@
       }
     },
     "coder": {
-      "description": "Implémentation TS/React + UI/CSS + tests + doc + scaffold",
+      "description": "Impl�mentation TS/React + UI/CSS + tests + doc + scaffold",
       "mode": "subagent",
-      "model": "opencode-go/qwen3.6-plus",
+      "model": "opencode-go/deepseek-v4-flash",
       "temperature": 0,
       "color": "#5B9BD5",
       "permission": {
@@ -58,7 +59,7 @@
       }
     },
     "reviewer": {
-      "description": "Code review, quality gates, conventions — lecture seule",
+      "description": "Code review, quality gates, conventions � lecture seule",
       "mode": "subagent",
       "model": "opencode-go/minimax-m2.7",
       "temperature": 0,
@@ -75,3 +76,4 @@
     }
   }
 }
+

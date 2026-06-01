@@ -52,6 +52,7 @@ const buttonVariants = cva({
       ghost: 'mr-btn--ghost',
       subtle: 'mr-btn--subtle',
       danger: 'mr-btn--danger',
+      warning: 'mr-btn--warning',
     },
     size: { sm: 'mr-btn--sm', md: 'mr-btn--md', lg: 'mr-btn--lg' },
   },

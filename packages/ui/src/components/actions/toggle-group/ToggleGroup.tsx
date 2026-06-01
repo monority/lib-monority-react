@@ -63,6 +63,7 @@ export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(
         className={cn(
           'mr-toggle-group',
           `mr-toggle-group--${orientation}`,
+          size && `mr-toggle-group--${size}`,
           className,
         )}
         {...props}

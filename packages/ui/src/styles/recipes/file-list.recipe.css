@@ -57,7 +57,7 @@
     transition: background 0.1s, color 0.1s;
   }
   .mr-file-list__remove:hover {
-    background: var(--mr-bg-danger-soft, rgba(220,38,38,0.08));
-    color: var(--mr-fg-danger, #dc2626);
+    background: var(--mr-bg-danger-soft, rgba(171,77,62,0.08));
+    color: var(--mr-fg-danger, #ab4d3e);
   }
 }

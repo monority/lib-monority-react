@@ -23,22 +23,25 @@
 
   .mr-badge--primary,
   .mr-badge[data-variant='primary'] {
-    background: var(--mr-accent);
-    color: var(--mr-accent-contrast);
-    border-color: transparent;
+    border-color: var(--mr-accent);
+    color: var(--mr-accent);
   }
 
   .mr-badge--success,
   .mr-badge[data-variant='success'] {
-    background: var(--mr-success);
-    color: white;
-    border-color: transparent;
+    border-color: var(--mr-success);
+    color: var(--mr-success);
   }
 
   .mr-badge--danger,
   .mr-badge[data-variant='danger'] {
-    background: var(--mr-danger);
-    color: white;
-    border-color: transparent;
+    border-color: var(--mr-danger);
+    color: var(--mr-danger);
+  }
+
+  .mr-badge--warning,
+  .mr-badge[data-variant='warning'] {
+    border-color: var(--mr-warning);
+    color: var(--mr-warning);
   }
 }

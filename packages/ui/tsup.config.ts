@@ -29,7 +29,6 @@ export default defineConfig({
     numberInput: 'src/components/forms/number-input/index.ts',
     passwordInput: 'src/components/forms/password-input/index.ts',
     select: 'src/components/forms/select/index.ts',
-    searchInput: 'src/components/forms/search-input/index.ts',
     dataList: 'src/components/data-display/data-list/index.ts',
     dataTable: 'src/components/data-display/data-table/index.ts',
     tabs: 'src/components/navigation/tabs/index.ts',

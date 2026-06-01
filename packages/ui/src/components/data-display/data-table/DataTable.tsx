@@ -106,6 +106,7 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
               {selectable ? (
                 <th scope="col" className="mr-data-table__select-cell">
                   <Checkbox
+                    size="sm"
                     className="mr-data-table__checkbox"
                     aria-label="Select all rows"
                     checked={allSelected}
@@ -154,6 +155,7 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
                   {selectable ? (
                     <td className="mr-data-table__select-cell">
                       <Checkbox
+                        size="sm"
                         className="mr-data-table__checkbox"
                         aria-label={`Select ${rowLabel}`}
                         checked={selectedSet.has(rowId)}

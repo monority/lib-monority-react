@@ -95,6 +95,17 @@
     background-color: color-mix(in srgb, var(--mr-danger) 80%, black);
   }
 
+  .mr-btn--warning,
+  .mr-btn[data-variant='warning'] {
+    background-color: var(--mr-warning);
+    color: var(--mr-warning-contrast, #f7f5f0);
+  }
+
+  .mr-btn--warning:hover:not(:disabled),
+  .mr-btn[data-variant='warning']:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--mr-warning) 85%, black);
+  }
+
   .mr-btn--ghost,
   .mr-btn[data-variant='ghost'] {
     background-color: transparent;
@@ -139,17 +150,17 @@
     gap: var(--mr-space-2);
   }
 
-  /* Icon-only mode — fixed w/h matching normal button heights */
+  /* Icon-only mode ï¿½ fixed w/h matching normal button heights */
   .mr-btn--icon-only,
   .mr-btn[data-icon-only='true'] {
-    width: 2.25rem;		/* 36px ˜ md normal height 37px */
+    width: 2.25rem;		/* 36px ï¿½ md normal height 37px */
     height: 2.25rem;
     padding: 0;
   }
 
   .mr-btn--icon-only.mr-btn--sm,
   .mr-btn[data-icon-only='true'][data-size='sm'] {
-    width: 1.75rem;		/* 28px ˜ sm normal height 26px */
+    width: 1.75rem;		/* 28px ï¿½ sm normal height 26px */
     height: 1.75rem;
   }
 

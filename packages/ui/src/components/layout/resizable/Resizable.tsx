@@ -133,6 +133,9 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
     const handleRef = useRef<HTMLDivElement>(null)
     const startPos = useRef({ x: 0, y: 0 })
     const startSizes = useRef<Map<string, number>>(new Map())
+    const ctxRef = useRef(ctx)
+    ctxRef.current = ctx
+    const handleIndexRef = useRef(-1)
 
     const handleRefCallback = useCallback(
       (node: HTMLDivElement | null) => {
@@ -155,6 +158,7 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
         e.preventDefault()
         ctx.setIsDragging(true)
         startPos.current = { x: e.clientX, y: e.clientY }
+        handleIndexRef.current = getHandleIndex()
 
         // Snapshot current sizes
         const snapshot = new Map<string, number>()
@@ -163,7 +167,7 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
         }
         startSizes.current = snapshot
       },
-      [ctx],
+      [ctx, getHandleIndex],
     )
 
     const handleKeyDown = useCallback(
@@ -202,11 +206,12 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
       if (!ctx.isDragging) return
 
       const handleMouseMove = (e: MouseEvent) => {
-        const idx = getHandleIndex()
+        const idx = handleIndexRef.current
         if (idx < 0) return
 
-        const panelIdBefore = ctx.panelIds[idx]
-        const panelIdAfter = ctx.panelIds[idx + 1]
+        const c = ctxRef.current
+        const panelIdBefore = c.panelIds[idx]
+        const panelIdAfter = c.panelIds[idx + 1]
         if (!panelIdBefore || !panelIdAfter) return
 
         const metaBefore = startSizes.current.get(panelIdBefore)
@@ -217,37 +222,41 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
         if (!container) return
 
         const rect = container.getBoundingClientRect()
-        const totalSize = ctx.direction === 'horizontal' ? rect.width : rect.height
+        const totalSize = c.direction === 'horizontal' ? rect.width : rect.height
+        if (totalSize <= 0) return
+
         const delta =
-          ctx.direction === 'horizontal'
+          c.direction === 'horizontal'
             ? e.clientX - startPos.current.x
             : e.clientY - startPos.current.y
 
         const deltaPercent = (delta / totalSize) * 100
 
-        const beforeMeta = ctx.panelMeta.get(panelIdBefore)
-        const afterMeta = ctx.panelMeta.get(panelIdAfter)
+        const beforeMeta = c.panelMeta.get(panelIdBefore)
+        const afterMeta = c.panelMeta.get(panelIdAfter)
         if (!beforeMeta || !afterMeta) return
 
-        const newBefore = Math.max(
-          beforeMeta.minSize,
-          Math.min(beforeMeta.maxSize, metaBefore + deltaPercent),
-        )
-        const newAfter = Math.max(
-          afterMeta.minSize,
-          Math.min(afterMeta.maxSize, metaAfter - deltaPercent),
-        )
+        const newBefore = metaBefore + deltaPercent
+        const newAfter = metaAfter - deltaPercent
 
-        // Only apply if both panels stay within bounds
-        const actualDelta = newBefore - metaBefore
-        if (actualDelta !== 0) {
-          ctx.updatePanelSize(panelIdBefore, metaBefore + actualDelta)
-          ctx.updatePanelSize(panelIdAfter, metaAfter - actualDelta)
-        }
+        const minBefore = beforeMeta.minSize ?? 0
+        const maxBefore = beforeMeta.maxSize ?? 100
+        const minAfter = afterMeta.minSize ?? 0
+        const maxAfter = afterMeta.maxSize ?? 100
+
+        const clampedBefore = Math.max(minBefore, Math.min(maxBefore, newBefore))
+        const clampedAfter = Math.max(minAfter, Math.min(maxAfter, newAfter))
+
+        const actualDelta = clampedBefore - metaBefore
+
+        if (Math.abs(actualDelta) < 0.01) return
+
+        c.updatePanelSize(panelIdBefore, clampedBefore)
+        c.updatePanelSize(panelIdAfter, clampedAfter)
       }
 
       const handleMouseUp = () => {
-        ctx.setIsDragging(false)
+        ctxRef.current.setIsDragging(false)
       }
 
       window.addEventListener('mousemove', handleMouseMove)
@@ -256,7 +265,7 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
         window.removeEventListener('mousemove', handleMouseMove)
         window.removeEventListener('mouseup', handleMouseUp)
       }
-    }, [ctx.isDragging, ctx.direction, ctx, getHandleIndex])
+    }, [ctx.isDragging, ctx.direction])
 
     const currentIdx = getHandleIndex()
     const prevPanelId = currentIdx >= 0 ? ctx.panelIds[currentIdx] : null

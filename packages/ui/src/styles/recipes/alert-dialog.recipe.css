@@ -65,12 +65,12 @@
     }
 
     .mr-alert-dialog__confirm {
-        background: linear-gradient(180deg, color-mix(in srgb, var(--mr-danger) 88%, #111111), color-mix(in srgb, var(--mr-danger) 96%, #09090b));
+        background: linear-gradient(180deg, color-mix(in srgb, var(--mr-danger) 88%, #1a1a1a), color-mix(in srgb, var(--mr-danger) 96%, #09090b));
         color: var(--mr-color-white);
     }
 
     .mr-alert-dialog__confirm:hover {
-        box-shadow: 0 10px 24px rgba(220, 38, 38, 0.22);
+        box-shadow: 0 10px 24px rgba(171, 77, 62, 0.22);
     }
 }
 

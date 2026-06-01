@@ -11,6 +11,7 @@ const badgeVariants = cva({
       primary: 'mr-badge--primary',
       success: 'mr-badge--success',
       danger: 'mr-badge--danger',
+      warning: 'mr-badge--warning',
     },
   },
   defaultVariants: { variant: 'default' },
