@@ -1,0 +1,7 @@
+import type { HTMLAttributes, ReactNode } from 'react'
+
+export interface KbdProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode
+  size?: 'sm' | 'md' | 'lg'
+  keys?: string[]
+}

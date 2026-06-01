@@ -1,0 +1,120 @@
+@layer recipes {
+  .mr-number-input__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: var(--mr-input-width);
+  }
+
+  .mr-number-input {
+    width: 100%;
+    min-height: var(--mr-input-height);
+    padding-inline: 1rem;
+    padding-right: 2.75rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-input-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-base);
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+    box-shadow: var(--mr-shadow-xs);
+    transition:
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-number-input::placeholder {
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-number-input:hover,
+  .mr-number-input:focus-visible {
+    border-color: var(--mr-border-strong);
+  }
+
+  .mr-number-input:focus-visible {
+    box-shadow: var(--mr-shadow-focus);
+    outline: none;
+  }
+
+  .mr-number-input__actions {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 var(--mr-input-radius) var(--mr-input-radius) 0;
+    overflow: hidden;
+  }
+
+  .mr-number-input__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--mr-fg-muted);
+    cursor: pointer;
+    font-size: var(--mr-text-xs);
+    transition:
+      background var(--mr-duration-fast) var(--mr-ease-standard),
+      color var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-number-input__btn:hover:not(:disabled) {
+    background: var(--mr-bg-subtle);
+    color: var(--mr-fg-base);
+  }
+
+  .mr-number-input__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .mr-number-input__btn:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--mr-accent);
+    z-index: 1;
+    outline: none;
+  }
+
+  .mr-number-input__btn + .mr-number-input__btn {
+    border-top: 1px solid var(--mr-border-subtle);
+  }
+
+  .mr-number-input--sm,
+  .mr-number-input[data-size='sm'] {
+    min-height: 2rem;
+    font-size: var(--mr-text-xs);
+    padding-inline: 0.75rem;
+    padding-right: 2.25rem;
+  }
+
+  .mr-number-input--lg,
+  .mr-number-input[data-size='lg'] {
+    min-height: 3rem;
+    font-size: var(--mr-text-md);
+    padding-inline: 1.25rem;
+    padding-right: 3rem;
+  }
+
+  .mr-number-input--disabled,
+  .mr-number-input[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .mr-number-input[data-disabled='true'] ~ .mr-number-input__actions {
+    opacity: 0.5;
+  }
+
+  .mr-number-input--error,
+  .mr-number-input[data-invalid='true'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+  }
+}

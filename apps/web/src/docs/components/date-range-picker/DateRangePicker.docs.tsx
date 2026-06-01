@@ -13,15 +13,18 @@ const docData: DocPageData = {
   usageCode: `<DateRangePicker fromLabel="Start" toLabel="End" />`,
   preview: () => <DateRangePickerBasicExample />,
   examples: [
-    { title: 'With error', content: <DateRangePickerWithErrorExample /> },
-    { title: 'With hint', content: <DateRangePickerWithHintExample /> },
-    { title: 'Disabled', content: <DateRangePickerDisabledExample /> },
+    { title: 'With error', content: <DateRangePickerWithErrorExample />, code: `<DateRangePicker fromLabel="Start" toLabel="End" error="Please select a date range" />` },
+    { title: 'With hint', content: <DateRangePickerWithHintExample />, code: `<DateRangePicker fromLabel="Check-in" toLabel="Check-out" hint="Select your stay dates" />` },
+    { title: 'Disabled', content: <DateRangePickerDisabledExample />, code: `<DateRangePicker fromLabel="Start" toLabel="End" disabled />` },
   ],
   props: [
     { name: 'fromLabel', type: `string`, defaultValue: "'From'", description: "Label for the start DatePicker." },
     { name: 'toLabel', type: `string`, defaultValue: "'To'", description: "Label for the end DatePicker." },
     { name: 'fromProps', type: `Partial<DatePickerProps>`, defaultValue: "-", description: "Props forwarded to the start DatePicker (except label)." },
     { name: 'toProps', type: `Partial<DatePickerProps>`, defaultValue: "-", description: "Props forwarded to the end DatePicker (except label)." },
+    { name: 'error', type: `ReactNode`, defaultValue: "-", description: "Error message shown on both date pickers." },
+    { name: 'hint', type: `ReactNode`, defaultValue: "-", description: "Hint text shown on both date pickers." },
+    { name: 'disabled', type: `boolean`, defaultValue: "false", description: "Disables both date pickers." },
   ],
   cssHooks: [
     '.mr-date-range-picker', '.mr-date-range-picker__from', '.mr-date-range-picker__to',

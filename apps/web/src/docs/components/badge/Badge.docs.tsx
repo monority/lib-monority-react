@@ -1,15 +1,24 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import { Badge } from '@monority/ui/badge'
-import { BadgeBasicExample, BadgeVariantsExample } from './Badge.examples'
+import {
+  BadgeDefaultExample,
+  BadgePrimaryExample,
+  BadgeSuccessExample,
+  BadgeDangerExample,
+  BadgeVariantsExample,
+} from './Badge.examples'
 
 const docData: DocPageData = {
   title: 'Badge',
   description: 'Compact status label for metadata, lifecycle states, and small categorization.',
   importCode: "import { Badge } from '@monority/ui/badge'",
   usageCode: '<Badge>Draft</Badge>',
-  preview: () => <BadgeBasicExample />,
+  preview: () => <BadgeDefaultExample />,
   examples: [
-    { title: 'Variants', content: <BadgeVariantsExample /> },
+    { title: 'Primary', content: <BadgePrimaryExample /> },
+    { title: 'Success', content: <BadgeSuccessExample /> },
+    { title: 'Danger', content: <BadgeDangerExample /> },
+    { title: 'All variants', content: <BadgeVariantsExample /> },
   ],
   props: [
     { name: 'variant', type: `'default' | 'primary' | 'success' | 'danger'`, defaultValue: "'default'", description: 'Semantic tone.' },

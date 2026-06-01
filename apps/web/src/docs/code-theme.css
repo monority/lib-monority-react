@@ -1,0 +1,140 @@
+/* --- Code syntax highlighting -- TSX/JSX optimized?? */
+/* Overrides highlight.js github-dark for better TSX readability */
+
+.docs-code-pre code .hljs {
+  color: #e2e8f0; /* slate-200 base text */
+}
+
+/* Keywords: import, export, function, const, return, from, if, etc. */
+.docs-code-pre code .hljs-keyword {
+  color: #c084fc;
+}
+
+/* Strings and template literals */
+.docs-code-pre code .hljs-string,
+.docs-code-pre code .hljs-template-variable,
+.docs-code-pre code .hljs-template-tag {
+  color: #86efac;
+}
+
+/* Numbers */
+.docs-code-pre code .hljs-number {
+  color: #fbbf24;
+}
+
+/* Literals: true, false, null, undefined */
+.docs-code-pre code .hljs-literal {
+  color: #f472b6;
+}
+
+/* Built-ins: React, useState, useEffect, etc. */
+.docs-code-pre code .hljs-built_in {
+  color: #67e8f9;
+}
+
+/* TypeScript types: string, number, boolean, CustomType */
+.docs-code-pre code .hljs-type {
+  color: #2dd4bf;
+}
+
+/* Function names */
+.docs-code-pre code .hljs-title.function_ {
+  color: #22d3ee;
+}
+
+/* Component/class names -- amber to pop out */
+.docs-code-pre code .hljs-title.class_ {
+  color: #fbbf24;
+}
+
+/* JSX/HTML tag names: div, span, Button, etc. (same amber as import specifiers) */
+.docs-code-pre code .hljs-name {
+  color: #fbbf24; /* same as title.class_ for consistent component names */
+}
+
+/* JSX attributes: size, tone, className, etc. */
+.docs-code-pre code .hljs-attr {
+  color: #f9a8d4;
+}
+
+/* Comments */
+.docs-code-pre code .hljs-comment {
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Function parameters */
+.docs-code-pre code .hljs-params {
+  color: #fde68a;
+}
+
+/* Meta: import.meta, #pragma, etc. */
+.docs-code-pre code .hljs-meta,
+.docs-code-pre code .hljs-meta .hljs-string {
+  color: #fb923c;
+}
+
+/* Variables */
+.docs-code-pre code .hljs-variable {
+  color: #e2e8f0;
+}
+
+/* Constants: const VALUE = ... */
+.docs-code-pre code .hljs-variable.constant_ {
+  color: #fbbf24;
+}
+
+/* Object properties */
+.docs-code-pre code .hljs-property {
+  color: #93c5fd;
+}
+
+/* Punctuation: {}[]().,; */
+.docs-code-pre code .hljs-punctuation {
+  color: #94a3b8;
+}
+
+/* Operators: + - * / === && || */
+.docs-code-pre code .hljs-operator {
+  color: #94a3b8;
+}
+
+/* Selector tags (CSS-in-JS, styled components) */
+.docs-code-pre code .hljs-selector-tag,
+.docs-code-pre code .hljs-selector-class,
+.docs-code-pre code .hljs-selector-id,
+.docs-code-pre code .hljs-selector-attr,
+.docs-code-pre code .hljs-selector-pseudo {
+  color: #c084fc;
+}
+
+/* Section: #region, headings in docs */
+.docs-code-pre code .hljs-section {
+  color: #fbbf24;
+}
+
+/* Deletion/addition in diffs */
+.docs-code-pre code .hljs-deletion {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.docs-code-pre code .hljs-addition {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+/* Links */
+.docs-code-pre code .hljs-link {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Emphasis and strong */
+.docs-code-pre code .hljs-emphasis {
+  font-style: italic;
+}
+
+.docs-code-pre code .hljs-strong {
+  font-weight: bold;
+}

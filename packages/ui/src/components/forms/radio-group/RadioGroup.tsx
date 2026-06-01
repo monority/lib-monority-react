@@ -13,19 +13,13 @@ const radioGroupVariants = cva({
       neutral: 'mr-radio-group--neutral',
       danger: 'mr-radio-group--danger',
     },
-    size: {
-      sm: 'mr-radio-group--sm',
-      md: 'mr-radio-group--md',
-      lg: 'mr-radio-group--lg',
-    },
   },
-  defaultVariants: { tone: 'accent', size: 'md' },
+  defaultVariants: { tone: 'accent' },
 })
 
 const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroupInner(
   {
     tone,
-    size,
     label,
     hint,
     error,
@@ -42,7 +36,6 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
   const ctx = useFormControl()
   const groupName = name || `${ctx.inputId}-name`
   const resolvedTone = tone ?? 'accent'
-  const resolvedSize = size ?? 'md'
   const isInvalid = ctx.isInvalid
   const isControlled = value !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue ?? '')
@@ -63,7 +56,7 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
       <div
         ref={ref}
         className={cn(
-          radioGroupVariants({ tone: resolvedTone, size: resolvedSize }),
+          radioGroupVariants({ tone: resolvedTone }),
           ctx.isDisabled && 'mr-radio-group--disabled',
           isInvalid && 'mr-radio-group--invalid',
         )}
@@ -71,7 +64,6 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
         aria-invalid={isInvalid || undefined}
         aria-describedby={ctx.describedBy}
         data-tone={resolvedTone}
-        data-size={resolvedSize}
         data-disabled={ctx.isDisabled ? true : undefined}
         data-invalid={isInvalid ? true : undefined}
         data-required={ctx.isRequired ? true : undefined}
@@ -129,4 +121,4 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
   )
 })
 
-export type { RadioGroupProps, RadioItem, RadioGroupTone, RadioGroupSize } from './RadioGroup.types'
+export type { RadioGroupProps, RadioItem, RadioGroupTone } from './RadioGroup.types'

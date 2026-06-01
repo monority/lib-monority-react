@@ -23,15 +23,34 @@ afterEach(() => {
 })
 
 describe('Divider', () => {
-  it('renders hr with separator role', () => {
+  it('renders div with separator role', () => {
     const view = render(<Divider />)
-    const hr = view.querySelector('hr')
-    expect(hr?.getAttribute('role')).toBe('separator')
+    const el = view.querySelector('[role="separator"]')
+    expect(el?.tagName).toBe('DIV')
+    expect(el?.getAttribute('aria-orientation')).toBe('horizontal')
   })
 
   it('forwards ref', () => {
-    const ref = createRef<HTMLHRElement>()
+    const ref = createRef<HTMLDivElement>()
     render(<Divider ref={ref} />)
-    expect(ref.current?.tagName).toBe('HR')
+    expect(ref.current?.tagName).toBe('DIV')
+  })
+
+  it('renders label when provided', () => {
+    const view = render(<Divider label="OR" />)
+    const label = view.querySelector('.mr-divider__label')
+    expect(label?.textContent).toBe('OR')
+  })
+
+  it('renders children as label when no label prop', () => {
+    const view = render(<Divider>AND</Divider>)
+    const label = view.querySelector('.mr-divider__label')
+    expect(label?.textContent).toBe('AND')
+  })
+
+  it('prefers label prop over children', () => {
+    const view = render(<Divider label="OR">AND</Divider>)
+    const label = view.querySelector('.mr-divider__label')
+    expect(label?.textContent).toBe('OR')
   })
 })

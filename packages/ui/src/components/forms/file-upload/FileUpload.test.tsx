@@ -23,24 +23,48 @@ afterEach(() => {
 })
 
 describe('FileUpload', () => {
-  it('renders with type file and default md size', () => {
+  it('renders with label and dropzone', () => {
     const view = render(<FileUpload label="Upload" />)
-    const input = view.querySelector('input')
-    expect(input?.type).toBe('file')
-    expect(input?.getAttribute('data-size')).toBe('md')
-    expect(input?.className).toContain('mr-input-base')
-    expect(input?.className).toContain('mr-file-upload')
+    const dropzone = view.querySelector('.mr-file-upload__dropzone')
+    expect(dropzone).not.toBeNull()
+    const trigger = view.querySelector('.mr-file-trigger')
+    expect(trigger).not.toBeNull()
+    expect(view.textContent).toContain('Upload')
   })
 
-  it('maps disabled, required and error states', () => {
-    const view = render(<FileUpload label="Doc" disabled required error="Required" />)
-    const input = view.querySelector('input')
+  it('renders default action text', () => {
+    const view = render(<FileUpload label="Upload" />)
+    const action = view.querySelector('.mr-file-upload__default-action')
+    expect(action).not.toBeNull()
+    expect(action?.textContent).toBe('Choose files')
+  })
+
+  it('renders custom action label', () => {
+    const view = render(<FileUpload label="Upload" actionLabel="Browse" />)
+    const action = view.querySelector('.mr-file-upload__action')
+    expect(action).not.toBeNull()
+    expect(action?.textContent).toBe('Browse')
+  })
+
+  it('renders description', () => {
+    const view = render(<FileUpload label="Upload" description="PDF only" />)
+    const desc = view.querySelector('.mr-file-upload__description')
+    expect(desc).not.toBeNull()
+    expect(desc?.textContent).toBe('PDF only')
+  })
+
+  it('maps disabled state on dropzone and input', () => {
+    const view = render(<FileUpload label="Doc" disabled />)
+    const dropzone = view.querySelector('.mr-file-upload__dropzone')
+    expect(dropzone?.getAttribute('data-disabled')).toBe('true')
+    const input = view.querySelector('input[type="file"]')
     expect(input?.disabled).toBe(true)
+  })
+
+  it('maps required state on hidden input', () => {
+    const view = render(<FileUpload label="Doc" required />)
+    const input = view.querySelector('input[type="file"]')
     expect(input?.required).toBe(true)
-    expect(input?.getAttribute('aria-invalid')).toBe('true')
-    expect(input?.getAttribute('data-disabled')).toBe('true')
-    expect(input?.getAttribute('data-required')).toBe('true')
-    expect(input?.getAttribute('data-invalid')).toBe('true')
   })
 
   it('forwards ref to native input', () => {
@@ -50,17 +74,45 @@ describe('FileUpload', () => {
     expect(ref.current?.type).toBe('file')
   })
 
-  it('applies sm and lg sizes', () => {
-    const sm = render(<FileUpload size="sm" />)
-    expect(sm.querySelector('input')?.getAttribute('data-size')).toBe('sm')
-    const lg = render(<FileUpload size="lg" />)
-    expect(lg.querySelector('input')?.getAttribute('data-size')).toBe('lg')
+  it('renders hint and error elements', () => {
+    const view = render(<FileUpload label="Doc" hint="PDF only" error="Wrong format" />)
+    const hintEl = view.querySelector('.mr-field__hint')
+    expect(hintEl).not.toBeNull()
+    expect(hintEl?.textContent).toBe('PDF only')
+    const errorEl = view.querySelector('.mr-field__error')
+    expect(errorEl).not.toBeNull()
+    expect(errorEl?.textContent).toBe('Wrong format')
   })
 
-  it('renders hint and error with aria-describedby', () => {
-    const view = render(<FileUpload hint="PDF only" error="Wrong format" />)
-    const describedBy = view.querySelector('input')?.getAttribute('aria-describedby')
-    expect(describedBy).toContain('-hint')
-    expect(describedBy).toContain('-error')
+  it('supports multiple prop', () => {
+    const view = render(<FileUpload label="Upload" multiple />)
+    const input = view.querySelector('input[type="file"]')
+    expect(input?.multiple).toBe(true)
+  })
+
+  it('renders icon', () => {
+    const view = render(<FileUpload label="Upload" />)
+    const icon = view.querySelector('.mr-file-upload__icon')
+    expect(icon).not.toBeNull()
+    expect(icon?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('renders placeholder text', () => {
+    const view = render(<FileUpload label="Upload" placeholder="Select your files" />)
+    const placeholder = view.querySelector('.mr-file-upload__placeholder')
+    expect(placeholder).not.toBeNull()
+    expect(placeholder?.textContent).toBe('Select your files')
+  })
+
+  it('does not render FileList when no files selected', () => {
+    const view = render(<FileUpload label="Upload" />)
+    const fileList = view.querySelector('.mr-file-list')
+    expect(fileList).toBeNull()
+  })
+
+  it('applies custom className to field', () => {
+    const view = render(<FileUpload label="Upload" className="custom-class" />)
+    const field = view.querySelector('.mr-file-upload-field')
+    expect(field?.className).toContain('custom-class')
   })
 })

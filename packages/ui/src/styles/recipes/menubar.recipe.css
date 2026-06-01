@@ -1,0 +1,140 @@
+@layer recipes {
+  .mr-menubar {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-spacing-1);
+    padding: var(--mr-spacing-1);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface);
+    border: 1px solid var(--mr-border-subtle);
+  }
+
+  .mr-menubar__menu-wrapper {
+    position: relative;
+  }
+
+  .mr-menubar__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-spacing-1);
+    padding: var(--mr-spacing-1_5) var(--mr-spacing-2_5);
+    border-radius: var(--mr-radius-sm);
+    font-size: var(--mr-text-sm);
+    font-weight: 500;
+    color: var(--mr-fg-muted);
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, background 0.15s;
+    font-family: inherit;
+    line-height: inherit;
+  }
+
+  .mr-menubar__trigger:hover,
+  .mr-menubar__menu-wrapper--active .mr-menubar__trigger {
+    color: var(--mr-fg-default);
+    background: var(--mr-bg-surface-strong);
+  }
+
+  .mr-menubar__trigger:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-menubar__trigger:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .mr-menubar__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: var(--mr-z-dropdown, 50);
+    min-width: 12rem;
+    padding: var(--mr-spacing-1);
+    margin-top: var(--mr-spacing-1);
+    background: var(--mr-bg-surface);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    box-shadow: var(--mr-shadow-lg, 0 4px 12px rgba(0, 0, 0, 0.1));
+    animation: mr-menubar-enter 0.15s ease-out;
+  }
+
+  @keyframes mr-menubar-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .mr-menubar__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-spacing-2);
+    width: 100%;
+    padding: var(--mr-spacing-1_5) var(--mr-spacing-2);
+    border-radius: var(--mr-radius-xs);
+    font-size: var(--mr-text-sm);
+    color: var(--mr-fg-default);
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.1s;
+    font-family: inherit;
+    line-height: inherit;
+  }
+
+  .mr-menubar__item:hover:not(:disabled) {
+    background: var(--mr-bg-surface-strong);
+  }
+
+  .mr-menubar__item:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-menubar__item--danger {
+    color: var(--mr-fg-danger);
+  }
+
+  .mr-menubar__item--danger:hover:not(:disabled) {
+    background: var(--mr-bg-danger-soft, rgba(220, 38, 38, 0.08));
+  }
+
+  .mr-menubar__item--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .mr-menubar__item-icon {
+    display: inline-flex;
+    width: 1rem;
+    justify-content: center;
+  }
+
+  .mr-menubar__item-label {
+    flex: 1;
+  }
+
+  .mr-menubar__shortcut {
+    font-size: var(--mr-text-xs);
+    color: var(--mr-fg-muted);
+    margin-left: auto;
+    font-family: var(--mr-font-mono, ui-monospace, monospace);
+  }
+
+  .mr-menubar__separator {
+    height: 1px;
+    margin: var(--mr-spacing-1) var(--mr-spacing-1);
+    background: var(--mr-border-subtle);
+  }
+}

@@ -1,2 +1,8 @@
+export { DropZone } from './DropZone'
+export type { DropZoneProps } from './DropZone.types'
+export { FileList } from './FileList'
+export type { FileListProps, FileListItem } from './FileList.types'
+export { FileTrigger } from './FileTrigger'
+export type { FileTriggerProps } from './FileTrigger.types'
 export { FileUpload } from './FileUpload'
 export type { FileUploadProps, FileUploadSize } from './FileUpload.types'

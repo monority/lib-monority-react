@@ -4,6 +4,7 @@ import {
   StatCardTonesExample,
   StatCardWithIconExample,
   StatCardWithFooterExample,
+  StatCardLongTextExample,
 } from './StatCard.examples'
 
 const docData: DocPageData = {
@@ -13,9 +14,12 @@ const docData: DocPageData = {
   usageCode: `<StatCard label="Revenue" value="$12,340" trend="+12%" trendTone="success" />`,
   preview: () => <StatCardBasicExample />,
   examples: [
-    { title: 'Trend tones', content: <StatCardTonesExample /> },
-    { title: 'With icon', content: <StatCardWithIconExample /> },
-    { title: 'With footer', content: <StatCardWithFooterExample /> },
+    { title: 'Trend tones', content: <StatCardTonesExample />, code: `<StatCard label="Revenue" value="$12,340" trend="+12%" trendTone="success" />
+<StatCard label="Churn" value="2.1%" trend="+0.3%" trendTone="danger" />
+<StatCard label="Stable" value="1,234" trend="0%" trendTone="neutral" />` },
+    { title: 'With icon', content: <StatCardWithIconExample />, code: `<StatCard label="Users" value="1,234" trend="+8%" trendTone="success" icon={<UserIcon />} />` },
+    { title: 'With footer', content: <StatCardWithFooterExample />, code: `<StatCard label="Orders" value="456" description="Last 30 days" footer={<span>Updated 5 min ago</span>} />` },
+    { title: 'Long text', content: <StatCardLongTextExample />, code: `<StatCard label="Total Revenue" value="$1,234,567.89" trend="+23.5%" trendTone="success" />` },
   ],
   props: [
     { name: 'label', type: `string`, defaultValue: "-", description: "Metric label." },

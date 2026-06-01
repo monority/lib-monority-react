@@ -1,0 +1,94 @@
+@layer recipes {
+  /* Textarea component-specific styles.
+     Base styles (border, padding, background, color, font-size,
+     line-height, transitions, ::placeholder) are provided by
+     .mr-input-base in input-base.recipe.css. */
+
+  .mr-textarea {
+    min-height: var(--mr-textarea-min-height, 5rem);
+    resize: vertical;
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--mr-border-subtle) transparent;
+  }
+
+  /* WebKit scrollbar */
+  .mr-textarea::-webkit-scrollbar {
+    width: 6px;
+  }
+  .mr-textarea::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .mr-textarea::-webkit-scrollbar-thumb {
+    background: var(--mr-border-subtle);
+    border-radius: 3px;
+  }
+  .mr-textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--mr-border-strong);
+  }
+
+  .mr-textarea--disabled,
+  .mr-textarea[data-disabled='true'] {
+    resize: none;
+  }
+
+  /* Resize control via data-resize attribute */
+  .mr-textarea[data-resize='none'] {
+    resize: none;
+  }
+  .mr-textarea[data-resize='both'] {
+    resize: both;
+  }
+  /* data-resize='vertical' is the default, already set */
+
+  .mr-textarea--accent,
+  .mr-textarea[data-tone='accent'] {
+    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-textarea--accent:focus-visible,
+  .mr-textarea[data-tone='accent']:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-textarea--danger,
+  .mr-textarea[data-tone='danger'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 30%, var(--mr-border-subtle));
+  }
+
+  .mr-textarea--danger:focus-visible,
+  .mr-textarea[data-tone='danger']:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-textarea--sm,
+  .mr-textarea[data-size='sm'] {
+    --mr-textarea-min-height: 3.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-textarea--md,
+  .mr-textarea[data-size='md'] {
+    --mr-textarea-min-height: 5rem;
+  }
+
+  .mr-textarea--lg,
+  .mr-textarea[data-size='lg'] {
+    --mr-textarea-min-height: 7rem;
+    padding: 0.75rem 1.25rem;
+    font-size: var(--mr-text-md);
+  }
+
+  /* Character counter */
+  .mr-textarea__counter {
+    display: block;
+    text-align: right;
+    font-size: var(--mr-text-xs);
+    color: var(--mr-fg-muted);
+    margin-top: var(--mr-space-1);
+    user-select: none;
+  }
+}

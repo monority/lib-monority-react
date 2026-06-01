@@ -19,9 +19,13 @@ const docData: DocPageData = {
 />`,
   preview: () => <SwitchBasicExample />,
   examples: [
-    { title: 'Sizes', content: <SwitchSizesExample /> },
-    { title: 'Tones', content: <SwitchTonesExample /> },
-    { title: 'Error state', content: <SwitchWithErrorExample /> },
+    { title: 'Sizes', content: <SwitchSizesExample />, code: `<Switch size="sm" defaultChecked />
+<Switch size="md" defaultChecked />
+<Switch size="lg" defaultChecked />` },
+    { title: 'Tones', content: <SwitchTonesExample />, code: `<Switch tone="accent" defaultChecked />
+<Switch tone="neutral" defaultChecked />
+<Switch tone="danger" defaultChecked />` },
+    { title: 'Error state', content: <SwitchWithErrorExample />, code: `<Switch invalid />` },
   ],
   props: [
     { name: 'checked', type: `boolean`, defaultValue: "false", description: "Controlled checked state." },

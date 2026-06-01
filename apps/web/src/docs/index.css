@@ -328,7 +328,6 @@
 .docs-preview-card {
   border: 1px solid var(--mr-border-subtle);
   border-radius: 0.5rem;
-  overflow: hidden;
   margin-bottom: 2.5rem;
 }
 
@@ -400,7 +399,6 @@
 .docs-example-group {
   border: 1px solid var(--mr-border-subtle);
   border-radius: 0.5rem;
-  overflow: hidden;
   margin-bottom: 1rem;
 }
 
@@ -425,6 +423,85 @@
   background: var(--mr-bg-surface-strong);
 }
 
+/* ─── Page Layout with ToC ─── */
+
+.docs-page-layout {
+  display: grid;
+  grid-template-columns: 1fr 14rem;
+  gap: 2rem;
+  align-items: start;
+}
+
+.docs-page-content {
+  min-width: 0;
+}
+
+.docs-page-toc {
+  position: sticky;
+  top: 2rem;
+}
+
+.docs-toc {
+  width: 14rem;
+  padding: 1rem;
+  border-left: 1px solid var(--mr-border-subtle);
+}
+
+.docs-toc__title {
+  margin: 0 0 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mr-fg-muted);
+}
+
+.docs-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.docs-toc__list li[data-level='3'] {
+  padding-left: 0.75rem;
+}
+
+.docs-toc__link {
+  display: block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--mr-fg-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  transition: color 0.15s, background 0.15s;
+}
+
+.docs-toc__link:hover {
+  color: var(--mr-fg-strong);
+  background: var(--mr-bg-accent-soft);
+}
+
+.docs-toc__link--active {
+  color: var(--mr-accent);
+  background: var(--mr-bg-accent-soft);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .docs-page-toc {
+    display: none;
+  }
+
+  .docs-page-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Responsive ─── */
+
 @media (max-width: 720px) {
   .docs-layout,
   .docs-grid {
@@ -442,3 +519,113 @@
     font-size: 1.75rem;
   }
 }
+/* ─── Feature Grid ─── */
+
+.docs-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.docs-feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--mr-border-subtle);
+  border-radius: var(--mr-radius-md);
+  background: var(--mr-bg-surface-elevated);
+}
+
+.docs-feature-card__accent {
+  width: 1.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--mr-accent);
+}
+
+.docs-feature-card__accent--neutral { background: var(--mr-fg-muted); }
+.docs-feature-card__accent--accent { background: var(--mr-accent); }
+.docs-feature-card__accent--success { background: var(--mr-success); }
+.docs-feature-card__accent--warning { background: var(--mr-warning); }
+.docs-feature-card__accent--danger { background: var(--mr-danger); }
+.docs-feature-card__accent--info { background: var(--mr-info, #3b82f6); }
+
+.docs-feature-card h3 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--mr-fg-strong);
+}
+
+.docs-feature-card p {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--mr-fg-muted);
+}
+
+/* ─── Installation Steps ─── */
+
+.docs-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  counter-reset: step;
+}
+
+.docs-step {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.docs-step__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--mr-radius-full);
+  background: var(--mr-bg-accent-soft);
+  color: var(--mr-fg-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.docs-step__content {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.docs-step__content h3 {
+  margin: 0.25rem 0 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--mr-fg-strong);
+}
+
+.docs-step__content p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--mr-fg-muted);
+}
+
+.docs-step__content .docs-code-block {
+  margin: 0;
+}
+
+.docs-text-link {
+  color: var(--mr-accent);
+  text-decoration: underline;
+  transition: opacity 0.15s;
+}
+
+.docs-text-link:hover {
+  opacity: 0.8;
+}
+

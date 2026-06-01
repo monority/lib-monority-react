@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import hljs from 'highlight.js/lib/core'
 import typescript from 'highlight.js/lib/languages/typescript'
 import xml from 'highlight.js/lib/languages/xml'
 import 'highlight.js/styles/github-dark.css'
+import '../code-theme.css'
 
 hljs.registerLanguage('typescript', typescript)
 hljs.registerLanguage('xml', xml)
@@ -47,7 +48,7 @@ function CopyButton({ text }: { text: string }) {
 
   return (
     <button className="docs-copy-btn" onClick={copy} aria-label="Copy code">
-      {copied ? 'Copied!' : 'Copy'}
+      {copied ? "Copied!" : "Copy"}
     </button>
   )
 }
@@ -93,10 +94,10 @@ function ExampleCard({ example, index }: { example: DocExample; index: number })
 export function DocPage({ doc }: { doc: DocPageData }) {
   const Preview = doc.preview
   const fullCode = doc.importCode
-    ? \\\n\\
+    ? `${doc.importCode}\n${doc.usageCode || ""}`
     : (doc.usageCode || '')
   const codeRef = useRef<HTMLElement>(null)
-  const previewLabel = doc.previewLabel ?? \\.tsx\
+  const previewLabel = doc.previewLabel ?? `${doc.title.toLowerCase().replace(/\s+/g, "-")}.tsx`
 
   useEffect(() => {
     if (codeRef.current && fullCode) hljs.highlightElement(codeRef.current)

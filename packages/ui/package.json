@@ -43,6 +43,18 @@
       "import": "./dist/card.js",
       "default": "./dist/card.js"
     },
+    "./carousel": {
+      "types": "./dist/carousel.d.ts",
+      "development": "./src/components/display/carousel/index.ts",
+      "import": "./dist/carousel.js",
+      "default": "./dist/carousel.js"
+    },
+    "./collapsible": {
+      "types": "./dist/collapsible.d.ts",
+      "development": "./src/components/display/collapsible/index.ts",
+      "import": "./dist/collapsible.js",
+      "default": "./dist/collapsible.js"
+    },
     "./modal": {
       "types": "./dist/modal.d.ts",
       "development": "./src/components/overlays/modal/index.ts",
@@ -54,6 +66,12 @@
       "development": "./src/components/overlays/command-palette/index.ts",
       "import": "./dist/commandPalette.js",
       "default": "./dist/commandPalette.js"
+    },
+    "./context-menu": {
+      "types": "./dist/contextMenu.d.ts",
+      "development": "./src/components/overlays/context-menu/index.ts",
+      "import": "./dist/contextMenu.js",
+      "default": "./dist/contextMenu.js"
     },
     "./dropdown-menu": {
       "types": "./dist/dropdownMenu.d.ts",
@@ -72,6 +90,12 @@
       "development": "./src/components/forms/checkbox/index.ts",
       "import": "./dist/checkbox.js",
       "default": "./dist/checkbox.js"
+    },
+    "./calendar": {
+      "types": "./dist/calendar.d.ts",
+      "development": "./src/components/forms/calendar/index.ts",
+      "import": "./dist/calendar.js",
+      "default": "./dist/calendar.js"
     },
     "./combobox": {
       "types": "./dist/combobox.d.ts",
@@ -132,6 +156,18 @@
       "development": "./src/components/navigation/tabs/index.ts",
       "import": "./dist/tabs.js",
       "default": "./dist/tabs.js"
+    },
+    "./navigation-menu": {
+      "types": "./dist/navigationMenu.d.ts",
+      "development": "./src/components/navigation/navigation-menu/index.ts",
+      "import": "./dist/navigationMenu.js",
+      "default": "./dist/navigationMenu.js"
+    },
+    "./menubar": {
+      "types": "./dist/menubar.d.ts",
+      "development": "./src/components/navigation/menubar/index.ts",
+      "import": "./dist/menubar.js",
+      "default": "./dist/menubar.js"
     },
     "./form-section": {
       "types": "./dist/formSection.d.ts",
@@ -199,6 +235,18 @@
       "import": "./dist/iconButton.js",
       "default": "./dist/iconButton.js"
     },
+    "./toggle": {
+      "types": "./dist/toggle.d.ts",
+      "development": "./src/components/actions/toggle/index.ts",
+      "import": "./dist/toggle.js",
+      "default": "./dist/toggle.js"
+    },
+    "./toggle-group": {
+      "types": "./dist/toggleGroup.d.ts",
+      "development": "./src/components/actions/toggle-group/index.ts",
+      "import": "./dist/toggleGroup.js",
+      "default": "./dist/toggleGroup.js"
+    },
     "./inline-alert": {
       "types": "./dist/inlineAlert.d.ts",
       "development": "./src/components/feedback/inline-alert/index.ts",
@@ -247,11 +295,23 @@
       "import": "./dist/title.js",
       "default": "./dist/title.js"
     },
+    "./kbd": {
+      "types": "./dist/kbd.d.ts",
+      "development": "./src/components/typography/kbd/index.ts",
+      "import": "./dist/kbd.js",
+      "default": "./dist/kbd.js"
+    },
     "./accordion": {
       "types": "./dist/accordion.d.ts",
       "development": "./src/components/display/accordion/index.ts",
       "import": "./dist/accordion.js",
       "default": "./dist/accordion.js"
+    },
+    "./aspect-ratio": {
+      "types": "./dist/aspectRatio.d.ts",
+      "development": "./src/components/layout/aspect-ratio/index.ts",
+      "import": "./dist/aspectRatio.js",
+      "default": "./dist/aspectRatio.js"
     },
     "./alert-dialog": {
       "types": "./dist/alertDialog.d.ts",
@@ -307,6 +367,12 @@
       "import": "./dist/grid.js",
       "default": "./dist/grid.js"
     },
+    "./hover-card": {
+      "types": "./dist/hoverCard.d.ts",
+      "development": "./src/components/overlays/hover-card/index.ts",
+      "import": "./dist/hoverCard.js",
+      "default": "./dist/hoverCard.js"
+    },
     "./page-header": {
       "types": "./dist/page-header.d.ts",
       "development": "./src/components/layout/page-header/index.ts",
@@ -318,6 +384,24 @@
       "development": "./src/components/layout/section/index.ts",
       "import": "./dist/section.js",
       "default": "./dist/section.js"
+    },
+    "./scroll-area": {
+      "types": "./dist/scrollArea.d.ts",
+      "development": "./src/components/layout/scroll-area/index.ts",
+      "import": "./dist/scrollArea.js",
+      "default": "./dist/scrollArea.js"
+    },
+    "./separator": {
+      "types": "./dist/separator.d.ts",
+      "development": "./src/components/layout/separator/index.ts",
+      "import": "./dist/separator.js",
+      "default": "./dist/separator.js"
+    },
+    "./resizable": {
+      "types": "./dist/resizable.d.ts",
+      "development": "./src/components/layout/resizable/index.ts",
+      "import": "./dist/resizable.js",
+      "default": "./dist/resizable.js"
     },
     "./stack": {
       "types": "./dist/stack.d.ts",

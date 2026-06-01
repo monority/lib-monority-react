@@ -1,5 +1,6 @@
 import { Button } from '@monority/ui/button'
 import { Modal } from '@monority/ui/modal'
+import { Input } from '@monority/ui/input'
 import { useState } from 'react'
 
 export function ModalBasicExample() {
@@ -25,7 +26,7 @@ export function ModalWithFormExample() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem' }}>Name</span>
-            <input className="mr-input" placeholder="Your name" />
+            <Input placeholder="Your name" />
           </label>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
             <Button variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>

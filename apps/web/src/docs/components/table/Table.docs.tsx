@@ -22,8 +22,21 @@ const rows = [
 <Table columns={columns} rows={rows} />`,
   preview: () => <TableBasicExample />,
   examples: [
-    { title: 'With data', content: <TableWithDataExample /> },
-    { title: 'Empty state', content: <TableEmptyExample /> },
+    { title: 'With data', content: <TableWithDataExample />, code: `const columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'role', label: 'Role' },
+]
+const rows = [
+  { name: 'John Doe', email: 'john@example.com', role: 'Developer' },
+  { name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
+]
+<Table columns={columns} rows={rows} />` },
+    { title: 'Empty state', content: <TableEmptyExample />, code: `const columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+]
+<Table columns={columns} rows={[]} />` },
   ],
   props: [
     { name: 'columns', type: `Column[]`, defaultValue: "[]", description: "Column definitions" },

@@ -39,14 +39,13 @@ const docData: DocPageData = {
     { name: 'invalid', type: `boolean`, defaultValue: "false", description: "Manually marks as invalid." },
     { name: 'name', type: `string`, defaultValue: "-", description: "HTML name attribute for the radio inputs." },
     { name: 'tone', type: `'accent' | 'neutral' | 'danger'`, defaultValue: `'accent'`, description: "Visual tone. Use 'danger' alongside error." },
-    { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: `'md'`, description: "Control density. 'lg' works well as choice cards." },
   ],
   cssHooks: [
     '.mr-radio-group', '.mr-radio-group--disabled', '.mr-radio-group--invalid',
     '.mr-radio', '.mr-radio--checked', '.mr-radio--disabled',
     '.mr-radio__input', '.mr-radio__control', '.mr-radio__dot',
     '.mr-radio__body', '.mr-radio__label', '.mr-radio__description',
-    '[data-tone]', '[data-size]', '[data-disabled]', '[data-invalid]', '[data-checked]', '[data-required]',
+    '[data-tone]', '[data-disabled]', '[data-invalid]', '[data-checked]', '[data-required]',
   ],
   tokens: [
     '--mr-accent', '--mr-accent-contrast', '--mr-danger',

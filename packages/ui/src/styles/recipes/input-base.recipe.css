@@ -1,0 +1,78 @@
+@layer recipes {
+  .mr-input-base {
+    width: var(--mr-input-width);
+    min-height: var(--mr-input-height);
+    padding-inline: 1rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-input-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-base);
+    font-family: inherit;
+    font-size: var(--mr-text-md);
+    line-height: 1.5;
+    box-shadow: var(--mr-shadow-xs);
+    transition:
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-input-base::placeholder {
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-input-base:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+    outline: none;
+  }
+
+  .mr-input-base:disabled,
+  .mr-input-base[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .mr-input-base[data-invalid='true'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-input-base[data-tone='accent'] {
+    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-input-base[data-tone='accent']:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-input-base[data-tone='danger'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 30%, var(--mr-border-subtle));
+  }
+
+  .mr-input-base[data-tone='danger']:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-input-base[data-size='sm'] {
+    min-height: 2rem;
+    padding-inline: 0.75rem;
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-input-base[data-size='md'] {
+    min-height: 2.5rem;
+  }
+
+  .mr-input-base[data-size='lg'] {
+    min-height: 3rem;
+    padding-inline: 1.25rem;
+    font-size: var(--mr-text-md);
+  }
+}

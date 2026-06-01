@@ -1,0 +1,31 @@
+@layer recipes {
+  .mr-toggle-group {
+    display: inline-flex;
+    gap: 0;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    overflow: hidden;
+  }
+  .mr-toggle-group--vertical {
+    flex-direction: column;
+    border-radius: var(--mr-radius-md);
+  }
+  .mr-toggle-group--horizontal {
+    flex-direction: row;
+  }
+  .mr-toggle-group__item {
+    border-radius: 0;
+    border: none !important;
+    border-right: 1px solid var(--mr-border-subtle) !important;
+  }
+  .mr-toggle-group--horizontal .mr-toggle-group__item:last-child {
+    border-right: none !important;
+  }
+  .mr-toggle-group--vertical .mr-toggle-group__item {
+    border-right: none !important;
+    border-bottom: 1px solid var(--mr-border-subtle) !important;
+  }
+  .mr-toggle-group--vertical .mr-toggle-group__item:last-child {
+    border-bottom: none !important;
+  }
+}

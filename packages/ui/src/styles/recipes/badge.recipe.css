@@ -1,0 +1,44 @@
+@layer recipes {
+  .mr-badge {
+    --mr-badge-height: 1.85rem;
+    --mr-badge-padding-x: 0.75rem;
+    --mr-badge-radius: var(--mr-radius-sm);
+    --mr-badge-font-size: var(--mr-text-xs);
+    --mr-badge-font-weight: 700;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--mr-badge-height);
+    padding-inline: var(--mr-badge-padding-x);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-badge-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-badge-font-size);
+    font-weight: var(--mr-badge-font-weight);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .mr-badge--primary,
+  .mr-badge[data-variant='primary'] {
+    background: var(--mr-accent);
+    color: var(--mr-accent-contrast);
+    border-color: transparent;
+  }
+
+  .mr-badge--success,
+  .mr-badge[data-variant='success'] {
+    background: var(--mr-success);
+    color: white;
+    border-color: transparent;
+  }
+
+  .mr-badge--danger,
+  .mr-badge[data-variant='danger'] {
+    background: var(--mr-danger);
+    color: white;
+    border-color: transparent;
+  }
+}

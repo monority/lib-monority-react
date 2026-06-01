@@ -1,4 +1,4 @@
-import { DocPage, type DocPageData } from '../DocPage'
+import { DocPage, type DocPageData } from "../DocPage"
 import {
   TextBasicExample,
   TextTonesExample,
@@ -8,21 +8,25 @@ import {
 
 const docData: DocPageData = {
   title: 'Text',
-  description: "Polymorphic text component with tone and size variants.",
+  description: 'Polymorphic text component with tone and size variants. Combine with Title for rich typographic layouts.',
   importCode: "import { Text } from '@monority/ui'",
-  usageCode: `<Text as="p" tone="muted" size="md">Muted paragraph text</Text>
-<Text as="span" tone="strong">Strong span text</Text>`,
+  usageCode: `<Text as="p" tone="base" size="md">
+  Body text for paragraphs and descriptions.
+</Text>
+<Text as="span" tone="muted" size="sm">
+  Captions and secondary information
+</Text>`,
   preview: () => <TextBasicExample />,
   examples: [
-    { title: 'Tones', content: <TextTonesExample /> },
     { title: 'Sizes', content: <TextSizesExample /> },
+    { title: 'Tones', content: <TextTonesExample /> },
     { title: 'As prop', content: <TextAsExample /> },
   ],
   props: [
-    { name: 'as', type: `'p' | 'span' | 'div'`, defaultValue: "'p'", description: "Polymorphic element type." },
-    { name: 'tone', type: `'muted' | 'base' | 'strong'`, defaultValue: "-", description: "Text tone / emphasis." },
-    { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: "-", description: "Text size preset." },
-    { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Text content." }
+    { name: "as", type: "'p' | 'span' | 'div'", defaultValue: "'p'", description: "Polymorphic element type." },
+    { name: "tone", type: "'muted' | 'base' | 'strong'", defaultValue: "-", description: "Text tone / emphasis level." },
+    { name: "size", type: "'sm' | 'md' | 'lg'", defaultValue: "-", description: "Text size preset." },
+    { name: "children", type: "ReactNode", defaultValue: "-", description: "Text content." },
   ],
   cssHooks: [
     '.mr-text', '.mr-text--sm', '.mr-text--md', '.mr-text--lg',
@@ -35,7 +39,7 @@ const docData: DocPageData = {
   ],
   a11y: [
     'Use concise text.',
-    'Tone variants use color — avoid color-only meaning for critical states.',
+    'Tone variants use color -- avoid color-only meaning for critical states.',
   ],
 }
 

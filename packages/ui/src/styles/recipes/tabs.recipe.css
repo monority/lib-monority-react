@@ -1,0 +1,97 @@
+@layer recipes {
+  .mr-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--mr-border-subtle);
+    font-family: inherit;
+  }
+
+  .mr-tabs__tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--mr-fg-muted);
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      color var(--mr-dur-150) var(--mr-ease-in-out),
+      border-color var(--mr-dur-150) var(--mr-ease-in-out);
+    margin-bottom: -1px;
+  }
+
+  .mr-tabs__tab:hover:not(:disabled):not([data-disabled='true']) {
+    color: var(--mr-fg-base);
+    border-bottom-color: var(--mr-border-strong);
+  }
+
+  .mr-tabs__tab:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-tabs__tab:disabled,
+  .mr-tabs__tab[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .mr-tabs__tab--active,
+  .mr-tabs__tab[data-active='true'] {
+    color: var(--mr-fg-base);
+    border-bottom-color: var(--mr-accent);
+  }
+
+  .mr-tabs--neutral .mr-tabs__tab--active,
+  .mr-tabs[data-tone='neutral'] .mr-tabs__tab[data-active='true'] {
+    border-bottom-color: var(--mr-fg-strong);
+  }
+
+  .mr-tabs--accent .mr-tabs__tab--active,
+  .mr-tabs[data-tone='accent'] .mr-tabs__tab[data-active='true'] {
+    border-bottom-color: var(--mr-accent);
+  }
+
+  .mr-tabs--danger .mr-tabs__tab--active,
+  .mr-tabs[data-tone='danger'] .mr-tabs__tab[data-active='true'] {
+    border-bottom-color: var(--mr-danger);
+  }
+
+  .mr-tabs--full-width,
+  .mr-tabs[data-full-width='true'] {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    width: 100%;
+  }
+
+  .mr-tabs--full-width .mr-tabs__tab,
+  .mr-tabs[data-full-width='true'] .mr-tabs__tab {
+    width: 100%;
+  }
+
+  .mr-tabs--sm .mr-tabs__tab,
+  .mr-tabs[data-size='sm'] .mr-tabs__tab {
+    padding: 0.25rem 0.75rem;
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-tabs--md .mr-tabs__tab,
+  .mr-tabs[data-size='md'] .mr-tabs__tab {
+    padding: 0.5rem 1rem;
+    font-size: var(--mr-text-sm);
+  }
+
+  .mr-tabs--lg .mr-tabs__tab,
+  .mr-tabs[data-size='lg'] .mr-tabs__tab {
+    padding: 0.75rem 1.25rem;
+    font-size: var(--mr-text-md);
+  }
+}

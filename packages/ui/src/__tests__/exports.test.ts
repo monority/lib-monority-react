@@ -6,38 +6,38 @@
 // ──────────────────────────────────────────────
 import {
   // Actions
-  Button, CopyButton, IconButton,
+    Button, CopyButton, IconButton, Toggle, ToggleGroup,
   // Typography
   Text, Title,
   // Feedback
   Badge, Banner, Callout, InlineAlert, Progress, Skeleton, Spinner, Toast, AsyncStateNotice, EmptyState,
   // Display
-  Accordion, Avatar, Card, MetricGrid, StatCard, Table,
+    Accordion, Avatar, Card, Carousel, MetricGrid, StatCard, Table,
   // Data-display
   DataList, DataTable,
   // Layout
-  Container, Divider, Grid, PageHeader, Section, Stack, Toolbar,
+  AspectRatio, Container, Divider, Grid, PageHeader, Section, Separator, Stack, Toolbar,
   // Navigation
-  Breadcrumb, FilterBar, Pagination, SidebarLayout, Tabs, Topbar,
+  Breadcrumb, FilterBar, NavigationMenu, Pagination, SidebarLayout, Tabs, Topbar,
   // Forms
   Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, Select, Slider, Switch, Textarea, Field,
   // Overlays
-  AlertDialog, Drawer, DropdownMenu, Modal, Popover, Tooltip, CommandPalette,
+  AlertDialog, Drawer, DropdownMenu, HoverCard, Modal, Popover, Tooltip, CommandPalette,
   // Experimental
   InfiniteScroll,
 } from '@monority/ui'
 
 describe('root barrel import (@monority/ui)', () => {
   const components: Record<string, unknown> = {
-    Button, CopyButton, IconButton,
+  Button, CopyButton, IconButton, Toggle, ToggleGroup,
     Text, Title,
     Badge, Banner, Callout, InlineAlert, Progress, Skeleton, Spinner, Toast, AsyncStateNotice, EmptyState,
-    Accordion, Avatar, Card, MetricGrid, StatCard, Table,
+  Accordion, Avatar, Card, Carousel, MetricGrid, StatCard, Table,
     DataList, DataTable,
-    Container, Divider, Grid, PageHeader, Section, Stack, Toolbar,
-    Breadcrumb, FilterBar, Pagination, SidebarLayout, Tabs, Topbar,
+    AspectRatio, Container, Divider, Grid, PageHeader, Section, Stack, Toolbar,
+  Breadcrumb, FilterBar, NavigationMenu, Pagination, SidebarLayout, Tabs, Topbar,
     Checkbox, Combobox, DatePicker, DateRangePicker, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, Select, Slider, Switch, Textarea, Field,
-    AlertDialog, Drawer, DropdownMenu, Modal, Popover, Tooltip, CommandPalette,
+    AlertDialog, Drawer, DropdownMenu, HoverCard, Modal, Popover, Tooltip, CommandPalette,
     InfiniteScroll,
   }
 
@@ -55,6 +55,11 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
   it('imports Accordion from @monority/ui/accordion', async () => {
     const { Accordion } = await import('@monority/ui/accordion')
     expect(Accordion).toBeDefined()
+  })
+
+  it('imports AspectRatio from @monority/ui/aspect-ratio', async () => {
+    const { AspectRatio } = await import('@monority/ui/aspect-ratio')
+    expect(AspectRatio).toBeDefined()
   })
 
   it('imports AlertDialog from @monority/ui/alert-dialog', async () => {
@@ -100,6 +105,11 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
   it('imports Card from @monority/ui/card', async () => {
     const { Card } = await import('@monority/ui/card')
     expect(Card).toBeDefined()
+  })
+
+  it('imports Carousel from @monority/ui/carousel', async () => {
+    const { Carousel } = await import('@monority/ui/carousel')
+    expect(Carousel).toBeDefined()
   })
 
   it('imports Checkbox from @monority/ui/checkbox', async () => {
@@ -192,6 +202,11 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
     expect(Grid).toBeDefined()
   })
 
+  it('imports HoverCard from @monority/ui/hover-card', async () => {
+    const { HoverCard } = await import('@monority/ui/hover-card')
+    expect(HoverCard).toBeDefined()
+  })
+
   it('imports IconButton from @monority/ui/icon-button', async () => {
     const { IconButton } = await import('@monority/ui/icon-button')
     expect(IconButton).toBeDefined()
@@ -220,6 +235,11 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
   it('imports Modal from @monority/ui/modal', async () => {
     const { Modal } = await import('@monority/ui/modal')
     expect(Modal).toBeDefined()
+  })
+
+  it('imports NavigationMenu from @monority/ui/navigation-menu', async () => {
+    const { NavigationMenu } = await import('@monority/ui/navigation-menu')
+    expect(NavigationMenu).toBeDefined()
   })
 
   it('imports NumberInput from @monority/ui/number-input', async () => {
@@ -315,6 +335,16 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
   it('imports Textarea from @monority/ui/textarea', async () => {
     const { Textarea } = await import('@monority/ui/textarea')
     expect(Textarea).toBeDefined()
+  })
+
+  it('imports Toggle from @monority/ui/toggle', async () => {
+    const { Toggle } = await import('@monority/ui/toggle')
+    expect(Toggle).toBeDefined()
+  })
+
+  it('imports ToggleGroup from @monority/ui/toggle-group', async () => {
+    const { ToggleGroup } = await import('@monority/ui/toggle-group')
+    expect(ToggleGroup).toBeDefined()
   })
 
   it('imports Title from @monority/ui/title', async () => {

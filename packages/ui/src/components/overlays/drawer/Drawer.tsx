@@ -1,4 +1,4 @@
-import { forwardRef, useId, useRef } from 'react'
+import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
@@ -30,35 +30,51 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const titleId = `${generatedId}-title`
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
+    const [closing, setClosing] = useState(false)
 
-    useBodyScrollLock(open)
-    useFocusTrap({ active: open, containerRef: panelRef, initialFocusRef: closeButtonRef, onEscape: onClose })
+    useBodyScrollLock(open && !closing)
+    useFocusTrap({ active: open && !closing, containerRef: panelRef, initialFocusRef: closeButtonRef, onEscape: handleClose })
     const portalTarget = usePortalTarget()
 
-    if (!open || !portalTarget) return null
+    function handleClose() {
+      setClosing(true)
+    }
+
+    useEffect(() => {
+      if (!closing) return
+      const timer = setTimeout(() => {
+        setClosing(false)
+        onClose?.()
+      }, 200)
+      return () => clearTimeout(timer)
+    }, [closing, onClose])
+
+    if ((!open && !closing) || !portalTarget) return null
 
     return createPortal(
       <div
-        ref={ref}
         className={cn('mr-drawer__backdrop', className)}
         data-open={open ? true : undefined}
         data-side={side}
+        data-closing={closing ? '' : undefined}
+        onClick={handleClose}
         {...props}
       >
         <div
           className="mr-drawer__backdrop-surface"
-          onClick={onClose}
           aria-hidden="true"
         />
         <div
-          ref={panelRef}
+          ref={ref || panelRef}
           className={cn(drawerVariants({ side }), 'mr-drawer__panel')}
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
           data-side={side}
           data-open={open ? true : undefined}
+          data-closing={closing ? '' : undefined}
           tabIndex={-1}
+          onClick={(e) => e.stopPropagation()}
         >
           <header className="mr-drawer__header">
             <h3 id={titleId} className="mr-drawer__title">{title}</h3>
@@ -66,7 +82,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               ref={closeButtonRef}
               variant="ghost"
               size="sm"
-              onClick={onClose}
+              onClick={handleClose}
               aria-label="Fermer le panneau"
             >
               Fermer

@@ -61,13 +61,13 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
     setIsLoading(true)
     cooldownRef.current = true
 
-    if (cooldown > 0) {
-      setTimeout(() => { cooldownRef.current = false }, cooldown)
-    }
+    // Always release cooldown (default 200ms debounce prevents rapid re-triggers)
+    setTimeout(() => { cooldownRef.current = false }, cooldown > 0 ? cooldown : 200)
 
     onLoadMore?.()
   }, [hasMore, disabled, cooldown, onLoadMore])
 
+  // Reset loading state when hasMore becomes false (end of list)
   useEffect(() => {
     if (!hasMore) setIsLoading(false)
   }, [hasMore])
@@ -84,44 +84,37 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
   const sentinel = (
     <div
       ref={sentinelRef}
-      className="mr-infinite-scroll__sentinel"
-      aria-hidden="true"
+      className='mr-infinite-scroll__sentinel'
+      aria-hidden='true'
     />
   )
 
-  const sentinelState = () => {
-    if (error) {
-      return (
-        <div className="mr-infinite-scroll__error">
-          {error}
-          {onRetry && (
-            <button
-              type="button"
-              className="mr-infinite-scroll__retry"
-              onClick={onRetry}
-            >
-              Retry
-            </button>
-          )}
-        </div>
-      )
-    }
+  const loaderElement = isLoading && !error ? (
+    <div className='mr-infinite-scroll__loader'>{loader || 'Loading...'}</div>
+  ) : null
 
-    if (isLoading) {
-      return <div className="mr-infinite-scroll__loader">{loader}</div>
-    }
+  const endElement = !hasMore && !error ? (
+    hasChildren && endMessage ? (
+      <div className='mr-infinite-scroll__end'>{endMessage}</div>
+    ) : !hasChildren && emptyMessage ? (
+      <div className='mr-infinite-scroll__empty'>{emptyMessage}</div>
+    ) : null
+  ) : null
 
-    if (!hasMore) {
-      if (hasChildren && endMessage) {
-        return <div className="mr-infinite-scroll__end">{endMessage}</div>
-      }
-      if (!hasChildren && emptyMessage) {
-        return <div className="mr-infinite-scroll__empty">{emptyMessage}</div>
-      }
-    }
-
-    return isLoading ? null : sentinel
-  }
+  const errorElement = error ? (
+    <div className='mr-infinite-scroll__error'>
+      {error}
+      {onRetry && (
+        <button
+          type='button'
+          className='mr-infinite-scroll__retry'
+          onClick={onRetry}
+        >
+          Retry
+        </button>
+      )}
+    </div>
+  ) : null
 
   return (
     <div
@@ -133,7 +126,9 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
       {reverse && sentinel}
       {children}
       {!reverse && sentinel}
-      {sentinelState()}
+      {loaderElement}
+      {endElement}
+      {errorElement}
     </div>
   )
 })

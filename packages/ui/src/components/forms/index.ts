@@ -1,8 +1,39 @@
+export { Calendar, type CalendarProps } from './calendar'
 export { Checkbox } from './checkbox'
 export { Combobox, type ComboboxItem, type ComboboxProps, type ComboboxSize, type ComboboxTone } from './combobox'
 export { DatePicker, type DatePickerProps, type DatePickerSize, type DatePickerTone } from './date-picker'
 export { DateRangePicker, type DateRangePickerProps, type DateRangePickerSize } from './date-range-picker'
-export { Field, type FieldProps } from './field'
+export {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+  type FieldProps,
+  type FieldContentProps,
+  type FieldDescriptionProps,
+  type FieldErrorProps,
+  type FieldGroupProps,
+  type FieldLabelProps,
+  type FieldLegendProps,
+  type FieldSeparatorProps,
+  type FieldSetProps,
+  type FieldTitleProps,
+} from './field'
+export {
+  DropZone,
+  type DropZoneProps,
+  FileList,
+  type FileListProps,
+  type FileListItem,
+  FileTrigger,
+  type FileTriggerProps,
+} from './file-upload'
 export { FileUpload, type FileUploadProps, type FileUploadSize } from './file-upload'
 export { FormSection, type FormSectionProps } from './form-section'
 export { Input, type InputProps } from './input'

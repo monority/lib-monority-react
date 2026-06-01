@@ -1,0 +1,17 @@
+@layer recipes {
+  .mr-kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    font-family: var(--mr-font-mono, ui-monospace, monospace);
+    color: var(--mr-fg-muted);
+    background: var(--mr-bg-surface-strong);
+    border: 1px solid var(--mr-border-subtle);
+    border-bottom-width: 2px;
+    white-space: nowrap;
+  }
+  .mr-kbd--sm { font-size: var(--mr-text-xs); padding: 0.0625rem 0.25rem; border-radius: var(--mr-radius-xs); }
+  .mr-kbd--md { font-size: var(--mr-text-sm); padding: 0.125rem 0.375rem; border-radius: var(--mr-radius-xs); }
+  .mr-kbd--lg { font-size: var(--mr-text-base); padding: 0.1875rem 0.5rem; border-radius: var(--mr-radius-sm); }
+  .mr-kbd__separator { color: var(--mr-fg-muted); margin: 0 0.0625rem; font-size: 0.75em; }
+}

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Progress } from '@monority/ui'
 
 export function ProgressBasicExample() {
@@ -28,4 +29,19 @@ export function ProgressTonesExample() {
 
 export function ProgressWithoutValueExample() {
   return <Progress value={65} showValue={false} label="Upload progress" />
+}
+
+export function ProgressIndeterminateExample() {
+  return <Progress mode="indeterminate" label="Loading..." />
+}
+
+export function ProgressSliderExample() {
+  const [value, setValue] = useState(40)
+  return (
+    <Progress
+      value={value}
+      label={`Click to set: ${value}%`}
+      onChange={setValue}
+    />
+  )
 }

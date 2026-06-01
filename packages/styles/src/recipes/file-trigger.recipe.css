@@ -1,0 +1,54 @@
+@layer recipes {
+  .mr-file-trigger__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .mr-file-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .mr-file-trigger:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-file-trigger[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .mr-file-trigger--default {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface);
+    color: var(--mr-fg-base);
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    font-weight: 500;
+  }
+
+  .mr-file-trigger--default:hover:not(:disabled) {
+    background: var(--mr-bg-surface-strong);
+    border-color: var(--mr-border-muted);
+  }
+
+  .mr-file-trigger--default:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}

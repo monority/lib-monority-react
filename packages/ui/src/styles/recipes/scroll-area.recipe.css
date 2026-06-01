@@ -1,0 +1,48 @@
+@layer recipes {
+  .mr-scroll-area {
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mr-border-subtle) transparent;
+  }
+
+  .mr-scroll-area::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .mr-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .mr-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+  }
+
+  .mr-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: var(--mr-border-muted);
+  }
+
+  .mr-scroll-area--hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mr-scroll-area--hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mr-scroll-area--vertical {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .mr-scroll-area--horizontal {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .mr-scroll-area--both {
+    overflow: auto;
+  }
+}

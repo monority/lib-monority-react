@@ -2,7 +2,9 @@ import { lazy, Suspense, useMemo, type ComponentType } from 'react'
 import { useLocation } from 'react-router-dom'
 import { DocsLayout } from './DocsLayout'
 import { Introduction } from './Introduction'
+import { Installation } from './Installation'
 import { docsComponentRegistry } from './components/registry'
+import { DocPageWithToc } from './components/DocPageWithToc'
 
 const docModules: Record<string, LazyComponent> = {}
 
@@ -51,9 +53,11 @@ export function DocsPage() {
     <DocsLayout>
       {!slug ? (
         <Introduction />
+      ) : slug === 'installation' ? (
+        <Installation />
       ) : DocComponent ? (
         <Suspense fallback={<LoadingFallback />}>
-          <DocComponent />
+          <DocPageWithToc key={slug} DocComponent={DocComponent} />
         </Suspense>
       ) : (
         <div className="docs-page">

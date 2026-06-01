@@ -1,0 +1,37 @@
+@layer recipes {
+  .mr-card {
+    min-height: 11rem;
+    border-radius: var(--mr-radius-lg);
+    border: 1px solid var(--mr-border-subtle);
+    background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+    box-shadow: var(--mr-shadow-sm);
+    backdrop-filter: blur(16px);
+    transition:
+      transform var(--mr-duration-base) var(--mr-ease-standard),
+      border-color var(--mr-duration-base) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-base) var(--mr-ease-standard),
+      background-color var(--mr-duration-base) var(--mr-ease-standard);
+  }
+
+  .mr-card--sm,
+  .mr-card[data-padding='sm'] {
+    padding: var(--mr-space-4);
+  }
+
+  .mr-card--md,
+  .mr-card[data-padding='md'] {
+    padding: clamp(var(--mr-space-4), 2vw, var(--mr-space-5));
+  }
+
+  .mr-card--lg,
+  .mr-card[data-padding='lg'] {
+    padding: clamp(var(--mr-space-5), 2.4vw, var(--mr-space-6));
+  }
+
+  .mr-card--interactive:hover,
+  .mr-card[data-interactive='true']:hover {
+    transform: translateY(-3px);
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-md);
+  }
+}

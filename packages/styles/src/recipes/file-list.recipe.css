@@ -1,0 +1,63 @@
+@layer recipes {
+  .mr-file-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-spacing-2, 0.5rem);
+    margin-top: var(--mr-spacing-2, 0.5rem);
+  }
+  .mr-file-list__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-spacing-2, 0.5rem);
+    padding: var(--mr-spacing-2, 0.5rem) var(--mr-spacing-3, 0.75rem);
+    border-radius: var(--mr-radius-sm);
+    background: var(--mr-bg-surface-strong);
+    transition: background 0.1s;
+  }
+  .mr-file-list__item:hover {
+    background: var(--mr-bg-surface-hover, var(--mr-bg-control));
+  }
+  .mr-file-list__icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .mr-file-list__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .mr-file-list__name {
+    font-size: var(--mr-text-sm);
+    color: var(--mr-fg-default);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mr-file-list__size {
+    font-size: var(--mr-text-xs);
+    color: var(--mr-fg-muted);
+  }
+  .mr-file-list__remove {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: none;
+    border-radius: var(--mr-radius-xs);
+    background: none;
+    color: var(--mr-fg-muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1;
+    transition: background 0.1s, color 0.1s;
+  }
+  .mr-file-list__remove:hover {
+    background: var(--mr-bg-danger-soft, rgba(220,38,38,0.08));
+    color: var(--mr-fg-danger, #dc2626);
+  }
+}

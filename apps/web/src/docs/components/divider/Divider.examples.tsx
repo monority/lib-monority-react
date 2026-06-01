@@ -3,7 +3,7 @@ import { Divider } from '@monority/ui'
 export function DividerBasicExample() {
   return (
     <>
-      <Divider>Example</Divider>
+      <Divider />
     </>
   )
 }
@@ -12,7 +12,7 @@ export function DividerWithLabelExample() {
   return (
     <div style={{ maxWidth: 300 }}>
       <p>Content above</p>
-      <Divider>OR</Divider>
+      <Divider label="OR" />
       <p>Content below</p>
     </div>
   )

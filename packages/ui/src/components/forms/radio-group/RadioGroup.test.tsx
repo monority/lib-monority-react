@@ -28,13 +28,11 @@ const items = [
 ]
 
 describe('RadioGroup', () => {
-  it('renders with accent tone and md size by default', () => {
+  it('renders with accent tone by default', () => {
     const view = render(<RadioGroup label="Choose" items={items} />)
     const group = view.querySelector('[role="radiogroup"]')
     expect(group?.getAttribute('data-tone')).toBe('accent')
-    expect(group?.getAttribute('data-size')).toBe('md')
     expect(group?.className).toContain('mr-radio-group--accent')
-    expect(group?.className).toContain('mr-radio-group--md')
   })
 
   it('renders all radio items with correct labels', () => {
@@ -95,11 +93,6 @@ describe('RadioGroup', () => {
   it('applies tones', () => {
     expect(render(<RadioGroup tone="danger" items={items} />).querySelector('[role="radiogroup"]')?.getAttribute('data-tone')).toBe('danger')
     expect(render(<RadioGroup tone="neutral" items={items} />).querySelector('[role="radiogroup"]')?.getAttribute('data-tone')).toBe('neutral')
-  })
-
-  it('applies sizes', () => {
-    expect(render(<RadioGroup size="sm" items={items} />).querySelector('[role="radiogroup"]')?.getAttribute('data-size')).toBe('sm')
-    expect(render(<RadioGroup size="lg" items={items} />).querySelector('[role="radiogroup"]')?.getAttribute('data-size')).toBe('lg')
   })
 
   it('forwards ref to the radiogroup container div', () => {

@@ -2,7 +2,18 @@ import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Field } from './Field'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from './Field'
 
 let container: HTMLDivElement | null = null
 let root: Root | null = null
@@ -81,5 +92,115 @@ describe('Field', () => {
     expect(view.querySelector('.mr-field__label')).toBeNull()
     expect(view.querySelector('.mr-field__hint')).toBeNull()
     expect(view.querySelector('.mr-field__error')).toBeNull()
+  })
+})
+
+describe('FieldLabel', () => {
+  it('renders as label element', () => {
+    const view = render(<FieldLabel>Test</FieldLabel>)
+    expect(view.querySelector('label')).not.toBeNull()
+  })
+
+  it('shows required asterisk', () => {
+    const view = render(<FieldLabel required>Required</FieldLabel>)
+    expect(view.querySelector('.mr-field__required')?.textContent).toBe(' *')
+  })
+
+  it('forwards ref', () => {
+    const ref = createRef<HTMLLabelElement>()
+    render(<FieldLabel ref={ref}>Ref test</FieldLabel>)
+    expect(ref.current?.tagName).toBe('LABEL')
+  })
+})
+
+describe('FieldContent', () => {
+  it('renders as div with content', () => {
+    const view = render(<FieldContent><span>inner</span></FieldContent>)
+    expect(view.querySelector('.mr-field__content')?.textContent).toBe('inner')
+  })
+
+  it('forwards ref', () => {
+    const ref = createRef<HTMLDivElement>()
+    render(<FieldContent ref={ref} />)
+    expect(ref.current?.tagName).toBe('DIV')
+  })
+})
+
+describe('FieldDescription', () => {
+  it('renders as span with hint class', () => {
+    const view = render(<FieldDescription>Help text</FieldDescription>)
+    expect(view.querySelector('span.mr-field__hint')?.textContent).toBe('Help text')
+  })
+
+  it('forwards ref', () => {
+    const ref = createRef<HTMLSpanElement>()
+    render(<FieldDescription ref={ref} />)
+    expect(ref.current?.tagName).toBe('SPAN')
+  })
+})
+
+describe('FieldError', () => {
+  it('renders with role=alert', () => {
+    const view = render(<FieldError>Something went wrong</FieldError>)
+    const el = view.querySelector('span.mr-field__error')
+    expect(el?.getAttribute('role')).toBe('alert')
+    expect(el?.getAttribute('aria-live')).toBe('assertive')
+  })
+
+  it('forwards ref', () => {
+    const ref = createRef<HTMLSpanElement>()
+    render(<FieldError ref={ref} />)
+    expect(ref.current?.tagName).toBe('SPAN')
+  })
+})
+
+describe('FieldGroup', () => {
+  it('renders with column direction by default', () => {
+    const view = render(<FieldGroup><span>a</span><span>b</span></FieldGroup>)
+    const el = view.querySelector('.mr-field__group')
+    expect(el?.classList.contains('mr-field__group--column')).toBe(true)
+  })
+
+  it('renders with row direction', () => {
+    const view = render(<FieldGroup direction="row"><span>a</span></FieldGroup>)
+    expect(view.querySelector('.mr-field__group--row')).not.toBeNull()
+  })
+})
+
+describe('FieldLegend', () => {
+  it('renders as legend element', () => {
+    const view = render(<FieldLegend>Legend</FieldLegend>)
+    expect(view.querySelector('legend')).not.toBeNull()
+  })
+
+  it('shows required asterisk', () => {
+    const view = render(<FieldLegend required>Required</FieldLegend>)
+    expect(view.querySelector('.mr-field__required')).not.toBeNull()
+  })
+})
+
+describe('FieldSeparator', () => {
+  it('renders as hr element', () => {
+    const view = render(<FieldSeparator />)
+    expect(view.querySelector('hr.mr-field__separator')).not.toBeNull()
+  })
+})
+
+describe('FieldSet', () => {
+  it('renders as fieldset element', () => {
+    const view = render(<FieldSet><span>content</span></FieldSet>)
+    expect(view.querySelector('fieldset.mr-field__set')).not.toBeNull()
+  })
+})
+
+describe('FieldTitle', () => {
+  it('renders as h3 by default', () => {
+    const view = render(<FieldTitle>Title</FieldTitle>)
+    expect(view.querySelector('h3.mr-field__title')).not.toBeNull()
+  })
+
+  it('renders as specified heading level', () => {
+    const view = render(<FieldTitle as="h2">Title</FieldTitle>)
+    expect(view.querySelector('h2.mr-field__title')).not.toBeNull()
   })
 })

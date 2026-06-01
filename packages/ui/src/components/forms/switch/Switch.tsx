@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import { FormControl, useFormControl } from '@/primitives/form-control'
@@ -30,7 +30,9 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
     hint,
     error,
     className,
-    checked = false,
+    checked,
+    defaultChecked,
+    onChange,
     disabled = false,
     required = false,
     invalid = false,
@@ -43,18 +45,32 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
   const isInvalid = invalid || Boolean(error)
   const { describedBy } = useFormControl()
 
+  const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false)
+  const isControlled = checked !== undefined
+  const resolvedChecked = isControlled ? checked : internalChecked
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) {
+        setInternalChecked(e.target.checked)
+      }
+      onChange?.(e)
+    },
+    [isControlled, onChange],
+  )
+
   return (
     <Field className={className} label={label} hint={hint} error={error}>
       <label
         className={cn(
           switchVariants({ tone: resolvedTone, size: resolvedSize }),
-          checked && 'mr-switch--checked',
+          resolvedChecked && 'mr-switch--checked',
           disabled && 'mr-switch--disabled',
           isInvalid && 'mr-switch--invalid',
         )}
         data-tone={resolvedTone}
         data-size={resolvedSize}
-        data-checked={checked ? true : undefined}
+        data-checked={resolvedChecked ? true : undefined}
         data-disabled={disabled ? true : undefined}
         data-invalid={isInvalid ? true : undefined}
         data-required={required ? true : undefined}
@@ -63,7 +79,9 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
           ref={ref}
           type="checkbox"
           className="mr-switch__input"
-          checked={checked}
+          checked={resolvedChecked}
+          defaultChecked={defaultChecked}
+          onChange={handleChange}
           disabled={disabled}
           required={required}
           aria-invalid={isInvalid || undefined}

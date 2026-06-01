@@ -1,7 +1,19 @@
 import { Badge } from '@monority/ui/badge'
 
-export function BadgeBasicExample() {
-  return <Badge>Draft</Badge>
+export function BadgeDefaultExample() {
+  return <Badge>Default</Badge>
+}
+
+export function BadgePrimaryExample() {
+  return <Badge variant="primary">Primary</Badge>
+}
+
+export function BadgeSuccessExample() {
+  return <Badge variant="success">Success</Badge>
+}
+
+export function BadgeDangerExample() {
+  return <Badge variant="danger">Danger</Badge>
 }
 
 export function BadgeVariantsExample() {

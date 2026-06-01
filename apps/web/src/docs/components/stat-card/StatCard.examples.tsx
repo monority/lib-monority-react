@@ -36,3 +36,23 @@ export function StatCardWithFooterExample() {
     />
   )
 }
+
+export function StatCardLongTextExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <StatCard
+        label="Total Revenue Generated This Quarter"
+        value="$1,234,567.89"
+        trend="+23.5% compared to last quarter"
+        trendTone="success"
+      />
+      <StatCard
+        label="Active Subscriptions"
+        value="98,765"
+        description="Includes trial and paid plans across all regions"
+        trend="+1,234 this month"
+        trendTone="success"
+      />
+    </div>
+  )
+}

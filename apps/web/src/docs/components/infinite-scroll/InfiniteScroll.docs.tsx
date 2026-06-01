@@ -29,7 +29,7 @@ const docData: DocPageData = {
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: 'List items to render.' },
   ],
   cssHooks: [
-    '.mr-infinite-scroll', '.mr-infinite-scroll__trigger',
+    '.mr-infinite-scroll', '.mr-infinite-scroll__sentinel, .mr-infinite-scroll__loader, .mr-infinite-scroll__end, .mr-infinite-scroll__error',
   ],
   tokens: [
     '--mr-space-*',

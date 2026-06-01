@@ -17,14 +17,23 @@ const docData: DocPageData = {
 </FormSection>`,
   preview: () => <FormSectionBasicExample />,
   examples: [
-    { title: 'Without actions', content: <FormSectionWithoutActionsExample /> },
-    { title: 'With meta', content: <FormSectionWithMetaExample /> },
+    { title: 'Without actions', content: <FormSectionWithoutActionsExample />, code: `<FormSection title="Read-only Info" description="This section cannot be edited.">
+  <Input label="Username" value="johndoe" disabled />
+</FormSection>` },
+    { title: 'With meta', content: <FormSectionWithMetaExample />, code: `<FormSection
+  title="Billing"
+  description="Manage your payment details."
+  meta={<span>Last updated 2 days ago</span>}
+  actions={<Button variant="secondary">Update</Button>}
+>
+  <Input label="Card number" placeholder="**** **** **** 4242" />
+</FormSection>` },
   ],
   props: [
     { name: 'title', type: `ReactNode`, defaultValue: "-", description: "Section title." },
     { name: 'description', type: `ReactNode`, defaultValue: "-", description: "Section description." },
     { name: 'meta', type: `ReactNode`, defaultValue: "-", description: "Metadata rendered next to title." },
-    { name: 'actions', type: `ReactNode`, defaultValue: "-", description: "Action buttons in the header." },
+    { name: 'actions', type: `ReactNode`, defaultValue: "-", description: "Action buttons at the bottom of the section." },
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Form fields." }
   ],
   cssHooks: [

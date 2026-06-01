@@ -9,8 +9,11 @@ export interface DocsComponentRegistryItem {
 export const docsComponentRegistry: DocsComponentRegistryItem[] = [
   // Actions
   { category: 'actions', label: 'Button', path: '/docs/button', slug: 'button', status: 'stable' },
+  { category: 'actions', label: 'Toggle', path: '/docs/toggle', slug: 'toggle', status: 'draft' },
+  { category: 'actions', label: 'ToggleGroup', path: '/docs/toggle-group', slug: 'toggle-group', status: 'draft' },
 
   // Forms
+  { category: 'forms', label: 'Calendar', path: '/docs/calendar', slug: 'calendar', status: 'draft' },
   { category: 'forms', label: 'Checkbox', path: '/docs/checkbox', slug: 'checkbox', status: 'draft' },
   { category: 'forms', label: 'Combobox', path: '/docs/combobox', slug: 'combobox', status: 'draft' },
   { category: 'forms', label: 'DatePicker', path: '/docs/date-picker', slug: 'date-picker', status: 'draft' },
@@ -40,8 +43,10 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
   // Overlays
   { category: 'overlays', label: 'AlertDialog', path: '/docs/alert-dialog', slug: 'alert-dialog', status: 'draft' },
   { category: 'overlays', label: 'CommandPalette', path: '/docs/command-palette', slug: 'command-palette', status: 'draft' },
+  { category: 'overlays', label: 'ContextMenu', path: '/docs/context-menu', slug: 'context-menu', status: 'draft' },
   { category: 'overlays', label: 'Drawer', path: '/docs/drawer', slug: 'drawer', status: 'draft' },
   { category: 'overlays', label: 'DropdownMenu', path: '/docs/dropdown-menu', slug: 'dropdown-menu', status: 'draft' },
+  { category: 'overlays', label: 'HoverCard', path: '/docs/hover-card', slug: 'hover-card', status: 'draft' },
   { category: 'overlays', label: 'Modal', path: '/docs/modal', slug: 'modal', status: 'stable' },
   { category: 'overlays', label: 'Popover', path: '/docs/popover', slug: 'popover', status: 'draft' },
   { category: 'overlays', label: 'Tooltip', path: '/docs/tooltip', slug: 'tooltip', status: 'draft' },
@@ -49,6 +54,8 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
   // Navigation
   { category: 'navigation', label: 'Breadcrumb', path: '/docs/breadcrumb', slug: 'breadcrumb', status: 'draft' },
   { category: 'navigation', label: 'FilterBar', path: '/docs/filter-bar', slug: 'filter-bar', status: 'draft' },
+  { category: 'navigation', label: 'Menubar', path: '/docs/menubar', slug: 'menubar', status: 'draft' },
+  { category: 'navigation', label: 'NavigationMenu', path: '/docs/navigation-menu', slug: 'navigation-menu', status: 'draft' },
   { category: 'navigation', label: 'Pagination', path: '/docs/pagination', slug: 'pagination', status: 'draft' },
   { category: 'navigation', label: 'SidebarLayout', path: '/docs/sidebar-layout', slug: 'sidebar-layout', status: 'draft' },
   { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'draft' },
@@ -58,6 +65,8 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
   { category: 'display', label: 'Accordion', path: '/docs/accordion', slug: 'accordion', status: 'draft' },
   { category: 'display', label: 'Avatar', path: '/docs/avatar', slug: 'avatar', status: 'draft' },
   { category: 'display', label: 'Card', path: '/docs/card', slug: 'card', status: 'stable' },
+  { category: 'display', label: 'Carousel', path: '/docs/carousel', slug: 'carousel', status: 'draft' },
+  { category: 'display', label: 'Collapsible', path: '/docs/collapsible', slug: 'collapsible', status: 'draft' },
   { category: 'display', label: 'MetricGrid', path: '/docs/metric-grid', slug: 'metric-grid', status: 'draft' },
   { category: 'display', label: 'StatCard', path: '/docs/stat-card', slug: 'stat-card', status: 'draft' },
   { category: 'display', label: 'Table', path: '/docs/table', slug: 'table', status: 'draft' },
@@ -67,15 +76,20 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
   { category: 'data-display', label: 'DataTable', path: '/docs/data-table', slug: 'data-table', status: 'draft' },
 
   // Typography
+  { category: 'typography', label: 'Kbd', path: '/docs/kbd', slug: 'kbd', status: 'draft' },
   { category: 'typography', label: 'Text', path: '/docs/text', slug: 'text', status: 'draft' },
   { category: 'typography', label: 'Title', path: '/docs/title', slug: 'title', status: 'draft' },
 
   // Layout
+  { category: 'layout', label: 'AspectRatio', path: '/docs/aspect-ratio', slug: 'aspect-ratio', status: 'draft' },
   { category: 'layout', label: 'Container', path: '/docs/container', slug: 'container', status: 'draft' },
   { category: 'layout', label: 'Divider', path: '/docs/divider', slug: 'divider', status: 'draft' },
   { category: 'layout', label: 'Grid', path: '/docs/grid', slug: 'grid', status: 'draft' },
   { category: 'layout', label: 'PageHeader', path: '/docs/page-header', slug: 'page-header', status: 'draft' },
+  { category: 'layout', label: 'Resizable', path: '/docs/resizable', slug: 'resizable', status: 'draft' },
   { category: 'layout', label: 'Section', path: '/docs/section', slug: 'section', status: 'draft' },
+  { category: 'layout', label: 'ScrollArea', path: '/docs/scroll-area', slug: 'scroll-area', status: 'draft' },
+  { category: 'layout', label: 'Separator', path: '/docs/separator', slug: 'separator', status: 'draft' },
   { category: 'layout', label: 'Stack', path: '/docs/stack', slug: 'stack', status: 'draft' },
   { category: 'layout', label: 'Toolbar', path: '/docs/toolbar', slug: 'toolbar', status: 'draft' },
 

@@ -27,6 +27,7 @@ afterEach(() => {
   document.body.style.overflow = ''
   root = null
   container = null
+  vi.useRealTimers()
 })
 
 describe('Drawer', () => {
@@ -61,29 +62,35 @@ describe('Drawer', () => {
     expect(panel?.getAttribute('data-side')).toBe('right')
   })
 
-  it('calls onClose from backdrop click', () => {
+  it('calls onClose from backdrop click after animation', () => {
+    vi.useFakeTimers()
     const onClose = vi.fn()
     render(<Drawer open title="Nav" onClose={onClose}>X</Drawer>)
     act(() => {
       document.body.querySelector('.mr-drawer__backdrop-surface')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })
+    expect(onClose).toHaveBeenCalledTimes(0)
+    act(() => { vi.advanceTimersByTime(200) })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
-  it('calls onClose from close button', () => {
+  it('calls onClose from close button after animation', () => {
+    vi.useFakeTimers()
     const onClose = vi.fn()
     render(<Drawer open title="Nav" onClose={onClose}>X</Drawer>)
     act(() => {
       document.body.querySelector<HTMLButtonElement>('[aria-label="Fermer le panneau"]')?.click()
     })
+    expect(onClose).toHaveBeenCalledTimes(0)
+    act(() => { vi.advanceTimersByTime(200) })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
-  it('forwards ref to backdrop element', () => {
+  it('forwards ref to panel element', () => {
     const ref = createRef<HTMLDivElement>()
     render(<Drawer ref={ref} open title="Test" onClose={() => {}}>X</Drawer>)
     expect(ref.current?.tagName).toBe('DIV')
-    expect(ref.current?.className).toContain('mr-drawer__backdrop')
+    expect(ref.current?.getAttribute('role')).toBe('dialog')
   })
 
   it('sets data-open on backdrop and panel', () => {

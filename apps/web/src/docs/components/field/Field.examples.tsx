@@ -1,9 +1,9 @@
-import { Field } from '@monority/ui'
+import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle, Input } from '@monority/ui'
 
 export function FieldBasicExample() {
   return (
     <Field label="Username">
-      <input className="mr-input" />
+      <Input />
     </Field>
   )
 }
@@ -11,7 +11,7 @@ export function FieldBasicExample() {
 export function FieldWithHintExample() {
   return (
     <Field label="Password" hint="Minimum 8 characters">
-      <input className="mr-input" type="password" />
+      <Input type="password" />
     </Field>
   )
 }
@@ -19,7 +19,7 @@ export function FieldWithHintExample() {
 export function FieldWithErrorExample() {
   return (
     <Field label="Email" error="Please enter a valid email address">
-      <input className="mr-input" defaultValue="invalid" aria-invalid />
+      <Input defaultValue="invalid" aria-invalid />
     </Field>
   )
 }
@@ -27,7 +27,7 @@ export function FieldWithErrorExample() {
 export function FieldRequiredExample() {
   return (
     <Field label="Full name" required>
-      <input className="mr-input" required />
+      <Input required />
     </Field>
   )
 }
@@ -35,7 +35,49 @@ export function FieldRequiredExample() {
 export function FieldStandaloneExample() {
   return (
     <Field label="Standalone">
-      <input className="mr-input" />
+      <Input />
     </Field>
+  )
+}
+
+export function FieldCompositionExample() {
+  return (
+    <div className="mr-field">
+      <FieldLabel htmlFor="composed-input" required>Email address</FieldLabel>
+      <FieldContent>
+        <Input id="composed-input" type="email" />
+      </FieldContent>
+      <FieldDescription>We'll never share your email.</FieldDescription>
+      <FieldError>Invalid email format.</FieldError>
+    </div>
+  )
+}
+
+export function FieldGroupExample() {
+  return (
+    <FieldGroup direction="row">
+      <Field label="First name" className="flex-1">
+        <Input />
+      </Field>
+      <Field label="Last name" className="flex-1">
+        <Input />
+      </Field>
+    </FieldGroup>
+  )
+}
+
+export function FieldSetExample() {
+  return (
+    <FieldSet>
+      <FieldLegend required>Billing address</FieldLegend>
+      <FieldTitle>Personal information</FieldTitle>
+      <Field label="Street">
+        <Input />
+      </Field>
+      <FieldSeparator />
+      <Field label="City">
+        <Input />
+      </Field>
+    </FieldSet>
   )
 }

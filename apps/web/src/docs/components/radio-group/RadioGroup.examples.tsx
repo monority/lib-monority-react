@@ -6,10 +6,8 @@ export function RadioGroupBasicExample() {
       label="Options"
       defaultValue="md"
       items={[
-        { value: 'sm', label: 'Small' },
-        { value: 'md', label: 'Medium' },
-        { value: 'lg', label: 'Large', disabled: true },
-      ]}
+        { value: 'sm', label: 'Default' },
+        { value: 'md', label: 'Value' },]}
     />
   )
 }

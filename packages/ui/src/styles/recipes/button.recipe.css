@@ -1,0 +1,162 @@
+@layer recipes {
+  .mr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--mr-space-2);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--mr-text-sm);
+    font-weight: 400;
+    line-height: 1.5;
+    text-decoration: none;
+    border-radius: var(--mr-radius-sm);
+    transition:
+      background-color var(--mr-dur-150) var(--mr-ease-in-out),
+      border-color var(--mr-dur-150) var(--mr-ease-in-out),
+      color var(--mr-dur-150) var(--mr-ease-in-out),
+      opacity var(--mr-dur-150) var(--mr-ease-in-out);
+    outline: none;
+    padding: var(--mr-space-2) var(--mr-space-3);
+  }
+
+  .mr-btn:focus-visible {
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+  }
+
+  .mr-btn:disabled,
+  .mr-btn[aria-disabled='true'],
+  .mr-btn[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .mr-btn--sm,
+  .mr-btn[data-size='sm'] {
+    padding: var(--mr-space-1) var(--mr-space-2);
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-btn--md,
+  .mr-btn[data-size='md'] {
+    padding: var(--mr-space-2) var(--mr-space-3);
+  }
+
+  .mr-btn--lg,
+  .mr-btn[data-size='lg'] {
+    padding: var(--mr-space-3) var(--mr-space-4);
+    font-size: var(--mr-text-md);
+  }
+
+  .mr-btn--primary,
+  .mr-btn[data-variant='primary'] {
+    background-color: var(--mr-accent);
+    color: var(--mr-accent-contrast);
+  }
+
+  .mr-btn--primary:hover:not(:disabled),
+  .mr-btn[data-variant='primary']:hover:not(:disabled) {
+    background-color: var(--mr-accent-strong);
+  }
+
+  .mr-btn--secondary,
+  .mr-btn[data-variant='secondary'] {
+    border: 1px solid var(--mr-border-subtle);
+    background-color: var(--mr-bg-surface-strong);
+    color: var(--mr-fg-strong);
+  }
+
+  .mr-btn--secondary:hover:not(:disabled),
+  .mr-btn[data-variant='secondary']:hover:not(:disabled) {
+    background-color: var(--mr-bg-control);
+  }
+
+  .mr-btn--muted,
+  .mr-btn[data-variant='muted'] {
+    background-color: var(--mr-bg-control);
+    color: var(--mr-fg-base);
+  }
+
+  .mr-btn--muted:hover:not(:disabled),
+  .mr-btn[data-variant='muted']:hover:not(:disabled) {
+    background-color: var(--mr-bg-surface-strong);
+  }
+
+  .mr-btn--danger,
+  .mr-btn[data-variant='danger'] {
+    background-color: var(--mr-danger);
+    color: white;
+  }
+
+  .mr-btn--danger:hover:not(:disabled),
+  .mr-btn[data-variant='danger']:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--mr-danger) 80%, black);
+  }
+
+  .mr-btn--ghost,
+  .mr-btn[data-variant='ghost'] {
+    background-color: transparent;
+    color: var(--mr-fg-strong);
+  }
+
+  .mr-btn--ghost:hover:not(:disabled),
+  .mr-btn[data-variant='ghost']:hover:not(:disabled) {
+    background-color: var(--mr-bg-accent-soft);
+  }
+
+  .mr-btn--subtle,
+  .mr-btn[data-variant='subtle'] {
+    background-color: var(--mr-bg-surface-elevated);
+    color: var(--mr-fg-strong);
+  }
+
+  .mr-btn--subtle:hover:not(:disabled),
+  .mr-btn[data-variant='subtle']:hover:not(:disabled) {
+    background-color: var(--mr-bg-control);
+  }
+
+  .mr-btn--loading,
+  .mr-btn[data-loading='true'] {
+    pointer-events: none;
+  }
+
+  .mr-btn--full-width,
+  .mr-btn[data-full-width='true'] {
+    width: 100%;
+  }
+
+  .mr-btn__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mr-btn__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+  }
+
+  /* Icon-only mode — fixed w/h matching normal button heights */
+  .mr-btn--icon-only,
+  .mr-btn[data-icon-only='true'] {
+    width: 2.25rem;		/* 36px ˜ md normal height 37px */
+    height: 2.25rem;
+    padding: 0;
+  }
+
+  .mr-btn--icon-only.mr-btn--sm,
+  .mr-btn[data-icon-only='true'][data-size='sm'] {
+    width: 1.75rem;		/* 28px ˜ sm normal height 26px */
+    height: 1.75rem;
+  }
+
+  .mr-btn--icon-only.mr-btn--lg,
+  .mr-btn[data-icon-only='true'][data-size='lg'] {
+    width: 3rem;		/* 48px = lg normal height 48px */
+    height: 3rem;
+  }
+
+}

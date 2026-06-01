@@ -10,4 +10,7 @@ export interface DateRangePickerProps {
   toLabel?: string
   fromProps?: Omit<Partial<DatePickerProps>, 'label'>
   toProps?: Omit<Partial<DatePickerProps>, 'label'>
+  error?: ReactNode
+  hint?: ReactNode
+  disabled?: boolean
 }

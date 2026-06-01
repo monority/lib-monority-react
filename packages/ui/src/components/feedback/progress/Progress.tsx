@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { ProgressProps, ProgressTone } from './Progress.types'
@@ -12,8 +12,12 @@ const progressVariants = cva({
       warning: 'mr-progress--warning',
       danger: 'mr-progress--danger',
     },
+    mode: {
+      determinate: 'mr-progress--determinate',
+      indeterminate: 'mr-progress--indeterminate',
+    },
   },
-  defaultVariants: { tone: 'neutral' },
+  defaultVariants: { tone: 'neutral', mode: 'determinate' },
 })
 
 function clamp(value: number): number {
@@ -27,27 +31,48 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       label,
       showValue = true,
       tone,
+      mode = 'determinate',
       className,
       barClassName,
+      onChange,
       ...props
     },
     ref,
   ) {
     const safeValue = clamp(value)
     const resolvedTone = tone ?? 'neutral'
+    const isIndeterminate = mode === 'indeterminate'
+    const isSlidable = !!onChange && !isIndeterminate
+
+    const handleTrackClick = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!onChange) return
+        const rect = e.currentTarget.getBoundingClientRect()
+        const ratio = (e.clientX - rect.left) / rect.width
+        onChange(clamp(Math.round(ratio * 100)))
+      },
+      [onChange],
+    )
 
     return (
       <div
         ref={ref}
-        className={cn(progressVariants({ tone: resolvedTone }), className)}
+        className={cn(
+          progressVariants({ tone: resolvedTone, mode }),
+          isSlidable && 'mr-progress--slidable',
+          className,
+        )}
         data-tone={resolvedTone}
-        data-value={safeValue}
+        data-mode={mode}
+        data-value={isIndeterminate ? undefined : safeValue}
         {...props}
       >
         {label || showValue ? (
           <div className="mr-progress__meta">
             {label ? <span className="mr-progress__label">{label}</span> : <span />}
-            {showValue ? <span className="mr-progress__value">{safeValue}%</span> : null}
+            {showValue && !isIndeterminate ? (
+              <span className="mr-progress__value">{safeValue}%</span>
+            ) : null}
           </div>
         ) : null}
         <div
@@ -55,12 +80,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={safeValue}
+          aria-valuenow={isIndeterminate ? undefined : safeValue}
           aria-label={typeof label === 'string' ? label : 'Progress'}
+          onClick={handleTrackClick}
         >
           <div
-            className={cn('mr-progress__bar', barClassName)}
-            style={{ width: `${safeValue}%` }}
+            className={cn(
+              'mr-progress__bar',
+              isIndeterminate && 'mr-progress__bar--indeterminate',
+              barClassName,
+            )}
+            style={isIndeterminate ? undefined : { width: `${safeValue}%` }}
           />
         </div>
       </div>
@@ -68,4 +98,4 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   },
 )
 
-export type { ProgressProps, ProgressTone } from './Progress.types'
+export type { ProgressProps, ProgressTone, ProgressMode } from './Progress.types'

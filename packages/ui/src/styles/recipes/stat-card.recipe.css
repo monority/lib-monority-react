@@ -1,0 +1,10 @@
+@layer recipes {
+  .mr-stat-card { display: flex; flex-direction: column; gap: var(--mr-space-2); }
+  .mr-stat-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--mr-space-3); }
+  .mr-stat-card__info { display: flex; flex-direction: column; gap: var(--mr-space-1); }
+  .mr-stat-card__icon { font-size: var(--mr-text-2xl); flex-shrink: 0; }
+  .mr-stat-card__trend[data-trend-tone='success'] { color: var(--mr-success); }
+  .mr-stat-card__trend[data-trend-tone='warning'] { color: var(--mr-warning); }
+  .mr-stat-card__trend[data-trend-tone='danger'] { color: var(--mr-danger); }
+  .mr-stat-card__footer { border-top: 1px solid var(--mr-border-subtle); padding-top: var(--mr-space-3); margin-top: var(--mr-space-1); }
+}

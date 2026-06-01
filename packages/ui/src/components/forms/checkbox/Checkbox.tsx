@@ -1,4 +1,4 @@
-﻿import { forwardRef, useCallback, useEffect, useId, useRef } from 'react'
+﻿import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { CheckboxProps } from './Checkbox.types'
@@ -28,6 +28,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     id,
     className,
     checked,
+    defaultChecked,
+    onChange,
     disabled = false,
     required = false,
     invalid = false,
@@ -41,6 +43,20 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   const internalRef = useRef<HTMLInputElement>(null)
   const resolvedTone = tone ?? 'accent'
   const resolvedSize = size ?? 'md'
+
+  const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false)
+  const isControlled = checked !== undefined
+  const resolvedChecked = isControlled ? checked : internalChecked
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) {
+        setInternalChecked(e.target.checked)
+      }
+      onChange?.(e)
+    },
+    [isControlled, onChange],
+  )
 
   // Merge forwarded ref with internal ref (needed for indeterminate)
   const setRefs = useCallback(
@@ -66,7 +82,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     <label
       className={cn(
         checkboxVariants({ tone: resolvedTone, size: resolvedSize }),
-        checked && 'mr-checkbox--checked',
+        resolvedChecked && 'mr-checkbox--checked',
         disabled && 'mr-checkbox--disabled',
         invalid && 'mr-checkbox--invalid',
         indeterminate && 'mr-checkbox--indeterminate',
@@ -75,7 +91,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
       htmlFor={checkboxId}
       data-tone={resolvedTone}
       data-size={resolvedSize}
-      data-checked={checked ? true : undefined}
+      data-checked={resolvedChecked ? true : undefined}
       data-disabled={disabled ? true : undefined}
       data-invalid={invalid ? true : undefined}
       data-required={required ? true : undefined}
@@ -86,7 +102,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         id={checkboxId}
         type="checkbox"
         className="mr-checkbox__input"
-        checked={checked}
+        checked={resolvedChecked}
+        onChange={handleChange}
         disabled={disabled}
         required={required}
         aria-invalid={invalid || undefined}

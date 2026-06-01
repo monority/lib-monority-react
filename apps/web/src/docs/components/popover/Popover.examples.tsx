@@ -1,4 +1,4 @@
-import { Popover, Button } from '@monority/ui'
+import { Popover, Button, Input } from '@monority/ui'
 
 export function PopoverBasicExample() {
   return (
@@ -16,7 +16,7 @@ export function PopoverWithFormExample() {
       <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: 200 }}>
         <label style={{ fontSize: '0.875rem' }}>
           Name
-          <input className="mr-input" style={{ marginTop: '0.25rem' }} placeholder="Enter name" />
+          <Input style={{ marginTop: '0.25rem' }} placeholder="Enter name" />
         </label>
         <Button size="sm">Save</Button>
       </div>

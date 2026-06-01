@@ -10,7 +10,7 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
     return (
       <div ref={ref} className={cn('mr-form-section', className)} data-mr-form-section="">
         <Card>
-          {title || description || meta || actions ? (
+          {title || description || meta ? (
             <div className="mr-form-section__header">
               <div className="mr-form-section__header-text">
                 {title ? <Title as="h3">{title}</Title> : null}
@@ -18,13 +18,13 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
               </div>
               <div className="mr-form-section__header-end">
                 {meta ? <span className="mr-form-section__header-meta">{meta}</span> : null}
-                {actions ? <div className="mr-form-section__header-actions">{actions}</div> : null}
               </div>
             </div>
           ) : null}
           {children ? (
             <div className="mr-form-section__body">{children}</div>
           ) : null}
+          {actions ? <div className="mr-form-section__footer">{actions}</div> : null}
         </Card>
       </div>
     )

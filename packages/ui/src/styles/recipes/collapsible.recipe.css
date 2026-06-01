@@ -1,0 +1,66 @@
+@layer recipes {
+  .mr-collapsible {
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    overflow: hidden;
+  }
+
+  .mr-collapsible__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--mr-space-3) var(--mr-space-4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--mr-fg-strong);
+    font-size: var(--mr-text-sm);
+    font-weight: 600;
+    text-align: left;
+    transition: background-color var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-collapsible__trigger:hover {
+    background: var(--mr-bg-surface-strong);
+  }
+
+  .mr-collapsible__trigger::after {
+    content: '';
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid var(--mr-fg-muted);
+    border-bottom: 2px solid var(--mr-fg-muted);
+    transform: rotate(-45deg);
+    transition: transform var(--mr-duration-fast) var(--mr-ease-standard);
+    flex-shrink: 0;
+  }
+
+  .mr-collapsible[data-open] .mr-collapsible__trigger::after {
+    transform: rotate(45deg);
+  }
+
+  .mr-collapsible__panel {
+    overflow: hidden;
+    transition: max-height var(--mr-duration-normal) var(--mr-ease-standard);
+    max-height: 0;
+  }
+
+  .mr-collapsible[data-open] .mr-collapsible__panel {
+    max-height: var(--mr-collapsible-max-height, 100vh);
+  }
+
+  .mr-collapsible__content {
+    padding: 0 var(--mr-space-4) var(--mr-space-4);
+    color: var(--mr-fg-default);
+    font-size: var(--mr-text-sm);
+    line-height: 1.6;
+  }
+
+  /* Sizes */
+  .mr-collapsible--sm .mr-collapsible__trigger { padding: var(--mr-space-2) var(--mr-space-3); font-size: var(--mr-text-xs); }
+  .mr-collapsible--sm .mr-collapsible__content { padding: 0 var(--mr-space-3) var(--mr-space-3); font-size: var(--mr-text-xs); }
+  .mr-collapsible--lg .mr-collapsible__trigger { padding: var(--mr-space-4) var(--mr-space-5); font-size: var(--mr-text-base); }
+  .mr-collapsible--lg .mr-collapsible__content { padding: 0 var(--mr-space-5) var(--mr-space-5); font-size: var(--mr-text-base); }
+}

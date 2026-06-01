@@ -7,6 +7,7 @@ interface DocsLayoutProps {
 }
 
 const introductionItem = { label: 'Introduction', path: '/docs', status: 'stable' as const }
+const installationItem = { label: 'Installation', path: '/docs/installation', status: 'stable' as const }
 
 export function DocsLayout({ children }: DocsLayoutProps) {
   const location = useLocation()
@@ -47,6 +48,16 @@ export function DocsLayout({ children }: DocsLayoutProps) {
             <span>{introductionItem.label}</span>
             <span className="docs-status" data-status={introductionItem.status}>
               {introductionItem.status}
+            </span>
+          </Link>
+
+          <Link
+            to={installationItem.path}
+            className={`docs-nav-link ${location.pathname === installationItem.path ? 'active' : ''}`}
+          >
+            <span>{installationItem.label}</span>
+            <span className="docs-status" data-status={installationItem.status}>
+              {installationItem.status}
             </span>
           </Link>
 

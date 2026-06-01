@@ -1,15 +1,19 @@
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 export type FileUploadSize = 'sm' | 'md' | 'lg'
 
-export interface FileUploadProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'accept' | 'placeholder'> {
+export interface FileUploadProps {
   size?: FileUploadSize
   label?: ReactNode
   hint?: ReactNode
   error?: ReactNode
   className?: string
-  inputClassName?: string
   accept?: string | string[]
   placeholder?: ReactNode
+  multiple?: boolean
+  disabled?: boolean
+  required?: boolean
+  actionLabel?: string
+  description?: ReactNode
+  id?: string
 }

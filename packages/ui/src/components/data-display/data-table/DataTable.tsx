@@ -1,6 +1,7 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
+import { Checkbox } from '@/components/forms/checkbox/Checkbox'
 import type { Column, DataTableProps, Sort } from './DataTable.types'
 
 function getCellValue<T>(row: T, col: Column<T>): React.ReactNode {
@@ -44,7 +45,6 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
 
   const [internalSort, setInternalSort] = useState<Sort | undefined>(initialSort)
   const [internalSelectedRowIds, setInternalSelectedRowIds] = useState<string[]>(defaultSelectedRowIds)
-  const selectAllRef = useRef<HTMLInputElement>(null)
   const sort = controlledSort ?? internalSort
   const sortedRows = useMemo(() => sortRows(rows, columns, sort), [columns, rows, sort])
   const hasRows = sortedRows.length > 0
@@ -65,10 +65,6 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
   const selectedVisibleCount = visibleRowIds.filter((id) => selectedSet.has(id)).length
   const allSelected = hasRows && selectedVisibleCount === visibleRowIds.length
   const partiallySelected = selectedVisibleCount > 0 && !allSelected
-
-  useEffect(() => {
-    if (selectAllRef.current) selectAllRef.current.indeterminate = partiallySelected
-  }, [partiallySelected])
 
   function updateSort(col: Column<T>) {
     if (!col.sortable) return
@@ -109,12 +105,11 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
             <tr>
               {selectable ? (
                 <th scope="col" className="mr-data-table__select-cell">
-                  <input
-                    ref={selectAllRef}
+                  <Checkbox
                     className="mr-data-table__checkbox"
-                    type="checkbox"
                     aria-label="Select all rows"
                     checked={allSelected}
+                    indeterminate={partiallySelected}
                     onChange={(e) => updateAllSelection(e.target.checked)}
                   />
                 </th>
@@ -158,9 +153,8 @@ export const DataTable = forwardRef(<T,>(props: DataTableProps<T>, ref: React.Fo
                 <tr key={rowId}>
                   {selectable ? (
                     <td className="mr-data-table__select-cell">
-                      <input
+                      <Checkbox
                         className="mr-data-table__checkbox"
-                        type="checkbox"
                         aria-label={`Select ${rowLabel}`}
                         checked={selectedSet.has(rowId)}
                         onChange={(e) => updateSelection(rowId, e.target.checked)}

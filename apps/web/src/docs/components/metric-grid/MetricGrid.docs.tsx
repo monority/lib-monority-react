@@ -1,7 +1,8 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
   MetricGridBasicExample,
-  MetricGridWithItemsExample,
+  MetricGridWithColorsExample,
+  MetricGridWithDescriptionExample,
 } from './MetricGrid.examples'
 
 const docData: DocPageData = {
@@ -14,7 +15,14 @@ const docData: DocPageData = {
 ]} />`,
   preview: () => <MetricGridBasicExample />,
   examples: [
-    { title: 'With items', content: <MetricGridWithItemsExample /> },
+    { title: 'With colors', content: <MetricGridWithColorsExample />, code: `<MetricGrid items={[
+  { label: 'Revenue', value: '$45,678', trend: '+18%', trendTone: 'success' },
+  { label: 'Churn', value: '2.1%', trend: '+0.3%', trendTone: 'danger' },
+]} />` },
+    { title: 'With descriptions', content: <MetricGridWithDescriptionExample />, code: `<MetricGrid items={[
+  { label: 'Active Users', value: '12,345', trend: '+8%', trendTone: 'success', description: 'Last 30 days' },
+  { label: 'Sessions', value: '45,678', trend: '+12%', trendTone: 'success', description: 'Last 30 days' },
+]} />` },
   ],
   props: [
     { name: 'items', type: `{ key: string; label: ReactNode; value: ReactNode; trend?: ReactNode; trendTone?: 'neutral' | 'success' | 'warning' | 'danger'; description?: ReactNode; icon?: ReactNode; footer?: ReactNode }[]`, defaultValue: "[]", description: "KPI card data." }

@@ -27,7 +27,7 @@ export function SkeletonListExample() {
 export function SkeletonCircleExample() {
   return (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Skeleton shape="circle" style={{ width: 40, height: 40 }} />
+      <Skeleton rounded style={{ width: 40, height: 40 }} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Skeleton style={{ width: 120, height: 14 }} />
         <Skeleton style={{ width: 80, height: 12 }} />

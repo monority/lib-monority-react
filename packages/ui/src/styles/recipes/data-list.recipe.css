@@ -1,0 +1,9 @@
+@layer recipes {
+  .mr-data-list { display: grid; gap: 0; }
+  .mr-data-list__item { display: grid; grid-template-columns: 1fr 2fr; padding: var(--mr-space-2) 0; border-bottom: 1px solid var(--mr-border-subtle); gap: var(--mr-space-2); }
+  .mr-data-list__item:last-child { border-bottom: none; }
+  .mr-data-list__label { font-size: var(--mr-text-sm); font-weight: 600; color: var(--mr-fg-muted); }
+  .mr-data-list__value { font-size: var(--mr-text-sm); color: var(--mr-fg-base); }
+  .mr-data-list--split .mr-data-list__item { grid-template-columns: 1fr 1fr; }
+  .mr-data-list--auto .mr-data-list__item { grid-template-columns: auto 1fr; }
+}

@@ -1,0 +1,14 @@
+@layer recipes {
+  /* Input component-specific overrides.
+     Base styles (border, padding, background, transitions, etc.)
+     are provided by .mr-input-base in input-base.recipe.css. */
+
+  .mr-input {
+    /* Inherits from .mr-input-base; add component-specific overrides here */
+  }
+
+  .mr-input--error {
+    /* Error state is handled by [data-invalid='true'] in input-base,
+       but keep this class for backward compatibility with cn() usage */
+  }
+}
