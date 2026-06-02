@@ -4,10 +4,10 @@ import { Collapsible } from '@monority/ui/collapsible'
 
 export function CollapsibleBasicExample() {
     return (
-        <Collapsible title="Release notes summary">
+        <Collapsible title="Release notes summary" defaultOpen>
             <p>
-                This week focuses on UI system cleanup: calmer surfaces, tighter hierarchy, and more
-                consistent overlay behavior across docs and app shells.
+                This release tightens dashboard surfaces, reduces decorative backgrounds, and
+                updates docs imports so lazy routes resolve through component subpaths.
             </p>
         </Collapsible>
     )
@@ -16,10 +16,11 @@ export function CollapsibleBasicExample() {
 export function CollapsibleDefaultOpenExample() {
     return (
         <Collapsible title="Migration checklist" defaultOpen>
-            <p>
-                Update shared layout surfaces first, then control components, then docs examples.
-                That sequence keeps the visual language stable while the system evolves.
-            </p>
+            <ul>
+                <li>Update shared surfaces and border tokens.</li>
+                <li>Review display primitives in compact layouts.</li>
+                <li>Refresh docs examples after runtime imports are stable.</li>
+            </ul>
         </Collapsible>
     )
 }
@@ -31,8 +32,8 @@ export function CollapsibleControlledExample() {
         <div style={{ display: 'grid', gap: '0.75rem' }}>
             <Collapsible title="Controlled delivery notes" open={open} onOpenChange={setOpen}>
                 <p>
-                    This panel is driven by external state, which is useful when the open state
-                    should follow a filter, route, or validation step.
+                    Controlled mode is useful when the panel follows a route, validation step, or
+                    saved preference instead of owning local state.
                 </p>
             </Collapsible>
             <div>
@@ -48,15 +49,15 @@ export function CollapsibleSizesExample() {
     return (
         <div style={{ display: 'grid', gap: '1rem' }}>
             <Collapsible title="Compact note" size="sm">
-                <p>Use the small size for terse supporting details inside dense screens.</p>
+                <p>Use small for terse supporting details in dense panels.</p>
             </Collapsible>
             <Collapsible title="Default note" size="md" defaultOpen>
-                <p>The medium size fits most inline product explanations and doc callouts.</p>
+                <p>Medium fits most inline explanations, settings notes, and docs callouts.</p>
             </Collapsible>
             <Collapsible title="Expanded narrative" size="lg">
                 <p>
-                    Large works better when the panel carries more instructional or status-heavy
-                    copy.
+                    Large works when the panel carries multiple sentences or status-heavy
+                    instructions that need more breathing room.
                 </p>
             </Collapsible>
         </div>

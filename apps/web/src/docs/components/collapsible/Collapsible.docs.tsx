@@ -9,8 +9,8 @@ import {
 const docData: DocPageData = {
     title: 'Collapsible',
     description:
-        'A standalone expandable panel for secondary details, migration notes, and inline help.',
-    importCode: "import { Collapsible } from '@monority/ui'",
+        'Expandable panel for secondary details, migration notes, and inline product guidance.',
+    importCode: "import { Collapsible } from '@monority/ui/collapsible'",
     usageCode: `<Collapsible title="Release notes summary">
   <p>This panel can reveal supporting context without taking over the page.</p>
 </Collapsible>`,
@@ -66,18 +66,19 @@ const docData: DocPageData = {
         '.mr-collapsible__panel',
         '.mr-collapsible__content',
         '[data-open]',
+        '[data-state]',
     ],
     tokens: [
         '--mr-bg-surface-elevated',
         '--mr-bg-surface-strong',
-        '--mr-bg-accent-soft',
         '--mr-border-subtle',
+        '--mr-border-strong',
         '--mr-radius-md',
         '--mr-shadow-xs',
     ],
     a11y: [
         'The trigger button exposes aria-expanded and aria-controls.',
-        'The panel uses role="region" and is labelled by the trigger.',
+        'The panel uses role="region", aria-hidden, and is labelled by the trigger.',
         'Keyboard access works with Enter and Space through the native button.',
     ],
 }
