@@ -45,7 +45,8 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
           aria-controls={`${instanceId}-panel`}
           onClick={toggle}
         >
-          {title}
+          <span className="mr-collapsible__label">{title}</span>
+          <span className="mr-collapsible__icon" aria-hidden="true" />
         </button>
         <div
           id={`${instanceId}-panel`}

@@ -301,6 +301,12 @@
       "import": "./dist/kbd.js",
       "default": "./dist/kbd.js"
     },
+    "./pre-code": {
+      "types": "./dist/preCode.d.ts",
+      "development": "./src/components/typography/pre-code/index.ts",
+      "import": "./dist/preCode.js",
+      "default": "./dist/preCode.js"
+    },
     "./accordion": {
       "types": "./dist/accordion.d.ts",
       "development": "./src/components/display/accordion/index.ts",

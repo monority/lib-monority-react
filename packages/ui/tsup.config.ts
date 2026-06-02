@@ -56,6 +56,7 @@ export default defineConfig({
     text: 'src/components/typography/text/index.ts',
     title: 'src/components/typography/title/index.ts',
     kbd: 'src/components/typography/kbd/index.ts',
+    preCode: 'src/components/typography/pre-code/index.ts',
     accordion: 'src/components/display/accordion/index.ts',
     aspectRatio: 'src/components/layout/aspect-ratio/index.ts',
     avatar: 'src/components/display/avatar/index.ts',

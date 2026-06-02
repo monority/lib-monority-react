@@ -15,6 +15,7 @@ interface PanelContextValue {
   panelMeta: Map<string, PanelMeta>
   registerPanel: (id: string, defaultSize: number, minSize: number, maxSize: number) => void
   updatePanelSize: (id: string, size: number) => void
+  updatePanelSizes: (updates: Array<{ id: string; size: number }>) => void
   isDragging: boolean
   setIsDragging: (v: boolean) => void
   panelIds: string[]
@@ -59,6 +60,19 @@ export const ResizablePanelGroup = forwardRef<HTMLDivElement, ResizablePanelGrou
       })
     }, [])
 
+    const updatePanelSizes = useCallback((updates: Array<{ id: string; size: number }>) => {
+      setPanelMeta(prev => {
+        const next = new Map(prev)
+        for (const { id, size } of updates) {
+          const meta = next.get(id)
+          if (!meta) continue
+          const clamped = Math.max(meta.minSize, Math.min(meta.maxSize, size))
+          next.set(id, { ...meta, currentSize: clamped })
+        }
+        return next
+      })
+    }, [])
+
     return (
       <PanelContext.Provider
         value={{
@@ -66,6 +80,7 @@ export const ResizablePanelGroup = forwardRef<HTMLDivElement, ResizablePanelGrou
           panelMeta,
           registerPanel,
           updatePanelSize,
+          updatePanelSizes,
           isDragging,
           setIsDragging,
           panelIds,
@@ -136,6 +151,8 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
     const ctxRef = useRef(ctx)
     ctxRef.current = ctx
     const handleIndexRef = useRef(-1)
+    const frameRef = useRef<number | null>(null)
+    const latestEventRef = useRef<MouseEvent | null>(null)
 
     const handleRefCallback = useCallback(
       (node: HTMLDivElement | null) => {
@@ -205,7 +222,7 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
     useEffect(() => {
       if (!ctx.isDragging) return
 
-      const handleMouseMove = (e: MouseEvent) => {
+      const updateFromEvent = (e: MouseEvent) => {
         const idx = handleIndexRef.current
         if (idx < 0) return
 
@@ -251,17 +268,39 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
 
         if (Math.abs(actualDelta) < 0.01) return
 
-        c.updatePanelSize(panelIdBefore, clampedBefore)
-        c.updatePanelSize(panelIdAfter, clampedAfter)
+        c.updatePanelSizes([
+          { id: panelIdBefore, size: clampedBefore },
+          { id: panelIdAfter, size: clampedAfter },
+        ])
+      }
+
+      const handleMouseMove = (e: MouseEvent) => {
+        latestEventRef.current = e
+        if (frameRef.current !== null) return
+
+        frameRef.current = window.requestAnimationFrame(() => {
+          frameRef.current = null
+          const latestEvent = latestEventRef.current
+          if (latestEvent) updateFromEvent(latestEvent)
+        })
       }
 
       const handleMouseUp = () => {
+        if (frameRef.current !== null) {
+          window.cancelAnimationFrame(frameRef.current)
+          frameRef.current = null
+        }
+        latestEventRef.current = null
         ctxRef.current.setIsDragging(false)
       }
 
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseup', handleMouseUp)
       return () => {
+        if (frameRef.current !== null) {
+          window.cancelAnimationFrame(frameRef.current)
+          frameRef.current = null
+        }
         window.removeEventListener('mousemove', handleMouseMove)
         window.removeEventListener('mouseup', handleMouseUp)
       }

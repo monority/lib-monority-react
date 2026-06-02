@@ -3,15 +3,15 @@ import { Menubar } from '@monority/ui'
 export function MenubarBasicExample() {
   const items = [
     {
-      label: 'File',
+      label: 'Workspace',
       items: [
-        { label: 'New', shortcut: 'Ctrl+N' },
-        { label: 'Open', shortcut: 'Ctrl+O' },
+        { label: 'New dashboard', shortcut: 'Ctrl+N' },
+        { label: 'Open workspace', shortcut: 'Ctrl+O' },
         { separator: true } as const,
-        { label: 'Save', shortcut: 'Ctrl+S' },
-        { label: 'Save As...', shortcut: 'Ctrl+Shift+S' },
+        { label: 'Save view', shortcut: 'Ctrl+S' },
+        { label: 'Duplicate view', shortcut: 'Ctrl+Shift+S' },
         { separator: true } as const,
-        { label: 'Exit' },
+        { label: 'Close workspace' },
       ],
     },
     {
@@ -20,104 +20,108 @@ export function MenubarBasicExample() {
         { label: 'Undo', shortcut: 'Ctrl+Z' },
         { label: 'Redo', shortcut: 'Ctrl+Y' },
         { separator: true } as const,
-        { label: 'Cut', shortcut: 'Ctrl+X' },
-        { label: 'Copy', shortcut: 'Ctrl+C' },
-        { label: 'Paste', shortcut: 'Ctrl+V' },
+        { label: 'Rename section', shortcut: 'Ctrl+R' },
+        { label: 'Duplicate block', shortcut: 'Ctrl+D' },
+        { label: 'Archive selection', shortcut: 'Ctrl+Shift+A' },
       ],
     },
     {
       label: 'View',
       items: [
-        { label: 'Zoom In', shortcut: 'Ctrl++' },
-        { label: 'Zoom Out', shortcut: 'Ctrl+-' },
-        { label: 'Reset Zoom', shortcut: 'Ctrl+0' },
+        { label: 'Compact density', shortcut: 'Alt+1' },
+        { label: 'Comfortable density', shortcut: 'Alt+2' },
+        { label: 'Reset layout', shortcut: 'Ctrl+0' },
         { separator: true } as const,
-        { label: 'Toggle Sidebar', shortcut: 'Ctrl+B' },
+        { label: 'Toggle sidebar', shortcut: 'Ctrl+B' },
       ],
     },
     {
-      label: 'Help',
+      label: 'Share',
       items: [
-        { label: 'Documentation' },
-        { label: 'Keyboard Shortcuts', shortcut: 'Ctrl+?' },
+        { label: 'Copy link' },
+        { label: 'Invite reviewers', shortcut: 'Ctrl+I' },
         { separator: true } as const,
-        { label: 'About' },
+        { label: 'Export snapshot' },
       ],
     },
   ]
+
   return <Menubar items={items} />
 }
 
 export function MenubarWithIconsExample() {
   const items = [
     {
-      label: 'File',
+      label: 'Create',
       items: [
-        { label: 'New File', icon: <span>📄</span>, shortcut: 'Ctrl+N' },
-        { label: 'Open Folder', icon: <span>📂</span>, shortcut: 'Ctrl+O' },
+        { label: 'New page', icon: <span>+</span>, shortcut: 'Ctrl+N' },
+        { label: 'New collection', icon: <span>#</span>, shortcut: 'Ctrl+Shift+N' },
         { separator: true } as const,
-        { label: 'Save', icon: <span>💾</span>, shortcut: 'Ctrl+S' },
+        { label: 'Save draft', icon: <span>S</span>, shortcut: 'Ctrl+S' },
       ],
     },
     {
-      label: 'Edit',
+      label: 'History',
       items: [
-        { label: 'Undo', icon: <span>↩️</span>, shortcut: 'Ctrl+Z' },
-        { label: 'Redo', icon: <span>↪️</span>, shortcut: 'Ctrl+Y' },
+        { label: 'Undo change', icon: <span>U</span>, shortcut: 'Ctrl+Z' },
+        { label: 'Restore revision', icon: <span>R</span>, shortcut: 'Ctrl+Y' },
       ],
     },
   ]
+
   return <Menubar items={items} />
 }
 
 export function MenubarDangerExample() {
   const items = [
     {
-      label: 'File',
+      label: 'Workspace',
       items: [
-        { label: 'New', shortcut: 'Ctrl+N' },
-        { label: 'Open', shortcut: 'Ctrl+O' },
+        { label: 'New dashboard', shortcut: 'Ctrl+N' },
+        { label: 'Open workspace', shortcut: 'Ctrl+O' },
         { separator: true } as const,
-        { label: 'Delete Project', variant: 'danger' as const },
+        { label: 'Delete workspace', variant: 'danger' as const },
       ],
     },
     {
-      label: 'Edit',
+      label: 'Records',
       items: [
-        { label: 'Clear All', variant: 'danger' as const, shortcut: 'Ctrl+Shift+Del' },
+        { label: 'Purge archive', variant: 'danger' as const, shortcut: 'Ctrl+Shift+Del' },
       ],
     },
   ]
+
   return <Menubar items={items} />
 }
 
 export function MenubarDisabledExample() {
   const items = [
     {
-      label: 'File',
+      label: 'Workspace',
       items: [
-        { label: 'New', shortcut: 'Ctrl+N' },
-        { label: 'Open', shortcut: 'Ctrl+O' },
+        { label: 'New dashboard', shortcut: 'Ctrl+N' },
+        { label: 'Open workspace', shortcut: 'Ctrl+O' },
         { separator: true } as const,
-        { label: 'Save', shortcut: 'Ctrl+S', disabled: true },
-        { label: 'Save As...', shortcut: 'Ctrl+Shift+S', disabled: true },
+        { label: 'Save view', shortcut: 'Ctrl+S', disabled: true },
+        { label: 'Duplicate view', shortcut: 'Ctrl+Shift+S', disabled: true },
       ],
     },
     {
-      label: 'Edit',
+      label: 'Share',
       disabled: true,
       items: [
-        { label: 'Undo', shortcut: 'Ctrl+Z' },
-        { label: 'Redo', shortcut: 'Ctrl+Y' },
+        { label: 'Invite reviewers', shortcut: 'Ctrl+I' },
+        { label: 'Publish snapshot', shortcut: 'Ctrl+Shift+P' },
       ],
     },
     {
       label: 'View',
       items: [
-        { label: 'Zoom In', shortcut: 'Ctrl++' },
-        { label: 'Zoom Out', shortcut: 'Ctrl+-' },
+        { label: 'Compact density', shortcut: 'Alt+1' },
+        { label: 'Comfortable density', shortcut: 'Alt+2' },
       ],
     },
   ]
+
   return <Menubar items={items} />
 }

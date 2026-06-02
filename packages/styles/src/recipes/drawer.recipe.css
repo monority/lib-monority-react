@@ -16,7 +16,7 @@
     .mr-drawer__backdrop-surface {
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-base) 60%, transparent);
+        background: color-mix(in srgb, var(--mr-bg-base) 64%, transparent);
     }
 
     .mr-drawer__panel {
@@ -25,15 +25,13 @@
         display: flex;
         flex-direction: column;
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-lg);
+        box-shadow: var(--mr-shadow-md);
     }
 
     .mr-drawer {
         position: absolute;
-        background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
         border: 1px solid var(--mr-border-subtle);
         box-shadow: var(--mr-shadow-md);
-        backdrop-filter: blur(18px);
         outline: none;
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);
@@ -41,22 +39,22 @@
 
     .mr-drawer--right,
     .mr-drawer--left,
-    .mr-drawer__panel[data-side='right'],
-    .mr-drawer__panel[data-side='left'] {
+    .mr-drawer__panel[data-side="right"],
+    .mr-drawer__panel[data-side="left"] {
         top: 0;
         bottom: 0;
         width: min(24rem, 100vw);
     }
 
     .mr-drawer--right,
-    .mr-drawer__panel[data-side='right'] {
+    .mr-drawer__panel[data-side="right"] {
         right: 0;
         border-left: 1px solid var(--mr-border-subtle);
         animation: mr-drawer-in-right 200ms ease-out forwards;
     }
 
     .mr-drawer--left,
-    .mr-drawer__panel[data-side='left'] {
+    .mr-drawer__panel[data-side="left"] {
         left: 0;
         border-right: 1px solid var(--mr-border-subtle);
         animation: mr-drawer-in-left 200ms ease-out forwards;
@@ -64,58 +62,66 @@
 
     .mr-drawer--top,
     .mr-drawer--bottom,
-    .mr-drawer__panel[data-side='top'],
-    .mr-drawer__panel[data-side='bottom'] {
+    .mr-drawer__panel[data-side="top"],
+    .mr-drawer__panel[data-side="bottom"] {
         right: 0;
         left: 0;
     }
 
     .mr-drawer--top,
-    .mr-drawer__panel[data-side='top'] {
+    .mr-drawer__panel[data-side="top"] {
         top: 0;
         height: min(16rem, 100vh);
         animation: mr-drawer-in-top 200ms ease-out forwards;
     }
 
     .mr-drawer--bottom,
-    .mr-drawer__panel[data-side='bottom'] {
+    .mr-drawer__panel[data-side="bottom"] {
         bottom: 0;
         min-height: 16rem;
         max-height: min(80vh, 42rem);
-        border-top-left-radius: var(--mr-radius-lg);
-        border-top-right-radius: var(--mr-radius-lg);
+        border-top-left-radius: var(--mr-radius-md);
+        border-top-right-radius: var(--mr-radius-md);
         animation: mr-drawer-in-bottom 200ms ease-out forwards;
     }
 
-    .mr-drawer__panel[data-closing='true'][data-side='right'] {
+    .mr-drawer__panel[data-closing="true"][data-side="right"] {
         animation: mr-drawer-out-right 200ms ease-in forwards;
     }
 
-    .mr-drawer__panel[data-closing='true'][data-side='left'] {
+    .mr-drawer__panel[data-closing="true"][data-side="left"] {
         animation: mr-drawer-out-left 200ms ease-in forwards;
     }
 
-    .mr-drawer__panel[data-closing='true'][data-side='top'] {
+    .mr-drawer__panel[data-closing="true"][data-side="top"] {
         animation: mr-drawer-out-top 200ms ease-in forwards;
     }
 
-    .mr-drawer__panel[data-closing='true'][data-side='bottom'] {
+    .mr-drawer__panel[data-closing="true"][data-side="bottom"] {
         animation: mr-drawer-out-bottom 200ms ease-in forwards;
     }
 
     .mr-drawer__header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: var(--mr-space-3);
         padding: var(--mr-space-4);
         border-bottom: 1px solid var(--mr-border-subtle);
     }
 
+    .mr-drawer__heading {
+        min-width: 0;
+    }
+
     .mr-drawer__title {
         font-size: var(--mr-text-lg);
-        font-weight: 700;
+        font-weight: 650;
         margin: 0;
+    }
+
+    .mr-drawer__close {
+        flex: 0 0 auto;
     }
 
     .mr-drawer__body {
@@ -205,12 +211,16 @@
     }
 
     @media (max-width: 900px) {
-
         .mr-drawer--right,
         .mr-drawer--left,
-        .mr-drawer__panel[data-side='right'],
-        .mr-drawer__panel[data-side='left'] {
+        .mr-drawer__panel[data-side="right"],
+        .mr-drawer__panel[data-side="left"] {
             width: min(100vw, 26rem);
+        }
+
+        .mr-drawer--bottom,
+        .mr-drawer__panel[data-side="bottom"] {
+            max-height: 86vh;
         }
     }
 }

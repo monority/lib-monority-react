@@ -8,24 +8,21 @@ import {
 
 const docData: DocPageData = {
   title: 'Skeleton',
-  description: "Placeholder loading skeleton that extends HTML div attributes.",
+  description:
+    'Shimmer placeholder for content that is still loading, useful for cards, lists, and profile rows.',
   importCode: "import { Skeleton } from '@monority/ui'",
-  usageCode: `<Skeleton style={{ width: 200, height: 20 }} />`,
+  usageCode: `<Skeleton style={{ width: '14rem', height: '1rem' }} />`,
   preview: () => <SkeletonBasicExample />,
   examples: [
     { title: 'Card layout', content: <SkeletonCardExample /> },
     { title: 'List items', content: <SkeletonListExample /> },
     { title: 'Circle avatar', content: <SkeletonCircleExample /> },
   ],
-  cssHooks: [
-    '.mr-skeleton', '[data-shape]', '[data-size]',
-  ],
-  tokens: [
-    '--mr-bg-surface-strong', '--mr-radius-*',
-  ],
+  cssHooks: ['.mr-skeleton', '.mr-skeleton--rounded', '[data-size]'],
+  tokens: ['--mr-bg-surface-strong', '--mr-bg-control', '--mr-radius-sm'],
   a11y: [
-    'aria-hidden="true" (decorative).',
-    'aria-busy="true" on parent container.',
+    'Skeleton blocks are aria-hidden because they are decorative placeholders.',
+    'Use aria-busy on the parent region while real content is loading.',
   ],
 }
 

@@ -1,47 +1,52 @@
 @layer recipes {
-  .mr-badge {
-    --mr-badge-height: 1.85rem;
-    --mr-badge-padding-x: 0.75rem;
-    --mr-badge-radius: var(--mr-radius-sm);
-    --mr-badge-font-size: var(--mr-text-xs);
-    --mr-badge-font-weight: 700;
+    .mr-badge {
+        --mr-badge-height: 1.625rem;
+        --mr-badge-padding-x: 0.625rem;
+        --mr-badge-radius: var(--mr-radius-xs);
+        --mr-badge-font-size: var(--mr-text-xs);
+        --mr-badge-font-weight: 650;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--mr-badge-height);
-    padding-inline: var(--mr-badge-padding-x);
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-badge-radius);
-    background: var(--mr-bg-control);
-    color: var(--mr-fg-muted);
-    font-size: var(--mr-badge-font-size);
-    font-weight: var(--mr-badge-font-weight);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--mr-space-1);
+        min-height: var(--mr-badge-height);
+        padding-inline: var(--mr-badge-padding-x);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-badge-radius);
+        background: var(--mr-bg-surface-strong);
+        color: var(--mr-fg-base);
+        font-size: var(--mr-badge-font-size);
+        font-weight: var(--mr-badge-font-weight);
+        line-height: 1;
+        white-space: nowrap;
+    }
 
-  .mr-badge--primary,
-  .mr-badge[data-variant='primary'] {
-    border-color: var(--mr-accent);
-    color: var(--mr-accent);
-  }
+    .mr-badge--primary,
+    .mr-badge[data-variant="primary"] {
+        border-color: var(--mr-border-accent);
+        background: var(--mr-bg-accent-soft);
+        color: var(--mr-fg-accent);
+    }
 
-  .mr-badge--success,
-  .mr-badge[data-variant='success'] {
-    border-color: var(--mr-success);
-    color: var(--mr-success);
-  }
+    .mr-badge--success,
+    .mr-badge[data-variant="success"] {
+        border-color: rgba(20, 83, 45, 0.2);
+        background: var(--mr-success-soft);
+        color: var(--mr-success);
+    }
 
-  .mr-badge--danger,
-  .mr-badge[data-variant='danger'] {
-    border-color: var(--mr-danger);
-    color: var(--mr-danger);
-  }
+    .mr-badge--danger,
+    .mr-badge[data-variant="danger"] {
+        border-color: rgba(153, 27, 27, 0.2);
+        background: var(--mr-danger-soft);
+        color: var(--mr-danger);
+    }
 
-  .mr-badge--warning,
-  .mr-badge[data-variant='warning'] {
-    border-color: var(--mr-warning);
-    color: var(--mr-warning);
-  }
+    .mr-badge--warning,
+    .mr-badge[data-variant="warning"] {
+        border-color: rgba(194, 65, 12, 0.2);
+        background: var(--mr-warning-soft);
+        color: var(--mr-warning);
+    }
 }

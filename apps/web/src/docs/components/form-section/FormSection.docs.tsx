@@ -7,7 +7,8 @@ import {
 
 const docData: DocPageData = {
   title: 'FormSection',
-  description: "Form section grouping using Card with title, description, meta, and actions.",
+  description:
+    'A grouped form panel with header context, optional metadata, and a dedicated action row.',
   importCode: "import { FormSection } from '@monority/ui'",
   usageCode: `<FormSection
   title="Profile"
@@ -17,38 +18,83 @@ const docData: DocPageData = {
 </FormSection>`,
   preview: () => <FormSectionBasicExample />,
   examples: [
-    { title: 'Without actions', content: <FormSectionWithoutActionsExample />, code: `<FormSection title="Read-only Info" description="This section cannot be edited.">
-  <Input label="Username" value="johndoe" disabled />
-</FormSection>` },
-    { title: 'With meta', content: <FormSectionWithMetaExample />, code: `<FormSection
-  title="Billing"
-  description="Manage your payment details."
-  meta={<span>Last updated 2 days ago</span>}
-  actions={<Button variant="secondary">Update</Button>}
+    {
+      title: 'Without actions',
+      content: <FormSectionWithoutActionsExample />,
+      code: `<FormSection
+  title="Environment"
+  description="Reference values inherited from workspace configuration."
 >
-  <Input label="Card number" placeholder="**** **** **** 4242" />
-</FormSection>` },
+  <Input label="Registry" value="npmjs.org" disabled />
+</FormSection>`,
+    },
+    {
+      title: 'With meta',
+      content: <FormSectionWithMetaExample />,
+      code: `<FormSection
+  title="Billing contact"
+  description="Choose who receives invoices and renewal reminders."
+  meta={<Badge variant="secondary">Required</Badge>}
+  actions={<Button variant="secondary">Update contact</Button>}
+>
+  <Input label="Contact name" placeholder="Jane Doe" />
+</FormSection>`,
+    },
   ],
   props: [
-    { name: 'title', type: `ReactNode`, defaultValue: "-", description: "Section title." },
-    { name: 'description', type: `ReactNode`, defaultValue: "-", description: "Section description." },
-    { name: 'meta', type: `ReactNode`, defaultValue: "-", description: "Metadata rendered next to title." },
-    { name: 'actions', type: `ReactNode`, defaultValue: "-", description: "Action buttons at the bottom of the section." },
-    { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Form fields." }
+    {
+      name: 'title',
+      type: `ReactNode`,
+      defaultValue: '-',
+      description: 'Section title.',
+    },
+    {
+      name: 'description',
+      type: `ReactNode`,
+      defaultValue: '-',
+      description: 'Section description.',
+    },
+    {
+      name: 'meta',
+      type: `ReactNode`,
+      defaultValue: '-',
+      description: 'Metadata rendered alongside the header.',
+    },
+    {
+      name: 'actions',
+      type: `ReactNode`,
+      defaultValue: '-',
+      description: 'Action row rendered below the form content.',
+    },
+    {
+      name: 'children',
+      type: `ReactNode`,
+      defaultValue: '-',
+      description: 'Form fields.',
+    },
   ],
   cssHooks: [
-    '.mr-form-section', '.mr-form-section__header', '.mr-form-section__header-text',
-    '.mr-form-section__header-meta', '.mr-form-section__header-end', '.mr-form-section__header-actions',
-    '.mr-form-section__body', '.mr-form-section__actions',
-    '[data-mr-form-section]'
+    '.mr-form-section',
+    '.mr-form-section__header',
+    '.mr-form-section__header-text',
+    '.mr-form-section__header-title',
+    '.mr-form-section__header-description',
+    '.mr-form-section__header-meta',
+    '.mr-form-section__body',
+    '.mr-form-section__footer',
+    '[data-mr-form-section]',
   ],
   tokens: [
-    '--mr-space-1', '--mr-space-3', '--mr-space-4', '--mr-space-6'
+    '--mr-space-4',
+    '--mr-space-5',
+    '--mr-space-6',
+    '--mr-border-subtle',
+    '--mr-bg-surface-elevated',
   ],
   a11y: [
     'Title renders as h3 for proper heading hierarchy.',
-    'Card wrapper provides visual grouping for related form fields.',
-    'No special keyboard interaction — relies on native form element semantics.'
+    'Grouped actions stay in a consistent footer region.',
+    'Keyboard behavior relies on native form controls inside the section.',
   ],
 }
 

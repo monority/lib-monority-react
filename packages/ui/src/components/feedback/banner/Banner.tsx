@@ -17,10 +17,11 @@ const bannerVariants = cva({
 })
 
 export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
-  { tone, eyebrow, title, description, actions, className, ...props },
+  { tone, eyebrow, title, description, actions, className, children, ...props },
   ref,
 ) {
   const resolvedTone = tone ?? 'info'
+  const hasStructuredContent = Boolean(eyebrow || title || description)
 
   return (
     <section
@@ -30,9 +31,15 @@ export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
       {...props}
     >
       <div className="mr-banner__body">
-        {eyebrow ? <span className="mr-banner__eyebrow">{eyebrow}</span> : null}
-        {title ? <strong className="mr-banner__title">{title}</strong> : null}
-        {description ? <p className="mr-banner__description">{description}</p> : null}
+        {hasStructuredContent ? (
+          <>
+            {eyebrow ? <span className="mr-banner__eyebrow">{eyebrow}</span> : null}
+            {title ? <strong className="mr-banner__title">{title}</strong> : null}
+            {description ? <p className="mr-banner__description">{description}</p> : null}
+          </>
+        ) : (
+          children ? <p className="mr-banner__description">{children}</p> : null
+        )}
       </div>
       {actions ? <div className="mr-banner__actions">{actions}</div> : null}
     </section>

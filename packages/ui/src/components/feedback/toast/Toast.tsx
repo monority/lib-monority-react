@@ -45,7 +45,9 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
     >
       <div className="mr-toast__body">
         <div className="mr-toast__header">
-          <strong className="mr-toast__title">{title}</strong>
+          <div className="mr-toast__heading">
+            <strong className="mr-toast__title">{title}</strong>
+          </div>
           {onClose ? (
             <Button
               variant="ghost"
@@ -54,11 +56,13 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
               onClick={onClose}
               aria-label="Close notification"
             >
-              ×
+              x
             </Button>
           ) : null}
         </div>
-        {description ? <p className="mr-toast__description">{description}</p> : null}
+        {description ? (
+          <p className="mr-toast__description">{description}</p>
+        ) : null}
       </div>
     </div>
   )

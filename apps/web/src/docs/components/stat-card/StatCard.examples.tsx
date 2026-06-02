@@ -21,7 +21,7 @@ export function StatCardWithIconExample() {
       value="1,234"
       trend="+8%"
       trendTone="success"
-      icon={<span style={{ fontSize: '1.5rem' }}>{'\uD83D\uDC65'}</span>}
+      icon={<span aria-hidden="true">AU</span>}
     />
   )
 }

@@ -34,6 +34,13 @@ describe('Banner', () => {
     expect(view.querySelector('.mr-banner__title')?.textContent).toBe('Important')
   })
 
+  it('renders children as fallback description', () => {
+    const view = render(<Banner>Maintenance starts at 18:00.</Banner>)
+    expect(view.querySelector('.mr-banner__description')?.textContent).toBe(
+      'Maintenance starts at 18:00.',
+    )
+  })
+
   it('renders description', () => {
     const view = render(<Banner description="Details here" />)
     expect(view.querySelector('.mr-banner__description')?.textContent).toBe('Details here')

@@ -121,9 +121,8 @@
     padding: var(--mr-space-3);
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+    background: var(--mr-bg-surface-elevated);
     box-shadow: var(--mr-shadow-md);
-    backdrop-filter: blur(18px);
   }
 
   /* ─── Calendar header ─────────────────────────────────────── */
@@ -135,7 +134,7 @@
   }
 
   .mr-datepicker__month-label {
-    font-weight: 600;
+    font-weight: 560;
     font-size: var(--mr-text-sm);
     color: var(--mr-fg-strong);
   }
@@ -214,7 +213,7 @@
 
   /* Today */
   .mr-datepicker__day[data-today='true'] {
-    font-weight: 700;
+    font-weight: 650;
     color: var(--mr-accent);
   }
 
@@ -222,7 +221,7 @@
   .mr-datepicker__day[data-selected='true'] {
     background: var(--mr-accent);
     color: var(--mr-accent-contrast);
-    font-weight: 600;
+    font-weight: 650;
   }
 
   .mr-datepicker__day[data-selected='true']:hover {

@@ -1,15 +1,18 @@
 @layer recipes {
     .mr-topbar {
+        --mr-topbar-padding-inline: var(--mr-space-4);
+
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-4);
+        gap: var(--mr-space-3);
         width: 100%;
         min-width: 0;
-        padding: var(--mr-space-3);
-        border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-lg);
-        background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+        min-height: 3.5rem;
+        padding: var(--mr-space-2) var(--mr-topbar-padding-inline);
+        border: 1px solid color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-strong);
         box-shadow: var(--mr-shadow-xs);
     }
 
@@ -28,23 +31,45 @@
         flex: 0 1 auto;
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-sm);
-        font-weight: 700;
-        letter-spacing: -0.02em;
+        font-weight: 650;
+        letter-spacing: 0;
+        line-height: 1.2;
     }
 
     .mr-topbar__navigation {
         flex: 1 1 auto;
+        gap: var(--mr-space-1);
     }
 
     .mr-topbar__navigation a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2rem;
+        padding-inline: var(--mr-space-3);
+        border-radius: var(--mr-radius-sm);
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
-        font-weight: 600;
+        font-weight: 560;
+        text-decoration: none;
+        transition:
+            background-color var(--mr-duration-fast) var(--mr-ease-standard),
+            color var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-topbar__navigation a:hover,
     .mr-topbar__navigation a:focus-visible {
+        background: var(--mr-bg-surface-elevated);
         color: var(--mr-fg-strong);
+    }
+
+    .mr-topbar__navigation [aria-current='page'] {
+        background: var(--mr-bg-surface-elevated);
+        color: var(--mr-fg-strong);
+    }
+
+    .mr-topbar__meta {
+        color: var(--mr-fg-muted);
+        font-size: var(--mr-text-sm);
     }
 
     .mr-topbar__actions {
@@ -55,12 +80,20 @@
         .mr-topbar {
             flex-direction: column;
             align-items: stretch;
+            min-height: auto;
+            --mr-topbar-padding-inline: var(--mr-space-3);
         }
 
         .mr-topbar__navigation,
         .mr-topbar__meta,
         .mr-topbar__actions {
             width: 100%;
+        }
+
+        .mr-topbar__navigation {
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            padding-bottom: 0.125rem;
         }
 
         .mr-topbar__actions {

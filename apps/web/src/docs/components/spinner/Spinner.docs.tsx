@@ -8,7 +8,8 @@ import {
 
 const docData: DocPageData = {
   title: 'Spinner',
-  description: "A visual indicator that an action is in progress.",
+  description:
+    'Compact loading indicator for short waits, background actions, and inline status feedback.',
   importCode: "import { Spinner } from '@monority/ui'",
   usageCode: `<Spinner size="sm" />
 <Spinner size="md" />
@@ -20,19 +21,14 @@ const docData: DocPageData = {
     { title: 'With text', content: <SpinnerWithTextExample /> },
   ],
   props: [
-    { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: "'md'", description: "Size of the spinner" },
-    { name: 'tone', type: `'base' | 'muted' | 'inverse'`, defaultValue: "'base'", description: "Color tone of the spinner" }
+    { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: "'md'", description: 'Size of the spinner.' },
+    { name: 'tone', type: `'base' | 'muted' | 'inverse'`, defaultValue: "'base'", description: 'Color tone of the spinner.' },
   ],
-  cssHooks: [
-    '.mr-spinner', '[data-size]', '[data-tone]',
-  ],
-  tokens: [
-    '--mr-fg-base', '--mr-fg-muted', '--mr-fg-inverse',
-  ],
+  cssHooks: ['.mr-spinner', '.mr-spinner__ring', '[data-size]', '[data-tone]'],
+  tokens: ['--mr-accent', '--mr-fg-muted', '--mr-bg-base'],
   a11y: [
-    'aria-busy="true" on parent container.',
-    'Spinner is aria-hidden (decorative).',
-    'Use alongside visible text for context.',
+    'The component exposes role="status" with an accessible loading label.',
+    'Add visible text nearby when the operation needs extra context.',
   ],
 }
 

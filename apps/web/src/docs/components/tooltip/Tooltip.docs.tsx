@@ -7,9 +7,9 @@ import {
 
 const docData: DocPageData = {
   title: 'Tooltip',
-  description: "CSS-based tooltip that appears on hover.",
+  description: 'A lightweight hover and focus hint for terse contextual labels.',
   importCode: "import { Tooltip } from '@monority/ui'",
-  usageCode: `<Tooltip content="Tooltip text">
+  usageCode: `<Tooltip content="Inspect token details">
   <Button>Hover me</Button>
 </Tooltip>`,
   preview: () => <TooltipBasicExample />,
@@ -22,16 +22,16 @@ const docData: DocPageData = {
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Trigger element." }
   ],
   cssHooks: [
-    '.mr-tooltip', '.mr-tooltip__content', '[data-placement]',
+    '.mr-tooltip', '.mr-tooltip__trigger', '.mr-tooltip__content',
   ],
   tokens: [
-    '--mr-bg-strong', '--mr-fg-inverse', '--mr-text-xs', '--mr-radius-sm', '--mr-shadow-md',
+    '--mr-bg-surface-strong', '--mr-fg-strong', '--mr-text-xs', '--mr-radius-sm', '--mr-shadow-sm',
   ],
   a11y: [
     'Tooltip ARIA pattern (role="tooltip").',
     'aria-describedby on trigger.',
     'Appears on focus/hover.',
-    'Dismisses on Escape.',
+    'The tooltip itself is passive and not interactive.',
   ],
 }
 

@@ -1,33 +1,61 @@
-import { AlertDialog } from '@monority/ui'
 import { useState } from 'react'
-import { Button } from '@monority/ui'
+import { AlertDialog, Button } from '@monority/ui'
 
 export function AlertDialogBasicExample() {
   const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="danger">Delete item</Button>
-      <AlertDialog open={open} title="Delete item?" description="This action cannot be undone." onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} />
+      <Button onClick={() => setOpen(true)} variant="danger">
+        Delete release snapshot
+      </Button>
+      <AlertDialog
+        open={open}
+        title="Delete this release snapshot?"
+        description="This permanently removes the saved draft and its review history."
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+      />
     </>
   )
 }
 
 export function AlertDialogDefaultToneExample() {
   const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Discard changes</Button>
-      <AlertDialog open={open} title="Discard changes?" description="Your unsaved changes will be lost." tone="default" confirmLabel="Discard" onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} />
+      <Button onClick={() => setOpen(true)}>Discard staged edits</Button>
+      <AlertDialog
+        open={open}
+        title="Discard staged edits?"
+        description="Your unpublished copy changes will be cleared from this session."
+        tone="default"
+        confirmLabel="Discard edits"
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+      />
     </>
   )
 }
 
 export function AlertDialogCustomLabelsExample() {
   const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="danger">Sign out</Button>
-      <AlertDialog open={open} title="Sign out?" description="Are you sure you want to sign out?" confirmLabel="Yes, sign out" cancelLabel="Stay signed in" onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} />
+      <Button onClick={() => setOpen(true)} variant="danger">
+        Remove reviewer access
+      </Button>
+      <AlertDialog
+        open={open}
+        title="Remove reviewer access?"
+        description="They will lose access to pending reviews and approval queues immediately."
+        confirmLabel="Remove access"
+        cancelLabel="Keep reviewer"
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+      />
     </>
   )
 }

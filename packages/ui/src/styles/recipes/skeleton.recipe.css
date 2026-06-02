@@ -1,8 +1,33 @@
 @layer recipes {
-  .mr-skeleton { min-height: 1rem; background: linear-gradient(90deg, var(--mr-bg-surface-strong) 25%, var(--mr-bg-control) 50%, var(--mr-bg-surface-strong) 75%); background-size: 200% 100%; animation: mr-skeleton-shimmer 1.5s ease-in-out infinite; border-radius: var(--mr-radius-sm); }
-  .mr-skeleton--sm, .mr-skeleton[data-size='sm'] { height: 1rem; }
-  .mr-skeleton--md, .mr-skeleton[data-size='md'] { height: 1.5rem; }
-  .mr-skeleton--lg, .mr-skeleton[data-size='lg'] { height: 2rem; }
-  .mr-skeleton--rounded { border-radius: var(--mr-radius-full); }
-  @keyframes mr-skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  @keyframes mr-skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .mr-skeleton {
+    min-height: 1rem;
+    border-radius: var(--mr-radius-sm);
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--mr-bg-surface-strong) 94%, white) 18%,
+        var(--mr-bg-control) 50%,
+        color-mix(in srgb, var(--mr-bg-surface-strong) 94%, white) 82%
+      );
+    background-size: 200% 100%;
+    animation: mr-skeleton-shimmer 1.5s ease-in-out infinite;
+  }
+
+  .mr-skeleton--sm,
+  .mr-skeleton[data-size='sm'] { height: 1rem; }
+
+  .mr-skeleton--md,
+  .mr-skeleton[data-size='md'] { height: 1.5rem; }
+
+  .mr-skeleton--lg,
+  .mr-skeleton[data-size='lg'] { height: 2rem; }
+
+  .mr-skeleton--rounded {
+    border-radius: var(--mr-radius-full);
+  }
 }

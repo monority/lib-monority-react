@@ -1,13 +1,30 @@
 @layer recipes {
   .mr-switch {
+    --mr-switch-scale: 1;
+    --mr-switch-border-width: 1px;
+    --mr-switch-track-width: calc(2.75rem * var(--mr-switch-scale));
+    --mr-switch-track-height: calc(1.5rem * var(--mr-switch-scale));
+    --mr-switch-padding: calc(0.125rem * var(--mr-switch-scale));
+    --mr-switch-thumb-size: calc(
+      var(--mr-switch-track-height) -
+      (2 * var(--mr-switch-padding)) -
+      (2 * var(--mr-switch-border-width))
+    );
+    --mr-switch-thumb-shift: calc(
+      var(--mr-switch-track-width) -
+      var(--mr-switch-thumb-size) -
+      (2 * var(--mr-switch-padding)) -
+      (2 * var(--mr-switch-border-width))
+    );
+
     display: inline-flex;
     align-items: center;
     gap: var(--mr-space-2);
-    cursor: pointer;
+    color: var(--mr-fg-base);
     font-family: inherit;
     font-size: var(--mr-text-sm);
     line-height: 1.5;
-    color: var(--mr-fg-base);
+    cursor: pointer;
     user-select: none;
   }
 
@@ -28,10 +45,11 @@
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
+    box-sizing: border-box;
     width: var(--mr-switch-track-width);
     height: var(--mr-switch-track-height);
     padding: var(--mr-switch-padding);
-    border: 1px solid var(--mr-border-subtle);
+    border: var(--mr-switch-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
     background: var(--mr-bg-control);
     transition:
@@ -45,11 +63,12 @@
     height: var(--mr-switch-thumb-size);
     border-radius: var(--mr-radius-full);
     background: var(--mr-fg-strong);
-    transition: transform var(--mr-duration-fast) var(--mr-ease-standard);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--mr-fg-strong) 18%, transparent);
     transform: translateX(0);
+    transition:
+      transform var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard);
   }
-
-  /* .mr-switch__label removed — label now rendered by Field wrapper */
 
   .mr-switch__input:focus-visible + .mr-switch__control {
     outline: 2px solid var(--mr-accent);
@@ -64,8 +83,8 @@
 
   .mr-switch--checked .mr-switch__thumb,
   .mr-switch[data-checked='true'] .mr-switch__thumb {
-    transform: translateX(calc(var(--mr-switch-track-width) - var(--mr-switch-thumb-size) - 2 * var(--mr-switch-padding)));
     background: var(--mr-accent-contrast);
+    transform: translateX(var(--mr-switch-thumb-shift));
   }
 
   .mr-switch--disabled,
@@ -78,12 +97,6 @@
   .mr-switch[data-invalid='true'] .mr-switch__control {
     border-color: var(--mr-danger);
     box-shadow: 0 0 0 1px var(--mr-danger);
-  }
-
-  .mr-switch--checked.mr-switch--accent .mr-switch__control,
-  .mr-switch[data-checked='true'][data-tone='accent'] .mr-switch__control {
-    background: var(--mr-accent);
-    border-color: var(--mr-accent);
   }
 
   .mr-switch--neutral .mr-switch__control,
@@ -121,29 +134,20 @@
 
   .mr-switch--sm,
   .mr-switch[data-size='sm'] {
-    --mr-switch-track-width: 2rem;
-    --mr-switch-track-height: 1.125rem;
-    --mr-switch-padding: 0.1rem;
-    --mr-switch-thumb-size: 0.875rem;
+    --mr-switch-scale: 0.82;
     gap: var(--mr-space-1);
     font-size: var(--mr-text-xs);
   }
 
   .mr-switch--md,
   .mr-switch[data-size='md'] {
-    --mr-switch-track-width: 2.75rem;
-    --mr-switch-track-height: 1.5rem;
-    --mr-switch-padding: 0.125rem;
-    --mr-switch-thumb-size: 1.15rem;
+    --mr-switch-scale: 1;
   }
 
   .mr-switch--lg,
   .mr-switch[data-size='lg'] {
-    --mr-switch-track-width: 3.5rem;
-    --mr-switch-track-height: 1.875rem;
-    --mr-switch-padding: 0.175rem;
-    --mr-switch-thumb-size: 1.4rem;
+    --mr-switch-scale: 1.25;
     gap: var(--mr-space-3);
-    font-size: var(--mr-text-md);
+    font-size: var(--mr-text-base);
   }
 }

@@ -1,45 +1,65 @@
 @layer recipes {
   .mr-drop-zone {
+    --mr-drop-zone-min-height: 8rem;
+    --mr-drop-zone-padding: var(--mr-space-5);
+
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 8rem;
-    padding: var(--mr-spacing-5, 1.25rem);
-    border: 2px dashed var(--mr-border-subtle);
+    min-height: var(--mr-drop-zone-min-height);
+    padding: var(--mr-drop-zone-padding);
+    border: 1px dashed var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface-soft);
+    background: var(--mr-bg-surface-elevated);
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+    box-shadow: var(--mr-shadow-xs);
+    transition:
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
   }
+
   .mr-drop-zone:hover {
     border-color: var(--mr-border-strong);
-    background: var(--mr-bg-control);
+    background: var(--mr-bg-surface-strong);
+    box-shadow: var(--mr-shadow-sm);
   }
+
+  .mr-drop-zone:focus-within {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
   .mr-drop-zone--dragover {
-    border-color: var(--mr-fg-accent);
-    background: var(--mr-bg-accent-soft, rgba(59,130,246,0.05));
+    border-color: var(--mr-accent);
+    background: var(--mr-bg-accent-soft);
   }
+
   .mr-drop-zone--disabled {
-    opacity: 0.5;
     cursor: not-allowed;
+    opacity: var(--mr-opacity-disabled, 0.5);
     pointer-events: none;
   }
+
   .mr-drop-zone__placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--mr-spacing-2, 0.5rem);
+    gap: var(--mr-space-2);
     text-align: center;
     pointer-events: none;
   }
+
   .mr-drop-zone__icon {
     font-size: 2rem;
     line-height: 1;
     opacity: 0.5;
   }
+
   .mr-drop-zone__text {
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-sm);
+    line-height: 1.5;
   }
 }

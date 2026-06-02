@@ -8,7 +8,8 @@ import {
 
 const docData: DocPageData = {
   title: 'Pagination',
-  description: "Page navigation with prev/next buttons and numbered page buttons.",
+  description:
+    'A compact page navigator with directional actions, condensed page ranges, and a stronger active state.',
   importCode: "import { Pagination } from '@monority/ui'",
   usageCode: `<Pagination page={1} totalPages={10} onPageChange={setPage} />`,
   preview: () => <PaginationBasicExample />,
@@ -18,23 +19,43 @@ const docData: DocPageData = {
     { title: 'Many pages', content: <PaginationManyPagesExample /> },
   ],
   props: [
-    { name: 'page', type: `number`, defaultValue: "1", description: "Current page." },
-    { name: 'totalPages', type: `number`, defaultValue: "1", description: "Total page count." },
-    { name: 'onPageChange', type: `(page: number) => void`, defaultValue: "-", description: "Page change callback." }
+    {
+      name: 'page',
+      type: `number`,
+      defaultValue: '1',
+      description: 'Current page.',
+    },
+    {
+      name: 'totalPages',
+      type: `number`,
+      defaultValue: '1',
+      description: 'Total page count.',
+    },
+    {
+      name: 'onPageChange',
+      type: `(page: number) => void`,
+      defaultValue: '-',
+      description: 'Page change callback.',
+    },
   ],
   cssHooks: [
-    '.mr-pagination', '.mr-pagination__button', '.mr-pagination__current',
-    '[data-active]',
+    '.mr-pagination',
+    '.mr-pagination__slot',
+    '.mr-pagination__pages',
+    '.mr-pagination__btn',
+    '.mr-pagination__ellipsis',
   ],
   tokens: [
-    '--mr-accent', '--mr-accent-contrast', '--mr-fg-muted',
-    '--mr-text-sm', '--mr-radius-sm',
+    '--mr-accent',
+    '--mr-border-subtle',
+    '--mr-bg-control',
+    '--mr-bg-surface-elevated',
+    '--mr-fg-muted',
   ],
   a11y: [
-    'Nav ARIA pattern (aria-label="Pagination").',
-    'aria-current="page" on current.',
-    'Previous/next with aria-label.',
-    'Keyboard navigation (arrows).',
+    'Uses nav semantics with an explicit pagination label.',
+    'The active page exposes aria-current="page".',
+    'Previous and next actions include clear labels.',
   ],
 }
 

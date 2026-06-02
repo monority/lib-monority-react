@@ -1,13 +1,6 @@
-﻿import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { ReactNode } from 'react'
-import hljs from 'highlight.js/lib/core'
-import typescript from 'highlight.js/lib/languages/typescript'
-import xml from 'highlight.js/lib/languages/xml'
-import 'highlight.js/styles/github-dark.css'
-import '../code-theme.css'
-
-hljs.registerLanguage('typescript', typescript)
-hljs.registerLanguage('xml', xml)
+import { DocsCodeBlock } from './DocsCodeBlock'
 
 export interface PropRow {
   name: string
@@ -48,36 +41,20 @@ function CopyButton({ text }: { text: string }) {
 
   return (
     <button className="docs-copy-btn" onClick={copy} aria-label="Copy code">
-      {copied ? "Copied!" : "Copy"}
+      {copied ? 'Copied!' : 'Copy'}
     </button>
   )
 }
 
 function HighlightedCode({ code }: { code: string }) {
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (ref.current) hljs.highlightElement(ref.current)
-  }, [code])
-
-  return (
-    <pre className="docs-code-pre"><code ref={ref} className="language-tsx">{code}</code></pre>
-  )
+  return <DocsCodeBlock className="docs-code-pre">{code}</DocsCodeBlock>
 }
 
-function ExampleCard({ example, index }: { example: DocExample; index: number }) {
-  const codeRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (example.code && codeRef.current) hljs.highlightElement(codeRef.current)
-  }, [example.code])
-
+function ExampleCard({ example }: { example: DocExample; index: number }) {
   return (
     <div className="docs-example-group">
       <h3>{example.title}</h3>
-      <div className="docs-example-content">
-        {example.content}
-      </div>
+      <div className="docs-example-content">{example.content}</div>
       {example.code ? (
         <div className="docs-code-area">
           <div className="docs-code-header">
@@ -94,14 +71,10 @@ function ExampleCard({ example, index }: { example: DocExample; index: number })
 export function DocPage({ doc }: { doc: DocPageData }) {
   const Preview = doc.preview
   const fullCode = doc.importCode
-    ? `${doc.importCode}\n${doc.usageCode || ""}`
-    : (doc.usageCode || '')
-  const codeRef = useRef<HTMLElement>(null)
-  const previewLabel = doc.previewLabel ?? `${doc.title.toLowerCase().replace(/\s+/g, "-")}.tsx`
-
-  useEffect(() => {
-    if (codeRef.current && fullCode) hljs.highlightElement(codeRef.current)
-  }, [fullCode])
+    ? `${doc.importCode}\n${doc.usageCode || ''}`
+    : doc.usageCode || ''
+  const previewLabel =
+    doc.previewLabel ?? `${doc.title.toLowerCase().replace(/\s+/g, '-')}.tsx`
 
   return (
     <div className="docs-page">
@@ -111,7 +84,6 @@ export function DocPage({ doc }: { doc: DocPageData }) {
         <p className="docs-description">{doc.description}</p>
       </header>
 
-      {/* Preview card */}
       {(fullCode || doc.preview) && (
         <div className="docs-preview-card">
           <div className="docs-preview-area">
@@ -130,7 +102,6 @@ export function DocPage({ doc }: { doc: DocPageData }) {
         </div>
       )}
 
-      {/* Examples section */}
       {doc.examples && doc.examples.length > 0 && (
         <section className="docs-section">
           <h2>Examples</h2>
@@ -142,7 +113,6 @@ export function DocPage({ doc }: { doc: DocPageData }) {
         </section>
       )}
 
-      {/* API Reference */}
       {doc.props && doc.props.length > 0 && (
         <section className="docs-section">
           <h2>API Reference</h2>
@@ -160,8 +130,12 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 {doc.props.map((prop) => (
                   <tr key={prop.name}>
                     <td className="docs-prop-name">{prop.name}</td>
-                    <td className="docs-prop-type"><code>{prop.type}</code></td>
-                    <td className="docs-prop-default"><code>{prop.defaultValue}</code></td>
+                    <td className="docs-prop-type">
+                      <code>{prop.type}</code>
+                    </td>
+                    <td className="docs-prop-default">
+                      <code>{prop.defaultValue}</code>
+                    </td>
                     <td className="docs-prop-desc">{prop.description}</td>
                   </tr>
                 ))}
@@ -171,7 +145,6 @@ export function DocPage({ doc }: { doc: DocPageData }) {
         </section>
       )}
 
-      {/* Styling */}
       {(doc.cssHooks || doc.tokens) && (
         <section className="docs-section">
           <h2>Styling</h2>
@@ -181,7 +154,9 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 <h3>CSS Hooks</h3>
                 <div className="docs-tag-list">
                   {doc.cssHooks.map((hook) => (
-                    <span key={hook} className="docs-tag"><code>{hook}</code></span>
+                    <span key={hook} className="docs-tag">
+                      <code>{hook}</code>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -191,7 +166,9 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 <h3>Tokens</h3>
                 <div className="docs-tag-list">
                   {doc.tokens.map((token) => (
-                    <span key={token} className="docs-tag"><code>{token}</code></span>
+                    <span key={token} className="docs-tag">
+                      <code>{token}</code>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -200,7 +177,6 @@ export function DocPage({ doc }: { doc: DocPageData }) {
         </section>
       )}
 
-      {/* Accessibility */}
       {doc.a11y && doc.a11y.length > 0 && (
         <section className="docs-section">
           <h2>Accessibility</h2>

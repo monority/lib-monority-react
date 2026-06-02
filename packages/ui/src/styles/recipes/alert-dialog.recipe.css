@@ -24,7 +24,7 @@
     .mr-alert-dialog__backdrop-surface {
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-base) 60%, transparent);
+        background: color-mix(in srgb, var(--mr-bg-base) 64%, transparent);
     }
 
     .mr-alert-dialog__panel {
@@ -34,21 +34,25 @@
         gap: var(--mr-space-4);
         padding: var(--mr-space-5);
         border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-lg);
+        border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-lg);
+        box-shadow: var(--mr-shadow-md);
     }
 
     .mr-alert-dialog__header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: var(--mr-space-3);
     }
 
+    .mr-alert-dialog__heading {
+        min-width: 0;
+    }
+
     .mr-alert-dialog__title {
         font-size: var(--mr-text-lg);
-        font-weight: 700;
+        font-weight: 650;
         margin: 0;
         color: var(--mr-fg-strong);
     }
@@ -61,16 +65,36 @@
     }
 
     .mr-alert-dialog__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--mr-space-2);
         justify-content: flex-end;
     }
 
+    .mr-alert-dialog__cancel {
+        flex: 0 0 auto;
+    }
+
     .mr-alert-dialog__confirm {
-        background: linear-gradient(180deg, color-mix(in srgb, var(--mr-danger) 88%, #1a1a1a), color-mix(in srgb, var(--mr-danger) 96%, #09090b));
-        color: var(--mr-color-white);
+        flex: 0 0 auto;
     }
 
     .mr-alert-dialog__confirm:hover {
-        box-shadow: 0 10px 24px rgba(171, 77, 62, 0.22);
+        box-shadow: var(--mr-shadow-sm);
+    }
+
+    @media (max-width: 640px) {
+        .mr-alert-dialog__panel {
+            width: min(100%, 32rem);
+            padding: var(--mr-space-4);
+        }
+
+        .mr-alert-dialog__actions {
+            flex-direction: column-reverse;
+        }
+
+        .mr-alert-dialog__actions > * {
+            width: 100%;
+        }
     }
 }
-

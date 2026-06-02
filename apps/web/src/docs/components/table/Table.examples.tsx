@@ -1,37 +1,50 @@
-import { Table } from '@monority/ui'
+import { Badge, Table } from '@monority/ui'
 
 export function TableBasicExample() {
   const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'role', label: 'Role' },
+    { key: 'plan', label: 'Plan' },
+    { key: 'seats', label: 'Seats', className: 'mr-table__cell--right' },
+    { key: 'support', label: 'Support' },
   ]
   const rows = [
-    { name: 'John Doe', email: 'john@example.com', role: 'Developer' },
-    { name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
-    { name: 'Bob Wilson', email: 'bob@example.com', role: 'Manager' },
+    { plan: 'Starter', seats: '5', support: 'Email' },
+    { plan: 'Growth', seats: '20', support: 'Priority' },
+    { plan: 'Scale', seats: 'Unlimited', support: 'Dedicated' },
   ]
+
   return <Table columns={columns} rows={rows} />
 }
 
 export function TableWithDataExample() {
   const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'role', label: 'Role' },
+    { key: 'component', label: 'Component' },
+    {
+      key: 'status',
+      label: 'Status',
+      render: (value: unknown) => (
+        <Badge variant="secondary">{String(value)}</Badge>
+      ),
+    },
+    {
+      key: 'coverage',
+      label: 'Coverage',
+      className: 'mr-table__cell--right',
+    },
   ]
   const rows = [
-    { name: 'John Doe', email: 'john@example.com', role: 'Developer' },
-    { name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
-    { name: 'Bob Wilson', email: 'bob@example.com', role: 'Manager' },
+    { component: 'Banner', status: 'Reviewed', coverage: '14 examples' },
+    { component: 'Toolbar', status: 'Aligned', coverage: '8 examples' },
+    { component: 'PageHeader', status: 'Published', coverage: '6 examples' },
   ]
+
   return <Table columns={columns} rows={rows} />
 }
 
 export function TableEmptyExample() {
   const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'email', label: 'Email' },
+    { key: 'component', label: 'Component' },
+    { key: 'owner', label: 'Owner' },
   ]
+
   return <Table columns={columns} rows={[]} />
 }

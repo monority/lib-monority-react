@@ -40,6 +40,11 @@ describe('SidebarLayout', () => {
     expect(view.querySelector('.mr-sidebar-layout__header')?.textContent).toBe('Header')
   })
 
+  it('does not render header when absent', () => {
+    const view = render(<SidebarLayout>Content</SidebarLayout>)
+    expect(view.querySelector('.mr-sidebar-layout__header')).toBeNull()
+  })
+
   it('applies default md width', () => {
     const view = render(<SidebarLayout />)
     expect(view.querySelector('div')?.getAttribute('data-sidebar-width')).toBe('md')

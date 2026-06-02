@@ -1,13 +1,13 @@
-import { DataList } from '@monority/ui'
+import { Badge, DataList } from '@monority/ui'
 
 export function DataListBasicExample() {
   return (
     <DataList
       items={[
-        { key: 'name', label: 'Name', value: 'John Doe' },
-        { key: 'email', label: 'Email', value: 'john@example.com' },
-        { key: 'role', label: 'Role', value: 'Developer' },
-        { key: 'status', label: 'Status', value: 'Active' },
+        { key: 'package', label: 'Package', value: '@monority/ui' },
+        { key: 'version', label: 'Version', value: '0.1.0' },
+        { key: 'license', label: 'License', value: 'MIT' },
+        { key: 'runtime', label: 'Runtime', value: 'React 19+' },
       ]}
     />
   )
@@ -17,17 +17,25 @@ export function DataListWithRenderExample() {
   return (
     <DataList
       items={[
-        { key: 'status', label: 'Status', value: 'active', render: (v) => (
-          <span style={{ color: v === 'active' ? 'var(--mr-success)' : 'var(--mr-danger)' }}>
-            {v === 'active' ? '● Active' : '● Inactive'}
-          </span>
-        )},
-        { key: 'role', label: 'Role', value: 'admin', render: (v) => (
-          <span style={{ textTransform: 'capitalize', fontWeight: 600 }}>{v}</span>
-        )},
-        { key: 'email', label: 'Email', value: 'john@example.com', render: (v) => (
-          <a href={`mailto:${v}`} style={{ color: 'var(--mr-accent)' }}>{v}</a>
-        )},
+        {
+          key: 'status',
+          label: 'Status',
+          value: 'stable',
+          render: (value) => (
+            <Badge variant="secondary">{String(value).toUpperCase()}</Badge>
+          ),
+        },
+        {
+          key: 'release',
+          label: 'Release notes',
+          value: 'View changelog',
+          render: (value) => <a href="#">{value}</a>,
+        },
+        {
+          key: 'owner',
+          label: 'Owner',
+          value: 'Design system',
+        },
       ]}
     />
   )
@@ -38,9 +46,10 @@ export function DataListSplitExample() {
     <DataList
       columns="split"
       items={[
-        { key: 'name', label: 'Name', value: 'John Doe' },
-        { key: 'email', label: 'Email', value: 'john@example.com' },
-        { key: 'role', label: 'Role', value: 'Developer' },
+        { key: 'name', label: 'Component', value: 'DataTable' },
+        { key: 'category', label: 'Category', value: 'Data display' },
+        { key: 'theme', label: 'Theme aware', value: 'Yes' },
+        { key: 'keyboard', label: 'Keyboard support', value: 'Native' },
       ]}
     />
   )

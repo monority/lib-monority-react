@@ -3,6 +3,10 @@
     display: flex;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: inherit;
   }
 
   .mr-resizable--horizontal {
@@ -21,7 +25,10 @@
   .mr-resizable__panel {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    min-height: 0;
     overflow: hidden;
+    will-change: flex-basis;
   }
 
   .mr-resizable__handle {
@@ -30,36 +37,74 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: var(--mr-bg-surface);
-    border: 1px solid var(--mr-border-subtle);
-    transition: background 0.15s;
+    background: var(--mr-bg-surface-strong);
+    border: 0;
+    color: var(--mr-fg-muted);
+    transition:
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      color var(--mr-duration-fast) var(--mr-ease-standard);
     z-index: 1;
+    touch-action: none;
+  }
+
+  .mr-resizable__handle::before {
+    content: '';
+    position: absolute;
+    border-radius: var(--mr-radius-full);
+    background: var(--mr-border-subtle);
+    transition:
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      transform var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-resizable__handle:hover,
   .mr-resizable__handle--active {
-    background: var(--mr-bg-surface-strong);
+    color: var(--mr-fg-strong);
+  }
+
+  .mr-resizable__handle:hover::before,
+  .mr-resizable__handle--active::before {
+    background: var(--mr-accent);
+  }
+
+  .mr-resizable__handle:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--mr-accent);
   }
 
   .mr-resizable__handle--horizontal {
-    width: 0.5rem;
+    width: 0.625rem;
     cursor: col-resize;
-    border-top: none;
-    border-bottom: none;
+  }
+
+  .mr-resizable__handle--horizontal::before {
+    width: 1px;
+    height: 70%;
   }
 
   .mr-resizable__handle--vertical {
-    height: 0.5rem;
+    height: 0.625rem;
     cursor: row-resize;
-    border-left: none;
-    border-right: none;
+  }
+
+  .mr-resizable__handle--vertical::before {
+    width: 70%;
+    height: 1px;
   }
 
   .mr-resizable__handle-indicator {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--mr-fg-muted);
+    color: currentColor;
     pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mr-resizable__handle,
+    .mr-resizable__handle::before {
+      transition-duration: 0ms;
+    }
   }
 }

@@ -1,9 +1,11 @@
 @layer recipes {
     .mr-sidebar-layout {
         --mr-sidebar-width: 16rem;
+        --mr-sidebar-layout-gap: var(--mr-space-5);
+
         display: grid;
         grid-template-columns: minmax(0, var(--mr-sidebar-width)) minmax(0, 1fr);
-        gap: var(--mr-space-5);
+        gap: var(--mr-sidebar-layout-gap);
         width: 100%;
         min-width: 0;
         align-items: start;
@@ -27,6 +29,11 @@
         display: grid;
         gap: var(--mr-space-3);
         min-width: 0;
+        padding: var(--mr-space-3);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-elevated);
+        box-shadow: var(--mr-shadow-xs);
     }
 
     .mr-sidebar-layout__main {
@@ -40,13 +47,39 @@
         min-width: 0;
     }
 
+    .mr-sidebar-layout__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+        padding: var(--mr-space-3) var(--mr-space-4);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-strong);
+        box-shadow: var(--mr-shadow-xs);
+    }
+
+    .mr-sidebar-layout__content {
+        padding: var(--mr-space-4);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-elevated);
+        box-shadow: var(--mr-shadow-xs);
+    }
+
     @media (max-width: 900px) {
         .mr-sidebar-layout {
             grid-template-columns: 1fr;
+            --mr-sidebar-layout-gap: var(--mr-space-3);
         }
 
         .mr-sidebar-layout__sidebar {
             position: static;
+        }
+
+        .mr-sidebar-layout__content,
+        .mr-sidebar-layout__header {
+            padding: var(--mr-space-3);
         }
     }
 }

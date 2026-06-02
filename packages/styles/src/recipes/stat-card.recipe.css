@@ -1,10 +1,87 @@
 @layer recipes {
-  .mr-stat-card { display: flex; flex-direction: column; gap: var(--mr-space-2); }
-  .mr-stat-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--mr-space-3); }
-  .mr-stat-card__info { display: flex; flex-direction: column; gap: var(--mr-space-1); }
-  .mr-stat-card__icon { font-size: var(--mr-text-2xl); flex-shrink: 0; }
-  .mr-stat-card__trend[data-trend-tone='success'] { color: var(--mr-success); }
-  .mr-stat-card__trend[data-trend-tone='warning'] { color: var(--mr-warning); }
-  .mr-stat-card__trend[data-trend-tone='danger'] { color: var(--mr-danger); }
-  .mr-stat-card__footer { border-top: 1px solid var(--mr-border-subtle); padding-top: var(--mr-space-3); margin-top: var(--mr-space-1); }
+  .mr-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-3);
+    min-height: 9.5rem;
+    position: relative;
+  }
+
+  .mr-stat-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--mr-space-3);
+    min-width: 0;
+  }
+
+  .mr-stat-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-1);
+    min-width: 0;
+  }
+
+  .mr-stat-card__info .mr-title {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    line-height: 1.05;
+  }
+
+  .mr-stat-card__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-sm);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-lg);
+  }
+
+  .mr-stat-card__trend {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: 1.5rem;
+    padding: 0 var(--mr-space-2);
+    border-radius: var(--mr-radius-xs);
+    background: var(--mr-bg-accent-soft);
+    color: var(--mr-fg-base);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mr-stat-card__trend .mr-text {
+    color: currentColor;
+    font-weight: 560;
+  }
+
+  .mr-stat-card__trend[data-trend-tone='success'] {
+    background: color-mix(in srgb, var(--mr-success) 9%, transparent);
+    color: var(--mr-success);
+  }
+
+  .mr-stat-card__trend[data-trend-tone='warning'] {
+    background: color-mix(in srgb, var(--mr-warning) 10%, transparent);
+    color: var(--mr-warning);
+  }
+
+  .mr-stat-card__trend[data-trend-tone='danger'] {
+    background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
+    color: var(--mr-danger);
+  }
+
+  .mr-stat-card__footer {
+    margin-top: auto;
+    padding-top: var(--mr-space-3);
+    border-top: 1px solid var(--mr-border-subtle);
+  }
+
+  .mr-stat-card > .mr-text {
+    max-width: 36ch;
+    line-height: 1.55;
+  }
 }

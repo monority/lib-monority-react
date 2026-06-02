@@ -1,67 +1,70 @@
 import { NavigationMenu } from '@monority/ui'
-import { useState } from 'react'
 
 export function NavigationMenuBasicExample() {
   const items = [
-    { label: 'Home', href: '/' },
-    { label: 'Products', href: '/products' },
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'About', href: '/about' },
+    { label: 'Overview', href: '/overview' },
+    { label: 'Components', href: '/components' },
+    { label: 'Tokens', href: '/tokens' },
+    { label: 'Changelog', href: '/changelog' },
   ]
+
   return <NavigationMenu items={items} />
 }
 
 export function NavigationMenuWithSubItemsExample() {
   const items = [
-    { label: 'Home', href: '/' },
+    { label: 'Overview', href: '/overview' },
     {
-      label: 'Products',
+      label: 'Components',
       items: [
-        { label: 'Analytics', href: '/products/analytics', description: 'Track your metrics' },
-        { label: 'Automation', href: '/products/automation', description: 'Automate workflows' },
-        { label: 'Integrations', href: '/products/integrations', description: 'Connect your tools' },
+        { label: 'Inputs', href: '/components/inputs', description: 'Fields, validation, and entry patterns.' },
+        { label: 'Navigation', href: '/components/navigation', description: 'Menus, tabs, pagination, and shells.' },
+        { label: 'Feedback', href: '/components/feedback', description: 'Banners, callouts, toasts, and empty states.' },
       ],
     },
     {
       label: 'Resources',
       items: [
-        { label: 'Documentation', href: '/docs', description: 'API reference and guides' },
-        { label: 'Blog', href: '/blog', description: 'Latest news and updates' },
+        { label: 'Guidelines', href: '/guidelines', description: 'Layout, spacing, and content hierarchy rules.' },
+        { label: 'Examples', href: '/examples', description: 'Reference compositions for product surfaces.' },
       ],
     },
-    { label: 'Pricing', href: '/pricing' },
+    { label: 'Changelog', href: '/changelog' },
   ]
+
   return <NavigationMenu items={items} />
 }
 
 export function NavigationMenuWithIconsExample() {
   const items = [
-    { label: 'Dashboard', href: '/dashboard', icon: <span>📊</span> },
-    { label: 'Projects', href: '/projects', icon: <span>📁</span> },
+    { label: 'Library', href: '/library', icon: <span>L</span> },
+    { label: 'Themes', href: '/themes', icon: <span>T</span> },
     {
       label: 'Settings',
-      icon: <span>⚙️</span>,
+      icon: <span>S</span>,
       items: [
-        { label: 'General', href: '/settings/general', icon: <span>🔧</span>, description: 'General settings' },
-        { label: 'Security', href: '/settings/security', icon: <span>🔒</span>, description: 'Password and 2FA' },
+        { label: 'Brand', href: '/settings/brand', icon: <span>B</span>, description: 'Logos, color roles, and typography.' },
+        { label: 'Publishing', href: '/settings/publishing', icon: <span>P</span>, description: 'Release flow, versions, and package visibility.' },
       ],
     },
   ]
+
   return <NavigationMenu items={items} />
 }
 
 export function NavigationMenuDisabledExample() {
   const items = [
-    { label: 'Home', href: '/' },
+    { label: 'Overview', href: '/overview' },
     { label: 'Beta', href: '/beta', disabled: true },
     {
-      label: 'Features',
+      label: 'Labs',
       disabled: true,
       items: [
-        { label: 'New Feature', href: '/features/new', description: 'Coming soon' },
+        { label: 'Experimental grid', href: '/labs/grid', description: 'Coming soon.' },
       ],
     },
     { label: 'Pricing', href: '/pricing' },
   ]
+
   return <NavigationMenu items={items} />
 }

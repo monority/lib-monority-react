@@ -1,7 +1,5 @@
 :root {
-  --mr-surface-default: linear-gradient(180deg, var(--mr-bg-surface-elevated), var(--mr-bg-surface));
-  --mr-surface-strong: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
-  --mr-surface-control: var(--mr-bg-control);
-  --mr-hero-glow-1: rgba(255, 255, 255, 0.7);
-  --mr-hero-glow-2: rgba(0, 0, 0, 0.03);
+    --mr-surface-default: var(--mr-bg-surface);
+    --mr-surface-strong: var(--mr-bg-surface-elevated);
+    --mr-surface-control: var(--mr-bg-control);
 }

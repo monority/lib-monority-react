@@ -11,7 +11,7 @@ const docData: DocPageData = {
   description: 'A styled scrollable container with custom scrollbar styling and orientation control.',
   importCode: "import { ScrollArea } from '@monority/ui'",
   usageCode: `<ScrollArea orientation="vertical" style={{ maxHeight: 200 }}>
-  <p>Long scrollable content...</p>
+  <p>Recent release activity...</p>
 </ScrollArea>`,
   preview: () => <ScrollAreaBasicExample />,
   examples: [
@@ -38,7 +38,7 @@ const docData: DocPageData = {
   a11y: [
     'Uses native scroll behavior with overflow.',
     'Scrollbar is styled but remains accessible.',
-    'hideScrollbar removes visual scrollbar — ensure content is still discoverable.',
+    'hideScrollbar removes the visual scrollbar, so make sure the content still reads as scrollable.',
   ],
 }
 

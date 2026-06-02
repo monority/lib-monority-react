@@ -6,9 +6,9 @@ import {
 
 const docData: DocPageData = {
   title: 'Toast',
-  description: "A notification that appears temporarily to inform users of important events.",
+  description: 'Transient notification surface for background status, success confirmation, and failure feedback.',
   importCode: "import { Toast, useToast } from '@monority/ui'",
-  usageCode: `<Toast title="Example" description="Toast notification" tone="neutral" />`,
+  usageCode: `<Toast title="Release draft saved" description="Your docs changes are ready for review." tone="neutral" />`,
   preview: () => <ToastBasicExample />,
   examples: [
     { title: 'Tones', content: <ToastTonesExample /> },
@@ -20,17 +20,29 @@ const docData: DocPageData = {
     { name: 'onClose', type: `() => void`, defaultValue: "-", description: "Close button callback." }
   ],
   cssHooks: [
-    '.mr-toast', '.mr-toast__title', '.mr-toast__description',
-    '.mr-toast--success', '.mr-toast--danger', '.mr-toast--info',
+    '.mr-toast',
+    '.mr-toast__body',
+    '.mr-toast__header',
+    '.mr-toast__heading',
+    '.mr-toast__title',
+    '.mr-toast__description',
+    '.mr-toast__close',
+    '.mr-toast-viewport',
+    '.mr-toast--success',
+    '.mr-toast--danger',
   ],
   tokens: [
-    '--mr-bg-surface-elevated', '--mr-shadow-lg', '--mr-radius-md',
-    '--mr-text-sm', '--mr-success', '--mr-danger', '--mr-accent',
+    '--mr-bg-surface-elevated',
+    '--mr-border-subtle',
+    '--mr-shadow-sm',
+    '--mr-radius-md',
+    '--mr-success',
+    '--mr-danger',
   ],
   a11y: [
-    'role="status" or role="alert".',
-    'aria-live="polite" for non-critical.',
-    'Dismiss button with aria-label.',
+    'Neutral and success toasts use role="status" with polite announcements.',
+    'Danger toasts use role="alert" with assertive announcements.',
+    'Dismiss buttons expose an explicit aria-label.',
   ],
 }
 

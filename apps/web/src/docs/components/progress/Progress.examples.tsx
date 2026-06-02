@@ -2,27 +2,27 @@ import { useState } from 'react'
 import { Progress } from '@monority/ui'
 
 export function ProgressBasicExample() {
-  return <Progress value={60} />
+  return <Progress value={68} label="Release migration" />
 }
 
 export function ProgressValuesExample() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Progress value={0} label="Not started" />
-      <Progress value={25} label="In progress" />
-      <Progress value={75} label="Almost done" />
-      <Progress value={100} label="Complete" />
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      <Progress value={0} label="Planning" />
+      <Progress value={28} label="Shell alignment" />
+      <Progress value={74} label="Docs rewrite" />
+      <Progress value={100} label="Component pass complete" tone="success" />
     </div>
   )
 }
 
 export function ProgressTonesExample() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Progress value={50} tone="neutral" label="Neutral" />
-      <Progress value={50} tone="success" label="Success" />
-      <Progress value={50} tone="warning" label="Warning" />
-      <Progress value={50} tone="danger" label="Danger" />
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      <Progress value={46} tone="neutral" label="Queued" />
+      <Progress value={82} tone="success" label="Synced" />
+      <Progress value={58} tone="warning" label="Needs review" />
+      <Progress value={21} tone="danger" label="Blocked" />
     </div>
   )
 }
@@ -32,15 +32,16 @@ export function ProgressWithoutValueExample() {
 }
 
 export function ProgressIndeterminateExample() {
-  return <Progress mode="indeterminate" label="Loading..." />
+  return <Progress mode="indeterminate" label="Rebuilding documentation bundle" />
 }
 
 export function ProgressSliderExample() {
   const [value, setValue] = useState(40)
+
   return (
     <Progress
       value={value}
-      label={`Click to set: ${value}%`}
+      label={`Review threshold: ${value}%`}
       onChange={setValue}
     />
   )

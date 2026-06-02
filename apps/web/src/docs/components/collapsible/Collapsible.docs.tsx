@@ -8,10 +8,10 @@ import {
 
 const docData: DocPageData = {
   title: 'Collapsible',
-  description: 'A standalone collapsible/expandable content panel.',
+  description: 'A standalone expandable panel for secondary details, migration notes, and inline help.',
   importCode: "import { Collapsible } from '@monority/ui'",
-  usageCode: `<Collapsible title="Section title">
-  <p>Collapsible content goes here.</p>
+  usageCode: `<Collapsible title="Release notes summary">
+  <p>This panel can reveal supporting context without taking over the page.</p>
 </Collapsible>`,
   preview: () => <CollapsibleBasicExample />,
   examples: [
@@ -28,16 +28,26 @@ const docData: DocPageData = {
     { name: 'size', type: "'sm' | 'md' | 'lg'", defaultValue: "'md'", description: 'Component size.' },
   ],
   cssHooks: [
-    '.mr-collapsible', '.mr-collapsible__trigger', '.mr-collapsible__panel', '.mr-collapsible__content', '[data-open]',
+    '.mr-collapsible',
+    '.mr-collapsible__trigger',
+    '.mr-collapsible__label',
+    '.mr-collapsible__icon',
+    '.mr-collapsible__panel',
+    '.mr-collapsible__content',
+    '[data-open]',
   ],
   tokens: [
-    '--mr-border-subtle', '--mr-radius-md', '--mr-space-3', '--mr-space-4', '--mr-fg-strong', '--mr-fg-muted', '--mr-duration-fast', '--mr-duration-normal',
+    '--mr-bg-surface-elevated',
+    '--mr-bg-surface-strong',
+    '--mr-bg-accent-soft',
+    '--mr-border-subtle',
+    '--mr-radius-md',
+    '--mr-shadow-xs',
   ],
   a11y: [
-    'Trigger button has aria-expanded.',
-    'Panel has role="region" and aria-labelledby.',
-    'aria-controls links trigger to panel.',
-    'Keyboard accessible (Enter/Space to toggle).',
+    'The trigger button exposes aria-expanded and aria-controls.',
+    'The panel uses role="region" and is labelled by the trigger.',
+    'Keyboard access works with Enter and Space through the native button.',
   ],
 }
 

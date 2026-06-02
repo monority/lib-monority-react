@@ -9,8 +9,8 @@ const docData: DocPageData = {
   title: 'Callout',
   description: "Styled callout box for notes, tips, and contextual highlights.",
   importCode: "import { Callout } from '@monority/ui'",
-  usageCode: `<Callout title="Note" tone="info">
-  <p>This is an informational callout.</p>
+  usageCode: `<Callout title="Migration" tone="info">
+  <p>Background sync will pause briefly while records are reindexed.</p>
 </Callout>`,
   preview: () => <CalloutBasicExample />,
   examples: [

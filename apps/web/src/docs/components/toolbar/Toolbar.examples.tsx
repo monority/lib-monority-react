@@ -3,9 +3,10 @@ import { Button } from '@monority/ui'
 
 export function ToolbarBasicExample() {
   return (
-    <>
-      <Toolbar>Example</Toolbar>
-    </>
+    <Toolbar>
+      <span style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>3 selected</span>
+      <Button size="sm">Apply changes</Button>
+    </Toolbar>
   )
 }
 

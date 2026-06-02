@@ -1,13 +1,9 @@
 body {
-  background:
-    radial-gradient(circle at top left, var(--mr-hero-glow-1), transparent 28%),
-    radial-gradient(circle at top right, var(--mr-hero-glow-2), transparent 24%),
-    var(--mr-bg-canvas);
-  color: var(--mr-fg-base);
-  font-family: var(--mr-font-body);
-  font-size: var(--mr-text-md);
-  line-height: var(--mr-leading-base);
-  transition:
-    background-color var(--mr-duration-base) var(--mr-ease-standard),
-    color var(--mr-duration-fast) var(--mr-ease-standard);
+    background: var(--mr-bg-canvas);
+    color: var(--mr-fg-base);
+    font-family: var(--mr-font-body);
+    font-size: var(--mr-text-md);
+    line-height: var(--mr-leading-base);
+    transition: background-color var(--mr-duration-base) var(--mr-ease-standard), color
+        var(--mr-duration-fast) var(--mr-ease-standard);
 }

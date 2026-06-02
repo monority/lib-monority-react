@@ -1,16 +1,18 @@
-import { FormSection } from '@monority/ui'
-import { Input } from '@monority/ui/input'
-import { Button } from '@monority/ui/button'
+import { Badge, Button, FormSection, Input, Textarea } from '@monority/ui'
 
 export function FormSectionBasicExample() {
   return (
     <FormSection
-      title="Profile Information"
-      description="Update your personal details below."
-      actions={<Button>Save Changes</Button>}
+      title="Project details"
+      description="Set the name and summary used across docs, releases, and internal references."
+      actions={<Button>Save changes</Button>}
     >
-      <Input label="Full name" placeholder="Jane Doe" />
-      <Input label="Email" type="email" placeholder="jane@company.com" />
+      <Input label="Project name" placeholder="Monority Core" />
+      <Textarea
+        label="Summary"
+        placeholder="Short description for changelogs and overview pages."
+        rows={4}
+      />
     </FormSection>
   )
 }
@@ -18,10 +20,11 @@ export function FormSectionBasicExample() {
 export function FormSectionWithoutActionsExample() {
   return (
     <FormSection
-      title="Read-only Info"
-      description="This section cannot be edited."
+      title="Environment"
+      description="Reference values inherited from workspace configuration."
     >
-      <Input label="Username" value="johndoe" disabled />
+      <Input label="Registry" value="npmjs.org" disabled />
+      <Input label="Package scope" value="@monority" disabled />
     </FormSection>
   )
 }
@@ -29,12 +32,13 @@ export function FormSectionWithoutActionsExample() {
 export function FormSectionWithMetaExample() {
   return (
     <FormSection
-      title="Billing"
-      description="Manage your payment details."
-      meta={<span style={{ fontSize: '0.75rem', color: 'var(--mr-fg-muted)' }}>Last updated 2 days ago</span>}
-      actions={<Button variant="secondary">Update</Button>}
+      title="Billing contact"
+      description="Choose who receives invoices and renewal reminders."
+      meta={<Badge variant="secondary">Required</Badge>}
+      actions={<Button variant="secondary">Update contact</Button>}
     >
-      <Input label="Card number" placeholder="**** **** **** 4242" />
+      <Input label="Contact name" placeholder="Jane Doe" />
+      <Input label="Email" type="email" placeholder="billing@company.com" />
     </FormSection>
   )
 }

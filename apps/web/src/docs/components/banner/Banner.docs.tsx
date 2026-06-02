@@ -22,20 +22,20 @@ const docData: DocPageData = {
     { name: 'eyebrow', type: `string`, defaultValue: "-", description: "Small text above title." },
     { name: 'title', type: `string`, defaultValue: "-", description: "Banner title." },
     { name: 'description', type: `string`, defaultValue: "-", description: "Banner description." },
-    { name: 'actions', type: `ReactNode`, defaultValue: "-", description: "Action buttons." }
+    { name: 'actions', type: `ReactNode`, defaultValue: "-", description: "Action buttons." },
+    { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Fallback message when title and description are omitted." }
   ],
   cssHooks: [
-    '.mr-banner', '.mr-banner--info', '.mr-banner--success', '.mr-banner--danger',
-    '[data-variant]',
+    '.mr-banner', '.mr-banner__body', '.mr-banner__actions',
+    '.mr-banner--info', '.mr-banner--success', '.mr-banner--warning', '.mr-banner--danger',
   ],
   tokens: [
-    '--mr-accent', '--mr-success', '--mr-danger',
-    '--mr-bg-accent-soft', '--mr-bg-success-soft', '--mr-bg-danger-soft',
-    '--mr-text-sm',
+    '--mr-info', '--mr-success', '--mr-warning', '--mr-danger',
+    '--mr-bg-surface-elevated', '--mr-border-subtle', '--mr-text-sm',
   ],
   a11y: [
     'role="alert" for important messages.',
-    'Dismiss button with aria-label.',
+    'Keep actions keyboard reachable and labelled with clear verbs.',
   ],
 }
 

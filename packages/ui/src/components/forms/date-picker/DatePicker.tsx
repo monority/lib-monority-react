@@ -221,10 +221,12 @@ function CalendarGrid({ viewDate, selectedDate, onSelect, minDate, maxDate, disa
   }
   while (weeks.length > 1) {
     const lastWeek = weeks[weeks.length - 1]
-    const hasCurrentMonth = lastWeek.some((d) => isSameMonth(d, viewDate))
+    const hasCurrentMonth = lastWeek?.some((d) => isSameMonth(d, viewDate)) ?? false
     if (!hasCurrentMonth) {
       weeks.pop()
-    } else { break }
+    } else {
+      break
+    }
   }
   const trimmedDays = weeks.flat()
   const dayNames = getDayNames()

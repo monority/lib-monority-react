@@ -36,10 +36,19 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal({ ope
         tabIndex={-1}
       >
         <header className="mr-modal__header">
-          <h3 className={cn('mr-title', 'mr-modal__title')} id={titleId}>
-            {title}
-          </h3>
-          <Button ref={closeButtonRef} variant="ghost" size="sm" onClick={onClose} aria-label="Fermer la fenetre">
+          <div className="mr-modal__heading">
+            <h3 className={cn('mr-title', 'mr-modal__title')} id={titleId}>
+              {title}
+            </h3>
+          </div>
+          <Button
+            ref={closeButtonRef}
+            className="mr-modal__close"
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            aria-label="Fermer la fenetre"
+          >
             Fermer
           </Button>
         </header>

@@ -26,17 +26,24 @@ export const DataList = forwardRef<HTMLDListElement, DataListProps>(
         data-columns={columns}
         {...props}
       >
-        {items.map((item, index) => (
-          <div
-            key={item.key ?? (typeof item.label === 'string' ? item.label : String(index))}
-            className={cn('mr-data-list__item', itemClassName)}
-          >
-            <dt className="mr-data-list__label">{item.label}</dt>
-            <dd className="mr-data-list__value">
-              {item.render ? item.render(item.value, item, index) : item.value}
-            </dd>
-          </div>
-        ))}
+        {items.map((item, index) => {
+          const itemKey =
+            item.key ??
+            (typeof item.label === 'string' ? item.label : String(index))
+
+          return (
+            <div
+              key={itemKey}
+              className={cn('mr-data-list__item', itemClassName)}
+              data-row-index={index}
+            >
+              <dt className="mr-data-list__label">{item.label}</dt>
+              <dd className="mr-data-list__value">
+                {item.render ? item.render(item.value, item, index) : item.value}
+              </dd>
+            </div>
+          )
+        })}
       </dl>
     )
   },

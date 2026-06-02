@@ -23,17 +23,24 @@ export function Field({ label, hint, error, required, htmlFor, hintId, errorId, 
   const resolvedHintId = hintId ?? ctx.hintId
   const resolvedErrorId = errorId ?? ctx.errorId
   const resolvedRequired = required ?? ctx.isRequired
+  const hasHint = Boolean(hint)
+  const hasError = Boolean(error)
 
   return (
-    <div className={cn('mr-field', className)}>
+    <div
+      className={cn('mr-field', className)}
+      data-has-hint={hasHint ? true : undefined}
+      data-has-error={hasError ? true : undefined}
+      data-required={resolvedRequired ? true : undefined}
+    >
       {label ? (
         <FieldLabel htmlFor={resolvedHtmlFor || undefined} required={resolvedRequired}>
           {label}
         </FieldLabel>
       ) : null}
       {children}
-      {hint ? <FieldDescription id={resolvedHintId}>{hint}</FieldDescription> : null}
-      {error ? <FieldError id={resolvedErrorId}>{error}</FieldError> : null}
+      {hasHint ? <FieldDescription id={resolvedHintId}>{hint}</FieldDescription> : null}
+      {hasError ? <FieldError id={resolvedErrorId}>{error}</FieldError> : null}
     </div>
   )
 }

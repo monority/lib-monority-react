@@ -1,140 +1,177 @@
 @layer recipes {
-  .mr-menubar {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--mr-spacing-1);
-    padding: var(--mr-spacing-1);
-    border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
-    border: 1px solid var(--mr-border-subtle);
-  }
-
-  .mr-menubar__menu-wrapper {
-    position: relative;
-  }
-
-  .mr-menubar__trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--mr-spacing-1);
-    padding: var(--mr-spacing-1_5) var(--mr-spacing-2_5);
-    border-radius: var(--mr-radius-sm);
-    font-size: var(--mr-text-sm);
-    font-weight: 500;
-    color: var(--mr-fg-muted);
-    border: none;
-    background: none;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: color 0.15s, background 0.15s;
-    font-family: inherit;
-    line-height: inherit;
-  }
-
-  .mr-menubar__trigger:hover,
-  .mr-menubar__menu-wrapper--active .mr-menubar__trigger {
-    color: var(--mr-fg-default);
-    background: var(--mr-bg-surface-strong);
-  }
-
-  .mr-menubar__trigger:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
-  }
-
-  .mr-menubar__trigger:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  .mr-menubar__menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: var(--mr-z-dropdown, 50);
-    min-width: 12rem;
-    padding: var(--mr-spacing-1);
-    margin-top: var(--mr-spacing-1);
-    background: var(--mr-bg-surface);
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-radius-md);
-    box-shadow: var(--mr-shadow-lg, 0 4px 12px rgba(0, 0, 0, 0.1));
-    animation: mr-menubar-enter 0.15s ease-out;
-  }
-
-  @keyframes mr-menubar-enter {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
+    .mr-menubar {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+        max-width: 100%;
+        min-width: 0;
+        padding: var(--mr-space-1);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-elevated);
+        color: var(--mr-fg-base);
+        box-shadow: var(--mr-shadow-xs);
+        overflow-x: auto;
+        scrollbar-width: none;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    .mr-menubar::-webkit-scrollbar {
+        display: none;
     }
-  }
 
-  .mr-menubar__item {
-    display: flex;
-    align-items: center;
-    gap: var(--mr-spacing-2);
-    width: 100%;
-    padding: var(--mr-spacing-1_5) var(--mr-spacing-2);
-    border-radius: var(--mr-radius-xs);
-    font-size: var(--mr-text-sm);
-    color: var(--mr-fg-default);
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.1s;
-    font-family: inherit;
-    line-height: inherit;
-  }
+    .mr-menubar__menu-wrapper {
+        position: relative;
+        flex: 0 0 auto;
+    }
 
-  .mr-menubar__item:hover:not(:disabled) {
-    background: var(--mr-bg-surface-strong);
-  }
+    .mr-menubar__trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.125rem;
+        padding: 0 var(--mr-space-3);
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        color: var(--mr-fg-muted);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--mr-text-sm);
+        font-weight: 560;
+        line-height: 1;
+        white-space: nowrap;
+        transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
+            var(--mr-duration-fast) var(--mr-ease-standard);
+    }
 
-  .mr-menubar__item:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
-  }
+    .mr-menubar__trigger:hover:not(:disabled),
+    .mr-menubar__menu-wrapper--active .mr-menubar__trigger,
+    .mr-menubar__menu-wrapper[data-active="true"] .mr-menubar__trigger {
+        background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
+        color: var(--mr-fg-strong);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
+    }
 
-  .mr-menubar__item--danger {
-    color: var(--mr-fg-danger);
-  }
+    .mr-menubar__trigger:focus-visible {
+        outline: 2px solid var(--mr-accent);
+        outline-offset: 2px;
+    }
 
-  .mr-menubar__item--danger:hover:not(:disabled) {
-    background: var(--mr-bg-danger-soft, rgba(220, 38, 38, 0.08));
-  }
+    .mr-menubar__trigger:disabled {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled, 0.5);
+    }
 
-  .mr-menubar__item--disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+    .mr-menubar__menu {
+        position: absolute;
+        inset-block-start: calc(100% + var(--mr-space-1));
+        inset-inline-start: 0;
+        z-index: var(--mr-z-dropdown, 50);
+        min-width: 14.5rem;
+        max-width: min(22rem, calc(100vw - 2rem));
+        padding: var(--mr-space-1);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-strong);
+        color: var(--mr-fg-base);
+        box-shadow: var(--mr-shadow-md);
+        animation: mr-menubar-enter var(--mr-duration-fast) var(--mr-ease-standard);
+    }
 
-  .mr-menubar__item-icon {
-    display: inline-flex;
-    width: 1rem;
-    justify-content: center;
-  }
+    @keyframes mr-menubar-enter {
+        from {
+            opacity: 0;
+            transform: translateY(-0.25rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-  .mr-menubar__item-label {
-    flex: 1;
-  }
+    .mr-menubar__item {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--mr-space-2);
+        width: 100%;
+        min-height: 2.25rem;
+        padding: 0 var(--mr-space-2);
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        color: var(--mr-fg-base);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--mr-text-sm);
+        line-height: 1.35;
+        text-align: start;
+        transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
+            var(--mr-duration-fast) var(--mr-ease-standard);
+    }
 
-  .mr-menubar__shortcut {
-    font-size: var(--mr-text-xs);
-    color: var(--mr-fg-muted);
-    margin-left: auto;
-    font-family: var(--mr-font-mono, ui-monospace, monospace);
-  }
+    .mr-menubar__item:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--mr-bg-accent-soft) 82%, transparent);
+        color: var(--mr-fg-strong);
+    }
 
-  .mr-menubar__separator {
-    height: 1px;
-    margin: var(--mr-spacing-1) var(--mr-spacing-1);
-    background: var(--mr-border-subtle);
-  }
+    .mr-menubar__item:focus-visible {
+        outline: 2px solid var(--mr-accent);
+        outline-offset: -1px;
+    }
+
+    .mr-menubar__item--danger {
+        color: var(--mr-danger);
+    }
+
+    .mr-menubar__item--danger:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
+        color: var(--mr-danger);
+    }
+
+    .mr-menubar__item--disabled,
+    .mr-menubar__item:disabled {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled, 0.5);
+    }
+
+    .mr-menubar__item-icon {
+        display: inline-flex;
+        width: 1rem;
+        min-width: 1rem;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-fg-muted);
+        font-size: 0.8125rem;
+        font-weight: 650;
+    }
+
+    .mr-menubar__item-label {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mr-menubar__shortcut {
+        margin-inline-start: var(--mr-space-4);
+        color: var(--mr-fg-muted);
+        font-family: var(--mr-font-mono, ui-monospace, monospace);
+        font-size: var(--mr-text-xs);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
+    .mr-menubar__separator {
+        height: 1px;
+        margin: var(--mr-space-1);
+        background: var(--mr-border-subtle);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-menubar__menu {
+            animation: none;
+        }
+    }
 }

@@ -1,47 +1,71 @@
 @layer recipes {
   .mr-file-upload__dropzone {
     position: relative;
+    border-style: dashed;
+    transition:
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
   }
+
+  .mr-file-upload__dropzone:hover:not([data-disabled='true']),
+  .mr-file-upload__dropzone[data-dragging='true'] {
+    background: color-mix(in srgb, var(--mr-accent) 4%, var(--mr-bg-surface-strong));
+    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-accent) 10%, transparent);
+  }
+
   .mr-file-upload__content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--mr-spacing-2);
+    gap: var(--mr-space-2);
     pointer-events: none;
     text-align: center;
   }
-  .mr-file-upload__icon {
-    font-size: 2rem;
-    line-height: 1;
-    opacity: 0.5;
-  }
+
   .mr-file-upload__description {
-    color: var(--mr-fg-muted);
+    max-width: 24rem;
+    color: var(--mr-fg-base);
     font-size: var(--mr-text-sm);
+    line-height: 1.5;
   }
+
   .mr-file-upload__placeholder {
     color: var(--mr-fg-muted);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-text-xs);
+    line-height: 1.5;
   }
+
   .mr-file-upload__action,
   .mr-file-upload__default-action {
     display: inline-flex;
-    padding: var(--mr-spacing-1) var(--mr-spacing-3);
-    border-radius: var(--mr-radius-sm);
-    background: var(--mr-bg-accent-soft);
-    color: var(--mr-fg-accent);
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    padding: 0 var(--mr-space-3);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-strong);
     font-size: var(--mr-text-sm);
-    font-weight: 500;
+    font-weight: 600;
     pointer-events: auto;
     cursor: pointer;
-    transition: background 0.15s;
+    transition:
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      color var(--mr-duration-fast) var(--mr-ease-standard);
   }
+
   .mr-file-upload__action:hover,
   .mr-file-upload__default-action:hover {
-    background: var(--mr-bg-accent-strong);
-    color: var(--mr-bg-base);
+    background: var(--mr-bg-accent-soft);
+    border-color: color-mix(in srgb, var(--mr-accent) 32%, var(--mr-border-subtle));
+    color: var(--mr-fg-strong);
   }
+
   .mr-file-upload__files {
-    margin-top: var(--mr-spacing-2);
+    margin-top: var(--mr-space-2);
   }
 }

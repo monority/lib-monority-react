@@ -1,34 +1,57 @@
 @layer recipes {
   .mr-section {
-    padding-inline: var(--mr-section-padding-x, 1rem);
+    --mr-section-padding-x: var(--mr-space-4);
+
+    display: grid;
+    gap: var(--mr-section-gap, var(--mr-space-4));
+    min-width: 0;
+    padding-inline: var(--mr-section-padding-x);
   }
 
   /* Spacing */
-  .mr-section--sm { padding-block: var(--mr-space-4); }
-  .mr-section--md { padding-block: var(--mr-space-8); }
-  .mr-section--lg { padding-block: var(--mr-space-12); }
-  .mr-section--xl { padding-block: var(--mr-space-16); }
+  .mr-section--sm { --mr-section-gap: var(--mr-space-3); padding-block: var(--mr-space-4); }
+  .mr-section--md { --mr-section-gap: var(--mr-space-4); padding-block: var(--mr-space-8); }
+  .mr-section--lg { --mr-section-gap: var(--mr-space-5); padding-block: var(--mr-space-12); }
+  .mr-section--xl { --mr-section-gap: var(--mr-space-6); padding-block: var(--mr-space-16); }
 
   /* Variants */
   .mr-section--bordered {
     border-top: 1px solid var(--mr-border-subtle);
     border-bottom: 1px solid var(--mr-border-subtle);
   }
+
   .mr-section--muted {
-    background: var(--mr-bg-muted);
+    background: var(--mr-bg-surface-strong);
   }
+
   .mr-section--card {
-    background: var(--mr-bg);
+    padding: var(--mr-space-5);
+    background: var(--mr-bg-surface-elevated);
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    box-shadow: var(--mr-shadow-sm);
+    box-shadow: var(--mr-shadow-xs);
   }
 
   /* Title */
   .mr-section__title {
-    margin: 0 0 var(--mr-space-4) 0;
+    margin: 0;
     font-size: var(--mr-text-lg);
-    font-weight: var(--mr-font-semibold);
-    color: var(--mr-fg);
+    font-weight: 650;
+    color: var(--mr-fg-strong);
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  .mr-section__title + * {
+    margin-top: 0;
+  }
+
+  @media (max-width: 640px) {
+    .mr-section {
+      --mr-section-padding-x: var(--mr-space-3);
+    }
+
+    .mr-section--lg { padding-block: var(--mr-space-8); }
+    .mr-section--xl { padding-block: var(--mr-space-10); }
   }
 }

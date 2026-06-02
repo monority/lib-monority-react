@@ -7,12 +7,12 @@ import {
 
 const docData: DocPageData = {
   title: 'AlertDialog',
-  description: "Confirmation dialog with role=\"alertdialog\" for destructive or important actions.",
+  description: 'Confirmation dialog for destructive or high-consequence actions that need extra friction.',
   importCode: "import { AlertDialog } from '@monority/ui'",
   usageCode: `<AlertDialog
   open={open}
-  title="Delete item?"
-  description="This action cannot be undone."
+  title="Delete this release snapshot?"
+  description="This permanently removes the saved draft and its review history."
   onConfirm={handleConfirm}
   onCancel={handleCancel}
 />`,
@@ -32,20 +32,31 @@ const docData: DocPageData = {
     { name: 'onCancel', type: `() => void`, defaultValue: "-", description: "Cancel callback." }
   ],
   cssHooks: [
-    '.mr-alert-dialog', '.mr-alert-dialog__backdrop', '.mr-alert-dialog__content',
-    '.mr-alert-dialog__header', '.mr-alert-dialog__body', '.mr-alert-dialog__footer',
+    '.mr-alert-dialog',
+    '.mr-alert-dialog__backdrop',
+    '.mr-alert-dialog__backdrop-surface',
+    '.mr-alert-dialog__panel',
+    '.mr-alert-dialog__header',
+    '.mr-alert-dialog__heading',
+    '.mr-alert-dialog__title',
+    '.mr-alert-dialog__description',
+    '.mr-alert-dialog__actions',
+    '.mr-alert-dialog__cancel',
+    '.mr-alert-dialog__confirm',
     '[data-open]',
   ],
   tokens: [
-    '--mr-bg-surface-elevated', '--mr-shadow-xl', '--mr-radius-lg',
-    '--mr-bg-overlay', '--mr-text-md', '--mr-space-*',
+    '--mr-bg-surface-elevated',
+    '--mr-border-subtle',
+    '--mr-danger',
+    '--mr-shadow-md',
+    '--mr-radius-md',
   ],
   a11y: [
-    'Alert dialog ARIA pattern (role="alertdialog").',
-    'Focus trap.',
-    'aria-describedby for message.',
-    'Escape key to close.',
-    'Destructive actions clearly labeled.',
+    'The panel uses role="alertdialog" with aria-modal="true".',
+    'The message is exposed through aria-describedby when present.',
+    'Focus moves inside the dialog and Escape dismisses it.',
+    'Destructive actions stay clearly labelled and visually distinct.',
   ],
 }
 

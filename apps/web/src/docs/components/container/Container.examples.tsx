@@ -2,19 +2,22 @@ import { Container } from '@monority/ui'
 
 export function ContainerBasicExample() {
   return (
-    <>
-      <Container>Example</Container>
-    </>
+    <Container data-surface="true">
+      <strong>Content rail</strong>
+      <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-fg-muted)' }}>
+        The container centers content, controls line length, and can opt into a framed surface.
+      </p>
+    </Container>
   )
 }
 
 export function ContainerSizesExample() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Container size="sm" style={{ background: 'var(--mr-bg-control)', padding: '0.5rem' }}>Small (sm)</Container>
-      <Container size="md" style={{ background: 'var(--mr-bg-control)', padding: '0.5rem' }}>Medium (md)</Container>
-      <Container size="lg" style={{ background: 'var(--mr-bg-control)', padding: '0.5rem' }}>Large (lg)</Container>
-      <Container size="xl" style={{ background: 'var(--mr-bg-control)', padding: '0.5rem' }}>Extra large (xl)</Container>
+      <Container size="sm" data-surface="true">Small content rail</Container>
+      <Container size="md" data-surface="true">Medium content rail</Container>
+      <Container size="lg" data-surface="true">Large content rail</Container>
+      <Container size="xl" data-surface="true">Extra large content rail</Container>
     </div>
   )
 }

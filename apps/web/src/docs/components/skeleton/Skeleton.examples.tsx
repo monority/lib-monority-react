@@ -1,25 +1,27 @@
 import { Skeleton } from '@monority/ui'
 
 export function SkeletonBasicExample() {
-  return <Skeleton width="200px" height="20px" />
+  return <Skeleton width="14rem" height="1rem" />
 }
 
 export function SkeletonCardExample() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: 300 }}>
-      <Skeleton style={{ width: '100%', height: 160 }} />
-      <Skeleton style={{ width: '80%', height: 16 }} />
-      <Skeleton style={{ width: '60%', height: 16 }} />
+    <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 320 }}>
+      <Skeleton style={{ width: '100%', height: 168 }} />
+      <Skeleton style={{ width: '72%', height: 16 }} />
+      <Skeleton style={{ width: '100%', height: 12 }} />
+      <Skeleton style={{ width: '88%', height: 12 }} />
     </div>
   )
 }
 
 export function SkeletonListExample() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton key={i} style={{ width: `${60 + Math.random() * 40}%`, height: 20 }} />
-      ))}
+    <div style={{ display: 'grid', gap: '0.75rem' }}>
+      <Skeleton style={{ width: '96%', height: 18 }} />
+      <Skeleton style={{ width: '82%', height: 18 }} />
+      <Skeleton style={{ width: '90%', height: 18 }} />
+      <Skeleton style={{ width: '68%', height: 18 }} />
     </div>
   )
 }
@@ -27,10 +29,10 @@ export function SkeletonListExample() {
 export function SkeletonCircleExample() {
   return (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Skeleton rounded style={{ width: 40, height: 40 }} />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Skeleton style={{ width: 120, height: 14 }} />
-        <Skeleton style={{ width: 80, height: 12 }} />
+      <Skeleton rounded style={{ width: 44, height: 44 }} />
+      <div style={{ display: 'grid', gap: '0.5rem' }}>
+        <Skeleton style={{ width: 132, height: 14 }} />
+        <Skeleton style={{ width: 92, height: 12 }} />
       </div>
     </div>
   )

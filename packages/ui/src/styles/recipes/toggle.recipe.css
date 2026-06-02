@@ -1,17 +1,39 @@
 @layer recipes {
   .mr-toggle {
+    --mr-toggle-height: 2rem;
+    --mr-toggle-padding-x: var(--mr-space-3);
+    --mr-toggle-radius: var(--mr-radius-sm);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.375rem;
+    gap: var(--mr-space-2);
+    min-width: var(--mr-toggle-height);
+    min-height: var(--mr-toggle-height);
+    padding: 0 var(--mr-toggle-padding-x);
     border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-toggle-radius);
+    background: var(--mr-bg-control);
+    color: var(--mr-fg-base);
     cursor: pointer;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
     font-family: inherit;
-    font-weight: 500;
+    font-size: var(--mr-text-sm);
+    font-weight: 560;
     line-height: 1;
+    touch-action: manipulation;
     user-select: none;
     white-space: nowrap;
+    transition:
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
+      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      color var(--mr-duration-fast) var(--mr-ease-standard),
+      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-toggle:hover:not(:disabled) {
+    border-color: var(--mr-border-strong);
+    color: var(--mr-fg-strong);
+    background: var(--mr-bg-surface-strong);
   }
 
   .mr-toggle:focus-visible {
@@ -20,57 +42,45 @@
   }
 
   .mr-toggle:disabled {
-    opacity: 0.5;
     cursor: not-allowed;
-    pointer-events: none;
+    opacity: var(--mr-opacity-disabled, 0.5);
   }
 
-  /* Variants */
-  .mr-toggle--default {
-    background: var(--mr-bg-surface);
-    color: var(--mr-fg-default);
+  .mr-toggle--default,
+  .mr-toggle[data-variant='default'] {
+    background: var(--mr-bg-control);
   }
 
-  .mr-toggle--default:hover:not(:disabled) {
-    background: var(--mr-bg-surface-strong);
-  }
-
-  .mr-toggle--default.mr-toggle--pressed {
-    background: var(--mr-bg-accent);
-    color: var(--mr-fg-accent);
-    border-color: var(--mr-border-accent);
-  }
-
-  .mr-toggle--outline {
+  .mr-toggle--outline,
+  .mr-toggle[data-variant='outline'] {
     background: transparent;
-    color: var(--mr-fg-muted);
-    border-color: var(--mr-border-subtle);
   }
 
-  .mr-toggle--outline:hover:not(:disabled) {
-    background: var(--mr-bg-surface-strong);
-    border-color: var(--mr-border-muted);
+  .mr-toggle--pressed,
+  .mr-toggle[data-state='on'] {
+    border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-strong));
+    background: var(--mr-bg-accent-soft);
+    color: var(--mr-fg-strong);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-accent) 10%, transparent);
   }
 
-  .mr-toggle--outline.mr-toggle--pressed {
-    background: var(--mr-bg-accent);
-    color: var(--mr-fg-accent);
-    border-color: var(--mr-border-accent);
+  .mr-toggle--sm,
+  .mr-toggle[data-size='sm'] {
+    --mr-toggle-height: 1.75rem;
+    --mr-toggle-padding-x: var(--mr-space-2);
+    --mr-toggle-radius: var(--mr-radius-xs);
+    font-size: var(--mr-text-xs);
   }
 
-  /* Sizes */
-  .mr-toggle--sm {
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--mr-radius-xs);
+  .mr-toggle--md,
+  .mr-toggle[data-size='md'] {
+    --mr-toggle-height: 2rem;
   }
 
-  .mr-toggle--md {
-    padding: 0.375rem 0.625rem;
-    border-radius: var(--mr-radius-sm);
-  }
-
-  .mr-toggle--lg {
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--mr-radius-sm);
+  .mr-toggle--lg,
+  .mr-toggle[data-size='lg'] {
+    --mr-toggle-height: 2.5rem;
+    --mr-toggle-padding-x: var(--mr-space-4);
+    font-size: var(--mr-text-base);
   }
 }

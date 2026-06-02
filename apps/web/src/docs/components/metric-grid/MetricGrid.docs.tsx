@@ -1,8 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
   MetricGridBasicExample,
-  MetricGridWithColorsExample,
-  MetricGridWithDescriptionExample,
+  MetricGridHealthExample,
+  MetricGridRevenueExample,
+  MetricGridRiskExample,
 } from './MetricGrid.examples'
 
 const docData: DocPageData = {
@@ -15,13 +16,14 @@ const docData: DocPageData = {
 ]} />`,
   preview: () => <MetricGridBasicExample />,
   examples: [
-    { title: 'With colors', content: <MetricGridWithColorsExample />, code: `<MetricGrid items={[
-  { label: 'Revenue', value: '$45,678', trend: '+18%', trendTone: 'success' },
-  { label: 'Churn', value: '2.1%', trend: '+0.3%', trendTone: 'danger' },
+    { title: 'Revenue item', content: <MetricGridRevenueExample />, code: `<MetricGrid items={[
+  { key: 'revenue', label: 'Revenue', value: '$45,678', trend: '+18%', trendTone: 'success', description: 'Net revenue after refunds' },
 ]} />` },
-    { title: 'With descriptions', content: <MetricGridWithDescriptionExample />, code: `<MetricGrid items={[
-  { label: 'Active Users', value: '12,345', trend: '+8%', trendTone: 'success', description: 'Last 30 days' },
-  { label: 'Sessions', value: '45,678', trend: '+12%', trendTone: 'success', description: 'Last 30 days' },
+    { title: 'Risk item', content: <MetricGridRiskExample />, code: `<MetricGrid items={[
+  { key: 'churn', label: 'Churn risk', value: '2.1%', trend: '+0.3%', trendTone: 'danger', description: 'Accounts requiring follow-up' },
+]} />` },
+    { title: 'Health item', content: <MetricGridHealthExample />, code: `<MetricGrid items={[
+  { key: 'nps', label: 'NPS score', value: '72', trend: '+5', trendTone: 'success', description: 'Latest survey window' },
 ]} />` },
   ],
   props: [

@@ -8,11 +8,11 @@ import {
 
 const docData: DocPageData = {
   title: 'Accordion',
-  description: "Expandable and collapsible sections for showing/hiding content.",
+  description: 'Grouped expandable sections for FAQs, release notes, and dense supporting content.',
   importCode: "import { Accordion } from '@monority/ui'",
   usageCode: `<Accordion items={[
-  { title: 'Section 1', content: <p>Content</p> },
-  { title: 'Section 2', content: <p>Content</p> },
+  { value: 'tokens', title: 'What changed?', content: <p>Updated surfaces and rhythm.</p> },
+  { value: 'migration', title: 'How do I migrate?', content: <p>Update shared shells first.</p> },
 ]} />`,
   preview: () => <AccordionBasicExample />,
   examples: [
@@ -29,16 +29,27 @@ const docData: DocPageData = {
     { name: 'collapsible', type: `boolean`, defaultValue: "false", description: "Allow closing the active section." }
   ],
   cssHooks: [
-    '.mr-accordion', '.mr-accordion__trigger', '.mr-accordion__panel', '[data-open]',
+    '.mr-accordion',
+    '.mr-accordion__item',
+    '.mr-accordion__trigger',
+    '.mr-accordion__label',
+    '.mr-accordion__icon',
+    '.mr-accordion__panel',
+    '.mr-accordion__content',
+    '[data-open]',
   ],
   tokens: [
-    '--mr-border-subtle', '--mr-bg-surface', '--mr-fg-base', '--mr-dur-200',
+    '--mr-bg-surface-elevated',
+    '--mr-bg-surface-strong',
+    '--mr-bg-accent-soft',
+    '--mr-border-subtle',
+    '--mr-shadow-xs',
+    '--mr-radius-md',
   ],
   a11y: [
-    'Accordion ARIA pattern.',
-    'aria-expanded on triggers.',
-    'aria-controls linking trigger to panel.',
-    'Keyboard navigation (Enter/Space to toggle).',
+    'Each trigger exposes aria-expanded and aria-controls.',
+    'Each panel is labelled by its trigger through aria-labelledby.',
+    'Buttons remain keyboard accessible with Enter and Space.',
   ],
 }
 

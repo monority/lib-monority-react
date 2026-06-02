@@ -8,10 +8,10 @@ import {
 
 const docData: DocPageData = {
   title: 'HoverCard',
-  description: 'A popover-like card that appears on hover, with configurable delays before showing and hiding.',
+  description: 'A hover-triggered detail card for previews, supporting metadata, and compact contextual information.',
   importCode: "import { HoverCard } from '@monority/ui'",
-  usageCode: `<HoverCard content={<div>Card content</div>}>
-  <Button>Hover me</Button>
+  usageCode: `<HoverCard content={<div>Release note preview</div>}>
+  <Button>Preview note</Button>
 </HoverCard>`,
   preview: () => <HoverCardBasicExample />,
   examples: [
@@ -38,14 +38,14 @@ const docData: DocPageData = {
     '[data-open]', '[data-side]', '[data-align]',
   ],
   tokens: [
-    '--mr-bg-surface', '--mr-bg-surface-elevated', '--mr-border-subtle',
-    '--mr-shadow-md', '--mr-shadow-lg', '--mr-radius-md', '--mr-text-sm',
+    '--mr-bg-surface-elevated', '--mr-border-subtle',
+    '--mr-shadow-md', '--mr-radius-md', '--mr-text-sm',
   ],
   a11y: [
     'Opens on hover with configurable delay.',
     'Card has role="dialog" for screen readers.',
     'Closes on mouse leave from trigger or card.',
-    'Positioning recalculates on scroll/resize.',
+    'Positioning recalculates on scroll and resize.',
   ],
 }
 

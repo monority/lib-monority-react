@@ -3,61 +3,102 @@
     display: flex;
     flex-direction: column;
     gap: var(--mr-space-1);
+    min-width: 0;
   }
-  .mr-field__label {
-    font-weight: 600;
-    font-size: var(--mr-text-sm);
+
+  .mr-field__label,
+  .mr-field__legend {
     color: var(--mr-fg-strong);
-    letter-spacing: -0.01em;
+    font-size: var(--mr-text-sm);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0;
+    transition: color var(--mr-duration-fast) var(--mr-ease-standard);
   }
+
+  .mr-field:focus-within > .mr-field__label,
+  .mr-field:focus-within > .mr-field__legend {
+    color: var(--mr-accent);
+  }
+
+  .mr-field[data-has-error='true'] > .mr-field__label,
+  .mr-field[data-has-error='true'] > .mr-field__legend {
+    color: var(--mr-danger);
+  }
+
   .mr-field__required {
     color: var(--mr-danger);
     margin-left: 0.25em;
   }
-  .mr-field__hint {
+
+  .mr-field__hint,
+  .mr-field__error {
+    display: block;
     font-size: var(--mr-text-xs);
+    line-height: 1.45;
+    transition:
+      color var(--mr-duration-fast) var(--mr-ease-standard),
+      opacity var(--mr-duration-fast) var(--mr-ease-standard);
+  }
+
+  .mr-field__hint {
     color: var(--mr-fg-muted);
   }
-  .mr-field__error {
-    font-size: var(--mr-text-xs);
-    color: var(--mr-danger);
+
+  .mr-field:focus-within > .mr-field__hint {
+    color: var(--mr-fg-base);
   }
+
+  .mr-field__error {
+    color: var(--mr-danger);
+    font-weight: 500;
+  }
+
   .mr-field__content {
     display: flex;
     flex-direction: column;
     gap: var(--mr-space-1);
+    min-width: 0;
   }
+
   .mr-field__group {
     display: flex;
     gap: var(--mr-space-2);
+    min-width: 0;
   }
+
   .mr-field__group--row {
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
   }
+
   .mr-field__group--column {
     flex-direction: column;
   }
+
   .mr-field__legend {
-    font-weight: 600;
-    font-size: var(--mr-text-sm);
-    color: var(--mr-fg-base);
     padding: 0;
   }
+
   .mr-field__separator {
     border: none;
     border-top: 1px solid var(--mr-border-subtle);
     margin: var(--mr-space-2) 0;
   }
+
   .mr-field__set {
     border: none;
     padding: 0;
     margin: 0;
+    min-width: 0;
   }
+
   .mr-field__title {
+    color: var(--mr-fg-strong);
     font-size: var(--mr-text-base);
     font-weight: 600;
-    color: var(--mr-fg-base);
+    line-height: 1.35;
     margin: 0;
   }
 }

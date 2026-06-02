@@ -7,7 +7,8 @@ import {
 
 const docData: DocPageData = {
   title: 'Table',
-  description: "A structured display of data in rows and columns with sorting and filtering capabilities.",
+  description:
+    'A simple read-only table for structured content, pricing comparisons, and static summaries.',
   importCode: "import { Table } from '@monority/ui'",
   usageCode: `const columns = [
     { key: 'name', label: 'Name' },
@@ -22,38 +23,69 @@ const rows = [
 <Table columns={columns} rows={rows} />`,
   preview: () => <TableBasicExample />,
   examples: [
-    { title: 'With data', content: <TableWithDataExample />, code: `const columns = [
-  { key: 'name', label: 'Name' },
-  { key: 'email', label: 'Email' },
-  { key: 'role', label: 'Role' },
+    {
+      title: 'With data',
+      content: <TableWithDataExample />,
+      code: `const columns = [
+  { key: 'component', label: 'Component' },
+  { key: 'status', label: 'Status' },
+  { key: 'coverage', label: 'Coverage', className: 'mr-table__cell--right' },
 ]
 const rows = [
-  { name: 'John Doe', email: 'john@example.com', role: 'Developer' },
-  { name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
+  { component: 'Banner', status: 'Reviewed', coverage: '14 examples' },
+  { component: 'Toolbar', status: 'Aligned', coverage: '8 examples' },
 ]
-<Table columns={columns} rows={rows} />` },
-    { title: 'Empty state', content: <TableEmptyExample />, code: `const columns = [
-  { key: 'name', label: 'Name' },
-  { key: 'email', label: 'Email' },
+<Table columns={columns} rows={rows} />`,
+    },
+    {
+      title: 'Empty state',
+      content: <TableEmptyExample />,
+      code: `const columns = [
+  { key: 'component', label: 'Component' },
+  { key: 'owner', label: 'Owner' },
 ]
-<Table columns={columns} rows={[]} />` },
+<Table columns={columns} rows={[]} />`,
+    },
   ],
   props: [
-    { name: 'columns', type: `Column[]`, defaultValue: "[]", description: "Column definitions" },
-    { name: 'rows', type: `Record<string, ReactNode>[]`, defaultValue: "[]", description: "Table data" },
-    { name: 'emptyState', type: `ReactNode`, defaultValue: "Built-in empty state", description: "Custom empty state content" }
+    {
+      name: 'columns',
+      type: `Column[]`,
+      defaultValue: '[]',
+      description: 'Column definitions',
+    },
+    {
+      name: 'rows',
+      type: `Record<string, ReactNode>[]`,
+      defaultValue: '[]',
+      description: 'Table data',
+    },
+    {
+      name: 'emptyState',
+      type: `ReactNode`,
+      defaultValue: 'Built-in empty state',
+      description: 'Custom empty state content',
+    },
   ],
   cssHooks: [
-    '.mr-table', '.mr-table__header', '.mr-table__row', '.mr-table__cell',
+    '.mr-table',
+    '.mr-table__head',
+    '.mr-table__th',
+    '.mr-table__td',
+    '.mr-table__tr',
   ],
   tokens: [
-    '--mr-border-subtle', '--mr-bg-surface', '--mr-bg-surface-strong',
-    '--mr-fg-base', '--mr-text-sm',
+    '--mr-border-subtle',
+    '--mr-bg-surface-elevated',
+    '--mr-bg-surface-strong',
+    '--mr-bg-control',
+    '--mr-fg-base',
+    '--mr-fg-muted',
   ],
   a11y: [
     'Native <table> semantics.',
-    'Scope attributes on headers.',
-    'Caption for context if needed.',
+    'Column headers use scope attributes.',
+    'Use DataTable when sorting or selection is needed.',
   ],
 }
 

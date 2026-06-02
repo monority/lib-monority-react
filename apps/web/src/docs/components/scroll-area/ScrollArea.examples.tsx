@@ -2,7 +2,7 @@ import { ScrollArea } from '@monority/ui'
 
 const longText = Array.from({ length: 30 }, (_, i) => (
   <p key={i} style={{ margin: '0.5rem 0', color: 'var(--mr-text-secondary)' }}>
-    Item {i + 1} — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Activity {i + 1} - Preview deployment completed for the documentation workspace.
   </p>
 ))
 
@@ -19,7 +19,7 @@ const wideContent = (
           textAlign: 'center',
         }}
       >
-        Col {i + 1}
+        Column {i + 1}
       </div>
     ))}
   </div>
@@ -32,7 +32,7 @@ const bigTable = (
         <tr>
           {Array.from({ length: 10 }, (_, i) => (
             <th key={i} style={{ padding: '0.5rem', border: '1px solid var(--mr-border-subtle)' }}>
-              Header {i + 1}
+              Metric {i + 1}
             </th>
           ))}
         </tr>
@@ -42,7 +42,7 @@ const bigTable = (
           <tr key={row}>
             {Array.from({ length: 10 }, (_, col) => (
               <td key={col} style={{ padding: '0.5rem', border: '1px solid var(--mr-border-subtle)' }}>
-                {row}-{col}
+                R{row + 1} / C{col + 1}
               </td>
             ))}
           </tr>

@@ -4,17 +4,90 @@
     100% { transform: translateX(100%); }
   }
 
-  .mr-progress { display: flex; flex-direction: column; gap: var(--mr-space-2); width: 100%; }
-  .mr-progress__meta { display: flex; justify-content: space-between; align-items: center; gap: var(--mr-space-2); }
-  .mr-progress__label { font-size: var(--mr-text-sm); font-weight: 600; color: var(--mr-fg-strong); }
-  .mr-progress__value { font-size: var(--mr-text-xs); font-weight: 700; letter-spacing: 0.04em; color: var(--mr-fg-muted); }
-  .mr-progress__track { position: relative; overflow: hidden; width: 100%; height: 0.7rem; border: 1px solid var(--mr-border-subtle); border-radius: var(--mr-radius-full); background: color-mix(in srgb, var(--mr-bg-control) 84%, transparent); box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.08); }
-  .mr-progress__bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--mr-fg-strong), color-mix(in srgb, var(--mr-fg-strong) 70%, white)); transition: width var(--mr-duration-base) var(--mr-ease-standard); }
-  .mr-progress__bar--indeterminate { width: 40% !important; animation: mr-progress-indeterminate 1.2s ease-in-out infinite; }
-  .mr-progress--slidable .mr-progress__track { cursor: pointer; }
-  .mr-progress--slidable .mr-progress__track:hover { height: 0.75rem; }
-  .mr-progress--neutral .mr-progress__bar, .mr-progress[data-tone='neutral'] .mr-progress__bar { background: var(--mr-accent); }
-  .mr-progress--success .mr-progress__bar, .mr-progress[data-tone='success'] .mr-progress__bar { background: linear-gradient(90deg, var(--mr-success), color-mix(in srgb, var(--mr-success) 70%, white)); }
-  .mr-progress--warning .mr-progress__bar, .mr-progress[data-tone='warning'] .mr-progress__bar { background: linear-gradient(90deg, var(--mr-warning), color-mix(in srgb, var(--mr-warning) 76%, white)); }
-  .mr-progress--danger .mr-progress__bar, .mr-progress[data-tone='danger'] .mr-progress__bar { background: linear-gradient(90deg, var(--mr-danger), color-mix(in srgb, var(--mr-danger) 72%, white)); }
+  .mr-progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-2);
+    width: 100%;
+  }
+
+  .mr-progress__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--mr-space-2);
+    min-width: 0;
+  }
+
+  .mr-progress__label {
+    font-size: var(--mr-text-sm);
+    font-weight: 600;
+    color: var(--mr-fg-strong);
+  }
+
+  .mr-progress__value {
+    font-size: var(--mr-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--mr-fg-muted);
+  }
+
+  .mr-progress__track {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 0.75rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--mr-bg-control) 90%, white), var(--mr-bg-control));
+    box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.08);
+  }
+
+  .mr-progress__bar {
+    height: 100%;
+    border-radius: inherit;
+    background:
+      linear-gradient(90deg, var(--mr-fg-strong), color-mix(in srgb, var(--mr-fg-strong) 70%, white));
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+    transition: width var(--mr-duration-base) var(--mr-ease-standard);
+  }
+
+  .mr-progress__bar--indeterminate {
+    width: 40% !important;
+    animation: mr-progress-indeterminate 1.2s ease-in-out infinite;
+  }
+
+  .mr-progress--slidable .mr-progress__track {
+    cursor: pointer;
+  }
+
+  .mr-progress--slidable .mr-progress__track:hover {
+    box-shadow:
+      inset 0 1px 1px rgba(15, 23, 42, 0.08),
+      0 0 0 1px color-mix(in srgb, var(--mr-accent) 16%, transparent);
+  }
+
+  .mr-progress--neutral .mr-progress__bar,
+  .mr-progress[data-tone='neutral'] .mr-progress__bar {
+    background: var(--mr-accent);
+  }
+
+  .mr-progress--success .mr-progress__bar,
+  .mr-progress[data-tone='success'] .mr-progress__bar {
+    background:
+      linear-gradient(90deg, var(--mr-success), color-mix(in srgb, var(--mr-success) 70%, white));
+  }
+
+  .mr-progress--warning .mr-progress__bar,
+  .mr-progress[data-tone='warning'] .mr-progress__bar {
+    background:
+      linear-gradient(90deg, var(--mr-warning), color-mix(in srgb, var(--mr-warning) 76%, white));
+  }
+
+  .mr-progress--danger .mr-progress__bar,
+  .mr-progress[data-tone='danger'] .mr-progress__bar {
+    background:
+      linear-gradient(90deg, var(--mr-danger), color-mix(in srgb, var(--mr-danger) 72%, white));
+  }
 }

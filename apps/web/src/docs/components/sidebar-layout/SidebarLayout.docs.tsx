@@ -7,7 +7,7 @@ import {
 
 const docData: DocPageData = {
   title: 'SidebarLayout',
-  description: "Two-column layout with sidebar and main content area.",
+  description: "Two-column app-shell layout with framed sidebar rail, optional header, and readable content panel.",
   importCode: "import { SidebarLayout } from '@monority/ui'",
   usageCode: `<SidebarLayout sidebar={<nav>...</nav>}>
   <main>Main content</main>

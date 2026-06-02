@@ -1,31 +1,39 @@
-import { DropdownMenu, Button } from '@monority/ui'
+import { Button, DropdownMenu } from '@monority/ui'
 
 export function DropdownMenuBasicExample() {
   const items = [
-    { value: 'edit', label: 'Edit' },
-    { value: 'duplicate', label: 'Duplicate' },
-    { value: '', label: '', type: 'separator' as const },
-    { value: 'delete', label: 'Delete', danger: true },
+    { value: 'open', label: 'Open record' },
+    { value: 'duplicate', label: 'Duplicate view' },
+    { value: 'separator-1', label: '', type: 'separator' as const },
+    { value: 'archive', label: 'Archive', danger: true },
   ]
+
   return <DropdownMenu trigger={<Button>Actions</Button>} items={items} />
 }
 
 export function DropdownMenuWithDisabledExample() {
   const items = [
-    { value: 'edit', label: 'Edit' },
-    { value: 'share', label: 'Share', disabled: true },
-    { value: '', label: '', type: 'separator' as const },
-    { value: 'delete', label: 'Delete', danger: true },
+    { value: 'rename', label: 'Rename' },
+    { value: 'share', label: 'Share snapshot', disabled: true },
+    { value: 'separator-1', label: '', type: 'separator' as const },
+    { value: 'delete', label: 'Delete workspace', danger: true },
   ]
-  return <DropdownMenu trigger={<Button>Menu</Button>} items={items} />
+
+  return <DropdownMenu trigger={<Button>Workspace</Button>} items={items} />
 }
 
 export function DropdownMenuWithCallbacksExample() {
   const items = [
-    { value: 'copy', label: 'Copy link', onSelect: (v) => alert(`Selected: ${v}`) },
-    { value: 'share', label: 'Share', onSelect: (v) => alert(`Selected: ${v}`) },
-    { value: '', label: '', type: 'separator' as const },
-    { value: 'report', label: 'Report', onSelect: (v) => alert(`Selected: ${v}`) },
+    { value: 'copy-link', label: 'Copy link', onSelect: () => {} },
+    { value: 'export-csv', label: 'Export CSV', onSelect: () => {} },
+    { value: 'separator-1', label: '', type: 'separator' as const },
+    { value: 'notify', label: 'Notify reviewers', onSelect: () => {} },
   ]
-  return <DropdownMenu trigger={<Button variant="secondary">Options</Button>} items={items} />
+
+  return (
+    <DropdownMenu
+      trigger={<Button variant="secondary">More</Button>}
+      items={items}
+    />
+  )
 }

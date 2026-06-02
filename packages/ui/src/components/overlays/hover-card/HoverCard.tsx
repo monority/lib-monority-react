@@ -1,9 +1,10 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
-import { usePortalTarget } from '@/internal/use-portal-target'
 import { cva } from '@/lib/variants'
-import type { HoverCardProps } from './HoverCard.types'
+import { usePortalTarget } from '@/internal/use-portal-target'
+import type { HoverCardAlign, HoverCardProps, HoverCardSide } from './HoverCard.types'
 
 const hoverCardVariants = cva({
   base: 'mr-hovercard',
@@ -22,6 +23,97 @@ const hoverCardVariants = cva({
   },
   defaultVariants: { align: 'center', side: 'bottom' },
 })
+
+interface FloatingPosition {
+  top: number
+  left: number
+  side: HoverCardSide
+  arrowLeft?: number
+  arrowTop?: number
+}
+
+const VIEWPORT_PADDING = 12
+const ARROW_PADDING = 12
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function getFallbackSide(side: HoverCardSide, trigger: DOMRect, content: DOMRect, offset: number) {
+  const space = {
+    top: trigger.top - offset - VIEWPORT_PADDING,
+    bottom: window.innerHeight - trigger.bottom - offset - VIEWPORT_PADDING,
+    left: trigger.left - offset - VIEWPORT_PADDING,
+    right: window.innerWidth - trigger.right - offset - VIEWPORT_PADDING,
+  }
+
+  if (side === 'bottom' && space.bottom < content.height && space.top > space.bottom) return 'top'
+  if (side === 'top' && space.top < content.height && space.bottom > space.top) return 'bottom'
+  if (side === 'right' && space.right < content.width && space.left > space.right) return 'left'
+  if (side === 'left' && space.left < content.width && space.right > space.left) return 'right'
+  return side
+}
+
+function getAlignedOffset(
+  align: HoverCardAlign,
+  start: number,
+  triggerSize: number,
+  contentSize: number,
+) {
+  if (align === 'start') return start
+  if (align === 'end') return start + triggerSize - contentSize
+  return start + triggerSize / 2 - contentSize / 2
+}
+
+function calculatePosition(
+  preferredSide: HoverCardSide,
+  align: HoverCardAlign,
+  sideOffset: number,
+  trigger: DOMRect,
+  content: DOMRect,
+): FloatingPosition {
+  const side = getFallbackSide(preferredSide, trigger, content, sideOffset)
+  const maxLeft = window.innerWidth - content.width - VIEWPORT_PADDING
+  const maxTop = window.innerHeight - content.height - VIEWPORT_PADDING
+
+  if (side === 'top' || side === 'bottom') {
+    const rawLeft = getAlignedOffset(align, trigger.left, trigger.width, content.width)
+    const left = clamp(rawLeft, VIEWPORT_PADDING, Math.max(VIEWPORT_PADDING, maxLeft))
+    const top =
+      side === 'top'
+        ? trigger.top - content.height - sideOffset
+        : trigger.bottom + sideOffset
+
+    return {
+      top: clamp(top, VIEWPORT_PADDING, Math.max(VIEWPORT_PADDING, maxTop)),
+      left,
+      side,
+      arrowLeft: clamp(
+        trigger.left + trigger.width / 2 - left,
+        ARROW_PADDING,
+        Math.max(ARROW_PADDING, content.width - ARROW_PADDING),
+      ),
+    }
+  }
+
+  const rawTop = getAlignedOffset(align, trigger.top, trigger.height, content.height)
+  const top = clamp(rawTop, VIEWPORT_PADDING, Math.max(VIEWPORT_PADDING, maxTop))
+  const left =
+    side === 'left'
+      ? trigger.left - content.width - sideOffset
+      : trigger.right + sideOffset
+
+  return {
+    top,
+    left: clamp(left, VIEWPORT_PADDING, Math.max(VIEWPORT_PADDING, maxLeft)),
+    side,
+    arrowTop: clamp(
+      trigger.top + trigger.height / 2 - top,
+      ARROW_PADDING,
+      Math.max(ARROW_PADDING, content.height - ARROW_PADDING),
+    ),
+  }
+}
 
 export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
   function HoverCard(
@@ -44,14 +136,17 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
     ref,
   ) {
     const instanceId = useId()
-    const rootRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLSpanElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
     const isControlled = controlledOpen !== undefined
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
-    const [position, setPosition] = useState({ top: 0, left: 0 })
+    const [position, setPosition] = useState<FloatingPosition>({
+      top: VIEWPORT_PADDING,
+      left: VIEWPORT_PADDING,
+      side,
+    })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
 
@@ -65,44 +160,24 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
 
     const recalcPosition = useCallback(() => {
       const triggerEl = triggerRef.current
-      if (!triggerEl) return
-      const rect = triggerEl.getBoundingClientRect()
-      const scrollTop = window.scrollY || document.documentElement.scrollTop
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft
+      const contentEl = contentRef.current
+      if (!triggerEl || !contentEl) return
 
-      let top = 0
-      let left = 0
-
-      if (side === 'top') {
-        top = rect.top + scrollTop - sideOffset
-        left = rect.left + scrollLeft + rect.width / 2
-      } else if (side === 'bottom') {
-        top = rect.bottom + scrollTop + sideOffset
-        left = rect.left + scrollLeft + rect.width / 2
-      } else if (side === 'left') {
-        top = rect.top + scrollTop + rect.height / 2
-        left = rect.left + scrollLeft - sideOffset
-      } else {
-        top = rect.top + scrollTop + rect.height / 2
-        left = rect.right + scrollLeft + sideOffset
-      }
-
-      if (align === 'start') {
-        if (side === 'top' || side === 'bottom') left = rect.left + scrollLeft
-        else top = rect.top + scrollTop
-      } else if (align === 'end') {
-        if (side === 'top' || side === 'bottom') left = rect.right + scrollLeft
-        else top = rect.bottom + scrollTop
-      }
-
-      setPosition({ top, left })
+      setPosition(
+        calculatePosition(
+          side,
+          align,
+          sideOffset,
+          triggerEl.getBoundingClientRect(),
+          contentEl.getBoundingClientRect(),
+        ),
+      )
     }, [side, align, sideOffset])
 
     const handleMouseEnter = useCallback(() => {
       clearTimeout(timeoutRef.current)
-      recalcPosition()
       timeoutRef.current = setTimeout(() => setOpenState(true), openDelay)
-    }, [openDelay, recalcPosition, setOpenState])
+    }, [openDelay, setOpenState])
 
     const handleMouseLeave = useCallback(() => {
       clearTimeout(timeoutRef.current)
@@ -113,18 +188,24 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
       return () => clearTimeout(timeoutRef.current)
     }, [])
 
+    useLayoutEffect(() => {
+      if (!isOpen) return
+      recalcPosition()
+    }, [isOpen, recalcPosition, content])
+
     useEffect(() => {
-      if (isOpen) {
-        const frameId = window.requestAnimationFrame(recalcPosition)
-        function onScroll() { recalcPosition() }
-        function onResize() { recalcPosition() }
-        window.addEventListener('scroll', onScroll, true)
-        window.addEventListener('resize', onResize)
-        return () => {
-          window.cancelAnimationFrame(frameId)
-          window.removeEventListener('scroll', onScroll, true)
-          window.removeEventListener('resize', onResize)
-        }
+      if (!isOpen) return
+      function onScroll() {
+        recalcPosition()
+      }
+      function onResize() {
+        recalcPosition()
+      }
+      window.addEventListener('scroll', onScroll, true)
+      window.addEventListener('resize', onResize)
+      return () => {
+        window.removeEventListener('scroll', onScroll, true)
+        window.removeEventListener('resize', onResize)
       }
     }, [isOpen, recalcPosition])
 
@@ -142,7 +223,6 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
           className="mr-hovercard__trigger"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          style={{ display: 'inline-flex' }}
         >
           {children}
         </span>
@@ -153,17 +233,23 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
                 id={`${instanceId}-content`}
                 className={cn(
                   'mr-hovercard__content',
-                  `mr-hovercard__content--${side}`,
+                  `mr-hovercard__content--${position.side}`,
                   `mr-hovercard__content--${align}`,
                   contentClassName,
                 )}
                 role="dialog"
                 aria-modal="false"
+                data-side={position.side}
                 style={{
-                  position: 'absolute',
                   top: `${position.top}px`,
                   left: `${position.left}px`,
-                }}
+                  '--mr-hovercard-arrow-left': position.arrowLeft
+                    ? `${position.arrowLeft}px`
+                    : undefined,
+                  '--mr-hovercard-arrow-top': position.arrowTop
+                    ? `${position.arrowTop}px`
+                    : undefined,
+                } as CSSProperties}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >

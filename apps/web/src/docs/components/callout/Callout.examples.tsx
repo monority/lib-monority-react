@@ -1,17 +1,17 @@
 import { Callout } from '@monority/ui'
 
 export function CalloutBasicExample() {
-  return <Callout>This feature is deprecated.</Callout>
+  return <Callout>API keys created before May 1 will rotate automatically this weekend.</Callout>
 }
 
 export function CalloutTonesExample() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Callout title="Note" tone="neutral">This is a neutral callout.</Callout>
-      <Callout title="Info" tone="info">This is an informational callout.</Callout>
-      <Callout title="Success" tone="success">Operation completed successfully.</Callout>
-      <Callout title="Warning" tone="warning">Please review before proceeding.</Callout>
-      <Callout title="Error" tone="danger">Something went wrong.</Callout>
+      <Callout title="Note" tone="neutral">This workspace inherits billing settings from the parent account.</Callout>
+      <Callout title="Info" tone="info">New docs search is rolling out gradually across teams.</Callout>
+      <Callout title="Success" tone="success">The migration finished and all datasets are now indexed.</Callout>
+      <Callout title="Warning" tone="warning">Review redirect rules before publishing the new navigation.</Callout>
+      <Callout title="Error" tone="danger">Webhook delivery is failing for the production endpoint.</Callout>
     </div>
   )
 }

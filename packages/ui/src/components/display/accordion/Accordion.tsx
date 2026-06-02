@@ -87,7 +87,8 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                   collapsible || !isOpen ? toggle(item.value) : undefined
                 }
               >
-                {item.title}
+                <span className="mr-accordion__label">{item.title}</span>
+                <span className="mr-accordion__icon" aria-hidden="true" />
               </button>
               <div
                 id={panelId}
@@ -96,7 +97,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                 className="mr-accordion__panel"
                 hidden={!isOpen}
               >
-                {item.content}
+                <div className="mr-accordion__content">{item.content}</div>
               </div>
             </div>
           )

@@ -1,16 +1,35 @@
-import { HoverCard, Button, Text } from '@monority/ui'
+import { Button, HoverCard } from '@monority/ui'
 
 export function HoverCardBasicExample() {
   return (
-    <HoverCard content={<Text>HoverCard content appears on hover.</Text>}>
-      <Button>Hover me</Button>
+    <HoverCard
+      content={
+        <div style={{ display: 'grid', gap: '0.5rem' }}>
+          <div style={{ color: 'var(--mr-fg-strong)', fontSize: 'var(--mr-text-sm)', fontWeight: 600 }}>
+            Release note
+          </div>
+          <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+            Hover cards are useful for compact supporting detail without interrupting the main flow.
+          </div>
+        </div>
+      }
+    >
+      <Button>Preview note</Button>
     </HoverCard>
   )
 }
 
 export function HoverCardCustomDelayExample() {
   return (
-    <HoverCard content={<Text>Opens after 1s, closes after 500ms.</Text>} openDelay={1000} closeDelay={500}>
+    <HoverCard
+      content={
+        <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+          Slower reveal for dense data surfaces or crowded tables.
+        </div>
+      }
+      openDelay={1000}
+      closeDelay={500}
+    >
       <Button variant="secondary">Slow hover</Button>
     </HoverCard>
   )
@@ -19,17 +38,17 @@ export function HoverCardCustomDelayExample() {
 export function HoverCardSidesExample() {
   return (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-      <HoverCard content={<Text>Top</Text>} side="top">
-        <Button variant="outline">Top</Button>
+      <HoverCard content={<div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>Top side</div>} side="top">
+        <Button variant="secondary">Top</Button>
       </HoverCard>
-      <HoverCard content={<Text>Bottom</Text>} side="bottom">
-        <Button variant="outline">Bottom</Button>
+      <HoverCard content={<div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>Bottom side</div>} side="bottom">
+        <Button variant="secondary">Bottom</Button>
       </HoverCard>
-      <HoverCard content={<Text>Left</Text>} side="left">
-        <Button variant="outline">Left</Button>
+      <HoverCard content={<div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>Left side</div>} side="left">
+        <Button variant="secondary">Left</Button>
       </HoverCard>
-      <HoverCard content={<Text>Right</Text>} side="right">
-        <Button variant="outline">Right</Button>
+      <HoverCard content={<div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>Right side</div>} side="right">
+        <Button variant="secondary">Right</Button>
       </HoverCard>
     </div>
   )
@@ -37,7 +56,14 @@ export function HoverCardSidesExample() {
 
 export function HoverCardControlledExample() {
   return (
-    <HoverCard content={<Text>Controlled open state.</Text>} defaultOpen>
+    <HoverCard
+      content={
+        <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+          Default open helps preview authored content in docs.
+        </div>
+      }
+      defaultOpen
+    >
       <Button variant="ghost">Always open</Button>
     </HoverCard>
   )

@@ -7,10 +7,10 @@ import {
 
 const docData: DocPageData = {
   title: 'Drawer',
-  description: "Slide-in panel overlay from any side with focus trap and backdrop.",
+  description: 'Slide-in side panel for adjacent detail, editing, and page-level inspection without a full context switch.',
   importCode: "import { Drawer } from '@monority/ui'",
-  usageCode: `<Drawer open={open} title="Details" side="right" onClose={() => setOpen(false)}>
-  <p>Drawer content</p>
+  usageCode: `<Drawer open={open} title="Deployment details" side="right" onClose={() => setOpen(false)}>
+  <p>Keep the user anchored while showing secondary information.</p>
 </Drawer>`,
   preview: () => <DrawerBasicExample />,
   examples: [
@@ -25,19 +25,30 @@ const docData: DocPageData = {
     { name: 'onClose', type: `() => void`, defaultValue: "-", description: "Close callback." }
   ],
   cssHooks: [
-    '.mr-drawer', '.mr-drawer__backdrop', '.mr-drawer__content', '.mr-drawer__header',
-    '.mr-drawer__body', '.mr-drawer__footer', '[data-open]', '[data-side]',
+    '.mr-drawer',
+    '.mr-drawer__backdrop',
+    '.mr-drawer__backdrop-surface',
+    '.mr-drawer__panel',
+    '.mr-drawer__header',
+    '.mr-drawer__heading',
+    '.mr-drawer__title',
+    '.mr-drawer__close',
+    '.mr-drawer__body',
+    '[data-open]',
+    '[data-side]',
   ],
   tokens: [
-    '--mr-bg-surface-elevated', '--mr-shadow-xl', '--mr-bg-overlay',
-    '--mr-space-*', '--mr-dur-300',
+    '--mr-bg-surface-elevated',
+    '--mr-border-subtle',
+    '--mr-shadow-md',
+    '--mr-radius-md',
+    '--mr-z-overlay',
   ],
   a11y: [
-    'Dialog ARIA pattern (role="dialog", aria-modal="true").',
-    'Focus trap.',
-    'aria-labelledby for header.',
-    'Escape key to close.',
-    'Close button with aria-label.',
+    'The panel follows the dialog ARIA pattern with aria-modal="true".',
+    'Focus is trapped while the drawer is open.',
+    'The title is exposed with aria-labelledby.',
+    'Escape and the close button both dismiss the panel.',
   ],
 }
 

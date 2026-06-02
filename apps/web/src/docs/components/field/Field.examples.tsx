@@ -1,83 +1,97 @@
-import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle, Input } from '@monority/ui'
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSeparator,
+    FieldSet,
+    FieldTitle,
+} from '@monority/ui/field'
+import { Input } from '@monority/ui/input'
 
 export function FieldBasicExample() {
-  return (
-    <Field label="Username">
-      <Input />
-    </Field>
-  )
+    return (
+        <Field label="Workspace name">
+            <Input defaultValue="Monority" />
+        </Field>
+    )
 }
 
 export function FieldWithHintExample() {
-  return (
-    <Field label="Password" hint="Minimum 8 characters">
-      <Input type="password" />
-    </Field>
-  )
+    return (
+        <Field label="Deployment alias" hint="Use lowercase letters, numbers, and hyphens.">
+            <Input defaultValue="design-system" />
+        </Field>
+    )
 }
 
 export function FieldWithErrorExample() {
-  return (
-    <Field label="Email" error="Please enter a valid email address">
-      <Input defaultValue="invalid" aria-invalid />
-    </Field>
-  )
+    return (
+        <Field label="Support email" error="Enter an email address with a valid domain.">
+            <Input defaultValue="support@" aria-invalid />
+        </Field>
+    )
 }
 
 export function FieldRequiredExample() {
-  return (
-    <Field label="Full name" required>
-      <Input required />
-    </Field>
-  )
+    return (
+        <Field label="Project owner" required>
+            <Input defaultValue="Avery Stone" required />
+        </Field>
+    )
 }
 
 export function FieldStandaloneExample() {
-  return (
-    <Field label="Standalone">
-      <Input />
-    </Field>
-  )
+    return (
+        <Field label="Release channel">
+            <Input defaultValue="stable" />
+        </Field>
+    )
 }
 
 export function FieldCompositionExample() {
-  return (
-    <div className="mr-field">
-      <FieldLabel htmlFor="composed-input" required>Email address</FieldLabel>
-      <FieldContent>
-        <Input id="composed-input" type="email" />
-      </FieldContent>
-      <FieldDescription>We'll never share your email.</FieldDescription>
-      <FieldError>Invalid email format.</FieldError>
-    </div>
-  )
+    return (
+        <div className="mr-field">
+            <FieldLabel htmlFor="composed-input" required>
+                Billing email
+            </FieldLabel>
+            <FieldContent>
+                <Input id="composed-input" type="email" defaultValue="billing@" aria-invalid />
+            </FieldContent>
+            <FieldDescription>Invoices and tax receipts are sent to this address.</FieldDescription>
+            <FieldError>Enter a complete email address.</FieldError>
+        </div>
+    )
 }
 
 export function FieldGroupExample() {
-  return (
-    <FieldGroup direction="row">
-      <Field label="First name" className="flex-1">
-        <Input />
-      </Field>
-      <Field label="Last name" className="flex-1">
-        <Input />
-      </Field>
-    </FieldGroup>
-  )
+    return (
+        <FieldGroup direction="row">
+            <Field label="First name" className="flex-1">
+                <Input defaultValue="Maya" />
+            </Field>
+            <Field label="Last name" className="flex-1">
+                <Input defaultValue="Chen" />
+            </Field>
+        </FieldGroup>
+    )
 }
 
 export function FieldSetExample() {
-  return (
-    <FieldSet>
-      <FieldLegend required>Billing address</FieldLegend>
-      <FieldTitle>Personal information</FieldTitle>
-      <Field label="Street">
-        <Input />
-      </Field>
-      <FieldSeparator />
-      <Field label="City">
-        <Input />
-      </Field>
-    </FieldSet>
-  )
+    return (
+        <FieldSet>
+            <FieldLegend required>Billing address</FieldLegend>
+            <FieldTitle>Company details</FieldTitle>
+            <Field label="Street">
+                <Input defaultValue="24 Rue Lafayette" />
+            </Field>
+            <FieldSeparator />
+            <Field label="City">
+                <Input defaultValue="Paris" />
+            </Field>
+        </FieldSet>
+    )
 }

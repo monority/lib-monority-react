@@ -43,7 +43,7 @@ export const InlineAlert = forwardRef<HTMLDivElement, InlineAlertProps>(
         <div className="mr-inline-alert__body">
           {title ? <strong className="mr-inline-alert__title">{title}</strong> : null}
           {description ? <p className="mr-inline-alert__description">{description}</p> : null}
-          {!title && !description && children ? <div className="mr-inline-alert__content">{children}</div> : null}
+          {children ? <div className="mr-inline-alert__content">{children}</div> : null}
         </div>
         {actionLabel ? (
           <Button size="sm" variant="ghost" onClick={onAction} className="mr-inline-alert__action">

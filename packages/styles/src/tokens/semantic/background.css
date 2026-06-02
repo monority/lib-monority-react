@@ -1,12 +1,12 @@
 :root {
-  --mr-bg-canvas: #f6f5f2;
-  --mr-bg-canvas-rgb: 246, 245, 242;
-  --mr-bg-subtle: #ebe8e1;
-  --mr-bg-surface: rgba(255, 255, 255, 0.78);
-  --mr-bg-surface-elevated: rgba(255, 255, 255, 0.9);
-  --mr-bg-surface-strong: rgba(255, 255, 255, 0.97);
-  --mr-bg-control: rgba(255, 255, 255, 0.92);
-  --mr-bg-inverse: #111111;
-  --mr-bg-accent-soft: rgba(17, 24, 39, 0.065);
-  --mr-bg-accent-strong: linear-gradient(180deg, #171717 0%, #09090b 100%);
+    --mr-bg-canvas: #f7f7f5;
+    --mr-bg-canvas-rgb: 247, 247, 245;
+    --mr-bg-subtle: #f1f1ee;
+    --mr-bg-surface: #fbfbfa;
+    --mr-bg-surface-elevated: #ffffff;
+    --mr-bg-surface-strong: #ffffff;
+    --mr-bg-control: #f4f4f2;
+    --mr-bg-inverse: #111111;
+    --mr-bg-accent-soft: rgba(17, 24, 39, 0.065);
+    --mr-bg-accent-strong: #111111;
 }

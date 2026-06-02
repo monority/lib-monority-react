@@ -7,10 +7,13 @@ import {
 
 const docData: DocPageData = {
   title: 'Popover',
-  description: "Floating content panel triggered by an element.",
+  description: 'A contextual floating panel for compact detail, quick edits, and supplementary actions.',
   importCode: "import { Popover } from '@monority/ui'",
-  usageCode: `<Popover trigger={<Button>Open</Button>}>
-  <div style={{ padding: 16 }}>Popover content</div>
+  usageCode: `<Popover trigger={<Button>Inspect token</Button>}>
+  <div>
+    <strong>Surface token</strong>
+    <p>Use elevated surfaces for contextual panels.</p>
+  </div>
 </Popover>`,
   preview: () => <PopoverBasicExample />,
   examples: [
@@ -27,18 +30,20 @@ const docData: DocPageData = {
     { name: 'side', type: `'top' | 'bottom' | 'left' | 'right'`, defaultValue: "-", description: "Side to render the popover." }
   ],
   cssHooks: [
-    '.mr-popover', '.mr-popover__trigger', '.mr-popover__content',
-    '[data-open]', '[data-placement]',
+    '.mr-popover', '.mr-popover__trigger', '.mr-popover__anchor', '.mr-popover__content',
+    '.mr-popover__content--top', '.mr-popover__content--bottom',
+    '[data-open]', '[data-align]', '[data-side]',
   ],
   tokens: [
-    '--mr-bg-surface-elevated', '--mr-shadow-lg', '--mr-radius-md',
-    '--mr-text-sm', '--mr-space-*',
+    '--mr-bg-surface-elevated', '--mr-shadow-md', '--mr-radius-md',
+    '--mr-text-sm', '--mr-space-*', '--mr-border-subtle',
   ],
   a11y: [
-    'Tooltip/popover ARIA pattern.',
-    'aria-describedby for trigger.',
+    'Content uses role="dialog" with aria-modal="false".',
+    'Trigger exposes aria-expanded and aria-controls.',
     'Escape key to close.',
-    'Focus management.',
+    'Focus moves into the panel when opened.',
+    'Clicking outside closes the popover.',
   ],
 }
 

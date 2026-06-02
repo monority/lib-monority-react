@@ -1,14 +1,34 @@
-﻿import { DataTable } from '@monority/ui'
+import type { ReactNode } from 'react'
+import { Badge, DataTable } from '@monority/ui'
 
 const columns = [
-  { key: 'name', header: 'Name', sortable: true },
-  { key: 'email', header: 'Email' },
-  { key: 'role', header: 'Role' },
+  { key: 'issue', header: 'Issue', sortable: true },
+  {
+    key: 'severity',
+    header: 'Severity',
+    render: (value: ReactNode) => (
+      <Badge variant="secondary">{String(value)}</Badge>
+    ),
+  },
+  { key: 'owner', header: 'Owner' },
 ]
 
 const rows = [
-  { name: 'John Doe', email: 'john@example.com', role: 'Developer' },
-  { name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
+  {
+    issue: 'Callout surface drift',
+    severity: 'Medium',
+    owner: 'Design system',
+  },
+  {
+    issue: 'Toolbar density pass',
+    severity: 'Low',
+    owner: 'Docs team',
+  },
+  {
+    issue: 'Resizable drag tuning',
+    severity: 'High',
+    owner: 'UI infra',
+  },
 ]
 
 export function DataTableBasicExample() {
@@ -24,5 +44,11 @@ export function DataTableEmptyExample() {
 }
 
 export function DataTableWithCaptionExample() {
-  return <DataTable columns={columns} rows={rows} caption="List of team members" />
+  return (
+    <DataTable
+      columns={columns}
+      rows={rows}
+      caption="Open UI review queue"
+    />
+  )
 }

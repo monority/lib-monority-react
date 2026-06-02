@@ -38,6 +38,14 @@ describe('Stack', () => {
     expect(view.querySelector('div')?.className).toContain('mr-stack--xl')
   })
 
+  it('applies direction, align, and justify data attributes', () => {
+    const view = render(<Stack direction="horizontal" align="center" justify="between" />)
+    const stack = view.querySelector('.mr-stack')
+    expect(stack?.getAttribute('data-direction')).toBe('horizontal')
+    expect(stack?.getAttribute('data-align')).toBe('center')
+    expect(stack?.getAttribute('data-justify')).toBe('between')
+  })
+
   it('forwards ref', () => {
     const ref = createRef<HTMLDivElement>()
     render(<Stack ref={ref} />)

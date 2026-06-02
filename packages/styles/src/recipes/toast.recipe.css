@@ -1,6 +1,6 @@
 @layer recipes {
     .mr-toast {
-        padding: 0.95rem 1rem;
+        padding: 1rem;
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
@@ -22,8 +22,8 @@
     .mr-toast__title {
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-sm);
-        font-weight: 700;
-        letter-spacing: -0.01em;
+        font-weight: 650;
+        letter-spacing: 0;
     }
 
     .mr-toast__body {
@@ -31,11 +31,15 @@
         gap: var(--mr-space-2);
     }
 
+    .mr-toast__heading {
+        min-width: 0;
+    }
+
     .mr-toast__header {
         display: flex;
         align-items: start;
         justify-content: space-between;
-        gap: var(--mr-space-2);
+        gap: var(--mr-space-3);
     }
 
     .mr-toast__close {
@@ -43,6 +47,7 @@
         min-height: 2rem;
         padding: 0;
         line-height: 1;
+        flex: 0 0 auto;
     }
 
     .mr-toast__description {
@@ -63,7 +68,7 @@
         pointer-events: none;
     }
 
-    .mr-toast-viewport>* {
+    .mr-toast-viewport > * {
         pointer-events: auto;
     }
 

@@ -11,6 +11,20 @@
         width: min(42rem, 100%);
     }
 
+    .mr-command__layout {
+        display: grid;
+        gap: var(--mr-space-4);
+    }
+
+    .mr-command__header {
+        display: grid;
+        gap: var(--mr-space-3);
+    }
+
+    .mr-command__heading {
+        min-width: 0;
+    }
+
     .mr-command__input {
         width: 100%;
     }
@@ -31,14 +45,13 @@
         padding: 0.9rem 1rem;
         border: 1px solid transparent;
         border-radius: var(--mr-radius-md);
-        background: linear-gradient(180deg, var(--mr-bg-surface-elevated), var(--mr-bg-surface));
+        background: var(--mr-bg-surface);
         color: var(--mr-fg-base);
         text-align: left;
         cursor: pointer;
-        transition:
-            border-color var(--mr-duration-fast) var(--mr-ease-standard),
-            background-color var(--mr-duration-fast) var(--mr-ease-standard),
-            color var(--mr-duration-fast) var(--mr-ease-standard);
+        transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
+            var(--mr-duration-fast) var(--mr-ease-standard), color var(--mr-duration-fast)
+            var(--mr-ease-standard);
     }
 
     .mr-command__item:hover,
@@ -51,6 +64,14 @@
     .mr-command__item-main {
         display: grid;
         gap: var(--mr-space-1);
+    }
+
+    .mr-command__item-group {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--mr-fg-muted);
     }
 
     .mr-command__item-label {
@@ -77,8 +98,9 @@
 
     .mr-command__empty {
         padding: var(--mr-space-5);
-        border: 1px dashed var(--mr-border-subtle);
+        border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface);
         color: var(--mr-fg-muted);
         text-align: center;
     }

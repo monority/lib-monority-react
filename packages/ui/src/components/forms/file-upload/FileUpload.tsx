@@ -51,7 +51,6 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             className="mr-file-upload__dropzone"
           >
             <div className="mr-file-upload__content">
-              <span className="mr-file-upload__icon" aria-hidden="true">📁</span>
               {description && <span className="mr-file-upload__description">{description}</span>}
               {placeholder && <span className="mr-file-upload__placeholder">{placeholder}</span>}
               <FileTrigger

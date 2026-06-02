@@ -40,6 +40,18 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       setClosing(true)
     }
 
+    function setPanelNode(node: HTMLDivElement | null) {
+      panelRef.current = node
+
+      if (!ref) return
+      if (typeof ref === 'function') {
+        ref(node)
+        return
+      }
+
+      ref.current = node
+    }
+
     useEffect(() => {
       if (!closing) return
       const timer = setTimeout(() => {
@@ -65,7 +77,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           aria-hidden="true"
         />
         <div
-          ref={ref || panelRef}
+          ref={setPanelNode}
           className={cn(drawerVariants({ side }), 'mr-drawer__panel')}
           role="dialog"
           aria-modal="true"
@@ -77,9 +89,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           onClick={(e) => e.stopPropagation()}
         >
           <header className="mr-drawer__header">
-            <h3 id={titleId} className="mr-drawer__title">{title}</h3>
+            <div className="mr-drawer__heading">
+              <h3 id={titleId} className="mr-drawer__title">{title}</h3>
+            </div>
             <Button
               ref={closeButtonRef}
+              className="mr-drawer__close"
               variant="ghost"
               size="sm"
               onClick={handleClose}

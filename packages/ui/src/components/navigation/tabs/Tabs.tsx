@@ -85,8 +85,8 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
       aria-label={ariaLabel}
       data-tone={resolvedTone}
       data-size={resolvedSize}
-      data-disabled={disabled ? true : undefined}
-      data-full-width={fullWidth ? true : undefined}
+      data-disabled={disabled ? 'true' : undefined}
+      data-full-width={fullWidth ? 'true' : undefined}
       {...props}
     >
       {items.map((item, index) => {
@@ -107,8 +107,8 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
             disabled={disabled}
             onClick={() => onChange(item.value)}
             onKeyDown={(e) => handleKeyDown(e, index)}
-            data-active={isActive ? true : undefined}
-            data-disabled={disabled ? true : undefined}
+            data-active={isActive ? 'true' : undefined}
+            data-disabled={disabled ? 'true' : undefined}
           >
             {item.label}
           </button>

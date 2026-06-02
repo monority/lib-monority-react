@@ -1,7 +1,23 @@
 @layer recipes {
   .mr-grid {
+    --mr-grid-min-column: 16rem;
+
     display: grid;
     gap: var(--mr-space-4);
+    min-width: 0;
+  }
+
+  .mr-grid[data-surface='true'],
+  .mr-grid--surface {
+    padding: var(--mr-space-3);
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-shadow-xs);
+  }
+
+  .mr-grid > * {
+    min-width: 0;
   }
 
   .mr-grid--1,
@@ -26,11 +42,22 @@
 
   .mr-grid--auto-fit,
   .mr-grid[data-columns='auto-fit'] {
-    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--mr-grid-min-column), 100%), 1fr));
   }
 
   .mr-grid--auto-fill,
   .mr-grid[data-columns='auto-fill'] {
-    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--mr-grid-min-column), 100%), 1fr));
+  }
+
+  @media (max-width: 720px) {
+    .mr-grid--2,
+    .mr-grid--3,
+    .mr-grid--4,
+    .mr-grid[data-columns='2'],
+    .mr-grid[data-columns='3'],
+    .mr-grid[data-columns='4'] {
+      grid-template-columns: 1fr;
+    }
   }
 }

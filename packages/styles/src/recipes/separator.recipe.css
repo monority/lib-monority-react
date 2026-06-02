@@ -1,18 +1,20 @@
 @layer recipes {
-  .mr-separator {
-    border: 0;
-    margin: 0;
-    flex-shrink: 0;
-    background: var(--mr-border-subtle);
-  }
+    .mr-separator {
+        --mr-separator-color: var(--mr-border-subtle);
 
-  .mr-separator--horizontal {
-    width: 100%;
-    height: 1px;
-  }
+        border: 0;
+        margin: 0;
+        flex-shrink: 0;
+        background: var(--mr-separator-color);
+    }
 
-  .mr-separator--vertical {
-    width: 1px;
-    height: 100%;
-  }
+    .mr-separator--horizontal {
+        width: 100%;
+        height: 1px;
+    }
+
+    .mr-separator--vertical {
+        width: 1px;
+        height: 100%;
+    }
 }

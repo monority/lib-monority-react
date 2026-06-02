@@ -7,9 +7,9 @@ import {
 
 const docData: DocPageData = {
   title: 'Stack',
-  description: "Flexbox column layout with controlled gap between children.",
+  description: "Flex layout primitive for vertical or horizontal grouping, spacing, alignment, and framed content blocks.",
   importCode: "import { Stack } from '@monority/ui'",
-  usageCode: `<Stack gap="md">
+  usageCode: `<Stack gap="md" direction="vertical">
   <div>Item 1</div>
   <div>Item 2</div>
 </Stack>`,
@@ -19,7 +19,10 @@ const docData: DocPageData = {
     { title: 'Horizontal', content: <StackHorizontalExample /> },
   ],
   props: [
-    { name: 'gap', type: `'xs' | 's' | 'sm' | 'm' | 'md' | 'l' | 'lg' | 'xl'`, defaultValue: "'m'", description: "Gap between children." }
+    { name: 'gap', type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`, defaultValue: "'md'", description: "Gap between children." },
+    { name: 'direction', type: `'vertical' | 'horizontal'`, defaultValue: "'vertical'", description: "Main axis direction." },
+    { name: 'align', type: `'stretch' | 'start' | 'center' | 'end'`, defaultValue: "'stretch'", description: "Cross-axis alignment." },
+    { name: 'justify', type: `'start' | 'center' | 'end' | 'between'`, defaultValue: "'start'", description: "Main-axis distribution." }
   ],
   cssHooks: [
     '.mr-stack', '[data-gap]', '[data-align]', '[data-justify]',

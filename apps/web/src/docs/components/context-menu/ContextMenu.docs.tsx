@@ -8,13 +8,13 @@ import {
 
 const docData: DocPageData = {
   title: 'ContextMenu',
-  description: 'Right-click context menu positioned at cursor with keyboard navigation.',
+  description: 'A cursor-positioned action menu for contextual commands, quick edits, and destructive actions.',
   importCode: "import { ContextMenu } from '@monority/ui'",
   usageCode: `<ContextMenu
-  trigger={<div>Right-click me</div>}
+  trigger={<div>Right-click this canvas</div>}
   items={[
-    { value: 'edit', label: 'Edit' },
-    { value: '', label: '', type: 'separator' as const },
+    { value: 'open', label: 'Open record' },
+    { value: 'separator-1', label: '', type: 'separator' as const },
     { value: 'delete', label: 'Delete', danger: true },
   ]}
 />`,
@@ -40,7 +40,7 @@ const docData: DocPageData = {
   tokens: [
     '--mr-z-overlay', '--mr-radius-md', '--mr-radius-sm',
     '--mr-bg-surface-elevated', '--mr-bg-surface-strong', '--mr-shadow-md', '--mr-border-subtle',
-    '--mr-space-*', '--mr-text-sm', '--mr-fg-base', '--mr-fg-strong', '--mr-bg-control', '--mr-danger'
+    '--mr-space-*', '--mr-text-sm', '--mr-fg-base', '--mr-fg-strong', '--mr-danger'
   ],
   a11y: [
     'Trigger sets role="button", tabindex="0", aria-expanded, and aria-haspopup="menu".',

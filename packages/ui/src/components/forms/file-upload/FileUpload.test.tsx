@@ -90,11 +90,10 @@ describe('FileUpload', () => {
     expect(input?.multiple).toBe(true)
   })
 
-  it('renders icon', () => {
+  it('does not render decorative icon', () => {
     const view = render(<FileUpload label="Upload" />)
     const icon = view.querySelector('.mr-file-upload__icon')
-    expect(icon).not.toBeNull()
-    expect(icon?.getAttribute('aria-hidden')).toBe('true')
+    expect(icon).toBeNull()
   })
 
   it('renders placeholder text', () => {

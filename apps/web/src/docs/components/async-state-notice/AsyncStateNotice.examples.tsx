@@ -7,7 +7,7 @@ export function AsyncStateNoticeBasicPreview() {
 }
 
 export function AsyncStateNoticeErrorExample() {
-  return <AsyncStateNotice isError errorMessage="Failed to load data." />
+  return <AsyncStateNotice isError errorMessage="Unable to load the analytics snapshot." />
 }
 
 export function AsyncStateNoticeCustomMessageExample() {
@@ -29,7 +29,7 @@ export function AsyncStateNoticeToggleExample() {
         <Button size="sm" variant="ghost" onClick={() => setState('idle')}>Reset</Button>
       </div>
       {state === 'loading' && <AsyncStateNotice isLoading />}
-      {state === 'error' && <AsyncStateNotice isError errorMessage="Something went wrong." />}
+      {state === 'error' && <AsyncStateNotice isError errorMessage="The sync request timed out. Try again in a moment." />}
     </div>
   )
 }

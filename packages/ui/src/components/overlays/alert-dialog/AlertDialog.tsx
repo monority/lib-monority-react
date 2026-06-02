@@ -73,18 +73,26 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(
           data-tone={tone}
           data-open={open ? true : undefined}
           tabIndex={-1}
-        >
-          <div className="mr-alert-dialog__header">
-            <h2 id={titleId} className="mr-alert-dialog__title">{title}</h2>
+      >
+        <div className="mr-alert-dialog__header">
+            <div className="mr-alert-dialog__heading">
+              <h2 id={titleId} className="mr-alert-dialog__title">{title}</h2>
+            </div>
           </div>
           {description ? (
             <p id={descriptionId} className="mr-alert-dialog__description">{description}</p>
           ) : null}
           <div className="mr-alert-dialog__actions">
-            <Button ref={cancelButtonRef} variant="ghost" onClick={onCancel}>
+            <Button
+              ref={cancelButtonRef}
+              className="mr-alert-dialog__cancel"
+              variant="ghost"
+              onClick={onCancel}
+            >
               {cancelLabel}
             </Button>
             <Button
+              className="mr-alert-dialog__confirm"
               variant={tone === 'danger' ? 'danger' : 'primary'}
               onClick={onConfirm}
             >

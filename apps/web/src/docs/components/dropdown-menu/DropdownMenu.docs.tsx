@@ -7,14 +7,15 @@ import {
 
 const docData: DocPageData = {
   title: 'DropdownMenu',
-  description: "Menu dropdown with keyboard navigation and item variants.",
+  description: 'A compact action menu for contextual commands, grouped items, and destructive actions.',
   importCode: "import { DropdownMenu } from '@monority/ui'",
   usageCode: `<DropdownMenu
   trigger={<Button>Actions</Button>}
   items={[
-    { value: 'edit', label: 'Edit' },
-    { value: '', label: '', type: 'separator' as const },
-    { value: 'delete', label: 'Delete', danger: true },
+    { value: 'open', label: 'Open record' },
+    { value: 'duplicate', label: 'Duplicate view' },
+    { value: 'separator-1', label: '', type: 'separator' as const },
+    { value: 'archive', label: 'Archive', danger: true },
   ]}
 />`,
   preview: () => <DropdownMenuBasicExample />,
@@ -35,12 +36,12 @@ const docData: DocPageData = {
     '.mr-dropdown', '.mr-dropdown__content', '.mr-dropdown__content--top',
     '.mr-dropdown__content--bottom', '.mr-dropdown__content--left', '.mr-dropdown__content--right',
     '.mr-dropdown__item', '.mr-dropdown__separator',
-    '[data-open]', '[data-align]', '[data-side]', '[data-value]', '[data-danger]', '[data-disabled]', '[data-active]'
+    '[data-open]', '[data-align]', '[data-side]', '[data-value]'
   ],
   tokens: [
     '--mr-z-overlay', '--mr-radius-md', '--mr-radius-sm',
-    '--mr-bg-surface-elevated', '--mr-shadow-md', '--mr-border-subtle',
-    '--mr-space-*', '--mr-text-sm', '--mr-fg-base', '--mr-bg-control', '--mr-danger'
+    '--mr-bg-surface-elevated', '--mr-bg-surface-strong', '--mr-shadow-md', '--mr-border-subtle',
+    '--mr-space-*', '--mr-text-sm', '--mr-fg-base', '--mr-danger'
   ],
   a11y: [
     'Trigger sets aria-expanded, aria-haspopup="menu", and aria-controls.',

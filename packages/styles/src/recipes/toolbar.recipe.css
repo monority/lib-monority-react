@@ -1,14 +1,18 @@
 @layer recipes {
     .mr-toolbar {
+        --mr-toolbar-padding: var(--mr-space-2);
+
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-4);
+        gap: var(--mr-space-2);
         width: 100%;
-        padding: var(--mr-space-3);
+        min-width: 0;
+        min-height: 2.75rem;
+        padding: var(--mr-toolbar-padding);
         border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-lg);
-        background: linear-gradient(180deg, var(--mr-bg-surface-strong), var(--mr-bg-surface-elevated));
+        border-radius: var(--mr-radius-md);
+        background: var(--mr-bg-surface-strong);
         box-shadow: var(--mr-shadow-xs);
     }
 
@@ -20,8 +24,9 @@
     .mr-toolbar__center {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-1);
         align-items: center;
+        min-width: 0;
     }
 
     .mr-toolbar__group--leading {
@@ -37,6 +42,7 @@
         .mr-toolbar {
             flex-direction: column;
             align-items: stretch;
+            --mr-toolbar-padding: var(--mr-space-3);
         }
 
         .mr-toolbar__group,

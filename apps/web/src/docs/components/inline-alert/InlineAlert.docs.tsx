@@ -7,9 +7,9 @@ import {
 
 const docData: DocPageData = {
   title: 'InlineAlert',
-  description: "Inline contextual message with tone and optional action.",
+  description: 'Inline status surface for contextual messaging inside forms, settings, and content workflows.',
   importCode: "import { InlineAlert } from '@monority/ui'",
-  usageCode: `<InlineAlert tone="warning" title="Storage almost full" description="Delete unused files." />`,
+  usageCode: `<InlineAlert tone="warning" title="Docs review expires soon" description="Only one approval is still missing." />`,
   preview: () => <InlineAlertBasicExample />,
   examples: [
     { title: 'Tones', content: <InlineAlertTonesExample /> },
@@ -23,17 +23,32 @@ const docData: DocPageData = {
     { name: 'onAction', type: `() => void`, defaultValue: "-", description: "Action callback." }
   ],
   cssHooks: [
-    '.mr-inline-alert', '.mr-inline-alert--info', '.mr-inline-alert--success',
-    '.mr-inline-alert--warning', '.mr-inline-alert--danger', '[data-variant]',
+    '.mr-inline-alert',
+    '.mr-inline-alert__marker',
+    '.mr-inline-alert__body',
+    '.mr-inline-alert__title',
+    '.mr-inline-alert__description',
+    '.mr-inline-alert__content',
+    '.mr-inline-alert__action',
+    '.mr-inline-alert--info',
+    '.mr-inline-alert--success',
+    '.mr-inline-alert--warning',
+    '.mr-inline-alert--danger',
+    '[data-tone]',
   ],
   tokens: [
-    '--mr-accent', '--mr-success', '--mr-warning', '--mr-danger',
-    '--mr-bg-accent-soft', '--mr-bg-success-soft', '--mr-bg-warning-soft',
-    '--mr-bg-danger-soft', '--mr-text-sm',
+    '--mr-bg-surface-elevated',
+    '--mr-border-subtle',
+    '--mr-shadow-xs',
+    '--mr-accent',
+    '--mr-success',
+    '--mr-warning',
+    '--mr-danger',
   ],
   a11y: [
-    'Inline notification pattern.',
-    'aria-live="polite" for dynamic updates.',
+    'Informational alerts use role="status".',
+    'Warning and danger alerts use role="alert".',
+    'Optional actions remain regular buttons inside the alert body.',
   ],
 }
 

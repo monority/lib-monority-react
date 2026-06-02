@@ -7,11 +7,19 @@ import {
 
 const docData: DocPageData = {
   title: 'FilterBar',
-  description: "Simple wrapper for filter controls in a horizontal bar layout.",
+  description: 'A compact control rail for search, filters, active chips, and result metadata.',
   importCode: "import { FilterBar } from '@monority/ui'",
   usageCode: `<FilterBar>
-  <Select />
-  <Input placeholder="Search..." />
+  <div className="mr-filter-bar__main">
+    <div className="mr-filter-bar__leading">
+      <Input placeholder="Search components..." />
+    </div>
+    <Select aria-label="Status filter">
+      <option>All statuses</option>
+    </Select>
+    <Button size="sm" variant="secondary">Apply</Button>
+  </div>
+  <div className="mr-filter-bar__meta">24 results</div>
 </FilterBar>`,
   preview: () => <FilterBarBasicExample />,
   examples: [
@@ -22,15 +30,20 @@ const docData: DocPageData = {
     { name: 'children', type: `ReactNode`, defaultValue: "-", description: "Filter controls." }
   ],
   cssHooks: [
-    '.mr-filter-bar', '.mr-filter-bar__item', '.mr-filter-bar__reset',
+    '.mr-filter-bar',
+    '.mr-filter-bar__main',
+    '.mr-filter-bar__leading',
+    '.mr-filter-bar__chips',
+    '.mr-filter-bar__chip',
+    '.mr-filter-bar__meta',
   ],
   tokens: [
-    '--mr-space-*', '--mr-border-subtle',
+    '--mr-space-*', '--mr-border-subtle', '--mr-bg-surface-elevated', '--mr-bg-control',
   ],
   a11y: [
-    'Toolbar ARIA pattern (role="toolbar").',
-    'aria-label for the toolbar.',
-    'Focus management between filters.',
+    'Uses role="group" with aria-label="Filters" by default.',
+    'Keep each child control independently labeled.',
+    'Use the meta area for passive status, not interactive filter inputs.',
   ],
 }
 
