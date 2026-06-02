@@ -1,4 +1,4 @@
-import { Avatar } from '@monority/ui'
+import { Avatar } from '@monority/ui/avatar'
 
 export function AvatarBasicExample() {
     return (

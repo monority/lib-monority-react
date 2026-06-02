@@ -1,4 +1,4 @@
-import { Kbd } from '@monority/ui'
+import { Kbd } from '@monority/ui/kbd'
 
 export function KbdBasicExample() {
     return (

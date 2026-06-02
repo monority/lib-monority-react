@@ -13,28 +13,24 @@ hljs.registerLanguage('tsx', typescript)
 hljs.registerLanguage('xml', xml)
 
 export interface DocsCodeBlockProps {
-  children: string
-  className?: string
-  language?: 'bash' | 'tsx' | 'typescript' | 'xml'
+    children: string
+    className?: string
+    language?: 'bash' | 'tsx' | 'typescript' | 'xml'
 }
 
-export function DocsCodeBlock({
-  children,
-  className,
-  language = 'tsx',
-}: DocsCodeBlockProps) {
-  const ref = useRef<HTMLElement>(null)
+export function DocsCodeBlock({ children, className, language = 'tsx' }: DocsCodeBlockProps) {
+    const ref = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.removeAttribute('data-highlighted')
-      hljs.highlightElement(ref.current)
-    }
-  }, [children])
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.removeAttribute('data-highlighted')
+            hljs.highlightElement(ref.current)
+        }
+    }, [children])
 
-  return (
-    <PreCode className={className} codeRef={ref} language={language}>
-      {children}
-    </PreCode>
-  )
+    return (
+        <PreCode className={className} codeRef={ref} language={language}>
+            {children}
+        </PreCode>
+    )
 }

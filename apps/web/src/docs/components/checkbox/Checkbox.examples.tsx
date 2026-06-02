@@ -1,4 +1,4 @@
-import { Checkbox } from '@monority/ui'
+import { Checkbox } from '@monority/ui/checkbox'
 
 export function CheckboxBasicExample() {
     return (

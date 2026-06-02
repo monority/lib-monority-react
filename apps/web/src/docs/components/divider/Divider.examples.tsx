@@ -1,4 +1,4 @@
-import { Divider } from '@monority/ui'
+import { Divider } from '@monority/ui/divider'
 
 export function DividerBasicExample() {
     return (

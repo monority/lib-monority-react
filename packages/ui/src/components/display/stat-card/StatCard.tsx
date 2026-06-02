@@ -5,58 +5,47 @@ import { Text } from '@/components/typography/text/Text'
 import { Title } from '@/components/typography/title/Title'
 import type { StatCardProps } from './StatCard.types'
 
-export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
-  function StatCard(
-    {
-      label,
-      value,
-      trend,
-      trendTone,
-      description,
-      icon,
-      footer,
-      className,
-      ...props
-    },
-    ref,
-  ) {
+export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(function StatCard(
+    { label, value, trend, trendTone, description, icon, footer, className, ...props },
+    ref
+) {
+    const resolvedTrendTone = trendTone ?? 'neutral'
+
     return (
-      <Card
-        ref={ref}
-        className={cn('mr-stat-card', className)}
-        padding="md"
-        {...props}
-      >
-        <div className="mr-stat-card__header">
-          <div className="mr-stat-card__info">
-            <Text tone="muted" size="sm">{label}</Text>
-            <Title as="span" size="lg">{value}</Title>
-          </div>
-          {icon ? (
-            <div className="mr-stat-card__icon" aria-hidden="true">
-              {icon}
+        <Card ref={ref} className={cn('mr-stat-card', className)} padding="md" {...props}>
+            <div className="mr-stat-card__header">
+                <Text as="span" className="mr-stat-card__label" tone="muted" size="sm">
+                    {label}
+                </Text>
+                {icon ? (
+                    <div className="mr-stat-card__icon" aria-hidden="true">
+                        {icon}
+                    </div>
+                ) : null}
             </div>
-          ) : null}
-        </div>
-        {trend ? (
-          <div className="mr-stat-card__trend" data-trend-tone={trendTone}>
-            <Text
-              tone={trendTone === 'danger' ? 'strong' : 'base'}
-              size="sm"
-            >
-              {trend}
-            </Text>
-          </div>
-        ) : null}
-        {description ? (
-          <Text tone="muted" size="sm">{description}</Text>
-        ) : null}
-        {footer ? (
-          <div className="mr-stat-card__footer">{footer}</div>
-        ) : null}
-      </Card>
+
+            <div className="mr-stat-card__metric">
+                <Title as="span" className="mr-stat-card__value" size="lg">
+                    {value}
+                </Title>
+                {trend ? (
+                    <div className="mr-stat-card__trend" data-trend-tone={resolvedTrendTone}>
+                        <span className="mr-stat-card__trend-marker" aria-hidden="true" />
+                        <Text as="span" tone="base" size="sm">
+                            {trend}
+                        </Text>
+                    </div>
+                ) : null}
+            </div>
+
+            {description ? (
+                <Text className="mr-stat-card__description" tone="muted" size="sm">
+                    {description}
+                </Text>
+            ) : null}
+            {footer ? <div className="mr-stat-card__footer">{footer}</div> : null}
+        </Card>
     )
-  },
-)
+})
 
 export type { StatCardProps, StatCardTone } from './StatCard.types'

@@ -1,4 +1,4 @@
-import { Separator } from '@monority/ui'
+import { Separator } from '@monority/ui/separator'
 
 export function SeparatorBasicExample() {
     return (

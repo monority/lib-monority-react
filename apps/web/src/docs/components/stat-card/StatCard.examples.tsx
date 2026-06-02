@@ -1,58 +1,99 @@
-import { StatCard } from '@monority/ui'
+import { StatCard } from '@monority/ui/stat-card'
 
 export function StatCardBasicExample() {
-  return <StatCard label="Revenue" value="$12,340" trend="+12%" trendTone="success" />
+    return (
+        <StatCard
+            label="Net revenue"
+            value="$128,420"
+            trend="+8.4% vs last month"
+            trendTone="success"
+            description="Closed revenue across paid workspaces."
+        />
+    )
 }
 
 export function StatCardTonesExample() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <StatCard label="Revenue" value="$12,340" trend="+12%" trendTone="success" />
-      <StatCard label="Churn" value="2.1%" trend="+0.3%" trendTone="danger" />
-      <StatCard label="Stable" value="1,234" trend="0%" trendTone="neutral" />
-    </div>
-  )
+    return (
+        <div
+            style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
+                gap: '1rem',
+            }}
+        >
+            <StatCard
+                label="Pipeline"
+                value="$842k"
+                trend="+14 qualified deals"
+                trendTone="success"
+            />
+            <StatCard
+                label="Incident rate"
+                value="0.18%"
+                trend="-0.04 points"
+                trendTone="success"
+            />
+            <StatCard
+                label="Overdue tasks"
+                value="23"
+                trend="+6 since Friday"
+                trendTone="warning"
+            />
+            <StatCard label="Failed jobs" value="17" trend="+3 in 24h" trendTone="danger" />
+        </div>
+    )
 }
 
 export function StatCardWithIconExample() {
-  return (
-    <StatCard
-      label="Users"
-      value="1,234"
-      trend="+8%"
-      trendTone="success"
-      icon={<span aria-hidden="true">AU</span>}
-    />
-  )
+    return (
+        <StatCard
+            label="Active seats"
+            value="1,284"
+            trend="+72 this week"
+            trendTone="success"
+            description="Billable seats with activity in the current cycle."
+            icon={<span aria-hidden="true">AS</span>}
+        />
+    )
 }
 
 export function StatCardWithFooterExample() {
-  return (
-    <StatCard
-      label="Orders"
-      value="456"
-      description="Last 30 days"
-      footer={<span style={{ fontSize: '0.75rem', color: 'var(--mr-fg-muted)' }}>Updated 5 min ago</span>}
-    />
-  )
+    return (
+        <StatCard
+            label="Open reviews"
+            value="46"
+            description="Pull requests waiting for owner approval."
+            footer={
+                <span style={{ fontSize: '0.75rem', color: 'var(--mr-fg-muted)' }}>
+                    Updated 5 minutes ago
+                </span>
+            }
+        />
+    )
 }
 
 export function StatCardLongTextExample() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <StatCard
-        label="Total Revenue Generated This Quarter"
-        value="$1,234,567.89"
-        trend="+23.5% compared to last quarter"
-        trendTone="success"
-      />
-      <StatCard
-        label="Active Subscriptions"
-        value="98,765"
-        description="Includes trial and paid plans across all regions"
-        trend="+1,234 this month"
-        trendTone="success"
-      />
-    </div>
-  )
+    return (
+        <div
+            style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
+                gap: '1rem',
+            }}
+        >
+            <StatCard
+                label="Quarterly recognized revenue"
+                value="$1,234,567.89"
+                trend="+23.5% vs previous quarter"
+                trendTone="success"
+            />
+            <StatCard
+                label="Backlog items requiring product decision"
+                value="1,472"
+                description="Includes requests tagged design review, customer escalation, or compliance."
+                trend="+118 added this month"
+                trendTone="warning"
+            />
+        </div>
+    )
 }

@@ -1,4 +1,5 @@
-import { Text, Title } from '@monority/ui'
+import { Text } from '@monority/ui/text'
+import { Title } from '@monority/ui/title'
 
 export function TitleBasicExample() {
     return (

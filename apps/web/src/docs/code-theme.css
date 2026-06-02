@@ -2,8 +2,8 @@
 
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
-  color: var(--docs-code-fg, var(--mr-fg-base));
-  background: transparent;
+    color: var(--docs-code-fg, var(--mr-fg-base));
+    background: transparent;
 }
 
 .mr-pre-code code .hljs-keyword,
@@ -12,14 +12,14 @@
 .mr-pre-code code .hljs-selector-id,
 .mr-pre-code code .hljs-selector-attr,
 .mr-pre-code code .hljs-selector-pseudo {
-  color: var(--docs-code-keyword, var(--mr-accent));
+    color: var(--docs-code-keyword, var(--mr-accent));
 }
 
 .mr-pre-code code .hljs-string,
 .mr-pre-code code .hljs-template-variable,
 .mr-pre-code code .hljs-template-tag,
 .mr-pre-code code .hljs-addition {
-  color: var(--docs-code-string, var(--mr-success));
+    color: var(--docs-code-string, var(--mr-success));
 }
 
 .mr-pre-code code .hljs-number,
@@ -27,65 +27,65 @@
 .mr-pre-code code .hljs-title.class_,
 .mr-pre-code code .hljs-name,
 .mr-pre-code code .hljs-variable.constant_ {
-  color: var(--docs-code-number, var(--mr-warning));
+    color: var(--docs-code-number, var(--mr-warning));
 }
 
 .mr-pre-code code .hljs-literal,
 .mr-pre-code code .hljs-attr {
-  color: var(--docs-code-literal, var(--mr-danger));
+    color: var(--docs-code-literal, var(--mr-danger));
 }
 
 .mr-pre-code code .hljs-built_in,
 .mr-pre-code code .hljs-title.function_,
 .mr-pre-code code .hljs-type {
-  color: var(--docs-code-type, var(--mr-info, var(--mr-accent)));
+    color: var(--docs-code-type, var(--mr-info, var(--mr-accent)));
 }
 
 .mr-pre-code code .hljs-comment {
-  color: var(--docs-code-comment, var(--mr-fg-muted));
-  font-style: italic;
+    color: var(--docs-code-comment, var(--mr-fg-muted));
+    font-style: italic;
 }
 
 .mr-pre-code code .hljs-params {
-  color: var(--docs-code-param, var(--mr-fg-base));
+    color: var(--docs-code-param, var(--mr-fg-base));
 }
 
 .mr-pre-code code .hljs-meta,
 .mr-pre-code code .hljs-meta .hljs-string {
-  color: var(--docs-code-meta, var(--mr-warning));
+    color: var(--docs-code-meta, var(--mr-warning));
 }
 
 .mr-pre-code code .hljs-variable {
-  color: var(--docs-code-fg, var(--mr-fg-base));
+    color: var(--docs-code-fg, var(--mr-fg-base));
 }
 
 .mr-pre-code code .hljs-property,
 .mr-pre-code code .hljs-link {
-  color: var(--docs-code-property, var(--mr-accent));
+    color: var(--docs-code-property, var(--mr-accent));
 }
 
 .mr-pre-code code .hljs-punctuation,
 .mr-pre-code code .hljs-operator {
-  color: var(--docs-code-muted, var(--mr-fg-muted));
+    color: var(--docs-code-muted, var(--mr-fg-muted));
 }
 
 .mr-pre-code code .hljs-deletion {
-  color: var(--docs-code-deletion, var(--mr-danger));
-  background: color-mix(in srgb, var(--mr-danger) 12%, transparent);
+    color: var(--docs-code-deletion, var(--mr-danger));
+    background: color-mix(in srgb, var(--mr-danger) 12%, transparent);
 }
 
 .mr-pre-code code .hljs-addition {
-  background: color-mix(in srgb, var(--mr-success) 12%, transparent);
+    background: color-mix(in srgb, var(--mr-success) 12%, transparent);
 }
 
 .mr-pre-code code .hljs-link {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .mr-pre-code code .hljs-emphasis {
-  font-style: italic;
+    font-style: italic;
 }
 
 .mr-pre-code code .hljs-strong {
-  font-weight: 700;
+    font-weight: 700;
 }
