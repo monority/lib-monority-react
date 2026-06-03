@@ -9,7 +9,7 @@ interface HeadingInfo {
 function generateId(text: string): string {
     return text
         .toLowerCase()
-        .replace(/s+/g, '-')
+        .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '')
 }
 
@@ -48,32 +48,25 @@ export function DocToc() {
     useEffect(() => {
         if (headings.length === 0) return
 
-        const OFFSET = 16 // small breathing room, no fixed header
+        const HEADING_OFFSET = 120
 
         function updateActive() {
-            const scrollPosition = window.scrollY + OFFSET
             let current = headings[0]!.id
 
             for (let i = 0; i < headings.length; i++) {
-                const h = headings[i]!
-                const el = document.getElementById(h.id)
+                const el = document.getElementById(headings[i]!.id)
                 if (!el) continue
 
-                const nextOffset =
-                    i < headings.length - 1
-                        ? (document.getElementById(headings[i + 1]!.id)?.offsetTop ?? Infinity)
-                        : Infinity
+                const rect = el.getBoundingClientRect()
 
-                // Active if scroll position is within this heading's section
-                if (el.offsetTop <= scrollPosition && scrollPosition < nextOffset) {
-                    current = h.id
+                if (rect.top <= HEADING_OFFSET) {
+                    current = headings[i]!.id
+                } else {
                     break
                 }
             }
 
-            // Fallback: if scrolled past all headings, activate the last one
-            const lastEl = document.getElementById(headings[headings.length - 1]!.id)
-            if (lastEl && window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+            if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 50) {
                 current = headings[headings.length - 1]!.id
             }
 

@@ -167,8 +167,8 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
 
             <header className="app-header">
                 <Container size="lg" className="cluster between app-header__inner">
-                    <Link className="brand" to="/" aria-label="Model starter">
-                        Model Starter
+                    <Link className="brand" to="/" aria-label="Monority">
+                        Monority
                     </Link>
 
                     <nav ref={navRef} className="cluster app-nav" aria-label="Navigation principale">

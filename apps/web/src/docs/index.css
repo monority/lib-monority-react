@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: 13rem minmax(0, 1fr);
     min-height: 100vh;
-    background: var(--mr-bg-canvas);
     color: var(--mr-fg-base);
     --docs-code-bg: var(--mr-bg-surface);
     --docs-code-fg: var(--mr-fg-base);
