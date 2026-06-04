@@ -1,4 +1,4 @@
-import { forwardRef, type ElementType } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { SectionProps } from './Section.types'
@@ -26,10 +26,10 @@ const sectionVariants = cva({
 })
 
 export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
-  { className, spacing = 'md', variant = 'default', as, title, children, ...props },
+  { className, spacing = 'md', variant = 'default', as, title, titleAs: TitleTag = 'h2', children, ...props },
   ref,
 ) {
-  const Component = (as ?? 'section') as ElementType
+  const Component = as ?? 'section'
 
   return (
     <Component
@@ -39,10 +39,8 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
       data-variant={variant}
       {...props}
     >
-      {title && <h2 className="mr-section__title">{title}</h2>}
+      {title != null && <TitleTag className="mr-section__title">{title}</TitleTag>}
       {children}
     </Component>
   )
 })
-
-export type { SectionProps, SectionSpacing, SectionVariant, SectionElement } from './Section.types'

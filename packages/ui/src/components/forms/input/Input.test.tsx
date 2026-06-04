@@ -107,4 +107,59 @@ describe('Input', () => {
     const wrapper = view.querySelector('.mr-field')
     expect(wrapper?.className).toContain('custom')
   })
+
+  it('renders with default neutral tone and md size', () => {
+    const view = render(<Input id="default" />)
+    const input = view.querySelector('input')
+    expect(input?.getAttribute('data-tone')).toBe('neutral')
+    expect(input?.getAttribute('data-size')).toBe('md')
+    expect(input?.className).toContain('mr-input--neutral')
+    expect(input?.className).toContain('mr-input--md')
+  })
+
+  it.each(['neutral', 'accent', 'danger'] as const)(
+    'sets data-tone="%s" and variant class for tone="%s"',
+    (tone) => {
+      const view = render(<Input id={`t-${tone}`} tone={tone} />)
+      const input = view.querySelector('input')
+      expect(input?.getAttribute('data-tone')).toBe(tone)
+      // neutral has no dedicated class
+      if (tone !== 'neutral') {
+        expect(input?.className).toContain(`mr-input--${tone}`)
+      }
+    },
+  )
+
+  it.each(['sm', 'md', 'lg'] as const)(
+    'sets data-size="%s" and variant class for size="%s"',
+    (size) => {
+      const view = render(<Input id={`s-${size}`} size={size} />)
+      const input = view.querySelector('input')
+      expect(input?.getAttribute('data-size')).toBe(size)
+      expect(input?.className).toContain(`mr-input--${size}`)
+    },
+  )
+
+  it('connects hint and error via aria-describedby', () => {
+    const view = render(<Input id="test" hint="hint text" error="error text" />)
+    const input = view.querySelector('input')
+    expect(input?.getAttribute('aria-describedby')).toContain('test-hint')
+    expect(input?.getAttribute('aria-describedby')).toContain('test-error')
+  })
+
+  it('sets aria-invalid via invalid prop', () => {
+    const view = render(<Input id="invalid" invalid />)
+    const input = view.querySelector('input')
+    expect(input?.getAttribute('aria-invalid')).toBe('true')
+    expect(input?.getAttribute('data-invalid')).toBe('true')
+    expect(input?.className).toContain('mr-input--invalid')
+  })
+
+  it('applies mr-input--error class when error prop is set', () => {
+    const view = render(<Input id="err" error="error text" />)
+    const input = view.querySelector('input')
+    expect(input?.className).toContain('mr-input--error')
+    expect(input?.className).toContain('mr-input--invalid')
+    expect(input?.getAttribute('aria-invalid')).toBe('true')
+  })
 })

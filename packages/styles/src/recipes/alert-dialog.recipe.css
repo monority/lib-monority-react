@@ -52,7 +52,7 @@
 
     .mr-alert-dialog__title {
         font-size: var(--mr-text-lg);
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
         margin: 0;
         color: var(--mr-fg-strong);
     }

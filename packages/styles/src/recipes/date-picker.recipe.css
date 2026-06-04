@@ -213,7 +213,7 @@
 
   /* Today */
   .mr-datepicker__day[data-today='true'] {
-    font-weight: 650;
+    font-weight: var(--mr-font-weight-semibold);
     color: var(--mr-accent);
   }
 
@@ -221,7 +221,7 @@
   .mr-datepicker__day[data-selected='true'] {
     background: var(--mr-accent);
     color: var(--mr-accent-contrast);
-    font-weight: 650;
+    font-weight: var(--mr-font-weight-semibold);
   }
 
   .mr-datepicker__day[data-selected='true']:hover {

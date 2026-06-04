@@ -91,7 +91,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Textarea',
         path: '/docs/textarea',
         slug: 'textarea',
-        status: 'draft',
+        status: 'stable',
     },
 
     // Feedback
@@ -115,7 +115,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Callout',
         path: '/docs/callout',
         slug: 'callout',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
@@ -368,7 +368,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Section',
         path: '/docs/section',
         slug: 'section',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'layout',

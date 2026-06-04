@@ -84,7 +84,7 @@
         display: inline-flex;
         min-width: 1rem;
         font-size: 0.8125rem;
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-nav-menu__content {
@@ -149,7 +149,7 @@
         color: var(--mr-fg-muted);
         min-width: 1rem;
         font-size: 0.8125rem;
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-nav-menu__sub-text {

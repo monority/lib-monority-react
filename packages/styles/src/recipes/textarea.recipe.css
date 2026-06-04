@@ -83,6 +83,7 @@
   .mr-textarea--md,
   .mr-textarea[data-size='md'] {
     --mr-textarea-min-height: 5.75rem;
+    padding: 0.625rem 1rem;
   }
 
   .mr-textarea--lg,

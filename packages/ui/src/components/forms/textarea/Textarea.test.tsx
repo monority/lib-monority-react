@@ -1,7 +1,7 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Textarea } from './Textarea'
 
 let container: HTMLDivElement | null = null
@@ -102,27 +102,64 @@ describe('Textarea', () => {
     expect(view.querySelector('.mr-textarea__counter')).toBeNull()
   })
 
-  it('updates counter on uncontrolled input change', () => {
-    const view = render(<Textarea id="test" maxLength={10} defaultValue="Hi" />)
-    expect(view.querySelector('.mr-textarea__counter')?.textContent).toBe('2 / 10')
-    const textarea = view.querySelector('textarea')!
-    act(() => {
-      const nativeInput = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.get
-        ? Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')!.get!.call(textarea)
-        : textarea.value
-      // Use setter
-      Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set?.call(textarea, 'Hello!')
-      textarea.dispatchEvent(new Event('input', { bubbles: true }))
-    })
-    // After input event, charCount state updates
-    act(() => { /* wait for state */ })
-    // The counter should now show 6 / 10
-    // Note: in jsdom the dispatch may not trigger React's onChange reliably,
-    // so this test is more of a structural check
-  })
-
   it('sets aria-invalid when error is provided', () => {
     const view = render(<Textarea error="Required" />)
     expect(view.querySelector('textarea')?.getAttribute('aria-invalid')).toBe('true')
+  })
+
+  it.each(['neutral', 'accent', 'danger'] as const)(
+    'sets data-tone="%s" and variant class for tone="%s"',
+    (tone) => {
+      const view = render(<Textarea tone={tone} />)
+      const textarea = view.querySelector('textarea')
+      expect(textarea?.getAttribute('data-tone')).toBe(tone)
+      expect(textarea?.className).toContain(`mr-textarea--${tone}`)
+    },
+  )
+
+  it.each(['sm', 'md', 'lg'] as const)(
+    'sets data-size="%s" and variant class for size="%s"',
+    (size) => {
+      const view = render(<Textarea size={size} />)
+      const textarea = view.querySelector('textarea')
+      expect(textarea?.getAttribute('data-size')).toBe(size)
+      expect(textarea?.className).toContain(`mr-textarea--${size}`)
+    },
+  )
+
+  it('calls onChange when value changes', () => {
+    const onChange = vi.fn()
+    const view = render(<Textarea onChange={onChange} />)
+    const textarea = view.querySelector('textarea') as HTMLTextAreaElement
+    act(() => {
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLTextAreaElement.prototype,
+        'value',
+      )?.set
+      nativeInputValueSetter?.call(textarea, 'test value')
+      textarea.dispatchEvent(new Event('input', { bubbles: true }))
+    })
+    expect(onChange).toHaveBeenCalledTimes(1)
+  })
+
+  it('forwards id to the textarea element', () => {
+    const view = render(<Textarea id="my-textarea" />)
+    expect(view.querySelector('textarea')?.getAttribute('id')).toBe('my-textarea')
+  })
+
+  it('merges custom className on the field wrapper', () => {
+    const view = render(<Textarea className="my-custom-class" />)
+    const wrapper = view.querySelector('.mr-field')
+    expect(wrapper?.className).toContain('my-custom-class')
+  })
+
+  it('passes placeholder to the native textarea', () => {
+    const view = render(<Textarea placeholder="Enter text..." />)
+    expect(view.querySelector('textarea')?.getAttribute('placeholder')).toBe('Enter text...')
+  })
+
+  it('renders controlled value', () => {
+    const view = render(<Textarea value="Controlled" onChange={() => {}} />)
+    expect(view.querySelector('textarea')?.value).toBe('Controlled')
   })
 })

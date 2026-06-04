@@ -8,20 +8,22 @@ import {
 const docData: DocPageData = {
     title: 'Callout',
     description: 'Styled callout box for notes, tips, and contextual highlights.',
-    importCode: "import { Callout } from '@monority/ui'",
-    usageCode: `<Callout title="Migration" tone="info">
-  <p>Background sync will pause briefly while records are reindexed.</p>
-</Callout>`,
+    importCode: "import { Callout } from '@monority/ui/callout'",
+    usageCode: `<Callout
+  title="Migration"
+  description="Background sync will pause briefly while records are reindexed."
+  tone="info"
+/>`,
     preview: () => <CalloutBasicExample />,
     examples: [
         { title: 'Tones', content: <CalloutTonesExample /> },
         { title: 'With children', content: <CalloutWithChildrenExample /> },
     ],
     props: [
-        { name: 'title', type: `string`, defaultValue: '-', description: 'Callout title.' },
+        { name: 'title', type: `ReactNode`, defaultValue: '-', description: 'Callout title.' },
         {
             name: 'description',
-            type: `string`,
+            type: `ReactNode`,
             defaultValue: '-',
             description: 'Callout description.',
         },
@@ -32,27 +34,41 @@ const docData: DocPageData = {
             description: 'Visual tone.',
         },
         { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Custom content.' },
+        {
+            name: 'role',
+            type: "'note' | 'alert' | 'status' | string",
+            defaultValue: "'note'",
+            description: 'ARIA landmark role. Use "alert" for time-sensitive messages.',
+        },
     ],
     cssHooks: [
         '.mr-callout',
+        '.mr-callout--neutral',
         '.mr-callout--info',
         '.mr-callout--success',
+        '.mr-callout--warning',
         '.mr-callout--danger',
-        '[data-variant]',
+        '[data-tone]',
     ],
     tokens: [
-        '--mr-accent',
-        '--mr-success',
-        '--mr-danger',
-        '--mr-bg-accent-soft',
-        '--mr-bg-success-soft',
-        '--mr-bg-danger-soft',
+        '--mr-border-strong',
+        '--mr-border-subtle',
+        '--mr-bg-surface-strong',
+        '--mr-bg-surface-elevated',
+        '--mr-shadow-xs',
+        '--mr-fg-strong',
+        '--mr-fg-base',
         '--mr-text-sm',
         '--mr-radius-md',
+        '--mr-info',
+        '--mr-success',
+        '--mr-warning',
+        '--mr-danger',
     ],
     a11y: [
-        'Use role="alert" for time-sensitive content.',
-        'Color is not the only visual indicator.',
+        'Default role="note". Pass role="alert" for time-sensitive notifications.',
+        'Color is not the only visual indicator — uses icon indicator by default.',
+        'Description and children should provide sufficient context for screen readers.',
     ],
 }
 

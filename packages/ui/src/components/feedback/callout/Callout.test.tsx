@@ -20,9 +20,11 @@ function render(ui: ReactElement) {
 }
 
 afterEach(() => {
-  act(() => {
-    root?.unmount()
-  })
+  try {
+    act(() => {
+      root?.unmount()
+    })
+  } catch {}
   container?.remove()
   root = null
   container = null
@@ -57,4 +59,33 @@ describe('Callout', () => {
     expect(ref.current?.tagName).toBe('DIV')
     expect(ref.current?.className).toContain('mr-callout')
   })
+
+  it('has default role="note"', () => {
+    const view = render(<Callout title="Note" />)
+    const el = view.querySelector('[role]')
+    expect(el?.getAttribute('role')).toBe('note')
+  })
+
+  it('accepts custom role', () => {
+    const view = render(<Callout title="Alert" role="alert" />)
+    const el = view.querySelector('[role]')
+    expect(el?.getAttribute('role')).toBe('alert')
+  })
+
+  it('renders title and description with tone', () => {
+    const view = render(
+      <Callout title="Warning" description="Proceed with caution" tone="warning" />,
+    )
+    expect(view.querySelector('.mr-callout__title')?.textContent).toBe('Warning')
+    expect(view.querySelector('.mr-callout__description')?.textContent).toBe('Proceed with caution')
+    expect(view.querySelector('div')?.className).toContain('mr-callout--warning')
+  })
+
+  it.each(['neutral', 'info', 'success', 'warning', 'danger'] as const)(
+    'sets data-tone="%s" for tone="%s"',
+    (tone) => {
+      const view = render(<Callout tone={tone} title="Test" />)
+      expect(view.querySelector('div')?.getAttribute('data-tone')).toBe(tone)
+    },
+  )
 })

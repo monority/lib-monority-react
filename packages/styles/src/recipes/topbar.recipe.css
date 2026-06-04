@@ -31,7 +31,7 @@
         flex: 0 1 auto;
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-sm);
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
         line-height: 1.2;
     }

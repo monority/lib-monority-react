@@ -143,7 +143,7 @@
         justify-content: center;
         color: var(--mr-fg-muted);
         font-size: 0.8125rem;
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-menubar__item-label {

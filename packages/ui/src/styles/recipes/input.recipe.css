@@ -1,14 +1,59 @@
 @layer recipes {
-  /* Input component-specific overrides.
-     Base styles (border, padding, background, transitions, etc.)
-     are provided by .mr-input-base in input-base.recipe.css. */
-
-  .mr-input {
+  .mr-input,
+  .mr-input-base {
     /* Inherits from .mr-input-base; add component-specific overrides here */
   }
 
+  .mr-input--accent,
+  .mr-input[data-tone='accent'] {
+    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-input--accent:focus-visible,
+  .mr-input[data-tone='accent']:focus-visible {
+    border-color: var(--mr-border-strong);
+    box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-input--danger,
+  .mr-input[data-tone='danger'],
+  .mr-input--invalid,
+  .mr-input[data-invalid='true'] {
+    border-color: color-mix(in srgb, var(--mr-danger) 42%, var(--mr-border-subtle));
+  }
+
+  .mr-input--danger:focus-visible,
+  .mr-input[data-tone='danger']:focus-visible,
+  .mr-input--invalid:focus-visible {
+    border-color: var(--mr-danger);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+  }
+
   .mr-input--error {
-    /* Error state is handled by [data-invalid='true'] in input-base,
-       but keep this class for backward compatibility with cn() usage */
+    /* backward compatibility — same as --invalid */
+    border-color: color-mix(in srgb, var(--mr-danger) 42%, var(--mr-border-subtle));
+  }
+
+  .mr-input--sm,
+  .mr-input[data-size='sm'] {
+    padding-inline: 0.75rem;
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-input--md,
+  .mr-input[data-size='md'] {
+    /* default, no override needed */
+  }
+
+  .mr-input--lg,
+  .mr-input[data-size='lg'] {
+    padding-inline: 1.25rem;
+    font-size: var(--mr-text-md);
+  }
+
+  .mr-input--disabled,
+  .mr-input[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }

@@ -18,17 +18,15 @@ const calloutVariants = cva({
 })
 
 export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout(
-  { tone, title, description, children, className, ...props },
+  { tone = 'neutral', title, description, children, className, role = 'note', ...props },
   ref,
 ) {
-  const resolvedTone = tone ?? 'neutral'
-
   return (
     <div
       ref={ref}
-      className={cn(calloutVariants({ tone: resolvedTone }), className)}
-      role="note"
-      data-tone={resolvedTone}
+      className={cn(calloutVariants({ tone }), className)}
+      role={role}
+      data-tone={tone}
       {...props}
     >
       {title ? <strong className="mr-callout__title">{title}</strong> : null}

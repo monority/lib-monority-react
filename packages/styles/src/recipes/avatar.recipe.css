@@ -19,7 +19,7 @@
     }
 
     .mr-avatar__initials {
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         user-select: none;
     }

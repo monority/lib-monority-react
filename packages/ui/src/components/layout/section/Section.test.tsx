@@ -79,4 +79,37 @@ describe('Section', () => {
     const { container } = render(<Section variant="card" />)
     expect(container.querySelector('[data-variant="card"]')).toBeTruthy()
   })
+
+  it('renders as aside when as="aside"', () => {
+    const { container } = render(<Section as="aside" />)
+    expect(container.querySelector('aside')).toBeTruthy()
+  })
+
+  it.each(['sm', 'md', 'lg', 'xl'] as const)(
+    'sets data-spacing="%s" for spacing="%s"',
+    (spacing) => {
+      const { container } = render(<Section spacing={spacing} />)
+      expect((container.firstChild as HTMLElement).getAttribute('data-spacing')).toBe(spacing)
+    },
+  )
+
+  it.each(['default', 'bordered', 'muted', 'card'] as const)(
+    'sets data-variant="%s" for variant="%s"',
+    (variant) => {
+      const { container } = render(<Section variant={variant} />)
+      expect((container.firstChild as HTMLElement).getAttribute('data-variant')).toBe(variant)
+    },
+  )
+
+  it('renders title as h3 when titleAs="h3"', () => {
+    render(<Section title="Section" titleAs="h3" />)
+    const heading = screen.getByText('Section')
+    expect(heading.tagName).toBe('H3')
+  })
+
+  it('does not set role by default', () => {
+    const { container } = render(<Section />)
+    const el = container.firstChild as HTMLElement
+    expect(el.hasAttribute('role')).toBe(false)
+  })
 })

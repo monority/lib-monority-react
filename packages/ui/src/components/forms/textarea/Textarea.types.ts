@@ -13,4 +13,5 @@ export interface TextareaProps
   className?: string
   invalid?: boolean
   resize?: 'none' | 'vertical' | 'both'
+  children?: ReactNode
 }

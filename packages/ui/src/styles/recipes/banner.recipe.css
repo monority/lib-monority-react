@@ -52,7 +52,7 @@
     margin: 0;
     color: var(--mr-fg-strong);
     font-size: var(--mr-text-base);
-    font-weight: 650;
+    font-weight: var(--mr-font-weight-semibold);
     line-height: 1.35;
     text-wrap: balance;
   }

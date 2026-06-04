@@ -44,7 +44,7 @@
         background: var(--mr-divider-label-bg);
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-xs);
-        font-weight: 650;
+        font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
     }
 

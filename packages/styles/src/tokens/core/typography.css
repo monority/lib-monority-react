@@ -2,6 +2,7 @@
   --mr-font-body: 'Geist Variable', 'Segoe UI', sans-serif;
   --mr-font-display: 'Geist Variable', 'Segoe UI', sans-serif;
   --mr-font-mono: 'JetBrains Mono', 'Geist Mono Variable', Consolas, monospace;
+  --mr-font-weight-semibold: 600;
   --mr-text-xs: 0.75rem;
   --mr-text-sm: 0.875rem;
   --mr-text-md: 1rem;

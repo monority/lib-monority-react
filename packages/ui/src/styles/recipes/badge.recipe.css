@@ -4,7 +4,7 @@
         --mr-badge-padding-x: 0.625rem;
         --mr-badge-radius: var(--mr-radius-xs);
         --mr-badge-font-size: var(--mr-text-xs);
-        --mr-badge-font-weight: 650;
+        --mr-badge-font-weight: var(--mr-font-weight-semibold);
 
         display: inline-flex;
         align-items: center;
