@@ -38,3 +38,22 @@
 - [ ] Input (même pattern que Textarea)
 - [ ] FormSection
 - [ ] Tous les composants encore en `draft`
+
+---
+
+## Test Taxonomy
+
+Tests are organised by responsibility. Future contributors should place new tests in the matching category:
+
+| Layer | Location | Purpose |
+|-------|----------|--------|
+| **Unit** | `packages/ui/src/components/<comp>/<Comp>.test.tsx` | Implementation behaviour, edge cases, internal state |
+| **Contract** | `packages/ui/src/__tests__/public-api.contract.test.tsx` | Public API invariants (void-element safety, form-family parity, data-size, a11y names) |
+| **Type smoke** | `packages/ui/src/__tests__/type-smoke.test.tsx` | Compile-time type shape guard (types must stay importable) |
+| **Export contract** | `packages/ui/src/__tests__/exports.contract.test.tsx` | Dynamic: every package.json export resolves at runtime |
+| **Adoption** | `packages/ui/src/__tests__/step11-adoption.test.tsx` | End-to-end consumer journey (render, interact, ref, controlled/uncontrolled) |
+| **Docs contract** | `apps/web/src/docs/step09-import-contract.test.ts` | Docs↔registry↔exports alignment |
+| **Docs contract** | `apps/web/src/docs/step10-docs-contract.test.ts` | Doc props match types, importCode subpaths valid |
+| **Build contract** | `apps/web/src/docs/step12-build-contract.test.ts` | Dist files exist, tsup↔package.json aligned |
+
+**Rule**: if a change touches a public prop, add or update a test in *Contract* or *Adoption*. If it changes types, add a *Type smoke* assertion. If it changes exports, the *Export contract* test will catch it automatically.
