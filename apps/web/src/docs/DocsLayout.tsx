@@ -1,7 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { Outlet, useLocation, Link } from 'react-router-dom'
 import { docsComponentRegistry } from './components/registry'
-import { AppHeader } from '@/layouts/AppHeader'
 
 interface DocsLayoutProps {
     children?: ReactNode
@@ -34,7 +33,6 @@ export function DocsLayout({ children }: DocsLayoutProps) {
 
     return (
         <div className="docs-layout">
-            <AppHeader />
             <aside className="docs-sidebar">
                 <div className="docs-sidebar__header">
                     <span className="docs-kicker">Monority UI</span>

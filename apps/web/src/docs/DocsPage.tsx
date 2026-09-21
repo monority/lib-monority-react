@@ -5,6 +5,7 @@ import { Introduction } from './Introduction'
 import { Installation } from './Installation'
 import { docsComponentRegistry } from './components/registry'
 import { DocPageWithToc } from './components/DocPageWithToc'
+import { AppHeader } from '@/layouts/AppHeader'
 
 const docModules: Record<string, LazyComponent> = {}
 
@@ -55,7 +56,9 @@ export function DocsPage() {
     const DocComponent = slug ? getDocComponent(slug) : null
 
     return (
-        <DocsLayout>
+        <>
+            <AppHeader />
+            <DocsLayout>
             {!slug ? (
                 <Introduction />
             ) : slug === 'installation' ? (
@@ -76,5 +79,6 @@ export function DocsPage() {
                 </div>
             )}
         </DocsLayout>
+        </>
     )
 }

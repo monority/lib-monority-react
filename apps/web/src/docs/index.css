@@ -4,7 +4,6 @@
     gap: 3rem;
     min-height: 100vh;
     color: var(--mr-fg-base);
-    padding-top: 3.25rem;
     --docs-code-bg: var(--mr-bg-surface);
     --docs-code-fg: var(--mr-fg-base);
     --docs-code-muted: var(--mr-fg-muted);
@@ -26,8 +25,8 @@
 
 .docs-sidebar {
     position: sticky;
-    top: 3.25rem;
-    height: calc(100vh - 3.25rem);
+    top: 0;
+    height: 100vh;
     padding: var(--mr-space-3);
     border-right: 1px solid var(--mr-border-subtle);
     background: var(--mr-bg-subtle);
