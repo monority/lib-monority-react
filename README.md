@@ -4,7 +4,7 @@
 [![CI](https://github.com/monority/ui/actions/workflows/ci.yml/badge.svg)](https://github.com/monority/ui/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-A premium React component library with design system, dark mode, and 48 beautifully crafted UI components.
+A premium React component library with design system, dark mode, and 77 publicly exported components.
 
 ## Installation
 
@@ -36,7 +36,7 @@ import { Button } from '@monority/ui/button'
 `Button` `CopyButton` `IconButton`
 
 ### Forms (16)
-`Checkbox` `Combobox` `DatePicker` `DateRangePicker` `Field` `FileUpload` `FormSection` `Input` `NumberInput` `PasswordInput` `RadioGroup` `SearchInput` `Select` `Slider` `Switch` `Textarea`
+`Checkbox` `Combobox` `DatePicker` `DateRangePicker` `Field` `FileUpload` `FormSection` `Input` `NumberInput` `PasswordInput` `RadioGroup` `Select` `Slider` `Switch` `Textarea`
 
 ### Typography (2)
 `Text` `Title`

@@ -1,6 +1,27 @@
 {
     "name": "@monority/ui",
     "version": "0.1.0",
+    "description": "A React component library with design system, dark mode, and 77 publicly exported components",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/monority/lib-monority-react.git"
+    },
+    "homepage": "https://github.com/monority/lib-monority-react#readme",
+    "bugs": {
+        "url": "https://github.com/monority/lib-monority-react/issues"
+    },
+    "keywords": [
+        "react",
+        "components",
+        "ui",
+        "design-system",
+        "typescript",
+        "accessible",
+        "dark-mode",
+        "cva",
+        "form-components"
+    ],
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org/"

@@ -39,6 +39,28 @@
 - [ ] FormSection
 - [ ] Tous les composants encore en `draft`
 
+## Release Workflow
+
+```bash
+# 1. Validate package health
+node tooling/scripts/validate.js
+
+# 2. Build + test + typecheck
+pnpm build && pnpm test && pnpm typecheck
+
+# 3. Create changeset (before PR merge)
+pnpm changeset
+
+# 4. On merge, release.yml publishes automatically via changesets/action
+# Or manually: pnpm release
+```
+
+**SemVer policy**: patch = bug fixes; minor = new components/props/exports; major = breaking changes.
+
+**Release readiness checklist**: see `docs/release-checklist.md`.
+
+**Changelog**: `CHANGELOG.md` at repo root. Updates via `pnpm changeset`.
+
 ---
 
 ## Test Taxonomy
