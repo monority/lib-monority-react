@@ -24,7 +24,7 @@ export function EmptyStateWithActionExample() {
 export function EmptyStateWithIconExample() {
     return (
         <EmptyState
-            icon={<Badge variant="secondary">Draft</Badge>}
+            icon={<Badge variant="default">Draft</Badge>}
             title="Review queue clear"
             description="All component updates have been triaged. New feedback will appear here."
         />

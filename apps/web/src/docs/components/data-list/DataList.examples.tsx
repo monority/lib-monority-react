@@ -23,7 +23,7 @@ export function DataListWithRenderExample() {
                     label: 'Status',
                     value: 'stable',
                     render: (value) => (
-                        <Badge variant="secondary">{String(value).toUpperCase()}</Badge>
+                        <Badge variant="default">{String(value).toUpperCase()}</Badge>
                     ),
                 },
                 {

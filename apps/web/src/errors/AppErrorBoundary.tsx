@@ -40,7 +40,7 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
             <Container size="md">
                 <Section spacing="lg" className="stack-m">
                     <div className="surface mr-app-error">
-                        <Stack gap="m">
+                        <Stack gap="md">
                             <Text tone="strong" className="eyebrow">
                                 Application error
                             </Text>

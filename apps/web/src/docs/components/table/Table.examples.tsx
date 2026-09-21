@@ -22,7 +22,7 @@ export function TableWithDataExample() {
         {
             key: 'status',
             label: 'Status',
-            render: (value: unknown) => <Badge variant="secondary">{String(value)}</Badge>,
+            render: (value: unknown) => <Badge variant="default">{String(value)}</Badge>,
         },
         {
             key: 'coverage',

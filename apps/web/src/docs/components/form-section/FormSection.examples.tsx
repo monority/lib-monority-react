@@ -38,7 +38,7 @@ export function FormSectionWithMetaExample() {
         <FormSection
             title="Billing contact"
             description="Choose who receives invoices and renewal reminders."
-            meta={<Badge variant="secondary">Required</Badge>}
+            meta={<Badge variant="default">Required</Badge>}
             actions={<Button variant="secondary">Update contact</Button>}
         >
             <Input label="Contact name" placeholder="Jane Doe" />

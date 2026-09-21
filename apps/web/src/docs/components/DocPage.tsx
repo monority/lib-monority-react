@@ -83,7 +83,7 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 <p className="docs-description">{doc.description}</p>
             </header>
 
-            {(fullCode || doc.preview) && (
+            {
                 <div className="docs-preview-card">
                     <div className="docs-preview-area">
                         <span className="docs-preview-label">{previewLabel}</span>
@@ -99,7 +99,7 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                         </div>
                     ) : null}
                 </div>
-            )}
+            }
 
             {doc.examples && doc.examples.length > 0 && (
                 <section className="docs-section">

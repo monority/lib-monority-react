@@ -7,7 +7,7 @@ const columns = [
     {
         key: 'severity',
         header: 'Severity',
-        render: (value: ReactNode) => <Badge variant="secondary">{String(value)}</Badge>,
+        render: (value: ReactNode) => <Badge variant="default">{String(value)}</Badge>,
     },
     { key: 'owner', header: 'Owner' },
 ]

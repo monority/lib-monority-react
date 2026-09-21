@@ -52,7 +52,6 @@ export function RadioGroupChoiceCardExample() {
     return (
         <RadioGroup
             label="Billing plan"
-            size="lg"
             defaultValue="pro"
             items={[
                 { value: 'basic', label: 'Basic', description: 'Up to 10 projects' },

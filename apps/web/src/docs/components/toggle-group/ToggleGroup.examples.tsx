@@ -23,7 +23,12 @@ export function ToggleGroupSinglePreview() {
     const [value, setValue] = useState<string>('')
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
-            <ToggleGroup items={alignItems} type="single" value={value} onValueChange={setValue} />
+            <ToggleGroup
+                items={alignItems}
+                type="single"
+                value={value}
+                onValueChange={(next) => setValue(next as string)}
+            />
             <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
                 Status: {value || 'all'}
             </span>
@@ -39,7 +44,7 @@ export function ToggleGroupMultipleExample() {
                 items={formatItems}
                 type="multiple"
                 value={value}
-                onValueChange={setValue}
+                onValueChange={(next) => setValue(next as string[])}
             />
             <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
                 Formatting: {value.length > 0 ? value.join(', ') : 'none'}

@@ -4,20 +4,22 @@ const PHI = (1 + Math.sqrt(5)) / 2
 
 type Vertex3 = [number, number, number]
 
-const vertices: Vertex3[] = [
-    [-1, PHI, 0],
-    [1, PHI, 0],
-    [-1, -PHI, 0],
-    [1, -PHI, 0],
-    [0, -1, PHI],
-    [0, 1, PHI],
-    [0, -1, -PHI],
-    [0, 1, -PHI],
-    [PHI, 0, -1],
-    [PHI, 0, 1],
-    [-PHI, 0, -1],
-    [-PHI, 0, 1],
-].map(([x, y, z]) => {
+const vertices: Vertex3[] = (
+    [
+        [-1, PHI, 0],
+        [1, PHI, 0],
+        [-1, -PHI, 0],
+        [1, -PHI, 0],
+        [0, -1, PHI],
+        [0, 1, PHI],
+        [0, -1, -PHI],
+        [0, 1, -PHI],
+        [PHI, 0, -1],
+        [PHI, 0, 1],
+        [-PHI, 0, -1],
+        [-PHI, 0, 1],
+    ] as Vertex3[]
+).map(([x, y, z]) => {
     const length = Math.hypot(x, y, z)
     return [x / length, y / length, z / length]
 })
@@ -26,8 +28,8 @@ const edges: [number, number][] = []
 
 for (let a = 0; a < vertices.length; a += 1) {
     for (let b = a + 1; b < vertices.length; b += 1) {
-        const [ax, ay, az] = vertices[a]
-        const [bx, by, bz] = vertices[b]
+        const [ax, ay, az] = vertices[a]!
+        const [bx, by, bz] = vertices[b]!
         const distance = Math.hypot(ax - bx, ay - by, az - bz)
 
         if (distance < 1.08) {
@@ -101,10 +103,11 @@ export function PremiumIcosahedron() {
             const height = rect.height
             const size = Math.min(width, height) * 0.54
             const elapsed = mediaQuery.matches ? 0 : (time - start) / 1000
+            const [baseX, baseY, baseZ] = initialRotation
             const rotation: Vertex3 = [
-                initialRotation[0] + elapsed * 0.16,
-                initialRotation[1] + elapsed * 0.11,
-                initialRotation[2] + elapsed * 0.08,
+                baseX + elapsed * 0.16,
+                baseY + elapsed * 0.11,
+                baseZ + elapsed * 0.08,
             ]
 
             context.clearRect(0, 0, width, height)
@@ -127,16 +130,16 @@ export function PremiumIcosahedron() {
 
             const sortedFaces = [...faces].sort((left, right) => {
                 const leftDepth =
-                    (projected[left[0]].z + projected[left[1]].z + projected[left[2]].z) / 3
+                    (projected[left[0]]!.z + projected[left[1]]!.z + projected[left[2]]!.z) / 3
                 const rightDepth =
-                    (projected[right[0]].z + projected[right[1]].z + projected[right[2]].z) / 3
+                    (projected[right[0]]!.z + projected[right[1]]!.z + projected[right[2]]!.z) / 3
                 return leftDepth - rightDepth
             })
 
             for (const [first, second, third] of sortedFaces) {
-                const a = projected[first]
-                const b = projected[second]
-                const c = projected[third]
+                const a = projected[first]!
+                const b = projected[second]!
+                const c = projected[third]!
                 const depth = (a.depth + b.depth + c.depth) / 3
                 const centerX = (a.x + b.x + c.x) / 3
                 const centerY = (a.y + b.y + c.y) / 3
@@ -148,7 +151,7 @@ export function PremiumIcosahedron() {
                     0,
                     centerX,
                     centerY,
-                    size * 0.28,
+                    size * 0.28
                 )
 
                 faceGradient.addColorStop(0, `rgba(215, 252, 255, ${alpha + 0.05 * faceTilt})`)
@@ -173,8 +176,15 @@ export function PremiumIcosahedron() {
                 context.stroke()
 
                 if (depth > 0.42) {
-                    const highlightPoint = [a, b, c].sort((left, right) => right.depth - left.depth)[0]
-                    const highlight = context.createLinearGradient(centerX, centerY, highlightPoint.x, highlightPoint.y)
+                    const highlightPoint = [a, b, c].sort(
+                        (left, right) => right.depth - left.depth
+                    )[0]!
+                    const highlight = context.createLinearGradient(
+                        centerX,
+                        centerY,
+                        highlightPoint.x,
+                        highlightPoint.y
+                    )
                     highlight.addColorStop(0, `rgba(255, 255, 255, ${0.0})`)
                     highlight.addColorStop(1, `rgba(222, 251, 255, ${0.08 + depth * 0.16})`)
 
@@ -188,8 +198,8 @@ export function PremiumIcosahedron() {
             }
 
             const sortedEdges = [...edges].sort((left, right) => {
-                const leftDepth = (projected[left[0]].z + projected[left[1]].z) / 2
-                const rightDepth = (projected[right[0]].z + projected[right[1]].z) / 2
+                const leftDepth = (projected[left[0]]!.z + projected[left[1]]!.z) / 2
+                const rightDepth = (projected[right[0]]!.z + projected[right[1]]!.z) / 2
                 return leftDepth - rightDepth
             })
 
@@ -197,8 +207,8 @@ export function PremiumIcosahedron() {
             context.globalCompositeOperation = 'lighter'
 
             for (const [from, to] of sortedEdges) {
-                const a = projected[from]
-                const b = projected[to]
+                const a = projected[from]!
+                const b = projected[to]!
                 const depth = (a.depth + b.depth) / 2
                 const alpha = 0.055 + depth * 0.14
                 const gradient = context.createLinearGradient(a.x, a.y, b.x, b.y)
@@ -218,8 +228,8 @@ export function PremiumIcosahedron() {
             context.restore()
 
             for (const [from, to] of sortedEdges) {
-                const a = projected[from]
-                const b = projected[to]
+                const a = projected[from]!
+                const b = projected[to]!
                 const depth = (a.depth + b.depth) / 2
                 const alpha = 0.15 + depth * 0.48
                 const gradient = context.createLinearGradient(a.x, a.y, b.x, b.y)
@@ -246,7 +256,7 @@ export function PremiumIcosahedron() {
                     0,
                     point.x,
                     point.y,
-                    radius,
+                    radius
                 )
                 gradient.addColorStop(0, `rgba(255, 250, 225, ${0.62 + point.depth * 0.34})`)
                 gradient.addColorStop(0.28, `rgba(238, 210, 164, ${0.34 + point.depth * 0.34})`)
