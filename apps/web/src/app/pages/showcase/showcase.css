@@ -58,7 +58,7 @@
 }
 
 .sc-section__canvas {
-    border: 1px solid var(--mr-border, rgba(128, 128, 128, 0.25));
+    border: 1px solid var(--mr-border-subtle, rgba(128, 128, 128, 0.25));
     border-radius: 0.75rem;
     padding: 1.25rem;
     background: var(--mr-bg-surface, transparent);

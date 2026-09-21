@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import './AppShell.css'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Button, Container, Drawer } from '@monority/ui'
 import { useAuth } from '@/hooks/useAuth'
@@ -120,7 +121,13 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
             }
         }
         function handleKeyDown(event: KeyboardEvent) {
-            if (event.key === 'Escape') {
+            // Scoped to the navigation subtree: overlays (modal, drawer,
+            // dialogs) own Escape while focused, and a global handler
+            // interferes with their dismissal.
+            if (
+                event.key === 'Escape' &&
+                navRef.current?.contains(event.target as Node)
+            ) {
                 setOpenGroupState({
                     label: null,
                     routeKey,

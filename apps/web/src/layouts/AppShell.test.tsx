@@ -173,6 +173,30 @@ describe('AppShell', () => {
         expect(within(dialog).getByRole('button', { name: 'Se deconnecter' })).toBeInTheDocument()
     })
 
+    it('ferme le groupe ouvert avec Escape uniquement depuis la navigation', () => {
+        renderAppShell(
+            {},
+            [
+                { label: 'Accueil', to: '/' },
+                { label: 'Dashboard', to: '/dashboard' },
+                { label: 'Docs', to: '/docs' },
+            ],
+        )
+
+        fireEvent.click(screen.getByRole('button', { name: /Produit/ }))
+        expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument()
+
+        // Escape outside the nav must not disturb overlays or nav state.
+        fireEvent.keyDown(document.body, { key: 'Escape' })
+        expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument()
+
+        // Escape from inside the nav closes the open group.
+        fireEvent.keyDown(screen.getByRole('button', { name: /Produit/ }), {
+            key: 'Escape',
+        })
+        expect(screen.queryByRole('link', { name: 'Dashboard' })).not.toBeInTheDocument()
+    })
+
     it('referme le drawer mobile apres une navigation', async () => {
         renderAppShell(
             {},

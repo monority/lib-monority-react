@@ -14,6 +14,16 @@
     padding-inline-end: 2.5rem;
   }
 
+  /* Dark surfaces need a light chevron (data-uri cannot inherit color). */
+  :root[data-theme='dark'] .mr-select,
+  :root[data-theme='dim'] .mr-select,
+  :root[data-theme='oled'] .mr-select,
+  .monority-theme-root[data-theme='dark'] .mr-select,
+  .monority-theme-root[data-theme='dim'] .mr-select,
+  .monority-theme-root[data-theme='oled'] .mr-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  }
+
   .mr-select--accent,
   .mr-select[data-tone='accent'] {
     border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));

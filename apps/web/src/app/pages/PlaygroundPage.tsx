@@ -15,32 +15,28 @@ export function PlaygroundPage() {
     })
     const [searchParams, setSearchParams] = useSearchParams()
     const requested = searchParams.get('component')
-    const requestedSlug =
+    // The URL is the single source of truth for the selected component, so
+    // dropdown changes, direct links and back/forward can never disagree.
+    const slug =
         requested && playgroundRegistry.some((item) => item.slug === requested)
             ? requested
             : playgroundRegistry[0]!.slug
-
-    const [slug, setSlug] = useState(requestedSlug)
     const definition = getPlaygroundDefinition(slug)
     const [values, setValues] = useState<PlaygroundProps>(() => ({
         ...definition.defaultProps,
     }))
+    const [valuesSlug, setValuesSlug] = useState(slug)
+    if (valuesSlug !== slug) {
+        setValues({ ...definition.defaultProps })
+        setValuesSlug(slug)
+    }
 
     // Invalid slug → fall back to the first component with a clean URL.
     useEffect(() => {
-        if (requested && requested !== requestedSlug) {
+        if (requested && requested !== slug) {
             setSearchParams({}, { replace: true })
         }
-    }, [requested, requestedSlug, setSearchParams])
-
-    // External navigation (back/forward, direct link) → follow the URL.
-    useEffect(() => {
-        if (requestedSlug !== slug) {
-            const nextDefinition = getPlaygroundDefinition(requestedSlug)
-            setSlug(requestedSlug)
-            setValues({ ...nextDefinition.defaultProps })
-        }
-    }, [requestedSlug, slug])
+    }, [requested, slug, setSearchParams])
 
     const code = useMemo(() => {
         const body = definition.generateCode(values)
@@ -49,8 +45,8 @@ export function PlaygroundPage() {
 
     const handleSelect = (next: string) => {
         const nextDefinition = getPlaygroundDefinition(next)
-        setSlug(next)
         setValues({ ...nextDefinition.defaultProps })
+        setValuesSlug(next)
         setSearchParams(next === playgroundRegistry[0]!.slug ? {} : { component: next })
     }
 

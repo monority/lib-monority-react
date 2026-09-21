@@ -1,0 +1,263 @@
+/* Application shell chrome (web-only, token-driven, theme-agnostic). */
+
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-shell main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Skip link: visually hidden until focused. */
+.app-skip-link {
+    position: absolute;
+    top: -100vh;
+    left: 1rem;
+    z-index: var(--mr-z-tooltip);
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    color: var(--mr-fg-strong);
+    border: 1px solid var(--mr-border-subtle);
+    text-decoration: none;
+}
+
+.app-skip-link:focus-visible {
+    top: 0.75rem;
+}
+
+/* Header bar. */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--mr-z-elevated);
+    border-bottom: 1px solid var(--mr-border-subtle);
+    background: color-mix(in srgb, var(--mr-bg-canvas) 88%, transparent);
+    backdrop-filter: blur(8px);
+}
+
+.app-header__inner {
+    min-height: 3.5rem;
+    padding-block: 0.625rem;
+}
+
+.brand {
+    color: var(--mr-fg-strong);
+    font-weight: 650;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.brand:hover {
+    color: var(--mr-fg-strong);
+}
+
+/* Primary navigation. */
+.app-nav {
+    gap: var(--mr-space-2);
+    min-width: 0;
+}
+
+.app-nav__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.625rem;
+    border-radius: var(--mr-radius-md);
+    color: var(--mr-fg-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.app-nav__link:hover {
+    color: var(--mr-fg-base);
+    background: var(--mr-bg-subtle);
+}
+
+.app-nav__link.is-active {
+    color: var(--mr-fg-strong);
+    background: var(--mr-bg-accent-soft);
+}
+
+/* Grouped dropdowns. */
+.app-nav__dropdown {
+    position: relative;
+}
+
+.app-nav__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid transparent;
+    border-radius: var(--mr-radius-md);
+    background: transparent;
+    color: var(--mr-fg-muted);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.app-nav__trigger:hover {
+    color: var(--mr-fg-base);
+    background: var(--mr-bg-subtle);
+}
+
+.app-nav__trigger[aria-expanded="true"] {
+    color: var(--mr-fg-strong);
+    background: var(--mr-bg-accent-soft);
+    border-color: var(--mr-border-subtle);
+}
+
+.app-nav__dropdown.is-active > .app-nav__trigger {
+    color: var(--mr-fg-strong);
+}
+
+.app-nav__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding-inline: 0.25rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+    font-size: 0.6875rem;
+    color: var(--mr-fg-muted);
+}
+
+.app-nav__caret {
+    transition: transform 160ms ease;
+}
+
+.app-nav__trigger[aria-expanded="true"] .app-nav__caret {
+    transform: rotate(180deg);
+}
+
+.app-nav__menu {
+    position: absolute;
+    top: calc(100% + 0.375rem);
+    left: 0;
+    z-index: var(--mr-z-elevated);
+    min-width: 12rem;
+    padding: 0.375rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-shadow-md);
+}
+
+.app-nav__menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.4375rem 0.625rem;
+    border-radius: var(--mr-radius-sm);
+    color: var(--mr-fg-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.app-nav__menu-link:hover {
+    color: var(--mr-fg-base);
+    background: var(--mr-bg-subtle);
+}
+
+.app-nav__menu-link.is-active {
+    color: var(--mr-fg-strong);
+    background: var(--mr-bg-accent-soft);
+}
+
+/* Mobile toggle: hidden on desktop, shown under the md breakpoint. */
+.app-nav-toggle {
+    display: none;
+}
+
+/* Header controls + session. */
+.app-header__controls {
+    gap: var(--mr-space-2);
+    margin-left: auto;
+}
+
+.app-session {
+    gap: var(--mr-space-2);
+}
+
+.app-session-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+    color: var(--mr-fg-muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+/* Mobile drawer navigation. */
+.app-mobile-nav__eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mr-fg-muted);
+}
+
+.app-mobile-nav__link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.625rem;
+    border-radius: var(--mr-radius-md);
+    color: var(--mr-fg-muted);
+    font-size: 0.9375rem;
+    text-decoration: none;
+}
+
+.app-mobile-nav__link:hover {
+    color: var(--mr-fg-base);
+    background: var(--mr-bg-subtle);
+}
+
+.app-mobile-nav__link.is-active {
+    color: var(--mr-fg-strong);
+    background: var(--mr-bg-accent-soft);
+}
+
+.app-mobile-nav__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding-inline: 0.25rem;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-full);
+    font-size: 0.6875rem;
+    color: var(--mr-fg-muted);
+}
+
+.app-mobile-nav__button {
+    justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+    .app-nav {
+        display: none;
+    }
+
+    .app-nav-toggle {
+        display: inline-flex;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-nav__caret {
+        transition: none;
+    }
+}
