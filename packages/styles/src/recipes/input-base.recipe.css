@@ -8,7 +8,7 @@
     background: var(--mr-bg-control);
     color: var(--mr-fg-base);
     font-family: inherit;
-    font-size: var(--mr-text-md);
+    font-size: var(--mr-text-sm);
     line-height: 1.5;
     box-shadow: var(--mr-shadow-xs);
     transition:

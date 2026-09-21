@@ -84,3 +84,9 @@
     font-size: var(--mr-text-base);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mr-toggle {
+    transition: none;
+  }
+}

@@ -1,14 +1,14 @@
 :root {
-  --mr-info: #1e40af;
-  --mr-info-soft: rgba(30, 64, 175, 0.10);
+  --mr-info: #1d4ed8;
+  --mr-info-soft: rgba(29, 78, 216, 0.08);
   --mr-info-contrast: #ffffff;
-  --mr-success: #14532d;
-  --mr-success-soft: rgba(20, 83, 45, 0.10);
+  --mr-success: #15803d;
+  --mr-success-soft: rgba(21, 128, 61, 0.08);
   --mr-success-contrast: #ffffff;
-  --mr-warning: #c2410c;
-  --mr-warning-soft: rgba(194, 65, 12, 0.10);
+  --mr-warning: #b45309;
+  --mr-warning-soft: rgba(180, 83, 9, 0.08);
   --mr-warning-contrast: #ffffff;
-  --mr-danger: #991b1b;
-  --mr-danger-soft: rgba(153, 27, 27, 0.10);
+  --mr-danger: #b91c1c;
+  --mr-danger-soft: rgba(185, 28, 28, 0.08);
   --mr-danger-contrast: #ffffff;
 }

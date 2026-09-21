@@ -151,3 +151,10 @@
     font-size: var(--mr-text-base);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mr-switch__control,
+  .mr-switch__thumb {
+    transition: none;
+  }
+}
