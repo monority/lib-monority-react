@@ -15,6 +15,16 @@
 - 7 fichiers CSS, 1063 UI + 59 web tests pass, consumer PASS
 - Commit: 00b37f6
 
+### 2026-06-04 — Step 15: Visual QA Corrections ✅
+- Extract shared AppHeader (Monority brand + Docs/Showcase/Playground)
+- HomePage, DocsLayout, AppShell all use unified header
+- Banner: grid+::before → flex+explicit marker div (alignment fix)
+- Callout: marker align-self center (remove margin-top hack)
+- Skeleton + Spinner: add prefers-reduced-motion guards
+- Input/Textarea/Combobox: tighten horizontal padding
+- 14 fichiers CSS/TSX, 1063 UI + 59 web tests pass, build clean, consumer PASS
+- Commit: ca371cf
+
 ### 2026-06-03 — Textarea Harmonization ✅
 - Harmonisation complète avec les patterns Callout/Section/Button
 - 4 fichiers modifiés, 22/22 tests, build OK
