@@ -86,13 +86,13 @@ const docData: DocPageData = {
             name: 'value',
             type: 'string',
             defaultValue: '-',
-            description: 'Controlled value.',
+            description: 'Controlled value. When omitted, the textarea is uncontrolled and `defaultValue` sets the initial value.',
         },
         {
             name: 'defaultValue',
             type: 'string',
             defaultValue: "''",
-            description: 'Default uncontrolled value.',
+            description: 'Uncontrolled initial value. Use instead of `value` for a controlled-less form field.',
         },
         {
             name: 'placeholder',

@@ -8,7 +8,7 @@ import {
 const docData: DocPageData = {
     title: 'Tooltip',
     description: 'A lightweight hover and focus hint for terse contextual labels.',
-    importCode: "import { Tooltip } from '@monority/ui'",
+    importCode: "import { Tooltip } from '@monority/ui/tooltip'",
     usageCode: `<Tooltip content="Inspect token details">
   <Button>Hover me</Button>
 </Tooltip>`,

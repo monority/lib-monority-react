@@ -5,7 +5,8 @@ const docData: DocPageData = {
     title: 'Toast',
     description:
         'Transient notification surface for background status, success confirmation, and failure feedback. Render one <Toast> directly, or push queued toasts through ToastProvider with useToast().',
-    importCode: "import { Toast, useToast } from '@monority/ui'",
+    importCode: `import { Toast } from '@monority/ui/toast'
+import { useToast } from '@monority/ui'`,
     usageCode: `<Toast title="Release draft saved" description="Your docs changes are ready for review." tone="neutral" />`,
     preview: () => <ToastBasicExample />,
     examples: [
@@ -16,9 +17,9 @@ const docData: DocPageData = {
         { name: 'title', type: `string`, defaultValue: '-', description: 'Toast title' },
         {
             name: 'description',
-            type: `string`,
+            type: `ReactNode`,
             defaultValue: '-',
-            description: 'Toast description',
+            description: 'Optional secondary text.',
         },
         {
             name: 'tone',

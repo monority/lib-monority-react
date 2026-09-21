@@ -10,7 +10,7 @@ const docData: DocPageData = {
     title: 'Accordion',
     description:
         'Grouped expandable sections for FAQs, release notes, and dense supporting content.',
-    importCode: "import { Accordion } from '@monority/ui'",
+    importCode: "import { Accordion } from '@monority/ui/accordion'",
     usageCode: `<Accordion items={[
   { value: 'tokens', title: 'What changed?', content: <p>Updated surfaces and rhythm.</p> },
   { value: 'migration', title: 'How do I migrate?', content: <p>Update shared shells first.</p> },

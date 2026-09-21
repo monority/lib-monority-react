@@ -57,6 +57,7 @@ const docData: DocPageData = {
         'The panel uses role="dialog" and aria-modal="true".',
         'The title id is connected through aria-labelledby.',
         'Focus is trapped while the modal is open and Escape closes it.',
+        'The close button uses a hardcoded French label; override the DOM if i18n is needed.',
     ],
 }
 

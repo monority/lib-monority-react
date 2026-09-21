@@ -9,7 +9,7 @@ const docData: DocPageData = {
     title: 'AlertDialog',
     description:
         'Confirmation dialog for destructive or high-consequence actions that need extra friction.',
-    importCode: "import { AlertDialog } from '@monority/ui'",
+    importCode: "import { AlertDialog } from '@monority/ui/alert-dialog'",
     usageCode: `<AlertDialog
   open={open}
   title="Delete this release snapshot?"
@@ -27,7 +27,7 @@ const docData: DocPageData = {
         { name: 'title', type: `string`, defaultValue: '-', description: 'Dialog title.' },
         {
             name: 'description',
-            type: `string`,
+            type: `ReactNode`,
             defaultValue: '-',
             description: 'Dialog description.',
         },
@@ -46,7 +46,7 @@ const docData: DocPageData = {
         {
             name: 'tone',
             type: `'danger' | 'default'`,
-            defaultValue: "'danger'",
+            defaultValue: "'default'",
             description: 'Visual tone.',
         },
         {
@@ -88,6 +88,7 @@ const docData: DocPageData = {
         'The message is exposed through aria-describedby when present.',
         'Focus moves inside the dialog and Escape dismisses it.',
         'Destructive actions stay clearly labelled and visually distinct.',
+        'Default button labels are in French; override confirmLabel/cancelLabel for other locales.',
     ],
 }
 

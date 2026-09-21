@@ -10,7 +10,7 @@ const docData: DocPageData = {
     title: 'Skeleton',
     description:
         'Shimmer placeholder for content that is still loading, useful for cards, lists, and profile rows.',
-    importCode: "import { Skeleton } from '@monority/ui'",
+    importCode: "import { Skeleton } from '@monority/ui/skeleton'",
     usageCode: `<Skeleton style={{ width: '14rem', height: '1rem' }} />`,
     preview: () => <SkeletonBasicExample />,
     examples: [

@@ -8,7 +8,7 @@ import {
 const docData: DocPageData = {
     title: 'Separator',
     description: 'Subtle divider for separating related groups without adding a new surface.',
-    importCode: "import { Separator } from '@monority/ui'",
+    importCode: "import { Separator } from '@monority/ui/separator'",
     usageCode: '<Separator />',
     preview: () => <SeparatorBasicExample />,
     examples: [

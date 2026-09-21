@@ -10,7 +10,7 @@ import {
 const docData: DocPageData = {
     title: 'Slider',
     description: 'Range slider with optional value display.',
-    importCode: "import { Slider } from '@monority/ui'",
+    importCode: "import { Slider } from '@monority/ui/slider'",
     usageCode: `<Slider label="Brightness" value={value} onValueChange={setValue} />`,
     preview: () => <SliderBasicExample />,
     examples: [
@@ -23,8 +23,8 @@ const docData: DocPageData = {
         { name: 'label', type: `ReactNode`, defaultValue: '-', description: 'Field label.' },
         { name: 'hint', type: `ReactNode`, defaultValue: '-', description: 'Helpful description.' },
         { name: 'error', type: `ReactNode`, defaultValue: '-', description: 'Error message.' },
-        { name: 'value', type: `number`, defaultValue: '-', description: 'Controlled value.' },
-        { name: 'defaultValue', type: `number`, defaultValue: '50', description: 'Default value.' },
+        { name: 'value', type: `number`, defaultValue: '-', description: 'Controlled value. Omit for uncontrolled mode with `defaultValue`.' },
+        { name: 'defaultValue', type: `number`, defaultValue: '50', description: 'Uncontrolled initial value (default 50).' },
         { name: 'min', type: `number`, defaultValue: '0', description: 'Minimum value.' },
         { name: 'max', type: `number`, defaultValue: '100', description: 'Maximum value.' },
         { name: 'step', type: `number`, defaultValue: '1', description: 'Step increment.' },
@@ -82,7 +82,8 @@ const docData: DocPageData = {
         'Supports disabled/required/aria-invalid.',
         'Visible focus ring on thumb.',
         'Associated label for screen readers.',
-        'Arrow keys adjust value.',
+        'Arrow keys, Home and End adjust the value.',
+        'onValueChange fires with the numeric value; onChange fires with the native event.',
     ],
 }
 

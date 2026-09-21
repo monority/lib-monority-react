@@ -11,7 +11,7 @@ const docData: DocPageData = {
     title: 'Progress',
     description:
         'Progress indicator for uploads, migrations, and task completion with determinate and indeterminate modes.',
-    importCode: "import { Progress } from '@monority/ui'",
+    importCode: "import { Progress } from '@monority/ui/progress'",
     usageCode: `<Progress value={68} label="Release migration" />`,
     preview: () => <ProgressBasicExample />,
     examples: [
@@ -27,7 +27,7 @@ const docData: DocPageData = {
             defaultValue: '0',
             description: 'Progress value (0-100).',
         },
-        { name: 'label', type: `string`, defaultValue: '-', description: 'Accessible label.' },
+        { name: 'label', type: `ReactNode`, defaultValue: '-', description: 'Accessible label.' },
         {
             name: 'showValue',
             type: `boolean`,

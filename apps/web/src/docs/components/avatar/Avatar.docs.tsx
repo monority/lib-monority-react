@@ -9,7 +9,7 @@ import {
 const docData: DocPageData = {
     title: 'Avatar',
     description: 'User or entity identity marker with image and initials fallback.',
-    importCode: "import { Avatar } from '@monority/ui'",
+    importCode: "import { Avatar } from '@monority/ui/avatar'",
     usageCode: `<Avatar size="sm" name="Alice B" />
 <Avatar size="md" name="Alice B" />
 <Avatar size="lg" name="Alice B" />`,

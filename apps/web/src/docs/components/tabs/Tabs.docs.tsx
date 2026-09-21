@@ -11,7 +11,7 @@ const docData: DocPageData = {
     title: 'Tabs',
     description:
         'A compact local navigation control for switching between adjacent views, filters, or content groups.',
-    importCode: "import { Tabs } from '@monority/ui'",
+    importCode: "import { Tabs } from '@monority/ui/tabs'",
     usageCode: `const [value, setValue] = useState('overview')
 
 <Tabs
@@ -32,7 +32,7 @@ const docData: DocPageData = {
     props: [
         {
             name: 'items',
-            type: `{ value: string; label: string }[]`,
+            type: `{ value: string; label: ReactNode }[]`,
             defaultValue: '[]',
             description: 'Tab definitions',
         },
@@ -108,7 +108,7 @@ const docData: DocPageData = {
     ],
     a11y: [
         'Root uses role="tablist" with aria-label.',
-        'Each tab uses role="tab" with aria-selected and aria-controls.',
+        'Each tab uses role="tab" with aria-selected and roving tabIndex.',
         'Roving tabIndex keeps the active tab in the keyboard flow.',
         'Arrow keys, Home, and End move across tabs.',
     ],

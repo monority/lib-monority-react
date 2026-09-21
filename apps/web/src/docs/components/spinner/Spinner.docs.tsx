@@ -10,7 +10,7 @@ const docData: DocPageData = {
     title: 'Spinner',
     description:
         'Compact loading indicator for short waits, background actions, and inline status feedback.',
-    importCode: "import { Spinner } from '@monority/ui'",
+    importCode: "import { Spinner } from '@monority/ui/spinner'",
     usageCode: `<Spinner size="sm" />
 <Spinner size="md" />
 <Spinner size="lg" />`,

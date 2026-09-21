@@ -12,7 +12,7 @@ const docData: DocPageData = {
     title: 'RadioGroup',
     description:
         'Radio button group with label, hint, error, descriptions, and accessible keyboard navigation.',
-    importCode: "import { RadioGroup } from '@monority/ui'",
+    importCode: "import { RadioGroup } from '@monority/ui/radio-group'",
     usageCode: `const items = [
   { value: 'sm', label: 'Small' },
   { value: 'md', label: 'Medium' },

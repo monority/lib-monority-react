@@ -10,7 +10,7 @@ import {
 const docData: DocPageData = {
     title: 'Checkbox',
     description: 'Selection control for independent choices, bulk actions, and optional settings.',
-    importCode: "import { Checkbox } from '@monority/ui'",
+    importCode: "import { Checkbox } from '@monority/ui/checkbox'",
     usageCode: `<Checkbox label="Send weekly summary" />
 <Checkbox label="Include failed jobs" defaultChecked />`,
     preview: () => <CheckboxBasicExample />,

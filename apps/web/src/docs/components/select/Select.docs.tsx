@@ -13,7 +13,7 @@ const docData: DocPageData = {
     title: 'Select',
     description:
         'A dropdown menu that allows users to select one option from a list. Supports label, hint, error, sizes, and disabled state.',
-    importCode: "import { Select } from '@monority/ui'",
+    importCode: "import { Select } from '@monority/ui/select'",
     usageCode: `<Select label="Country">
   <option value="">Select an option...</option>
   <option value="option1">Option 1</option>
@@ -43,8 +43,9 @@ const docData: DocPageData = {
             defaultValue: "'neutral'",
             description: 'Visual tone',
         },
-        { name: 'value', type: `string`, defaultValue: '-', description: 'Selected value' },
-        { name: 'onChange', type: `function`, defaultValue: '-', description: 'Change callback' },
+        { name: 'value', type: `string`, defaultValue: '-', description: 'Controlled selected value. Use `defaultValue` for uncontrolled mode.' },
+        { name: 'defaultValue', type: `string`, defaultValue: "''", description: 'Uncontrolled initial value.' },
+        { name: 'onChange', type: `function`, defaultValue: '-', description: 'Native change callback. Value is available via `event.target.value`.' },
         {
             name: 'required',
             type: `boolean`,

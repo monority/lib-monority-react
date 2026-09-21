@@ -9,7 +9,7 @@ import {
 const docData: DocPageData = {
     title: 'Switch',
     description: 'Immediate on/off control for persistent settings and feature flags.',
-    importCode: "import { Switch } from '@monority/ui'",
+    importCode: "import { Switch } from '@monority/ui/switch'",
     usageCode: `const [checked, setChecked] = useState(false)
 
 <Switch
@@ -44,15 +44,15 @@ const docData: DocPageData = {
             name: 'checked',
             type: `boolean`,
             defaultValue: 'false',
-            description: 'Controlled checked state.',
+            description: 'Controlled checked state. Omit to use uncontrolled mode with `defaultChecked`.',
         },
         {
             name: 'defaultChecked',
             type: `boolean`,
             defaultValue: 'false',
-            description: 'Default checked state.',
+            description: 'Initial checked state when used uncontrolled.',
         },
-        { name: 'onChange', type: `function`, defaultValue: '-', description: 'Change callback.' },
+        { name: 'onChange', type: `function`, defaultValue: '-', description: 'Native change event callback (event.target.checked gives the new state).' },
         {
             name: 'label',
             type: `ReactNode`,
