@@ -30,6 +30,7 @@ export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
       data-tone={resolvedTone}
       {...props}
     >
+      <span className="mr-banner__marker" aria-hidden="true" />
       <div className="mr-banner__body">
         {hasStructuredContent ? (
           <>

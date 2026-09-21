@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useErrorToast } from '@/hooks/useErrorToast'
 import { useToast } from '@monority/ui'
 import { cn } from '@/lib/cn'
+import { AppHeader } from './AppHeader'
 
 interface NavigationItem {
     label: string
@@ -172,12 +173,10 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                 Aller au contenu principal
             </a>
 
-            <header className="app-header">
-                <Container size="lg" className="cluster between app-header__inner">
-                    <Link className="brand" to="/" aria-label="Monority">
-                        Monority
-                    </Link>
+            <AppHeader />
 
+            <div className="app-shell__chrome">
+                <Container size="lg" className="cluster between app-chrome__inner">
                     <nav ref={navRef} className="cluster app-nav" aria-label="Navigation principale">
                         <div className="cluster app-nav__direct">
                             {directItems.map((item) =>
@@ -318,7 +317,7 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
                         </Button>
                     </div>
                 </Container>
-            </header>
+            </div>
 
             <Drawer
                 open={isMobileNavigationOpen}

@@ -2,7 +2,7 @@
   .mr-input-base {
     width: var(--mr-input-width);
     min-height: var(--mr-input-height);
-    padding-inline: 1rem;
+    padding-inline: 0.625rem;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-input-radius);
     background: var(--mr-bg-control);
@@ -72,7 +72,7 @@
 
   .mr-input-base[data-size='lg'] {
     min-height: 3rem;
-    padding-inline: 1.25rem;
+    padding-inline: 0.875rem;
     font-size: var(--mr-text-md);
   }
 }

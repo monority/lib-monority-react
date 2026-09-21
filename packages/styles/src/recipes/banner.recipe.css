@@ -6,10 +6,9 @@
     --mr-banner-marker: color-mix(in srgb, var(--mr-banner-tone) 92%, var(--mr-fg-strong));
 
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: var(--mr-space-4);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mr-space-3);
     width: 100%;
     min-width: 0;
     padding: var(--mr-space-4);
@@ -20,24 +19,21 @@
     box-shadow: var(--mr-shadow-xs);
   }
 
-  .mr-banner::before {
-    position: absolute;
-    top: var(--mr-space-4);
-    left: var(--mr-space-4);
+  .mr-banner__marker {
+    flex-shrink: 0;
     width: 0.55rem;
     height: 0.55rem;
+    margin-top: 0.3125rem;
     border-radius: var(--mr-radius-full);
     background: var(--mr-banner-marker);
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--mr-banner-tone) 12%, transparent);
-    content: '';
+    align-self: flex-start;
   }
 
-  .mr-banner__content,
   .mr-banner__body {
     display: grid;
     gap: var(--mr-space-1);
     min-width: 0;
-    padding-inline-start: calc(var(--mr-space-4) + 0.25rem);
   }
 
   .mr-banner__eyebrow {
@@ -102,33 +98,13 @@
 
   @media (max-width: 900px) {
     .mr-banner {
-      grid-template-columns: minmax(0, 1fr);
+      flex-wrap: wrap;
       gap: var(--mr-space-3);
     }
 
     .mr-banner__actions {
       justify-content: flex-start;
-      padding-inline-start: calc(var(--mr-space-4) + 0.25rem);
-    }
-  }
-
-  @media (max-width: 520px) {
-    .mr-banner {
-      padding: var(--mr-space-3);
-    }
-
-    .mr-banner::before {
-      top: calc(var(--mr-space-3) + 0.15rem);
-      left: var(--mr-space-3);
-    }
-
-    .mr-banner__body,
-    .mr-banner__actions {
-      padding-inline-start: var(--mr-space-4);
-    }
-
-    .mr-banner__actions > * {
-      flex: 1 1 100%;
+      width: 100%;
     }
   }
 }

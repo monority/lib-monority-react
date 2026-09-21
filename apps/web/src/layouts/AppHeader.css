@@ -1,0 +1,81 @@
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--mr-z-elevated);
+    border-bottom: 1px solid var(--mr-border-subtle);
+    background: color-mix(in srgb, var(--mr-bg-canvas) 88%, transparent);
+    backdrop-filter: blur(8px);
+}
+
+.app-header--home {
+    background: transparent;
+    border-bottom: none;
+    backdrop-filter: none;
+}
+
+.app-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.app-header__brand {
+    font-size: 0.875rem;
+    font-weight: 620;
+    letter-spacing: -0.01em;
+    color: var(--mr-fg-strong);
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.app-header--home .app-header__brand {
+    color: rgba(244, 239, 228, 0.9);
+}
+
+.app-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.app-header__nav a {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3125rem 0.5rem;
+    border-radius: var(--mr-radius-sm);
+    color: var(--mr-fg-muted);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    transition: color 140ms ease, background-color 140ms ease;
+}
+
+.app-header__nav a:hover {
+    color: var(--mr-fg-base);
+    background: var(--mr-bg-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-header__nav a {
+        transition: none;
+    }
+}
+
+.home-page .app-header__brand {
+    color: rgba(244, 239, 228, 0.9);
+}
+
+.home-page .app-header__nav a {
+    color: rgba(244, 239, 228, 0.62);
+}
+
+.home-page .app-header__nav a:hover {
+    color: rgba(255, 248, 226, 0.92);
+    background: transparent;
+}

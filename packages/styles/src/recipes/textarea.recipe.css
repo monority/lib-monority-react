@@ -76,20 +76,20 @@
   .mr-textarea--sm,
   .mr-textarea[data-size='sm'] {
     --mr-textarea-min-height: 4rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.375rem 0.625rem;
     font-size: var(--mr-text-xs);
   }
 
   .mr-textarea--md,
   .mr-textarea[data-size='md'] {
     --mr-textarea-min-height: 5.75rem;
-    padding: 0.625rem 1rem;
+    padding: 0.5rem 0.625rem;
   }
 
   .mr-textarea--lg,
   .mr-textarea[data-size='lg'] {
     --mr-textarea-min-height: 7.5rem;
-    padding: 0.875rem 1rem;
+    padding: 0.625rem 0.875rem;
     font-size: var(--mr-text-base);
   }
 

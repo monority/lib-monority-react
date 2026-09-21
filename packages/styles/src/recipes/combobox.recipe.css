@@ -7,7 +7,7 @@
   .mr-combobox__input {
     width: 100%;
     min-height: var(--mr-input-height);
-    padding-inline: 1rem;
+    padding-inline: 0.625rem;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-input-radius);
     background: var(--mr-bg-control);
@@ -63,7 +63,7 @@
 
   .mr-combobox[data-size='sm'] .mr-combobox__input {
     --mr-input-height: 2rem;
-    padding-inline: 0.75rem;
+    padding-inline: 0.5rem;
     font-size: var(--mr-text-xs);
   }
 
@@ -73,7 +73,7 @@
 
   .mr-combobox[data-size='lg'] .mr-combobox__input {
     --mr-input-height: 3rem;
-    padding-inline: 1.25rem;
+    padding-inline: 0.875rem;
     font-size: var(--mr-text-md);
   }
 

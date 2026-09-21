@@ -261,3 +261,17 @@
         transition: none;
     }
 }
+
+/* Secondary chrome bar (below shared AppHeader). */
+.app-shell__chrome {
+    border-bottom: 1px solid var(--mr-border-subtle);
+    background: var(--mr-bg-subtle);
+    position: sticky;
+    top: 3.25rem;
+    z-index: var(--mr-z-elevated);
+}
+
+.app-chrome__inner {
+    min-height: 2.5rem;
+    padding-block: 0.375rem;
+}

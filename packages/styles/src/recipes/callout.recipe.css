@@ -18,10 +18,10 @@
         content: '';
         width: 0.625rem;
         height: 0.625rem;
-        margin-top: 0.35rem;
         border: 1px solid var(--mr-callout-accent);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-callout-accent-bg);
+        align-self: center;
     }
 
     .mr-callout__title {
