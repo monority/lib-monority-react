@@ -86,4 +86,68 @@ describe('Tooltip', () => {
     const button = view.querySelector('button')
     expect(button?.getAttribute('aria-describedby')).toBe(tooltipContent?.getAttribute('id'))
   })
+
+  it('marks the tooltip dismissed when Escape is pressed', () => {
+    const view = render(
+      <Tooltip content="Help text">
+        <button type="button">Action</button>
+      </Tooltip>,
+    )
+    const wrapper = view.querySelector('.mr-tooltip') as HTMLElement
+
+    expect(wrapper.getAttribute('data-hidden')).toBeNull()
+    act(() => {
+      wrapper.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      )
+    })
+    expect(wrapper.getAttribute('data-hidden')).toBe('true')
+  })
+
+  it('clears the dismissal when the pointer leaves the trigger', () => {
+    const view = render(
+      <Tooltip content="Help text">
+        <button type="button">Action</button>
+      </Tooltip>,
+    )
+    const wrapper = view.querySelector('.mr-tooltip') as HTMLElement
+
+    act(() => {
+      wrapper.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      )
+    })
+    expect(wrapper.getAttribute('data-hidden')).toBe('true')
+
+    act(() => {
+      // React derives onMouseLeave from delegated mouseout/mouseover
+      wrapper.dispatchEvent(new MouseEvent('mouseout', { bubbles: true }))
+    })
+    expect(wrapper.getAttribute('data-hidden')).toBeNull()
+  })
+
+  it('does not treat other keys as dismissal', () => {
+    const view = render(
+      <Tooltip content="Help text">
+        <button type="button">Action</button>
+      </Tooltip>,
+    )
+    const wrapper = view.querySelector('.mr-tooltip') as HTMLElement
+
+    act(() => {
+      wrapper.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+      )
+    })
+    expect(wrapper.getAttribute('data-hidden')).toBeNull()
+  })
+
+  it('keeps plain (non-element) children as-is', () => {
+    const view = render(
+      <Tooltip content="Help text">
+        <span data-testid="plain">Trigger</span>
+      </Tooltip>,
+    )
+    expect(view.querySelector('[data-testid="plain"]')).not.toBeNull()
+  })
 })

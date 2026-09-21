@@ -24,9 +24,9 @@ const docData: DocPageData = {
     props: [
         {
             name: 'items',
-            type: `{ value: string; title: ReactNode; content: ReactNode }[]`,
+            type: `{ value: string; title: ReactNode; content: ReactNode; disabled?: boolean }[]`,
             defaultValue: '[]',
-            description: 'Accordion sections.',
+            description: 'Accordion sections. Items accept a disabled flag.',
         },
         {
             name: 'defaultValue',
@@ -81,6 +81,9 @@ const docData: DocPageData = {
         'Each trigger exposes aria-expanded and aria-controls.',
         'Each panel is labelled by its trigger through aria-labelledby.',
         'Buttons remain keyboard accessible with Enter and Space.',
+        'Triggers use a roving tabindex.',
+        'ArrowUp / ArrowDown move between triggers (wrapping); Home / End jump to first / last.',
+        'Disabled items are skipped by keyboard navigation and cannot be toggled.',
     ],
 }
 

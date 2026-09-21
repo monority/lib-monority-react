@@ -34,8 +34,9 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
   const displayValue = isControlled ? value : internalValue
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (!isControlled) setInternalValue(event.target.value)
-    onValueChange?.(event.target.value)
+    const nextValue = Number(event.target.value)
+    if (!isControlled) setInternalValue(nextValue)
+    onValueChange?.(nextValue)
     onChange?.(event)
   }
 

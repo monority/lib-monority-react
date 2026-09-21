@@ -8,6 +8,8 @@ export interface CheckboxProps
   tone?: CheckboxTone
   size?: CheckboxSize
   label?: ReactNode
+  hint?: ReactNode
+  error?: ReactNode
   className?: string
   indeterminate?: boolean
   invalid?: boolean

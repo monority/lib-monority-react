@@ -1,4 +1,4 @@
-import { forwardRef, useCallback } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { ProgressProps, ProgressTone } from './Progress.types'
@@ -34,7 +34,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       mode = 'determinate',
       className,
       barClassName,
-      onChange,
       ...props
     },
     ref,
@@ -42,26 +41,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const safeValue = clamp(value)
     const resolvedTone = tone ?? 'neutral'
     const isIndeterminate = mode === 'indeterminate'
-    const isSlidable = !!onChange && !isIndeterminate
-
-    const handleTrackClick = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!onChange) return
-        const rect = e.currentTarget.getBoundingClientRect()
-        const ratio = (e.clientX - rect.left) / rect.width
-        onChange(clamp(Math.round(ratio * 100)))
-      },
-      [onChange],
-    )
 
     return (
       <div
         ref={ref}
-        className={cn(
-          progressVariants({ tone: resolvedTone, mode }),
-          isSlidable && 'mr-progress--slidable',
-          className,
-        )}
+        className={cn(progressVariants({ tone: resolvedTone, mode }), className)}
         data-tone={resolvedTone}
         data-mode={mode}
         data-value={isIndeterminate ? undefined : safeValue}
@@ -82,7 +66,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuemax={100}
           aria-valuenow={isIndeterminate ? undefined : safeValue}
           aria-label={typeof label === 'string' ? label : 'Progress'}
-          onClick={handleTrackClick}
         >
           <div
             className={cn(

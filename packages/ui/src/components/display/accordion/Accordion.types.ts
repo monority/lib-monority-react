@@ -4,6 +4,8 @@ export interface AccordionItem {
   value: string
   title: ReactNode
   content: ReactNode
+  /** Disabled items are not focusable via the roving tabindex and cannot be toggled. */
+  disabled?: boolean
 }
 
 export type AccordionSize = 'sm' | 'md' | 'lg'

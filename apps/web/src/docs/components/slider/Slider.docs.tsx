@@ -11,7 +11,7 @@ const docData: DocPageData = {
     title: 'Slider',
     description: 'Range slider with optional value display.',
     importCode: "import { Slider } from '@monority/ui'",
-    usageCode: `<Slider label="Brightness" value={value} onChange={setValue} />`,
+    usageCode: `<Slider label="Brightness" value={value} onValueChange={setValue} />`,
     preview: () => <SliderBasicExample />,
     examples: [
         { title: 'Custom range', content: <SliderWithRangeExample /> },
@@ -39,6 +39,18 @@ const docData: DocPageData = {
             type: `boolean`,
             defaultValue: 'false',
             description: 'Required field indicator.',
+        },
+        {
+            name: 'onValueChange',
+            type: `(value: number) => void`,
+            defaultValue: '-',
+            description: 'Called with the numeric slider value on change.',
+        },
+        {
+            name: 'onChange',
+            type: `(event: ChangeEvent<HTMLInputElement>) => void`,
+            defaultValue: '-',
+            description: 'Native change event on the range input.',
         },
     ],
     cssHooks: [

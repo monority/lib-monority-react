@@ -25,19 +25,28 @@ function getInitials(name?: string): string {
     .slice(0, 2)
 }
 
+/**
+ * Avatar contract:
+ * - `src` renders an `<img>` (alt from `alt`).
+ * - Fallback when there is no image or it fails to load: explicit `children`
+ *   if provided, otherwise initials derived from `name`.
+ * - `name` also provides the accessible name unless `alt` (or an explicit
+ *   `aria-label`) is set.
+ */
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  function Avatar({ src, alt = '', name, size, className, ...props }, ref) {
+  function Avatar({ src, alt = '', name, size, className, children, ...props }, ref) {
     const [imgError, setImgError] = useState(false)
     const initials = useMemo(() => getInitials(name), [name])
     const showImage = src && !imgError
+    const accessibleName = alt || name
 
     return (
       <div
         ref={ref}
         className={cn(avatarVariants({ size }), className)}
         data-size={size}
-        role={alt ? 'img' : undefined}
-        aria-label={alt || undefined}
+        role={accessibleName ? 'img' : undefined}
+        aria-label={accessibleName || undefined}
         {...props}
       >
         {showImage ? (
@@ -49,7 +58,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
           />
         ) : (
           <span className="mr-avatar__initials" aria-hidden="true">
-            {initials}
+            {children ?? initials}
           </span>
         )}
       </div>

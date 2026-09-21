@@ -5,7 +5,6 @@ import {
     ProgressTonesExample,
     ProgressWithoutValueExample,
     ProgressIndeterminateExample,
-    ProgressSliderExample,
 } from './Progress.examples'
 
 const docData: DocPageData = {
@@ -20,7 +19,6 @@ const docData: DocPageData = {
         { title: 'Tones', content: <ProgressTonesExample /> },
         { title: 'Without value', content: <ProgressWithoutValueExample /> },
         { title: 'Indeterminate', content: <ProgressIndeterminateExample /> },
-        { title: 'Interactive slider', content: <ProgressSliderExample /> },
     ],
     props: [
         {
@@ -49,12 +47,6 @@ const docData: DocPageData = {
             description: 'Display mode. Indeterminate shows an animated bar.',
         },
         {
-            name: 'onChange',
-            type: `(value: number) => void`,
-            defaultValue: '-',
-            description: 'Click handler on the track for interactive slider mode.',
-        },
-        {
             name: 'barClassName',
             type: `string`,
             defaultValue: '-',
@@ -68,7 +60,6 @@ const docData: DocPageData = {
         '.mr-progress__bar',
         '.mr-progress__label',
         '.mr-progress__bar--indeterminate',
-        '.mr-progress--slidable',
         '[data-tone]',
         '[data-mode]',
     ],

@@ -86,7 +86,28 @@ describe('Slider', () => {
       nativeInputValueSetter?.call(input, '75')
       input.dispatchEvent(new Event('input', { bubbles: true }))
     })
-    expect(onValueChange).toHaveBeenCalledWith('75')
+    expect(onValueChange).toHaveBeenCalledWith(75)
+  })
+
+  it('applies numeric range attributes on the native input', () => {
+    const view = render(<Slider min={10} max={90} step={5} defaultValue={30} />)
+    const input = view.querySelector('input') as HTMLInputElement
+
+    expect(input.min).toBe('10')
+    expect(input.max).toBe('90')
+    expect(input.step).toBe('5')
+    expect(input.value).toBe('30')
+    // native range input exposes implicit slider role with value semantics
+    expect(input.getAttribute('type')).toBe('range')
+  })
+
+  it('renders the controlled value in the output', () => {
+    const view = render(<Slider value={42} />)
+    const input = view.querySelector('input') as HTMLInputElement
+    const output = view.querySelector('output')
+
+    expect(input.value).toBe('42')
+    expect(output?.textContent).toBe('42')
   })
 
   it('passes className to the wrapper', () => {

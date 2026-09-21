@@ -20,23 +20,17 @@ export function CheckboxDisabledExample() {
 
 export function CheckboxWithErrorExample() {
     return (
-        <div style={{ display: 'grid', gap: '0.375rem' }}>
-            <Checkbox label="Confirm retention policy" invalid />
-            <span style={{ fontSize: '0.8125rem', color: 'var(--mr-danger)' }}>
-                Required before archiving this workspace.
-            </span>
-        </div>
+        <Checkbox label="Confirm retention policy" error="Required before archiving this workspace." />
     )
 }
 
 export function CheckboxWithDescriptionExample() {
     return (
-        <div style={{ display: 'grid', gap: '0.375rem' }}>
-            <Checkbox label="Enable notifications" defaultChecked />
-            <span style={{ fontSize: '0.8125rem', color: 'var(--mr-fg-muted)' }}>
-                Send alerts when deployment checks fail.
-            </span>
-        </div>
+        <Checkbox
+            label="Enable notifications"
+            defaultChecked
+            hint="Send alerts when deployment checks fail."
+        />
     )
 }
 

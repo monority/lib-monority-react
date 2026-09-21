@@ -58,4 +58,45 @@ describe('Avatar', () => {
     render(<Avatar ref={ref} name="Test" />)
     expect(ref.current?.className).toContain('mr-avatar')
   })
+
+  it('renders explicit children as the fallback instead of derived initials', () => {
+    const view = render(<Avatar name="Maya Chen">MC</Avatar>)
+    const fallback = view.querySelector('.mr-avatar__initials')
+
+    expect(fallback?.textContent).toBe('MC')
+  })
+
+  it('exposes the accessible name from alt when provided', () => {
+    const view = render(<Avatar name="Maya Chen" alt="Maya Chen" />)
+    const root = view.querySelector('.mr-avatar') as HTMLElement
+
+    expect(root.getAttribute('role')).toBe('img')
+    expect(root.getAttribute('aria-label')).toBe('Maya Chen')
+  })
+
+  it('exposes the accessible name from name when alt is absent', () => {
+    const view = render(<Avatar name="Noah Price" />)
+    const root = view.querySelector('.mr-avatar') as HTMLElement
+
+    expect(root.getAttribute('role')).toBe('img')
+    expect(root.getAttribute('aria-label')).toBe('Noah Price')
+  })
+
+  it('stays decorative when no accessible name exists', () => {
+    const view = render(<Avatar />)
+    const root = view.querySelector('.mr-avatar') as HTMLElement
+
+    expect(root.getAttribute('role')).toBeNull()
+    expect(root.getAttribute('aria-label')).toBeNull()
+  })
+
+  it('hides the fallback from the accessibility tree (name carries it)', () => {
+    const view = render(<Avatar name="Ana Lee" />)
+    expect(view.querySelector('.mr-avatar__initials')?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('uses a placeholder when name is missing entirely', () => {
+    const view = render(<Avatar />)
+    expect(view.querySelector('.mr-avatar__initials')?.textContent).toBe('?')
+  })
 })

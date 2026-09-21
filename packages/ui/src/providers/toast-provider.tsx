@@ -30,6 +30,31 @@ interface ToastContextValue {
   dismissToast: (id: string) => void
 }
 
+/**
+ * Owns its own auto-dismiss timer so that adding or removing another toast
+ * never resets an existing countdown.
+ */
+function TimedToast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string) => void }) {
+  const { id, title, description, tone, duration } = toast
+
+  useEffect(() => {
+    if (duration === Infinity) {
+      return undefined
+    }
+    const timer = window.setTimeout(() => onDismiss(id), duration)
+    return () => window.clearTimeout(timer)
+  }, [duration, id, onDismiss])
+
+  return (
+    <Toast
+      title={title}
+      description={description}
+      tone={tone}
+      onClose={() => onDismiss(id)}
+    />
+  )
+}
+
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
@@ -46,24 +71,6 @@ export function ToastProvider({ children }: ToastProviderProps) {
     [],
   )
 
-  useEffect(() => {
-    if (!toasts.length) {
-      return undefined
-    }
-
-    const timers = toasts
-      .filter((toast) => toast.duration !== Infinity)
-      .map((toast) =>
-        window.setTimeout(() => {
-          dismissToast(toast.id)
-        }, toast.duration),
-      )
-
-    return () => {
-      timers.forEach((timer) => window.clearTimeout(timer))
-    }
-  }, [dismissToast, toasts])
-
   const portalTarget = usePortalTarget()
 
   const value = useMemo(
@@ -79,15 +86,9 @@ export function ToastProvider({ children }: ToastProviderProps) {
       {children}
       {portalTarget &&
         createPortal(
-          <div className="ui-toast-viewport" aria-live="polite" aria-atomic="false">
+          <div className="mr-toast-viewport" aria-live="polite" aria-atomic="false">
             {toasts.map((toast) => (
-              <Toast
-                key={toast.id}
-                title={toast.title}
-                description={toast.description}
-                tone={toast.tone}
-                onClose={() => dismissToast(toast.id)}
-              />
+              <TimedToast key={toast.id} toast={toast} onDismiss={dismissToast} />
             ))}
           </div>,
           portalTarget,

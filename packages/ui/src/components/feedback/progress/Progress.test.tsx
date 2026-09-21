@@ -70,4 +70,21 @@ describe('Progress', () => {
     const view = render(<Progress label="Uploading" />)
     expect(view.querySelector('.mr-progress__label')?.textContent).toBe('Uploading')
   })
+
+  it('omits aria-valuenow in indeterminate mode', () => {
+    const view = render(<Progress mode="indeterminate" />)
+    const track = view.querySelector('[role="progressbar"]')
+
+    expect(track?.getAttribute('aria-valuenow')).toBeNull()
+    expect(track?.getAttribute('aria-valuemin')).toBe('0')
+    expect(track?.getAttribute('aria-valuemax')).toBe('100')
+  })
+
+  it('is not interactive: the track carries no click semantics', () => {
+    const view = render(<Progress value={30} />)
+    const track = view.querySelector('[role="progressbar"]') as HTMLElement
+
+    expect(track.onclick).toBeNull()
+    expect(view.querySelector('.mr-progress--slidable')).toBeNull()
+  })
 })

@@ -10,5 +10,4 @@ export interface ProgressProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   tone?: ProgressTone
   mode?: ProgressMode
   barClassName?: string
-  onChange?: (value: number) => void
 }

@@ -38,4 +38,10 @@
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
+
+    /* Escape dismissal (APG): overrides hover/focus until pointer leaves or focus moves */
+    .mr-tooltip[data-hidden='true'] .mr-tooltip__content {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0.2rem);
+    }
 }

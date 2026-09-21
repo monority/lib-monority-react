@@ -25,13 +25,15 @@ export function AvatarSizesExample() {
 }
 
 export function AvatarWithImageExample() {
+    const placeholderAvatar =
+        'data:image/svg+xml;utf8,' +
+        encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" fill="#7c6cf4"/><circle cx="32" cy="24" r="12" fill="#fff"/><path d="M10 64c2-14 12-20 22-20s20 6 22 20z" fill="#fff"/></svg>',
+        )
+
     return (
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar
-                size="md"
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-                alt="Felix"
-            />
+            <Avatar size="md" src={placeholderAvatar} alt="Felix" />
             <Avatar size="md" name="Noah Price" alt="Noah Price">
                 NP
             </Avatar>

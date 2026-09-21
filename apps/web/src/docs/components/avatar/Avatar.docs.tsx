@@ -26,18 +26,24 @@ const docData: DocPageData = {
             defaultValue: "'md'",
             description: 'Rendered size.',
         },
-        { name: 'src', type: `string`, defaultValue: '-', description: 'Image source URL.' },
+        { name: 'src', type: `string`, defaultValue: '-', description: 'Image source URL. Falls back to children/initials when absent or on load error.' },
         {
             name: 'alt',
             type: `string`,
             defaultValue: '-',
-            description: 'Accessible name for image avatars.',
+            description: 'Image alt text; used as the accessible name when provided.',
+        },
+        {
+            name: 'name',
+            type: `string`,
+            defaultValue: '-',
+            description: 'Person name. Provides the accessible name (unless alt is set) and the initials fallback.',
         },
         {
             name: 'children',
             type: `ReactNode`,
             defaultValue: '-',
-            description: 'Initials or fallback content.',
+            description: 'Explicit fallback content rendered instead of the derived initials.',
         },
     ],
     cssHooks: [
@@ -57,8 +63,9 @@ const docData: DocPageData = {
     ],
     a11y: [
         'Provide alt text or aria-label when the avatar identifies a person.',
-        'Use empty alt text for decorative avatars.',
-        'Keep initials readable and short.',
+        'name provides the accessible name when alt is absent.',
+        'Avatars without name, alt, or aria-label stay decorative (no role).',
+        'The fallback (initials or children) is hidden from the accessibility tree.',
     ],
 }
 
