@@ -7,6 +7,14 @@
 - 2 fichiers CSS modifies, 22/22 tests, build OK
 - [Note vault](https://obsidian://open?vault=Obsidian%20Vault&file=dev-actual%2F2026-06-04%20Session%20Monority%20-%20Textarea%20Harmonization)
 
+### 2026-06-04 — Step 14: Visual Polish ✅
+- Tighten space scale 25% (more compact rhythm)
+- Refine semantic colors: danger/warning more readable, softer soft variants
+- Field gap + input font-size + card padding tightened
+- Switch/Toggle: add prefers-reduced-motion guard
+- 7 fichiers CSS, 1063 UI + 59 web tests pass, consumer PASS
+- Commit: 00b37f6
+
 ### 2026-06-03 — Textarea Harmonization ✅
 - Harmonisation complète avec les patterns Callout/Section/Button
 - 4 fichiers modifiés, 22/22 tests, build OK
