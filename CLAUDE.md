@@ -25,6 +25,12 @@
 - 14 fichiers CSS/TSX, 1063 UI + 59 web tests pass, build clean, consumer PASS
 - Commit: ca371cf
 
+### 2026-06-04 — Step 15A: Docs Layout Regression Fix ✅
+- Root cause: AppHeader nested inside .docs-layout grid → broke sidebar/content columns
+- Fix: move AppHeader to DocsPage wrapper (outside grid), restore sidebar sticky top:0
+- 3 fichiers, header préservé, docs intact
+- Commit: 3347c61
+
 ### 2026-06-03 — Textarea Harmonization ✅
 - Harmonisation complète avec les patterns Callout/Section/Button
 - 4 fichiers modifiés, 22/22 tests, build OK
