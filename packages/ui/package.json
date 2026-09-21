@@ -6,7 +6,9 @@
         "registry": "https://registry.npmjs.org/"
     },
     "type": "module",
-    "sideEffects": ["**/*.css"],
+    "sideEffects": [
+        "**/*.css"
+    ],
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -126,28 +128,22 @@
             "default": "./dist/slider.js"
         },
         "./number-input": {
-            "types": "./dist/number-input.d.ts",
+            "types": "./dist/numberInput.d.ts",
             "development": "./src/components/forms/number-input/index.ts",
-            "import": "./dist/number-input.js",
-            "default": "./dist/number-input.js"
+            "import": "./dist/numberInput.js",
+            "default": "./dist/numberInput.js"
         },
         "./password-input": {
-            "types": "./dist/password-input.d.ts",
+            "types": "./dist/passwordInput.d.ts",
             "development": "./src/components/forms/password-input/index.ts",
-            "import": "./dist/password-input.js",
-            "default": "./dist/password-input.js"
+            "import": "./dist/passwordInput.js",
+            "default": "./dist/passwordInput.js"
         },
         "./select": {
             "types": "./dist/select.d.ts",
             "development": "./src/components/forms/select/index.ts",
             "import": "./dist/select.js",
             "default": "./dist/select.js"
-        },
-        "./search-input": {
-            "types": "./dist/searchInput.d.ts",
-            "development": "./src/components/forms/search-input/index.ts",
-            "import": "./dist/searchInput.js",
-            "default": "./dist/searchInput.js"
         },
         "./tabs": {
             "types": "./dist/tabs.d.ts",
@@ -378,10 +374,10 @@
             "default": "./dist/hoverCard.js"
         },
         "./page-header": {
-            "types": "./dist/page-header.d.ts",
+            "types": "./dist/pageHeader.d.ts",
             "development": "./src/components/layout/page-header/index.ts",
-            "import": "./dist/page-header.js",
-            "default": "./dist/page-header.js"
+            "import": "./dist/pageHeader.js",
+            "default": "./dist/pageHeader.js"
         },
         "./section": {
             "types": "./dist/section.d.ts",
@@ -478,7 +474,10 @@
             "default": "./dist/index.css"
         }
     },
-    "files": ["dist", "README.md"],
+    "files": [
+        "dist",
+        "README.md"
+    ],
     "scripts": {
         "dev": "tsup --watch",
         "build": "tsup",

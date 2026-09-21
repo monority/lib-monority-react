@@ -1,0 +1,20 @@
+{
+    "name": "@monority/ui-consumer-fixture",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "description": "External-consumer validation for the built @monority/ui package. Resolves exclusively through packages/ui/package.json exports against packages/ui/dist — no source aliases.",
+    "dependencies": {
+        "@monority/ui": "file:../..",
+        "react": "19.2.6",
+        "react-dom": "19.2.6"
+    },
+    "devDependencies": {
+        "typescript": "5.9.3"
+    },
+    "scripts": {
+        "install-fixture": "pnpm install --ignore-workspace",
+        "check": "tsc --noEmit",
+        "check:runtime": "node ./dist-check.mjs"
+    }
+}
