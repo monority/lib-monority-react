@@ -68,7 +68,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
             {...props}
           />
           {showValue ? (
-            <output className="mr-slider__value" htmlFor={ctx.inputId}>
+            <output className="mr-slider__value" htmlFor={id || undefined}>
               {displayValue}
             </output>
           ) : null}
