@@ -3,6 +3,7 @@ import { Button } from '@monority/ui/button'
 import { Callout } from '@monority/ui/callout'
 import { Input } from '@monority/ui/input'
 import { Section } from '@monority/ui/section'
+import { Switch } from '@monority/ui/switch'
 import { Textarea } from '@monority/ui/textarea'
 
 export function SettingsComposition() {
@@ -26,6 +27,11 @@ export function SettingsComposition() {
                     label="Team mission"
                     placeholder="What does this workspace own?"
                     resize="vertical"
+                />
+                <Switch
+                    label="Weekly digest"
+                    hint="Email every Monday with component updates."
+                    defaultChecked
                 />
                 {saved && (
                     <Callout

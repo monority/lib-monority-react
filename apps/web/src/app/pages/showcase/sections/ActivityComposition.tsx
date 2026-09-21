@@ -2,6 +2,8 @@ import { Badge } from '@monority/ui/badge'
 import { Button } from '@monority/ui/button'
 import { Card } from '@monority/ui/card'
 import { Section } from '@monority/ui/section'
+import { Skeleton } from '@monority/ui/skeleton'
+import { Spinner } from '@monority/ui/spinner'
 
 const activity = [
     { title: 'Release 0.4.0 published', status: 'Synced', variant: 'success' as const },
@@ -33,6 +35,15 @@ export function ActivityComposition() {
                         <Button variant="ghost" size="sm">
                             View archive
                         </Button>
+                    </div>
+                </Card>
+                <Card padding="md" aria-busy="true">
+                    <div className="sc-activity__row">
+                        <div style={{ display: 'grid', gap: '0.5rem', flex: 1 }}>
+                            <Skeleton width="42%" height="1rem" />
+                            <Skeleton width="68%" height="0.875rem" />
+                        </div>
+                        <Spinner size="sm" tone="muted" />
                     </div>
                 </Card>
             </div>

@@ -1,4 +1,3 @@
-import { Field } from '@monority/ui/field'
 import { RadioGroup } from '@monority/ui/radio-group'
 
 export function RadioGroupBasicExample() {
@@ -16,17 +15,17 @@ export function RadioGroupBasicExample() {
 
 export function RadioGroupInvalidExample() {
     return (
-        <Field label="Plan" error="Please select a plan">
-            <RadioGroup
-                invalid
-                defaultValue=""
-                items={[
-                    { value: 'free', label: 'Free' },
-                    { value: 'pro', label: 'Pro' },
-                    { value: 'enterprise', label: 'Enterprise' },
-                ]}
-            />
-        </Field>
+        <RadioGroup
+            label="Plan"
+            error="Please select a plan"
+            invalid
+            defaultValue=""
+            items={[
+                { value: 'free', label: 'Free' },
+                { value: 'pro', label: 'Pro' },
+                { value: 'enterprise', label: 'Enterprise' },
+            ]}
+        />
     )
 }
 
@@ -64,15 +63,14 @@ export function RadioGroupChoiceCardExample() {
 
 export function RadioGroupFieldsetExample() {
     return (
-        <Field label="Theme preference">
-            <RadioGroup
-                defaultValue="system"
-                items={[
-                    { value: 'light', label: 'Light mode' },
-                    { value: 'dark', label: 'Dark mode' },
-                    { value: 'system', label: 'System default' },
-                ]}
-            />
-        </Field>
+        <RadioGroup
+            label="Theme preference"
+            defaultValue="system"
+            items={[
+                { value: 'light', label: 'Light mode' },
+                { value: 'dark', label: 'Dark mode' },
+                { value: 'system', label: 'System default' },
+            ]}
+        />
     )
 }

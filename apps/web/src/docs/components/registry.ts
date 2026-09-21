@@ -15,7 +15,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'button',
         status: 'stable',
     },
-    { category: 'actions', label: 'Toggle', path: '/docs/toggle', slug: 'toggle', status: 'draft' },
+    {
+        category: 'actions',
+        label: 'Toggle',
+        path: '/docs/toggle',
+        slug: 'toggle',
+        status: 'stable',
+    },
     {
         category: 'actions',
         label: 'ToggleGroup',
@@ -81,11 +87,11 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'RadioGroup',
         path: '/docs/radio-group',
         slug: 'radio-group',
-        status: 'draft',
+        status: 'stable',
     },
-    { category: 'forms', label: 'Select', path: '/docs/select', slug: 'select', status: 'draft' },
+    { category: 'forms', label: 'Select', path: '/docs/select', slug: 'select', status: 'stable' },
     { category: 'forms', label: 'Slider', path: '/docs/slider', slug: 'slider', status: 'draft' },
-    { category: 'forms', label: 'Switch', path: '/docs/switch', slug: 'switch', status: 'draft' },
+    { category: 'forms', label: 'Switch', path: '/docs/switch', slug: 'switch', status: 'stable' },
     {
         category: 'forms',
         label: 'Textarea',
@@ -143,14 +149,14 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Skeleton',
         path: '/docs/skeleton',
         slug: 'skeleton',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
         label: 'Spinner',
         path: '/docs/spinner',
         slug: 'spinner',
-        status: 'draft',
+        status: 'stable',
     },
     { category: 'feedback', label: 'Toast', path: '/docs/toast', slug: 'toast', status: 'draft' },
 
@@ -160,7 +166,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'AlertDialog',
         path: '/docs/alert-dialog',
         slug: 'alert-dialog',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'overlays',
@@ -219,7 +225,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Breadcrumb',
         path: '/docs/breadcrumb',
         slug: 'breadcrumb',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'navigation',
@@ -256,7 +262,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'sidebar-layout',
         status: 'draft',
     },
-    { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'draft' },
+    { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'stable' },
     {
         category: 'navigation',
         label: 'Topbar',
@@ -382,7 +388,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Separator',
         path: '/docs/separator',
         slug: 'separator',
-        status: 'draft',
+        status: 'stable',
     },
     { category: 'layout', label: 'Stack', path: '/docs/stack', slug: 'stack', status: 'draft' },
     {
