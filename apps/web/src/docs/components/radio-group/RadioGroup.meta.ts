@@ -1,6 +1,6 @@
 export const radioGroupMeta = {
     title: 'RadioGroup',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/radio-group',
     import: "import { RadioGroup } from '@monority/ui'",
     category: 'forms',

@@ -1,6 +1,6 @@
 export const spinnerMeta = {
     title: 'Spinner',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/spinner',
     import: "import { Spinner } from '@monority/ui'",
     category: 'feedback',

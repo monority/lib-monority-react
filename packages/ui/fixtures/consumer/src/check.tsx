@@ -28,16 +28,17 @@ export function RootImports() {
                 checked={checked}
                 onChange={(event) => setChecked(event.target.checked)}
             />
-            <Slider label="Volume" value={value} onValueChange={setValue} />
-            <Progress value={68} label="Migration" />
+            <Slider label="Volume" value={value} onValueChange={setValue} invalid />
+            <Progress value={68} label={<span>Migration</span>} />
             <Tooltip content="Details">
                 <button type="button">Trigger</button>
             </Tooltip>
             <Toast title="Saved" tone="success" />
-            <Avatar name="Maya Chen" />
+            <Avatar name="Maya Chen" size="lg" />
             <Accordion
                 items={[{ value: 'a', title: 'Section', content: 'Body' }]}
                 defaultValue="a"
+                size="lg"
                 collapsible
             />
             <NumberInput label="Qty" />

@@ -1,6 +1,6 @@
 export const separatorMeta = {
     title: 'Separator',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/separator',
     import: "import { Separator } from '@monority/ui'",
     category: 'layout',

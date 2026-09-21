@@ -1,6 +1,6 @@
 export const selectMeta = {
     title: 'Select',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/select',
     import: "import { Select } from '@monority/ui'",
     category: 'forms',

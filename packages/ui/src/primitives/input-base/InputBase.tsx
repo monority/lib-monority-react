@@ -25,6 +25,9 @@ export function InputBase({
   const isRequired = required ?? ctx.isRequired
   const resolvedId = id || ctx.inputId
 
+  // <input> is a void element: rendering children makes React throw.
+  const canHaveChildren = Tag !== 'input'
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const describedBy = ctx.describedBy || (props as Record<string, any>)['aria-describedby']
 
@@ -48,7 +51,7 @@ export function InputBase({
       data-required={isRequired ? true : undefined}
       {...restProps}
     >
-      {children}
+      {canHaveChildren ? children : null}
     </Tag>
   )
 }

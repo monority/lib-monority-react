@@ -83,12 +83,6 @@ const docData: DocPageData = {
             description: 'Maximum character length. Shows a live counter when set.',
         },
         {
-            name: 'children',
-            type: 'ReactNode',
-            defaultValue: '-',
-            description: 'Additional content rendered alongside the textarea.',
-        },
-        {
             name: 'value',
             type: 'string',
             defaultValue: '-',

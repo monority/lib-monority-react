@@ -1,6 +1,6 @@
 export const toggleMeta = {
     title: 'Toggle',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/toggle',
     import: "import { Toggle } from '@monority/ui/toggle'",
     category: 'actions',

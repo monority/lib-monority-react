@@ -91,12 +91,6 @@ const docData: DocPageData = {
             description: 'Disables the input and applies muted styling.',
         },
         {
-            name: 'children',
-            type: `ReactNode`,
-            defaultValue: `'-'`,
-            description: 'Extra content rendered inside InputBase.',
-        },
-        {
             name: 'placeholder',
             type: `string`,
             defaultValue: `'-'`,

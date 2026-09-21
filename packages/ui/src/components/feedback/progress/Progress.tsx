@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { ProgressProps, ProgressTone } from './Progress.types'
@@ -41,6 +41,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const safeValue = clamp(value)
     const resolvedTone = tone ?? 'neutral'
     const isIndeterminate = mode === 'indeterminate'
+    const labelId = useId()
 
     return (
       <div
@@ -53,7 +54,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       >
         {label || showValue ? (
           <div className="mr-progress__meta">
-            {label ? <span className="mr-progress__label">{label}</span> : <span />}
+            {label ? (
+              <span className="mr-progress__label" id={labelId}>
+                {label}
+              </span>
+            ) : (
+              <span />
+            )}
             {showValue && !isIndeterminate ? (
               <span className="mr-progress__value">{safeValue}%</span>
             ) : null}
@@ -65,7 +72,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={isIndeterminate ? undefined : safeValue}
-          aria-label={typeof label === 'string' ? label : 'Progress'}
+          aria-labelledby={label ? labelId : undefined}
+          aria-label={label ? undefined : 'Progress'}
         >
           <div
             className={cn(

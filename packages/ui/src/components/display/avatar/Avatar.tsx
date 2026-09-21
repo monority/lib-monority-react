@@ -35,6 +35,7 @@ function getInitials(name?: string): string {
  */
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   function Avatar({ src, alt = '', name, size, className, children, ...props }, ref) {
+    const resolvedSize = size ?? 'md'
     const [imgError, setImgError] = useState(false)
     const initials = useMemo(() => getInitials(name), [name])
     const showImage = src && !imgError
@@ -43,8 +44,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div
         ref={ref}
-        className={cn(avatarVariants({ size }), className)}
-        data-size={size}
+        className={cn(avatarVariants({ size: resolvedSize }), className)}
+        data-size={resolvedSize}
         role={accessibleName ? 'img' : undefined}
         aria-label={accessibleName || undefined}
         {...props}

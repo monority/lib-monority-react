@@ -1,6 +1,6 @@
 export const tabsMeta = {
     title: 'Tabs',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/tabs',
     import: "import { Tabs } from '@monority/ui'",
     category: 'navigation',

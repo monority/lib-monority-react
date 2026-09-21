@@ -1,6 +1,6 @@
 export const switchMeta = {
     title: 'Switch',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/switch',
     import: "import { Switch } from '@monority/ui'",
     category: 'forms',

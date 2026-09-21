@@ -37,7 +37,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       invalid = false,
       required = false,
       disabled = false,
-      children,
       ...props
     },
     ref,
@@ -68,9 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               inputClassName,
             )}
             {...props}
-          >
-            {children}
-          </InputBase>
+          />
         </Field>
       </FormControl>
     )

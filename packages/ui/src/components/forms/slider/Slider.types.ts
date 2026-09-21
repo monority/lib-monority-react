@@ -10,6 +10,8 @@ export interface SliderProps
   error?: ReactNode
   className?: string
   inputClassName?: string
+  /** Explicit invalid state. Also implied by `error`. */
+  invalid?: boolean
   showValue?: boolean
   /** Numeric slider value when controlled. */
   value?: number

@@ -1,6 +1,6 @@
 export const breadcrumbMeta = {
     title: 'Breadcrumb',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/breadcrumb',
     import: "import { Breadcrumb } from '@monority/ui'",
     category: 'navigation',

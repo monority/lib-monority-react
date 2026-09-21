@@ -22,6 +22,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
     showValue = true,
     disabled = false,
     required = false,
+    invalid = false,
     onChange,
     onValueChange,
     ...props
@@ -31,6 +32,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
   const [internalValue, setInternalValue] = useState(defaultValue)
   const ctx = useFormControl()
   const isControlled = value !== undefined
+  const isInvalid = invalid || Boolean(error)
   const displayValue = isControlled ? value : internalValue
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -41,14 +43,22 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
   }
 
   return (
-    <FormControl id={id} size={size} hint={!!hint} error={!!error} disabled={disabled} required={required}>
+    <FormControl
+      id={id}
+      size={size}
+      hint={!!hint}
+      error={!!error}
+      disabled={disabled}
+      required={required}
+      invalid={isInvalid}
+    >
       <Field className={cn('mr-slider-field', className)} label={label} hint={hint} error={error}>
         <div className="mr-slider__row">
           <InputBase
             as="input"
             type="range"
             ref={ref}
-            className={cn('mr-slider', error ? 'mr-slider--error' : undefined, inputClassName)}
+            className={cn('mr-slider', isInvalid && 'mr-slider--error', inputClassName)}
             min={min}
             max={max}
             step={step}

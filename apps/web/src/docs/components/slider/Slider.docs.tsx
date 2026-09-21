@@ -41,6 +41,12 @@ const docData: DocPageData = {
             description: 'Required field indicator.',
         },
         {
+            name: 'invalid',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Explicit invalid state. Also implied by error.',
+        },
+        {
             name: 'onValueChange',
             type: `(value: number) => void`,
             defaultValue: '-',

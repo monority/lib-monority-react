@@ -50,6 +50,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       : internalValue
 
     const generatedId = useId()
+    const resolvedSize = size ?? 'md'
     const firstEnabledIndex = Math.max(
       0,
       items.findIndex((item) => !item.disabled),
@@ -125,8 +126,8 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     return (
       <div
         ref={ref}
-        className={cn(accordionVariants({ size }), className)}
-        data-size={size}
+        className={cn(accordionVariants({ size: resolvedSize }), className)}
+        data-size={resolvedSize}
         {...props}
       >
         {items.map((item: AccordionItem, index: number) => {
