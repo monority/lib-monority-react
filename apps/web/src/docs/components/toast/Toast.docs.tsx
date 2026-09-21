@@ -1,14 +1,17 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { ToastBasicExample, ToastTonesExample } from './Toast.examples'
+import { ToastBasicExample, ToastProviderExample, ToastTonesExample } from './Toast.examples'
 
 const docData: DocPageData = {
     title: 'Toast',
     description:
-        'Transient notification surface for background status, success confirmation, and failure feedback.',
+        'Transient notification surface for background status, success confirmation, and failure feedback. Render one <Toast> directly, or push queued toasts through ToastProvider with useToast().',
     importCode: "import { Toast, useToast } from '@monority/ui'",
     usageCode: `<Toast title="Release draft saved" description="Your docs changes are ready for review." tone="neutral" />`,
     preview: () => <ToastBasicExample />,
-    examples: [{ title: 'Tones', content: <ToastTonesExample /> }],
+    examples: [
+        { title: 'Tones', content: <ToastTonesExample /> },
+        { title: 'Provider queue', content: <ToastProviderExample /> },
+    ],
     props: [
         { name: 'title', type: `string`, defaultValue: '-', description: 'Toast title' },
         {
@@ -54,6 +57,7 @@ const docData: DocPageData = {
         'Neutral and success toasts use role="status" with polite announcements.',
         'Danger toasts use role="alert" with assertive announcements.',
         'Dismiss buttons expose an explicit aria-label.',
+        'Queued toasts auto-dismiss after duration (default 3600ms); duration Infinity stays until dismissed.',
     ],
 }
 

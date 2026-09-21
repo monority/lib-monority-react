@@ -116,6 +116,8 @@
 }
 
 .docs-content {
+    /* grid children must be able to shrink below their min-content width */
+    min-width: 0;
     padding: var(--mr-space-5) clamp(var(--mr-space-4), 4vw, var(--mr-space-7));
 }
 
@@ -607,7 +609,12 @@
 
 @media (max-width: 720px) {
 
-    .docs-layout,
+    /* minmax(0, 1fr): the track must never exceed the viewport, otherwise
+       wide min-content children (code blocks, grids) force a 390px overflow */
+    .docs-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     .docs-grid {
         grid-template-columns: 1fr;
     }

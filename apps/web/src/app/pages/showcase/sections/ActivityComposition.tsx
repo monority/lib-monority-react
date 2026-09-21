@@ -1,9 +1,12 @@
+import { Avatar } from '@monority/ui/avatar'
 import { Badge } from '@monority/ui/badge'
 import { Button } from '@monority/ui/button'
 import { Card } from '@monority/ui/card'
+import { Progress } from '@monority/ui/progress'
 import { Section } from '@monority/ui/section'
 import { Skeleton } from '@monority/ui/skeleton'
 import { Spinner } from '@monority/ui/spinner'
+import { Tooltip } from '@monority/ui/tooltip'
 
 const activity = [
     { title: 'Release 0.4.0 published', status: 'Synced', variant: 'success' as const },
@@ -18,6 +21,7 @@ export function ActivityComposition() {
                 {activity.map((item) => (
                     <Card key={item.title} padding="md">
                         <div className="sc-activity__row">
+                            <Avatar name="Core team" size="sm" />
                             <div>
                                 <strong>{item.title}</strong>
                                 <p className="sc-muted">Updated 2 hours ago by the core team.</p>
@@ -32,10 +36,15 @@ export function ActivityComposition() {
                             <strong>No pending reviews</strong>
                             <p className="sc-muted">You are all caught up. Nice work.</p>
                         </div>
-                        <Button variant="ghost" size="sm">
-                            View archive
-                        </Button>
+                        <Tooltip content="Open the review archive">
+                            <Button variant="ghost" size="sm">
+                                View archive
+                            </Button>
+                        </Tooltip>
                     </div>
+                </Card>
+                <Card padding="md">
+                    <Progress value={68} label="Release migration" />
                 </Card>
                 <Card padding="md" aria-busy="true">
                     <div className="sc-activity__row">

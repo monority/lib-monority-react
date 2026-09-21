@@ -43,7 +43,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Checkbox',
         path: '/docs/checkbox',
         slug: 'checkbox',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'forms',
@@ -90,7 +90,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'stable',
     },
     { category: 'forms', label: 'Select', path: '/docs/select', slug: 'select', status: 'stable' },
-    { category: 'forms', label: 'Slider', path: '/docs/slider', slug: 'slider', status: 'draft' },
+    { category: 'forms', label: 'Slider', path: '/docs/slider', slug: 'slider', status: 'stable' },
     { category: 'forms', label: 'Switch', path: '/docs/switch', slug: 'switch', status: 'stable' },
     {
         category: 'forms',
@@ -142,7 +142,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Progress',
         path: '/docs/progress',
         slug: 'progress',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
@@ -158,7 +158,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'spinner',
         status: 'stable',
     },
-    { category: 'feedback', label: 'Toast', path: '/docs/toast', slug: 'toast', status: 'draft' },
+    { category: 'feedback', label: 'Toast', path: '/docs/toast', slug: 'toast', status: 'stable' },
 
     // Overlays
     {
@@ -216,7 +216,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Tooltip',
         path: '/docs/tooltip',
         slug: 'tooltip',
-        status: 'draft',
+        status: 'stable',
     },
 
     // Navigation
@@ -277,9 +277,9 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Accordion',
         path: '/docs/accordion',
         slug: 'accordion',
-        status: 'draft',
+        status: 'stable',
     },
-    { category: 'display', label: 'Avatar', path: '/docs/avatar', slug: 'avatar', status: 'draft' },
+    { category: 'display', label: 'Avatar', path: '/docs/avatar', slug: 'avatar', status: 'stable' },
     { category: 'display', label: 'Card', path: '/docs/card', slug: 'card', status: 'stable' },
     {
         category: 'display',

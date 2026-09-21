@@ -1,4 +1,6 @@
 import { Toast } from '@monority/ui/toast'
+import { useToast } from '@monority/ui'
+import { Button } from '@monority/ui/button'
 
 export function ToastBasicExample() {
     return (
@@ -6,6 +8,38 @@ export function ToastBasicExample() {
             title="Release draft saved"
             description="Your component docs changes were stored locally and are ready for review."
         />
+    )
+}
+
+export function ToastProviderExample() {
+    const { pushToast } = useToast()
+
+    return (
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <Button
+                onClick={() =>
+                    pushToast({
+                        title: 'Review queued',
+                        description: 'The next documentation batch is waiting for approval.',
+                    })
+                }
+            >
+                Push toast (3.6s)
+            </Button>
+            <Button
+                variant="secondary"
+                onClick={() =>
+                    pushToast({
+                        title: 'Deploy blocked',
+                        description: 'Stays visible until dismissed.',
+                        tone: 'danger',
+                        duration: Infinity,
+                    })
+                }
+            >
+                Push sticky toast
+            </Button>
+        </div>
     )
 }
 

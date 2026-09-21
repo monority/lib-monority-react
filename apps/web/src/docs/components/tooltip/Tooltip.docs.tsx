@@ -21,7 +21,7 @@ const docData: DocPageData = {
         { name: 'content', type: `ReactNode`, defaultValue: '-', description: 'Tooltip content.' },
         { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Trigger element.' },
     ],
-    cssHooks: ['.mr-tooltip', '.mr-tooltip__trigger', '.mr-tooltip__content'],
+    cssHooks: ['.mr-tooltip', '.mr-tooltip__trigger', '.mr-tooltip__content', '[data-hidden]'],
     tokens: [
         '--mr-bg-surface-strong',
         '--mr-fg-strong',
@@ -33,6 +33,8 @@ const docData: DocPageData = {
         'Tooltip ARIA pattern (role="tooltip").',
         'aria-describedby on trigger.',
         'Appears on focus/hover.',
+        'Escape dismisses the tooltip until the pointer leaves or focus moves.',
+        'Positioned above the trigger via CSS; no viewport collision engine.',
         'The tooltip itself is passive and not interactive.',
     ],
 }

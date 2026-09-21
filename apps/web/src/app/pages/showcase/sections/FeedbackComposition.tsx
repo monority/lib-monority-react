@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useToast } from '@monority/ui'
 import { Button } from '@monority/ui/button'
 import { Callout } from '@monority/ui/callout'
 import { Card } from '@monority/ui/card'
@@ -7,6 +8,7 @@ import { Modal } from '@monority/ui/modal'
 export function FeedbackComposition() {
     const [open, setOpen] = useState(false)
     const [confirmed, setConfirmed] = useState(false)
+    const { pushToast } = useToast()
 
     return (
         <div className="sc-feedback">
@@ -50,6 +52,11 @@ export function FeedbackComposition() {
                         onClick={() => {
                             setOpen(false)
                             setConfirmed(true)
+                            pushToast({
+                                title: 'Release confirmed',
+                                description: 'The changelog is now visible to every workspace member.',
+                                tone: 'success',
+                            })
                         }}
                     >
                         Publish
