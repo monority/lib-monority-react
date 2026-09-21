@@ -1,7 +1,7 @@
 ﻿import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import fs from 'node:fs'
-import { defineConfig } from 'vite'
+import { defineConfig, normalizePath } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const webDir = path.dirname(fileURLToPath(import.meta.url))
@@ -39,7 +39,12 @@ export default defineConfig({
       resolveId(source) {
         if (!source.startsWith('@/')) return null
         const relative = source.slice(2)
-        return tryResolve(path.resolve(webSrc, relative)) || tryResolve(path.resolve(uiSrc, relative)) || null
+        // Normalize to forward slashes: Rollup compares module IDs as strings,
+        // and a backslash path would register as a second instance of the same
+        // file (this previously duplicated auth-context and broke useAuth).
+        const resolved =
+          tryResolve(path.resolve(webSrc, relative)) || tryResolve(path.resolve(uiSrc, relative))
+        return resolved ? normalizePath(resolved) : null
       },
     },
   ],
