@@ -64,27 +64,21 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
     const handleKeyDown = useCallback(
         (e: KeyboardEvent, index: number) => {
             if (!items.length) return
-            if (e.key === 'ArrowRight') {
-                e.preventDefault()
-                const nextItem = items[getNextIndex(index, 1)]
-                if (nextItem) handleChange(nextItem.value)
-            }
-            if (e.key === 'ArrowLeft') {
-                e.preventDefault()
-                const nextItem = items[getNextIndex(index, -1)]
-                if (nextItem) handleChange(nextItem.value)
-            }
-            if (e.key === 'Home' && items[0]) {
-                e.preventDefault()
-                handleChange(items[0].value)
-            }
-            const lastItem = items[items.length - 1]
-            if (e.key === 'End' && lastItem) {
-                e.preventDefault()
-                handleChange(lastItem.value)
-            }
+            let nextIndex: number | null = null
+            if (e.key === 'ArrowRight') nextIndex = getNextIndex(index, 1)
+            else if (e.key === 'ArrowLeft') nextIndex = getNextIndex(index, -1)
+            else if (e.key === 'Home') nextIndex = 0
+            else if (e.key === 'End') nextIndex = items.length - 1
+            if (nextIndex === null) return
+            e.preventDefault()
+            const nextItem = items[nextIndex]
+            if (!nextItem) return
+            handleChange(nextItem.value)
+            // Roving tabindex: selection alone is not enough — keyboard focus
+            // must follow, otherwise focus strands on a tab with tabIndex -1.
+            document.getElementById(`${instanceId}-tab-${nextIndex}`)?.focus()
         },
-        [items, handleChange, getNextIndex]
+        [items, handleChange, getNextIndex, instanceId]
     )
 
     return (

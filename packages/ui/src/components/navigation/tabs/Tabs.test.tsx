@@ -210,4 +210,18 @@ describe('Tabs', () => {
             expect(tab.getAttribute('aria-controls')).toBeNull()
         })
     })
+
+    it('moves focus with selection on ArrowRight (roving tabindex)', () => {
+        const view = render(<Tabs items={items} />)
+        const tabs = view.querySelectorAll('[role="tab"]')
+        act(() => {
+            ;(tabs[0] as HTMLElement).focus()
+        })
+        act(() => {
+            tabs[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+        })
+        const updated = view.querySelectorAll('[role="tab"]')
+        expect(updated[1].getAttribute('aria-selected')).toBe('true')
+        expect(document.activeElement).toBe(updated[1])
+    })
 })
