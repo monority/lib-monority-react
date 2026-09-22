@@ -133,4 +133,11 @@
             padding-inline: var(--mr-space-4);
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-accordion__trigger,
+        .mr-accordion__icon {
+            transition: none;
+        }
+    }
 }

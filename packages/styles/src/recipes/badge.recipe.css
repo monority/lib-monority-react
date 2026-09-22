@@ -31,21 +31,21 @@
 
     .mr-badge--success,
     .mr-badge[data-variant="success"] {
-        border-color: rgba(20, 83, 45, 0.2);
+        border-color: color-mix(in srgb, var(--mr-success) 28%, var(--mr-border-subtle));
         background: var(--mr-success-soft);
         color: var(--mr-success);
     }
 
     .mr-badge--danger,
     .mr-badge[data-variant="danger"] {
-        border-color: rgba(153, 27, 27, 0.2);
+        border-color: color-mix(in srgb, var(--mr-danger) 28%, var(--mr-border-subtle));
         background: var(--mr-danger-soft);
         color: var(--mr-danger);
     }
 
     .mr-badge--warning,
     .mr-badge[data-variant="warning"] {
-        border-color: rgba(194, 65, 12, 0.2);
+        border-color: color-mix(in srgb, var(--mr-warning) 28%, var(--mr-border-subtle));
         background: var(--mr-warning-soft);
         color: var(--mr-warning);
     }

@@ -1,10 +1,16 @@
 @layer recipes {
+    @keyframes mr-toast-in {
+        from { opacity: 0; transform: translateY(0.5rem); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     .mr-toast {
         padding: 1rem;
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-shadow-sm);
+        animation: mr-toast-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-toast--neutral {
@@ -77,6 +83,12 @@
             right: var(--mr-space-3);
             bottom: var(--mr-space-3);
             width: min(100%, calc(100vw - 1.5rem));
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-toast {
+            animation: none;
         }
     }
 }
