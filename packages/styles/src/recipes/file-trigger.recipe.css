@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    transition: background var(--mr-dur-150), color var(--mr-dur-150), border-color var(--mr-dur-150);
   }
 
   .mr-file-trigger:focus-visible {

@@ -50,14 +50,14 @@
     .mr-drawer__panel[data-side="right"] {
         right: 0;
         border-left: 1px solid var(--mr-border-subtle);
-        animation: mr-drawer-in-right 200ms ease-out forwards;
+        animation: mr-drawer-in-right var(--mr-dur-200) var(--mr-ease-out) forwards;
     }
 
     .mr-drawer--left,
     .mr-drawer__panel[data-side="left"] {
         left: 0;
         border-right: 1px solid var(--mr-border-subtle);
-        animation: mr-drawer-in-left 200ms ease-out forwards;
+        animation: mr-drawer-in-left var(--mr-dur-200) var(--mr-ease-out) forwards;
     }
 
     .mr-drawer--top,
@@ -72,7 +72,7 @@
     .mr-drawer__panel[data-side="top"] {
         top: 0;
         height: min(16rem, 100vh);
-        animation: mr-drawer-in-top 200ms ease-out forwards;
+        animation: mr-drawer-in-top var(--mr-dur-200) var(--mr-ease-out) forwards;
     }
 
     .mr-drawer--bottom,
@@ -82,23 +82,23 @@
         max-height: min(80vh, 42rem);
         border-top-left-radius: var(--mr-radius-md);
         border-top-right-radius: var(--mr-radius-md);
-        animation: mr-drawer-in-bottom 200ms ease-out forwards;
+        animation: mr-drawer-in-bottom var(--mr-dur-200) var(--mr-ease-out) forwards;
     }
 
     .mr-drawer__panel[data-closing="true"][data-side="right"] {
-        animation: mr-drawer-out-right 200ms ease-in forwards;
+        animation: mr-drawer-out-right var(--mr-dur-200) var(--mr-ease-in) forwards;
     }
 
     .mr-drawer__panel[data-closing="true"][data-side="left"] {
-        animation: mr-drawer-out-left 200ms ease-in forwards;
+        animation: mr-drawer-out-left var(--mr-dur-200) var(--mr-ease-in) forwards;
     }
 
     .mr-drawer__panel[data-closing="true"][data-side="top"] {
-        animation: mr-drawer-out-top 200ms ease-in forwards;
+        animation: mr-drawer-out-top var(--mr-dur-200) var(--mr-ease-in) forwards;
     }
 
     .mr-drawer__panel[data-closing="true"][data-side="bottom"] {
-        animation: mr-drawer-out-bottom 200ms ease-in forwards;
+        animation: mr-drawer-out-bottom var(--mr-dur-200) var(--mr-ease-in) forwards;
     }
 
     .mr-drawer__header {
