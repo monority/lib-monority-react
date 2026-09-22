@@ -19,4 +19,17 @@ describe('docs shell responsive guards', () => {
     it('allows the docs content column to shrink below min-content', () => {
         expect(css).toMatch(/\.docs-content\s*\{[^}]*min-width:\s*0/)
     })
+
+    it('hides the desktop sidebar on mobile viewports', () => {
+        expect(css).toMatch(/\.docs-sidebar--desktop\s*\{[^}]*display:\s*none/)
+    })
+
+    it('keeps the mobile navigation hidden on desktop', () => {
+        expect(css).toMatch(/\.docs-mobile-bar,\s*\n?\.docs-mobile-nav\s*\{[^}]*display:\s*none/)
+    })
+
+    it('disables mobile navigation motion under reduced motion', () => {
+        expect(css).toContain('.docs-mobile-nav__panel')
+        expect(css).toMatch(/prefers-reduced-motion[^}]*animation:\s*none/)
+    })
 })
