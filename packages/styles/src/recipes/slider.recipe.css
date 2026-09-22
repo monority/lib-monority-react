@@ -21,7 +21,41 @@
     cursor: pointer;
   }
 
+  /* The range input shares InputBase (min-height, surface, border) for its
+     hit area. Neutralize the box here and draw a thin track instead, so the
+     control does not render as a fat pill. */
+  .mr-slider[type='range'] {
+    min-height: 0;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mr-slider[type='range']:hover:not(:disabled):not([data-disabled='true']) {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .mr-slider::-webkit-slider-runnable-track {
+    height: 0.5rem;
+    border-radius: var(--mr-radius-full);
+    background: var(--mr-bg-control);
+  }
+
+  .mr-slider::-moz-range-track {
+    height: 0.5rem;
+    border-radius: var(--mr-radius-full);
+    background: var(--mr-bg-control);
+  }
+
   .mr-slider:focus-visible {
+    box-shadow: none;
+  }
+
+  .mr-slider[type='range']:focus-visible::-webkit-slider-runnable-track,
+  .mr-slider[type='range']:focus-visible::-moz-range-track {
     box-shadow: var(--mr-shadow-focus);
   }
 
@@ -30,6 +64,7 @@
     appearance: none;
     width: 1.25rem;
     height: 1.25rem;
+    margin-top: -0.375rem;
     border-radius: var(--mr-radius-full);
     background: var(--mr-accent);
     border: 2px solid var(--mr-bg-surface);
@@ -47,7 +82,8 @@
     cursor: pointer;
   }
 
-  .mr-slider--error {
+  .mr-slider--error::-webkit-slider-runnable-track,
+  .mr-slider--error::-moz-range-track {
     background: color-mix(in srgb, var(--mr-danger) 24%, var(--mr-bg-control));
   }
 
@@ -61,6 +97,7 @@
   .mr-slider[data-size='sm']::-webkit-slider-thumb {
     width: 1rem;
     height: 1rem;
+    margin-top: -0.375rem;
   }
 
   .mr-slider--sm::-moz-range-thumb,
@@ -75,10 +112,35 @@
     width: min(28rem, 100%);
   }
 
+  .mr-slider--sm[type='range'],
+  .mr-slider[data-size='sm'][type='range'] {
+    height: 2rem;
+  }
+
+  .mr-slider--sm::-webkit-slider-runnable-track,
+  .mr-slider[data-size='sm']::-webkit-slider-runnable-track,
+  .mr-slider--sm::-moz-range-track,
+  .mr-slider[data-size='sm']::-moz-range-track {
+    height: 0.25rem;
+  }
+
+  .mr-slider--lg[type='range'],
+  .mr-slider[data-size='lg'][type='range'] {
+    height: 2rem;
+  }
+
+  .mr-slider--lg::-webkit-slider-runnable-track,
+  .mr-slider[data-size='lg']::-webkit-slider-runnable-track,
+  .mr-slider--lg::-moz-range-track,
+  .mr-slider[data-size='lg']::-moz-range-track {
+    height: 0.75rem;
+  }
+
   .mr-slider--lg::-webkit-slider-thumb,
   .mr-slider[data-size='lg']::-webkit-slider-thumb {
     width: 1.5rem;
     height: 1.5rem;
+    margin-top: -0.375rem;
   }
 
   .mr-slider--lg::-moz-range-thumb,
@@ -93,8 +155,10 @@
     cursor: not-allowed;
   }
 
-  .mr-slider--error,
-  .mr-slider[data-invalid='true'] {
+  .mr-slider--error::-webkit-slider-runnable-track,
+  .mr-slider--error::-moz-range-track,
+  .mr-slider[data-invalid='true']::-webkit-slider-runnable-track,
+  .mr-slider[data-invalid='true']::-moz-range-track {
     background: color-mix(in srgb, var(--mr-danger) 24%, var(--mr-bg-control));
   }
 
