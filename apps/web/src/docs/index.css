@@ -174,7 +174,7 @@
     background: var(--docs-code-bg);
     color: var(--docs-code-fg);
     box-shadow: var(--docs-code-shadow);
-    padding: 1.25rem;
+    padding: 0.75rem;
 }
 
 .docs-code-block pre {
@@ -210,8 +210,8 @@
     justify-content: center;
     gap: 0.875rem;
     flex-wrap: wrap;
-    min-height: 9rem;
-    padding: 4rem;
+    min-height: 6rem;
+    padding: 2rem;
     background: var(--mr-bg-surface);
 }
 

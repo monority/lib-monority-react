@@ -4,9 +4,8 @@
         --mr-callout-accent-bg: var(--mr-bg-surface-strong);
 
         position: relative;
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
-        gap: var(--mr-space-2);
+        display: flex;
+        gap: var(--mr-space-3);
         padding: var(--mr-space-4);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
@@ -14,39 +13,38 @@
         box-shadow: var(--mr-shadow-xs);
     }
 
-    .mr-callout::before {
-        content: '';
+    .mr-callout__indicator {
+        flex-shrink: 0;
         width: 0.625rem;
         height: 0.625rem;
+        margin-top: 0.1875rem;
         border: 1px solid var(--mr-callout-accent);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-callout-accent-bg);
-        align-self: center;
+    }
+
+    .mr-callout__content {
+        min-width: 0;
     }
 
     .mr-callout__title {
-        grid-column: 2;
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
         line-height: 1.45;
+        margin: 0;
     }
 
     .mr-callout__description {
-        grid-column: 2;
-        margin: 0;
+        margin: 0.125rem 0 0;
         color: var(--mr-fg-base);
         font-size: var(--mr-text-sm);
         line-height: 1.6;
     }
 
-    .mr-callout > :not(.mr-callout__title, .mr-callout__description) {
-        grid-column: 2;
-    }
-
-    .mr-callout:not(:has(.mr-callout__title)):not(:has(.mr-callout__description)) {
-        align-items: start;
+    .mr-callout > :not(.mr-callout__indicator):not(.mr-callout__content) {
+        margin-top: 0.125rem;
     }
 
     .mr-callout--info,

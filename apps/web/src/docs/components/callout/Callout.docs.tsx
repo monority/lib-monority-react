@@ -43,6 +43,10 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-callout',
+        '.mr-callout__indicator',
+        '.mr-callout__content',
+        '.mr-callout__title',
+        '.mr-callout__description',
         '.mr-callout--neutral',
         '.mr-callout--info',
         '.mr-callout--success',

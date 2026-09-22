@@ -64,17 +64,11 @@
 
   .mr-spinner--inverse,
   .mr-spinner[data-tone='inverse'] { color: var(--mr-bg-base); }
-}
 
   @media (prefers-reduced-motion: reduce) {
     .mr-spinner__ring {
       animation: none;
       border-top-color: color-mix(in srgb, currentColor 26%, transparent);
     }
-  }
-@media (prefers-reduced-motion: reduce) {
-  .mr-spinner__ring {
-    animation: none;
-    border-top-color: color-mix(in srgb, currentColor 26%, transparent);
   }
 }

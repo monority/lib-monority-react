@@ -30,17 +30,11 @@
   .mr-skeleton--rounded {
     border-radius: var(--mr-radius-full);
   }
-}
 
   @media (prefers-reduced-motion: reduce) {
     .mr-skeleton {
       animation: none;
       background: var(--mr-bg-control);
     }
-  }
-@media (prefers-reduced-motion: reduce) {
-  .mr-skeleton {
-    animation: none;
-    background: var(--mr-bg-control);
   }
 }

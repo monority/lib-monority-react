@@ -5,6 +5,7 @@ import {
     ProgressTonesExample,
     ProgressWithoutValueExample,
     ProgressIndeterminateExample,
+    ProgressAnimatedExample,
 } from './Progress.examples'
 
 const docData: DocPageData = {
@@ -15,6 +16,7 @@ const docData: DocPageData = {
     usageCode: `<Progress value={68} label="Release migration" />`,
     preview: () => <ProgressBasicExample />,
     examples: [
+        { title: 'Animated', content: <ProgressAnimatedExample /> },
         { title: 'Values', content: <ProgressValuesExample /> },
         { title: 'Tones', content: <ProgressTonesExample /> },
         { title: 'Without value', content: <ProgressWithoutValueExample /> },

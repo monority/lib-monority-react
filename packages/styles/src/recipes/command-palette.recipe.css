@@ -13,12 +13,12 @@
 
     .mr-command__layout {
         display: grid;
-        gap: var(--mr-space-4);
+        gap: var(--mr-space-3);
     }
 
     .mr-command__header {
         display: grid;
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-2);
     }
 
     .mr-command__heading {
@@ -39,10 +39,10 @@
     .mr-command__item {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-2);
         align-items: center;
         width: 100%;
-        padding: 0.9rem 1rem;
+        padding: 0.5rem 0.75rem;
         border: 1px solid transparent;
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface);
@@ -97,7 +97,7 @@
     }
 
     .mr-command__empty {
-        padding: var(--mr-space-5);
+        padding: var(--mr-space-4);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface);

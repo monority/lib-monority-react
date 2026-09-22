@@ -62,4 +62,11 @@
     padding-inline-end: 2.75rem;
     background-position: right 0.75rem center;
   }
+
+  /* Native popup is OS/browser-owned and cannot be styled as a custom
+     listbox. Keep options coherent with surfaces where the UA allows it. */
+  .mr-select option {
+    background-color: var(--mr-bg-surface-elevated);
+    color: var(--mr-fg-base);
+  }
 }

@@ -29,9 +29,12 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout
       data-tone={tone}
       {...props}
     >
-      {title ? <strong className="mr-callout__title">{title}</strong> : null}
-      {description ? <p className="mr-callout__description">{description}</p> : null}
-      {children}
+      <div className="mr-callout__indicator" aria-hidden="true" />
+      <div className="mr-callout__content">
+        {title ? <strong className="mr-callout__title">{title}</strong> : null}
+        {description ? <p className="mr-callout__description">{description}</p> : null}
+        {children}
+      </div>
     </div>
   )
 })

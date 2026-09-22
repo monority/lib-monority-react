@@ -47,6 +47,7 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-banner',
+        '.mr-banner__marker',
         '.mr-banner__body',
         '.mr-banner__actions',
         '.mr-banner--info',

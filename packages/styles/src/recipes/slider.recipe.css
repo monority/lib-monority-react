@@ -7,7 +7,7 @@
   .mr-slider__row {
     display: flex;
     align-items: center;
-    gap: var(--mr-space-3);
+    gap: var(--mr-space-2);
   }
 
   .mr-slider {
@@ -19,6 +19,10 @@
     background: var(--mr-bg-control);
     outline: none;
     cursor: pointer;
+  }
+
+  .mr-slider:focus-visible {
+    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-slider::-webkit-slider-thumb {
