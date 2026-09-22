@@ -100,6 +100,7 @@ export function DocsLayout({ children }: DocsLayoutProps) {
                                 query={query}
                                 onQueryChange={setQuery}
                                 pathname={location.pathname}
+                                onLinkClick={() => setMenuOpen(false)}
                             />
                         </div>
                     </div>
@@ -114,9 +115,10 @@ interface DocsSidebarBodyProps {
     query: string
     onQueryChange: (value: string) => void
     pathname: string
+    onLinkClick?: () => void
 }
 
-function DocsSidebarBody({ query, onQueryChange, pathname }: DocsSidebarBodyProps) {
+function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSidebarBodyProps) {
     const normalizedQuery = query.trim().toLowerCase()
     const items = docsComponentRegistry.filter((item) =>
         normalizedQuery
@@ -146,7 +148,7 @@ function DocsSidebarBody({ query, onQueryChange, pathname }: DocsSidebarBodyProp
                 placeholder="Search components"
                 aria-label="Search components"
             />
-            <nav className="docs-nav" aria-label="Documentation">
+            <nav className="docs-nav" aria-label="Documentation" onClick={onLinkClick}>
                 <Link
                     to={introductionItem.path}
                     className={`docs-nav-link ${pathname === introductionItem.path ? 'active' : ''}`}

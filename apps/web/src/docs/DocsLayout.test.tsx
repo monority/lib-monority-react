@@ -36,8 +36,17 @@ describe('DocsLayout mobile navigation', () => {
         expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
     })
 
-    it('closes the navigation on Escape', () => {
+    it('closes the drawer synchronously when a navigation link is clicked', () => {
         renderDocsLayout()
+        fireEvent.click(screen.getByRole('button', { name: 'Open documentation menu' }))
+        const dialog = screen.getByRole('dialog', { name: 'Documentation navigation' })
+        const toastLink = dialog.querySelector('a[href="/docs/toast"]')
+        expect(toastLink).not.toBeNull()
+        fireEvent.click(toastLink!)
+        expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
+    })
+
+    it('closes the navigation on Escape', () => {        renderDocsLayout()
         fireEvent.click(screen.getByRole('button', { name: 'Open documentation menu' }))
         expect(
             screen.getByRole('dialog', { name: 'Documentation navigation' }),
