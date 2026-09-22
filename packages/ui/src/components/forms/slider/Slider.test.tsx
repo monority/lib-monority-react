@@ -115,4 +115,9 @@ describe('Slider', () => {
     const wrapper = view.querySelector('.mr-field')
     expect(wrapper?.className).toContain('custom')
   })
+
+  it('tolerates an out-of-range controlled value without crashing', () => {
+    const view = render(<Slider value={150} min={0} max={100} />)
+    expect(view.querySelector('input')).not.toBeNull()
+  })
 })

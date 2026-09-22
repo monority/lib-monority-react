@@ -224,4 +224,15 @@ describe('Tabs', () => {
         expect(updated[1].getAttribute('aria-selected')).toBe('true')
         expect(document.activeElement).toBe(updated[1])
     })
+
+    it('keeps focus on a single tab when arrows wrap onto itself', () => {
+        const view = render(<Tabs items={[{ value: 'only', label: 'Only' }]} />)
+        const tab = view.querySelector('[role="tab"]') as HTMLElement
+        act(() => {
+            tab.focus()
+            tab.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+        })
+        expect(document.activeElement).toBe(tab)
+        expect(tab.getAttribute('aria-selected')).toBe('true')
+    })
 })

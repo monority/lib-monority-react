@@ -33,6 +33,7 @@ import { ToastProvider } from '@/providers/toast-provider'
 import { useToast } from '@/hooks/use-toast'
 import { Modal } from '@/components/overlays/modal/Modal'
 import { AlertDialog } from '@/components/overlays/alert-dialog/AlertDialog'
+import { FormControl } from '@/primitives/form-control'
 
 // ─── Display ─────────────────────────────────────────────────────────────────
 import { Avatar } from '@/components/display/avatar/Avatar'
@@ -804,5 +805,79 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
         render(<Tabs items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]} />)
         const tabs = container!.querySelectorAll('[role="tab"]')
         expect(tabs[0].getAttribute('aria-selected')).toBe('true')
+    })
+})
+
+describe('Step 22 · Public contract hardening', () => {
+    let container: HTMLDivElement | null = null
+    let root: ReturnType<typeof createRoot> | null = null
+
+    function render(ui: React.ReactElement) {
+        container = document.createElement('div')
+        document.body.appendChild(container)
+        root = createRoot(container)
+        act(() => { root?.render(ui) })
+        return container
+    }
+
+    afterEach(() => {
+        act(() => { root?.unmount() })
+        container?.remove()
+        container = null
+        root = null
+        document.body.style.overflow = ''
+    })
+
+    it('two RadioGroups stay independent (unique group names)', () => {
+        render(
+            <>
+                <FormControl>
+                    <RadioGroup items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]} />
+                </FormControl>
+                <FormControl>
+                    <RadioGroup items={[{ value: 'a', label: 'A2' }, { value: 'b', label: 'B2' }]} />
+                </FormControl>
+            </>
+        )
+        const radios = container!.querySelectorAll('input[type="radio"]')
+        expect(radios.length).toBe(4)
+        expect(new Set([...radios].map((r) => r.getAttribute('name'))).size).toBe(2)
+        act(() => { (radios[0] as HTMLInputElement).click() })
+        expect((radios[0] as HTMLInputElement).checked).toBe(true)
+        expect((radios[2] as HTMLInputElement).checked).toBe(false)
+    })
+
+    it('two Tooltips expose unique describedby ids', () => {
+        render(
+            <>
+                <Tooltip content="one"><Button>first</Button></Tooltip>
+                <Tooltip content="two"><Button>second</Button></Tooltip>
+            </>
+        )
+        const tips = container!.querySelectorAll('[role="tooltip"]')
+        expect(tips.length).toBe(2)
+        expect(tips[0].getAttribute('id')).not.toBe(tips[1].getAttribute('id'))
+    })
+
+    it('controlled Slider keeps parent value when parent refuses change', () => {
+        const onValueChange = vi.fn()
+        render(<Slider value={30} onValueChange={onValueChange} />)
+        const input = container!.querySelector('input[type="range"]') as HTMLInputElement
+        expect(input.value).toBe('30')
+        act(() => {
+            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+            setter?.call(input, '80')
+            input.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(onValueChange).toHaveBeenCalledWith(80)
+        expect(input.value).toBe('30')
+    })
+
+    it('Modal unmount while open restores body scroll and removes portal', () => {
+        render(<Modal open title="T" onClose={() => {}}>body</Modal>)
+        expect(document.body.style.overflow).toBe('hidden')
+        act(() => { root?.render(<div />) })
+        expect(document.body.style.overflow).not.toBe('hidden')
+        expect(container!.querySelector('[role="dialog"]')).toBeNull()
     })
 })
