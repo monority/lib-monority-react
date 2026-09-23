@@ -6,7 +6,7 @@
   "main": "./src/tokens.json",
   "scripts": {
     "build": "style-dictionary build --config ./sd.config.js",
-    "clean": "rm -rf dist"
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "devDependencies": {
     "style-dictionary": "^4.0.0"

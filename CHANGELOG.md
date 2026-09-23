@@ -5,7 +5,7 @@
 ### Features
 
 - Initial public release of `@monority/ui`
-- 77 exported components across Actions, Forms, Typography, Display, Data Display, Feedback, Layout, Navigation, Overlays, and Experimental categories
+- 74 exported components across Actions, Forms, Typography, Display, Data Display, Feedback, Layout, Navigation, Overlays, and Experimental categories
 - Design system with shared tokens, CSS recipes, and dark mode support
 - Full TypeScript support with strict types and `forwardRef` on all interactive components
 - 25 Playground-stable components with comprehensive documentation

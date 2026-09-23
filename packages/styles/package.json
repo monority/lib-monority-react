@@ -7,7 +7,7 @@
     "**/*.css"
   ],
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "typecheck": "echo 'no types'"
   }
 }
