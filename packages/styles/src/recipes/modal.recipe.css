@@ -2,7 +2,7 @@
     .mr-modal {
         position: fixed;
         inset: 0;
-        z-index: var(--mr-z-overlay);
+        z-index: var(--mr-z-modal);
         display: grid;
         place-items: center;
         padding: var(--mr-space-4);
@@ -11,12 +11,12 @@
     .mr-modal__backdrop {
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-base) 64%, transparent);
+        background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
     }
 
     .mr-modal__panel {
         position: relative;
-        width: min(38rem, 100%);
+        width: var(--mr-modal-width);
         max-height: min(42rem, calc(100vh - 2rem));
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);

@@ -20,8 +20,8 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
       onClose,
       items = [],
       title = 'Command palette',
-      placeholder = 'Rechercher une action...',
-      emptyLabel = 'Aucun resultat.',
+      placeholder = 'Rechercher une action…',
+      emptyLabel = 'Aucun résultat.',
       className,
       ...props
     },
@@ -89,6 +89,16 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
       if (event.key === 'Enter' && activeItem) {
         event.preventDefault()
         handleSelect(activeItem)
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault()
+        setActiveIndex(0)
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault()
+        setActiveIndex(filteredItems.length ? filteredItems.length - 1 : 0)
       }
     }
 

@@ -47,7 +47,7 @@
   .mr-banner__title {
     margin: 0;
     color: var(--mr-fg-strong);
-    font-size: var(--mr-text-base);
+    font-size: var(--mr-text-md);
     font-weight: var(--mr-font-weight-semibold);
     line-height: 1.35;
     text-wrap: balance;

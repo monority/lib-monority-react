@@ -81,7 +81,7 @@
   .mr-toggle[data-size='lg'] {
     --mr-toggle-height: 2.5rem;
     --mr-toggle-padding-x: var(--mr-space-4);
-    font-size: var(--mr-text-base);
+    font-size: var(--mr-text-md);
   }
 }
 

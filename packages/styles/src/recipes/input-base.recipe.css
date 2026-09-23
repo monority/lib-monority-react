@@ -43,6 +43,11 @@
     border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
   }
 
+  .mr-input-base[data-invalid='true']:focus-visible {
+    border-color: var(--mr-danger);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+  }
+
   .mr-input-base[data-tone='accent'] {
     border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
   }
@@ -57,8 +62,8 @@
   }
 
   .mr-input-base[data-tone='danger']:focus-visible {
-    border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
+    border-color: var(--mr-danger);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
   }
 
   .mr-input-base[data-size='sm'] {

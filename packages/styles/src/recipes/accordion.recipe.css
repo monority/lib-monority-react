@@ -43,7 +43,7 @@
 
     .mr-accordion__trigger:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px var(--mr-border-focus, var(--mr-accent));
+        box-shadow: inset 0 0 0 2px var(--mr-accent);
     }
 
     /* Disabled item (button[disabled] + item hook for styling the label) */
@@ -123,15 +123,6 @@
         border-top: 1px solid var(--mr-border-subtle);
         color: var(--mr-fg-base);
         line-height: 1.6;
-    }
-
-    @media (max-width: 900px) {
-        .mr-accordion__trigger {
-            padding-inline: var(--mr-space-4);
-        }
-        .mr-accordion__panel {
-            padding-inline: var(--mr-space-4);
-        }
     }
 
     @media (prefers-reduced-motion: reduce) {

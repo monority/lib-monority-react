@@ -6,6 +6,7 @@ export type TabsSize = 'sm' | 'md' | 'lg'
 export interface TabItem {
     value: string
     label: ReactNode
+    disabled?: boolean
 }
 
 export interface TabsProps

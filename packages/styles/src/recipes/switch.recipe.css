@@ -148,7 +148,7 @@
   .mr-switch[data-size='lg'] {
     --mr-switch-scale: 1.25;
     gap: var(--mr-space-3);
-    font-size: var(--mr-text-base);
+    font-size: var(--mr-text-md);
   }
 }
 

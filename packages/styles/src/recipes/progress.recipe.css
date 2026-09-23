@@ -80,4 +80,14 @@
     background:
       linear-gradient(90deg, var(--mr-danger), color-mix(in srgb, var(--mr-danger) 72%, white));
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mr-progress__bar {
+      transition: none;
+    }
+
+    .mr-progress__bar--indeterminate {
+      animation: none;
+    }
+  }
 }

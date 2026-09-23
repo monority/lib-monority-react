@@ -67,7 +67,7 @@
         position: fixed;
         right: var(--mr-space-4);
         bottom: var(--mr-space-4);
-        z-index: var(--mr-z-overlay);
+        z-index: var(--mr-z-toast);
         display: grid;
         gap: var(--mr-space-3);
         width: min(24rem, calc(100vw - 2rem));

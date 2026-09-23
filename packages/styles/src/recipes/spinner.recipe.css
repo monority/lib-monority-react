@@ -63,7 +63,7 @@
   .mr-spinner[data-tone='muted'] { color: var(--mr-fg-muted); }
 
   .mr-spinner--inverse,
-  .mr-spinner[data-tone='inverse'] { color: var(--mr-bg-base); }
+  .mr-spinner[data-tone='inverse'] { color: var(--mr-accent-contrast); }
 
   @media (prefers-reduced-motion: reduce) {
     .mr-spinner__ring {

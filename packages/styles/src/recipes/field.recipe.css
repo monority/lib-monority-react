@@ -96,7 +96,7 @@
 
   .mr-field__title {
     color: var(--mr-fg-strong);
-    font-size: var(--mr-text-base);
+    font-size: var(--mr-text-md);
     font-weight: 600;
     line-height: 1.35;
     margin: 0;

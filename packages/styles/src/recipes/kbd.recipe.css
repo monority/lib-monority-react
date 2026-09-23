@@ -29,7 +29,7 @@
     }
     .mr-kbd--lg {
         min-height: 1.875rem;
-        font-size: var(--mr-text-base);
+        font-size: var(--mr-text-md);
         padding: 0 0.5625rem;
         border-radius: var(--mr-radius-sm);
     }

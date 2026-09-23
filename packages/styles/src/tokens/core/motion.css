@@ -1,6 +1,7 @@
 :root {
   --mr-duration-fast: 140ms;
   --mr-duration-base: 220ms;
+  --mr-duration-normal: var(--mr-duration-base);
   --mr-duration-slow: 350ms;
   --mr-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
   --mr-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);

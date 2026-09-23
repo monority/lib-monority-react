@@ -45,7 +45,7 @@
 
     .mr-collapsible__trigger:focus-visible {
         background: var(--mr-bg-surface-strong);
-        box-shadow: inset 0 0 0 2px var(--mr-border-focus, var(--mr-accent));
+        box-shadow: inset 0 0 0 2px var(--mr-accent);
     }
 
     .mr-collapsible__label {
@@ -156,11 +156,11 @@
 
     .mr-collapsible--lg .mr-collapsible__trigger {
         min-height: 3.5rem;
-        font-size: var(--mr-text-base);
+        font-size: var(--mr-text-md);
     }
 
     .mr-collapsible--lg .mr-collapsible__content {
-        font-size: var(--mr-text-base);
+        font-size: var(--mr-text-md);
     }
 
     @media (prefers-reduced-motion: reduce) {

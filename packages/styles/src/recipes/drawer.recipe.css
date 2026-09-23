@@ -16,7 +16,7 @@
     .mr-drawer__backdrop-surface {
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-base) 64%, transparent);
+        background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
     }
 
     .mr-drawer__panel {

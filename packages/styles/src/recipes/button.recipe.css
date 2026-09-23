@@ -87,7 +87,7 @@
   .mr-btn--danger,
   .mr-btn[data-variant='danger'] {
     background-color: var(--mr-danger);
-    color: white;
+    color: var(--mr-danger-contrast);
   }
 
   .mr-btn--danger:hover:not(:disabled),
@@ -98,7 +98,7 @@
   .mr-btn--warning,
   .mr-btn[data-variant='warning'] {
     background-color: var(--mr-warning);
-    color: var(--mr-warning-contrast, #f7f5f0);
+    color: var(--mr-warning-contrast);
   }
 
   .mr-btn--warning:hover:not(:disabled),

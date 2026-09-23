@@ -55,21 +55,44 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
         [isControlled, onChange]
     )
 
-    const getNextIndex = useCallback(
-        (currentIndex: number, direction: number) =>
-            (currentIndex + direction + items.length) % items.length,
-        [items.length]
+    const isItemDisabled = useCallback((index: number) => disabled || items[index]?.disabled === true, [disabled, items])
+
+    const getNextEnabledIndex = useCallback(
+        (currentIndex: number, direction: number) => {
+            if (!items.length) return -1
+            let next = currentIndex
+            for (let step = 0; step < items.length; step += 1) {
+                next = (next + direction + items.length) % items.length
+                if (!isItemDisabled(next)) return next
+            }
+            return -1
+        },
+        [items.length, isItemDisabled]
     )
+
+    const getFirstEnabledIndex = useCallback(() => {
+        for (let index = 0; index < items.length; index += 1) {
+            if (!isItemDisabled(index)) return index
+        }
+        return -1
+    }, [items.length, isItemDisabled])
+
+    const getLastEnabledIndex = useCallback(() => {
+        for (let index = items.length - 1; index >= 0; index -= 1) {
+            if (!isItemDisabled(index)) return index
+        }
+        return -1
+    }, [items.length, isItemDisabled])
 
     const handleKeyDown = useCallback(
         (e: KeyboardEvent, index: number) => {
             if (!items.length) return
             let nextIndex: number | null = null
-            if (e.key === 'ArrowRight') nextIndex = getNextIndex(index, 1)
-            else if (e.key === 'ArrowLeft') nextIndex = getNextIndex(index, -1)
-            else if (e.key === 'Home') nextIndex = 0
-            else if (e.key === 'End') nextIndex = items.length - 1
-            if (nextIndex === null) return
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextIndex = getNextEnabledIndex(index, 1)
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextIndex = getNextEnabledIndex(index, -1)
+            else if (e.key === 'Home') nextIndex = getFirstEnabledIndex()
+            else if (e.key === 'End') nextIndex = getLastEnabledIndex()
+            if (nextIndex === null || nextIndex < 0) return
             e.preventDefault()
             const nextItem = items[nextIndex]
             if (!nextItem) return
@@ -78,7 +101,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
             // must follow, otherwise focus strands on a tab with tabIndex -1.
             document.getElementById(`${instanceId}-tab-${nextIndex}`)?.focus()
         },
-        [items, handleChange, getNextIndex, instanceId]
+        [items, handleChange, getNextEnabledIndex, getFirstEnabledIndex, getLastEnabledIndex, instanceId]
     )
 
     return (
@@ -100,6 +123,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
         >
             {items.map((item, index) => {
                 const isActive = item.value === resolvedValue
+                const isTabDisabled = disabled || item.disabled === true
                 const tabId = `${instanceId}-tab-${index}`
 
                 return (
@@ -110,12 +134,13 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
                         className={cn('mr-tabs__tab', isActive && 'mr-tabs__tab--active')}
                         role="tab"
                         aria-selected={isActive}
+                        aria-disabled={isTabDisabled || undefined}
                         tabIndex={isActive ? 0 : -1}
-                        disabled={disabled}
+                        disabled={isTabDisabled}
                         onClick={() => handleChange(item.value)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         data-active={isActive ? 'true' : undefined}
-                        data-disabled={disabled ? 'true' : undefined}
+                        data-disabled={isTabDisabled ? 'true' : undefined}
                     >
                         {item.label}
                     </button>

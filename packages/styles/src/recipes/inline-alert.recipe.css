@@ -50,9 +50,9 @@
 
     .mr-inline-alert--info,
     .mr-inline-alert[data-tone="info"] {
-        color: var(--mr-accent);
-        background: color-mix(in srgb, var(--mr-accent) 7%, var(--mr-bg-surface-elevated));
-        border-color: color-mix(in srgb, var(--mr-accent) 18%, var(--mr-border-subtle));
+        color: var(--mr-info);
+        background: color-mix(in srgb, var(--mr-info) 7%, var(--mr-bg-surface-elevated));
+        border-color: color-mix(in srgb, var(--mr-info) 18%, var(--mr-border-subtle));
     }
 
     .mr-inline-alert--success,

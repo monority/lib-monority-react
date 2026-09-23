@@ -90,7 +90,7 @@
   .mr-textarea[data-size='lg'] {
     --mr-textarea-min-height: 7.5rem;
     padding: 0.625rem 0.875rem;
-    font-size: var(--mr-text-base);
+    font-size: var(--mr-text-md);
   }
 
   .mr-textarea__counter {
