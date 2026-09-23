@@ -1,6 +1,6 @@
 export const datePickerMeta = {
     title: 'DatePicker',
-    status: 'stable',
+    status: 'draft',
     package: '@monority/ui/date-picker',
     import: "import { DatePicker } from '@monority/ui'",
     category: 'forms',

@@ -1,5 +1,5 @@
 import { Toast } from '@monority/ui/toast'
-import { useToast } from '@monority/ui'
+import { ToastProvider, useToast } from '@monority/ui'
 import { Button } from '@monority/ui/button'
 
 export function ToastBasicExample() {
@@ -12,6 +12,14 @@ export function ToastBasicExample() {
 }
 
 export function ToastProviderExample() {
+    return (
+        <ToastProvider>
+            <ToastProviderButtons />
+        </ToastProvider>
+    )
+}
+
+function ToastProviderButtons() {
     const { pushToast } = useToast()
 
     return (

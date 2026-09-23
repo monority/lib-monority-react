@@ -14,7 +14,7 @@ import { useToast } from '@monority/ui'`,
         { title: 'Provider queue', content: <ToastProviderExample /> },
     ],
     props: [
-        { name: 'title', type: `string`, defaultValue: '-', description: 'Toast title' },
+        { name: 'title', type: `ReactNode`, defaultValue: '-', description: 'Toast title' },
         {
             name: 'description',
             type: `ReactNode`,
@@ -32,6 +32,12 @@ import { useToast } from '@monority/ui'`,
             type: `() => void`,
             defaultValue: '-',
             description: 'Close button callback.',
+        },
+        {
+            name: 'duration',
+            type: `number`,
+            defaultValue: '3600',
+            description: 'ToastProvider queue only (pushToast): ms before auto-dismiss, Infinity stays.',
         },
     ],
     cssHooks: [

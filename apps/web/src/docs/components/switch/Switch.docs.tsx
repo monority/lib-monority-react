@@ -85,6 +85,18 @@ const docData: DocPageData = {
         },
         { name: 'invalid', type: `boolean`, defaultValue: 'false', description: 'Invalid state.' },
         {
+            name: 'hint',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Helpful description.',
+        },
+        {
+            name: 'error',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Error message.',
+        },
+        {
             name: 'className',
             type: `string`,
             defaultValue: '-',

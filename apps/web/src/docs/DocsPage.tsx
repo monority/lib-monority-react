@@ -1,5 +1,5 @@
 import { lazy, Suspense, useMemo, type ComponentType } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { DocsLayout } from './DocsLayout'
 import { Introduction } from './Introduction'
 import { Installation } from './Installation'
@@ -74,6 +74,11 @@ export function DocsPage() {
                         <h1>Not Found</h1>
                         <p className="docs-description">
                             No documentation found for this component.
+                        </p>
+                        <p>
+                            <Link to="/docs" className="docs-text-link">
+                                Back to the component list
+                            </Link>
                         </p>
                     </div>
                 </div>

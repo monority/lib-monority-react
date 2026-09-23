@@ -8,4 +8,5 @@ export interface BannerProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> 
   title?: ReactNode
   description?: ReactNode
   actions?: ReactNode
+  children?: ReactNode
 }

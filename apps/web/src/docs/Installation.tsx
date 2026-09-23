@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { DocsCodeBlock } from './components/DocsCodeBlock'
 
 export function Installation() {
@@ -49,12 +50,12 @@ import '@monority/ui/styles.css'`}</DocsCodeBlock>
                             when you want tighter control over tree-shaking.
                         </p>
                         <DocsCodeBlock className="docs-code-block">{`// Main barrel
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui'
 import { Modal } from '@monority/ui/modal'
 import { Tooltip } from '@monority/ui/tooltip'
 
 // Sub-path imports
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { Modal } from '@monority/ui/modal'`}</DocsCodeBlock>
                     </div>
                 </div>
@@ -74,9 +75,9 @@ import { Modal } from '@monority/ui/modal'`}</DocsCodeBlock>
                 <ul className="docs-list">
                     <li>
                         Browse the{' '}
-                        <a href="/docs" className="docs-text-link">
+                        <Link to="/docs" className="docs-text-link">
                             component documentation
-                        </a>
+                        </Link>
                     </li>
                     <li>Open the Button page first if you want a quick integration pass</li>
                     <li>

@@ -597,6 +597,21 @@
     opacity: 0.8;
 }
 
+.docs-nav-empty {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--mr-fg-muted);
+}
+
+button.docs-text-link {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
     .docs-page-toc {
         display: none;

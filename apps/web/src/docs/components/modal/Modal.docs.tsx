@@ -6,7 +6,11 @@ const docData: DocPageData = {
     description:
         'Focused dialog surface for short decision flows, confirmation, and compact editing tasks.',
     importCode: "import { Modal } from '@monority/ui/modal'",
-    usageCode: `<Modal open={open} title="Approve release notes" onClose={() => setOpen(false)}>
+    usageCode: `import { useState } from 'react'
+
+const [open, setOpen] = useState(false)
+
+<Modal open={open} title="Approve release notes" onClose={() => setOpen(false)}>
   <p>Review the final summary before publishing.</p>
 </Modal>`,
     preview: () => <ModalBasicExample />,
@@ -19,7 +23,7 @@ const docData: DocPageData = {
             name: 'open',
             type: `boolean`,
             defaultValue: '-',
-            description: 'Controls mounted dialog state.',
+            description: 'Always controlled: pass useState, no uncontrolled mode.',
         },
         { name: 'title', type: `string`, defaultValue: '-', description: 'Dialog label.' },
         {

@@ -329,6 +329,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
 
     // Typography
     { category: 'typography', label: 'Kbd', path: '/docs/kbd', slug: 'kbd', status: 'draft' },
+    {
+        category: 'typography',
+        label: 'PreCode',
+        path: '/docs/pre-code',
+        slug: 'pre-code',
+        status: 'draft',
+    },
     { category: 'typography', label: 'Text', path: '/docs/text', slug: 'text', status: 'draft' },
     { category: 'typography', label: 'Title', path: '/docs/title', slug: 'title', status: 'draft' },
 

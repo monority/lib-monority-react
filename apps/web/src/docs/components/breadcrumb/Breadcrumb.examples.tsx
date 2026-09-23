@@ -18,8 +18,7 @@ export function BreadcrumbManyItemsExample() {
             items={[
                 { label: 'Workspace', href: '/' },
                 { label: 'Docs', href: '/docs' },
-                { label: 'Navigation', href: '/docs/components/navigation' },
-                { label: 'Shell', href: '/docs/components/navigation/shell' },
+                { label: 'Tabs', href: '/docs/tabs' },
                 { label: 'Breadcrumb' },
             ]}
         />

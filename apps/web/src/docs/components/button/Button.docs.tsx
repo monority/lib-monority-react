@@ -29,7 +29,7 @@ const docData: DocPageData = {
     props: [
         {
             name: 'variant',
-            type: "'primary' | 'secondary' | 'muted' | 'ghost' | 'subtle' | 'danger'",
+            type: "'primary' | 'secondary' | 'muted' | 'ghost' | 'subtle' | 'danger' | 'warning'",
             defaultValue: "'primary'",
             description: 'Visual intent.',
         },
@@ -44,6 +44,12 @@ const docData: DocPageData = {
             type: 'boolean',
             defaultValue: 'false',
             description: 'Disables action and marks busy state.',
+        },
+        {
+            name: 'disabled',
+            type: 'boolean',
+            defaultValue: 'false',
+            description: 'Native disabled state (independent of loading).',
         },
         {
             name: 'fullWidth',
@@ -98,6 +104,12 @@ const docData: DocPageData = {
             type: 'boolean',
             defaultValue: 'false',
             description: 'Icon-only mode: fixed w/h, requires aria-label.',
+        },
+        {
+            name: 'children',
+            type: 'ReactNode',
+            defaultValue: '-',
+            description: 'Button label content.',
         },
     ],
     cssHooks: [

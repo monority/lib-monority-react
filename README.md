@@ -1,10 +1,10 @@
 # Monority
 
 [![npm version](https://img.shields.io/npm/v/@monority/ui)](https://www.npmjs.com/package/@monority/ui)
-[![CI](https://github.com/monority/ui/actions/workflows/ci.yml/badge.svg)](https://github.com/monority/ui/actions)
+[![CI](https://github.com/monority/lib-monority-react/actions/workflows/ci.yml/badge.svg)](https://github.com/monority/lib-monority-react/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-A premium React component library with design system, dark mode, and 77 publicly exported components.
+A premium React component library with design system, dark mode, and 74 component subpath exports (plus the main barrel and CSS).
 
 ## Installation
 
@@ -33,16 +33,20 @@ import { Button } from '@monority/ui/button'
 ## Components
 
 ### Actions (3)
-`Button` `CopyButton` `IconButton`
+`Button` `Toggle` `ToggleGroup`
 
-### Forms (16)
-`Checkbox` `Combobox` `DatePicker` `DateRangePicker` `Field` `FileUpload` `FormSection` `Input` `NumberInput` `PasswordInput` `RadioGroup` `Select` `Slider` `Switch` `Textarea`
+`CopyButton` and `IconButton` are exported too and redirect to the Button page.
 
-### Typography (2)
-`Text` `Title`
+### Forms (14)
+`Calendar` `Checkbox` `Combobox` `DatePicker` `DateRangePicker` `Field` `FileUpload` `FormSection` `Input` `RadioGroup` `Select` `Slider` `Switch` `Textarea`
 
-### Display (6)
-`Accordion` `Avatar` `Card` `MetricGrid` `StatCard` `Table`
+`NumberInput` and `PasswordInput` are exported too and redirect to the Input page.
+
+### Typography (4)
+`Kbd` `PreCode` `Text` `Title`
+
+### Display (8)
+`Accordion` `Avatar` `Card` `Carousel` `Collapsible` `MetricGrid` `StatCard` `Table`
 
 ### Data Display (2)
 `DataList` `DataTable`
@@ -50,14 +54,14 @@ import { Button } from '@monority/ui/button'
 ### Feedback (10)
 `AsyncStateNotice` `Badge` `Banner` `Callout` `EmptyState` `InlineAlert` `Progress` `Skeleton` `Spinner` `Toast`
 
-### Layout (7)
-`Container` `Divider` `Grid` `PageHeader` `Section` `Stack` `Toolbar`
+### Layout (11)
+`AspectRatio` `Container` `Divider` `Grid` `PageHeader` `Resizable` `ScrollArea` `Section` `Separator` `Stack` `Toolbar`
 
-### Navigation (6)
-`Breadcrumb` `FilterBar` `Pagination` `SidebarLayout` `Tabs` `Topbar`
+### Navigation (8)
+`Breadcrumb` `FilterBar` `Menubar` `NavigationMenu` `Pagination` `SidebarLayout` `Tabs` `Topbar`
 
-### Overlays (7)
-`AlertDialog` `CommandPalette` `Drawer` `DropdownMenu` `Modal` `Popover` `Tooltip`
+### Overlays (9)
+`AlertDialog` `CommandPalette` `ContextMenu` `Drawer` `DropdownMenu` `HoverCard` `Modal` `Popover` `Tooltip`
 
 ### Experimental (1)
 `InfiniteScroll`
@@ -81,14 +85,11 @@ pnpm lint         # Lint all packages
 ```
 monority/
 ├── apps/
-│   ├── web/          # Documentation & showcase site
-│   └── docs/         # Documentation (Next.js)
+│   └── web/          # Documentation & showcase site
 ├── packages/
 │   ├── ui/           # Core component library
 │   ├── tokens/       # Design tokens
-│   ├── styles/       # CSS source (recipes, base, themes)
-│   ├── eslint-config/
-│   └── typescript-config/
+│   └── styles/       # CSS source (recipes, base, themes)
 ├── tooling/
 │   ├── generators/   # Component generator
 │   └── scripts/      # Utility scripts

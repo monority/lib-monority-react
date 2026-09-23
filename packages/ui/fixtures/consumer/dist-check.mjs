@@ -27,6 +27,23 @@ assert.ok(PageHeader, 'page-header export missing')
 const { Slider: SliderSub } = await import('@monority/ui/slider')
 assert.ok(SliderSub, 'slider subpath export missing')
 
+for (const [subpath, symbol] of [
+    ['@monority/ui/tabs', 'Tabs'],
+    ['@monority/ui/modal', 'Modal'],
+    ['@monority/ui/banner', 'Banner'],
+    ['@monority/ui/input', 'Input'],
+    ['@monority/ui/select', 'Select'],
+    ['@monority/ui/textarea', 'Textarea'],
+    ['@monority/ui/switch', 'Switch'],
+    ['@monority/ui/badge', 'Badge'],
+    ['@monority/ui/callout', 'Callout'],
+    ['@monority/ui/card', 'Card'],
+    ['@monority/ui/pre-code', 'PreCode'],
+]) {
+    const mod = await import(subpath)
+    assert.ok(mod[symbol], `${subpath} export missing: ${symbol}`)
+}
+
 // CSS subpath must resolve (bundlers handle the CSS payload).
 const cssUrl = import.meta.resolve('@monority/ui/styles.css')
 assert.ok(cssUrl.endsWith('dist/index.css'), `unexpected css target: ${cssUrl}`)

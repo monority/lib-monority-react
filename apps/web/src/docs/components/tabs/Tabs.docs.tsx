@@ -12,7 +12,9 @@ const docData: DocPageData = {
     description:
         'A compact local navigation control for switching between adjacent views, filters, or content groups.',
     importCode: "import { Tabs } from '@monority/ui/tabs'",
-    usageCode: `const [value, setValue] = useState('overview')
+    usageCode: `import { useState } from 'react'
+
+const [value, setValue] = useState('overview')
 
 <Tabs
     items={[
@@ -32,15 +34,21 @@ const docData: DocPageData = {
     props: [
         {
             name: 'items',
-            type: `{ value: string; label: ReactNode }[]`,
+            type: `{ value: string; label: ReactNode; disabled?: boolean }[]`,
             defaultValue: '[]',
-            description: 'Tab definitions',
+            description: 'Tab definitions. Set disabled per item to skip it in keyboard navigation.',
         },
         {
             name: 'value',
             type: `string`,
             defaultValue: '-',
-            description: 'Currently selected value',
+            description: 'Controlled selected value.',
+        },
+        {
+            name: 'defaultValue',
+            type: `string`,
+            defaultValue: 'first item',
+            description: 'Uncontrolled initial value.',
         },
         {
             name: 'onChange',

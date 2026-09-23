@@ -33,7 +33,7 @@ const docData: DocPageData = {
             defaultValue: "'neutral'",
             description: 'Visual tone.',
         },
-        { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Custom content.' },
+        { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Custom content rendered below title and description.' },
         {
             name: 'role',
             type: "'note' | 'alert' | 'status' | string",

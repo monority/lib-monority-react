@@ -54,7 +54,12 @@ const docData: DocPageData = {
         },
         { name: 'disabled', type: `boolean`, defaultValue: 'false', description: 'Disabled state' },
         { name: 'invalid', type: `boolean`, defaultValue: 'false', description: 'Invalid state' },
-        { name: 'placeholder', type: `string`, defaultValue: '-', description: 'Placeholder text' },
+        {
+            name: 'children',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Option and optgroup elements.',
+        },
         {
             name: 'className',
             type: `string`,

@@ -20,9 +20,10 @@ export function DocsLayout({ children }: DocsLayoutProps) {
     const menuButtonRef = useRef<HTMLButtonElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
 
-    // Close the mobile navigation on route change and restore the trigger focus.
+    // Close the mobile navigation and reset the sidebar filter on route change.
     useEffect(() => {
         setMenuOpen(false)
+        setQuery('')
     }, [location.pathname])
 
     // Lock background scroll while the mobile navigation is open.
@@ -119,10 +120,13 @@ interface DocsSidebarBodyProps {
 }
 
 function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSidebarBodyProps) {
-    const normalizedQuery = query.trim().toLowerCase()
+    const normalizedQuery = query.trim().toLowerCase().replaceAll('-', '')
     const items = docsComponentRegistry.filter((item) =>
         normalizedQuery
-            ? `${item.label} ${item.category}`.toLowerCase().includes(normalizedQuery)
+            ? `${item.label} ${item.category} ${item.slug} ${item.path}`
+                  .toLowerCase()
+                  .replaceAll('-', '')
+                  .includes(normalizedQuery)
             : true
     )
 
@@ -145,9 +149,24 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                 type="search"
                 value={query}
                 onChange={(event) => onQueryChange(event.target.value)}
+                onKeyDown={(event) => {
+                    if (event.key === 'Escape') onQueryChange('')
+                }}
                 placeholder="Search components"
                 aria-label="Search components"
             />
+            {normalizedQuery && items.length === 0 ? (
+                <p className="docs-nav-empty" role="status">
+                    No components match “{query.trim()}”.{' '}
+                    <button
+                        type="button"
+                        className="docs-text-link"
+                        onClick={() => onQueryChange('')}
+                    >
+                        Clear search
+                    </button>
+                </p>
+            ) : null}
             <nav className="docs-nav" aria-label="Documentation" onClick={onLinkClick}>
                 <Link
                     to={introductionItem.path}

@@ -13,6 +13,7 @@ export function ButtonVariantsExample() {
             <Button variant="ghost">Ghost</Button>
             <Button variant="subtle">Subtle</Button>
             <Button variant="danger">Danger</Button>
+            <Button variant="warning">Warning</Button>
         </div>
     )
 }

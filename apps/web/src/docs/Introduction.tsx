@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { DocsCodeBlock } from './components/DocsCodeBlock'
 
 export function Introduction() {
@@ -71,9 +72,9 @@ function App() {
   return <Button>Open workspace</Button>
 }`}</DocsCodeBlock>
                 <p className="docs-text" style={{ marginTop: '1rem' }}>
-                    <a href="/docs/installation" className="docs-text-link">
+                    <Link to="/docs/installation" className="docs-text-link">
                         Read the full installation guide
-                    </a>
+                    </Link>
                 </p>
             </section>
 
@@ -84,18 +85,20 @@ function App() {
                 </p>
                 <ul className="docs-list">
                     <li>
-                        <strong>Primitives</strong> - FormControl, InputBase
+                        <strong>Primitives</strong> - Button, Input, Select, Checkbox, Switch -
+                        small focused building blocks
                     </li>
                     <li>
                         <strong>Forms</strong> - Checkbox, Input, Select, Slider, Calendar,
                         DatePicker, FileUpload, and more
                     </li>
                     <li>
-                        <strong>Actions</strong> - Button, IconButton, Toggle, ToggleGroup,
-                        CopyButton
+                        <strong>Actions</strong> - Button, Toggle, ToggleGroup - IconButton and
+                        CopyButton redirect to the Button page
                     </li>
                     <li>
-                        <strong>Typography</strong> - Text, Title, Kbd, PreCode
+                        <strong>Typography</strong> - Text, Title, Kbd - plus the PreCode code
+                        block export
                     </li>
                     <li>
                         <strong>Display</strong> - Accordion, Avatar, Card, Carousel, Collapsible,

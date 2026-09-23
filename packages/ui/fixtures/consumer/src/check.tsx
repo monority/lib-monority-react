@@ -2,10 +2,17 @@ import { useState } from 'react'
 import {
     Accordion,
     Avatar,
+    Badge,
     Button,
+    Callout,
+    Card,
     Checkbox,
+    Input,
     Progress,
+    Select,
     Slider,
+    Switch,
+    Textarea,
     Toast,
     ToastProvider,
     Tooltip,
@@ -13,6 +20,9 @@ import {
 } from '@monority/ui'
 import { NumberInput } from '@monority/ui/number-input'
 import { PageHeader } from '@monority/ui/page-header'
+import { Tabs } from '@monority/ui/tabs'
+import { Modal } from '@monority/ui/modal'
+import { Banner } from '@monority/ui/banner'
 import '@monority/ui/styles.css'
 
 // Root import: every Step 06/07 stabilized symbol must be present.
@@ -43,6 +53,33 @@ export function RootImports() {
             />
             <NumberInput label="Qty" />
             <PageHeader title="Title" />
+            <Input label="Email" defaultValue="team@company.com" />
+            <Textarea label="Mission" rows={3} />
+            <Select label="Country" defaultValue="">
+                <option value="">Select</option>
+                <option value="fr">France</option>
+            </Select>
+            <Switch label="Digest" defaultChecked />
+            <Badge variant="success">Synced</Badge>
+            <Callout title="Note" tone="info">
+                Billing inherits from the parent account.
+            </Callout>
+            <Banner tone="info" title="Maintenance">
+                Service may be briefly unavailable.
+            </Banner>
+            <Card>
+                <span>Step 26 families resolve from the barrel.</span>
+            </Card>
+            <Tabs
+                items={[
+                    { value: 'a', label: 'Alpha' },
+                    { value: 'b', label: 'Beta', disabled: true },
+                ]}
+                defaultValue="a"
+            />
+            <Modal open={false} title="Review" onClose={() => {}}>
+                <p>Closed by default.</p>
+            </Modal>
         </ToastProvider>
     )
 }

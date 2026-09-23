@@ -27,7 +27,7 @@ const docData: DocPageData = {
             name: 'variant',
             type: `'default' | 'primary' | 'success' | 'warning' | 'danger'`,
             defaultValue: "'default'",
-            description: 'Semantic tone.',
+            description: 'Visual variant.',
         },
         {
             name: 'children',

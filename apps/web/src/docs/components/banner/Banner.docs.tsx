@@ -9,7 +9,7 @@ import {
 const docData: DocPageData = {
     title: 'Banner',
     description: 'Top-of-page notification with eyebrow, title, description, and optional actions.',
-    importCode: "import { Banner } from '@monority/ui'",
+    importCode: "import { Banner } from '@monority/ui/banner'",
     usageCode: `<Banner tone="info" title="Scheduled maintenance" description="Service may be briefly unavailable." />`,
     preview: () => <BannerBasicExample />,
     examples: [
@@ -26,14 +26,14 @@ const docData: DocPageData = {
         },
         {
             name: 'eyebrow',
-            type: `string`,
+            type: `ReactNode`,
             defaultValue: '-',
             description: 'Small text above title.',
         },
-        { name: 'title', type: `string`, defaultValue: '-', description: 'Banner title.' },
+        { name: 'title', type: `ReactNode`, defaultValue: '-', description: 'Banner title.' },
         {
             name: 'description',
-            type: `string`,
+            type: `ReactNode`,
             defaultValue: '-',
             description: 'Banner description.',
         },
@@ -65,7 +65,7 @@ const docData: DocPageData = {
         '--mr-text-sm',
     ],
     a11y: [
-        'role="alert" for important messages.',
+        'Renders a static section: add role="alert" yourself for time-sensitive messages.',
         'Keep actions keyboard reachable and labelled with clear verbs.',
     ],
 }

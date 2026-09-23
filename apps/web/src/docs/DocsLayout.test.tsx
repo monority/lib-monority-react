@@ -56,3 +56,32 @@ describe('DocsLayout mobile navigation', () => {
         expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
     })
 })
+
+describe('DocsLayout component search', () => {
+    it('matches hyphenated slugs like date-picker', () => {
+        renderDocsLayout()
+        const search = screen.getByRole('searchbox', { name: 'Search components' })
+        fireEvent.change(search, { target: { value: 'date-picker' } })
+        expect(screen.getByRole('link', { name: /DatePicker/ })).toBeInTheDocument()
+    })
+
+    it('shows a clearable empty state when nothing matches', () => {
+        renderDocsLayout()
+        const search = screen.getByRole('searchbox', { name: 'Search components' })
+        fireEvent.change(search, { target: { value: 'zzz-no-such-component' } })
+        expect(screen.getByText(/No components match/)).toBeInTheDocument()
+        fireEvent.click(screen.getByRole('button', { name: 'Clear search' }))
+        expect(
+            (screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement)
+                .value,
+        ).toBe('')
+    })
+
+    it('clears the search on Escape', () => {
+        renderDocsLayout()
+        const search = screen.getByRole('searchbox', { name: 'Search components' })
+        fireEvent.change(search, { target: { value: 'button' } })
+        fireEvent.keyDown(search, { key: 'Escape' })
+        expect((search as HTMLInputElement).value).toBe('')
+    })
+})

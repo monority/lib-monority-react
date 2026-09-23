@@ -150,7 +150,6 @@ const docData: DocPageData = {
         'Hint/error IDs feed aria-describedby.',
         'Errors set aria-invalid.',
         'Search inputs use type="search".',
-        'data-size and data-tone attributes enable variant styling.',
         'data-invalid, data-required, data-disabled as helper hooks.',
     ],
 }
