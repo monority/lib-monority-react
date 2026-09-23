@@ -9,6 +9,7 @@
   .mr-number-input {
     width: 100%;
     min-height: var(--mr-input-height);
+    padding-block: 0.5rem;
     padding-inline: 1rem;
     padding-right: 2.75rem;
     border: 1px solid var(--mr-border-subtle);
@@ -86,6 +87,7 @@
   .mr-number-input[data-size='sm'] {
     min-height: var(--mr-control-size-sm);
     font-size: var(--mr-text-xs);
+    padding-block: 0.375rem;
     padding-inline: 0.75rem;
     padding-right: 2.25rem;
   }
@@ -94,6 +96,7 @@
   .mr-number-input[data-size='lg'] {
     min-height: var(--mr-control-size-lg);
     font-size: var(--mr-text-md);
+    padding-block: 0.625rem;
     padding-inline: 1.25rem;
     padding-right: 3rem;
   }

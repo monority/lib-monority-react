@@ -74,18 +74,26 @@
     outline-color: var(--mr-danger);
   }
 
+  /* Size variants: the inner input keeps data-size='md' from InputBase, so its
+     [data-size='md'] min-height rule would win over --mr-input-height. Set the
+     height explicitly to keep the control ladder (32/40/48). */
   .mr-combobox[data-size='sm'] .mr-combobox__input {
     --mr-input-height: var(--mr-control-size-sm);
+    min-height: var(--mr-control-size-sm);
+    padding-block: 0.375rem;
     padding-inline: 0.5rem;
     font-size: var(--mr-text-xs);
   }
 
   .mr-combobox[data-size='md'] .mr-combobox__input {
     --mr-input-height: var(--mr-control-size-md);
+    min-height: var(--mr-control-size-md);
   }
 
   .mr-combobox[data-size='lg'] .mr-combobox__input {
     --mr-input-height: var(--mr-control-size-lg);
+    min-height: var(--mr-control-size-lg);
+    padding-block: 0.625rem;
     padding-inline: 0.875rem;
     font-size: var(--mr-text-md);
   }

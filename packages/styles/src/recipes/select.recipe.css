@@ -6,6 +6,11 @@
 
   .mr-select {
     appearance: none;
+    /* Explicit control height. With `appearance: none` the browser derives a
+       <select>'s intrinsic block size from its option list, so a select inside
+       a flex column (e.g. a filter bar) stretched to ~4x option height instead
+       of matching the control ladder. */
+    block-size: var(--mr-input-height);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath fill='%2371717a' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
@@ -52,19 +57,27 @@
 
   .mr-select--sm,
   .mr-select[data-size='sm'] {
+    block-size: var(--mr-control-size-sm);
     padding-inline-end: 2rem;
     background-position: right 0.5rem center;
   }
 
   .mr-select--md,
   .mr-select[data-size='md'] {
-    /* default */
+    block-size: var(--mr-control-size-md);
   }
 
   .mr-select--lg,
   .mr-select[data-size='lg'] {
+    block-size: var(--mr-control-size-lg);
     padding-inline-end: 2.75rem;
     background-position: right 0.75rem center;
+  }
+
+  /* Multi-row selects must keep their intrinsic list height. */
+  .mr-select[multiple],
+  .mr-select[size] {
+    block-size: auto;
   }
 
   /* Native popup is OS/browser-owned and cannot be styled as a custom

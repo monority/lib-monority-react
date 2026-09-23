@@ -52,9 +52,13 @@
     opacity: 0.5;
   }
 
-  /* Size variants */
+  /* Size variants. The trigger carries data-size='md' from InputBase, so its
+     [data-size='md'] min-height rule wins over --mr-input-height; set the height
+     explicitly to keep the control ladder (32/40/48). */
   .mr-datepicker[data-size='sm'] .mr-datepicker__trigger {
     --mr-input-height: var(--mr-control-size-sm);
+    min-height: var(--mr-control-size-sm);
+    padding-block: 0.375rem;
     padding-inline: 0.75rem;
     padding-right: 2.25rem;
     font-size: var(--mr-text-xs);
@@ -62,6 +66,8 @@
 
   .mr-datepicker[data-size='lg'] .mr-datepicker__trigger {
     --mr-input-height: var(--mr-control-size-lg);
+    min-height: var(--mr-control-size-lg);
+    padding-block: 0.625rem;
     padding-inline: 1.25rem;
     padding-right: 3rem;
     font-size: var(--mr-text-md);

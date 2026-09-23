@@ -35,12 +35,14 @@
   .mr-carousel__arrow {
     position: absolute;
     top: 50%;
-    z-index: var(--mr-z-dropdown, 50);
+    z-index: var(--mr-z-overlay);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    /* Matches the md icon-button height so circular controls stay in family. */
+    width: var(--mr-btn-height-md);
+    height: var(--mr-btn-height-md);
+    padding: 0;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
     background: var(--mr-bg-control);

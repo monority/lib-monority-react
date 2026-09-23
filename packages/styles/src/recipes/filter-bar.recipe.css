@@ -67,16 +67,31 @@
         align-self: center;
     }
 
+    /* These controls live inside a column-flex Field wrapper, so a `flex-basis`
+       here sizes their HEIGHT (a select stretched to 176px inside filter bars).
+       Express the width intent on the inline axis and let the Field wrappers
+       carry the row-level grow/shrink. */
     .mr-filter-bar :where(.mr-input, .mr-select) {
-        min-width: 0;
+        min-inline-size: 0;
     }
 
     .mr-filter-bar :where(.mr-input) {
-        flex: 1 1 14rem;
+        inline-size: 100%;
     }
 
     .mr-filter-bar :where(.mr-select) {
-        flex: 0 1 11rem;
+        inline-size: 11rem;
+        max-inline-size: 100%;
+    }
+
+    .mr-filter-bar__main>.mr-field,
+    .mr-filter-bar__leading>.mr-field {
+        flex: 0 1 auto;
+        min-inline-size: 0;
+    }
+
+    .mr-filter-bar__leading>.mr-field {
+        flex: 1 1 14rem;
     }
 
     .mr-filter-bar :where(.mr-button) {
@@ -100,8 +115,13 @@
             align-self: stretch;
         }
 
-        .mr-filter-bar :where(.mr-input, .mr-select, .mr-button) {
-            flex-basis: auto;
+        .mr-filter-bar :where(.mr-input, .mr-select) {
+            inline-size: 100%;
+        }
+
+        .mr-filter-bar__main>.mr-field,
+        .mr-filter-bar__leading>.mr-field {
+            flex: 0 1 auto;
         }
     }
 }
