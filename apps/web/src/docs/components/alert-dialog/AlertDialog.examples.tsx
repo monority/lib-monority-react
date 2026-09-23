@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AlertDialog } from '@monority/ui/alert-dialog'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 
 export function AlertDialogBasicExample() {
     const [open, setOpen] = useState(false)

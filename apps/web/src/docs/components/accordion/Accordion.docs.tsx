@@ -58,6 +58,12 @@ const docData: DocPageData = {
             defaultValue: 'false',
             description: 'Allow closing the active section.',
         },
+        {
+            name: 'size',
+            type: `'sm' | 'md' | 'lg'`,
+            defaultValue: "'md'",
+            description: 'Accordion size.',
+        },
     ],
     cssHooks: [
         '.mr-accordion',

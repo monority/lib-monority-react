@@ -1,5 +1,5 @@
 import { Badge } from '@monority/ui/badge'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { FormSection } from '@monority/ui/form-section'
 import { Input } from '@monority/ui/input'
 import { Textarea } from '@monority/ui/textarea'

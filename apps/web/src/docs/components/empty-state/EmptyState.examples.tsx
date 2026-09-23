@@ -1,5 +1,5 @@
 import { Badge } from '@monority/ui/badge'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { EmptyState } from '@monority/ui/empty-state'
 
 export function EmptyStateBasicExample() {

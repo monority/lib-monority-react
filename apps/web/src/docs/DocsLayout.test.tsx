@@ -84,4 +84,14 @@ describe('DocsLayout component search', () => {
         fireEvent.keyDown(search, { key: 'Escape' })
         expect((search as HTMLInputElement).value).toBe('')
     })
+
+    it('resets the search filter on navigation', () => {
+        renderDocsLayout()
+        const search = screen.getByRole('searchbox', { name: 'Search components' })
+        fireEvent.change(search, { target: { value: 'zzz-no-such-component' } })
+        expect(screen.getByText(/No components match/)).toBeInTheDocument()
+        fireEvent.click(screen.getByRole('link', { name: /Installation/ }))
+        expect(screen.queryByText(/No components match/)).toBeNull()
+        expect((screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement).value).toBe('')
+    })
 })

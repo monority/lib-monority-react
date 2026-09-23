@@ -1,5 +1,5 @@
 import { Badge } from '@monority/ui/badge'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { FilterBar } from '@monority/ui/filter-bar'
 import { Input } from '@monority/ui/input'
 import { Select } from '@monority/ui/select'

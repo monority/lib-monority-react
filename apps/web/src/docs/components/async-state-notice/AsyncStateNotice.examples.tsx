@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AsyncStateNotice } from '@monority/ui/async-state-notice'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 
 export function AsyncStateNoticeBasicPreview() {
     return <AsyncStateNotice isLoading />

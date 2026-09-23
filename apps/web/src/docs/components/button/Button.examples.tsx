@@ -1,4 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 
 export function ButtonBasicPreview() {
     return <Button>Button</Button>

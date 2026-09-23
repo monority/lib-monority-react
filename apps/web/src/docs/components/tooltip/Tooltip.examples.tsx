@@ -1,4 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { Tooltip } from '@monority/ui/tooltip'
 
 export function TooltipBasicExample() {

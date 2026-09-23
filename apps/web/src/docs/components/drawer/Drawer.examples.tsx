@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { Drawer } from '@monority/ui/drawer'
 import { Input } from '@monority/ui/input'
 

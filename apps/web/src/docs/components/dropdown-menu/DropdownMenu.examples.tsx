@@ -1,4 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { DropdownMenu } from '@monority/ui/dropdown-menu'
 
 export function DropdownMenuBasicExample() {

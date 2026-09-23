@@ -7,7 +7,7 @@ import {
 
 const docData: DocPageData = {
     title: 'Callout',
-    description: 'Styled callout box for notes, tips, and contextual highlights.',
+    description: 'Styled callout box for notes, tips, and contextual highlights. Use for explanatory content inline with surrounding content.',
     importCode: "import { Callout } from '@monority/ui/callout'",
     usageCode: `<Callout
   title="Migration"

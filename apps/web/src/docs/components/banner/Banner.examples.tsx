@@ -1,5 +1,5 @@
 import { Banner } from '@monority/ui/banner'
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 
 export function BannerBasicExample() {
     return <Banner>Scheduled maintenance starts tonight at 23:00 CET.</Banner>

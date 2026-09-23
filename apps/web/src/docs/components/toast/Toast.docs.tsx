@@ -4,7 +4,7 @@ import { ToastBasicExample, ToastProviderExample, ToastTonesExample } from './To
 const docData: DocPageData = {
     title: 'Toast',
     description:
-        'Transient notification surface for background status, success confirmation, and failure feedback. Render one <Toast> directly, or push queued toasts through ToastProvider with useToast().',
+        'Transient notification surface for background status, success confirmation, and failure feedback. Use for temporary feedback tied to an action. Render one <Toast> directly, or push queued toasts through ToastProvider with useToast().',
     importCode: `import { Toast } from '@monority/ui/toast'
 import { useToast } from '@monority/ui'`,
     usageCode: `<Toast title="Release draft saved" description="Your docs changes are ready for review." tone="neutral" />`,
@@ -31,13 +31,7 @@ import { useToast } from '@monority/ui'`,
             name: 'onClose',
             type: `() => void`,
             defaultValue: '-',
-            description: 'Close button callback.',
-        },
-        {
-            name: 'duration',
-            type: `number`,
-            defaultValue: '3600',
-            description: 'ToastProvider queue only (pushToast): ms before auto-dismiss, Infinity stays.',
+            description: 'Close button callback. Queued toasts also accept duration via pushToast (default 3600ms, Infinity stays).',
         },
     ],
     cssHooks: [

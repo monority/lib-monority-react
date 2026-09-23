@@ -1,4 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { PageHeader } from '@monority/ui/page-header'
 
 export function PageHeaderBasicExample() {

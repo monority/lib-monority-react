@@ -1,4 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
+import { Button } from '@monority/ui/button'
 import { HoverCard } from '@monority/ui/hover-card'
 
 export function HoverCardBasicExample() {

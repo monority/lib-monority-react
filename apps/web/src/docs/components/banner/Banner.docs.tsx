@@ -8,7 +8,7 @@ import {
 
 const docData: DocPageData = {
     title: 'Banner',
-    description: 'Top-of-page notification with eyebrow, title, description, and optional actions.',
+    description: 'Top-of-page notification with eyebrow, title, description, and optional actions. Use for persistent page- or section-level information.',
     importCode: "import { Banner } from '@monority/ui/banner'",
     usageCode: `<Banner tone="info" title="Scheduled maintenance" description="Service may be briefly unavailable." />`,
     preview: () => <BannerBasicExample />,

@@ -11,7 +11,11 @@ const docData: DocPageData = {
     title: 'Slider',
     description: 'Range slider with optional value display.',
     importCode: "import { Slider } from '@monority/ui/slider'",
-    usageCode: `<Slider label="Brightness" value={value} onValueChange={setValue} />`,
+    usageCode: `import { useState } from 'react'
+
+const [value, setValue] = useState(50)
+
+<Slider label="Brightness" value={value} onValueChange={setValue} />`,
     preview: () => <SliderBasicExample />,
     examples: [
         { title: 'Custom range', content: <SliderWithRangeExample /> },
@@ -58,6 +62,13 @@ const docData: DocPageData = {
             defaultValue: '-',
             description: 'Native change event on the range input.',
         },
+        {
+            name: 'size',
+            type: `'sm' | 'md' | 'lg'`,
+            defaultValue: "'md'",
+            description: 'Slider size.',
+        },
+        { name: 'disabled', type: `boolean`, defaultValue: 'false', description: 'Disabled state.' },
     ],
     cssHooks: [
         '.mr-slider',
