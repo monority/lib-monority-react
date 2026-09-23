@@ -1,4 +1,9 @@
 @layer recipes {
+    @keyframes mr-hovercard-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
     .mr-hovercard {
         position: relative;
         display: inline-flex;
@@ -21,6 +26,8 @@
         font-size: var(--mr-text-sm);
         line-height: 1.5;
         box-shadow: var(--mr-shadow-md);
+        /* Opacity-only: placement rules own transform. */
+        animation: mr-hovercard-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-hovercard__arrow {

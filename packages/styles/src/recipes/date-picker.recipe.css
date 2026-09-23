@@ -32,10 +32,13 @@
     color: var(--mr-fg-muted);
   }
 
-  .mr-datepicker__trigger:hover,
-  .mr-datepicker__trigger:focus-visible {
+  .mr-datepicker__trigger:hover {
     border-color: var(--mr-border-strong);
     box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-datepicker__trigger:focus-visible {
+    border-color: var(--mr-border-strong);
   }
 
   .mr-datepicker__trigger--invalid,
@@ -51,14 +54,14 @@
 
   /* Size variants */
   .mr-datepicker[data-size='sm'] .mr-datepicker__trigger {
-    --mr-input-height: 2rem;
+    --mr-input-height: var(--mr-control-size-sm);
     padding-inline: 0.75rem;
     padding-right: 2.25rem;
     font-size: var(--mr-text-xs);
   }
 
   .mr-datepicker[data-size='lg'] .mr-datepicker__trigger {
-    --mr-input-height: 3rem;
+    --mr-input-height: var(--mr-control-size-lg);
     padding-inline: 1.25rem;
     padding-right: 3rem;
     font-size: var(--mr-text-md);
@@ -71,7 +74,6 @@
 
   .mr-datepicker[data-tone='accent'] .mr-datepicker__trigger:focus-visible {
     border-color: var(--mr-accent);
-    box-shadow: 0 0 0 1px var(--mr-accent);
   }
 
   .mr-datepicker[data-tone='danger'] .mr-datepicker__trigger {
@@ -80,7 +82,7 @@
 
   .mr-datepicker[data-tone='danger'] .mr-datepicker__trigger:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--mr-danger) 50%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   /* ─── Calendar icon ───────────────────────────────────────── */
@@ -147,7 +149,7 @@
   }
 
   .mr-datepicker__month-label {
-    font-weight: 560;
+    font-weight: var(--mr-font-weight-semibold);
     font-size: var(--mr-text-sm);
     color: var(--mr-fg-strong);
   }

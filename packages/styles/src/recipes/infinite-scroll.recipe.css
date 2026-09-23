@@ -17,8 +17,8 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: var(--mr-space-lg, 1rem);
-    color: var(--mr-fg-muted, #6b7280);
+    padding: var(--mr-space-4);
+    color: var(--mr-fg-muted);
     font-size: 0.875rem;
   }
 
@@ -37,8 +37,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--mr-space-lg, 1rem);
-    color: var(--mr-fg-muted, #6b7280);
+    padding: var(--mr-space-4);
+    color: var(--mr-fg-muted);
     font-size: 0.875rem;
   }
 
@@ -46,9 +46,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--mr-space-md, 0.5rem);
-    padding: var(--mr-space-lg, 1rem);
-    color: var(--mr-danger, #ab4d3e);
+    gap: var(--mr-space-2);
+    padding: var(--mr-space-4);
+    color: var(--mr-danger);
     font-size: 0.875rem;
   }
 
@@ -56,8 +56,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--mr-space-lg, 1rem);
-    color: var(--mr-fg-muted, #6b7280);
+    padding: var(--mr-space-4);
+    color: var(--mr-fg-muted);
     font-size: 0.875rem;
   }
 
@@ -69,8 +69,8 @@
     cursor: pointer;
     font: inherit;
     font-size: 0.875rem;
-    color: var(--mr-fg-base, #111827);
-    transition: background var(--mr-dur-150) ease;
+    color: var(--mr-fg-base);
+    transition: background-color var(--mr-dur-150) var(--mr-ease-standard);
   }
 
   .mr-infinite-scroll__retry:hover {

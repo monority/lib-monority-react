@@ -2,6 +2,9 @@
   --mr-z-base: 1;
   --mr-z-elevated: 4;
   --mr-z-overlay: 8;
+  /* Menus/dropdowns sit on the overlay layer (was an undeclared 50 fallback
+     that outranked toasts and tooltips). */
+  --mr-z-dropdown: 8;
   --mr-z-modal: 16;
   --mr-z-toast: 24;
   --mr-z-tooltip: 32;

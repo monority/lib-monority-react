@@ -30,7 +30,7 @@
   }
 
   .mr-calendar__month-label {
-    font-weight: 600;
+    font-weight: var(--mr-font-weight-semibold);
     font-size: var(--mr-text-sm);
     color: var(--mr-fg-strong);
   }
@@ -130,7 +130,7 @@
   .mr-calendar__day--selected {
     background: var(--mr-accent);
     color: var(--mr-accent-contrast);
-    font-weight: 600;
+    font-weight: var(--mr-font-weight-semibold);
   }
 
   .mr-calendar__day--selected:hover {

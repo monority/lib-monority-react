@@ -46,7 +46,7 @@
   .mr-file-list__name {
     font-size: var(--mr-text-sm);
     color: var(--mr-fg-strong);
-    font-weight: 560;
+    font-weight: var(--mr-font-weight-semibold);
     line-height: 1.45;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -84,7 +84,7 @@
   }
 
   .mr-file-list__remove:focus-visible {
-    outline: none;
-    box-shadow: var(--mr-shadow-focus);
+    outline: 2px solid var(--mr-accent);
+    outline-offset: -2px;
   }
 }

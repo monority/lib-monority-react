@@ -29,7 +29,7 @@
         background: transparent;
         font-family: inherit;
         font-size: var(--mr-text-sm);
-        font-weight: 560;
+        font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-fg-strong);
         cursor: pointer;
         text-align: left;
@@ -42,8 +42,8 @@
     }
 
     .mr-accordion__trigger:focus-visible {
-        outline: none;
-        box-shadow: inset 0 0 0 2px var(--mr-accent);
+        outline: 2px solid var(--mr-accent);
+        outline-offset: -2px;
     }
 
     /* Disabled item (button[disabled] + item hook for styling the label) */

@@ -29,8 +29,6 @@
 
   .mr-input-base:focus-visible {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
-    outline: none;
   }
 
   .mr-input-base:disabled,
@@ -45,7 +43,7 @@
 
   .mr-input-base[data-invalid='true']:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   .mr-input-base[data-tone='accent'] {
@@ -63,22 +61,22 @@
 
   .mr-input-base[data-tone='danger']:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   .mr-input-base[data-size='sm'] {
-    min-height: 2rem;
+    min-height: var(--mr-control-size-sm);
     padding-block: 0.375rem;
     padding-inline: 0.75rem;
     font-size: var(--mr-text-xs);
   }
 
   .mr-input-base[data-size='md'] {
-    min-height: 2.5rem;
+    min-height: var(--mr-control-size-md);
   }
 
   .mr-input-base[data-size='lg'] {
-    min-height: 3rem;
+    min-height: var(--mr-control-size-lg);
     padding-block: 0.625rem;
     padding-inline: 0.875rem;
     font-size: var(--mr-text-md);

@@ -32,7 +32,7 @@
         cursor: pointer;
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-sm);
-        font-weight: 560;
+        font-weight: var(--mr-font-weight-semibold);
         text-align: left;
         outline: none;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
@@ -45,7 +45,8 @@
 
     .mr-collapsible__trigger:focus-visible {
         background: var(--mr-bg-surface-strong);
-        box-shadow: inset 0 0 0 2px var(--mr-accent);
+        outline: 2px solid var(--mr-accent);
+        outline-offset: -2px;
     }
 
     .mr-collapsible__label {

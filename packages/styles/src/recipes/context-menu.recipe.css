@@ -38,18 +38,22 @@
         color: var(--mr-fg-base);
         font: inherit;
         font-size: var(--mr-text-sm);
-        font-weight: 560;
+        font-weight: var(--mr-font-weight-semibold);
         text-align: left;
         cursor: pointer;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
             var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
-    .mr-context-menu__item:hover,
-    .mr-context-menu__item:focus-visible {
+    .mr-context-menu__item:hover {
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
         color: var(--mr-fg-strong);
         box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
+    }
+
+    .mr-context-menu__item:focus-visible {
+        outline: 2px solid var(--mr-accent);
+        outline-offset: -2px;
     }
 
     .mr-context-menu__item:disabled {

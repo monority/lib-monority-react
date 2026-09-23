@@ -10,13 +10,20 @@ export function AspectRatioBasicExample() {
 
 export function AspectRatioVideoExample() {
     return (
-        <AspectRatio>
-            <iframe
-                src="https://www.youtube.com/embed/dQw4W9WgXcQ"
-                title="Video"
-                style={{ width: '100%', height: '100%', border: 'none' }}
-                allowFullScreen
-            />
+        <AspectRatio style={{ background: 'var(--mr-bg-control)' }}>
+            {/* CSP-safe stand-in for an embedded player: the ratio box is the demo. */}
+            <div
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    color: 'var(--mr-fg-muted)',
+                    fontSize: 'var(--mr-text-sm)',
+                }}
+            >
+                ▶ 16:9 video placeholder
+            </div>
         </AspectRatio>
     )
 }

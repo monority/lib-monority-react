@@ -11,7 +11,7 @@
     font-weight: 400;
     line-height: 1.5;
     text-decoration: none;
-    border-radius: var(--mr-radius-sm);
+    border-radius: var(--mr-btn-radius);
     transition:
       background-color var(--mr-dur-150) var(--mr-ease-in-out),
       border-color var(--mr-dur-150) var(--mr-ease-in-out),
@@ -35,17 +35,20 @@
 
   .mr-btn--sm,
   .mr-btn[data-size='sm'] {
+    min-height: var(--mr-btn-height-sm);
     padding: var(--mr-space-1) var(--mr-space-2);
     font-size: var(--mr-text-xs);
   }
 
   .mr-btn--md,
   .mr-btn[data-size='md'] {
+    min-height: var(--mr-btn-height-md);
     padding: var(--mr-space-2) var(--mr-space-3);
   }
 
   .mr-btn--lg,
   .mr-btn[data-size='lg'] {
+    min-height: var(--mr-btn-height-lg);
     padding: var(--mr-space-3) var(--mr-space-4);
     font-size: var(--mr-text-md);
   }
@@ -150,24 +153,24 @@
     gap: var(--mr-space-2);
   }
 
-  /* Icon-only mode � fixed w/h matching normal button heights */
+  /* Icon-only mode: square controls that reuse the exact button height ladder. */
   .mr-btn--icon-only,
   .mr-btn[data-icon-only='true'] {
-    width: 2.25rem;		/* 36px � md normal height 37px */
-    height: 2.25rem;
+    width: var(--mr-btn-height-md);
+    height: var(--mr-btn-height-md);
     padding: 0;
   }
 
   .mr-btn--icon-only.mr-btn--sm,
   .mr-btn[data-icon-only='true'][data-size='sm'] {
-    width: 1.75rem;		/* 28px � sm normal height 26px */
-    height: 1.75rem;
+    width: var(--mr-btn-height-sm);
+    height: var(--mr-btn-height-sm);
   }
 
   .mr-btn--icon-only.mr-btn--lg,
   .mr-btn[data-icon-only='true'][data-size='lg'] {
-    width: 3rem;		/* 48px = lg normal height 48px */
-    height: 3rem;
+    width: var(--mr-btn-height-lg);
+    height: var(--mr-btn-height-lg);
   }
 
 }

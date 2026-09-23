@@ -1,8 +1,9 @@
 :root {
-  --mr-duration-fast: 140ms;
-  --mr-duration-base: 220ms;
+  /* Semantic aliases of the raw --mr-dur-* scale (single source of truth). */
+  --mr-duration-fast: var(--mr-dur-150);
+  --mr-duration-base: var(--mr-dur-200);
   --mr-duration-normal: var(--mr-duration-base);
-  --mr-duration-slow: 350ms;
+  --mr-duration-slow: var(--mr-dur-300);
   --mr-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
   --mr-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
   --mr-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);

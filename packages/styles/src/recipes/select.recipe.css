@@ -37,7 +37,6 @@
   .mr-select--accent:focus-visible,
   .mr-select[data-tone='accent']:focus-visible {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-select--danger,
@@ -48,7 +47,7 @@
   .mr-select--danger:focus-visible,
   .mr-select[data-tone='danger']:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   .mr-select--sm,

@@ -1,4 +1,6 @@
+/* Single focus language: 2px accent outline with a 2px gap.
+   Invalid states re-color the outline instead of inventing a second ring. */
 :focus-visible {
-  outline: none;
-  box-shadow: var(--mr-shadow-focus);
+  outline: 2px solid var(--mr-accent);
+  outline-offset: 2px;
 }

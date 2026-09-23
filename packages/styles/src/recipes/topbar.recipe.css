@@ -49,7 +49,7 @@
         border-radius: var(--mr-radius-sm);
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
-        font-weight: 560;
+        font-weight: var(--mr-font-weight-semibold);
         text-decoration: none;
         transition:
             background-color var(--mr-duration-fast) var(--mr-ease-standard),

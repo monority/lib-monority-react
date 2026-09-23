@@ -51,12 +51,9 @@
   }
 
   .mr-slider:focus-visible {
-    box-shadow: none;
-  }
-
-  .mr-slider[type='range']:focus-visible::-webkit-slider-runnable-track,
-  .mr-slider[type='range']:focus-visible::-moz-range-track {
-    box-shadow: var(--mr-shadow-focus);
+    outline: 2px solid var(--mr-accent);
+    outline-offset: 2px;
+    border-radius: var(--mr-radius-full);
   }
 
   .mr-slider::-webkit-slider-thumb {
@@ -166,7 +163,7 @@
     min-width: 2.5rem;
     text-align: center;
     font-size: var(--mr-text-sm);
-    font-weight: 600;
+    font-weight: var(--mr-font-weight-semibold);
     color: var(--mr-fg-strong);
   }
 }

@@ -1,4 +1,15 @@
 @layer recipes {
+  @keyframes mr-combobox-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   .mr-combobox {
     position: relative;
     width: var(--mr-input-width);
@@ -26,10 +37,13 @@
     color: var(--mr-fg-muted);
   }
 
-  .mr-combobox__input:hover,
-  .mr-combobox__input:focus-visible {
+  .mr-combobox__input:hover {
     border-color: var(--mr-border-strong);
     box-shadow: var(--mr-shadow-focus);
+  }
+
+  .mr-combobox__input:focus-visible {
+    border-color: var(--mr-border-strong);
   }
 
   .mr-combobox[data-invalid='true'] .mr-combobox__input,
@@ -49,7 +63,6 @@
 
   .mr-combobox[data-tone='accent'] .mr-combobox__input:focus-visible {
     border-color: var(--mr-accent);
-    box-shadow: 0 0 0 1px var(--mr-accent);
   }
 
   .mr-combobox[data-tone='danger'] .mr-combobox__input {
@@ -58,21 +71,21 @@
 
   .mr-combobox[data-tone='danger'] .mr-combobox__input:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--mr-danger) 50%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   .mr-combobox[data-size='sm'] .mr-combobox__input {
-    --mr-input-height: 2rem;
+    --mr-input-height: var(--mr-control-size-sm);
     padding-inline: 0.5rem;
     font-size: var(--mr-text-xs);
   }
 
   .mr-combobox[data-size='md'] .mr-combobox__input {
-    --mr-input-height: 2.5rem;
+    --mr-input-height: var(--mr-control-size-md);
   }
 
   .mr-combobox[data-size='lg'] .mr-combobox__input {
-    --mr-input-height: 3rem;
+    --mr-input-height: var(--mr-control-size-lg);
     padding-inline: 0.875rem;
     font-size: var(--mr-text-md);
   }
@@ -90,6 +103,7 @@
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
     box-shadow: var(--mr-shadow-md);
+    animation: mr-combobox-in var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-combobox__item {
@@ -120,15 +134,15 @@
   }
 
   .mr-combobox__item:focus-visible {
-    outline: none;
+    outline: 2px solid var(--mr-accent);
+    outline-offset: -2px;
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-combobox__item-label {
     color: var(--mr-fg-strong);
     font-size: var(--mr-text-sm);
-    font-weight: 560;
+    font-weight: var(--mr-font-weight-semibold);
   }
 
   .mr-combobox__item-description {

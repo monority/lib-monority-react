@@ -29,7 +29,7 @@
     }
 
     .mr-inline-alert__title {
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
         font-size: var(--mr-text-sm);
         color: var(--mr-fg-strong);
         letter-spacing: 0;

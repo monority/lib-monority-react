@@ -16,9 +16,9 @@
         z-index: var(--mr-z-overlay);
         min-width: max-content;
         max-width: min(16rem, calc(100vw - 1rem));
-        padding: 0.5rem 0.7rem;
+        padding: var(--mr-space-3) var(--mr-space-4);
         border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-md);
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 96%, transparent);
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-xs);

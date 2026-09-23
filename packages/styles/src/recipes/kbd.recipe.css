@@ -5,7 +5,7 @@
         justify-content: center;
         gap: 0.1875rem;
         font-family: var(--mr-font-mono, ui-monospace, monospace);
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         color: var(--mr-fg-base);
         background: var(--mr-bg-control);

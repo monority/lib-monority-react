@@ -4,7 +4,7 @@
   --mr-container-sm: min(720px, calc(100% - 2rem));
   --mr-container-md: min(960px, calc(100% - 2rem));
   --mr-container-lg: min(var(--mr-page-max-width), calc(100% - 2rem));
-  --mr-control-size-sm: 2.4rem;
-  --mr-control-size-md: 3rem;
-  --mr-control-size-lg: 3.5rem;
+  --mr-control-size-sm: 2rem;
+  --mr-control-size-md: 2.5rem;
+  --mr-control-size-lg: 3rem;
 }

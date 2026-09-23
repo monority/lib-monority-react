@@ -61,6 +61,11 @@
         color: var(--mr-fg-strong);
     }
 
+    .mr-command__item:focus-visible {
+        outline: 2px solid var(--mr-accent);
+        outline-offset: -2px;
+    }
+
     .mr-command__item-main {
         display: grid;
         gap: var(--mr-space-1);
@@ -68,7 +73,7 @@
 
     .mr-command__item-group {
         font-size: 0.6875rem;
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
         text-transform: uppercase;
         letter-spacing: 0.04em;
         color: var(--mr-fg-muted);
@@ -76,7 +81,7 @@
 
     .mr-command__item-label {
         font-size: var(--mr-text-sm);
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-fg-strong);
     }
 

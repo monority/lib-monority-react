@@ -59,7 +59,6 @@
   .mr-textarea--accent:focus-visible,
   .mr-textarea[data-tone='accent']:focus-visible {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-textarea--danger,
@@ -72,7 +71,7 @@
   .mr-textarea[data-tone='danger']:focus-visible,
   .mr-textarea--invalid:focus-visible {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mr-danger) 14%, transparent);
+    outline-color: var(--mr-danger);
   }
 
   .mr-textarea--sm,

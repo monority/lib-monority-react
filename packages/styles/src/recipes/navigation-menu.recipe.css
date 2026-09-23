@@ -40,7 +40,7 @@
         cursor: pointer;
         font-family: inherit;
         font-size: var(--mr-text-sm);
-        font-weight: 560;
+        font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         text-decoration: none;
         white-space: nowrap;
@@ -140,7 +140,7 @@
 
     .mr-nav-menu__sub-item:focus-visible {
         outline: 2px solid var(--mr-accent);
-        outline-offset: -1px;
+        outline-offset: -2px;
     }
 
     .mr-nav-menu__sub-icon {
@@ -161,7 +161,7 @@
 
     .mr-nav-menu__sub-label {
         color: var(--mr-fg-strong);
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-nav-menu__sub-desc {

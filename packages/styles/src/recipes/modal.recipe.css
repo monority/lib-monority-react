@@ -1,4 +1,20 @@
 @layer recipes {
+    @keyframes mr-modal-backdrop-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes mr-modal-panel-in {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.985);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
     .mr-modal {
         position: fixed;
         inset: 0;
@@ -12,6 +28,7 @@
         position: absolute;
         inset: 0;
         background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
+        animation: mr-modal-backdrop-in var(--mr-dur-200) var(--mr-ease-out);
     }
 
     .mr-modal__panel {
@@ -20,11 +37,12 @@
         max-height: min(42rem, calc(100vh - 2rem));
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);
-        padding: var(--mr-space-5);
+        padding: var(--mr-modal-padding);
         border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-modal-radius);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-shadow-md);
+        animation: mr-modal-panel-in var(--mr-dur-200) var(--mr-ease-out);
     }
 
     .mr-modal__title {

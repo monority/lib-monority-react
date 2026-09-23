@@ -34,11 +34,6 @@
     border-color: var(--mr-border-strong);
   }
 
-  .mr-number-input:focus-visible {
-    box-shadow: var(--mr-shadow-focus);
-    outline: none;
-  }
-
   .mr-number-input__actions {
     position: absolute;
     right: 1px;
@@ -78,9 +73,9 @@
   }
 
   .mr-number-input__btn:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--mr-accent);
     z-index: 1;
-    outline: none;
+    outline: 2px solid var(--mr-accent);
+    outline-offset: -2px;
   }
 
   .mr-number-input__btn + .mr-number-input__btn {
@@ -89,7 +84,7 @@
 
   .mr-number-input--sm,
   .mr-number-input[data-size='sm'] {
-    min-height: 2rem;
+    min-height: var(--mr-control-size-sm);
     font-size: var(--mr-text-xs);
     padding-inline: 0.75rem;
     padding-right: 2.25rem;
@@ -97,7 +92,7 @@
 
   .mr-number-input--lg,
   .mr-number-input[data-size='lg'] {
-    min-height: 3rem;
+    min-height: var(--mr-control-size-lg);
     font-size: var(--mr-text-md);
     padding-inline: 1.25rem;
     padding-right: 3rem;
@@ -116,5 +111,11 @@
   .mr-number-input--error,
   .mr-number-input[data-invalid='true'] {
     border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+  }
+
+  .mr-number-input--error:focus-visible,
+  .mr-number-input[data-invalid='true']:focus-visible {
+    border-color: var(--mr-danger);
+    outline-color: var(--mr-danger);
   }
 }

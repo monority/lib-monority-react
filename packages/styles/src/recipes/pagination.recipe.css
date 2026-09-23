@@ -32,15 +32,15 @@
         justify-content: center;
         gap: var(--mr-space-2);
         min-width: 2.5rem;
-        min-height: 2.5rem;
+        min-height: var(--mr-control-size-md);
         padding-inline: 0.875rem;
         border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-sm);
         background: var(--mr-bg-control);
         color: var(--mr-fg-base);
         font: inherit;
         font-size: var(--mr-text-sm);
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
         cursor: pointer;
         transition:
             border-color var(--mr-duration-fast) var(--mr-ease-standard),
@@ -82,7 +82,7 @@
         min-width: 2rem;
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
-        font-weight: 600;
+        font-weight: var(--mr-font-weight-semibold);
     }
 
     @media (max-width: 640px) {
