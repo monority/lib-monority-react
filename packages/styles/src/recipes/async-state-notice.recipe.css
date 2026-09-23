@@ -1,4 +1,29 @@
 @layer recipes {
+  /* Distinct keyframe names per state: React reuses the same DOM node on
+     loading↔error swaps, so animation-name changes are what retrigger the
+     entrance. One shared name would never restart. */
+  @keyframes mr-async-notice-loading-in {
+    from {
+      opacity: 0;
+      transform: translateY(-1px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes mr-async-notice-error-in {
+    from {
+      opacity: 0;
+      transform: translateY(-1px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   .mr-async-state-notice {
     display: flex;
     align-items: center;
@@ -9,12 +34,18 @@
     line-height: 1.5;
   }
 
+  .mr-async-state-notice--loading,
+  .mr-async-state-notice[data-state='loading'] {
+    animation: mr-async-notice-loading-in 180ms var(--mr-ease-standard) both;
+  }
+
   .mr-async-state-notice__message {
     min-width: 0;
   }
 
   .mr-async-state-notice--error,
   .mr-async-state-notice[data-state='error'] {
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
+    animation: mr-async-notice-error-in 180ms var(--mr-ease-standard) both;
   }
 }

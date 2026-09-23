@@ -28,13 +28,18 @@
     --mr-accent-contrast: #1a1612;
     --mr-accent-soft: rgba(245, 240, 232, 0.08);
     --mr-info: #3b82f6;
+    --mr-info-soft: rgba(59, 130, 246, 0.12);
     --mr-success: #2bb95f;
-    --mr-success-soft: rgba(22, 163, 74, 0.12);
+    --mr-success-soft: rgba(43, 185, 95, 0.12);
     --mr-success-contrast: #0a0a0a;
-    --mr-warning: #ea580c;
-    --mr-warning-soft: rgba(234, 88, 12, 0.12);
+    /* Amber-shifted (h32 s80) so warning no longer collides with danger red (h0). */
+    --mr-warning: #dc8118;
+    --mr-warning-soft: rgba(220, 129, 24, 0.12);
     --mr-warning-contrast: #0a0a0a;
     --mr-danger: #dc2626;
     --mr-danger-soft: rgba(220, 38, 38, 0.12);
     --mr-danger-contrast: #ffffff;
+    /* Lifted red for small text on dark surfaces (AA vs #18181b);
+       solid fills keep the deeper --mr-danger. */
+    --mr-danger-text: #e26565;
 }

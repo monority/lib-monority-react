@@ -1,4 +1,6 @@
-/* Code syntax theme: inherits docs color tokens, with local fallbacks. */
+/* Code syntax theme: inherits docs color tokens, with local fallbacks.
+   Hierarchy (light + dark): violet keywords, blue types/properties,
+   amber JSX names, green strings, red literals, muted attrs/brackets. */
 
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
@@ -10,29 +12,40 @@
 .mr-pre-code code .hljs-selector-tag,
 .mr-pre-code code .hljs-selector-class,
 .mr-pre-code code .hljs-selector-id,
-.mr-pre-code code .hljs-selector-attr,
 .mr-pre-code code .hljs-selector-pseudo {
     color: var(--docs-code-keyword, var(--mr-accent));
 }
 
 .mr-pre-code code .hljs-string,
 .mr-pre-code code .hljs-template-variable,
-.mr-pre-code code .hljs-template-tag,
-.mr-pre-code code .hljs-addition {
+.mr-pre-code code .hljs-template-tag {
     color: var(--docs-code-string, var(--mr-success));
 }
 
 .mr-pre-code code .hljs-number,
 .mr-pre-code code .hljs-section,
-.mr-pre-code code .hljs-title.class_,
-.mr-pre-code code .hljs-name,
 .mr-pre-code code .hljs-variable.constant_ {
     color: var(--docs-code-number, var(--mr-warning));
 }
 
-.mr-pre-code code .hljs-literal,
-.mr-pre-code code .hljs-attr {
+/* JSX/TSX element + component names (hljs emits hljs-name, hljs-title). */
+.mr-pre-code code .hljs-name,
+.mr-pre-code code .hljs-title {
+    color: var(--docs-code-name, var(--mr-warning));
+}
+
+.mr-pre-code code .hljs-literal {
     color: var(--docs-code-literal, var(--mr-danger));
+}
+
+/* Attribute names read as structure, not alarms: keep them quiet. */
+.mr-pre-code code .hljs-attr {
+    color: var(--docs-code-attr, var(--mr-fg-muted));
+}
+
+/* Tag brackets (`<`, `/>`) — children (name/attr) carry their own colors. */
+.mr-pre-code code .hljs-tag {
+    color: var(--docs-code-tag, var(--mr-fg-muted));
 }
 
 .mr-pre-code code .hljs-built_in,

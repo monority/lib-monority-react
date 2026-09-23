@@ -1,5 +1,7 @@
 @layer recipes {
-  .mr-textarea {
+  .mr-textarea.mr-textarea {
+    /* Double class: beats `.mr-input-base[data-size]` (0,2,0) which otherwise
+       wins by specificity and collapses textarea min-height to input height. */
     min-height: var(--mr-textarea-min-height, 5rem);
     line-height: 1.55;
     resize: vertical;

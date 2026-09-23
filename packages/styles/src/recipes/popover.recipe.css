@@ -18,6 +18,13 @@
         display: inline-flex;
     }
 
+    /* Entrance only (opacity: positioning rules own `transform` on --top/--left
+       variants, so keyframes must never touch transform here). */
+    @keyframes mr-popover-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
     .mr-popover__content {
         position: fixed;
         z-index: var(--mr-z-overlay);
@@ -27,6 +34,7 @@
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-shadow-md);
+        animation: mr-popover-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-popover--align-start,

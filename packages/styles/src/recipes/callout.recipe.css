@@ -24,6 +24,12 @@
         background: var(--mr-callout-accent-bg);
     }
 
+    /* Description-only callouts: no title line, so the text baseline sits
+       ~2px lower — drop the marker 2px to stay centered on line one. */
+    .mr-callout:not(:has(.mr-callout__title)) .mr-callout__indicator {
+        margin-top: 0.4375rem;
+    }
+
     .mr-callout__content {
         display: grid;
         gap: var(--mr-space-1);

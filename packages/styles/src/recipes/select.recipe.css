@@ -6,12 +6,17 @@
 
   .mr-select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23666' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath fill='%2371717a' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     cursor: pointer;
     /* Extra padding-inline-end for chevron space — overrides input-base */
     padding-inline-end: 2.5rem;
+  }
+
+  /* Placeholder-looking state: an empty first option reads muted like inputs. */
+  .mr-select:has(option[value='']:checked) {
+    color: var(--mr-fg-muted);
   }
 
   /* Dark surfaces need a light chevron (data-uri cannot inherit color). */
@@ -21,7 +26,7 @@
   .monority-theme-root[data-theme='dark'] .mr-select,
   .monority-theme-root[data-theme='dim'] .mr-select,
   .monority-theme-root[data-theme='oled'] .mr-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath fill='%23a1a1aa' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
   }
 
   .mr-select--accent,

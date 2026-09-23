@@ -58,13 +58,13 @@
     }
 
     .mr-context-menu__item.is-danger {
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
     }
 
     .mr-context-menu__item.is-danger:hover,
     .mr-context-menu__item.is-danger:focus-visible {
         background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
     }
 
     .mr-context-menu__separator {

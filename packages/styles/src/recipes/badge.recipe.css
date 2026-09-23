@@ -40,7 +40,7 @@
     .mr-badge[data-variant="danger"] {
         border-color: color-mix(in srgb, var(--mr-danger) 28%, var(--mr-border-subtle));
         background: var(--mr-danger-soft);
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
     }
 
     .mr-badge--warning,

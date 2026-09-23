@@ -80,7 +80,7 @@
 
   .mr-file-list__remove:hover {
     background: var(--mr-bg-danger-soft);
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
   }
 
   .mr-file-list__remove:focus-visible {

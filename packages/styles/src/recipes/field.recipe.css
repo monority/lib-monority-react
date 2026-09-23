@@ -23,11 +23,11 @@
 
   .mr-field[data-has-error='true']>.mr-field__label,
   .mr-field[data-has-error='true']>.mr-field__legend {
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
   }
 
   .mr-field__required {
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
     margin-left: 0.25em;
   }
 
@@ -50,7 +50,7 @@
   }
 
   .mr-field__error {
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
     font-weight: 500;
   }
 

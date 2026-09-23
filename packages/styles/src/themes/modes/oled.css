@@ -27,14 +27,17 @@
     --mr-accent-strong: #faf7f2;
     --mr-accent-contrast: #1a1612;
     --mr-accent-soft: rgba(245, 240, 232, 0.08);
-    --mr-info: #15ca85;
+    /* OLED semantic set: info must stay blue (was teal, colliding with success). */
+    --mr-info: #3b82f6;
+    --mr-info-soft: rgba(59, 130, 246, 0.12);
     --mr-success: #06aa8f;
-    --mr-success-soft: rgba(22, 163, 74, 0.12);
+    --mr-success-soft: rgba(6, 170, 143, 0.12);
     --mr-success-contrast: #0a0a0a;
-    --mr-warning: #ea580c;
-    --mr-warning-soft: rgba(234, 88, 12, 0.12);
+    --mr-warning: #dc8118;
+    --mr-warning-soft: rgba(220, 129, 24, 0.12);
     --mr-warning-contrast: #0a0a0a;
     --mr-danger: #aa2b2b;
-    --mr-danger-soft: rgba(220, 38, 38, 0.12);
+    --mr-danger-soft: rgba(170, 43, 43, 0.12);
     --mr-danger-contrast: #ffffff;
+    --mr-danger-text: #e26565;
 }

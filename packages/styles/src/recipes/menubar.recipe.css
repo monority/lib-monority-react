@@ -121,12 +121,12 @@
     }
 
     .mr-menubar__item--danger {
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
     }
 
     .mr-menubar__item--danger:hover:not(:disabled) {
         background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
     }
 
     .mr-menubar__item--disabled,

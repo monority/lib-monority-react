@@ -71,7 +71,7 @@
 
     .mr-inline-alert--danger,
     .mr-inline-alert[data-tone="danger"] {
-        color: var(--mr-danger);
+        color: var(--mr-danger-text);
         background: color-mix(in srgb, var(--mr-danger) 8%, var(--mr-bg-surface-elevated));
         border-color: color-mix(in srgb, var(--mr-danger) 18%, var(--mr-border-subtle));
     }

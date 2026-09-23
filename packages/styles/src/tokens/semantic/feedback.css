@@ -11,4 +11,6 @@
   --mr-danger: #b91c1c;
   --mr-danger-soft: rgba(185, 28, 28, 0.08);
   --mr-danger-contrast: #ffffff;
+  /* Text-on-surface variant: same hue, kept in sync with --mr-danger in light. */
+  --mr-danger-text: var(--mr-danger);
 }
