@@ -33,6 +33,8 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     const instanceId = useId(); const rootRef = useRef<HTMLDivElement>(null); const triggerElementRef = useRef<Element | null>(null); const contentRef = useRef<HTMLDivElement>(null)
     const isControlled = controlledOpen !== undefined; const [internalOpen, setInternalOpen] = useState(defaultOpen); const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen; const portalTarget = usePortalTarget()
+    // Never paint at the (0,0) initial position: hidden until measured.
+    const [positioned, setPositioned] = useState(false)
     const setOpenState = useCallback((nextOpen: boolean) => { if (!isControlled) setInternalOpen(nextOpen); onOpenChange?.(nextOpen) }, [isControlled, onOpenChange])
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
     const updatePosition = useCallback(() => {
@@ -40,6 +42,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       if (!el) return; const rect = el.getBoundingClientRect(); const gap = 10; const top = side === 'top' ? rect.top - gap : rect.bottom + gap
       let left = rect.left; if (align === 'center') left = rect.left + rect.width / 2; if (align === 'end') left = rect.right
       setPosition({ top, left })
+      setPositioned(true)
     }, [align, side])
     function focusItem(direction = 1, targetValue?: string) {
       const menuItems = contentRef.current?.querySelectorAll('[role="menuitem"]')
@@ -50,7 +53,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       ;(menuItems[nextIndex] as HTMLElement)?.focus()
     }
     useEffect(() => {
-      if (!isOpen) return
+      if (!isOpen) { setPositioned(false); return }
       const frameId = window.requestAnimationFrame(updatePosition)
       function pd(e: MouseEvent) { if (!rootRef.current?.contains(e.target as Node) && !contentRef.current?.contains(e.target as Node)) setOpenState(false) }
       function kd(e: KeyboardEvent) { if (e.key === 'Escape') { setOpenState(false); (rootRef.current?.querySelector('[data-mr-dropdown-trigger="true"] button, [data-mr-dropdown-trigger="true"] a, [data-mr-dropdown-trigger="true"] [tabindex]') as HTMLElement)?.focus() } }
@@ -62,7 +65,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     return <div ref={ref} className={cn(dropdownMenuVariants({ align, side }), className)} data-open={isOpen ? true : undefined} data-align={align} data-side={side} {...props}>
       {typeof trigger === 'string' ? <button type="button" className="mr-dropdown__trigger" data-mr-dropdown-trigger="true" aria-expanded={isOpen} aria-controls={`${instanceId}-content`} aria-haspopup="menu" onClick={(e) => { triggerElementRef.current = e.currentTarget; updatePosition(); setOpenState(!isOpen) }} onKeyDown={(e) => { if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); updatePosition(); setOpenState(true) } }}>{trigger}</button>
       : <span className="mr-dropdown__anchor" data-mr-dropdown-trigger="true" aria-expanded={isOpen} aria-controls={`${instanceId}-content`} aria-haspopup="menu" onClick={(e) => { triggerElementRef.current = (e.target as HTMLElement).closest('button, a, [tabindex]') ?? e.currentTarget; updatePosition(); setOpenState(!isOpen) }} onKeyDown={(e) => { if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); updatePosition(); setOpenState(true) } }}>{trigger}</span>}
-      {isOpen && portalTarget ? createPortal(<div ref={contentRef} id={`${instanceId}-content`} className={cn('mr-dropdown__content', `mr-dropdown__content--${side}`, `mr-dropdown__content--${align}`, contentClassName)} role="menu" aria-orientation="vertical" style={{ top: `${position.top}px`, left: `${position.left}px` }} onKeyDown={(e) => { if (e.key === 'ArrowDown') { e.preventDefault(); focusItem(1) } if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(-1) } if (e.key === 'Home') { e.preventDefault(); focusItem(1, actionableItems[0]?.value) } if (e.key === 'End') { e.preventDefault(); focusItem(-1, actionableItems[actionableItems.length - 1]?.value) } }}>
+      {isOpen && portalTarget ? createPortal(<div ref={contentRef} id={`${instanceId}-content`} className={cn('mr-dropdown__content', `mr-dropdown__content--${side}`, `mr-dropdown__content--${align}`, contentClassName)} role="menu" aria-orientation="vertical" style={{ top: `${position.top}px`, left: `${position.left}px`, visibility: positioned ? undefined : 'hidden' }} onKeyDown={(e) => { if (e.key === 'ArrowDown') { e.preventDefault(); focusItem(1) } if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(-1) } if (e.key === 'Home') { e.preventDefault(); focusItem(1, actionableItems[0]?.value) } if (e.key === 'End') { e.preventDefault(); focusItem(-1, actionableItems[actionableItems.length - 1]?.value) } }}>
         {items.map((item, index) => item.type === 'separator' ? <div key={`${instanceId}-sep-${index}`} className="mr-dropdown__separator" role="separator" /> : <button key={item.value} type="button" role="menuitem" data-value={item.value} className={cn('mr-dropdown__item', item.danger && 'is-danger')} disabled={item.disabled} onClick={() => { item.onSelect?.(item.value); setOpenState(false) }}>{item.label}</button>)}
       </div>, portalTarget) : null}
     </div>

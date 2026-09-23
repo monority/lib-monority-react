@@ -38,6 +38,9 @@
     flex-shrink: 0;
     width: var(--mr-radio-size);
     height: var(--mr-radio-size);
+    /* Optical centering on the first label line: half the gap between the
+       1.5 label line-height and the 18px control. Keeps multiline intact. */
+    margin-top: calc((1em * 1.5 - var(--mr-radio-size)) / 2);
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
     background: var(--mr-bg-control);

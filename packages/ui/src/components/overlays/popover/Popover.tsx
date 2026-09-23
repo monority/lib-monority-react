@@ -31,16 +31,19 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
     const instanceId = useId(); const rootRef = useRef<HTMLDivElement>(null); const triggerElementRef = useRef<Element | null>(null); const contentRef = useRef<HTMLDivElement>(null)
     const isControlled = controlledOpen !== undefined; const [internalOpen, setInternalOpen] = useState(defaultOpen); const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen; const portalTarget = usePortalTarget()
+    // Never paint at the (0,0) initial position: hidden until measured.
+    const [positioned, setPositioned] = useState(false)
     const setOpenState = useCallback((nextOpen: boolean) => { if (!isControlled) setInternalOpen(nextOpen); onOpenChange?.(nextOpen) }, [isControlled, onOpenChange])
     const updatePosition = useCallback(() => {
       const el = triggerElementRef.current ?? rootRef.current?.querySelector('[data-mr-popover-trigger="true"]')
       if (!el) return; const rect = el.getBoundingClientRect(); const gap = 10; const top = side === 'top' ? rect.top - gap : rect.bottom + gap
       let left = rect.left; if (align === 'center') left = rect.left + rect.width / 2; if (align === 'end') left = rect.right
       setPosition({ top, left })
+      setPositioned(true)
     }, [align, side])
 
     useEffect(() => {
-      if (!isOpen) return
+      if (!isOpen) { setPositioned(false); return }
       const frameId = window.requestAnimationFrame(updatePosition)
       function pd(e: MouseEvent) { if (!rootRef.current?.contains(e.target as Node) && !contentRef.current?.contains(e.target as Node)) setOpenState(false) }
       function kd(e: KeyboardEvent) { if (e.key === 'Escape') { setOpenState(false); (rootRef.current?.querySelector('[data-mr-popover-trigger="true"] button, [data-mr-popover-trigger="true"] a, [data-mr-popover-trigger="true"] [tabindex]') as HTMLElement)?.focus() } }
@@ -54,7 +57,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
     return <div ref={ref} className={cn(popoverVariants({ align, side }), className)} data-open={isOpen ? true : undefined} data-align={align} data-side={side} {...props}>
       {typeof trigger === 'string' ? <button type="button" className="mr-popover__trigger" aria-expanded={isOpen} aria-controls={`${instanceId}-content`} onClick={(e) => { triggerElementRef.current = e.currentTarget; updatePosition(); setOpenState(!isOpen) }}>{trigger}</button>
       : <span className="mr-popover__anchor" data-mr-popover-trigger="true" aria-expanded={isOpen} aria-controls={`${instanceId}-content`} onClick={(e) => { triggerElementRef.current = (e.target as HTMLElement).closest('button, a, [tabindex]') ?? e.currentTarget; updatePosition(); setOpenState(!isOpen) }}>{trigger}</span>}
-      {isOpen && portalTarget ? createPortal(<div ref={contentRef} id={`${instanceId}-content`} className={cn('mr-popover__content', `mr-popover__content--${side}`, `mr-popover__content--${align}`, contentClassName)} role="dialog" aria-modal="false" tabIndex={-1} style={{ top: `${position.top}px`, left: `${position.left}px` }}>{children}</div>, portalTarget) : null}
+      {isOpen && portalTarget ? createPortal(<div ref={contentRef} id={`${instanceId}-content`} className={cn('mr-popover__content', `mr-popover__content--${side}`, `mr-popover__content--${align}`, contentClassName)} role="dialog" aria-modal="false" tabIndex={-1} style={{ top: `${position.top}px`, left: `${position.left}px`, visibility: positioned ? undefined : 'hidden' }}>{children}</div>, portalTarget) : null}
     </div>
   },
 )

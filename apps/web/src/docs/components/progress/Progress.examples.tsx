@@ -37,23 +37,23 @@ export function ProgressIndeterminateExample() {
 
 export function ProgressAnimatedExample() {
     const [value, setValue] = useState(0)
+    const [direction, setDirection] = useState(1)
 
     useEffect(() => {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             setValue(100)
             return
         }
+        // Ping-pong loop: fills up then drains back — no hard jump to zero.
         const interval = setInterval(() => {
-            setValue((current) => Math.min(current + 5, 100))
+            setValue((current) => Math.min(100, Math.max(0, current + 5 * direction)))
         }, 200)
         return () => clearInterval(interval)
-    }, [])
+    }, [direction])
 
     useEffect(() => {
-        if (value >= 100) {
-            const id = setTimeout(() => setValue(0), 1200)
-            return () => clearTimeout(id)
-        }
+        if (value >= 100) setDirection(-1)
+        else if (value <= 0) setDirection(1)
     }, [value])
 
     return <Progress value={value} label="Packaging release" />

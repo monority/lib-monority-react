@@ -1,0 +1,20 @@
+@layer recipes {
+  .mr-async-state-notice {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    min-width: 0;
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-sm);
+    line-height: 1.5;
+  }
+
+  .mr-async-state-notice__message {
+    min-width: 0;
+  }
+
+  .mr-async-state-notice--error,
+  .mr-async-state-notice[data-state='error'] {
+    color: var(--mr-danger);
+  }
+}

@@ -17,7 +17,8 @@
         flex-shrink: 0;
         width: 0.625rem;
         height: 0.625rem;
-        margin-top: 0.1875rem;
+        /* Centers the 10px marker on the 18px title first line. Stays top-anchored for multiline. */
+        margin-top: 0.3125rem;
         border: 1px solid var(--mr-callout-accent);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-callout-accent-bg);

@@ -350,6 +350,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
   const [viewDate, setViewDate] = useState<Date>(initialDate ? startOfMonth(initialDate) : startOfMonth(new Date()))
   const [open, setOpen] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0 })
+  // The popover must never paint at the (0,0) initial position: it stays
+  // hidden until the first real measurement lands.
+  const [positioned, setPositioned] = useState(false)
 
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLInputElement>(null)
@@ -380,10 +383,12 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
   useEffect(() => {
     if (!open) return
 
+    setPositioned(false)
     const frameId = window.requestAnimationFrame(() => {
       const r = triggerRef.current?.getBoundingClientRect()
       if (r) {
         setPosition({ top: r.bottom + 8, left: r.left, width: Math.max(r.width, 280) })
+        setPositioned(true)
       }
     })
 
@@ -405,7 +410,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
 
     function onResize() {
       const r = triggerRef.current?.getBoundingClientRect()
-      if (r) setPosition({ top: r.bottom + 8, left: r.left, width: Math.max(r.width, 280) })
+      if (r) {
+        setPosition({ top: r.bottom + 8, left: r.left, width: Math.max(r.width, 280) })
+        setPositioned(true)
+      }
     }
 
     document.addEventListener('pointerdown', onPointerDown)
@@ -513,6 +521,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                   top: `${position.top}px`,
                   left: `${position.left}px`,
                   minWidth: `${position.width}px`,
+                  visibility: positioned ? undefined : 'hidden',
                 }}
               >
                 <CalendarHeader viewDate={viewDate} onPrev={handlePrevMonth} onNext={handleNextMonth} />

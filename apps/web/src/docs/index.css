@@ -210,8 +210,8 @@
     justify-content: center;
     gap: 0.875rem;
     flex-wrap: wrap;
-    min-height: 6rem;
-    padding: 2rem;
+    min-height: 4.5rem;
+    padding: 1.5rem;
     background: var(--mr-bg-surface);
 }
 
@@ -308,7 +308,7 @@
 }
 
 .docs-example-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
     background: var(--mr-bg-surface);
 }
 

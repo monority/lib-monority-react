@@ -223,4 +223,14 @@
             max-height: 86vh;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-drawer--right,
+        .mr-drawer--left,
+        .mr-drawer--top,
+        .mr-drawer--bottom,
+        .mr-drawer__panel {
+            animation: none;
+        }
+    }
 }
