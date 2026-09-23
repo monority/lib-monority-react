@@ -24,6 +24,9 @@
     }
 
     .mr-callout__content {
+        display: grid;
+        gap: var(--mr-space-1);
+        align-content: start;
         min-width: 0;
     }
 
@@ -37,7 +40,7 @@
     }
 
     .mr-callout__description {
-        margin: 0.125rem 0 0;
+        margin: 0;
         color: var(--mr-fg-base);
         font-size: var(--mr-text-sm);
         line-height: 1.6;

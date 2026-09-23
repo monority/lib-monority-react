@@ -13,6 +13,16 @@
     backdrop-filter: none;
 }
 
+/* P1 Step25: AppShell.css re-declares .app-header later in the bundle with
+   equal specificity, which silently re-applied the light canvas background
+   under the cream home nav text in light theme. This higher-specificity rule
+   pins the dark hero treatment in both themes (hero is #0a0a0c always). */
+.home-page .app-header--home {
+    background: rgba(10, 10, 12, 0.82);
+    border-bottom: 1px solid rgba(231, 213, 176, 0.14);
+    backdrop-filter: blur(8px);
+}
+
 .app-header__inner {
     display: flex;
     align-items: center;
