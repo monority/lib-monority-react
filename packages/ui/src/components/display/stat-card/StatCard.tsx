@@ -18,17 +18,17 @@ export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(function StatC
                     {label}
                 </Text>
                 <div className="mr-stat-card__header-end">
+                    {icon != null ? (
+                        <div className="mr-stat-card__icon" aria-hidden="true">
+                            {icon}
+                        </div>
+                    ) : null}
                     {trend != null ? (
                         <div className="mr-stat-card__trend" data-trend-tone={resolvedTrendTone}>
                             <span className="mr-stat-card__trend-marker" aria-hidden="true" />
                             <Text as="span" tone="base" size="sm">
                                 {trend}
                             </Text>
-                        </div>
-                    ) : null}
-                    {icon != null ? (
-                        <div className="mr-stat-card__icon" aria-hidden="true">
-                            {icon}
                         </div>
                     ) : null}
                 </div>

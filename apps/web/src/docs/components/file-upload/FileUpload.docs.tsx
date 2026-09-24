@@ -17,7 +17,7 @@ const docData: DocPageData = {
     title: 'FileUpload',
     description:
         'Composed file upload with drag-and-drop, file trigger, and file list. Also available as standalone primitives: FileTrigger, DropZone, FileList.',
-    importCode: `import { FileUpload, FileTrigger, DropZone, FileList } from '@monority/ui'`,
+    importCode: `import { FileUpload, FileTrigger, DropZone, FileList } from '@monority/ui/file-upload'`,
     usageCode: `<FileUpload label="Attachment" actionLabel="Choose a file" />`,
     preview: () => <FileUploadBasicExample />,
     examples: [
@@ -87,6 +87,18 @@ const docData: DocPageData = {
             description: 'Required field indicator.',
         },
         {
+            name: 'invalid',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Marks the trigger and native input invalid.',
+        },
+        {
+            name: 'name',
+            type: `string`,
+            defaultValue: '-',
+            description: 'Native file input name used during form submission.',
+        },
+        {
             name: 'disabled',
             type: `boolean`,
             defaultValue: 'false',
@@ -114,7 +126,6 @@ const docData: DocPageData = {
     cssHooks: [
         '.mr-file-upload__dropzone',
         '.mr-file-upload__content',
-        '.mr-file-upload__icon',
         '.mr-file-upload__description',
         '.mr-file-upload__placeholder',
         '.mr-file-upload__action',
@@ -148,8 +159,9 @@ const docData: DocPageData = {
         '--mr-space-3',
     ],
     a11y: [
-        'Native form element semantics via FileTrigger.',
-        'Supports disabled/required/aria-invalid.',
+        'Native file input and button semantics via FileTrigger.',
+        'Hint and error descriptions are linked to the visible trigger.',
+        'Supports disabled/required/aria-invalid and native name submission.',
         'Visible focus ring on trigger button.',
         'DropZone has role="region" with aria-label.',
         'FileList has role="list" with aria-label="Selected files".',
@@ -162,8 +174,8 @@ const docData: DocPageData = {
 const fileTriggerDoc: DocPageData = {
     title: 'FileTrigger',
     description:
-        'Accessible file picker trigger. Renders a hidden <input type="file"> and a clickable element (button or custom children).',
-    importCode: `import { FileTrigger } from '@monority/ui'`,
+        'Accessible file picker trigger. Renders a native file input and a native button, with custom button content supported.',
+    importCode: `import { FileTrigger } from '@monority/ui/file-upload'`,
     usageCode: `<FileTrigger onSelect={(files) => console.log(files)} />`,
     preview: () => <FileTriggerDefaultExample />,
     examples: [
@@ -207,6 +219,24 @@ const fileTriggerDoc: DocPageData = {
             description: 'Disable the trigger.',
         },
         {
+            name: 'required',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Require a selected file.',
+        },
+        {
+            name: 'invalid',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Marks the trigger and native input invalid.',
+        },
+        {
+            name: 'name',
+            type: `string`,
+            defaultValue: '-',
+            description: 'Native file input name used during form submission.',
+        },
+        {
             name: 'children',
             type: `ReactNode`,
             defaultValue: '-',
@@ -216,9 +246,9 @@ const fileTriggerDoc: DocPageData = {
     cssHooks: ['.mr-file-trigger', '.mr-file-trigger--default', '.mr-file-trigger__input'],
     tokens: ['--mr-bg-accent-soft', '--mr-bg-accent-strong', '--mr-fg-accent', '--mr-radius-sm'],
     a11y: [
-        'Hidden native input with proper type="file".',
-        'Trigger has role="button" with keyboard support (Enter/Space).',
-        'aria-disabled when disabled.',
+        'Native input with type="file" and optional name.',
+        'Visible control is a native button with native Enter/Space behavior.',
+        'Disabled, required, invalid, and described-by state apply to both input and trigger.',
     ],
 }
 

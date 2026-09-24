@@ -1,9 +1,10 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { CardBasicExample, CardPaddingExample, CardInteractiveExample } from './Card.examples'
+import { CardBasicExample, CardInteractiveExample, CardPaddingExample } from './Card.examples'
 
 const docData: DocPageData = {
     title: 'Card',
-    description: 'Surface primitive for grouping related content with consistent density and elevation.',
+    description:
+        'Surface primitive for grouping related content with consistent density and elevation.',
     importCode: "import { Card } from '@monority/ui/card'",
     usageCode: `<Card padding="lg" interactive>
   <h3>Project health</h3>
@@ -44,6 +45,9 @@ const docData: DocPageData = {
         '--mr-card-padding-sm',
         '--mr-card-padding-md',
         '--mr-card-padding-lg',
+        '--mr-bg-surface',
+        '--mr-bg-surface-elevated',
+        '--mr-border-subtle',
         '--mr-elevation-surface',
         '--mr-elevation-raised',
     ],

@@ -9,7 +9,7 @@ import {
 const docData: DocPageData = {
     title: 'DateRangePicker',
     description:
-        'Two custom DatePicker components with calendar popovers, bound together with a visual separator.',
+        'Two custom DatePicker components with calendar popovers. End must be strictly after Start; invalid controlled ends clear once through onChange.',
     importCode: "import { DateRangePicker } from '@monority/ui/date-range-picker'",
     usageCode: `<DateRangePicker fromLabel="Start" toLabel="End" />`,
     preview: () => <DateRangePickerBasicExample />,
@@ -74,19 +74,14 @@ const docData: DocPageData = {
             description: 'Disables both date pickers.',
         },
     ],
-    cssHooks: [
-        '.mr-date-range-picker',
-        '.mr-date-range-picker__from',
-        '.mr-date-range-picker__to',
-        '.mr-date-range-picker__separator',
-    ],
+    cssHooks: ['.mr-date-range-picker', '.mr-date-range-picker__separator', '.mr-datepicker'],
     tokens: [
         '--mr-border-subtle',
         '--mr-bg-control',
         '--mr-fg-base',
         '--mr-fg-muted',
         '--mr-input-height',
-        '--mr-radius-md',
+        '--mr-input-radius',
         '--mr-text-sm',
         '--mr-space-*',
     ],

@@ -32,6 +32,7 @@ export function RadioGroupInvalidExample() {
 export function RadioGroupWithDescriptionExample() {
     return (
         <RadioGroup
+            data-testid="radio-described"
             label="Notification preference"
             defaultValue="mention"
             items={[

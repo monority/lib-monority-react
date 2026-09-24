@@ -1,60 +1,80 @@
 @layer recipes {
-  .mr-file-trigger__input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+    .mr-file-trigger__input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 
-  .mr-file-trigger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-     font: inherit;
-     pointer-events: auto;
-     cursor: pointer;
-    transition: background var(--mr-dur-150), color var(--mr-dur-150), border-color var(--mr-dur-150);
-  }
+    .mr-file-trigger {
+        appearance: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        pointer-events: auto;
+        cursor: pointer;
+        transition: background-color var(--mr-dur-150) var(--mr-ease-standard), border-color
+            var(--mr-dur-150) var(--mr-ease-standard), color var(--mr-dur-150)
+            var(--mr-ease-standard);
+    }
 
-  .mr-file-trigger:focus-visible {
-    outline: var(--mr-focus-width) solid var(--mr-accent);
-    outline-offset: var(--mr-focus-offset);
-  }
+    .mr-file-trigger__label {
+        display: contents;
+    }
 
-  .mr-file-trigger[aria-disabled='true'] {
-     opacity: var(--mr-opacity-disabled);
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+    .mr-file-trigger:focus-visible {
+        outline: var(--mr-focus-width) solid var(--mr-accent);
+        outline-offset: var(--mr-focus-offset);
+    }
 
-  .mr-file-trigger--default {
-    padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
-    border: var(--mr-border-width) solid var(--mr-border-subtle);
-    border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
-    color: var(--mr-fg-base);
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    font-weight: var(--mr-font-weight-medium);
-  }
+    .mr-file-trigger[aria-disabled="true"] {
+        opacity: var(--mr-opacity-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 
-  .mr-file-trigger--default:hover:not(:disabled) {
-    background: var(--mr-bg-surface-strong);
-    border-color: var(--mr-border-strong);
-  }
+    .mr-file-trigger--default {
+        min-block-size: var(--mr-control-size-md);
+        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border-radius: var(--mr-input-radius);
+        background: var(--mr-bg-control);
+        color: var(--mr-fg-base);
+        font-family: inherit;
+        font-size: var(--mr-text-sm);
+        font-weight: var(--mr-font-weight-medium);
+    }
 
-  .mr-file-trigger--default:disabled {
-     opacity: var(--mr-opacity-disabled);
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+    .mr-file-trigger--default[data-size="sm"] {
+        min-block-size: var(--mr-control-size-sm);
+        padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+        font-size: var(--mr-text-xs);
+    }
+
+    .mr-file-trigger--default[data-size="lg"] {
+        min-block-size: var(--mr-control-size-lg);
+        padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
+        font-size: var(--mr-text-md);
+    }
+
+    .mr-file-trigger--default:hover:not(:disabled) {
+        background: var(--mr-bg-surface-strong);
+        border-color: var(--mr-border-strong);
+    }
+
+    .mr-file-trigger--default:disabled {
+        opacity: var(--mr-opacity-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 }

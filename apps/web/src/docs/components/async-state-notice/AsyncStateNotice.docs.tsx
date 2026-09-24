@@ -1,8 +1,8 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     AsyncStateNoticeBasicPreview,
-    AsyncStateNoticeErrorExample,
     AsyncStateNoticeCustomMessageExample,
+    AsyncStateNoticeErrorExample,
     AsyncStateNoticeToggleExample,
 } from './AsyncStateNotice.examples'
 
@@ -24,13 +24,12 @@ const docData: DocPageData = {
         '[data-state]',
     ],
     tokens: [
-        '--mr-accent',
-        '--mr-danger',
-        '--mr-bg-accent-soft',
-        '--mr-danger-soft',
+        '--mr-danger-text',
         '--mr-text-sm',
-        '--mr-radius-md',
-        '--mr-space-*',
+        '--mr-space-1',
+        '--mr-space-2',
+        '--mr-duration-enter',
+        '--mr-ease-standard',
     ],
     a11y: [
         'aria-live="polite" for state announcements.',

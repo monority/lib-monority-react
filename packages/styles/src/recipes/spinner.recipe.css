@@ -1,76 +1,88 @@
 @layer recipes {
-  @keyframes mr-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .mr-spinner {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--mr-accent);
-  }
-
-  .mr-spinner__ring {
-    display: block;
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: var(--mr-radius-full);
-    border: 2px solid currentColor;
-    border-right-color: color-mix(in srgb, currentColor 26%, transparent);
-     border-top-color: transparent;
-     transform-origin: center;
-     will-change: transform;
-     animation: mr-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
-  }
-
-  .mr-spinner--sm,
-  .mr-spinner[data-size='sm'] {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .mr-spinner--sm .mr-spinner__ring {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-width: 1.5px;
-  }
-
-  .mr-spinner--md,
-  .mr-spinner[data-size='md'] {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .mr-spinner--md .mr-spinner__ring {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  .mr-spinner--lg,
-  .mr-spinner[data-size='lg'] {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .mr-spinner--lg .mr-spinner__ring {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-
-  .mr-spinner--base,
-  .mr-spinner[data-tone='base'] { color: var(--mr-accent); }
-
-  .mr-spinner--muted,
-  .mr-spinner[data-tone='muted'] { color: var(--mr-fg-muted); }
-
-  .mr-spinner--inverse,
-  .mr-spinner[data-tone='inverse'] { color: var(--mr-accent-contrast); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mr-spinner__ring {
-      animation: none;
-      border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+    @keyframes mr-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
-  }
+
+    .mr-spinner {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-accent);
+    }
+
+    .mr-spinner__ring {
+        display: block;
+        inline-size: var(--mr-spinner-ring-md);
+        block-size: var(--mr-spinner-ring-md);
+        border: var(--mr-border-width) solid currentColor;
+        border-radius: var(--mr-radius-full);
+        border-right-color: color-mix(in srgb, currentColor 26%, transparent);
+        border-top-color: transparent;
+        transform-origin: center;
+        will-change: transform;
+        animation: mr-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
+    }
+
+    .mr-spinner--sm,
+    .mr-spinner[data-size="sm"] {
+        inline-size: var(--mr-spinner-size-sm);
+        block-size: var(--mr-spinner-size-sm);
+    }
+
+    .mr-spinner--sm .mr-spinner__ring,
+    .mr-spinner[data-size="sm"] .mr-spinner__ring {
+        inline-size: var(--mr-spinner-ring-sm);
+        block-size: var(--mr-spinner-ring-sm);
+    }
+
+    .mr-spinner--md,
+    .mr-spinner[data-size="md"] {
+        inline-size: var(--mr-spinner-size-md);
+        block-size: var(--mr-spinner-size-md);
+    }
+
+    .mr-spinner--md .mr-spinner__ring,
+    .mr-spinner[data-size="md"] .mr-spinner__ring {
+        inline-size: var(--mr-spinner-ring-md);
+        block-size: var(--mr-spinner-ring-md);
+    }
+
+    .mr-spinner--lg,
+    .mr-spinner[data-size="lg"] {
+        inline-size: var(--mr-spinner-size-lg);
+        block-size: var(--mr-spinner-size-lg);
+    }
+
+    .mr-spinner--lg .mr-spinner__ring,
+    .mr-spinner[data-size="lg"] .mr-spinner__ring {
+        inline-size: var(--mr-spinner-ring-lg);
+        block-size: var(--mr-spinner-ring-lg);
+    }
+
+    .mr-spinner--base,
+    .mr-spinner[data-tone="base"] {
+        color: var(--mr-accent);
+    }
+
+    .mr-spinner--muted,
+    .mr-spinner[data-tone="muted"] {
+        color: var(--mr-fg-muted);
+    }
+
+    .mr-spinner--inverse,
+    .mr-spinner[data-tone="inverse"] {
+        color: var(--mr-accent-contrast);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-spinner__ring {
+            animation: none;
+            border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+        }
+    }
 }

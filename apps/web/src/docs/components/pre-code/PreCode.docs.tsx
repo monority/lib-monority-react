@@ -1,14 +1,21 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { PreCodeBasicExample, PreCodeSizesExample, PreCodeWrapExample } from './PreCode.examples'
+import {
+    PreCodeBasicExample,
+    PreCodeScrollExample,
+    PreCodeSizesExample,
+    PreCodeWrapExample,
+} from './PreCode.examples'
 
 const docData: DocPageData = {
     title: 'PreCode',
-    description: 'Preformatted code block with size and wrapping controls.',
+    description:
+        'Preformatted code block with horizontal scrolling, optional wrapping, and readable theme-aware syntax colors.',
     importCode: "import { PreCode } from '@monority/ui/pre-code'",
     usageCode: `<PreCode language="tsx">const value = 1</PreCode>`,
     preview: () => <PreCodeBasicExample />,
     examples: [
         { title: 'Sizes', content: <PreCodeSizesExample /> },
+        { title: 'Horizontal scrolling', content: <PreCodeScrollExample /> },
         { title: 'Wrapping', content: <PreCodeWrapExample /> },
     ],
     props: [
@@ -44,10 +51,25 @@ const docData: DocPageData = {
         },
     ],
     cssHooks: ['.mr-pre-code', '.mr-pre-code--sm', '.mr-pre-code--md', '.mr-pre-code--wrap'],
-    tokens: ['--mr-font-mono', '--mr-text-xs', '--mr-text-sm'],
+    tokens: [
+        '--mr-font-mono',
+        '--mr-text-xs',
+        '--mr-text-sm',
+        '--mr-space-3',
+        '--mr-space-4',
+        '--mr-radius-sm',
+        '--mr-radius-md',
+        '--mr-bg-surface-strong',
+        '--mr-fg-base',
+        '--mr-code-bg',
+        '--mr-code-fg',
+        '--mr-code-scrollbar',
+        '--mr-code-shadow',
+    ],
     a11y: [
         'Renders native <pre><code> markup.',
-        'Keep code readable at 375px: prefer wrap for long lines.',
+        'Default mode scrolls long lines horizontally without widening the page.',
+        'Use wrap when line wrapping is preferred.',
     ],
 }
 

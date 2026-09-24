@@ -17,7 +17,14 @@ export function FileUploadWithActionExample() {
 }
 
 export function FileUploadWithErrorExample() {
-    return <FileUpload label="Upload" error="File size must be less than 5MB" />
+    return (
+        <FileUpload
+            id="upload-error"
+            name="attachments"
+            label="Upload"
+            error="File size must be less than 5MB"
+        />
+    )
 }
 
 export function FileUploadMultipleExample() {

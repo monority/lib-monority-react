@@ -1,8 +1,8 @@
-import { forwardRef, useCallback, useState } from 'react'
+import { FieldDescription, FieldError, FieldLabel } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import { FormControl, useFormControl } from '@/primitives/form-control'
-import { Field } from '@/components/forms/field/Field'
+import { forwardRef, useCallback, useState } from 'react'
 import type { SwitchProps } from './Switch.types'
 
 const switchVariants = cva({
@@ -43,7 +43,7 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
     const resolvedTone = tone ?? 'accent'
     const resolvedSize = size ?? 'md'
     const isInvalid = invalid || Boolean(error)
-    const { describedBy, inputId } = useFormControl()
+    const { describedBy, errorId, hintId, inputId } = useFormControl()
 
     const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false)
     const isControlled = checked !== undefined
@@ -60,40 +60,62 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
     )
 
     return (
-        <Field className={className} label={label} hint={hint} error={error}>
-            <label
-                className={cn(
-                    switchVariants({ tone: resolvedTone, size: resolvedSize }),
-                    resolvedChecked && 'mr-switch--checked',
-                    disabled && 'mr-switch--disabled',
-                    isInvalid && 'mr-switch--invalid'
-                )}
-                data-tone={resolvedTone}
-                data-size={resolvedSize}
-                data-checked={resolvedChecked ? true : undefined}
-                data-disabled={disabled ? true : undefined}
-                data-invalid={isInvalid ? true : undefined}
-                data-required={required ? true : undefined}
-            >
-                <input
-                    ref={ref}
-                    id={inputId || undefined}
-                    type="checkbox"
-                    className="mr-switch__input"
-                    checked={resolvedChecked}
-                    onChange={handleChange}
-                    disabled={disabled}
-                    required={required}
-                    aria-invalid={isInvalid || undefined}
-                    aria-describedby={describedBy}
-                    role="switch"
-                    {...props}
-                />
-                <span className="mr-switch__control" aria-hidden="true">
-                    <span className="mr-switch__thumb" />
-                </span>
-            </label>
-        </Field>
+        <div
+            className={cn('mr-field', className)}
+            data-has-hint={hint != null ? true : undefined}
+            data-has-error={error != null ? true : undefined}
+            data-required={required ? true : undefined}
+        >
+            <div className="mr-switch__row">
+                {label != null || hint != null || error != null ? (
+                    <div className="mr-switch__content">
+                        {label != null ? (
+                            <FieldLabel htmlFor={inputId || undefined} required={required}>
+                                {label}
+                            </FieldLabel>
+                        ) : null}
+                        {hint != null ? (
+                            <FieldDescription id={hintId}>{hint}</FieldDescription>
+                        ) : null}
+                        {error != null ? <FieldError id={errorId}>{error}</FieldError> : null}
+                    </div>
+                ) : null}
+                <label
+                    className={cn(
+                        switchVariants({ tone: resolvedTone, size: resolvedSize }),
+                        resolvedChecked && 'mr-switch--checked',
+                        disabled && 'mr-switch--disabled',
+                        isInvalid && 'mr-switch--invalid'
+                    )}
+                    htmlFor={inputId || undefined}
+                    data-tone={resolvedTone}
+                    data-size={resolvedSize}
+                    data-checked={resolvedChecked ? true : undefined}
+                    data-disabled={disabled ? true : undefined}
+                    data-invalid={isInvalid ? true : undefined}
+                    data-required={required ? true : undefined}
+                >
+                    <input
+                        ref={ref}
+                        id={inputId || undefined}
+                        type="checkbox"
+                        className="mr-switch__input"
+                        checked={resolvedChecked}
+                        onChange={handleChange}
+                        disabled={disabled}
+                        required={required}
+                        aria-invalid={isInvalid || undefined}
+                        aria-describedby={describedBy}
+                        aria-checked={resolvedChecked}
+                        role="switch"
+                        {...props}
+                    />
+                    <span className="mr-switch__control" aria-hidden="true">
+                        <span className="mr-switch__thumb" />
+                    </span>
+                </label>
+            </div>
+        </div>
     )
 })
 

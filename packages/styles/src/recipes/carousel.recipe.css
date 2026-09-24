@@ -1,14 +1,17 @@
 @layer recipes {
   .mr-carousel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas:
+      'viewport'
+      'dots';
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--mr-space-3);
     min-width: 0;
     overflow: hidden;
   }
 
   .mr-carousel__viewport {
+    grid-area: viewport;
     width: 100%;
     overflow: hidden;
     border-radius: var(--mr-radius-md);
@@ -33,34 +36,31 @@
   }
 
   .mr-carousel__arrow {
-    position: absolute;
-    top: 50%;
+    grid-area: viewport;
     z-index: var(--mr-z-overlay);
     display: inline-flex;
     align-items: center;
+    align-self: center;
     justify-content: center;
-    /* Matches the md icon-button height so circular controls stay in family. */
-     inline-size: var(--mr-btn-height-md);
-     block-size: var(--mr-btn-height-md);
+    inline-size: var(--mr-btn-height-md);
+    block-size: var(--mr-btn-height-md);
     padding: 0;
-     border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border: 0;
     border-radius: var(--mr-radius-full);
-    background: var(--mr-bg-control);
+    background: transparent;
+    box-shadow: none;
     color: var(--mr-fg-strong);
     cursor: pointer;
     font: inherit;
     line-height: 1;
-    opacity: 0.94;
-    transform: translateY(-50%);
     transition:
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      border-color var(--mr-duration-fast) var(--mr-ease-standard),
+      color var(--mr-duration-fast) var(--mr-ease-standard),
       opacity var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-carousel__arrow:hover:not(:disabled) {
-    border-color: var(--mr-border-strong);
-    background: var(--mr-bg-surface-strong);
+    background: transparent;
+    color: var(--mr-accent);
   }
 
   .mr-carousel__arrow:focus-visible {
@@ -74,14 +74,17 @@
   }
 
   .mr-carousel__arrow--prev {
-    left: var(--mr-space-2);
+    justify-self: start;
+    margin-inline-start: var(--mr-space-2);
   }
 
   .mr-carousel__arrow--next {
-    right: var(--mr-space-2);
+    justify-self: end;
+    margin-inline-end: var(--mr-space-2);
   }
 
   .mr-carousel__dots {
+    grid-area: dots;
     display: flex;
     justify-content: center;
     gap: var(--mr-space-2);

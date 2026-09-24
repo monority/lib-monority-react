@@ -43,11 +43,14 @@ describe('StatCard', () => {
         )
     })
 
-    it('keeps the trend in the header-end region', () => {
-        const view = render(<StatCard label="Revenue" value="$12k" trend="8.4%" />)
-        const header = view.querySelector('.mr-stat-card__header')
+    it('keeps the trend at the header-end edge after an optional icon', () => {
+        const view = render(
+            <StatCard label="Revenue" value="$12k" trend="8.4%" icon={<span>icon</span>} />
+        )
+        const headerEnd = view.querySelector('.mr-stat-card__header-end')
         const trend = view.querySelector('.mr-stat-card__trend')
-        expect(header?.querySelector('.mr-stat-card__header-end')?.contains(trend)).toBe(true)
+        expect(headerEnd?.contains(trend)).toBe(true)
+        expect(headerEnd?.lastElementChild).toBe(trend)
     })
 
     it('marks the value for styling hooks', () => {

@@ -18,7 +18,7 @@ export function StatCardTonesExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                 gap: 'var(--mr-space-5)',
+                gap: 'var(--mr-space-5)',
             }}
         >
             <StatCard
@@ -78,14 +78,16 @@ export function StatCardLongTextExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                 gap: 'var(--mr-space-5)',
+                gap: 'var(--mr-space-5)',
             }}
         >
             <StatCard
+                data-testid="stat-card-long-title"
                 label="Quarterly recognized revenue"
                 value="$1,234,567.89"
                 trend="+23.5% vs previous quarter"
                 trendTone="success"
+                icon={<span>QR</span>}
             />
             <StatCard
                 label="Backlog items requiring product decision"

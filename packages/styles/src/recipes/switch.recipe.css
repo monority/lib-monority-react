@@ -1,4 +1,32 @@
 @layer recipes {
+  .mr-switch__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mr-space-4);
+    min-inline-size: 0;
+  }
+
+  .mr-switch__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--mr-space-0);
+    min-inline-size: 0;
+  }
+
+  .mr-switch__content .mr-field__label {
+    overflow-wrap: anywhere;
+  }
+
+  .mr-switch__row:focus-within .mr-field__label {
+    color: var(--mr-accent);
+  }
+
+  .mr-field[data-has-error='true'] .mr-switch__row .mr-field__label {
+    color: var(--mr-danger-text);
+  }
+
   .mr-switch {
     --mr-switch-scale: 1;
     --mr-switch-border-width: var(--mr-border-width);
@@ -19,7 +47,7 @@
 
     display: inline-flex;
     align-items: center;
-    gap: var(--mr-space-2);
+    flex-shrink: 0;
     color: var(--mr-fg-base);
     font-family: inherit;
     font-size: var(--mr-text-sm);
@@ -135,7 +163,6 @@
   .mr-switch--sm,
   .mr-switch[data-size='sm'] {
     --mr-switch-scale: var(--mr-switch-scale-sm);
-    gap: var(--mr-space-1);
     font-size: var(--mr-text-xs);
   }
 
@@ -147,7 +174,6 @@
   .mr-switch--lg,
   .mr-switch[data-size='lg'] {
     --mr-switch-scale: var(--mr-switch-scale-lg);
-    gap: var(--mr-space-3);
     font-size: var(--mr-text-md);
   }
 }

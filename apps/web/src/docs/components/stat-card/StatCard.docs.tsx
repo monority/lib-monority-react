@@ -59,9 +59,12 @@ const docData: DocPageData = {
     cssHooks: [
         '.mr-stat-card',
         '.mr-stat-card__header',
+        '.mr-stat-card__header-end',
         '.mr-stat-card__value',
         '.mr-stat-card__label',
         '.mr-stat-card__trend',
+        '.mr-stat-card__trend-marker',
+        '.mr-stat-card__icon',
         '.mr-stat-card__description',
         '.mr-stat-card__footer',
         '[data-trend-tone]',
@@ -72,7 +75,8 @@ const docData: DocPageData = {
         '--mr-text-*',
         '--mr-space-*',
         '--mr-success',
-        '--mr-danger',
+        '--mr-warning',
+        '--mr-danger-text',
     ],
     a11y: [
         'Summary/statistics pattern.',

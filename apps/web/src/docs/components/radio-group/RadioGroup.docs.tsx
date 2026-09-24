@@ -19,7 +19,7 @@ const docData: DocPageData = {
   { value: 'lg', label: 'Large', disabled: true },
 ]
 
-<RadioGroup label="Size" items={items} />`,
+<RadioGroup label="Size" size="md" items={items} />`,
     preview: () => <RadioGroupBasicExample />,
     examples: [
         { title: 'Invalid', content: <RadioGroupInvalidExample /> },
@@ -80,6 +80,12 @@ const docData: DocPageData = {
             description: 'HTML name attribute for the radio inputs.',
         },
         {
+            name: 'size',
+            type: `'sm' | 'md' | 'lg'`,
+            defaultValue: `'md'`,
+            description: 'Radio indicator and label density.',
+        },
+        {
             name: 'tone',
             type: `'accent' | 'neutral' | 'danger'`,
             defaultValue: `'accent'`,
@@ -100,6 +106,7 @@ const docData: DocPageData = {
         '.mr-radio__label',
         '.mr-radio__description',
         '[data-tone]',
+        '[data-size]',
         '[data-disabled]',
         '[data-invalid]',
         '[data-checked]',

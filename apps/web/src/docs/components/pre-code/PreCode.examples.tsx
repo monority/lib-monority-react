@@ -6,10 +6,20 @@ export function PreCodeBasicExample() {
 
 export function PreCodeSizesExample() {
     return (
-        <div style={{ display: 'grid', gap: '0.75rem' }}>
+        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
             <PreCode size="sm">pnpm add @monority/ui</PreCode>
             <PreCode size="md">pnpm add @monority/ui</PreCode>
         </div>
+    )
+}
+
+export function PreCodeScrollExample() {
+    const longLine =
+        'const result = await client.query.execute({ query: "select activeWorkspaces, totalSeats, renewalRate, supportPriority, accountOwner from workspaceAnalytics where billingStatus = active order by renewalRate desc" })'
+    return (
+        <PreCode data-testid="pre-code-scroll" language="tsx">
+            {longLine}
+        </PreCode>
     )
 }
 

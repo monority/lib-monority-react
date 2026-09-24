@@ -7,22 +7,20 @@
         display: flex;
         flex-direction: column;
         gap: var(--mr-space-3);
-        min-width: 0;
-        min-block-size: var(--mr-card-min-height, 0);
-        position: relative;
+        min-inline-size: 0;
     }
 
     .mr-stat-card__header {
-     display: grid;
-     grid-template-columns: minmax(0, 1fr) auto;
-     align-items: start;
-     gap: var(--mr-space-3);
-     min-width: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+        align-items: start;
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
     }
 
-     .mr-stat-card__label {
-        min-width: 0;
-        max-width: min(28ch, 100%);
+    .mr-stat-card__label {
+        min-inline-size: 0;
+        max-inline-size: min(28ch, 100%);
         line-height: var(--mr-leading-snug);
         overflow-wrap: anywhere;
         text-wrap: pretty;
@@ -30,11 +28,12 @@
 
     .mr-stat-card__header-end {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         align-items: flex-start;
         justify-content: flex-end;
         gap: var(--mr-space-2);
-        min-width: 0;
+        min-inline-size: 0;
+        max-inline-size: 100%;
     }
 
     .mr-stat-card__metric {
@@ -42,11 +41,11 @@
         flex-wrap: wrap;
         align-items: baseline;
         gap: var(--mr-space-2) var(--mr-space-3);
-        min-width: 0;
+        min-inline-size: 0;
     }
 
     .mr-stat-card__value {
-        min-width: 0;
+        min-inline-size: 0;
         overflow-wrap: anywhere;
         font-variant-numeric: tabular-nums;
         letter-spacing: 0;
@@ -59,9 +58,9 @@
         flex: 0 0 auto;
         align-items: center;
         justify-content: center;
-        width: var(--mr-control-size-sm);
-        height: var(--mr-control-size-sm);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        inline-size: var(--mr-control-size-sm);
+        block-size: var(--mr-control-size-sm);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-sm);
         background: var(--mr-bg-control);
         color: var(--mr-fg-muted);
@@ -73,8 +72,9 @@
         align-items: center;
         gap: var(--mr-space-1);
         align-self: flex-start;
+        min-inline-size: 0;
         min-block-size: var(--mr-control-size-sm);
-        max-width: 100%;
+        max-inline-size: 100%;
         padding: 0 var(--mr-space-2);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-stat-card-trend-bg);
@@ -84,14 +84,14 @@
 
     .mr-stat-card__trend-marker {
         flex: 0 0 auto;
-         width: var(--mr-space-2);
-         height: var(--mr-space-2);
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
         border-radius: var(--mr-radius-full);
         background: var(--mr-stat-card-trend-marker);
     }
 
     .mr-stat-card__trend .mr-text {
-        min-width: 0;
+        min-inline-size: 0;
         overflow-wrap: anywhere;
         color: currentColor;
         font-weight: var(--mr-font-weight-semibold);
@@ -111,21 +111,21 @@
     }
 
     .mr-stat-card__trend[data-trend-tone="danger"] {
-        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-danger) 10%, transparent);
-        --mr-stat-card-trend-fg: var(--mr-danger);
-        --mr-stat-card-trend-marker: var(--mr-danger);
+        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-danger-text) 10%, transparent);
+        --mr-stat-card-trend-fg: var(--mr-danger-text);
+        --mr-stat-card-trend-marker: var(--mr-danger-text);
     }
 
     .mr-stat-card__description {
-        max-width: 38ch;
+        max-inline-size: min(38ch, 100%);
         line-height: var(--mr-leading-relaxed);
         text-wrap: pretty;
     }
 
     .mr-stat-card__footer {
-        margin-top: auto;
-        padding-top: var(--mr-space-3);
-         border-top: var(--mr-border-width) solid var(--mr-border-subtle);
+        margin-block-start: auto;
+        padding-block-start: var(--mr-space-3);
+        border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
         line-height: var(--mr-leading-relaxed);

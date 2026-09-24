@@ -1,14 +1,15 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    CarouselBasicExample,
     CarouselAutoPlayExample,
+    CarouselBasicExample,
     CarouselLoopExample,
     CarouselNoControlsExample,
 } from './Carousel.examples'
 
 const docData: DocPageData = {
     title: 'Carousel',
-    description: 'Scrollable/sliding carousel with prev/next buttons and optional pagination dots.',
+    description:
+        'Scrollable carousel with centered, transparent arrow controls and optional pagination dots.',
     importCode: "import { Carousel } from '@monority/ui/carousel'",
     usageCode: `<Carousel
   slides={[
@@ -98,11 +99,13 @@ const docData: DocPageData = {
         '--mr-radius-md',
         '--mr-radius-full',
         '--mr-space-3',
-        '--mr-bg-surface',
-        '--mr-bg-surface-strong',
-        '--mr-border-subtle',
-        '--mr-border-strong',
-        '--mr-fg-base',
+        '--mr-btn-height-md',
+        '--mr-accent',
+        '--mr-fg-strong',
+        '--mr-focus-width',
+        '--mr-focus-offset',
+        '--mr-z-overlay',
+        '--mr-duration-fast',
     ],
     a11y: [
         'Root has role="region" + aria-roledescription="carousel".',

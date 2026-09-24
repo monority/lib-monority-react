@@ -1,11 +1,11 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    ProgressBasicExample,
-    ProgressValuesExample,
-    ProgressTonesExample,
-    ProgressWithoutValueExample,
-    ProgressIndeterminateExample,
     ProgressAnimatedExample,
+    ProgressBasicExample,
+    ProgressIndeterminateExample,
+    ProgressTonesExample,
+    ProgressValuesExample,
+    ProgressWithoutValueExample,
 } from './Progress.examples'
 
 const docData: DocPageData = {
@@ -73,6 +73,9 @@ const docData: DocPageData = {
         '--mr-bg-control',
         '--mr-border-subtle',
         '--mr-radius-full',
+        '--mr-duration-base',
+        '--mr-dur-1200',
+        '--mr-ease-in-out',
     ],
     a11y: [
         'The track exposes role="progressbar".',

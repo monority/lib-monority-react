@@ -3,7 +3,7 @@ import { Textarea } from '@monority/ui/textarea'
 export function TextareaBasicExample() {
     return (
         <>
-            <Textarea defaultValue="Example" />
+            <Textarea data-testid="textarea-basic" defaultValue="Example" />
         </>
     )
 }
@@ -17,9 +17,7 @@ export function TextareaWithErrorExample() {
 }
 
 export function TextareaDisabledExample() {
-    return (
-        <Textarea label="Description" disabled defaultValue="Cannot edit this content" />
-    )
+    return <Textarea label="Description" disabled defaultValue="Cannot edit this content" />
 }
 
 export function TextareaWithCharCountExample() {

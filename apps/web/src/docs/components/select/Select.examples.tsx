@@ -2,10 +2,13 @@ import { Select } from '@monority/ui/select'
 
 export function SelectBasicExample() {
     return (
-        <Select label="Country">
+        <Select label="Country" data-testid="select-basic">
             <option value="">Select an option...</option>
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
+            <option value="long">
+                A deliberately long country or region option that must stay clear of the chevron
+            </option>
         </Select>
     )
 }

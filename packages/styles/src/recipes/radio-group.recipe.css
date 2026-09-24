@@ -1,156 +1,188 @@
 @layer recipes {
-  .mr-radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--mr-space-2);
-     --mr-radio-size: var(--mr-control-icon-size-lg);
-  }
+    .mr-radio-group {
+        --mr-radio-group-gap: var(--mr-space-2);
+        --mr-radio-gap: var(--mr-space-2);
+        --mr-radio-size: var(--mr-control-icon-size-md);
+        --mr-radio-label-size: var(--mr-text-sm);
+        --mr-radio-description-size: var(--mr-text-xs);
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-radio-group-gap);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
 
-  .mr-radio {
-     display: inline-flex;
-     align-items: center;
-     gap: var(--mr-space-2);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    line-height: var(--mr-leading-control);
-    color: var(--mr-fg-base);
-    user-select: none;
-  }
+    .mr-radio-group[data-size="sm"] {
+        --mr-radio-group-gap: var(--mr-space-1);
+        --mr-radio-gap: var(--mr-space-1);
+        --mr-radio-size: var(--mr-control-icon-size-sm);
+        --mr-radio-label-size: var(--mr-text-xs);
+    }
 
-  .mr-radio__input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+    .mr-radio-group[data-size="lg"] {
+        --mr-radio-group-gap: var(--mr-space-3);
+        --mr-radio-gap: var(--mr-space-3);
+        --mr-radio-size: var(--mr-control-icon-size-lg);
+        --mr-radio-label-size: var(--mr-text-md);
+        --mr-radio-description-size: var(--mr-text-sm);
+    }
 
-  .mr-radio__control {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: var(--mr-radio-size);
-    height: var(--mr-radio-size);
-     border: var(--mr-border-width) solid var(--mr-border-subtle);
-    border-radius: var(--mr-radius-full);
-    background: var(--mr-bg-control);
-    transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), border-color var(--mr-duration-fast) var(--mr-ease-standard), box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
-  }
+    .mr-radio {
+        display: inline-grid;
+        grid-template-columns: var(--mr-radio-size) minmax(0, 1fr);
+        align-items: center;
+        gap: var(--mr-radio-gap);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--mr-radio-label-size);
+        line-height: var(--mr-leading-control);
+        color: var(--mr-fg-base);
+        user-select: none;
+    }
 
-  .mr-radio__dot {
-    width: 50%;
-    height: 50%;
-    border-radius: var(--mr-radius-full);
-    background: var(--mr-accent);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: opacity var(--mr-duration-fast) var(--mr-ease-standard), transform var(--mr-duration-fast) var(--mr-ease-standard);
-  }
+    .mr-radio__input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 
-  .mr-radio__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--mr-space-0);
-  }
+    .mr-radio__control {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
+        align-self: center;
+        flex-shrink: 0;
+        width: var(--mr-radio-size);
+        height: var(--mr-radio-size);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-full);
+        background: var(--mr-bg-control);
+        transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), border-color
+            var(--mr-duration-fast) var(--mr-ease-standard), box-shadow var(--mr-duration-fast)
+            var(--mr-ease-standard);
+    }
 
-  .mr-radio__label {
-    font-size: var(--mr-text-sm);
-    line-height: var(--mr-leading-control);
-  }
+    .mr-radio__dot {
+        width: 50%;
+        height: 50%;
+        border-radius: var(--mr-radius-full);
+        background: var(--mr-accent);
+        opacity: 0;
+        transform: scale(0.5);
+        transition: opacity var(--mr-duration-fast) var(--mr-ease-standard), transform
+            var(--mr-duration-fast) var(--mr-ease-standard);
+    }
 
-  .mr-radio__description {
-    font-size: var(--mr-text-xs);
-    line-height: var(--mr-leading-normal);
-    color: var(--mr-fg-muted);
-  }
+    .mr-radio__body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-0);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        overflow-wrap: anywhere;
+    }
 
-  .mr-radio__input:focus-visible+.mr-radio__control {
-    outline: var(--mr-focus-width) solid var(--mr-accent);
-    outline-offset: var(--mr-focus-offset);
-  }
+    .mr-radio__label {
+        font-size: var(--mr-radio-label-size);
+        line-height: var(--mr-leading-control);
+    }
 
-  .mr-radio--checked .mr-radio__control,
-  .mr-radio[data-checked='true'] .mr-radio__control {
-    border-color: var(--mr-accent);
-  }
+    .mr-radio__description {
+        font-size: var(--mr-radio-description-size);
+        line-height: var(--mr-leading-normal);
+        color: var(--mr-fg-muted);
+    }
 
-  .mr-radio--checked .mr-radio__dot,
-  .mr-radio[data-checked='true'] .mr-radio__dot {
-    opacity: 1;
-    transform: scale(1);
-  }
+    .mr-radio__input:focus-visible + .mr-radio__control {
+        outline: var(--mr-focus-width) solid var(--mr-accent);
+        outline-offset: var(--mr-focus-offset);
+    }
 
-  .mr-radio-group--disabled,
-  .mr-radio-group[data-disabled='true'] {
-      opacity: var(--mr-opacity-disabled);
-  }
+    .mr-radio--checked .mr-radio__control,
+    .mr-radio[data-checked="true"] .mr-radio__control {
+        border-color: var(--mr-accent);
+    }
 
-  .mr-radio-group--disabled .mr-radio,
-  .mr-radio-group[data-disabled='true'] .mr-radio {
-    opacity: 1;
-  }
+    .mr-radio--checked .mr-radio__dot,
+    .mr-radio[data-checked="true"] .mr-radio__dot {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-  .mr-radio-group--disabled .mr-radio,
-  .mr-radio-group[data-disabled='true'] .mr-radio {
-    cursor: not-allowed;
-  }
+    .mr-radio-group--disabled,
+    .mr-radio-group[data-disabled="true"] {
+        opacity: var(--mr-opacity-disabled);
+    }
 
-  .mr-radio--disabled,
-  .mr-radio[data-disabled='true'] {
-    cursor: not-allowed;
-     opacity: var(--mr-opacity-disabled);
-  }
+    .mr-radio-group--disabled .mr-radio,
+    .mr-radio-group[data-disabled="true"] .mr-radio {
+        opacity: 1;
+    }
 
-  .mr-radio-group--invalid .mr-radio__control,
-  .mr-radio-group[data-invalid='true'] .mr-radio__control {
-    border-color: var(--mr-danger);
-     box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
-  }
+    .mr-radio-group--disabled .mr-radio,
+    .mr-radio-group[data-disabled="true"] .mr-radio {
+        cursor: not-allowed;
+    }
 
-  .mr-radio-group--neutral .mr-radio__control,
-  .mr-radio-group[data-tone='neutral'] .mr-radio__control {
-    border-color: var(--mr-border-strong);
-    background: var(--mr-bg-surface);
-  }
+    .mr-radio--disabled,
+    .mr-radio[data-disabled="true"] {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled);
+    }
 
-  .mr-radio-group--neutral .mr-radio--checked .mr-radio__control,
-  .mr-radio-group--neutral .mr-radio[data-checked='true'] .mr-radio__control,
-  .mr-radio-group[data-tone='neutral'] .mr-radio--checked .mr-radio__control,
-  .mr-radio-group[data-tone='neutral'] .mr-radio[data-checked='true'] .mr-radio__control {
-    border-color: var(--mr-fg-strong);
-  }
+    .mr-radio-group--invalid .mr-radio__control,
+    .mr-radio-group[data-invalid="true"] .mr-radio__control {
+        border-color: var(--mr-danger);
+        box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
+    }
 
-  .mr-radio-group--neutral .mr-radio--checked .mr-radio__dot,
-  .mr-radio-group--neutral .mr-radio[data-checked='true'] .mr-radio__dot,
-  .mr-radio-group[data-tone='neutral'] .mr-radio--checked .mr-radio__dot,
-  .mr-radio-group[data-tone='neutral'] .mr-radio[data-checked='true'] .mr-radio__dot {
-    background: var(--mr-fg-strong);
-  }
+    .mr-radio-group--neutral .mr-radio__control,
+    .mr-radio-group[data-tone="neutral"] .mr-radio__control {
+        border-color: var(--mr-border-strong);
+        background: var(--mr-bg-surface);
+    }
 
-  .mr-radio-group--danger .mr-radio__control,
-  .mr-radio-group[data-tone='danger'] .mr-radio__control {
-    border-color: color-mix(in srgb, var(--mr-danger) 50%, var(--mr-border-subtle));
-  }
+    .mr-radio-group--neutral .mr-radio--checked .mr-radio__control,
+    .mr-radio-group--neutral .mr-radio[data-checked="true"] .mr-radio__control,
+    .mr-radio-group[data-tone="neutral"] .mr-radio--checked .mr-radio__control,
+    .mr-radio-group[data-tone="neutral"] .mr-radio[data-checked="true"] .mr-radio__control {
+        border-color: var(--mr-fg-strong);
+    }
 
-  .mr-radio-group--danger .mr-radio--checked .mr-radio__control,
-  .mr-radio-group--danger .mr-radio[data-checked='true'] .mr-radio__control,
-  .mr-radio-group[data-tone='danger'] .mr-radio--checked .mr-radio__control,
-  .mr-radio-group[data-tone='danger'] .mr-radio[data-checked='true'] .mr-radio__control {
-    border-color: var(--mr-danger);
-    background: var(--mr-danger);
-  }
+    .mr-radio-group--neutral .mr-radio--checked .mr-radio__dot,
+    .mr-radio-group--neutral .mr-radio[data-checked="true"] .mr-radio__dot,
+    .mr-radio-group[data-tone="neutral"] .mr-radio--checked .mr-radio__dot,
+    .mr-radio-group[data-tone="neutral"] .mr-radio[data-checked="true"] .mr-radio__dot {
+        background: var(--mr-fg-strong);
+    }
 
-  .mr-radio-group--danger .mr-radio--checked .mr-radio__dot,
-  .mr-radio-group--danger .mr-radio[data-checked='true'] .mr-radio__dot,
-  .mr-radio-group[data-tone='danger'] .mr-radio--checked .mr-radio__dot,
-  .mr-radio-group[data-tone='danger'] .mr-radio[data-checked='true'] .mr-radio__dot {
-    background: var(--mr-accent-contrast);
-  }
+    .mr-radio-group--danger .mr-radio__control,
+    .mr-radio-group[data-tone="danger"] .mr-radio__control {
+        border-color: color-mix(in srgb, var(--mr-danger) 50%, var(--mr-border-subtle));
+    }
+
+    .mr-radio-group--danger .mr-radio--checked .mr-radio__control,
+    .mr-radio-group--danger .mr-radio[data-checked="true"] .mr-radio__control,
+    .mr-radio-group[data-tone="danger"] .mr-radio--checked .mr-radio__control,
+    .mr-radio-group[data-tone="danger"] .mr-radio[data-checked="true"] .mr-radio__control {
+        border-color: var(--mr-danger);
+        background: var(--mr-danger);
+    }
+
+    .mr-radio-group--danger .mr-radio--checked .mr-radio__dot,
+    .mr-radio-group--danger .mr-radio[data-checked="true"] .mr-radio__dot,
+    .mr-radio-group[data-tone="danger"] .mr-radio--checked .mr-radio__dot,
+    .mr-radio-group[data-tone="danger"] .mr-radio[data-checked="true"] .mr-radio__dot {
+        background: var(--mr-accent-contrast);
+    }
 }

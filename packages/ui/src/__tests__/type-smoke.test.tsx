@@ -1,26 +1,26 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 // Type smoke tests: compile-time contracts that prevent accidental API breakage.
 // These are zero-runtime-cost guards — if the types break, this file won't compile.
 
-import type { ButtonProps, ButtonVariant, ButtonSize } from '@monority/ui/button'
-import type { InputProps } from '@monority/ui/input'
-import type { SliderProps } from '@monority/ui/slider'
 import type { AccordionProps } from '@monority/ui/accordion'
-import type { ToastProps } from '@monority/ui/toast'
-import type { ModalProps } from '@monority/ui/modal'
-import type { TabsProps } from '@monority/ui/tabs'
-import type { CheckboxProps } from '@monority/ui/checkbox'
-import type { SwitchProps } from '@monority/ui/switch'
-import type { RadioGroupProps } from '@monority/ui/radio-group'
-import type { SelectProps } from '@monority/ui/select'
-import type { DatePickerProps } from '@monority/ui/date-picker'
-import type { FieldProps } from '@monority/ui/field'
-import type { FileUploadProps } from '@monority/ui/file-upload'
-import type { TextareaProps } from '@monority/ui/textarea'
-import type { ProgressProps } from '@monority/ui/progress'
 import type { AvatarProps } from '@monority/ui/avatar'
 import type { BadgeProps } from '@monority/ui/badge'
+import type { ButtonProps, ButtonVariant } from '@monority/ui/button'
+import type { CheckboxProps } from '@monority/ui/checkbox'
+import type { DatePickerProps } from '@monority/ui/date-picker'
+import type { FieldProps } from '@monority/ui/field'
+import type { FileTriggerProps, FileUploadProps } from '@monority/ui/file-upload'
+import type { InputProps } from '@monority/ui/input'
+import type { ModalProps } from '@monority/ui/modal'
+import type { ProgressProps } from '@monority/ui/progress'
+import type { RadioGroupProps } from '@monority/ui/radio-group'
+import type { SelectProps } from '@monority/ui/select'
+import type { SliderProps } from '@monority/ui/slider'
+import type { SwitchProps } from '@monority/ui/switch'
+import type { TabsProps } from '@monority/ui/tabs'
+import type { TextareaProps } from '@monority/ui/textarea'
+import type { ToastProps } from '@monority/ui/toast'
 
 describe('Type smoke · public types remain importable and well-shaped', () => {
     it('ButtonProps has expected shape', () => {
@@ -69,9 +69,14 @@ describe('Type smoke · public types remain importable and well-shaped', () => {
         expect(_p.checked).toBe(false)
     })
 
-    it('RadioGroupProps has items/value/onChange', () => {
-        const _p: RadioGroupProps = { items: [{ value: 'a', label: 'A' }], onChange: () => {} }
+    it('RadioGroupProps has items/value/onChange and density', () => {
+        const _p: RadioGroupProps = {
+            size: 'lg',
+            items: [{ value: 'a', label: 'A' }],
+            onChange: () => {},
+        }
         expect(_p.items!.length).toBe(1)
+        expect(_p.size).toBe('lg')
     })
 
     it('DatePickerProps accepts null for controlled clearing', () => {
@@ -84,9 +89,20 @@ describe('Type smoke · public types remain importable and well-shaped', () => {
         expect(_p.labelId).toBe('choice-label')
     })
 
-    it('FileUploadProps accepts controlled files and change callback', () => {
-        const _p: FileUploadProps = { files: [], onFilesChange: () => {} }
+    it('FileUploadProps accepts controlled files, native name, and invalid state', () => {
+        const _p: FileUploadProps = {
+            files: [],
+            name: 'attachments',
+            invalid: true,
+            onFilesChange: () => {},
+        }
         expect(Array.isArray(_p.files)).toBe(true)
+        expect(_p.name).toBe('attachments')
+    })
+
+    it('FileTriggerProps preserves native onChange and name', () => {
+        const _p: FileTriggerProps = { name: 'attachments', onChange: () => {} }
+        expect(_p.name).toBe('attachments')
     })
 
     it('SelectProps has label', () => {

@@ -9,7 +9,7 @@ const docData: DocPageData = {
     title: 'FormSection',
     description:
         'A grouped form panel with header context, optional metadata, and a dedicated action row.',
-    importCode: "import { FormSection } from '@monority/ui'",
+    importCode: "import { FormSection } from '@monority/ui/form-section'",
     usageCode: `<FormSection
   title="Profile"
   description="Update your personal information."
@@ -83,14 +83,9 @@ const docData: DocPageData = {
         '.mr-form-section__body',
         '.mr-form-section__footer',
         '[data-mr-form-section]',
+        '[data-has-actions]',
     ],
-    tokens: [
-        '--mr-space-4',
-        '--mr-space-5',
-        '--mr-space-6',
-        '--mr-border-subtle',
-        '--mr-bg-surface-elevated',
-    ],
+    tokens: ['--mr-space-4', '--mr-space-5', '--mr-border-subtle', '--mr-bg-surface-elevated'],
     a11y: [
         'Title renders as h3 for proper heading hierarchy.',
         'Grouped actions stay in a consistent footer region.',

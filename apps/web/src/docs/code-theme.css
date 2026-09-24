@@ -4,6 +4,7 @@
 
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
+    padding: 0;
     color: var(--docs-code-fg, var(--mr-fg-base));
     background: transparent;
 }
@@ -35,7 +36,7 @@
 }
 
 .mr-pre-code code .hljs-literal {
-    color: var(--docs-code-literal, var(--mr-danger));
+    color: var(--docs-code-literal, var(--mr-danger-text));
 }
 
 /* Attribute names read as structure, not alarms: keep them quiet. */
@@ -89,8 +90,8 @@
 }
 
 .mr-pre-code code .hljs-deletion {
-    color: var(--docs-code-deletion, var(--mr-danger));
-    background: color-mix(in srgb, var(--mr-danger) 12%, transparent);
+    color: var(--docs-code-deletion, var(--mr-danger-text));
+    background: color-mix(in srgb, var(--mr-danger-text) 12%, transparent);
 }
 
 .mr-pre-code code .hljs-addition {
@@ -106,5 +107,5 @@
 }
 
 .mr-pre-code code .hljs-strong {
-    font-weight: 700;
+    font-weight: var(--mr-font-weight-bold);
 }

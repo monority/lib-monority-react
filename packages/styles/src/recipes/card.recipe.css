@@ -9,7 +9,7 @@
      overflow-wrap: anywhere;
     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-card-radius, var(--mr-radius-md));
-    background: var(--mr-bg-surface-elevated);
+    background: var(--mr-bg-surface);
     color: var(--mr-fg-base);
     box-shadow: var(--mr-elevation-surface);
     transition:
@@ -85,7 +85,7 @@
   .mr-card--interactive:hover,
   .mr-card[data-interactive='true']:hover {
     border-color: var(--mr-border-strong);
-    background: var(--mr-bg-surface-strong);
+    background: var(--mr-bg-surface-elevated);
     box-shadow: var(--mr-elevation-raised);
   }
 

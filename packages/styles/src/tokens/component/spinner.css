@@ -1,0 +1,8 @@
+:root {
+    --mr-spinner-size-sm: 1rem;
+    --mr-spinner-size-md: 1.5rem;
+    --mr-spinner-size-lg: 2rem;
+    --mr-spinner-ring-sm: 0.75rem;
+    --mr-spinner-ring-md: 1.25rem;
+    --mr-spinner-ring-lg: 1.75rem;
+}

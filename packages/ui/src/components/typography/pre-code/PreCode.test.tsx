@@ -65,6 +65,18 @@ describe('PreCode', () => {
         expect(codeRef.current?.tagName).toBe('CODE')
     })
 
+    it('keeps default long lines scrollable and wrap mode explicit', () => {
+        const view = render(
+            <>
+                <PreCode>one very long line</PreCode>
+                <PreCode wrap>one very long line</PreCode>
+            </>
+        )
+        const views = view.querySelectorAll('pre')
+        expect(views[0]?.getAttribute('data-wrap')).toBeNull()
+        expect(views[1]?.getAttribute('data-wrap')).toBe('true')
+    })
+
     it('spreads props and custom classes', () => {
         const view = render(
             <PreCode className="outer" codeClassName="inner" data-testid="snippet">

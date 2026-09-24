@@ -40,7 +40,7 @@ function CopyButton({ text }: { text: string }) {
     }, [text])
 
     return (
-        <button className="docs-copy-btn" onClick={copy} aria-label="Copy code">
+        <button type="button" className="docs-copy-btn" onClick={copy} aria-label="Copy code">
             {copied ? 'Copied!' : 'Copy'}
         </button>
     )
@@ -50,7 +50,7 @@ function HighlightedCode({ code }: { code: string }) {
     return <DocsCodeBlock className="docs-code-pre">{code}</DocsCodeBlock>
 }
 
-function ExampleCard({ example }: { example: DocExample; index: number }) {
+function ExampleCard({ example }: { example: DocExample }) {
     return (
         <div className="docs-example-group">
             <h3>{example.title}</h3>
@@ -86,8 +86,12 @@ export function DocPage({ doc }: { doc: DocPageData }) {
             {
                 <div className="docs-preview-card">
                     <div className="docs-preview-area">
-                        <span className="docs-preview-label">{previewLabel}</span>
-                        <Preview />
+                        <div className="docs-preview-header">
+                            <span className="docs-preview-label">{previewLabel}</span>
+                        </div>
+                        <div className="docs-preview-content">
+                            <Preview />
+                        </div>
                     </div>
                     {fullCode ? (
                         <div className="docs-code-area">
@@ -105,8 +109,8 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 <section className="docs-section">
                     <h2>Examples</h2>
                     <div className="docs-examples-list">
-                        {doc.examples.map((ex, i) => (
-                            <ExampleCard key={i} example={ex} index={i} />
+                        {doc.examples.map((example) => (
+                            <ExampleCard key={example.title} example={example} />
                         ))}
                     </div>
                 </section>

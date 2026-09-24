@@ -7,9 +7,8 @@ export function CardBasicExample() {
                 <strong className="mr-card__title">Project health</strong>
                 <span>Live</span>
             </div>
-            <p className="mr-card__description">
-                Stable release candidate, no blocking issues.
-            </p>
+            <p className="mr-card__description">Stable release candidate, no blocking issues.</p>
+            <div className="mr-card__footer">Updated 5 minutes ago</div>
         </Card>
     )
 }
@@ -36,7 +35,9 @@ export function CardInteractiveExample() {
             <Card padding="md" interactive style={{ flex: '1 1 12rem' }}>
                 Deployment summary
             </Card>
-            <Card padding="md" style={{ flex: '1 1 12rem' }}>Static notes</Card>
+            <Card padding="md" style={{ flex: '1 1 12rem' }}>
+                Static notes
+            </Card>
         </div>
     )
 }

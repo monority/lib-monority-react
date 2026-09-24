@@ -1,6 +1,6 @@
 import { act, createRef } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Switch } from './Switch'
 
@@ -100,6 +100,27 @@ describe('Switch', () => {
         expect(error?.textContent).toBe('Required')
         expect(input?.getAttribute('aria-describedby')).toBe('notif-hint notif-error')
         expect(input?.getAttribute('aria-invalid')).toBe('true')
+    })
+
+    it('keeps label, description, and control in one structural row', () => {
+        const view = render(
+            <Switch
+                id="aligned-switch"
+                label="Aligned switch"
+                hint="Supporting description"
+                error="Required"
+            />
+        )
+        const row = view.querySelector('.mr-switch__row')
+        const content = view.querySelector('.mr-switch__content')
+        const label = view.querySelector('.mr-field__label')
+        const control = view.querySelector('.mr-switch')
+        expect(row).toBeTruthy()
+        expect(content?.textContent).toContain('Aligned switch')
+        expect(content?.textContent).toContain('Supporting description')
+        expect(content?.textContent).toContain('Required')
+        expect(label?.getAttribute('for')).toBe('aligned-switch')
+        expect(control?.getAttribute('for')).toBe('aligned-switch')
     })
 
     it('shows label rendered by Field wrapper', () => {

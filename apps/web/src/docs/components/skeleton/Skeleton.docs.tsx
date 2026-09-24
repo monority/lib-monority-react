@@ -2,8 +2,8 @@ import { DocPage, type DocPageData } from '../DocPage'
 import {
     SkeletonBasicExample,
     SkeletonCardExample,
-    SkeletonListExample,
     SkeletonCircleExample,
+    SkeletonListExample,
 } from './Skeleton.examples'
 
 const docData: DocPageData = {
@@ -19,7 +19,13 @@ const docData: DocPageData = {
         { title: 'Circle avatar', content: <SkeletonCircleExample /> },
     ],
     cssHooks: ['.mr-skeleton', '.mr-skeleton--rounded', '[data-size]'],
-    tokens: ['--mr-bg-surface-strong', '--mr-bg-control', '--mr-radius-sm'],
+    tokens: [
+        '--mr-bg-surface-strong',
+        '--mr-bg-control',
+        '--mr-radius-sm',
+        '--mr-duration-loop',
+        '--mr-ease-in-out',
+    ],
     a11y: [
         'Skeleton blocks are aria-hidden because they are decorative placeholders.',
         'Use aria-busy on the parent region while real content is loading.',

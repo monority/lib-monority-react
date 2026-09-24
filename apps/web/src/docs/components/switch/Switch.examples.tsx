@@ -18,9 +18,15 @@ export function SwitchBasicExample() {
 export function SwitchSizesExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <Switch label="Compact row" size="sm" defaultChecked />
-            <Switch label="Settings form" size="md" defaultChecked />
-            <Switch label="Touch target" size="lg" defaultChecked />
+            <Switch
+                data-testid="switch-compact"
+                label="Compact row with a longer description"
+                hint="Aligned against the full content block"
+                size="sm"
+                defaultChecked
+            />
+            <Switch data-testid="switch-medium" label="Settings form" size="md" defaultChecked />
+            <Switch data-testid="switch-large" label="Touch target" size="lg" defaultChecked />
         </div>
     )
 }

@@ -44,7 +44,8 @@ const docData: DocPageData = {
             name: 'checked',
             type: `boolean`,
             defaultValue: 'false',
-            description: 'Controlled checked state. Omit to use uncontrolled mode with `defaultChecked`.',
+            description:
+                'Controlled checked state. Omit to use uncontrolled mode with `defaultChecked`.',
         },
         {
             name: 'defaultChecked',
@@ -52,7 +53,12 @@ const docData: DocPageData = {
             defaultValue: 'false',
             description: 'Initial checked state when used uncontrolled.',
         },
-        { name: 'onChange', type: `function`, defaultValue: '-', description: 'Native change event callback (event.target.checked gives the new state).' },
+        {
+            name: 'onChange',
+            type: `function`,
+            defaultValue: '-',
+            description: 'Native change event callback (event.target.checked gives the new state).',
+        },
         {
             name: 'label',
             type: `ReactNode`,
@@ -104,6 +110,8 @@ const docData: DocPageData = {
         },
     ],
     cssHooks: [
+        '.mr-switch__row',
+        '.mr-switch__content',
         '.mr-switch',
         '.mr-switch--sm',
         '.mr-switch--md',
@@ -127,7 +135,10 @@ const docData: DocPageData = {
         '--mr-fg-muted',
         '--mr-text-sm',
         '--mr-radius-full',
-        '--mr-dur-200',
+        '--mr-switch-scale-sm',
+        '--mr-switch-scale-lg',
+        '--mr-space-4',
+        '--mr-duration-fast',
     ],
     a11y: [
         'Native switch semantics with role="switch".',

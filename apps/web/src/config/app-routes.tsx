@@ -1,11 +1,12 @@
-import type { RouteObject } from 'react-router-dom'
-import { HomePage } from '@/home/HomePage'
 import { AppLayout } from '@/app/AppLayout'
-import { DashboardPage } from '@/app/pages/DashboardPage'
 import { AdminPage } from '@/app/pages/AdminPage'
+import { DashboardPage } from '@/app/pages/DashboardPage'
+import { MoodboardPage } from '@/app/pages/MoodboardPage'
+import { NotFoundPage } from '@/app/pages/NotFoundPage'
 import { PlaygroundPage } from '@/app/pages/PlaygroundPage'
 import { ShowcasePage } from '@/app/pages/ShowcasePage'
-import { NotFoundPage } from '@/app/pages/NotFoundPage'
+import { HomePage } from '@/home/HomePage'
+import type { RouteObject } from 'react-router-dom'
 
 interface AppRouteDefinition {
     key: string
@@ -52,6 +53,12 @@ const appRouteDefinitions: AppRouteDefinition[] = [
         includeInPrimaryNavigation: true,
     },
     {
+        key: 'moodboard',
+        label: 'Moodboard',
+        path: '/moodboard',
+        includeInPrimaryNavigation: true,
+    },
+    {
         key: 'not-found',
         label: 'Not Found',
         path: '*',
@@ -71,6 +78,11 @@ export const appRoutes: RouteObject[] = [
             { path: 'playground', element: <PlaygroundPage /> },
             { path: 'showcase', element: <ShowcasePage /> },
         ],
+    },
+
+    {
+        path: '/moodboard',
+        element: <MoodboardPage />,
     },
 
     // Docs — lazy load avec son propre layout

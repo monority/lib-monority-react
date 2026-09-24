@@ -62,7 +62,8 @@ const docData: DocPageData = {
             name: 'resize',
             type: `'none' | 'vertical' | 'both'`,
             defaultValue: "'vertical'",
-            description: 'Controls the CSS resize behavior.',
+            description:
+                'Controls native CSS resize behavior. Manual height is preserved across value changes.',
         },
         {
             name: 'disabled',
@@ -86,13 +87,15 @@ const docData: DocPageData = {
             name: 'value',
             type: 'string',
             defaultValue: '-',
-            description: 'Controlled value. When omitted, the textarea is uncontrolled and `defaultValue` sets the initial value.',
+            description:
+                'Controlled value. When omitted, the textarea is uncontrolled and `defaultValue` sets the initial value.',
         },
         {
             name: 'defaultValue',
             type: 'string',
             defaultValue: "''",
-            description: 'Uncontrolled initial value. Use instead of `value` for a controlled-less form field.',
+            description:
+                'Uncontrolled initial value. Use instead of `value` for a controlled-less form field.',
         },
         {
             name: 'placeholder',
