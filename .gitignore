@@ -52,3 +52,5 @@ opencode.json
 test-results
 playwright-report
 blob-report
+docs/
+memory-ai/
