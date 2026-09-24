@@ -129,6 +129,12 @@ import { Input } from '@monority/ui/input'`,
             description: 'ID of the controlled input.',
         },
         {
+            name: 'labelId',
+            type: 'string',
+            defaultValue: '-',
+            description: 'Custom ID for label element.',
+        },
+        {
             name: 'hintId',
             type: 'string',
             defaultValue: '-',

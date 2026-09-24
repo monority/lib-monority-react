@@ -2,9 +2,9 @@
     .mr-title {
         margin: 0;
         color: var(--mr-fg-strong);
-        font-weight: 700;
+         font-weight: var(--mr-font-weight-bold);
         letter-spacing: 0;
-        line-height: 1.2;
+         line-height: var(--mr-leading-heading);
         text-wrap: balance;
     }
 
@@ -19,11 +19,11 @@
     .mr-title--lg,
     .mr-title[data-size="lg"] {
         font-size: var(--mr-text-2xl);
-        line-height: 1.15;
+         line-height: var(--mr-leading-snug);
     }
     .mr-title--display,
     .mr-title[data-size="display"] {
         font-size: var(--mr-text-3xl);
-        line-height: 1.1;
+         line-height: var(--mr-leading-tight);
     }
 }

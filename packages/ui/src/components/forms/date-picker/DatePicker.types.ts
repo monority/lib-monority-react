@@ -11,7 +11,7 @@ export interface DatePickerProps
   hint?: ReactNode
   error?: ReactNode
   // Value
-  value?: Date | string
+  value?: Date | string | null
   defaultValue?: Date | string
   onChange?: (date: Date | null) => void
   // Calendar options

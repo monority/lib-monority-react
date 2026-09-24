@@ -71,11 +71,11 @@ const docData: DocPageData = {
         '[data-size]',
     ],
     tokens: [
-        '--mr-bg-accent',
+        '--mr-bg-accent-soft',
         '--mr-fg-accent',
         '--mr-fg-muted',
         '--mr-border-subtle',
-        '--mr-border-muted',
+        '--mr-border-strong',
         '--mr-border-accent',
         '--mr-bg-surface-strong',
         '--mr-radius-xs',

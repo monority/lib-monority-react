@@ -107,6 +107,22 @@ describe('RadioGroup', () => {
     const describedBy = view.querySelector('[role="radiogroup"]')?.getAttribute('aria-describedby')
     expect(describedBy).toContain('-hint')
     expect(describedBy).toContain('-error')
+    expect(view.querySelector('.mr-field__hint')?.textContent).toBe('Select one')
+    expect(view.querySelector('.mr-field__error')?.textContent).toBe('Required')
+  })
+
+  it('associates the group label with the radiogroup', () => {
+    const view = render(<RadioGroup id="choice" label="Choose" items={items} />)
+    const group = view.querySelector('[role="radiogroup"]')
+    const label = view.querySelector('label')
+    expect(group?.getAttribute('aria-labelledby')).toBe('choice-label')
+    expect(label?.getAttribute('id')).toBe('choice-label')
+    expect(label?.getAttribute('for')).toBe('choice-yes')
+  })
+
+  it('exposes disabled state on the group', () => {
+    const view = render(<RadioGroup items={items} disabled />)
+    expect(view.querySelector('[role="radiogroup"]')?.getAttribute('aria-disabled')).toBe('true')
   })
 
   it('calls onChange with the selected value', () => {

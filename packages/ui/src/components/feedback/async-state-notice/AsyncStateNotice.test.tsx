@@ -54,6 +54,15 @@ describe('AsyncStateNotice', () => {
     expect(error.querySelector('div')?.getAttribute('role')).toBe('alert')
   })
 
+    it('switches state hooks and live-region semantics on transition', () => {
+        const view = render(<AsyncStateNotice isLoading />)
+        act(() => root?.render(<AsyncStateNotice isError />))
+        const notice = view.querySelector('.mr-async-state-notice')
+        expect(notice?.getAttribute('data-state')).toBe('error')
+        expect(notice?.getAttribute('role')).toBe('alert')
+        expect(notice?.getAttribute('aria-atomic')).toBe('true')
+    })
+
     it('forwards ref', () => {
         const ref = createRef<HTMLDivElement>()
         render(<AsyncStateNotice isLoading ref={ref} />)

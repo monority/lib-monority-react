@@ -4,6 +4,9 @@
   --mr-duration-base: var(--mr-dur-200);
   --mr-duration-normal: var(--mr-duration-base);
   --mr-duration-slow: var(--mr-dur-300);
+  --mr-duration-enter: var(--mr-dur-180);
+  --mr-duration-exit: var(--mr-dur-150);
+  --mr-duration-loop: var(--mr-dur-1500);
   --mr-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
   --mr-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
   --mr-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);

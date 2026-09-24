@@ -5,5 +5,5 @@
   --mr-btn-height-md: var(--mr-control-size-md);
   --mr-btn-height-lg: var(--mr-control-size-lg);
 
-  --mr-btn-padding-x: 1rem;
+  --mr-btn-padding-x: var(--mr-control-padding-inline-md);
 }

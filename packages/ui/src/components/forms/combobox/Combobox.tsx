@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
+import { OVERLAY_OFFSET } from '@/lib/constants'
 import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
 import { FormControl } from '@/primitives/form-control'
@@ -93,7 +94,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       if (!open) return
       const frameId = window.requestAnimationFrame(() => {
         const r = inputRef.current?.getBoundingClientRect()
-        if (r) setPosition({ top: r.bottom + 10, left: r.left, width: r.width })
+        if (r) setPosition({ top: r.bottom + OVERLAY_OFFSET, left: r.left, width: r.width })
       })
       function pd(e: MouseEvent) {
         if (
@@ -107,7 +108,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       }
       function vc() {
         const r = inputRef.current?.getBoundingClientRect()
-        if (r) setPosition({ top: r.bottom + 10, left: r.left, width: r.width })
+        if (r) setPosition({ top: r.bottom + OVERLAY_OFFSET, left: r.left, width: r.width })
       }
       document.addEventListener('mousedown', pd)
       window.addEventListener('resize', vc)
@@ -157,7 +158,16 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     }
 
     return (
-      <FormControl id={inputId} hint={!!hint} error={!!error} disabled={disabled} required={required}>
+      <FormControl
+        id={inputId}
+        hint={!!hint}
+        error={!!error}
+        size={resolvedSize}
+        tone={resolvedTone}
+        invalid={isInvalid}
+        disabled={disabled}
+        required={required}
+      >
         <Field
           className={className}
           label={label}

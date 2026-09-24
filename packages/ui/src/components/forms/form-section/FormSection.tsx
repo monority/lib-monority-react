@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
+import { Card } from '@/components/display/card/Card'
 import { Title } from '@/components/typography/title/Title'
 import { Text } from '@/components/typography/text/Text'
 import type { FormSectionProps } from './FormSection.types'
@@ -9,19 +10,20 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
     { title, description, meta, actions, children, className },
     ref,
   ) {
-    const hasHeader = Boolean(title || description || meta)
+    const hasHeader = title != null || description != null || meta != null
 
     return (
-      <div
+      <Card
         ref={ref}
         className={cn('mr-form-section', className)}
+        padding="md"
         data-mr-form-section=""
-        data-has-actions={actions ? 'true' : undefined}
+         data-has-actions={actions != null ? 'true' : undefined}
       >
         {hasHeader ? (
           <div className="mr-form-section__header">
             <div className="mr-form-section__header-text">
-              {title ? (
+               {title != null ? (
                 <Title
                   as="h3"
                   size="sm"
@@ -30,7 +32,7 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
                   {title}
                 </Title>
               ) : null}
-              {description ? (
+               {description != null ? (
                 <Text
                   tone="muted"
                   className="mr-form-section__header-description"
@@ -39,16 +41,16 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(
                 </Text>
               ) : null}
             </div>
-            {meta ? (
+             {meta != null ? (
               <div className="mr-form-section__header-end">
                 <span className="mr-form-section__header-meta">{meta}</span>
               </div>
             ) : null}
           </div>
         ) : null}
-        {children ? <div className="mr-form-section__body">{children}</div> : null}
-        {actions ? <div className="mr-form-section__footer">{actions}</div> : null}
-      </div>
+         {children != null ? <div className="mr-form-section__body">{children}</div> : null}
+         {actions != null ? <div className="mr-form-section__footer">{actions}</div> : null}
+      </Card>
     )
   },
 )

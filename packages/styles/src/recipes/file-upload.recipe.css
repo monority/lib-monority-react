@@ -12,7 +12,7 @@
   .mr-file-upload__dropzone[data-dragging='true'] {
     background: color-mix(in srgb, var(--mr-accent) 4%, var(--mr-bg-surface-strong));
     border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-accent) 10%, transparent);
+    box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-accent) 10%, transparent);
   }
 
   .mr-file-upload__content {
@@ -25,16 +25,16 @@
   }
 
   .mr-file-upload__description {
-    max-width: 24rem;
+     max-inline-size: var(--mr-content-max-width);
     color: var(--mr-fg-base);
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 
   .mr-file-upload__placeholder {
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-xs);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 
   .mr-file-upload__action,
@@ -42,10 +42,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2rem;
-    padding: 0 var(--mr-space-3);
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-radius-md);
+     min-block-size: var(--mr-control-size-md);
+     padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
+     border-radius: var(--mr-radius-sm);
     background: var(--mr-bg-control);
     color: var(--mr-fg-strong);
     font-size: var(--mr-text-sm);
@@ -58,8 +58,27 @@
       color var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
-  .mr-file-upload__action:hover,
-  .mr-file-upload__default-action:hover {
+  .mr-file-upload__dropzone[data-size='sm'] .mr-file-upload__action,
+  .mr-file-upload__dropzone[data-size='sm'] .mr-file-upload__default-action {
+    min-block-size: var(--mr-control-size-sm);
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+    font-size: var(--mr-text-xs);
+  }
+
+  .mr-file-upload__dropzone[data-size='lg'] .mr-file-upload__action,
+  .mr-file-upload__dropzone[data-size='lg'] .mr-file-upload__default-action {
+    min-block-size: var(--mr-control-size-lg);
+    padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
+    font-size: var(--mr-text-md);
+  }
+
+  .mr-file-trigger:disabled .mr-file-upload__action,
+  .mr-file-trigger:disabled .mr-file-upload__default-action {
+    cursor: not-allowed;
+  }
+
+  .mr-file-trigger:not(:disabled) .mr-file-upload__action:hover,
+  .mr-file-trigger:not(:disabled) .mr-file-upload__default-action:hover {
     background: var(--mr-bg-accent-soft);
     border-color: color-mix(in srgb, var(--mr-accent) 32%, var(--mr-border-subtle));
     color: var(--mr-fg-strong);

@@ -1,30 +1,23 @@
 @layer recipes {
-  /* Select component-specific styles.
-     Base styles (border, padding, background-color, color, font-size,
-     line-height, transitions) are provided by .mr-input-base in
-     input-base.recipe.css. */
-
-  .mr-select {
+  .mr-select.mr-select {
     appearance: none;
-    /* Explicit control height. With `appearance: none` the browser derives a
-       <select>'s intrinsic block size from its option list, so a select inside
-       a flex column (e.g. a filter bar) stretched to ~4x option height instead
-       of matching the control ladder. */
-    block-size: var(--mr-input-height);
+    min-block-size: var(--mr-input-height);
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-icon-size-lg) + var(--mr-space-1));
+     padding-inline-start: var(--mr-control-padding-inline-md);
+    overflow: hidden;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath fill='%2371717a' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
+     background-repeat: no-repeat;
+     background-position: right var(--mr-control-padding-inline-md) center;
+     background-size: var(--mr-icon-size-lg) var(--mr-icon-size-sm);
     cursor: pointer;
-    /* Extra padding-inline-end for chevron space — overrides input-base */
-    padding-inline-end: 2.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  /* Placeholder-looking state: an empty first option reads muted like inputs. */
   .mr-select:has(option[value='']:checked) {
     color: var(--mr-fg-muted);
   }
 
-  /* Dark surfaces need a light chevron (data-uri cannot inherit color). */
   :root[data-theme='dark'] .mr-select,
   :root[data-theme='dim'] .mr-select,
   :root[data-theme='oled'] .mr-select,
@@ -55,33 +48,46 @@
     outline-color: var(--mr-danger);
   }
 
-  .mr-select--sm,
-  .mr-select[data-size='sm'] {
-    block-size: var(--mr-control-size-sm);
-    padding-inline-end: 2rem;
-    background-position: right 0.5rem center;
+  .mr-select.mr-select--sm,
+  .mr-select.mr-select[data-size='sm'] {
+     min-block-size: var(--mr-control-size-sm);
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-sm) + var(--mr-icon-size-md) + var(--mr-space-1));
+     padding-inline-start: var(--mr-control-padding-inline-sm);
+     background-position: right var(--mr-control-padding-inline-sm) center;
+     background-size: var(--mr-icon-size-md) var(--mr-icon-size-sm);
+     font-size: var(--mr-text-xs);
   }
 
-  .mr-select--md,
-  .mr-select[data-size='md'] {
-    block-size: var(--mr-control-size-md);
+  .mr-select.mr-select--md,
+  .mr-select.mr-select[data-size='md'] {
+    min-block-size: var(--mr-control-size-md);
+    padding-block: var(--mr-control-padding-block-md);
   }
 
-  .mr-select--lg,
-  .mr-select[data-size='lg'] {
-    block-size: var(--mr-control-size-lg);
-    padding-inline-end: 2.75rem;
-    background-position: right 0.75rem center;
+  .mr-select.mr-select--lg,
+  .mr-select.mr-select[data-size='lg'] {
+     min-block-size: var(--mr-control-size-lg);
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-lg) + var(--mr-icon-size-lg) + var(--mr-space-1));
+     padding-inline-start: var(--mr-control-padding-inline-lg);
+     background-position: right var(--mr-control-padding-inline-lg) center;
+     background-size: var(--mr-icon-size-lg) var(--mr-icon-size-md);
+     font-size: var(--mr-text-md);
   }
 
-  /* Multi-row selects must keep their intrinsic list height. */
   .mr-select[multiple],
   .mr-select[size] {
+    min-block-size: 0;
     block-size: auto;
+    overflow: auto;
+    text-overflow: clip;
+    white-space: normal;
   }
 
-  /* Native popup is OS/browser-owned and cannot be styled as a custom
-     listbox. Keep options coherent with surfaces where the UA allows it. */
+  .mr-select:disabled,
+  .mr-select[data-disabled='true'] {
+    cursor: not-allowed;
+  }
+
   .mr-select option {
     background-color: var(--mr-bg-surface-elevated);
     color: var(--mr-fg-base);

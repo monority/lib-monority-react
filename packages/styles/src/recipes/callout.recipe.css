@@ -7,10 +7,10 @@
         display: flex;
         gap: var(--mr-space-3);
         padding: var(--mr-space-4);
-        border: 1px solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
+        box-shadow: var(--mr-elevation-surface);
     }
 
     .mr-callout__indicator {
@@ -19,7 +19,7 @@
         height: 0.625rem;
         /* Centers the 10px marker on the 18px title first line. Stays top-anchored for multiline. */
         margin-top: 0.3125rem;
-        border: 1px solid var(--mr-callout-accent);
+         border: var(--mr-border-width) solid var(--mr-callout-accent);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-callout-accent-bg);
     }
@@ -42,7 +42,7 @@
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
-        line-height: 1.45;
+        line-height: var(--mr-leading-snug);
         margin: 0;
     }
 
@@ -50,7 +50,7 @@
         margin: 0;
         color: var(--mr-fg-base);
         font-size: var(--mr-text-sm);
-        line-height: 1.6;
+        line-height: var(--mr-leading-relaxed);
     }
 
     .mr-callout > :not(.mr-callout__indicator):not(.mr-callout__content) {

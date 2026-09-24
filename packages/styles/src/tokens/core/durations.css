@@ -2,9 +2,13 @@
   --mr-dur-0: 0ms;
   --mr-dur-100: 100ms;
   --mr-dur-150: 150ms;
+  --mr-dur-180: 180ms;
   --mr-dur-200: 200ms;
   --mr-dur-300: 300ms;
   --mr-dur-500: 500ms;
+  --mr-dur-600: 600ms;
   --mr-dur-700: 700ms;
   --mr-dur-1000: 1000ms;
+  --mr-dur-1200: 1200ms;
+  --mr-dur-1500: 1500ms;
 }

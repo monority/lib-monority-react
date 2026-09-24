@@ -1,7 +1,7 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { FileUpload } from './FileUpload'
 
 let container: HTMLDivElement | null = null
@@ -30,6 +30,14 @@ describe('FileUpload', () => {
     const trigger = view.querySelector('.mr-file-trigger')
     expect(trigger).not.toBeNull()
     expect(view.textContent).toContain('Upload')
+  })
+
+  it('generates matching IDs for label and native input', () => {
+    const view = render(<FileUpload label="Upload" />)
+    const input = view.querySelector('input[type="file"]')
+    const label = view.querySelector('label')
+    expect(input?.getAttribute('id')).toBeTruthy()
+    expect(label?.getAttribute('for')).toBe(input?.getAttribute('id'))
   })
 
   it('renders default action text', () => {
@@ -107,6 +115,39 @@ describe('FileUpload', () => {
     const view = render(<FileUpload label="Upload" />)
     const fileList = view.querySelector('.mr-file-list')
     expect(fileList).toBeNull()
+  })
+
+  it('exposes an accessible custom trigger and associates the label', () => {
+    const view = render(<FileUpload id="attachment" label="Attachment" actionLabel="Browse" />)
+    const trigger = view.querySelector('[role="button"].mr-file-trigger')
+    const input = view.querySelector('input[type="file"]')
+    const label = view.querySelector('label')
+    expect(trigger?.getAttribute('role')).toBe('button')
+    expect(trigger?.textContent).toBe('Browse')
+    expect(input?.getAttribute('id')).toBe('attachment')
+    expect(label?.getAttribute('for')).toBe('attachment')
+  })
+
+  it('stores selected files and clears required state after selection', () => {
+    const onFilesChange = vi.fn()
+    const view = render(<FileUpload label="Attachment" required onFilesChange={onFilesChange} />)
+    const input = view.querySelector('input[type="file"]') as HTMLInputElement
+    const file = new File(['content'], 'notes.txt', { type: 'text/plain' })
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] })
+
+    act(() => input.dispatchEvent(new Event('change', { bubbles: true })))
+
+    expect(onFilesChange).toHaveBeenCalledWith([file])
+    expect(view.querySelector('.mr-file-list__name')?.textContent).toBe('notes.txt')
+    expect(input.required).toBe(false)
+    expect(view.querySelector('.mr-file-upload__placeholder')).toBeNull()
+  })
+
+  it('renders controlled files without mutating them', () => {
+    const file = new File(['content'], 'controlled.txt', { type: 'text/plain' })
+    const view = render(<FileUpload label="Attachment" files={[file]} placeholder="Choose" />)
+    expect(view.querySelector('.mr-file-list__name')?.textContent).toBe('controlled.txt')
+    expect(view.querySelector('.mr-file-upload__placeholder')).toBeNull()
   })
 
   it('applies custom className to field', () => {

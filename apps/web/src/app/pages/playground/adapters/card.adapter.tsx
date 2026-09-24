@@ -23,10 +23,11 @@ export const cardPlayground: PlaygroundDefinition = {
     defaultProps: defaults,
     render: (props) => (
         <Card padding={props.padding as 'md'} interactive={props.interactive === true}>
-            <strong>Project health</strong>
-            <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-fg-muted)' }}>
-                Stable release candidate, no blocking issues.
-            </p>
+            <div className="mr-card__header">
+                <strong className="mr-card__title">Project health</strong>
+                <span>Live</span>
+            </div>
+            <p className="mr-card__description">Stable release candidate, no blocking issues.</p>
         </Card>
     ),
     generateCode: codeFor,

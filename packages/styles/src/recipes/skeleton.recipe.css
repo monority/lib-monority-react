@@ -15,7 +15,7 @@
         color-mix(in srgb, var(--mr-bg-surface-strong) 94%, white) 82%
       );
     background-size: 200% 100%;
-    animation: mr-skeleton-shimmer 1.5s ease-in-out infinite;
+    animation: mr-skeleton-shimmer var(--mr-duration-loop) var(--mr-ease-in-out) infinite;
   }
 
   .mr-skeleton--sm,

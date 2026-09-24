@@ -97,12 +97,12 @@ const docData: DocPageData = {
     tokens: [
         '--mr-radius-md',
         '--mr-radius-full',
-        '--mr-spacing-3',
+        '--mr-space-3',
         '--mr-bg-surface',
         '--mr-bg-surface-strong',
         '--mr-border-subtle',
-        '--mr-border-muted',
-        '--mr-fg-default',
+        '--mr-border-strong',
+        '--mr-fg-base',
     ],
     a11y: [
         'Root has role="region" + aria-roledescription="carousel".',

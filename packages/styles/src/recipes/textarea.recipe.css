@@ -1,21 +1,26 @@
 @layer recipes {
   .mr-textarea.mr-textarea {
-    /* Double class: beats `.mr-input-base[data-size]` (0,2,0) which otherwise
-       wins by specificity and collapses textarea min-height to input height. */
-    min-height: var(--mr-textarea-min-height, 5rem);
-    line-height: 1.55;
-    resize: vertical;
-    scrollbar-width: thin;
+     /* Double class: beats `.mr-input-base[data-size]` (0,2,0) which otherwise
+        wins by specificity and collapses textarea min-height to input height. */
+     display: block;
+     box-sizing: border-box;
+     min-height: var(--mr-textarea-min-height, var(--mr-textarea-min-height-md));
+     vertical-align: top;
+     line-height: var(--mr-leading-relaxed);
+     resize: vertical;
+     overflow-y: auto;
+     scrollbar-width: thin;
     scrollbar-color: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent) transparent;
     transition:
       min-height var(--mr-duration-fast) var(--mr-ease-standard),
       border-color var(--mr-duration-fast) var(--mr-ease-standard),
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
+       background-color var(--mr-duration-fast) var(--mr-ease-standard),
+       box-shadow var(--mr-duration-fast) var(--mr-ease-standard),
+       color var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-textarea::-webkit-scrollbar {
-    width: 0.625rem;
+     width: var(--mr-space-3);
   }
 
   .mr-textarea::-webkit-scrollbar-track {
@@ -24,7 +29,7 @@
 
   .mr-textarea::-webkit-scrollbar-thumb {
     background: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent);
-    border: 0.1875rem solid transparent;
+     border: var(--mr-space-1) solid transparent;
     border-radius: var(--mr-radius-full);
     background-clip: padding-box;
   }
@@ -76,21 +81,21 @@
 
   .mr-textarea--sm,
   .mr-textarea[data-size='sm'] {
-    --mr-textarea-min-height: 4rem;
-    padding: 0.375rem 0.625rem;
+    --mr-textarea-min-height: var(--mr-textarea-min-height-sm);
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
     font-size: var(--mr-text-xs);
   }
 
   .mr-textarea--md,
   .mr-textarea[data-size='md'] {
-    --mr-textarea-min-height: 5.75rem;
-    padding: 0.5rem 0.625rem;
+    --mr-textarea-min-height: var(--mr-textarea-min-height-md);
+    padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
   }
 
   .mr-textarea--lg,
   .mr-textarea[data-size='lg'] {
-    --mr-textarea-min-height: 7.5rem;
-    padding: 0.625rem 0.875rem;
+    --mr-textarea-min-height: var(--mr-textarea-min-height-lg);
+    padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
     font-size: var(--mr-text-md);
   }
 
@@ -98,8 +103,8 @@
     align-self: flex-end;
     display: inline-flex;
     align-items: center;
-    min-height: 1.25rem;
-    padding-inline: 0.375rem;
+     min-block-size: var(--mr-space-5);
+     padding-inline: var(--mr-space-1);
     border-radius: var(--mr-radius-xs);
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-xs);

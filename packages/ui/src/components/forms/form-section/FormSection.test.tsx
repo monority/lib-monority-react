@@ -23,6 +23,11 @@ afterEach(() => {
 })
 
 describe('FormSection', () => {
+  it('uses the shared Card surface', () => {
+    const view = render(<FormSection>Content</FormSection>)
+    expect(view.querySelector('.mr-form-section')?.className).toContain('mr-card')
+  })
+
   it('renders children', () => {
     const view = render(<FormSection><input /></FormSection>)
     expect(view.querySelector('input')).toBeTruthy()
@@ -50,6 +55,12 @@ describe('FormSection', () => {
     const view = render(<FormSection>Content</FormSection>)
     expect(view.querySelector('h3')).toBeNull()
     expect(view.querySelector('.mr-form-section__header')).toBeNull()
+  })
+
+  it('preserves zero-valued ReactNode content', () => {
+    const view = render(<FormSection title={0} description={0} meta={0} actions={0}>Body</FormSection>)
+    expect(view.textContent).toContain('0')
+    expect(view.querySelector('.mr-form-section__footer')).toBeTruthy()
   })
 
   it('passes className to the root', () => {

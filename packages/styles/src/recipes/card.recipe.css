@@ -1,10 +1,17 @@
 @layer recipes {
   .mr-card {
-    min-height: var(--mr-card-min-height, 9.5rem);
-    border: 1px solid var(--mr-border-subtle);
+    --mr-card-current-gap: var(--mr-card-gap, var(--mr-surface-gap-md));
+    display: flex;
+    flex-direction: column;
+     gap: var(--mr-card-current-gap);
+     min-width: 0;
+     padding: var(--mr-card-padding, var(--mr-card-padding-md));
+     overflow-wrap: anywhere;
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-card-radius, var(--mr-radius-md));
     background: var(--mr-bg-surface-elevated);
-    box-shadow: var(--mr-shadow-xs);
+    color: var(--mr-fg-base);
+    box-shadow: var(--mr-elevation-surface);
     transition:
       border-color var(--mr-duration-fast) var(--mr-ease-standard),
       box-shadow var(--mr-duration-fast) var(--mr-ease-standard),
@@ -13,23 +20,78 @@
 
   .mr-card--sm,
   .mr-card[data-padding='sm'] {
-    padding: var(--mr-space-3);
+    --mr-card-current-gap: var(--mr-card-gap-sm, var(--mr-surface-gap-sm));
+    gap: var(--mr-card-current-gap);
+    padding: var(--mr-card-padding-sm, var(--mr-surface-padding-sm));
   }
 
   .mr-card--md,
   .mr-card[data-padding='md'] {
-    padding: clamp(var(--mr-space-3), 2vw, var(--mr-space-4));
+    --mr-card-current-gap: var(--mr-card-gap-md, var(--mr-surface-gap-md));
+    gap: var(--mr-card-current-gap);
+    padding: var(--mr-card-padding-md, var(--mr-surface-padding-md));
   }
 
   .mr-card--lg,
   .mr-card[data-padding='lg'] {
-    padding: var(--mr-card-padding, clamp(var(--mr-space-4), 2vw, var(--mr-space-5)));
+    --mr-card-current-gap: var(--mr-card-gap-lg, var(--mr-surface-gap-lg));
+    gap: var(--mr-card-current-gap);
+    padding: var(--mr-card-padding-lg, var(--mr-surface-padding-lg));
+  }
+
+   .mr-card__header {
+     display: flex;
+     align-items: flex-start;
+     justify-content: space-between;
+     gap: var(--mr-space-3);
+     min-inline-size: 0;
+     padding-block-end: var(--mr-space-3);
+     border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
+   }
+
+  .mr-card__title {
+    color: var(--mr-fg-strong);
+    font-size: var(--mr-text-lg);
+    font-weight: var(--mr-font-weight-semibold);
+    line-height: var(--mr-leading-heading);
+  }
+
+  .mr-card__description {
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-sm);
+    line-height: var(--mr-leading-normal);
+  }
+
+   .mr-card__content {
+     display: grid;
+     gap: var(--mr-space-3);
+     min-inline-size: 0;
+   }
+
+  .mr-card__footer {
+    margin-block-start: auto;
+    padding-block-start: var(--mr-space-3);
+    border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
+    color: var(--mr-fg-muted);
+    font-size: var(--mr-text-sm);
+    line-height: var(--mr-leading-normal);
+  }
+
+  .mr-card--interactive,
+  .mr-card[data-interactive='true'] {
+    cursor: pointer;
   }
 
   .mr-card--interactive:hover,
   .mr-card[data-interactive='true']:hover {
     border-color: var(--mr-border-strong);
     background: var(--mr-bg-surface-strong);
-    box-shadow: var(--mr-shadow-sm);
+    box-shadow: var(--mr-elevation-raised);
+  }
+
+  .mr-card--interactive:focus-visible,
+  .mr-card[data-interactive='true']:focus-visible {
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: var(--mr-focus-offset);
   }
 }

@@ -1,7 +1,7 @@
 @layer recipes {
   .mr-toggle {
-    --mr-toggle-height: 2rem;
-    --mr-toggle-padding-x: var(--mr-space-3);
+    --mr-toggle-height: var(--mr-control-size-md);
+    --mr-toggle-padding-x: var(--mr-control-padding-inline-md);
     --mr-toggle-radius: var(--mr-radius-sm);
 
     display: inline-flex;
@@ -11,7 +11,7 @@
     min-width: var(--mr-toggle-height);
     min-height: var(--mr-toggle-height);
     padding: 0 var(--mr-toggle-padding-x);
-    border: 1px solid var(--mr-border-subtle);
+     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-toggle-radius);
     background: var(--mr-bg-control);
     color: var(--mr-fg-base);
@@ -37,8 +37,8 @@
   }
 
   .mr-toggle:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
+     outline: var(--mr-focus-width) solid var(--mr-accent);
+     outline-offset: var(--mr-focus-offset);
   }
 
   .mr-toggle:disabled {
@@ -61,26 +61,26 @@
     border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-strong));
     background: var(--mr-bg-accent-soft);
     color: var(--mr-fg-strong);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-accent) 10%, transparent);
+     box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-accent) 10%, transparent);
   }
 
   .mr-toggle--sm,
   .mr-toggle[data-size='sm'] {
-    --mr-toggle-height: 1.75rem;
-    --mr-toggle-padding-x: var(--mr-space-2);
+    --mr-toggle-height: var(--mr-control-size-sm);
+    --mr-toggle-padding-x: var(--mr-control-padding-inline-sm);
     --mr-toggle-radius: var(--mr-radius-xs);
     font-size: var(--mr-text-xs);
   }
 
   .mr-toggle--md,
   .mr-toggle[data-size='md'] {
-    --mr-toggle-height: 2rem;
+    --mr-toggle-height: var(--mr-control-size-md);
   }
 
   .mr-toggle--lg,
   .mr-toggle[data-size='lg'] {
-    --mr-toggle-height: 2.5rem;
-    --mr-toggle-padding-x: var(--mr-space-4);
+    --mr-toggle-height: var(--mr-control-size-lg);
+    --mr-toggle-padding-x: var(--mr-control-padding-inline-lg);
     font-size: var(--mr-text-md);
   }
 }

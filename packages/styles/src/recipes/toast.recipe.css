@@ -6,7 +6,7 @@
 
     .mr-toast {
         padding: var(--mr-space-4);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-shadow-sm);

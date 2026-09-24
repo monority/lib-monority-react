@@ -41,7 +41,7 @@ const docData: DocPageData = {
         '.mr-scroll-area--both',
         '.mr-scroll-area--hide',
     ],
-    tokens: ['--mr-border-subtle', '--mr-border-muted', '--mr-radius-full'],
+    tokens: ['--mr-border-subtle', '--mr-border-strong', '--mr-radius-full'],
     a11y: [
         'Uses native scroll behavior with overflow.',
         'Scrollbar is styled but remains accessible.',

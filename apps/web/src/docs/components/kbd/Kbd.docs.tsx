@@ -50,7 +50,7 @@ const docData: DocPageData = {
         '--mr-radius-sm',
         '--mr-text-xs',
         '--mr-text-sm',
-        '--mr-text-base',
+        '--mr-text-sm',
     ],
     a11y: [
         'Renders native <kbd> markup.',

@@ -27,7 +27,7 @@ const docData: DocPageData = {
         '--mr-accent',
         '--mr-danger',
         '--mr-bg-accent-soft',
-        '--mr-bg-danger-soft',
+        '--mr-danger-soft',
         '--mr-text-sm',
         '--mr-radius-md',
         '--mr-space-*',

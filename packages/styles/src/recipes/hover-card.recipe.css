@@ -16,16 +16,16 @@
     .mr-hovercard__content {
         position: fixed;
         z-index: var(--mr-z-overlay);
-        min-width: 13rem;
-        max-width: min(22rem, calc(100vw - 1.5rem));
-        padding: var(--mr-space-4);
-        border: 1px solid var(--mr-border-subtle);
+         min-inline-size: var(--mr-overlay-width-menu);
+         max-inline-size: min(var(--mr-overlay-width-popover), calc(100vw - 2 * var(--mr-overlay-gutter)));
+         padding: var(--mr-surface-padding-md);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         color: var(--mr-fg-base);
         font-size: var(--mr-text-sm);
-        line-height: 1.5;
-        box-shadow: var(--mr-shadow-md);
+         line-height: var(--mr-leading-normal);
+         box-shadow: var(--mr-elevation-overlay);
         /* Opacity-only: placement rules own transform. */
         animation: mr-hovercard-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
@@ -34,7 +34,7 @@
         position: absolute;
         width: 0.625rem;
         height: 0.625rem;
-        border: 1px solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         background: var(--mr-bg-surface-elevated);
         transform: rotate(45deg);
     }

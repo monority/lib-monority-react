@@ -48,6 +48,12 @@
     color: var(--docs-code-tag, var(--mr-fg-muted));
 }
 
+.mr-pre-code code .hljs-tag .hljs-name,
+.mr-pre-code code .hljs-tag .hljs-title,
+.mr-pre-code code .hljs-tag .hljs-type {
+    color: var(--docs-code-name, var(--mr-warning));
+}
+
 .mr-pre-code code .hljs-built_in,
 .mr-pre-code code .hljs-title.function_,
 .mr-pre-code code .hljs-type {

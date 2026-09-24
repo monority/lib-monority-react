@@ -3,7 +3,7 @@ import { CardBasicExample, CardPaddingExample, CardInteractiveExample } from './
 
 const docData: DocPageData = {
     title: 'Card',
-    description: 'Surface primitive for grouping related content without owning internal layout.',
+    description: 'Surface primitive for grouping related content with consistent density and elevation.',
     importCode: "import { Card } from '@monority/ui/card'",
     usageCode: `<Card padding="lg" interactive>
   <h3>Project health</h3>
@@ -35,8 +35,18 @@ const docData: DocPageData = {
         '.mr-card--lg',
         '[data-padding]',
         '[data-interactive]',
+        '.mr-card__header',
+        '.mr-card__content',
+        '.mr-card__footer',
     ],
-    tokens: ['--mr-radius-lg', '--mr-border-subtle', '--mr-shadow-sm', '--mr-space-*'],
+    tokens: [
+        '--mr-card-radius',
+        '--mr-card-padding-sm',
+        '--mr-card-padding-md',
+        '--mr-card-padding-lg',
+        '--mr-elevation-surface',
+        '--mr-elevation-raised',
+    ],
     a11y: ['Card is layout only.', 'Use a real button or link for primary actions inside a card.'],
 }
 

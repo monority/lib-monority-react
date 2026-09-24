@@ -1,16 +1,17 @@
 import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Field } from '@/components/forms/field/Field'
+import { InputBase } from '@/primitives/input-base'
 import type { NumberInputProps } from './NumberInput.types'
 
 const MinusIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+  <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true">
     <path d="M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 )
 
 const PlusIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+  <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true">
     <path d="M3 8H13M8 3V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 )
@@ -138,11 +139,12 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         errorId={errorId}
       >
         <div className="mr-number-input__wrapper">
-          <input
+          <InputBase
+            as="input"
             ref={(el) => {
-              inputRef.current = el
-              if (typeof ref === 'function') ref(el)
-              else if (ref) ref.current = el
+              inputRef.current = el as HTMLInputElement | null
+              if (typeof ref === 'function') ref(el as HTMLInputElement | null)
+              else if (ref) ref.current = el as HTMLInputElement | null
             }}
             id={inputId}
             type="text"
@@ -156,14 +158,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
               isInvalid && 'mr-number-input--error',
               inputClassName,
             )}
+            size={resolvedSize}
+            invalid={isInvalid}
             disabled={disabled}
             required={required}
-            aria-invalid={isInvalid || undefined}
             aria-describedby={describedBy}
-            data-size={resolvedSize}
-            data-disabled={disabled ? true : undefined}
-            data-invalid={isInvalid ? true : undefined}
-            data-required={required ? true : undefined}
             {...props}
           />
           <div className="mr-number-input__actions">

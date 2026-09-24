@@ -40,7 +40,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 1.5rem 4rem;
+     padding: var(--mr-space-7) var(--mr-space-4) var(--mr-space-8);
 }
 
 .home-hero {
@@ -55,8 +55,8 @@ body {
 .home-kicker {
     margin: 0 0 1.25rem;
     color: rgba(219, 204, 176, 0.74);
-    font-size: 0.875rem;
-    line-height: 1.4;
+     font-size: var(--mr-text-sm);
+     line-height: var(--mr-leading-normal);
 }
 
 .home-title {
@@ -73,16 +73,16 @@ body {
     margin: 1.5rem 0 0;
     max-width: 30rem;
     color: rgba(238, 231, 216, 0.72);
-    font-size: 1.0625rem;
-    line-height: 1.75;
+     font-size: var(--mr-text-md);
+     line-height: var(--mr-leading-relaxed);
     text-wrap: pretty;
 }
 
 .home-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
+     gap: var(--mr-space-3);
+     margin-block-start: var(--mr-space-6);
     justify-content: center;
 }
 
@@ -90,19 +90,19 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.55rem;
-    padding-inline: 1rem;
-    border: 1px solid rgba(231, 213, 176, 0.2);
-    border-radius: 0.375rem;
+     min-block-size: var(--mr-control-size-md);
+     padding-inline: var(--mr-control-padding-inline-md);
+     border: var(--mr-border-width) solid rgba(231, 213, 176, 0.2);
+     border-radius: var(--mr-radius-sm);
     color: rgba(247, 241, 226, 0.84);
     background: rgba(255, 255, 255, 0.03);
-    font-size: 0.875rem;
-    font-weight: 560;
+     font-size: var(--mr-text-sm);
+     font-weight: var(--mr-font-weight-medium);
     text-decoration: none;
     transition:
-        background 180ms ease,
-        border-color 180ms ease,
-        color 180ms ease;
+         background-color var(--mr-duration-enter) var(--mr-ease-standard),
+         border-color var(--mr-duration-enter) var(--mr-ease-standard),
+         color var(--mr-duration-enter) var(--mr-ease-standard);
 }
 
 .home-link:hover {
@@ -125,16 +125,16 @@ body {
 
 /* --- Responsive --- */
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
     .home-header {
         align-items: flex-start;
-        padding: 1rem;
-        gap: 1rem;
+         padding: var(--mr-space-4);
+         gap: var(--mr-space-4);
     }
 
     .home-nav {
-        gap: 0.65rem;
-        font-size: 0.75rem;
+         gap: var(--mr-space-3);
+         font-size: var(--mr-text-xs);
     }
 
     .home-nav a:nth-child(3) {
@@ -142,7 +142,7 @@ body {
     }
 
     .home-main {
-        padding: 1.5rem 1rem 3rem;
+         padding: var(--mr-space-5) var(--mr-space-4) var(--mr-space-7);
     }
 
     .home-title {
@@ -150,7 +150,7 @@ body {
     }
 
     .home-subtitle {
-        font-size: 0.98rem;
+         font-size: var(--mr-text-sm);
     }
 }
 

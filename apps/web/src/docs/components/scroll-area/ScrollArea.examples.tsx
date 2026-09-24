@@ -1,7 +1,7 @@
 import { ScrollArea } from '@monority/ui/scroll-area'
 
 const longText = Array.from({ length: 30 }, (_, i) => (
-    <p key={i} style={{ margin: '0.5rem 0', color: 'var(--mr-text-secondary)' }}>
+    <p key={i} style={{ margin: '0.5rem 0', color: 'var(--mr-fg-muted)' }}>
         Activity {i + 1} - Preview deployment completed for the documentation workspace.
     </p>
 ))

@@ -1,10 +1,10 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Input } from '@monority/ui/input'
 import {
     InputBasicExample,
-    InputSearchExample,
+    InputFamilySizesExample,
     InputNumberExample,
     InputPasswordExample,
+    InputSearchExample,
 } from './Input.examples'
 
 const docData: DocPageData = {
@@ -22,6 +22,7 @@ const docData: DocPageData = {
         { title: 'Search', content: <InputSearchExample /> },
         { title: 'Number', content: <InputNumberExample /> },
         { title: 'Password', content: <InputPasswordExample /> },
+        { title: 'Control sizes', content: <InputFamilySizesExample /> },
     ],
     props: [
         {

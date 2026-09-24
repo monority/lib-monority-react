@@ -2,4 +2,9 @@
   --mr-input-radius: var(--mr-radius-sm);
   --mr-input-height: var(--mr-control-size-md);
   --mr-input-width: min(22rem, 100%);
+  --mr-input-padding-block: var(--mr-control-padding-block-md);
+  --mr-input-padding-inline: var(--mr-control-padding-inline-md);
+  --mr-textarea-min-height-sm: 4rem;
+  --mr-textarea-min-height-md: 6rem;
+  --mr-textarea-min-height-lg: 7.5rem;
 }

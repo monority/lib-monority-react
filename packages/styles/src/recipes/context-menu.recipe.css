@@ -14,14 +14,14 @@
         z-index: var(--mr-z-overlay);
         display: grid;
         gap: var(--mr-space-1);
-        min-width: 13rem;
-        width: max-content;
-        max-width: min(20rem, calc(100vw - 2rem));
-        padding: var(--mr-space-2);
-        border: 1px solid var(--mr-border-subtle);
+         min-inline-size: var(--mr-overlay-width-menu);
+         inline-size: max-content;
+         max-inline-size: min(var(--mr-overlay-width-menu), calc(100vw - 2 * var(--mr-overlay-gutter)));
+         padding: var(--mr-space-2);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-md);
+         box-shadow: var(--mr-elevation-overlay);
         animation: mr-context-menu-in var(--mr-duration-fast) var(--mr-ease-standard) forwards;
         transform-origin: top left;
     }
@@ -30,8 +30,8 @@
         display: flex;
         align-items: center;
         width: 100%;
-        min-height: 2rem;
-        padding: var(--mr-space-2) 0.625rem;
+         min-block-size: var(--mr-control-size-sm);
+         padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
         border: 0;
         border-radius: var(--mr-radius-sm);
         background: transparent;
@@ -48,17 +48,17 @@
     .mr-context-menu__item:hover {
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
         color: var(--mr-fg-strong);
-        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
+         box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
     }
 
     .mr-context-menu__item:focus-visible {
-        outline: 2px solid var(--mr-accent);
-        outline-offset: -2px;
+         outline: var(--mr-focus-width) solid var(--mr-accent);
+         outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
     .mr-context-menu__item:disabled {
         cursor: not-allowed;
-        opacity: 0.5;
+         opacity: var(--mr-opacity-disabled);
     }
 
     .mr-context-menu__item.is-danger {

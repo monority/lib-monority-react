@@ -43,6 +43,13 @@ describe('StatCard', () => {
         )
     })
 
+    it('keeps the trend in the header-end region', () => {
+        const view = render(<StatCard label="Revenue" value="$12k" trend="8.4%" />)
+        const header = view.querySelector('.mr-stat-card__header')
+        const trend = view.querySelector('.mr-stat-card__trend')
+        expect(header?.querySelector('.mr-stat-card__header-end')?.contains(trend)).toBe(true)
+    })
+
     it('marks the value for styling hooks', () => {
         const view = render(<StatCard label="Sales" value="100" />)
         expect(view.querySelector('.mr-stat-card__value')?.textContent).toBe('100')

@@ -42,13 +42,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
 ) {
   const resolvedTone = tone ?? 'neutral'
   const resolvedSize = size ?? 'md'
-  const isInvalid = invalid || Boolean(error)
+  const isInvalid = invalid || error != null
 
   return (
     <FormControl
       id={id}
-      hint={!!hint}
-      error={!!error}
+      hint={hint != null}
+      error={error != null}
       disabled={disabled}
       required={required}
       tone={resolvedTone}

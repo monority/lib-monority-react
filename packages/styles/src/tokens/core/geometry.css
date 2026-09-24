@@ -1,0 +1,39 @@
+:root {
+  --mr-border-width: 1px;
+  --mr-border-width-focus: 2px;
+  --mr-focus-width: var(--mr-border-width-focus);
+  --mr-focus-offset: 2px;
+
+  --mr-control-padding-block-sm: var(--mr-space-1);
+  --mr-control-padding-block-md: var(--mr-space-2);
+  --mr-control-padding-block-lg: var(--mr-space-3);
+  --mr-control-padding-inline-sm: var(--mr-space-2);
+  --mr-control-padding-inline-md: var(--mr-space-3);
+  --mr-control-padding-inline-lg: var(--mr-space-4);
+
+  --mr-icon-size-sm: 1rem;
+  --mr-icon-size-md: 1.125rem;
+  --mr-icon-size-lg: 1.25rem;
+  --mr-icon-size: var(--mr-icon-size-md);
+
+  --mr-surface-padding-sm: var(--mr-space-3);
+  --mr-surface-padding-md: var(--mr-space-4);
+  --mr-surface-padding-lg: var(--mr-space-5);
+  --mr-surface-gap-sm: var(--mr-space-2);
+  --mr-surface-gap-md: var(--mr-space-3);
+  --mr-surface-gap-lg: var(--mr-space-4);
+
+  --mr-overlay-offset: var(--mr-space-2);
+  --mr-overlay-gutter: var(--mr-space-4);
+  --mr-overlay-width-tooltip: 16rem;
+  --mr-overlay-width-menu: 16rem;
+  --mr-overlay-width-popover: 22rem;
+  --mr-overlay-width-dialog: 42rem;
+  --mr-overlay-width-alert: 32rem;
+  --mr-overlay-width-drawer: 24rem;
+  --mr-overlay-width-command: 42rem;
+  --mr-switch-track-width-md: 2.75rem;
+  --mr-switch-track-height-md: 1.5rem;
+  --mr-switch-scale-sm: 0.82;
+  --mr-switch-scale-lg: 1.25;
+}

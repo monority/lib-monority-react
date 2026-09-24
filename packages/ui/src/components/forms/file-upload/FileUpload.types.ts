@@ -15,5 +15,7 @@ export interface FileUploadProps {
   required?: boolean
   actionLabel?: string
   description?: ReactNode
+  files?: File[]
+  onFilesChange?: (files: File[]) => void
   id?: string
 }

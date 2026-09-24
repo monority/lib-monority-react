@@ -3,4 +3,7 @@
   --mr-shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.05);
   --mr-shadow-md: 0 20px 48px rgba(15, 23, 42, 0.08);
   --mr-shadow-focus: 0 0 0 4px rgba(15, 23, 42, 0.08);
+  --mr-shadow-surface: var(--mr-shadow-xs);
+  --mr-shadow-raised: var(--mr-shadow-sm);
+  --mr-shadow-overlay: var(--mr-shadow-md);
 }

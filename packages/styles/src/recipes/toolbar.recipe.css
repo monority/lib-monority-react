@@ -10,7 +10,7 @@
         min-width: 0;
         min-height: 2.75rem;
         padding: var(--mr-toolbar-padding);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
         box-shadow: var(--mr-shadow-xs);

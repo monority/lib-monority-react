@@ -1,118 +1,106 @@
 @layer recipes {
-    @keyframes mr-modal-backdrop-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+  @keyframes mr-modal-backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-    @keyframes mr-modal-panel-in {
-        from {
-            opacity: 0;
-            transform: translateY(0.5rem) scale(0.985);
-        }
-        to {
-            opacity: 1;
-            transform: none;
-        }
+  @keyframes mr-modal-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--mr-space-3)) scale(0.985);
     }
-
-    .mr-alert-dialog {
-        width: min(32rem, 100%);
+    to {
+      opacity: 1;
+      transform: none;
     }
+  }
 
-    .mr-alert-dialog--default,
-    .mr-alert-dialog--danger {
-        /* variant classes applied by cva */
-    }
+  .mr-alert-dialog {
+    inline-size: min(var(--mr-overlay-width-alert), 100%);
+  }
 
-    .mr-alert-dialog--danger {
-        border-color: color-mix(in srgb, var(--mr-danger) 28%, var(--mr-border-subtle));
-    }
+  .mr-alert-dialog--danger {
+    border-color: color-mix(in srgb, var(--mr-danger) 28%, var(--mr-border-subtle));
+  }
 
-    .mr-alert-dialog__backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: var(--mr-z-modal);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .mr-alert-dialog__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--mr-z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mr-overlay-gutter);
+  }
 
-    .mr-alert-dialog__backdrop-surface {
-        position: absolute;
-        inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
-        animation: mr-modal-backdrop-in var(--mr-dur-200) var(--mr-ease-out);
-    }
+  .mr-alert-dialog__backdrop-surface {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
+    animation: mr-modal-backdrop-in var(--mr-duration-base) var(--mr-ease-out);
+  }
 
+  .mr-alert-dialog__panel {
+    position: relative;
+    z-index: calc(var(--mr-z-modal) + 1);
+    display: grid;
+    gap: var(--mr-space-4);
+    padding: var(--mr-surface-padding-lg);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-elevation-overlay);
+    animation: mr-modal-panel-in var(--mr-duration-base) var(--mr-ease-out);
+  }
+
+  .mr-alert-dialog__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--mr-space-3);
+  }
+
+  .mr-alert-dialog__heading {
+    min-inline-size: 0;
+  }
+
+  .mr-alert-dialog__title {
+    margin: 0;
+    color: var(--mr-fg-strong);
+    font-size: var(--mr-text-lg);
+    font-weight: var(--mr-font-weight-semibold);
+  }
+
+  .mr-alert-dialog__description {
+    margin: 0;
+    color: var(--mr-fg-base);
+    font-size: var(--mr-text-sm);
+    line-height: var(--mr-leading-base);
+  }
+
+  .mr-alert-dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--mr-space-2);
+  }
+
+  .mr-alert-dialog__confirm:hover {
+    box-shadow: var(--mr-elevation-raised);
+  }
+
+  @media (max-width: 640px) {
     .mr-alert-dialog__panel {
-        position: relative;
-        z-index: calc(var(--mr-z-modal) + 1);
-        display: grid;
-        gap: var(--mr-space-4);
-        padding: var(--mr-space-5);
-        border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-md);
-        animation: mr-modal-panel-in var(--mr-dur-200) var(--mr-ease-out);
-    }
-
-    .mr-alert-dialog__header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: var(--mr-space-3);
-    }
-
-    .mr-alert-dialog__heading {
-        min-width: 0;
-    }
-
-    .mr-alert-dialog__title {
-        font-size: var(--mr-text-lg);
-        font-weight: var(--mr-font-weight-semibold);
-        margin: 0;
-        color: var(--mr-fg-strong);
-    }
-
-    .mr-alert-dialog__description {
-        margin: 0;
-        color: var(--mr-fg-base);
-        font-size: var(--mr-text-sm);
-        line-height: var(--mr-leading-base);
+      inline-size: min(100%, var(--mr-overlay-width-alert));
+      padding: var(--mr-surface-padding-md);
     }
 
     .mr-alert-dialog__actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--mr-space-2);
-        justify-content: flex-end;
+      flex-direction: column-reverse;
     }
 
-    .mr-alert-dialog__cancel {
-        flex: 0 0 auto;
+    .mr-alert-dialog__actions > * {
+      inline-size: 100%;
     }
-
-    .mr-alert-dialog__confirm {
-        flex: 0 0 auto;
-    }
-
-    .mr-alert-dialog__confirm:hover {
-        box-shadow: var(--mr-shadow-sm);
-    }
-
-    @media (max-width: 640px) {
-        .mr-alert-dialog__panel {
-            width: min(100%, 32rem);
-            padding: var(--mr-space-4);
-        }
-
-        .mr-alert-dialog__actions {
-            flex-direction: column-reverse;
-        }
-
-        .mr-alert-dialog__actions > * {
-            width: 100%;
-        }
-    }
+  }
 }

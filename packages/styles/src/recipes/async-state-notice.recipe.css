@@ -5,7 +5,7 @@
   @keyframes mr-async-notice-loading-in {
     from {
       opacity: 0;
-      transform: translateY(-1px);
+       transform: translateY(var(--mr-space-1));
     }
     to {
       opacity: 1;
@@ -16,7 +16,7 @@
   @keyframes mr-async-notice-error-in {
     from {
       opacity: 0;
-      transform: translateY(-1px);
+       transform: translateY(var(--mr-space-1));
     }
     to {
       opacity: 1;
@@ -31,12 +31,12 @@
     min-width: 0;
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 
   .mr-async-state-notice--loading,
   .mr-async-state-notice[data-state='loading'] {
-    animation: mr-async-notice-loading-in 180ms var(--mr-ease-standard) both;
+    animation: mr-async-notice-loading-in var(--mr-duration-enter) var(--mr-ease-standard) both;
   }
 
   .mr-async-state-notice__message {
@@ -46,6 +46,13 @@
   .mr-async-state-notice--error,
   .mr-async-state-notice[data-state='error'] {
     color: var(--mr-danger-text);
-    animation: mr-async-notice-error-in 180ms var(--mr-ease-standard) both;
+    animation: mr-async-notice-error-in var(--mr-duration-enter) var(--mr-ease-standard) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mr-async-state-notice--loading,
+    .mr-async-state-notice--error {
+      animation: none;
+    }
   }
 }

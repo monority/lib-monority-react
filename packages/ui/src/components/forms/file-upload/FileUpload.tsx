@@ -1,4 +1,4 @@
-import { forwardRef, useState, useCallback } from 'react'
+import { forwardRef, useCallback, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { Field } from '@/components/forms/field/Field'
@@ -23,60 +23,91 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       required = false,
       actionLabel,
       description,
+      files: controlledFiles,
+      onFilesChange,
     },
     ref,
   ) {
-    const [files, setFiles] = useState<{ name: string; size: number; type: string }[]>([])
+    const [internalFiles, setInternalFiles] = useState<File[]>([])
+    const inputRef = useRef<HTMLInputElement | null>(null)
+    const isControlled = controlledFiles !== undefined
+    const files = controlledFiles ?? internalFiles
+    const resolvedSize = size ?? 'md'
 
-    const handleSelect = useCallback((selected: File[]) => {
-      setFiles(selected.map((f) => ({ name: f.name, size: f.size, type: f.type })))
-    }, [])
+    const updateFiles = useCallback(
+      (nextFiles: File[]) => {
+        if (!isControlled) setInternalFiles(nextFiles)
+        onFilesChange?.(nextFiles)
+      },
+      [isControlled, onFilesChange],
+    )
 
-    const handleDrop = useCallback((dropped: File[]) => {
-      setFiles(dropped.map((f) => ({ name: f.name, size: f.size, type: f.type })))
-    }, [])
+    const handleRemove = useCallback(
+      (index: number) => {
+        updateFiles(files.filter((_, fileIndex) => fileIndex !== index))
+      },
+      [files, updateFiles],
+    )
 
-    const handleRemove = useCallback((index: number) => {
-      setFiles((prev) => prev.filter((_, i) => i !== index))
-    }, [])
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (typeof ref === 'function') ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref],
+    )
+
+    const handleZoneClick = useCallback(
+      (event: React.MouseEvent<HTMLDivElement>) => {
+        if (disabled || (event.target as HTMLElement).closest('.mr-file-trigger')) return
+        inputRef.current?.click()
+      },
+      [disabled],
+    )
 
     return (
-      <FormControl id={id} hint={!!hint} error={!!error} disabled={disabled} required={required} size={size}>
+      <FormControl id={id} hint={hint != null} error={error != null} disabled={disabled} required={required} size={resolvedSize}>
         <Field className={cn('mr-file-upload-field', className)} label={label} hint={hint} error={error}>
           <DropZone
             accept={accept}
             multiple={multiple}
             disabled={disabled}
-            onDrop={handleDrop}
+            onDrop={updateFiles}
+            onClick={handleZoneClick}
             className="mr-file-upload__dropzone"
+            data-size={resolvedSize}
           >
             <div className="mr-file-upload__content">
-              {description && <span className="mr-file-upload__description">{description}</span>}
-              {placeholder && <span className="mr-file-upload__placeholder">{placeholder}</span>}
+              {description != null ? <span className="mr-file-upload__description">{description}</span> : null}
+              {placeholder != null && files.length === 0 ? (
+                <span className="mr-file-upload__placeholder">{placeholder}</span>
+              ) : null}
               <FileTrigger
-                ref={ref}
+                 ref={setInputRef}
+                id={id}
                 accept={accept}
                 multiple={multiple}
                 disabled={disabled}
-                required={required}
-                onSelect={handleSelect}
+                required={required && files.length === 0}
+                onSelect={updateFiles}
               >
-                {actionLabel ? (
-                  <span className="mr-file-upload__action">{actionLabel}</span>
+                 {actionLabel != null ? (
+                   <span className="mr-file-upload__action">{actionLabel}</span>
                 ) : (
                   <span className="mr-file-upload__default-action">Choose files</span>
                 )}
               </FileTrigger>
             </div>
           </DropZone>
-          {files.length > 0 && (
+          {files.length > 0 ? (
             <FileList
               files={files}
               onRemove={handleRemove}
               disabled={disabled}
               className="mr-file-upload__files"
             />
-          )}
+          ) : null}
         </Field>
       </FormControl>
     )

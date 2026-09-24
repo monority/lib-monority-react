@@ -11,20 +11,21 @@ export interface FieldProps {
   error?: ReactNode
   required?: boolean
   htmlFor?: string
+  labelId?: string
   hintId?: string
   errorId?: string
   className?: string
   children?: ReactNode
 }
 
-export function Field({ label, hint, error, required, htmlFor, hintId, errorId, className, children }: FieldProps) {
+export function Field({ label, hint, error, required, htmlFor, labelId, hintId, errorId, className, children }: FieldProps) {
   const ctx = useFormControl()
   const resolvedHtmlFor = htmlFor ?? ctx.inputId
   const resolvedHintId = hintId ?? ctx.hintId
   const resolvedErrorId = errorId ?? ctx.errorId
   const resolvedRequired = required ?? ctx.isRequired
-  const hasHint = Boolean(hint)
-  const hasError = Boolean(error)
+  const hasHint = hint != null
+  const hasError = error != null
 
   return (
     <div
@@ -33,8 +34,8 @@ export function Field({ label, hint, error, required, htmlFor, hintId, errorId, 
       data-has-error={hasError ? true : undefined}
       data-required={resolvedRequired ? true : undefined}
     >
-      {label ? (
-        <FieldLabel htmlFor={resolvedHtmlFor || undefined} required={resolvedRequired}>
+      {label != null ? (
+        <FieldLabel id={labelId} htmlFor={resolvedHtmlFor || undefined} required={resolvedRequired}>
           {label}
         </FieldLabel>
       ) : null}

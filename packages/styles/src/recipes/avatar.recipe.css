@@ -5,10 +5,10 @@
         justify-content: center;
         flex-shrink: 0;
         overflow: hidden;
-        border: 1px solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-full);
         background: var(--mr-bg-accent-soft);
-        box-shadow: inset 0 0 0 1px rgba(var(--mr-bg-canvas-rgb), 0.45);
+        box-shadow: inset 0 0 0 var(--mr-border-width) rgba(var(--mr-bg-canvas-rgb), 0.45);
         color: var(--mr-fg-strong);
     }
 

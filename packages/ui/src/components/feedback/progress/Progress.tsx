@@ -52,9 +52,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         data-value={isIndeterminate ? undefined : safeValue}
         {...props}
       >
-        {label || showValue ? (
+        {label != null || showValue ? (
           <div className="mr-progress__meta">
-            {label ? (
+             {label != null ? (
               <span className="mr-progress__label" id={labelId}>
                 {label}
               </span>
@@ -72,8 +72,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={isIndeterminate ? undefined : safeValue}
-          aria-labelledby={label ? labelId : undefined}
-          aria-label={label ? undefined : 'Progress'}
+           aria-labelledby={label != null ? labelId : undefined}
+           aria-label={label != null ? undefined : 'Progress'}
         >
           <div
             className={cn(

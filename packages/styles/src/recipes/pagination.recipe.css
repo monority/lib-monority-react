@@ -15,7 +15,7 @@
         gap: var(--mr-space-2);
         flex-wrap: wrap;
         padding: var(--mr-space-1);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-shadow-xs);
@@ -26,15 +26,15 @@
         align-items: center;
     }
 
-    .mr-pagination__btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--mr-space-2);
-        min-width: 2.5rem;
+     .mr-pagination__btn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: var(--mr-space-2);
+         min-width: var(--mr-control-size-md);
         min-height: var(--mr-control-size-md);
-        padding-inline: 0.875rem;
-        border: 1px solid var(--mr-border-subtle);
+         padding-inline: var(--mr-control-padding-inline-md);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-sm);
         background: var(--mr-bg-control);
         color: var(--mr-fg-base);
@@ -65,8 +65,8 @@
     }
 
     .mr-pagination__btn--page {
-        min-width: 2.5rem;
-        padding-inline: 0.5rem;
+         min-width: var(--mr-control-size-md);
+         padding-inline: var(--mr-control-padding-inline-sm);
     }
 
     .mr-pagination__btn--active {
@@ -79,7 +79,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 2rem;
+         min-width: var(--mr-control-size-sm);
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);

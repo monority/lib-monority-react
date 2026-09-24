@@ -46,7 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
 ) {
   const resolvedTone = tone ?? 'neutral'
   const resolvedSize = size ?? 'md'
-  const isInvalid = invalid || Boolean(error)
+  const isInvalid = invalid || error != null
   const isControlled = value !== undefined
 
   // Track char count for uncontrolled
@@ -97,8 +97,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <FormControl
       id={id}
-      hint={!!hint}
-      error={!!error}
+      hint={hint != null}
+      error={error != null}
       disabled={disabled}
       required={required}
       tone={resolvedTone}

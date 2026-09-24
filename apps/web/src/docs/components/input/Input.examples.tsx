@@ -21,3 +21,25 @@ export function InputNumberExample() {
 export function InputPasswordExample() {
     return <PasswordInput label="Password" hint="8+ characters" />
 }
+
+export function InputFamilySizesExample() {
+    return (
+        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
+            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+                <Input label="Input small" size="sm" />
+                <Input label="Input medium" size="md" />
+                <Input label="Input large" size="lg" />
+            </div>
+            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+                <NumberInput label="Number small" size="sm" />
+                <NumberInput label="Number medium" size="md" />
+                <NumberInput label="Number large" size="lg" />
+            </div>
+            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+                <PasswordInput label="Password small" size="sm" />
+                <PasswordInput label="Password medium" size="md" />
+                <PasswordInput label="Password large" size="lg" />
+            </div>
+        </div>
+    )
+}

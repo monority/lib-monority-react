@@ -17,33 +17,35 @@ export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(function StatC
                 <Text as="span" className="mr-stat-card__label" tone="muted" size="sm">
                     {label}
                 </Text>
-                {icon ? (
-                    <div className="mr-stat-card__icon" aria-hidden="true">
-                        {icon}
-                    </div>
-                ) : null}
+                <div className="mr-stat-card__header-end">
+                    {trend != null ? (
+                        <div className="mr-stat-card__trend" data-trend-tone={resolvedTrendTone}>
+                            <span className="mr-stat-card__trend-marker" aria-hidden="true" />
+                            <Text as="span" tone="base" size="sm">
+                                {trend}
+                            </Text>
+                        </div>
+                    ) : null}
+                    {icon != null ? (
+                        <div className="mr-stat-card__icon" aria-hidden="true">
+                            {icon}
+                        </div>
+                    ) : null}
+                </div>
             </div>
 
             <div className="mr-stat-card__metric">
                 <Title as="span" className="mr-stat-card__value" size="lg">
                     {value}
                 </Title>
-                {trend ? (
-                    <div className="mr-stat-card__trend" data-trend-tone={resolvedTrendTone}>
-                        <span className="mr-stat-card__trend-marker" aria-hidden="true" />
-                        <Text as="span" tone="base" size="sm">
-                            {trend}
-                        </Text>
-                    </div>
-                ) : null}
             </div>
 
-            {description ? (
+            {description != null ? (
                 <Text className="mr-stat-card__description" tone="muted" size="sm">
                     {description}
                 </Text>
             ) : null}
-            {footer ? <div className="mr-stat-card__footer">{footer}</div> : null}
+            {footer != null ? <div className="mr-stat-card__footer">{footer}</div> : null}
         </Card>
     )
 })

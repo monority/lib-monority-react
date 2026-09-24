@@ -37,6 +37,8 @@ export default defineConfig({
             use: { viewport: { width: 721, height: 800 } },
         },
         { name: 'desktop', use: { viewport: { width: 1440, height: 900 } } },
+        { name: 'desktop-1024', use: { viewport: { width: 1024, height: 900 } } },
+        { name: 'tablet-768', use: { viewport: { width: 768, height: 900 } } },
         {
             name: 'mobile-reduced-motion',
             use: {

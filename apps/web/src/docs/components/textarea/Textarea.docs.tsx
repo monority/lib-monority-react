@@ -132,7 +132,7 @@ const docData: DocPageData = {
         '--mr-danger',
         '--mr-warning',
         '--mr-text-xs',
-        '--mr-text-base',
+        '--mr-text-sm',
         '--mr-radius-full',
         '--mr-radius-xs',
         '--mr-duration-fast',

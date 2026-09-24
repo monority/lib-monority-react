@@ -1,3 +1,5 @@
+import { Select } from '@monority/ui/select'
+
 interface ControlSelectProps {
     id: string
     label: string
@@ -8,22 +10,17 @@ interface ControlSelectProps {
 
 export function ControlSelect({ id, label, value, options, onChange }: ControlSelectProps) {
     return (
-        <div className="pg-control">
-            <label className="pg-control__label" htmlFor={id}>
-                {label}
-            </label>
-            <select
-                id={id}
-                className="pg-control__select"
-                value={value}
-                onChange={(event) => onChange(event.target.value)}
-            >
-                {options.map((option) => (
-                    <option key={option} value={option}>
-                        {option}
-                    </option>
-                ))}
-            </select>
-        </div>
+        <Select
+            id={id}
+            label={label}
+            value={value}
+            onChange={(event) => onChange(event.target.value)}
+        >
+            {options.map((option) => (
+                <option key={option} value={option}>
+                    {option}
+                </option>
+            ))}
+        </Select>
     )
 }

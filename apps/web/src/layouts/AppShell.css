@@ -17,11 +17,11 @@
     top: -100vh;
     left: 1rem;
     z-index: var(--mr-z-tooltip);
-    padding: 0.5rem 0.875rem;
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-md);
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
     color: var(--mr-fg-strong);
-    border: 1px solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     text-decoration: none;
 }
 
@@ -34,20 +34,20 @@
     position: sticky;
     top: 0;
     z-index: var(--mr-z-elevated);
-    border-bottom: 1px solid var(--mr-border-subtle);
+     border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: color-mix(in srgb, var(--mr-bg-canvas) 88%, transparent);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(var(--mr-blur-md));
 }
 
 .app-header__inner {
-    min-height: 3.5rem;
-    padding-block: 0.625rem;
+     min-block-size: var(--mr-control-size-lg);
+     padding-block: 0;
 }
 
 .brand {
     color: var(--mr-fg-strong);
-    font-weight: 650;
-    font-size: 0.9375rem;
+    font-weight: var(--mr-font-weight-semibold);
+    font-size: var(--mr-text-sm);
     letter-spacing: -0.01em;
     text-decoration: none;
     white-space: nowrap;
@@ -66,10 +66,10 @@
 .app-nav__link {
     display: inline-flex;
     align-items: center;
-    padding: 0.375rem 0.625rem;
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
     border-radius: var(--mr-radius-md);
     color: var(--mr-fg-muted);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
     text-decoration: none;
     white-space: nowrap;
 }
@@ -92,14 +92,14 @@
 .app-nav__trigger {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.375rem 0.625rem;
-    border: 1px solid transparent;
+    gap: var(--mr-space-1);
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+     border: var(--mr-border-width) solid transparent;
     border-radius: var(--mr-radius-md);
     background: transparent;
     color: var(--mr-fg-muted);
     font: inherit;
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
     cursor: pointer;
     white-space: nowrap;
 }
@@ -123,17 +123,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.25rem;
-    height: 1.25rem;
+    min-inline-size: var(--mr-control-size-sm);
+    block-size: var(--mr-control-size-sm);
     padding-inline: 0.25rem;
-    border: 1px solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
-    font-size: 0.6875rem;
+    font-size: var(--mr-text-xs);
     color: var(--mr-fg-muted);
 }
 
 .app-nav__caret {
-    transition: transform 160ms ease;
+    transition: transform var(--mr-duration-fast) var(--mr-ease-standard);
 }
 
 .app-nav__trigger[aria-expanded="true"] .app-nav__caret {
@@ -142,24 +142,24 @@
 
 .app-nav__menu {
     position: absolute;
-    top: calc(100% + 0.375rem);
+    top: calc(100% + var(--mr-overlay-offset));
     left: 0;
     z-index: var(--mr-z-elevated);
-    min-width: 12rem;
-    padding: 0.375rem;
-    border: 1px solid var(--mr-border-subtle);
+    min-inline-size: var(--mr-overlay-width-menu);
+     padding: var(--mr-space-1);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
-    box-shadow: var(--mr-shadow-md);
+    box-shadow: var(--mr-elevation-overlay);
 }
 
 .app-nav__menu-link {
     display: flex;
     align-items: center;
-    padding: 0.4375rem 0.625rem;
+     padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
     border-radius: var(--mr-radius-sm);
     color: var(--mr-fg-muted);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
     text-decoration: none;
     white-space: nowrap;
 }
@@ -192,18 +192,18 @@
 .app-session-chip {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.625rem;
-    border: 1px solid var(--mr-border-subtle);
+     padding: var(--mr-space-1) var(--mr-control-padding-inline-sm);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
     color: var(--mr-fg-muted);
-    font-size: 0.75rem;
+     font-size: var(--mr-text-xs);
     white-space: nowrap;
 }
 
 /* Mobile drawer navigation. */
 .app-mobile-nav__eyebrow {
-    font-size: 0.6875rem;
-    font-weight: 650;
+    font-size: var(--mr-text-xs);
+    font-weight: var(--mr-font-weight-semibold);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--mr-fg-muted);
@@ -212,10 +212,10 @@
 .app-mobile-nav__link {
     display: flex;
     align-items: center;
-    padding: 0.5rem 0.625rem;
+     padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
     border-radius: var(--mr-radius-md);
     color: var(--mr-fg-muted);
-    font-size: 0.9375rem;
+    font-size: var(--mr-text-sm);
     text-decoration: none;
 }
 
@@ -233,12 +233,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.25rem;
-    height: 1.25rem;
+    min-inline-size: var(--mr-control-size-sm);
+    block-size: var(--mr-control-size-sm);
     padding-inline: 0.25rem;
-    border: 1px solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
-    font-size: 0.6875rem;
+    font-size: var(--mr-text-xs);
     color: var(--mr-fg-muted);
 }
 
@@ -264,14 +264,14 @@
 
 /* Secondary chrome bar (below shared AppHeader). */
 .app-shell__chrome {
-    border-bottom: 1px solid var(--mr-border-subtle);
+     border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: var(--mr-bg-subtle);
     position: sticky;
-    top: 3.25rem;
+    top: calc(var(--mr-control-size-lg) + var(--mr-space-2));
     z-index: var(--mr-z-elevated);
 }
 
 .app-chrome__inner {
-    min-height: 2.5rem;
-    padding-block: 0.375rem;
+     min-block-size: var(--mr-control-size-md);
+     padding-block: var(--mr-space-1);
 }

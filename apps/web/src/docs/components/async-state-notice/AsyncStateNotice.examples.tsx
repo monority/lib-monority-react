@@ -17,8 +17,8 @@ export function AsyncStateNoticeCustomMessageExample() {
 export function AsyncStateNoticeToggleExample() {
     const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle')
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-5)' }}>
+            <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
                 <Button size="sm" onClick={() => setState('loading')}>
                     Load
                 </Button>

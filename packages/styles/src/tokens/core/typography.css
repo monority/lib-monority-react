@@ -2,18 +2,26 @@
   --mr-font-body: 'Geist Variable', 'Segoe UI', sans-serif;
   --mr-font-display: 'Geist Variable', 'Segoe UI', sans-serif;
   --mr-font-mono: 'JetBrains Mono', 'Geist Mono Variable', Consolas, monospace;
+  --mr-font-weight-regular: 400;
+  --mr-font-weight-medium: 500;
   --mr-font-weight-semibold: 600;
+  --mr-font-weight-bold: 700;
+  --mr-text-3xs: 0.5625rem;
+  --mr-text-2xs: 0.625rem;
   --mr-text-xs: 0.75rem;
   --mr-text-sm: 0.875rem;
   --mr-text-md: 1rem;
   --mr-text-lg: 1.125rem;
   --mr-text-xl: clamp(1.25rem, 1.02rem + 0.95vw, 1.8rem);
-  /* Referenced by title.recipe.css (lg/display); was undefined, so those
-     sizes silently fell back to inherited text. */
   --mr-text-2xl: clamp(1.5rem, 1.34rem + 0.7vw, 2.1rem);
   --mr-text-3xl: clamp(1.9rem, 1.68rem + 1vw, 2.6rem);
   --mr-text-display: clamp(3rem, 2.45rem + 2.6vw, 5.5rem);
   --mr-leading-tight: 1.08;
   --mr-leading-snug: 1.2;
+  --mr-leading-normal: 1.4;
+  --mr-leading-relaxed: 1.6;
   --mr-leading-base: 1.65;
+  --mr-leading-control: var(--mr-leading-normal);
+  --mr-leading-heading: var(--mr-leading-snug);
+  --mr-leading-body: var(--mr-leading-base);
 }

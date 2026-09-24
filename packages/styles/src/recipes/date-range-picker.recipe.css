@@ -1,13 +1,38 @@
 @layer recipes {
   .mr-date-range-picker {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     gap: var(--mr-space-3);
+    min-inline-size: 0;
+  }
+
+  .mr-date-range-picker > .mr-datepicker {
+     flex: 1 1 0;
+    min-inline-size: 0;
   }
   .mr-date-range-picker__separator {
+    flex: 0 0 auto;
     padding-bottom: var(--mr-space-1);
     font-size: var(--mr-text-lg);
     color: var(--mr-fg-muted);
-    line-height: 2.5rem;
+    line-height: var(--mr-control-size-md);
+  }
+
+  @media (max-width: 640px) {
+    .mr-date-range-picker {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .mr-date-range-picker > .mr-datepicker {
+      flex-basis: auto;
+    }
+
+    .mr-date-range-picker__separator {
+      align-self: center;
+      padding-bottom: 0;
+      transform: rotate(90deg);
+    }
   }
 }

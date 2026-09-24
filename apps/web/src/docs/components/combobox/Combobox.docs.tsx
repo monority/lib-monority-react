@@ -11,7 +11,7 @@ const docData: DocPageData = {
     title: 'Combobox',
     description:
         'Autocomplete select with portal dropdown, keyboard navigation, and client-side filtering.',
-    importCode: "import { Combobox } from '@monority/ui'",
+    importCode: "import { Combobox } from '@monority/ui/combobox'",
     usageCode: `const [value, setValue] = useState('')
 const items = [
   { value: 'react', label: 'React' },
@@ -81,9 +81,9 @@ const items = [
     ],
     cssHooks: [
         '.mr-combobox',
-        '.mr-combobox__trigger',
-        '.mr-combobox__menu',
-        '.mr-combobox__option',
+        '.mr-combobox__input',
+        '.mr-combobox__list',
+        '.mr-combobox__item',
         '[data-size]',
         '[data-disabled]',
         '[data-invalid]',
@@ -96,7 +96,7 @@ const items = [
         '--mr-border-subtle',
         '--mr-fg-base',
         '--mr-fg-muted',
-        '--mr-shadow-lg',
+        '--mr-shadow-overlay',
         '--mr-radius-md',
         '--mr-text-sm',
     ],

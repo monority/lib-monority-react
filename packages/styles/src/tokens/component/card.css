@@ -1,4 +1,11 @@
 :root {
-  --mr-card-radius: var(--mr-radius-lg);
-  --mr-card-padding: clamp(var(--mr-space-4), 2vw, var(--mr-space-5));
+  --mr-card-radius: var(--mr-radius-md);
+  --mr-card-padding-sm: var(--mr-surface-padding-sm);
+  --mr-card-padding-md: var(--mr-surface-padding-md);
+  --mr-card-padding-lg: var(--mr-surface-padding-lg);
+  --mr-card-padding: var(--mr-card-padding-md);
+  --mr-card-gap-sm: var(--mr-surface-gap-sm);
+  --mr-card-gap-md: var(--mr-surface-gap-md);
+  --mr-card-gap-lg: var(--mr-surface-gap-lg);
+  --mr-card-gap: var(--mr-card-gap-md);
 }

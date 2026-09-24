@@ -8,8 +8,8 @@
     cursor: pointer;
     font-family: inherit;
     font-size: var(--mr-text-sm);
-    font-weight: 400;
-    line-height: 1.5;
+    font-weight: var(--mr-font-weight-regular);
+    line-height: var(--mr-leading-control);
     text-decoration: none;
     border-radius: var(--mr-btn-radius);
     transition:
@@ -18,38 +18,38 @@
       color var(--mr-dur-150) var(--mr-ease-in-out),
       opacity var(--mr-dur-150) var(--mr-ease-in-out);
     outline: none;
-    padding: var(--mr-space-2) var(--mr-space-3);
+    padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
   }
 
   .mr-btn:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: var(--mr-focus-offset);
   }
 
   .mr-btn:disabled,
   .mr-btn[aria-disabled='true'],
   .mr-btn[data-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: var(--mr-opacity-disabled, 0.5);
   }
 
   .mr-btn--sm,
   .mr-btn[data-size='sm'] {
-    min-height: var(--mr-btn-height-sm);
-    padding: var(--mr-space-1) var(--mr-space-2);
+    min-block-size: var(--mr-btn-height-sm);
+    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
     font-size: var(--mr-text-xs);
   }
 
   .mr-btn--md,
   .mr-btn[data-size='md'] {
-    min-height: var(--mr-btn-height-md);
-    padding: var(--mr-space-2) var(--mr-space-3);
+    min-block-size: var(--mr-btn-height-md);
+    padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
   }
 
   .mr-btn--lg,
   .mr-btn[data-size='lg'] {
-    min-height: var(--mr-btn-height-lg);
-    padding: var(--mr-space-3) var(--mr-space-4);
+    min-block-size: var(--mr-btn-height-lg);
+    padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
     font-size: var(--mr-text-md);
   }
 
@@ -66,7 +66,7 @@
 
   .mr-btn--secondary,
   .mr-btn[data-variant='secondary'] {
-    border: 1px solid var(--mr-border-subtle);
+     border: var(--mr-border-width) solid var(--mr-border-subtle);
     background-color: var(--mr-bg-surface-strong);
     color: var(--mr-fg-strong);
   }
@@ -142,9 +142,17 @@
   }
 
   .mr-btn__icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    inline-size: var(--mr-icon-size);
+    block-size: var(--mr-icon-size);
+    font-size: var(--mr-icon-size);
+  }
+
+  .mr-btn__icon svg {
+    inline-size: 1em;
+    block-size: 1em;
   }
 
   .mr-btn__label {
@@ -156,21 +164,21 @@
   /* Icon-only mode: square controls that reuse the exact button height ladder. */
   .mr-btn--icon-only,
   .mr-btn[data-icon-only='true'] {
-    width: var(--mr-btn-height-md);
-    height: var(--mr-btn-height-md);
+    inline-size: var(--mr-btn-height-md);
+    block-size: var(--mr-btn-height-md);
     padding: 0;
   }
 
   .mr-btn--icon-only.mr-btn--sm,
   .mr-btn[data-icon-only='true'][data-size='sm'] {
-    width: var(--mr-btn-height-sm);
-    height: var(--mr-btn-height-sm);
+    inline-size: var(--mr-btn-height-sm);
+    block-size: var(--mr-btn-height-sm);
   }
 
   .mr-btn--icon-only.mr-btn--lg,
   .mr-btn[data-icon-only='true'][data-size='lg'] {
-    width: var(--mr-btn-height-lg);
-    height: var(--mr-btn-height-lg);
+    inline-size: var(--mr-btn-height-lg);
+    block-size: var(--mr-btn-height-lg);
   }
 
 }

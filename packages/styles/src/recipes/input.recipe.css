@@ -35,24 +35,24 @@
 
   .mr-input--sm,
   .mr-input[data-size='sm'] {
-    padding-inline: 0.75rem;
+    padding-inline: var(--mr-control-padding-inline-sm);
     font-size: var(--mr-text-xs);
   }
 
   .mr-input--md,
   .mr-input[data-size='md'] {
-    /* default, no override needed */
+    padding-inline: var(--mr-control-padding-inline-md);
   }
 
   .mr-input--lg,
   .mr-input[data-size='lg'] {
-    padding-inline: 1.25rem;
+    padding-inline: var(--mr-control-padding-inline-lg);
     font-size: var(--mr-text-md);
   }
 
   .mr-input--disabled,
   .mr-input[data-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+     opacity: var(--mr-opacity-disabled);
   }
 }

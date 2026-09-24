@@ -1,5 +1,7 @@
 @layer recipes {
   .mr-pre-code {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     margin: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -11,7 +13,7 @@
   }
 
   .mr-pre-code::-webkit-scrollbar {
-    height: 0.625rem;
+     height: var(--mr-space-3);
   }
 
   .mr-pre-code::-webkit-scrollbar-track {
@@ -20,7 +22,7 @@
 
   .mr-pre-code::-webkit-scrollbar-thumb {
     background: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent));
-    border: 0.1875rem solid transparent;
+     border: var(--mr-space-1) solid transparent;
     border-radius: var(--mr-radius-full);
     background-clip: padding-box;
   }
@@ -30,9 +32,10 @@
     min-width: max-content;
     color: inherit;
     font-family: inherit;
-    line-height: 1.7;
-    white-space: pre;
-    tab-size: 2;
+    line-height: var(--mr-leading-relaxed);
+     white-space: pre;
+     overflow-wrap: normal;
+     tab-size: 2;
   }
 
   .mr-pre-code--sm {
@@ -50,6 +53,7 @@
   .mr-pre-code--wrap {
     overflow-x: hidden;
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
     word-break: break-word;
   }
 

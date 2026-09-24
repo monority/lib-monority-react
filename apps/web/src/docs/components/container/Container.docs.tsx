@@ -19,7 +19,7 @@ const docData: DocPageData = {
         },
     ],
     cssHooks: ['.mr-container'],
-    tokens: ['--mr-container-max-width', '--mr-space-*'],
+    tokens: ['--mr-container-sm', '--mr-container-md', '--mr-container-lg', '--mr-page-max-width', '--mr-space-*'],
     a11y: ['Structural layout component.', 'No interactive semantics by default.'],
 }
 

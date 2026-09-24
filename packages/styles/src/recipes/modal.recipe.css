@@ -1,91 +1,91 @@
 @layer recipes {
-    @keyframes mr-modal-backdrop-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+  @keyframes mr-modal-backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-    @keyframes mr-modal-panel-in {
-        from {
-            opacity: 0;
-            transform: translateY(0.5rem) scale(0.985);
-        }
-        to {
-            opacity: 1;
-            transform: none;
-        }
+  @keyframes mr-modal-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--mr-space-3)) scale(0.985);
     }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 
+  .mr-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--mr-z-modal);
+    display: grid;
+    place-items: center;
+    padding: var(--mr-overlay-gutter);
+  }
+
+  .mr-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
+    animation: mr-modal-backdrop-in var(--mr-duration-base) var(--mr-ease-out);
+  }
+
+  .mr-modal__panel {
+    position: relative;
+    inline-size: var(--mr-modal-width);
+    max-block-size: min(42rem, calc(100vh - 2 * var(--mr-overlay-gutter)));
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: var(--mr-modal-padding);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border-radius: var(--mr-modal-radius);
+    background: var(--mr-bg-surface-elevated);
+    box-shadow: var(--mr-elevation-overlay);
+    animation: mr-modal-panel-in var(--mr-duration-base) var(--mr-ease-out);
+  }
+
+  .mr-modal__title {
+    color: var(--mr-fg-strong);
+    font-weight: var(--mr-font-weight-semibold);
+    letter-spacing: 0;
+  }
+
+  .mr-modal__heading {
+    min-inline-size: 0;
+  }
+
+  .mr-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--mr-space-3);
+    padding-block-end: var(--mr-space-4);
+    border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
+  }
+
+  .mr-modal__close {
+    flex: 0 0 auto;
+  }
+
+  .mr-modal__body {
+    min-block-size: 0;
+    padding-block-start: var(--mr-space-4);
+    overflow: auto;
+  }
+
+  @media (max-width: 768px) {
     .mr-modal {
-        position: fixed;
-        inset: 0;
-        z-index: var(--mr-z-modal);
-        display: grid;
-        place-items: center;
-        padding: var(--mr-space-4);
-    }
-
-    .mr-modal__backdrop {
-        position: absolute;
-        inset: 0;
-        background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
-        animation: mr-modal-backdrop-in var(--mr-dur-200) var(--mr-ease-out);
+      align-items: end;
+      padding: var(--mr-space-3);
     }
 
     .mr-modal__panel {
-        position: relative;
-        width: var(--mr-modal-width);
-        max-height: min(42rem, calc(100vh - 2rem));
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
-        padding: var(--mr-modal-padding);
-        border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-modal-radius);
-        background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-md);
-        animation: mr-modal-panel-in var(--mr-dur-200) var(--mr-ease-out);
+      inline-size: 100%;
+      max-block-size: min(80vh, 42rem);
+      padding: var(--mr-surface-padding-md);
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
     }
-
-    .mr-modal__title {
-        color: var(--mr-fg-strong);
-        font-weight: var(--mr-font-weight-semibold);
-        letter-spacing: 0;
-    }
-
-    .mr-modal__heading {
-        min-width: 0;
-    }
-
-    .mr-modal__header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: var(--mr-space-3);
-        padding-bottom: var(--mr-space-4);
-        border-bottom: 1px solid var(--mr-border-subtle);
-    }
-
-    .mr-modal__close {
-        flex: 0 0 auto;
-    }
-
-    .mr-modal__body {
-        min-height: 0;
-        padding-top: var(--mr-space-4);
-        overflow: auto;
-    }
-
-    @media (max-width: 720px) {
-        .mr-modal {
-            padding: var(--mr-space-3);
-            align-items: end;
-        }
-
-        .mr-modal__panel {
-            width: 100%;
-            max-height: min(80vh, 42rem);
-            padding: var(--mr-space-4);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-    }
+  }
 }

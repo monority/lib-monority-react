@@ -49,11 +49,19 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const cooldownRef = useRef(false)
+  const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const hasItems = useRef(false)
 
   useEffect(() => {
-    if (children) hasItems.current = true
+    if (children) {
+      hasItems.current = true
+      setIsLoading(false)
+    }
   }, [children])
+
+  useEffect(() => () => {
+    if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current)
+  }, [])
 
   const handleIntersect = useCallback(() => {
     if (cooldownRef.current || !hasMore || disabled) return
@@ -62,7 +70,10 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
     cooldownRef.current = true
 
     // Always release cooldown (default 200ms debounce prevents rapid re-triggers)
-    setTimeout(() => { cooldownRef.current = false }, cooldown > 0 ? cooldown : 200)
+    cooldownTimerRef.current = setTimeout(() => {
+      cooldownRef.current = false
+      cooldownTimerRef.current = null
+    }, cooldown > 0 ? cooldown : 200)
 
     onLoadMore?.()
   }, [hasMore, disabled, cooldown, onLoadMore])
@@ -90,7 +101,9 @@ export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(fu
   )
 
   const loaderElement = isLoading && !error ? (
-    <div className='mr-infinite-scroll__loader'>{loader || 'Loading...'}</div>
+    <div className='mr-infinite-scroll__loader' role='status' aria-live='polite'>
+      {loader || 'Loading...'}
+    </div>
   ) : null
 
   const endElement = !hasMore && !error ? (

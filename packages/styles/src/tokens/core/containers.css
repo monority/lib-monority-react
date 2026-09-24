@@ -7,4 +7,7 @@
   --mr-control-size-sm: 2rem;
   --mr-control-size-md: 2.5rem;
   --mr-control-size-lg: 3rem;
+  --mr-control-icon-size-sm: var(--mr-icon-size-sm);
+  --mr-control-icon-size-md: var(--mr-icon-size-md);
+  --mr-control-icon-size-lg: var(--mr-icon-size-lg);
 }

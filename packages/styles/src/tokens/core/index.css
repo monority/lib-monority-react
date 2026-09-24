@@ -11,4 +11,5 @@
 @import './easings.css';
 @import './breakpoints.css';
 @import './containers.css';
+@import './geometry.css';
 @import './aspect-ratios.css';

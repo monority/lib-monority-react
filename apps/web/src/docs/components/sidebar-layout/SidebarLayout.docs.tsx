@@ -42,7 +42,6 @@ const docData: DocPageData = {
     ],
     tokens: [
         '--mr-sidebar-width',
-        '--mr-sidebar-collapsed-width',
         '--mr-bg-surface',
         '--mr-border-subtle',
         '--mr-space-*',

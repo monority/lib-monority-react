@@ -50,6 +50,8 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
     <Field
       className={className}
       label={label}
+      labelId={ctx.inputId ? `${ctx.inputId}-label` : undefined}
+      htmlFor={items[0] ? `${ctx.inputId}-${items[0].value}` : undefined}
       hint={hint}
       error={error}
     >
@@ -63,6 +65,8 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
         role="radiogroup"
         aria-invalid={isInvalid || undefined}
         aria-describedby={ctx.describedBy}
+        aria-labelledby={label != null && ctx.inputId ? `${ctx.inputId}-label` : undefined}
+        aria-disabled={ctx.isDisabled || undefined}
         data-tone={resolvedTone}
         data-disabled={ctx.isDisabled ? true : undefined}
         data-invalid={isInvalid ? true : undefined}
@@ -102,7 +106,7 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
               </span>
               <span className="mr-radio__body">
                 <span className="mr-radio__label">{item.label}</span>
-                {item.description ? <span className="mr-radio__description">{item.description}</span> : null}
+                {item.description != null ? <span className="mr-radio__description">{item.description}</span> : null}
               </span>
             </label>
           )
@@ -115,8 +119,8 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(props, ref) {
   const { id, hint, error, disabled, required, invalid, ...rest } = props
   return (
-    <FormControl id={id} hint={!!hint} error={!!error} disabled={disabled} required={required} invalid={invalid}>
-      <RadioGroupInner ref={ref} {...rest} />
+    <FormControl id={id} hint={hint != null} error={error != null} disabled={disabled} required={required} invalid={invalid}>
+      <RadioGroupInner ref={ref} {...rest} hint={hint} error={error} />
     </FormControl>
   )
 })

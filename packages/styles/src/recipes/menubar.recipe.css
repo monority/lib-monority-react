@@ -6,7 +6,7 @@
         max-width: 100%;
         min-width: 0;
         padding: var(--mr-space-1);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         color: var(--mr-fg-base);
@@ -28,8 +28,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 2.125rem;
-        padding: 0 var(--mr-space-3);
+         min-block-size: var(--mr-control-size-sm);
+         padding: 0 var(--mr-control-padding-inline-md);
         border: 0;
         border-radius: var(--mr-radius-sm);
         background: transparent;
@@ -49,12 +49,12 @@
     .mr-menubar__menu-wrapper[data-active="true"] .mr-menubar__trigger {
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
         color: var(--mr-fg-strong);
-        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
+         box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
     }
 
     .mr-menubar__trigger:focus-visible {
-        outline: 2px solid var(--mr-accent);
-        outline-offset: 2px;
+         outline: var(--mr-focus-width) solid var(--mr-accent);
+         outline-offset: var(--mr-focus-offset);
     }
 
     .mr-menubar__trigger:disabled {
@@ -66,11 +66,11 @@
         position: absolute;
         inset-block-start: calc(100% + var(--mr-space-1));
         inset-inline-start: 0;
-        z-index: var(--mr-z-dropdown, 50);
-        min-width: 14.5rem;
-        max-width: min(22rem, calc(100vw - 2rem));
+         z-index: var(--mr-z-dropdown);
+         min-inline-size: var(--mr-overlay-width-menu);
+         max-inline-size: min(var(--mr-overlay-width-popover), calc(100vw - 2 * var(--mr-overlay-gutter)));
         padding: var(--mr-space-1);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
         color: var(--mr-fg-base);
@@ -95,7 +95,7 @@
         align-items: center;
         gap: var(--mr-space-2);
         width: 100%;
-        min-height: 2.25rem;
+         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-space-2);
         border: 0;
         border-radius: var(--mr-radius-sm);
@@ -104,7 +104,7 @@
         cursor: pointer;
         font-family: inherit;
         font-size: var(--mr-text-sm);
-        line-height: 1.35;
+        line-height: var(--mr-leading-snug);
         text-align: start;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
             var(--mr-duration-fast) var(--mr-ease-standard);
@@ -116,8 +116,8 @@
     }
 
     .mr-menubar__item:focus-visible {
-        outline: 2px solid var(--mr-accent);
-        outline-offset: -2px;
+         outline: var(--mr-focus-width) solid var(--mr-accent);
+         outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
     .mr-menubar__item--danger {
@@ -137,12 +137,12 @@
 
     .mr-menubar__item-icon {
         display: inline-flex;
-        width: 1rem;
-        min-width: 1rem;
+         inline-size: var(--mr-icon-size-sm);
+         min-inline-size: var(--mr-icon-size-sm);
         align-items: center;
         justify-content: center;
         color: var(--mr-fg-muted);
-        font-size: 0.8125rem;
+         font-size: var(--mr-icon-size-sm);
         font-weight: var(--mr-font-weight-semibold);
     }
 

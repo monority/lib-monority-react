@@ -5,10 +5,10 @@
         --mr-collapsible-content-padding-block: var(--mr-space-3) var(--mr-space-4);
         --mr-collapsible-content-padding-inline: var(--mr-space-4);
 
-        border: 1px solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
+        box-shadow: var(--mr-elevation-surface);
         overflow: hidden;
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
             var(--mr-duration-fast) var(--mr-ease-standard);
@@ -24,7 +24,7 @@
         justify-content: space-between;
         gap: var(--mr-space-3);
         width: 100%;
-        min-height: 3rem;
+        min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-collapsible-trigger-padding-block)
             var(--mr-collapsible-trigger-padding-inline);
         background: transparent;
@@ -45,15 +45,15 @@
 
     .mr-collapsible__trigger:focus-visible {
         background: var(--mr-bg-surface-strong);
-        outline: 2px solid var(--mr-accent);
-        outline-offset: -2px;
+        outline: var(--mr-focus-width) solid var(--mr-accent);
+        outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
     .mr-collapsible__label {
         flex: 1 1 auto;
         min-width: 0;
         overflow-wrap: anywhere;
-        line-height: 1.35;
+        line-height: var(--mr-leading-snug);
         text-wrap: pretty;
     }
 
@@ -65,7 +65,7 @@
         height: 1.75rem;
         flex: 0 0 auto;
         border-radius: var(--mr-radius-full);
-        border: 1px solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         background: var(--mr-bg-control);
         color: var(--mr-fg-muted);
         transition: transform var(--mr-duration-fast) var(--mr-ease-standard), background-color
@@ -111,10 +111,10 @@
         overflow: hidden;
         padding: var(--mr-collapsible-content-padding-block)
             var(--mr-collapsible-content-padding-inline);
-        border-top: 1px solid var(--mr-border-subtle);
+        border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
         color: var(--mr-fg-base);
         font-size: var(--mr-text-sm);
-        line-height: 1.6;
+        line-height: var(--mr-leading-relaxed);
         text-wrap: pretty;
     }
 
@@ -135,7 +135,7 @@
     }
 
     .mr-collapsible--sm .mr-collapsible__trigger {
-        min-height: 2.5rem;
+        min-block-size: var(--mr-control-size-md);
         font-size: var(--mr-text-xs);
     }
 
@@ -156,7 +156,7 @@
     }
 
     .mr-collapsible--lg .mr-collapsible__trigger {
-        min-height: 3.5rem;
+        min-block-size: var(--mr-control-size-lg);
         font-size: var(--mr-text-md);
     }
 

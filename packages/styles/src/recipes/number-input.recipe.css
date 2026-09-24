@@ -3,63 +3,40 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: var(--mr-input-width);
+    inline-size: var(--mr-input-width);
   }
 
   .mr-number-input {
-    width: 100%;
-    min-height: var(--mr-input-height);
-    padding-block: 0.5rem;
-    padding-inline: 1rem;
-    padding-right: 2.75rem;
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-input-radius);
-    background: var(--mr-bg-control);
-    color: var(--mr-fg-base);
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    line-height: 1.5;
-    box-shadow: var(--mr-shadow-xs);
-    transition:
-      border-color var(--mr-duration-fast) var(--mr-ease-standard),
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
-  }
-
-  .mr-number-input::placeholder {
-    color: var(--mr-fg-muted);
-  }
-
-  .mr-number-input:hover,
-  .mr-number-input:focus-visible {
-    border-color: var(--mr-border-strong);
+    inline-size: 100%;
+    padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-sm));
   }
 
   .mr-number-input__actions {
     position: absolute;
-    right: 1px;
-    top: 1px;
-    bottom: 1px;
+    inset-block: var(--mr-border-width);
+    inset-inline-end: var(--mr-border-width);
+    inline-size: var(--mr-control-size-sm);
     display: flex;
     flex-direction: column;
-    border-radius: 0 var(--mr-input-radius) var(--mr-input-radius) 0;
     overflow: hidden;
+    border-start-end-radius: var(--mr-input-radius);
+    border-end-end-radius: var(--mr-input-radius);
   }
 
   .mr-number-input__btn {
-    flex: 1;
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
-    width: 2rem;
+    inline-size: 100%;
     padding: 0;
-    border: none;
+    border: 0;
     background: transparent;
     color: var(--mr-fg-muted);
     cursor: pointer;
     font-size: var(--mr-text-xs);
     transition:
-      background var(--mr-duration-fast) var(--mr-ease-standard),
+      background-color var(--mr-duration-fast) var(--mr-ease-standard),
       color var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
@@ -69,46 +46,52 @@
   }
 
   .mr-number-input__btn:disabled {
-    opacity: 0.4;
     cursor: not-allowed;
+    opacity: var(--mr-opacity-disabled, 0.4);
   }
 
   .mr-number-input__btn:focus-visible {
     z-index: 1;
-    outline: 2px solid var(--mr-accent);
-    outline-offset: -2px;
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: calc(-1 * var(--mr-focus-width));
   }
 
   .mr-number-input__btn + .mr-number-input__btn {
-    border-top: 1px solid var(--mr-border-subtle);
+    border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
   }
 
-  .mr-number-input--sm,
+  .mr-number-input[data-size='md'] {
+    padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-md));
+  }
+
   .mr-number-input[data-size='sm'] {
-    min-height: var(--mr-control-size-sm);
-    font-size: var(--mr-text-xs);
-    padding-block: 0.375rem;
-    padding-inline: 0.75rem;
-    padding-right: 2.25rem;
+    padding-inline-end: calc(var(--mr-control-padding-inline-sm) + var(--mr-control-size-sm));
   }
 
-  .mr-number-input--lg,
   .mr-number-input[data-size='lg'] {
-    min-height: var(--mr-control-size-lg);
-    font-size: var(--mr-text-md);
-    padding-block: 0.625rem;
-    padding-inline: 1.25rem;
-    padding-right: 3rem;
+    padding-inline-end: calc(var(--mr-control-padding-inline-lg) + var(--mr-control-size-lg));
+  }
+
+  .mr-number-input[data-size='sm'] ~ .mr-number-input__actions {
+    inline-size: var(--mr-control-size-sm);
+  }
+
+  .mr-number-input[data-size='md'] ~ .mr-number-input__actions {
+    inline-size: var(--mr-control-size-md);
+  }
+
+  .mr-number-input[data-size='lg'] ~ .mr-number-input__actions {
+    inline-size: var(--mr-control-size-lg);
   }
 
   .mr-number-input--disabled,
   .mr-number-input[data-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: var(--mr-opacity-disabled, 0.5);
   }
 
   .mr-number-input[data-disabled='true'] ~ .mr-number-input__actions {
-    opacity: 0.5;
+    opacity: var(--mr-opacity-disabled, 0.5);
   }
 
   .mr-number-input--error,

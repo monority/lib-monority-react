@@ -7,7 +7,7 @@
     cursor: pointer;
     font-family: inherit;
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
     color: var(--mr-fg-base);
     user-select: none;
   }
@@ -34,7 +34,7 @@
     flex-shrink: 0;
     width: var(--mr-checkbox-size);
     height: var(--mr-checkbox-size);
-    border: 1px solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-xs);
     background: var(--mr-bg-control);
     transition:
@@ -70,13 +70,13 @@
   /* === Label === */
   .mr-checkbox__label {
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 
   /* === Focus === */
   .mr-checkbox__input:focus-visible + .mr-checkbox__control {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: var(--mr-focus-offset);
   }
 
   /* === Checked === */
@@ -95,14 +95,14 @@
   .mr-checkbox--disabled,
   .mr-checkbox[data-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+     opacity: var(--mr-opacity-disabled);
   }
 
   /* === Invalid === */
   .mr-checkbox--invalid .mr-checkbox__control,
   .mr-checkbox[data-invalid='true'] .mr-checkbox__control {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 1px var(--mr-danger);
+     box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
   }
 
   /* === Tone: accent (default) === */

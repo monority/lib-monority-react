@@ -9,23 +9,9 @@
 
   /* ─── Trigger input ───────────────────────────────────────── */
   .mr-datepicker__trigger {
-    width: 100%;
-    min-height: var(--mr-input-height);
-    padding-inline: 1rem;
-    padding-right: 2.5rem;
-    border: 1px solid var(--mr-border-subtle);
-    border-radius: var(--mr-input-radius);
-    background: var(--mr-bg-control);
-    color: var(--mr-fg-base);
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    line-height: 1.5;
-    box-shadow: var(--mr-shadow-xs);
+     inline-size: 100%;
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-icon-size-lg) + var(--mr-space-1));
     cursor: pointer;
-    transition:
-      border-color var(--mr-duration-fast) var(--mr-ease-standard),
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
   }
 
   .mr-datepicker__trigger::placeholder {
@@ -46,31 +32,24 @@
     border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
   }
 
-  .mr-datepicker__trigger--disabled,
-  .mr-datepicker[data-disabled='true'] .mr-datepicker__trigger {
-    cursor: not-allowed;
-    opacity: 0.5;
+     .mr-datepicker__trigger--disabled,
+     .mr-datepicker[data-disabled='true'] .mr-datepicker__trigger {
+     cursor: not-allowed;
+     opacity: var(--mr-opacity-disabled);
   }
 
-  /* Size variants. The trigger carries data-size='md' from InputBase, so its
-     [data-size='md'] min-height rule wins over --mr-input-height; set the height
-     explicitly to keep the control ladder (32/40/48). */
+  .mr-datepicker[data-size='md'] .mr-datepicker__trigger {
+    min-block-size: var(--mr-control-size-md);
+  }
+
   .mr-datepicker[data-size='sm'] .mr-datepicker__trigger {
-    --mr-input-height: var(--mr-control-size-sm);
-    min-height: var(--mr-control-size-sm);
-    padding-block: 0.375rem;
-    padding-inline: 0.75rem;
-    padding-right: 2.25rem;
-    font-size: var(--mr-text-xs);
+     min-block-size: var(--mr-control-size-sm);
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-sm) + var(--mr-icon-size-md) + var(--mr-space-1));
   }
 
   .mr-datepicker[data-size='lg'] .mr-datepicker__trigger {
-    --mr-input-height: var(--mr-control-size-lg);
-    min-height: var(--mr-control-size-lg);
-    padding-block: 0.625rem;
-    padding-inline: 1.25rem;
-    padding-right: 3rem;
-    font-size: var(--mr-text-md);
+     min-block-size: var(--mr-control-size-lg);
+     --mr-input-padding-inline-end: calc(var(--mr-control-padding-inline-lg) + var(--mr-icon-size-lg) + var(--mr-space-1));
   }
 
   /* Tone variants */
@@ -94,29 +73,29 @@
   /* ─── Calendar icon ───────────────────────────────────────── */
   .mr-datepicker__icon {
     position: absolute;
-    right: 0.75rem;
+     right: var(--mr-control-padding-inline-md);
     top: 50%;
     transform: translateY(-50%);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
+    inline-size: var(--mr-icon-size-md);
+    block-size: var(--mr-icon-size-md);
     color: var(--mr-fg-muted);
     opacity: 0.6;
     pointer-events: none;
   }
 
   .mr-datepicker[data-size='sm'] .mr-datepicker__icon {
-    right: 0.5rem;
-    width: 1rem;
-    height: 1rem;
+     right: var(--mr-control-padding-inline-sm);
+    inline-size: var(--mr-icon-size-sm);
+    block-size: var(--mr-icon-size-sm);
   }
 
   .mr-datepicker[data-size='lg'] .mr-datepicker__icon {
-    right: 1rem;
-    width: 1.5rem;
-    height: 1.5rem;
+     right: var(--mr-control-padding-inline-lg);
+    inline-size: var(--mr-icon-size-lg);
+    block-size: var(--mr-icon-size-lg);
   }
 
   .mr-datepicker[data-disabled='true'] .mr-datepicker__icon {
@@ -127,10 +106,10 @@
   .mr-datepicker__popover {
     z-index: var(--mr-z-overlay);
     padding: var(--mr-space-3);
-    border: 1px solid var(--mr-border-subtle);
+     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
-    box-shadow: var(--mr-shadow-md);
+     box-shadow: var(--mr-elevation-overlay);
     /* Entrance settles the popup under the input; positioning is inline top/left. */
     animation: mr-datepicker-popover-in var(--mr-duration-fast) var(--mr-ease-standard);
   }
@@ -138,7 +117,7 @@
   @keyframes mr-datepicker-popover-in {
     from {
       opacity: 0;
-      transform: translateY(-0.25rem);
+      transform: translateY(calc(-1 * var(--mr-overlay-offset)));
     }
     to {
       opacity: 1;
@@ -164,8 +143,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    inline-size: var(--mr-control-size-sm);
+    block-size: var(--mr-control-size-sm);
     border: none;
     background: transparent;
     border-radius: var(--mr-radius-sm);
@@ -180,8 +159,8 @@
   }
 
   .mr-datepicker__nav-btn:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
+     outline: var(--mr-focus-width) solid var(--mr-accent);
+     outline-offset: var(--mr-focus-offset);
   }
 
   /* ─── Day names header ────────────────────────────────────── */
@@ -194,7 +173,7 @@
   .mr-datepicker__day-name {
     text-align: center;
     font-size: var(--mr-text-xs);
-    font-weight: 500;
+    font-weight: var(--mr-font-weight-medium);
     color: var(--mr-fg-muted);
     padding: var(--mr-space-1) 0;
   }
@@ -203,7 +182,7 @@
   .mr-datepicker__grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+     gap: var(--mr-space-1);
   }
 
   /* ─── Day cell ────────────────────────────────────────────── */
@@ -228,8 +207,8 @@
   }
 
   .mr-datepicker__day:focus-visible {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: -2px;
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: calc(-1 * var(--mr-focus-width));
   }
 
   /* Today */

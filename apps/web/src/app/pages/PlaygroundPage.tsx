@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Select } from '@monority/ui/select'
 import { Link, useSearchParams } from 'react-router-dom'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { getPlaygroundDefinition, playgroundRegistry } from './playground/playground-registry'
@@ -68,12 +69,9 @@ export function PlaygroundPage() {
             </header>
 
             <div className="pg-selector">
-                <label className="pg-control__label" htmlFor="pg-component">
-                    Component
-                </label>
-                <select
+                <Select
                     id="pg-component"
-                    className="pg-selector__select"
+                    label="Component"
                     value={slug}
                     onChange={(event) => handleSelect(event.target.value)}
                 >
@@ -82,7 +80,7 @@ export function PlaygroundPage() {
                             {item.label}
                         </option>
                     ))}
-                </select>
+                </Select>
             </div>
 
             <div className="pg-grid">

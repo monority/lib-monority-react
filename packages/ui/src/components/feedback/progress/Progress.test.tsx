@@ -66,6 +66,11 @@ describe('Progress', () => {
     expect(ref.current?.className).toContain('mr-progress')
   })
 
+  it('preserves zero-valued label content', () => {
+    const view = render(<Progress label={0} />)
+    expect(view.querySelector('.mr-progress__label')?.textContent).toBe('0')
+  })
+
   it('renders label', () => {
     const view = render(<Progress label="Uploading" />)
     expect(view.querySelector('.mr-progress__label')?.textContent).toBe('Uploading')

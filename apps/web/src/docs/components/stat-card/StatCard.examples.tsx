@@ -18,7 +18,7 @@ export function StatCardTonesExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: '1rem',
+                 gap: 'var(--mr-space-5)',
             }}
         >
             <StatCard
@@ -64,7 +64,7 @@ export function StatCardWithFooterExample() {
             value="46"
             description="Pull requests waiting for owner approval."
             footer={
-                <span style={{ fontSize: '0.75rem', color: 'var(--mr-fg-muted)' }}>
+                <span style={{ fontSize: 'var(--mr-text-xs)', color: 'var(--mr-fg-muted)' }}>
                     Updated 5 minutes ago
                 </span>
             }
@@ -78,7 +78,7 @@ export function StatCardLongTextExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: '1rem',
+                 gap: 'var(--mr-space-5)',
             }}
         >
             <StatCard

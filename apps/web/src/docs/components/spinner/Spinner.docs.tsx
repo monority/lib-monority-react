@@ -35,7 +35,7 @@ const docData: DocPageData = {
         },
     ],
     cssHooks: ['.mr-spinner', '.mr-spinner__ring', '[data-size]', '[data-tone]'],
-    tokens: ['--mr-accent', '--mr-fg-muted', '--mr-bg-base'],
+    tokens: ['--mr-accent', '--mr-fg-muted', '--mr-dur-600', '--mr-ease-linear'],
     a11y: [
         'The component exposes role="status" with an accessible loading label.',
         'Add visible text nearby when the operation needs extra context.',

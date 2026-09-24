@@ -98,6 +98,18 @@ const docData: DocPageData = {
             defaultValue: "'md'",
             description: 'Control size.',
         },
+        {
+            name: 'files',
+            type: `File[]`,
+            defaultValue: '-',
+            description: 'Controlled selected files.',
+        },
+        {
+            name: 'onFilesChange',
+            type: `(files: File[]) => void`,
+            defaultValue: '-',
+            description: 'Called when selected files change.',
+        },
     ],
     cssHooks: [
         '.mr-file-upload__dropzone',
@@ -131,9 +143,9 @@ const docData: DocPageData = {
         '--mr-radius-sm',
         '--mr-radius-md',
         '--mr-text-sm',
-        '--mr-spacing-1',
-        '--mr-spacing-2',
-        '--mr-spacing-3',
+        '--mr-space-1',
+        '--mr-space-2',
+        '--mr-space-3',
     ],
     a11y: [
         'Native form element semantics via FileTrigger.',
@@ -272,7 +284,7 @@ const dropZoneDoc: DocPageData = {
     tokens: [
         '--mr-border-subtle',
         '--mr-border-strong',
-        '--mr-bg-surface-soft',
+        '--mr-bg-surface',
         '--mr-bg-control',
         '--mr-fg-accent',
         '--mr-bg-accent-soft',
@@ -344,13 +356,13 @@ const fileListDoc: DocPageData = {
     tokens: [
         '--mr-bg-surface-strong',
         '--mr-bg-control',
-        '--mr-fg-default',
+        '--mr-fg-base',
         '--mr-fg-muted',
         '--mr-radius-sm',
         '--mr-text-sm',
         '--mr-text-xs',
-        '--mr-spacing-2',
-        '--mr-spacing-3',
+        '--mr-space-2',
+        '--mr-space-3',
     ],
     a11y: [
         'role="list" with aria-label="Selected files".',

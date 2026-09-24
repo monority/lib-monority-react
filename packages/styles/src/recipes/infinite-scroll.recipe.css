@@ -16,21 +16,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+     gap: var(--mr-surface-gap-sm);
     padding: var(--mr-space-4);
     color: var(--mr-fg-muted);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
   }
 
   .mr-infinite-scroll__loader::before {
     content: "";
     display: inline-block;
-    width: 1rem;
-    height: 1rem;
+     width: var(--mr-icon-size-md);
+     height: var(--mr-icon-size-md);
     border-radius: var(--mr-radius-full);
-    border: 2px solid currentColor;
+     border: var(--mr-border-width) solid currentColor;
     border-top-color: transparent;
-    animation: mr-infinite-spin 0.6s linear infinite;
+    animation: mr-infinite-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
   }
 
   .mr-infinite-scroll__end {
@@ -39,7 +39,7 @@
     justify-content: center;
     padding: var(--mr-space-4);
     color: var(--mr-fg-muted);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
   }
 
   .mr-infinite-scroll__error {
@@ -49,7 +49,7 @@
     gap: var(--mr-space-2);
     padding: var(--mr-space-4);
     color: var(--mr-danger);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
   }
 
   .mr-infinite-scroll__empty {
@@ -58,13 +58,13 @@
     justify-content: center;
     padding: var(--mr-space-4);
     color: var(--mr-fg-muted);
-    font-size: 0.875rem;
+     font-size: var(--mr-text-sm);
   }
 
   .mr-infinite-scroll__retry {
     padding: var(--mr-space-2) var(--mr-space-3);
     min-height: var(--mr-control-size-sm);
-    border: 1px solid currentColor;
+     border: var(--mr-border-width) solid currentColor;
     border-radius: var(--mr-radius-sm);
     background: transparent;
     cursor: pointer;
@@ -76,6 +76,13 @@
 
   .mr-infinite-scroll__retry:hover {
     background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mr-infinite-scroll__loader::before {
+      animation: none;
+      border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+    }
   }
 
   @keyframes mr-infinite-spin {

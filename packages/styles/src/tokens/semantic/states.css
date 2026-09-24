@@ -2,5 +2,5 @@
   --mr-state-hover: rgba(17, 24, 39, 0.06);
   --mr-state-active: rgba(17, 24, 39, 0.12);
   --mr-state-disabled: 0.5;
-  --mr-state-focus-ring: 0 0 0 4px rgba(15, 23, 42, 0.08);
+  --mr-state-focus-ring: var(--mr-shadow-focus);
 }

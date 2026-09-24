@@ -3,17 +3,17 @@
     display: flex;
     flex-direction: column;
     gap: var(--mr-space-2);
-    --mr-radio-size: 1.125rem;
+     --mr-radio-size: var(--mr-control-icon-size-lg);
   }
 
   .mr-radio {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: var(--mr-space-2);
+     display: inline-flex;
+     align-items: center;
+     gap: var(--mr-space-2);
     cursor: pointer;
     font-family: inherit;
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
     color: var(--mr-fg-base);
     user-select: none;
   }
@@ -38,10 +38,7 @@
     flex-shrink: 0;
     width: var(--mr-radio-size);
     height: var(--mr-radio-size);
-    /* Optical centering on the first label line: half the gap between the
-       1.5 label line-height and the 18px control. Keeps multiline intact. */
-    margin-top: calc((1em * 1.5 - var(--mr-radio-size)) / 2);
-    border: 1px solid var(--mr-border-subtle);
+     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-full);
     background: var(--mr-bg-control);
     transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), border-color var(--mr-duration-fast) var(--mr-ease-standard), box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
@@ -65,18 +62,18 @@
 
   .mr-radio__label {
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 
   .mr-radio__description {
     font-size: var(--mr-text-xs);
-    line-height: 1.4;
+    line-height: var(--mr-leading-normal);
     color: var(--mr-fg-muted);
   }
 
   .mr-radio__input:focus-visible+.mr-radio__control {
-    outline: 2px solid var(--mr-accent);
-    outline-offset: 2px;
+    outline: var(--mr-focus-width) solid var(--mr-accent);
+    outline-offset: var(--mr-focus-offset);
   }
 
   .mr-radio--checked .mr-radio__control,
@@ -92,7 +89,12 @@
 
   .mr-radio-group--disabled,
   .mr-radio-group[data-disabled='true'] {
-    opacity: 0.5;
+      opacity: var(--mr-opacity-disabled);
+  }
+
+  .mr-radio-group--disabled .mr-radio,
+  .mr-radio-group[data-disabled='true'] .mr-radio {
+    opacity: 1;
   }
 
   .mr-radio-group--disabled .mr-radio,
@@ -103,13 +105,13 @@
   .mr-radio--disabled,
   .mr-radio[data-disabled='true'] {
     cursor: not-allowed;
-    opacity: 0.5;
+     opacity: var(--mr-opacity-disabled);
   }
 
   .mr-radio-group--invalid .mr-radio__control,
   .mr-radio-group[data-invalid='true'] .mr-radio__control {
     border-color: var(--mr-danger);
-    box-shadow: 0 0 0 1px var(--mr-danger);
+     box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
   }
 
   .mr-radio-group--neutral .mr-radio__control,

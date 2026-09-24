@@ -14,6 +14,9 @@ import type { CheckboxProps } from '@monority/ui/checkbox'
 import type { SwitchProps } from '@monority/ui/switch'
 import type { RadioGroupProps } from '@monority/ui/radio-group'
 import type { SelectProps } from '@monority/ui/select'
+import type { DatePickerProps } from '@monority/ui/date-picker'
+import type { FieldProps } from '@monority/ui/field'
+import type { FileUploadProps } from '@monority/ui/file-upload'
 import type { TextareaProps } from '@monority/ui/textarea'
 import type { ProgressProps } from '@monority/ui/progress'
 import type { AvatarProps } from '@monority/ui/avatar'
@@ -69,6 +72,21 @@ describe('Type smoke · public types remain importable and well-shaped', () => {
     it('RadioGroupProps has items/value/onChange', () => {
         const _p: RadioGroupProps = { items: [{ value: 'a', label: 'A' }], onChange: () => {} }
         expect(_p.items!.length).toBe(1)
+    })
+
+    it('DatePickerProps accepts null for controlled clearing', () => {
+        const _p: DatePickerProps = { value: null, onChange: () => {} }
+        expect(_p.value).toBeNull()
+    })
+
+    it('FieldProps accepts a label ID', () => {
+        const _p: FieldProps = { label: 'Choice', labelId: 'choice-label' }
+        expect(_p.labelId).toBe('choice-label')
+    })
+
+    it('FileUploadProps accepts controlled files and change callback', () => {
+        const _p: FileUploadProps = { files: [], onFilesChange: () => {} }
+        expect(Array.isArray(_p.files)).toBe(true)
     })
 
     it('SelectProps has label', () => {

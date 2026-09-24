@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useRef, use
 import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
+import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
 import { cva } from '@/lib/variants'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { HoverCardAlign, HoverCardProps, HoverCardSide } from './HoverCard.types'
@@ -32,8 +33,8 @@ interface FloatingPosition {
   arrowTop?: number
 }
 
-const VIEWPORT_PADDING = 12
-const ARROW_PADDING = 12
+const VIEWPORT_PADDING = OVERLAY_VIEWPORT_GUTTER
+const ARROW_PADDING = OVERLAY_ARROW_PADDING
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
@@ -124,7 +125,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
       closeDelay = 150,
       side = 'bottom',
       align = 'center',
-      sideOffset = 8,
+      sideOffset = OVERLAY_OFFSET,
       defaultOpen = false,
       open: controlledOpen,
       onOpenChange,

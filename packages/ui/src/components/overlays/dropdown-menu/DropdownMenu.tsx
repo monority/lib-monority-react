@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
+import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import { cva } from '@/lib/variants'
 import type { DropdownMenuProps, DropdownMenuItem } from './DropdownMenu.types'
@@ -39,7 +40,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
     const updatePosition = useCallback(() => {
       const el = triggerElementRef.current ?? rootRef.current?.querySelector('[data-mr-dropdown-trigger="true"]')
-      if (!el) return; const rect = el.getBoundingClientRect(); const gap = 10; const top = side === 'top' ? rect.top - gap : rect.bottom + gap
+      if (!el) return; const rect = el.getBoundingClientRect(); const gap = OVERLAY_OFFSET; const top = side === 'top' ? rect.top - gap : rect.bottom + gap
       let left = rect.left; if (align === 'center') left = rect.left + rect.width / 2; if (align === 'end') left = rect.right
       setPosition({ top, left })
       setPositioned(true)

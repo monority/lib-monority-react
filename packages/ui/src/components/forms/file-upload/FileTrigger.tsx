@@ -1,11 +1,13 @@
 import { forwardRef, useImperativeHandle, useRef, useCallback, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { useFormControl } from '@/primitives/form-control'
 import type { FileTriggerProps } from './FileTrigger.types'
 
 export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(
   function FileTrigger(
     {
       accept,
+      id,
       multiple = false,
       onSelect,
       directory = false,
@@ -18,6 +20,8 @@ export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(
     ref,
   ) {
     const inputRef = useRef<HTMLInputElement>(null)
+    const ctx = useFormControl()
+    const resolvedId = id ?? ctx.inputId
 
     useImperativeHandle(ref, () => inputRef.current!, [])
 
@@ -41,8 +45,9 @@ export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(
     return (
       <>
         <input
-          ref={inputRef}
-          type="file"
+           ref={inputRef}
+           id={resolvedId}
+           type="file"
           accept={acceptString}
           multiple={multiple}
           disabled={disabled}
@@ -50,9 +55,9 @@ export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(
           {...(directory ? { webkitdirectory: '' as unknown as string } : {})}
           onChange={handleChange}
           className="mr-file-trigger__input"
-          tabIndex={-1}
-          aria-hidden="true"
-          {...props}
+           tabIndex={-1}
+           aria-hidden="true"
+           {...props}
         />
         {children ? (
           <span

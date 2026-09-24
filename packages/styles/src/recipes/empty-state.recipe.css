@@ -7,7 +7,7 @@
         gap: var(--mr-space-5);
         min-height: 15rem;
         padding: var(--mr-space-8);
-        border: 1px dashed color-mix(in srgb, var(--mr-border-subtle) 88%, transparent);
+         border: var(--mr-border-width) dashed color-mix(in srgb, var(--mr-border-subtle) 88%, transparent);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface);
         text-align: center;

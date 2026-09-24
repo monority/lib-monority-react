@@ -1,3 +1,5 @@
+import { Input } from '@monority/ui/input'
+
 interface ControlNumberProps {
     id: string
     label: string
@@ -9,19 +11,14 @@ interface ControlNumberProps {
 
 export function ControlNumber({ id, label, value, min, max, onChange }: ControlNumberProps) {
     return (
-        <div className="pg-control">
-            <label className="pg-control__label" htmlFor={id}>
-                {label}
-            </label>
-            <input
-                id={id}
-                className="pg-control__input"
-                type="number"
-                value={value}
-                min={min}
-                max={max}
-                onChange={(event) => onChange(Number(event.target.value))}
-            />
-        </div>
+        <Input
+            id={id}
+            label={label}
+            type="number"
+            value={value}
+            min={min}
+            max={max}
+            onChange={(event) => onChange(Number(event.target.value))}
+        />
     )
 }

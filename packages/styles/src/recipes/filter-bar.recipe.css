@@ -7,10 +7,10 @@
         width: 100%;
         min-width: 0;
         padding: var(--mr-space-3);
-        border: 1px solid var(--mr-border-subtle);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
+        box-shadow: var(--mr-elevation-surface);
     }
 
     .mr-filter-bar__main,
@@ -44,15 +44,15 @@
         align-self: center;
         color: var(--mr-fg-muted);
         font-size: var(--mr-text-sm);
-        line-height: 1.4;
+        line-height: var(--mr-leading-normal);
     }
 
     .mr-filter-bar__chip {
         display: inline-flex;
         align-items: center;
-        min-height: 2rem;
-        padding-inline: 0.75rem;
-        border: 1px solid var(--mr-border-subtle);
+        min-block-size: var(--mr-control-size-sm);
+         padding-inline: var(--mr-control-padding-inline-sm);
+         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-full);
         background: color-mix(in srgb, var(--mr-bg-control) 76%, transparent);
         color: var(--mr-fg-muted);
@@ -60,7 +60,7 @@
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
         white-space: nowrap;
-        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--mr-fg-base) 4%, transparent);
+         box-shadow: inset 0 var(--mr-border-width) 0 color-mix(in srgb, var(--mr-fg-base) 4%, transparent);
     }
 
     .mr-filter-bar :where(.mr-input, .mr-select, .mr-button) {

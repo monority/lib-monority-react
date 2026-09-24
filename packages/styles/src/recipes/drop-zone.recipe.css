@@ -9,11 +9,11 @@
     justify-content: center;
     min-height: var(--mr-drop-zone-min-height);
     padding: var(--mr-drop-zone-padding);
-    border: 1px dashed var(--mr-border-subtle);
+    border: var(--mr-border-width) dashed var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
     cursor: pointer;
-    box-shadow: var(--mr-shadow-xs);
+    box-shadow: var(--mr-elevation-surface);
     transition:
       border-color var(--mr-duration-fast) var(--mr-ease-standard),
       background-color var(--mr-duration-fast) var(--mr-ease-standard),
@@ -60,6 +60,6 @@
   .mr-drop-zone__text {
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-sm);
-    line-height: 1.5;
+    line-height: var(--mr-leading-control);
   }
 }

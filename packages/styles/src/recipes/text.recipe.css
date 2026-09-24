@@ -1,5 +1,5 @@
 @layer recipes {
-  .mr-text { line-height: 1.6; }
+  .mr-text { line-height: var(--mr-leading-relaxed); }
   .mr-text--muted, .mr-text[data-tone='muted'] { color: var(--mr-fg-muted); }
   .mr-text--base, .mr-text[data-tone='base'] { color: var(--mr-fg-base); }
   .mr-text--strong, .mr-text[data-tone='strong'] { color: var(--mr-fg-strong); }
