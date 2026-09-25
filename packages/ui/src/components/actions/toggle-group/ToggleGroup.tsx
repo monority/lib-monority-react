@@ -58,7 +58,7 @@ export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(
       <div
         ref={ref}
         role={type === 'multiple' ? 'toolbar' : 'group'}
-        aria-orientation={orientation}
+        aria-orientation={type === 'multiple' ? orientation : undefined}
         data-orientation={orientation}
         className={cn(
           'mr-toggle-group',

@@ -6,7 +6,9 @@ export interface ThemeContextValue {
   resolvedTheme: ResolvedThemeName
   /** @deprecated Utilisez resolvedTheme. */
   readonly isDark: boolean
-  setTheme: (theme: ThemeNameType) => void
+  setTheme: React.Dispatch<React.SetStateAction<ThemeNameType>>
+  /** @deprecated Utilisez setTheme avec une valeur explicite. */
+  toggleTheme: () => void
 }
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null)

@@ -581,8 +581,8 @@ test('Step32 motion advances visibly and stops under reduced motion', async ({ p
         await page.waitForTimeout(180)
         const final = await ring.evaluate((element) => getComputedStyle(element).transform)
         if (reduced) {
-            expect(initial.animation).toBe('none')
-            expect(final).toBe(initial.transform)
+            expect(initial.animation).toBe('mr-spin')
+            expect(final).not.toBe(initial.transform)
         } else {
             expect(initial.animation).not.toBe('none')
             expect(final).not.toBe(initial.transform)
@@ -906,19 +906,21 @@ test('Step33 select, alignment, Card, and Carousel geometry stays coherent', asy
     )
 })
 
-test('Step34 moodboard presents one system across three themes', async ({ page }) => {
+test('Step34 moodboard presents one system across five themes', async ({ page }) => {
     const width = page.viewportSize()?.width ?? 0
     await page.goto('/moodboard')
     await expect(page.getByTestId('moodboard-page')).toBeVisible()
     const panels = page.locator('[data-testid^="moodboard-panel-"]')
-    await expect(panels).toHaveCount(3)
+    await expect(panels).toHaveCount(5)
     await expect(page.getByTestId('moodboard-theme-grid')).toBeVisible()
     await expect(page.getByTestId('moodboard-light-tokens')).toBeVisible()
     await expect(page.getByTestId('moodboard-dark-tokens')).toBeVisible()
     await expect(page.getByTestId('moodboard-oled-tokens')).toBeVisible()
+    await expect(page.getByTestId('moodboard-ocean-tokens')).toBeVisible()
+    await expect(page.getByTestId('moodboard-night-tokens')).toBeVisible()
 
     const panelMetrics: string[] = []
-    for (const theme of ['light', 'dark', 'oled'] as const) {
+    for (const theme of ['light', 'dark', 'oled', 'ocean', 'night'] as const) {
         const panel = page.getByTestId(`moodboard-panel-${theme}`)
         const metrics = await panel.evaluate((element) => {
             const style = getComputedStyle(element)
@@ -935,14 +937,14 @@ test('Step34 moodboard presents one system across three themes', async ({ page }
                 backgroundImage: style.backgroundImage,
             }
         })
-        expect(metrics.cards).toBe(5)
+        expect(metrics.cards).toBe(6)
         expect(metrics.controls).toBeGreaterThan(10)
         expect(metrics.overflow).toBe(true)
         expect(metrics.backgroundImage).toBe('none')
         expect(metrics.surface).not.toBe('rgba(0, 0, 0, 0)')
         panelMetrics.push(`${theme}:${metrics.canvas}:${metrics.surface}`)
     }
-    expect(new Set(panelMetrics).size).toBe(3)
+    expect(new Set(panelMetrics).size).toBe(5)
 
     const primary = page
         .getByTestId('moodboard-panel-light')

@@ -66,6 +66,12 @@ function Reader({ readIsDark = false }: { readIsDark?: boolean }) {
       <button type="button" onClick={() => setTheme('light')}>
         light
       </button>
+      <button type="button" onClick={() => setTheme((current) => current === 'light' ? 'oled' : 'light')}>
+        functional
+      </button>
+      <button type="button" onClick={context.toggleTheme}>
+        toggle
+      </button>
     </div>
   )
 }
@@ -143,6 +149,30 @@ describe('ThemeProvider', () => {
     await waitFor(() => expect(document.documentElement.dataset.themeChoice).toBe('dark'))
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark')
     expect(screen.getByTestId('state').textContent).toBe('dark|dark|undefined')
+  })
+
+  it('accepte la forme fonctionnelle de setTheme', () => {
+    document.documentElement.dataset.theme = 'light'
+    document.documentElement.dataset.themeChoice = 'light'
+    renderProvider()
+
+    fireEvent.click(screen.getByRole('button', { name: 'functional' }))
+
+    expect(screen.getByTestId('state').textContent).toBe('oled|oled|undefined')
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('oled')
+  })
+
+  it('toggleTheme est déprécié et délègue à setTheme', () => {
+    document.documentElement.dataset.theme = 'light'
+    document.documentElement.dataset.themeChoice = 'light'
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+    renderProvider()
+
+    fireEvent.click(screen.getByRole('button', { name: 'toggle' }))
+    fireEvent.click(screen.getByRole('button', { name: 'toggle' }))
+
+    expect(screen.getByTestId('state').textContent).toBe('oled|oled|undefined')
+    expect(warn.mock.calls.filter(([message]) => String(message).includes('theme.toggleTheme'))).toHaveLength(1)
   })
 
   it('H2: hydrate sans alerte après un thème posé par le script de tête', async () => {

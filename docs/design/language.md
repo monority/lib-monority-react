@@ -15,7 +15,7 @@ Ce document fait foi pour le langage visuel, les fondations, les règles d'état
 |---|---|---|
 | Préfixe | `--mr-*` pour les tokens, `mr-` pour les classes, `data-mr-*` pour les attributs internes | Existant, aucun coût de migration |
 | Source des tokens | `packages/tokens` (Style Dictionary v4, format DTCG) devient la source unique ; `packages/styles/src/tokens` est généré | Aujourd'hui deux sources, dont une importée nulle part |
-| Thèmes | `light` (défaut), `dark`, `oled`, `high-contrast`. `dim` devient un alias déprécié de `dark` | `dim` trop proche de `dark` ; `high-contrast` est une vraie exigence d'accessibilité |
+| Thèmes | `dark` (défaut), `light`, `oled`, `ocean`, `night`, `high-contrast`. `dim` devient un alias déprécié de `dark` |Les cinq atmosphères restent une seule grammaire ; `high-contrast` est une exigence d'accessibilité |
 | Portée des thèmes | Tout attribut `data-theme`, `data-brand`, `data-density` fonctionne sur `:root` et sur n'importe quel élément | Aujourd'hui light, dim et high-contrast ne fonctionnent que sur `:root` |
 | Changement de thème | Script de tête bloquant + `ThemeProvider` sans lecture du stockage au rendu | Supprime le flash et le décalage d'hydratation en rendu serveur |
 | Vocabulaire des statuts | `success`, `warning`, `danger`, `info` (+ `neutral`, `accent`) | Vocabulaire déjà utilisé, standard |
@@ -75,9 +75,11 @@ Les tokens sémantiques ne contiennent jamais de hex ni de teinte en dur pour l'
 
 | Thème | Usage | Seuils de contraste |
 |---|---|---|
-| `light` | Défaut | AA (section 5.5) |
-| `dark` | Préférence sombre | AA |
+| `dark` | Défaut, charbon technique et précis | AA (section 5.5) |
+| `light` | Papier froid, lisible et neutre | AA |
 | `oled` | Écrans OLED, fond noir pur | AA |
+| `ocean` | Bleu profond, accent turquoise contenu | AA |
+| `night` | Navy indigo, atmosphère calmée | AA |
 | `high-contrast` | Basse vision, `prefers-contrast: more` | Textes 7:1, bordures de contrôle 7:1, focus 4.5:1, aucune ombre, surfaces distinguées par bordures |
 
 - Les sélecteurs de thème sont `[data-theme="…"]`, sans restriction à `:root`. La classe `.monority-theme-root` devient inutile (alias déprécié).
@@ -86,7 +88,7 @@ Les tokens sémantiques ne contiennent jamais de hex ni de teinte en dur pour l'
 - `getThemeScript()` (exporté) renvoie un script à insérer dans `<head>` : il lit le choix stocké, résout `system` et pose `data-theme` sur `<html>` avant le premier rendu.
 - Portée de la marque : les rayons dérivés et les 14 styles `--mr-type-*` sont déclarés sur `:root, [data-theme], [data-brand]`. Ainsi `data-brand="studio"` s'applique seul à tout niveau pour les rayons et la typographie. Les couleurs sémantiques sont résolues là où `data-theme` est déclaré : une marque doit donc être posée sur le même élément que le thème ou sur un de ses ancêtres. `ThemeScope theme="…" brand="studio"` est la manière recommandée de poser les deux attributs sur un sous-arbre.
 - `ThemeProvider` : aucune lecture de `localStorage` ni de `matchMedia` pendant le rendu. Il lit l'attribut posé par le script via `useSyncExternalStore`, écrit le choix et met à jour l'attribut. Il expose `theme`, `resolvedTheme`, `setTheme`. `isDark` est déprécié.
-- Tous les thèmes sont atteignables par l'API (`light | dark | oled | high-contrast | system`).
+- Tous les thèmes sont atteignables par l'API (`dark | light | oled | ocean | night | high-contrast | system`).
 - `@media (forced-colors: active)` est géré en plus de `high-contrast` (section 6).
 
 ### 5.3 Couleurs sémantiques
@@ -176,7 +178,7 @@ Ombre et voile :
 
 ### 5.5 Contrastes vérifiés
 
-Valeur minimale mesurée (WCAG 2.1) sur tous les fonds concernés : `bg-canvas`, `bg-surface`, `bg-raised`, `bg-sunken`, `bg-hover`, `bg-overlay` pour les textes ; `bg-surface`, `bg-raised`, `bg-sunken`, `bg-hover` pour les bordures de contrôle (une case à cocher dans une ligne survolée est un cas réel). Au total : 4 thèmes × 2 marques, 624 paires, 0 échec.
+Valeur minimale mesurée (WCAG 2.1) sur tous les fonds concernés : `bg-canvas`, `bg-surface`, `bg-raised`, `bg-sunken`, `bg-hover`, `bg-overlay` pour les textes ; `bg-surface`, `bg-raised`, `bg-sunken`, `bg-hover` pour les bordures de contrôle (une case à cocher dans une ligne survolée est un cas réel). Au total : 6 thèmes × 2 marques, 936 paires, 0 échec.
 
 | Paire (sur tous ses fonds) | Seuil | Light | Dark | OLED | Seuil HC | High-contrast | Studio (min. 4 thèmes) |
 |---|---|---|---|---|---|---|---|

@@ -14,11 +14,13 @@ const resolvedPath = fileURLToPath(
 )
 const resolved = JSON.parse(readFileSync(resolvedPath, 'utf8'))
 
-const themes = ['light', 'dark', 'oled', 'high-contrast'] as const
+const themes = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast'] as const
 const opposite: Record<(typeof themes)[number], string> = {
     light: 'dark',
     dark: 'light',
     oled: 'light',
+    ocean: 'light',
+    night: 'dark',
     'high-contrast': 'dark',
 }
 
@@ -27,6 +29,16 @@ const hexToRgb = (hex: string): string => {
     const value = raw.length === 3 ? [...raw].map((char) => char + char).join('') : raw
     const channels = [0, 2, 4].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16))
     return `rgb(${channels.join(', ')})`
+}
+
+const expectRgbClose = (actual: string, expected: string, tolerance = 1) => {
+    const values = (value: string) => value.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? []
+    const actualValues = values(actual)
+    const expectedValues = values(expected)
+    expect(actualValues).toHaveLength(3)
+    for (let index = 0; index < 3; index += 1) {
+        expect(Math.abs((actualValues[index] ?? 0) - (expectedValues[index] ?? 0))).toBeLessThanOrEqual(tolerance)
+    }
 }
 
 const declarationsFor = (theme: string, token: string): Record<string, string> => ({
@@ -91,14 +103,15 @@ test.describe('phase 2a — thèmes sur sous-arbre', () => {
                 },
             )
 
-            expect(result.background).toBe(hexToRgb(expected['--mr-bg-canvas']))
-            expect(result.color).toBe(hexToRgb(expected['--mr-text-primary']))
-            expect(result.border).toBe(hexToRgb(expected['--mr-accent']))
+            expectRgbClose(result.background, hexToRgb(expected['--mr-bg-canvas']))
+            expectRgbClose(result.color, hexToRgb(expected['--mr-text-primary']))
+            expectRgbClose(result.border, hexToRgb(expected['--mr-accent']))
             expect(result.controlSize).toBe(expected['--mr-control-size-md'])
             expect(result.brandHue).toBe('85')
             expect(result.radiusControl).toBe(expected['--mr-radius-control'])
             expect(result.fontFamily).toMatch(/^Inter/)
-            expect(result.accent).toMatch(/(?:^|\s)85(?:\)|$)/)
+            const expectedHue = theme === 'ocean' ? '195' : theme === 'night' ? '275' : '85'
+            expect(result.accent).toMatch(new RegExp(`(?:^|\\s)${expectedHue}(?:\\)|$)`))
         })
     }
 

@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react'
 
-export type ThemeScopeTheme = 'light' | 'dark' | 'oled' | 'high-contrast'
+export type ThemeScopeTheme = 'light' | 'dark' | 'oled' | 'ocean' | 'night' | 'high-contrast'
 export type ThemeScopeBrand = 'studio'
 export type ThemeScopeDensity = 'comfortable' | 'compact'
 

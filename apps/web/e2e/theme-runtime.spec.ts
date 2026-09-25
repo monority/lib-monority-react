@@ -52,6 +52,21 @@ test.describe('Phase 2b — bootstrap du thème', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme-choice', 'system')
   })
 
+  for (const theme of ['ocean', 'night'] as const) {
+    test(`${theme} est disponible avant hydratation`, async ({ page }) => {
+      await page.addInitScript((storedTheme) => localStorage.setItem('model-theme', storedTheme), theme)
+      await blockHydration(page)
+      await page.goto('/docs', { waitUntil: 'domcontentloaded' })
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
+    })
+  }
+
+  test('dark est le thème par défaut sans choix stocké', async ({ page }) => {
+    await blockHydration(page)
+    await page.goto('/docs', { waitUntil: 'domcontentloaded' })
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  })
+
   test('migre dim vers dark et réécrit le stockage avant hydratation', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('model-theme', 'dim'))
     await blockHydration(page)

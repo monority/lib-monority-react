@@ -25,7 +25,7 @@
         border-top-color: transparent;
         transform-origin: center;
         will-change: transform;
-        animation: mr-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
+        animation: mr-spin var(--mr-duration-spin) linear infinite;
     }
 
     .mr-spinner--sm,
@@ -77,12 +77,5 @@
     .mr-spinner--inverse,
     .mr-spinner[data-tone="inverse"] {
         color: var(--mr-accent-contrast);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .mr-spinner__ring {
-            animation: none;
-            border-top-color: color-mix(in srgb, currentColor 26%, transparent);
-        }
     }
 }

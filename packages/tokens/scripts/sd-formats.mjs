@@ -13,7 +13,7 @@ function block(selector, entries) {
 function collect(sources) {
     const root = []
     const rootBrand = []
-    const themes = { 'theme-light': [], 'theme-dark': [], 'theme-oled': [], 'theme-high-contrast': [] }
+    const themes = { 'theme-light': [], 'theme-dark': [], 'theme-oled': [], 'theme-ocean': [], 'theme-night': [], 'theme-high-contrast': [] }
     const compact = []
     const media640 = []
     const reduced = []
@@ -44,6 +44,8 @@ function collect(sources) {
         'themes/light.json',
         'themes/dark.json',
         'themes/oled.json',
+        'themes/ocean.json',
+        'themes/night.json',
         'themes/high-contrast.json',
     ]) {
         eachLeaf(sources[f], (segs, leaf) => push(f, segs, leaf))
@@ -73,6 +75,10 @@ export function emitTokensCss(sources) {
         '}',
         '',
         block('[data-theme="oled"]', stripFile(themes['theme-oled'])),
+        '',
+        block('[data-theme="ocean"]', stripFile(themes['theme-ocean'])),
+        '',
+        block('[data-theme="night"]', stripFile(themes['theme-night'])),
         '',
         block('[data-theme="high-contrast"]', stripFile(themes['theme-high-contrast'])),
         '',
@@ -119,6 +125,8 @@ export function emitDts(sources) {
         'themes/light.json',
         'themes/dark.json',
         'themes/oled.json',
+        'themes/ocean.json',
+        'themes/night.json',
         'themes/high-contrast.json',
         'density.json',
         'brand-studio.json',

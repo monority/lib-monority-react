@@ -8,6 +8,8 @@ export const ThemeName = {
   LIGHT: 'light',
   DARK: 'dark',
   OLED: 'oled',
+  OCEAN: 'ocean',
+  NIGHT: 'night',
   HIGH_CONTRAST: 'high-contrast',
   SYSTEM: 'system',
   /** @deprecated Alias migré automatiquement vers dark. */

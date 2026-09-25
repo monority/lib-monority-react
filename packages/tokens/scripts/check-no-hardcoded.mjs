@@ -24,7 +24,9 @@ if (/#[0-9a-fA-F]{3,8}\b/.test(css.replace(/\/\*[\s\S]*?\*\//g, ''))) {
 
 const decls = new Map()
 for (const m of css.matchAll(/(--mr-[\w-]+)\s*:\s*([^;{}]+);/g)) {
-    decls.set(m[1], m[2].trim())
+    const values = decls.get(m[1]) ?? []
+    values.push(m[2].trim())
+    decls.set(m[1], values)
 }
 const allowedFixed = new Set([
     'success-text',
@@ -41,15 +43,19 @@ const allowedFixed = new Set([
     'info-border',
     'danger-solid',
     'danger-solid-hover',
+    'on-danger-solid',
 ])
-for (const [name, value] of decls) {
-    if (!value.includes('oklch(')) continue
-    const short = name.replace(/^--mr-/, '')
-    if (allowedFixed.has(short)) continue
-    if (!value.includes('var(--mr-brand-hue)') && !value.includes('var(--mr-neutral-hue)')) {
-        // `none`, `color-mix` sans teinte, ombres noires pures : cas autorisés
-        if (/oklch\(0 0 0/.test(value)) continue
-        failures.push(`${name} : teinte sans référence de marque → ${value}`)
+for (const [name, values] of decls) {
+    for (const value of values) {
+        if (!value.includes('oklch(')) continue
+        const short = name.replace(/^--mr-/, '')
+        if (allowedFixed.has(short)) continue
+        if (!value.includes('var(--mr-brand-hue)') && !value.includes('var(--mr-neutral-hue)')) {
+            // `none`, `color-mix` sans teinte, ombres noires pures : cas autorisés
+            if (/oklch\(0 0 0/.test(value)) continue
+            if (/\b(?:195|230|275)\)/.test(value)) continue // Ocean / Night semantic hues
+            failures.push(`${name} : teinte sans référence de marque → ${value}`)
+        }
     }
 }
 

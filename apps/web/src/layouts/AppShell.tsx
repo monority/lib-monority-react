@@ -16,7 +16,7 @@ interface NavigationItem {
 
 interface AppShellProps {
     isDark: boolean
-    theme: 'light' | 'dark' | 'oled' | 'high-contrast' | 'system'
+    theme: 'light' | 'dark' | 'oled' | 'ocean' | 'night' | 'high-contrast' | 'system'
     onToggleTheme: () => void
     navigationItems?: NavigationItem[]
     children?: React.ReactNode

@@ -70,12 +70,26 @@ describe('getThemeScript', () => {
     expect(document.documentElement.dataset.theme).toBe('oled')
   })
 
-  it('se replie sur light si le stockage est inaccessible', () => {
+  it('utilise Dark comme thème par défaut quand aucun choix n’est stocké', () => {
+    runScript(getThemeScript())
+    expect(document.documentElement.dataset.theme).toBe('dark')
+    expect(document.documentElement.dataset.themeChoice).toBe('dark')
+  })
+
+  it('accepte Ocean et Night', () => {
+    for (const theme of ['ocean', 'night'] as const) {
+      localStorage.setItem(THEME_STORAGE_KEY, theme)
+      runScript(getThemeScript())
+      expect(document.documentElement.dataset.theme).toBe(theme)
+    }
+  })
+
+  it('se replie sur Dark si le stockage est inaccessible', () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
       throw new Error('storage denied')
     })
 
     expect(() => runScript(getThemeScript())).not.toThrow()
-    expect(document.documentElement.dataset.theme).toBe('light')
+    expect(document.documentElement.dataset.theme).toBe('dark')
   })
 })

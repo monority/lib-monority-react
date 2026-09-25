@@ -10,4 +10,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  /* Spinner is intentionally slowed, never stopped, per its component spec. */
+  .mr-spinner__ring {
+    animation-duration: 1600ms !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: linear;
+  }
 }

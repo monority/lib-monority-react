@@ -3,7 +3,7 @@
  * Phase 2a — X2. Contraste en CI, calculé depuis les sources DTCG avec
  * colorjs.io (valeurs oklch non arrondies, jamais le rendu hex 8 bits).
  *
- * Composition (78 paires × 4 thèmes × 2 marques = 624) :
+ * Composition (78 paires × 6 thèmes × 2 marques = 936) :
  *   textes (primary, secondary, tertiary, disabled)      4 × 6 = 24
  *   accent-text (six fonds dont accent-subtle)                6
  *   anneau de focus                                           6
@@ -35,7 +35,8 @@ const SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sun
 const FOUR = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover']
 const ACCENT_SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover', '--mr-accent-subtle']
 const TONES = ['success', 'warning', 'danger', 'info']
-const THEMES = ['light', 'dark', 'oled', 'high-contrast']
+const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
+const TABLE_THEMES = ['light', 'dark', 'oled', 'high-contrast']
 const BRANDS = ['monority', 'studio']
 
 // [clé tableau 5.5, fg, fonds, seuil AA, seuil high-contrast]
@@ -101,14 +102,14 @@ for (const [key, fg, bgs, aa, hc] of PAIRS) {
 }
 
 for (const [key, expected] of Object.entries(TABLE)) {
-    THEMES.forEach((theme, i) => {
+    TABLE_THEMES.forEach((theme, i) => {
         const computed = mins[key][theme]
         if (computed + TOLERANCE < expected[i]) {
             failures.push(`tableau 5.5 ${key}/${theme} : calculé ${computed.toFixed(2)} < ${expected[i]}`)
         }
     })
     const studio = Math.min(
-        ...THEMES.flatMap((theme) =>
+        ...TABLE_THEMES.flatMap((theme) =>
             PAIRS.filter(([k]) => k === key || k === `primary-${key}`).flatMap(([, fg, bgs]) =>
                 bgs.map((bg) => contrast(col(fg, theme, 'studio'), col(bg, theme, 'studio'))),
             ),

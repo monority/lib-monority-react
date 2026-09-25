@@ -6,13 +6,16 @@ Statut : brouillon de travail, non publié. Les valeurs exhaustives seront figé
 
 | Avant | Après | Cassant | Action consommateur |
 |---|---|---|---|
-| Thèmes `light \| dark \| oled \| system` | `light \| dark \| oled \| high-contrast \| system` | non | `high-contrast` devient disponible ; conserver la valeur de stockage actuelle `model-theme`. |
+| Thèmes `light \| dark \| oled \| system` | `dark \| light \| oled \| ocean \| night \| high-contrast \| system` | oui | `dark` devient le défaut ; Ocean et Night sont des atmosphères sémantiquesindependantes ; conserver `model-theme`. |
 | Valeur stockée `dim` | `dark` | oui | Migration automatique au bootstrap et dans `ThemeProvider`; la valeur stockée est réécrite `dark`. |
 | `ThemeProvider` lit `localStorage` et `matchMedia` au rendu | Script de tête + `useSyncExternalStore`; snapshot serveur `system` | oui | Insérer `getThemeScript()` avant le script applicatif. Ne plus compter sur une application tardive du thème au premier rendu React. |
 | `useTheme().isDark` | `useTheme().resolvedTheme` | oui | `isDark` reste temporairement, calculé depuis `resolvedTheme`, avec un unique avertissement de développement. |
-| `useTheme().toggleTheme` | `useTheme().setTheme(theme)` | oui | Remplacer les cycles de bascule par une valeur explicite. |
+| `useTheme().toggleTheme` | `useTheme().setTheme(theme)` | oui | `toggleTheme` est rétabli déprécié et délègue à `setTheme`; préférer une valeur explicite. |
 | `ThemeRoot` + `.monority-theme-root` | `data-theme` sur `<html>` + `ThemeScope` pour les sous-arbres | oui | Retirer `ThemeRoot` de `AppProviders`. La classe legacy n'a plus d'effet CSS. |
 | Portée de marque historique | `ThemeScope theme="dark" brand="studio"` | non | Pour les couleurs, poser ensemble thème et marque sur le même élément ou via un ancêtre. |
+
+- Ocean : canvas/surfaces bleu profond, accent turquoise contenu, statuts sémantiques partagés.
+- Night : canvas/surfaces navy, accent indigo, contraste et géométrie identiques aux autres thèmes.
 
 ## Portée de marque
 
@@ -40,7 +43,8 @@ La source exhaustive reste `docs/design/audit/migration-table.md`. Les familles 
 - `isDark` : conservé un temps, déprécié, avertissement unique en développement.
 - `ThemeName.DIM` : conservé pour la migration des sources, mais `setTheme` le résout en `dark`.
 - `ThemeRoot` : conservé avec balise de dépréciation, sans effet sur `<html>` et sans classe legacy.
-- `toggleTheme` : retiré de `ThemeContext`; les consommateurs doivent passer à `setTheme`.
+- `toggleTheme` : déprécié via l'utilitaire interne, avertissement unique en développement.
+- `setTheme` : accepte une valeur ou une fonction `(current) => next`.
 
 ## Assertions modifiées en phase 2a
 

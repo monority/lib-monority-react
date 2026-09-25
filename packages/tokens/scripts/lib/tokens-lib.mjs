@@ -11,7 +11,7 @@ export const BRANDS = {
     monority: { brandHue: 200, brandChroma: 0.12, neutralHue: 215 },
     studio: { brandHue: 85, brandChroma: 0.1, neutralHue: 250 },
 }
-export const THEMES = ['light', 'dark', 'oled', 'high-contrast']
+export const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
 export const DENSITIES = ['comfortable', 'compact']
 export const BRAND_NAMES = ['monority', 'studio']
 
@@ -57,6 +57,8 @@ export function loadSources(srcDir) {
         'themes/light.json',
         'themes/dark.json',
         'themes/oled.json',
+        'themes/ocean.json',
+        'themes/night.json',
         'themes/high-contrast.json',
         'deprecated.json',
     ]
@@ -72,7 +74,7 @@ export function cssName(segments) {
     const [ns, ...rest] = segments
     if (ns !== 'mr') throw new Error('racine attendue: mr')
     const head = rest[0]
-    if (['theme-light', 'theme-dark', 'theme-oled', 'theme-high-contrast'].includes(head)) {
+    if (['theme-light', 'theme-dark', 'theme-oled', 'theme-ocean', 'theme-night', 'theme-high-contrast'].includes(head)) {
         return { scope: head, name: '--mr-' + rest.slice(1).join('-').split('~')[0] }
     }
     if (head === 'density-compact' || head === 'media-max640' || head === 'motion-reduced') {

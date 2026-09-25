@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react'
 import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
 import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '../lib/constants'
 import { ThemeContext } from '../contexts/theme-context'
+import { deprecate } from '../internal/deprecate'
 import type { ThemeContextValue } from '../contexts/theme-context'
 
 const THEME_CHANGE_EVENT = 'monority-theme-change'
@@ -23,6 +24,8 @@ function normalizeTheme(value: string | null | undefined): ThemeNameType {
     value === ThemeName.LIGHT ||
     value === ThemeName.DARK ||
     value === ThemeName.OLED ||
+    value === ThemeName.OCEAN ||
+    value === ThemeName.NIGHT ||
     value === ThemeName.HIGH_CONTRAST ||
     value === ThemeName.SYSTEM
   ) {
@@ -51,8 +54,9 @@ function readStoredTheme(): ThemeNameType {
   try {
     return normalizeTheme(window.localStorage.getItem(THEME_STORAGE_KEY))
   } catch {
-    return ThemeName.SYSTEM
+    return ThemeName.DARK
   }
+  return ThemeName.DARK
 }
 
 function resolveSystemTheme(): ResolvedThemeName {
@@ -158,19 +162,38 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     hydrateFromStorage()
   }, [])
 
-  const setTheme = useCallback((nextTheme: ThemeNameType) => {
-    if (!canUseDOM()) return
-    try {
-      window.localStorage.setItem(
-        THEME_STORAGE_KEY,
-        nextTheme === ThemeName.DIM ? ThemeName.DARK : nextTheme,
-      )
-    } catch {
-      // Le thème reste appliqué pour la session.
-    }
-    applyTheme(nextTheme)
-    notifyThemeChange()
-  }, [])
+  const setTheme = useCallback(
+    (nextTheme: ThemeNameType | ((current: ThemeNameType) => ThemeNameType)) => {
+      if (!canUseDOM()) return
+      const resolvedNextTheme =
+        typeof nextTheme === 'function' ? nextTheme(getThemeSnapshot()) : nextTheme
+      try {
+        window.localStorage.setItem(
+          THEME_STORAGE_KEY,
+          resolvedNextTheme === ThemeName.DIM ? ThemeName.DARK : resolvedNextTheme,
+        )
+      } catch {
+        // Le thème reste appliqué pour la session.
+      }
+      applyTheme(resolvedNextTheme)
+      notifyThemeChange()
+    },
+    [],
+  )
+
+  const toggleTheme = useCallback(() => {
+    deprecate(
+      'theme.toggleTheme',
+      'toggleTheme est déprécié. Utilisez setTheme avec une valeur explicite.',
+    )
+    setTheme((currentTheme) => {
+      const currentResolvedTheme =
+        currentTheme === ThemeName.SYSTEM ? getResolvedThemeSnapshot() : currentTheme
+      if (currentResolvedTheme === ThemeName.LIGHT) return ThemeName.DARK
+      if (currentResolvedTheme === ThemeName.DARK) return ThemeName.OLED
+      return ThemeName.LIGHT
+    })
+  }, [setTheme])
 
   const value = useMemo<ThemeContextValue>(
     () => ({
@@ -181,8 +204,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         return resolvedTheme === ThemeName.DARK || resolvedTheme === ThemeName.OLED
       },
       setTheme,
+      toggleTheme,
     }),
-    [resolvedTheme, setTheme, theme],
+    [resolvedTheme, setTheme, theme, toggleTheme],
   )
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

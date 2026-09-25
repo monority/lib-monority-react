@@ -6,6 +6,7 @@ import { NotFoundPage } from '@/app/pages/NotFoundPage'
 import { PlaygroundPage } from '@/app/pages/PlaygroundPage'
 import { ShowcasePage } from '@/app/pages/ShowcasePage'
 import { HomePage } from '@/home/HomePage'
+import { HarnessPage } from '@/harness/HarnessPage'
 import type { RouteObject } from 'react-router-dom'
 
 interface AppRouteDefinition {
@@ -78,6 +79,11 @@ export const appRoutes: RouteObject[] = [
             { path: 'playground', element: <PlaygroundPage /> },
             { path: 'showcase', element: <ShowcasePage /> },
         ],
+    },
+
+    {
+        path: '/harness/:component',
+        element: <HarnessPage />,
     },
 
     {
