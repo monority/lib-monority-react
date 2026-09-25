@@ -10,7 +10,7 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         expect(screen.getByTestId('moodboard-page')).toBeInTheDocument()
-        expect(screen.getByText('One language, five atmospheres.')).toBeInTheDocument()
+        expect(screen.getByText('One language, independent axes.')).toBeInTheDocument()
         expect(screen.getAllByTestId(/moodboard-panel-/)).toHaveLength(5)
 
         for (const theme of themes) {
@@ -42,12 +42,16 @@ describe('MoodboardPage', () => {
         })
         expect(within(darkPanel).getByLabelText('Workspace')).toHaveValue('shared-workspace')
 
-        fireEvent.click(screen.getByRole('button', { name: 'Compact' }))
+        fireEvent.click(within(screen.getByRole('group', { name: 'Layout density axis' })).getByRole('button', { name: 'Compact' }))
         expect(screen.getByTestId('moodboard-panel-light')).toHaveAttribute('data-density', 'compact')
         expect(screen.getByTestId('moodboard-panel-dark')).toHaveAttribute('data-density', 'compact')
 
+        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        expect(screen.getByTestId('moodboard-page').parentElement).toHaveAttribute('data-design-accent', 'violet')
+        fireEvent.click(screen.getByRole('button', { name: 'Rounded' }))
         fireEvent.click(screen.getByRole('button', { name: 'Réinitialiser l’état' }))
         expect(screen.getByTestId('moodboard-panel-light')).toHaveAttribute('data-density', 'comfortable')
+        expect(screen.getByTestId('moodboard-page').parentElement).toHaveAttribute('data-design-accent', 'cyan')
         expect(within(lightPanel).getByLabelText('Workspace')).toHaveValue('monority-prod')
     })
 })

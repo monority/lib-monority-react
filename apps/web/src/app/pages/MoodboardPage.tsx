@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Badge,
     Button,
@@ -19,7 +19,12 @@ import {
     ToggleGroup,
     Tooltip,
     Topbar,
+    DesignProvider,
+    DESIGN_PRESETS,
+    DEFAULT_DESIGN_CONFIG,
     type Column,
+    designConfigToJSON,
+    type DesignConfig,
 } from '@monority/ui'
 import { usePageSeo } from '@/seo/usePageSeo'
 import './moodboard.css'
@@ -297,6 +302,7 @@ function SharedPanel({
                         <div className="moodboard-token-group"><span className="moodboard-token-label">Text</span><div className="moodboard-text-samples"><i /><i /><i /><i /></div></div>
                         <div className="moodboard-token-group"><span className="moodboard-token-label">Accent</span><div className="moodboard-accent-samples"><i /><i /><i /><i /><i /><i /><i /></div></div>
                         <div className="moodboard-token-group"><span className="moodboard-token-label">Status</span><div className="moodboard-status-samples"><i /><i /><i /><i /></div></div>
+                        <div className="moodboard-token-group"><span className="moodboard-token-label">Charts</span><div className="moodboard-chart-samples"><i /><i /><i /><i /><i /></div></div>
                         <div className="moodboard-token-group"><span className="moodboard-token-label">Geometry</span><div className="moodboard-geometry-samples"><i /><i /><i /></div></div>
                     </div>
                     <div className="moodboard-typography-strip"><span>Aa display</span><span>Aa heading</span><span>Aa body</span><span>code</span></div>
@@ -308,42 +314,61 @@ function SharedPanel({
 
 export function MoodboardPage() {
     usePageSeo({ title: 'Moodboard', description: 'Monority UI visual system across five atmospheres.' })
-    const [density, setDensity] = useState<DensityName>('comfortable')
-    const [brand, setBrand] = useState<BrandName>('monority')
+    const [config, setConfig] = useState<DesignConfig>(() => {
+        if (typeof window === 'undefined') return DEFAULT_DESIGN_CONFIG
+        try {
+            const stored = localStorage.getItem('monority-design-config')
+            return stored ? { ...DEFAULT_DESIGN_CONFIG, ...JSON.parse(stored) } : DEFAULT_DESIGN_CONFIG
+        } catch {
+            return DEFAULT_DESIGN_CONFIG
+        }
+    })
     const [state, setState] = useState<PanelState>(initialState)
+    const [copied, setCopied] = useState(false)
     const updateState = (next: Partial<PanelState>) => setState((current) => ({ ...current, ...next }))
-    const controls = useMemo(() => [
-        { name: 'density', type: 'single' as const, value: density, setValue: setDensity },
-        { name: 'brand', type: 'single' as const, value: brand, setValue: setBrand },
-    ], [brand, density])
+    const updateConfig = <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => {
+        setConfig((current) => ({ ...current, [key]: value }))
+    }
+    const onValue = (key: keyof DesignConfig) => (value: string | string[]) => {
+        updateConfig(key, String(value) as DesignConfig[typeof key])
+    }
+    useEffect(() => {
+        try {
+            localStorage.setItem('monority-design-config', designConfigToJSON(config))
+        } catch {
+            // Le stockage peut être indisponible ; la configuration reste en mémoire.
+        }
+    }, [config])
+
+    const density: DensityName = config.density === 'compact' ? 'compact' : 'comfortable'
+    const brand: BrandName = config.brand
 
     return (
-        <div className="moodboard-page" data-testid="moodboard-page">
-            <header className="moodboard-control">
-                <div className="moodboard-control__title"><span>MONORITY UI / THEMES</span><strong>One language, five atmospheres.</strong></div>
-                <div className="moodboard-control__actions">
-                    {controls[0] && <ToggleGroup
-                        size="sm"
-                        value={density}
-                        onValueChange={(value) => setDensity(String(value) as DensityName)}
-                        items={[{ value: 'comfortable', label: 'Comfortable' }, { value: 'compact', label: 'Compact' }]}
-                        aria-label="Theme density"
-                    />}
-                    <ToggleGroup
-                        size="sm"
-                        value={brand}
-                        onValueChange={(value) => setBrand(String(value) as BrandName)}
-                        items={[{ value: 'monority', label: 'Monority' }, { value: 'studio', label: 'Studio' }]}
-                        aria-label="Brand"
-                    />
-                    <Button variant="secondary" size="sm" onClick={() => { setDensity('comfortable'); setBrand('monority'); setState(initialState) }}>Réinitialiser l’état</Button>
+        <DesignProvider config={config} className="moodboard-design-root">
+            <div className="moodboard-page" data-testid="moodboard-page">
+                <header className="moodboard-control">
+                    <div className="moodboard-control__title"><span>MONORITY UI / DESIGN CUSTOMIZER</span><strong>One language, independent axes.</strong></div>
+                    <div className="moodboard-control__actions">
+                        <Button variant="ghost" size="sm" onClick={async () => { await navigator.clipboard.writeText(designConfigToJSON(config)); setCopied(true) }}>{copied ? 'Configuration copiée' : 'Copier configuration'}</Button>
+                        <Button variant="secondary" size="sm" onClick={() => { setConfig(DEFAULT_DESIGN_CONFIG); setState(initialState) }}>Réinitialiser l’état</Button>
+                    </div>
+                </header>
+                <section className="moodboard-customizer" aria-label="Design customizer">
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Theme</span><ToggleGroup size="sm" value={config.theme} onValueChange={onValue('theme')} items={themeDefinitions.map((theme) => ({ value: theme.id, label: theme.label }))} aria-label="Theme axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Brand</span><ToggleGroup size="sm" value={config.brand} onValueChange={onValue('brand')} items={DESIGN_PRESETS.brands} aria-label="Brand axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Accent</span><ToggleGroup size="sm" value={config.accent} onValueChange={onValue('accent')} items={DESIGN_PRESETS.accents} aria-label="Accent axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Components</span><ToggleGroup size="sm" value={config.componentColor} onValueChange={onValue('componentColor')} items={DESIGN_PRESETS.componentColors} aria-label="Component color axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Charts</span><ToggleGroup size="sm" value={config.chartPalette} onValueChange={onValue('chartPalette')} items={DESIGN_PRESETS.chartPalettes} aria-label="Chart palette axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Radius</span><ToggleGroup size="sm" value={config.radius} onValueChange={onValue('radius')} items={DESIGN_PRESETS.radii} aria-label="Radius axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Spacing</span><ToggleGroup size="sm" value={config.spacing} onValueChange={onValue('spacing')} items={DESIGN_PRESETS.spacings} aria-label="Spacing axis" /></div>
+                    <div className="moodboard-customizer__group"><span className="moodboard-kicker">Layout</span><ToggleGroup size="sm" value={config.density} onValueChange={onValue('density')} items={DESIGN_PRESETS.densities} aria-label="Layout density axis" /></div>
+                </section>
+                <div className="moodboard-page__grid" data-testid="moodboard-theme-grid">
+                    {themeDefinitions.map((definition) => (
+                        <SharedPanel key={definition.id} definition={definition} density={density} brand={brand} state={state} onState={updateState} />
+                    ))}
                 </div>
-            </header>
-            <div className="moodboard-page__grid" data-testid="moodboard-theme-grid">
-                {themeDefinitions.map((definition) => (
-                    <SharedPanel key={definition.id} definition={definition} density={density} brand={brand} state={state} onState={updateState} />
-                ))}
             </div>
-        </div>
+        </DesignProvider>
     )
 }

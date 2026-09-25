@@ -55,13 +55,13 @@
 
   .mr-btn--primary,
   .mr-btn[data-variant='primary'] {
-    background-color: var(--mr-accent);
-    color: var(--mr-accent-contrast);
+    background-color: var(--mr-control-accent, var(--mr-accent));
+    color: var(--mr-control-on-accent, var(--mr-on-accent));
   }
 
   .mr-btn--primary:hover:not(:disabled),
   .mr-btn[data-variant='primary']:hover:not(:disabled) {
-    background-color: var(--mr-accent-strong);
+    background-color: var(--mr-control-accent-hover, var(--mr-accent-hover));
   }
 
   .mr-btn--secondary,

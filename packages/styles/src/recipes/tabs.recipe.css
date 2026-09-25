@@ -70,9 +70,9 @@
 
   .mr-tabs--accent .mr-tabs__tab--active,
   .mr-tabs[data-tone='accent'] .mr-tabs__tab[data-active='true'] {
-    color: color-mix(in srgb, var(--mr-accent) 74%, var(--mr-fg-strong));
-    border-color: color-mix(in srgb, var(--mr-accent) 34%, var(--mr-border-subtle));
-    background: color-mix(in srgb, var(--mr-accent) 10%, var(--mr-bg-surface-strong));
+    color: color-mix(in srgb, var(--mr-control-accent, var(--mr-accent)) 74%, var(--mr-fg-strong));
+    border-color: color-mix(in srgb, var(--mr-control-accent, var(--mr-accent)) 34%, var(--mr-border-subtle));
+    background: color-mix(in srgb, var(--mr-control-accent, var(--mr-accent)) 10%, var(--mr-bg-surface-strong));
   }
 
   .mr-tabs--danger .mr-tabs__tab--active,

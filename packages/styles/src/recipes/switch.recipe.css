@@ -105,13 +105,13 @@
 
   .mr-switch--checked .mr-switch__control,
   .mr-switch[data-checked='true'] .mr-switch__control {
-    background: var(--mr-accent);
-    border-color: var(--mr-accent);
+    background: var(--mr-control-accent, var(--mr-accent));
+    border-color: var(--mr-control-accent, var(--mr-accent));
   }
 
   .mr-switch--checked .mr-switch__thumb,
   .mr-switch[data-checked='true'] .mr-switch__thumb {
-    background: var(--mr-accent-contrast);
+    background: var(--mr-control-on-accent, var(--mr-on-accent));
     transform: translateX(var(--mr-switch-thumb-shift));
   }
 

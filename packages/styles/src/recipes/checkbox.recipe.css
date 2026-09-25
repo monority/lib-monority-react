@@ -49,8 +49,8 @@
     display: block;
     width: 45%;
     height: 70%;
-    border-right: 2px solid var(--mr-accent-contrast);
-    border-bottom: 2px solid var(--mr-accent-contrast);
+    border-right: 2px solid var(--mr-control-on-accent, var(--mr-on-accent));
+    border-bottom: 2px solid var(--mr-control-on-accent, var(--mr-on-accent));
     transform: rotate(45deg) translate(-1px, -1px);
     opacity: 0;
     transition: opacity var(--mr-dur-100) var(--mr-ease-in-out);
@@ -62,7 +62,7 @@
     width: 55%;
     height: 0;
     border-right: none;
-    border-bottom: 2px solid var(--mr-accent-contrast);
+    border-bottom: 2px solid var(--mr-control-on-accent, var(--mr-on-accent));
     transform: none;
     opacity: 1;
   }
@@ -82,8 +82,8 @@
   /* === Checked === */
   .mr-checkbox--checked .mr-checkbox__control,
   .mr-checkbox[data-checked='true'] .mr-checkbox__control {
-    background: var(--mr-accent);
-    border-color: var(--mr-accent);
+    background: var(--mr-control-accent, var(--mr-accent));
+    border-color: var(--mr-control-accent, var(--mr-accent));
   }
 
   .mr-checkbox--checked .mr-checkbox__control::after,
@@ -113,8 +113,8 @@
 
   .mr-checkbox--checked.mr-checkbox--accent .mr-checkbox__control,
   .mr-checkbox[data-checked='true'][data-tone='accent'] .mr-checkbox__control {
-    background: var(--mr-accent);
-    border-color: var(--mr-accent);
+    background: var(--mr-control-accent, var(--mr-accent));
+    border-color: var(--mr-control-accent, var(--mr-accent));
   }
 
   /* === Tone: neutral === */

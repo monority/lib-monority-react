@@ -19,6 +19,24 @@
     background: var(--mr-bg-surface);
 }
 
+.moodboard-customizer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mr-spacing-3);
+    inline-size: min(100% - var(--mr-spacing-8), 1600px);
+    margin: var(--mr-spacing-4) auto 0;
+    padding: var(--mr-spacing-4);
+    border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-card);
+    background: var(--mr-bg-surface);
+}
+
+.moodboard-customizer__group {
+    display: grid;
+    gap: var(--mr-spacing-2);
+    min-inline-size: 0;
+}
+
 .moodboard-control__title,
 .moodboard-control__actions,
 .moodboard-panel__meta,
@@ -267,6 +285,7 @@
 .moodboard-accent-samples,
 .moodboard-status-samples,
 .moodboard-geometry-samples,
+.moodboard-chart-samples,
 .moodboard-text-samples {
     display: flex;
     gap: var(--mr-spacing-1);
@@ -275,6 +294,7 @@
 .moodboard-swatches i,
 .moodboard-accent-samples i,
 .moodboard-status-samples i,
+.moodboard-chart-samples i,
 .moodboard-geometry-samples i {
     display: block;
     width: var(--mr-spacing-6);
@@ -299,6 +319,11 @@
 .moodboard-status-samples i:nth-child(2) { background: var(--mr-warning-text); }
 .moodboard-status-samples i:nth-child(3) { background: var(--mr-danger-text); }
 .moodboard-status-samples i:nth-child(4) { background: var(--mr-info-text); }
+.moodboard-chart-samples i:nth-child(1) { background: var(--mr-chart-1); }
+.moodboard-chart-samples i:nth-child(2) { background: var(--mr-chart-2); }
+.moodboard-chart-samples i:nth-child(3) { background: var(--mr-chart-3); }
+.moodboard-chart-samples i:nth-child(4) { background: var(--mr-chart-4); }
+.moodboard-chart-samples i:nth-child(5) { background: var(--mr-chart-5); }
 .moodboard-text-samples i:nth-child(1) { color: var(--mr-text-primary); }
 .moodboard-text-samples i:nth-child(2) { color: var(--mr-text-secondary); }
 .moodboard-text-samples i:nth-child(3) { color: var(--mr-text-tertiary); }
@@ -318,8 +343,14 @@
 .moodboard-typography-strip span:nth-child(3) { font: var(--mr-type-body); }
 .moodboard-typography-strip span:nth-child(4) { font: var(--mr-type-code); }
 
+@media (max-width: 640px) {
+    .moodboard-customizer { grid-template-columns: 1fr; }
+    .moodboard-control { align-items: flex-start; flex-direction: column; padding-block: var(--mr-spacing-2); }
+}
+
 @media (min-width: 1100px) {
     .moodboard-page__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .moodboard-customizer { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1600px) {

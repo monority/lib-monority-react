@@ -93,6 +93,16 @@
   --mr-stack-gap: 12px;
   --mr-section-gap: 16px;
   --mr-grid-gap: 16px;
+  --mr-control-accent: var(--mr-accent);
+  --mr-control-accent-hover: var(--mr-accent-hover);
+  --mr-control-accent-active: var(--mr-accent-active);
+  --mr-control-accent-subtle: var(--mr-accent-subtle);
+  --mr-control-on-accent: var(--mr-on-accent);
+  --mr-chart-1: var(--mr-accent);
+  --mr-chart-2: var(--mr-info-text);
+  --mr-chart-3: var(--mr-success-text);
+  --mr-chart-4: var(--mr-warning-text);
+  --mr-chart-5: var(--mr-danger-text);
   --mr-badge-height-sm: 20px;
   --mr-badge-height-md: 24px;
   --mr-badge-dot-size: 6px;

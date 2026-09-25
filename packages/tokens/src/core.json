@@ -104,6 +104,16 @@
     "menu-item-height": { "$value": "32px", "$type": "dimension" },
     "stack-gap": { "$value": "12px", "$type": "dimension" },
     "section-gap": { "$value": "16px", "$type": "dimension" },
-    "grid-gap": { "$value": "16px", "$type": "dimension" }
+    "grid-gap": { "$value": "16px", "$type": "dimension" },
+    "control-accent": { "$value": "var(--mr-accent)", "$type": "color" },
+    "control-accent-hover": { "$value": "var(--mr-accent-hover)", "$type": "color" },
+    "control-accent-active": { "$value": "var(--mr-accent-active)", "$type": "color" },
+    "control-accent-subtle": { "$value": "var(--mr-accent-subtle)", "$type": "color" },
+    "control-on-accent": { "$value": "var(--mr-on-accent)", "$type": "color" },
+    "chart-1": { "$value": "var(--mr-accent)", "$type": "color" },
+    "chart-2": { "$value": "var(--mr-info-text)", "$type": "color" },
+    "chart-3": { "$value": "var(--mr-success-text)", "$type": "color" },
+    "chart-4": { "$value": "var(--mr-warning-text)", "$type": "color" },
+    "chart-5": { "$value": "var(--mr-danger-text)", "$type": "color" }
   }
 }
