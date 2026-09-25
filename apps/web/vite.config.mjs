@@ -3,6 +3,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import { defineConfig, normalizePath } from 'vite'
 import react from '@vitejs/plugin-react'
+import { getThemeScript } from '../../packages/ui/src/providers/get-theme-script'
 
 const webDir = path.dirname(fileURLToPath(import.meta.url))
 const webSrc = path.resolve(webDir, './src')
@@ -30,8 +31,22 @@ function tryResolve(basePath) {
   return null
 }
 
+const themeBootstrap = () => ({
+  name: 'monority-theme-bootstrap',
+  transformIndexHtml() {
+    return [
+      {
+        tag: 'script',
+        children: getThemeScript(),
+        injectTo: 'head-prepend',
+      },
+    ]
+  },
+})
+
 export default defineConfig({
   plugins: [
+    themeBootstrap(),
     react(),
     {
       name: 'monority-path-aliases',

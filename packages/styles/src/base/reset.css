@@ -6,8 +6,7 @@
 
 html,
 body,
-#root,
-.monority-theme-root {
+#root {
   min-height: 100%;
 }
 

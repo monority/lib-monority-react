@@ -1,5 +1,0 @@
-:root {
-  --mr-modal-radius: var(--mr-radius-lg);
-  --mr-modal-width: min(var(--mr-overlay-width-dialog), calc(100% - 2 * var(--mr-overlay-gutter)));
-  --mr-modal-padding: var(--mr-surface-padding-lg);
-}

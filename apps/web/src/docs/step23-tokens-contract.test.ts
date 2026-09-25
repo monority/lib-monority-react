@@ -22,14 +22,14 @@ function tokenFile(path: string) {
 
 describe('step23 design token contracts', () => {
     it('defines the shared space scale consumed by recipes', () => {
-        const spacing = tokenFile('tokens/core/spacing.css')
-        expect(spacing).toContain('--mr-space-2: 0.375rem')
+        const deprecated = tokenFile('tokens/generated/deprecated.css')
+        expect(deprecated).toContain('--mr-space-2: 0.375rem')
     })
 
     it('defines the shared duration scale consumed by recipes', () => {
-        const durations = tokenFile('tokens/core/durations.css')
-        expect(durations).toContain('--mr-dur-150: 150ms')
-        expect(durations).toContain('--mr-dur-200: 200ms')
+        const deprecated = tokenFile('tokens/generated/deprecated.css')
+        expect(deprecated).toContain('--mr-dur-150: 150ms')
+        expect(deprecated).toContain('--mr-dur-200: 200ms')
     })
 
     it('drives drawer motion through duration and easing tokens', () => {

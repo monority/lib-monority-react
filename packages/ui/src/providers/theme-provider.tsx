@@ -1,95 +1,188 @@
-import { useEffect, useEffectEvent, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react'
 import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
+import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '../lib/constants'
 import { ThemeContext } from '../contexts/theme-context'
+import type { ThemeContextValue } from '../contexts/theme-context'
 
-type ThemeNameType = (typeof ThemeName)[keyof typeof ThemeName]
+const THEME_CHANGE_EVENT = 'monority-theme-change'
+const RESOLVED_THEMES: readonly ResolvedThemeName[] = ['light', 'dark', 'oled', 'high-contrast']
+
+let hasWarnedAboutIsDark = false
 
 function canUseDOM() {
-  return typeof window !== 'undefined'
+  return typeof document !== 'undefined'
 }
 
-function getSystemTheme(): ThemeNameType {
-  if (!canUseDOM()) {
-    return ThemeName.LIGHT
-  }
-
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return ThemeName.DARK
-  }
-
-  return ThemeName.LIGHT
+function isResolvedTheme(value: string | undefined): value is ResolvedThemeName {
+  return RESOLVED_THEMES.includes(value as ResolvedThemeName)
 }
 
-function getStoredTheme(): ThemeNameType {
-  if (!canUseDOM()) {
-    return ThemeName.SYSTEM
-  }
-
-  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
-
+function normalizeTheme(value: string | null | undefined): ThemeNameType {
+  if (value === ThemeName.DIM) return ThemeName.DARK
   if (
-    savedTheme === ThemeName.LIGHT ||
-    savedTheme === ThemeName.DARK ||
-    savedTheme === ThemeName.OLED ||
-    savedTheme === ThemeName.SYSTEM
+    value === ThemeName.LIGHT ||
+    value === ThemeName.DARK ||
+    value === ThemeName.OLED ||
+    value === ThemeName.HIGH_CONTRAST ||
+    value === ThemeName.SYSTEM
   ) {
-    return savedTheme as ThemeNameType
+    return value
   }
-
   return ThemeName.SYSTEM
 }
 
-interface ThemeProviderProps {
+function getThemeSnapshot(): ThemeNameType {
+  if (!canUseDOM()) return ThemeName.SYSTEM
+  return normalizeTheme(document.documentElement.dataset.themeChoice)
+}
+
+function getThemeStoreSnapshot(): string {
+  const theme = getThemeSnapshot()
+  return theme === ThemeName.SYSTEM ? `${theme}:${getResolvedThemeSnapshot()}` : theme
+}
+
+function getResolvedThemeSnapshot(): ResolvedThemeName {
+  if (!canUseDOM()) return ThemeName.LIGHT
+  const attribute = document.documentElement.dataset.theme
+  return isResolvedTheme(attribute) ? attribute : ThemeName.LIGHT
+}
+
+function readStoredTheme(): ThemeNameType {
+  try {
+    return normalizeTheme(window.localStorage.getItem(THEME_STORAGE_KEY))
+  } catch {
+    return ThemeName.SYSTEM
+  }
+}
+
+function resolveSystemTheme(): ResolvedThemeName {
+  if (window.matchMedia('(prefers-contrast: more)').matches) return ThemeName.HIGH_CONTRAST
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? ThemeName.DARK
+    : ThemeName.LIGHT
+}
+
+function notifyThemeChange() {
+  window.dispatchEvent(new Event(THEME_CHANGE_EVENT))
+}
+
+function applyTheme(theme: ThemeNameType) {
+  const normalizedTheme = normalizeTheme(theme)
+  const resolvedTheme =
+    normalizedTheme === ThemeName.SYSTEM ? resolveSystemTheme() : normalizedTheme
+  const root = document.documentElement
+  root.dataset.theme = resolvedTheme
+  root.dataset.themeChoice = normalizedTheme
+  root.style.colorScheme =
+    resolvedTheme === ThemeName.DARK || resolvedTheme === ThemeName.OLED ? 'dark' : 'light'
+
+  if (theme === ThemeName.DIM) {
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, ThemeName.DARK)
+    } catch {
+      // Le stockage peut être bloqué ; le thème reste appliqué pour la session.
+    }
+  }
+}
+
+function hydrateFromStorage() {
+  if (!canUseDOM()) return
+  const storedTheme = readStoredTheme()
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, storedTheme)
+  } catch {
+    // Le thème résolu reste disponible même sans persistance.
+  }
+  applyTheme(storedTheme)
+  notifyThemeChange()
+}
+
+function warnAboutIsDark() {
+  const runtime = globalThis as typeof globalThis & {
+    process?: { env?: { NODE_ENV?: string } }
+  }
+  if (runtime.process?.env?.NODE_ENV === 'production' || hasWarnedAboutIsDark) return
+  hasWarnedAboutIsDark = true
+  console.warn(
+    '[Monority UI] ThemeContext.isDark est déprécié. Utilisez resolvedTheme avec ThemeName.DARK ou ThemeName.OLED.',
+  )
+}
+
+export interface ThemeProviderProps {
   children: React.ReactNode
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<ThemeNameType>(getStoredTheme)
-  const [systemTheme, setSystemTheme] = useState<ThemeNameType>(getSystemTheme)
-  const resolvedTheme = theme === ThemeName.SYSTEM ? systemTheme : theme
-  const handleSystemThemeChange = useEffectEvent((event: MediaQueryListEvent) => {
-    setSystemTheme(event.matches ? ThemeName.DARK : ThemeName.LIGHT)
-  })
+  const subscriptionTheme = getThemeSnapshot()
+  const subscribeToTheme = useCallback(
+    (onStoreChange: () => void) => {
+      if (!canUseDOM()) return () => undefined
+
+      window.addEventListener(THEME_CHANGE_EVENT, onStoreChange)
+      if (subscriptionTheme !== ThemeName.SYSTEM) {
+        return () => window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange)
+      }
+
+      const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      const contrastQuery = window.matchMedia('(prefers-contrast: more)')
+      const handleSystemChange = () => {
+        applyTheme(ThemeName.SYSTEM)
+        onStoreChange()
+      }
+      darkQuery.addEventListener('change', handleSystemChange)
+      contrastQuery.addEventListener('change', handleSystemChange)
+
+      return () => {
+        window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange)
+        darkQuery.removeEventListener('change', handleSystemChange)
+        contrastQuery.removeEventListener('change', handleSystemChange)
+      }
+    },
+    [subscriptionTheme],
+  )
+
+  const storeSnapshot = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeStoreSnapshot,
+    () => `${ThemeName.SYSTEM}:${ThemeName.LIGHT}`,
+  )
+  const [storedTheme, systemTheme] = storeSnapshot.split(':') as [ThemeNameType, ResolvedThemeName?]
+  const theme = normalizeTheme(storedTheme) as ThemePreference
+  const resolvedTheme =
+    theme === ThemeName.SYSTEM
+      ? (systemTheme ?? ThemeName.LIGHT)
+      : (theme as ResolvedThemeName)
 
   useEffect(() => {
-    if (!canUseDOM()) {
-      return undefined
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', handleSystemThemeChange)
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange)
-    }
+    if (!canUseDOM() || document.documentElement.dataset.themeChoice) return
+    hydrateFromStorage()
   }, [])
 
-  useEffect(() => {
-    if (!canUseDOM()) {
-      return
+  const setTheme = useCallback((nextTheme: ThemeNameType) => {
+    if (!canUseDOM()) return
+    try {
+      window.localStorage.setItem(
+        THEME_STORAGE_KEY,
+        nextTheme === ThemeName.DIM ? ThemeName.DARK : nextTheme,
+      )
+    } catch {
+      // Le thème reste appliqué pour la session.
     }
+    applyTheme(nextTheme)
+    notifyThemeChange()
+  }, [])
 
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
-  }, [theme])
-
-  const value = useMemo(
+  const value = useMemo<ThemeContextValue>(
     () => ({
       theme,
       resolvedTheme,
-      isDark: resolvedTheme === ThemeName.DARK || resolvedTheme === ThemeName.OLED,
-      setTheme,
-      toggleTheme: () => {
-        setTheme((currentTheme: ThemeNameType) => {
-          const currentResolvedTheme =
-            currentTheme === ThemeName.SYSTEM ? systemTheme : currentTheme
-
-          if (currentResolvedTheme === ThemeName.LIGHT) return ThemeName.DARK
-          if (currentResolvedTheme === ThemeName.DARK) return ThemeName.OLED
-          return ThemeName.LIGHT
-        })
+      get isDark() {
+        warnAboutIsDark()
+        return resolvedTheme === ThemeName.DARK || resolvedTheme === ThemeName.OLED
       },
+      setTheme,
     }),
-    [resolvedTheme, systemTheme, theme],
+    [resolvedTheme, setTheme, theme],
   )
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

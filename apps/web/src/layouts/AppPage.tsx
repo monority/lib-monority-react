@@ -1,7 +1,7 @@
 import { AppShell } from './AppShell'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { Container, Stack } from '@monority/ui'
-import { useTheme } from '@monority/ui'
+import { ThemeName, useTheme } from '@monority/ui'
 
 interface AppPageProps {
     navigationItems?: any[]
@@ -18,7 +18,11 @@ export function AppPage({
     stackGap = 'xl',
     children,
 }: AppPageProps) {
-    const { isDark, theme, toggleTheme } = useTheme()
+    const { resolvedTheme, setTheme, theme } = useTheme()
+    const isDark = resolvedTheme === ThemeName.DARK || resolvedTheme === ThemeName.OLED
+    const toggleTheme = () => {
+        setTheme(isDark ? ThemeName.LIGHT : ThemeName.DARK)
+    }
     usePageSeo(seo ?? {})
 
     return (

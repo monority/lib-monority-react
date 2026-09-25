@@ -13,20 +13,25 @@ function source(path: string) {
 
 describe('Step 31 geometry contracts', () => {
     it('defines and imports shared geometry tokens', () => {
-        const geometry = source('tokens/core/geometry.css')
-        const index = source('tokens/core/index.css')
+        const generated = source('tokens/generated/tokens.css')
+        const deprecated = source('tokens/generated/deprecated.css')
+        const index = source('index.css')
         for (const token of [
             '--mr-border-width',
             '--mr-focus-width',
             '--mr-control-padding-inline-md',
             '--mr-icon-size-md',
+        ]) {
+            expect(generated).toContain(token)
+        }
+        for (const token of [
             '--mr-overlay-width-dialog',
             '--mr-surface-padding-md',
             '--mr-surface-gap-lg',
         ]) {
-            expect(geometry).toContain(token)
+            expect(deprecated).toContain(token)
         }
-        expect(index).toContain("'./geometry.css'")
+        expect(index).toContain("'./tokens/generated/tokens.css'")
     })
 
     it('keeps Card on the shared surface geometry', () => {
@@ -42,9 +47,8 @@ describe('Step 31 geometry contracts', () => {
 
     it('keeps Spinner variant geometry in component tokens', () => {
         const spinner = source('recipes/spinner.recipe.css')
-        const componentIndex = source('tokens/component/index.css')
-        const tokens = source('tokens/component/spinner.css')
-        expect(componentIndex).toContain('./spinner.css')
+        const tokens = source('tokens/generated/deprecated.css')
+        expect(tokens).toContain('--mr-spinner-size-sm')
         for (const token of [
             '--mr-spinner-size-sm',
             '--mr-spinner-size-md',
@@ -104,7 +108,7 @@ describe('Step 31 geometry contracts', () => {
     })
 
     it('uses the corrected aspect ratio token', () => {
-        const tokens = source('tokens/core/aspect-ratios.css')
+        const tokens = source('tokens/generated/deprecated.css')
         const utility = source('utilities/aspect-ratio.css')
         expect(tokens).toContain('--mr-aspect-landscape')
         expect(utility).toContain('var(--mr-aspect-landscape)')

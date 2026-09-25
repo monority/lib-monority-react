@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "./src/tokens.json",
   "scripts": {
-    "build": "style-dictionary build --config ./sd.config.js",
-    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
+    "build": "node ./scripts/build.mjs",
+    "test": "pnpm build && node ./scripts/check-equivalence.mjs && node ./scripts/check-no-hardcoded.mjs && node ./scripts/check-deprecated.mjs && node ./scripts/check-contrasts.mjs && node ./scripts/check-spec-values.mjs",
+    "clean": "node -e \"const fs=require('fs'); for (const p of ['dist','../styles/src/tokens/generated']) fs.rmSync(p,{recursive:true,force:true})\""
   },
   "devDependencies": {
+    "colorjs.io": "^0.7.1",
     "style-dictionary": "^4.0.0"
   }
 }

@@ -8,7 +8,12 @@ export const ThemeName = {
   LIGHT: 'light',
   DARK: 'dark',
   OLED: 'oled',
+  HIGH_CONTRAST: 'high-contrast',
   SYSTEM: 'system',
+  /** @deprecated Alias migré automatiquement vers dark. */
+  DIM: 'dim',
 } as const
 
 export type ThemeNameType = (typeof ThemeName)[keyof typeof ThemeName]
+export type ThemePreference = Exclude<ThemeNameType, 'dim'>
+export type ResolvedThemeName = Exclude<ThemeNameType, 'system' | 'dim'>

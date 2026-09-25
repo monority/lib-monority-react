@@ -2,7 +2,8 @@
 
 @import './base/reset.css' layer(reset);
 @import './base/normalize.css' layer(reset);
-@import './tokens/index.css' layer(tokens);
+@import './tokens/generated/deprecated.css' layer(tokens);
+@import './tokens/generated/tokens.css' layer(tokens);
 @import './base/root.css' layer(base);
 @import './base/typography.css' layer(base);
 @import './base/accessibility.css' layer(base);
@@ -15,7 +16,6 @@
 @import './base/print.css' layer(base);
 @import './base/direction.css' layer(base);
 @import './base/color-scheme.css' layer(base);
-@import './themes/index.css' layer(base);
 @import './recipes/index.css' layer(recipes);
 @import './utilities/index.css' layer(utilities);
 @import './vendors/index.css' layer(overrides);

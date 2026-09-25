@@ -1,12 +1,12 @@
 import { createContext } from 'react'
-import type { ThemeNameType } from '@/lib/constants'
+import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '@/lib/constants'
 
 export interface ThemeContextValue {
-  theme: ThemeNameType
-  resolvedTheme: string
-  isDark: boolean
-  setTheme: React.Dispatch<React.SetStateAction<ThemeNameType>>
-  toggleTheme: () => void
+  theme: ThemePreference
+  resolvedTheme: ResolvedThemeName
+  /** @deprecated Utilisez resolvedTheme. */
+  readonly isDark: boolean
+  setTheme: (theme: ThemeNameType) => void
 }
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null)

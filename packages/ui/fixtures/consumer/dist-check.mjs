@@ -14,9 +14,16 @@ for (const symbol of [
     'useToast',
     'Avatar',
     'Accordion',
+    'ThemeProvider',
+    'ThemeScope',
+    'getThemeScript',
 ]) {
     assert.ok(root[symbol], `root export missing: ${symbol}`)
 }
+
+assert.equal(typeof root.getThemeScript, 'function')
+assert.match(root.getThemeScript(), /model-theme/)
+assert.equal(root.getThemeScript().length, new Blob([root.getThemeScript()]).size)
 
 const { NumberInput } = await import('@monority/ui/number-input')
 assert.ok(NumberInput, 'number-input export missing')

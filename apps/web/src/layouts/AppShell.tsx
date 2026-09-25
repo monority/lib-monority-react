@@ -16,7 +16,7 @@ interface NavigationItem {
 
 interface AppShellProps {
     isDark: boolean
-    theme: 'light' | 'dark' | 'oled' | 'system'
+    theme: 'light' | 'dark' | 'oled' | 'high-contrast' | 'system'
     onToggleTheme: () => void
     navigationItems?: NavigationItem[]
     children?: React.ReactNode
@@ -90,13 +90,22 @@ export function AppShell({ isDark, theme, onToggleTheme, navigationItems = [], c
     })
     const navRef = useRef<HTMLDivElement>(null)
     const getNextThemeLabel = () => {
-        if (theme === 'oled') return 'clair'
+        if (theme === 'oled' || theme === 'high-contrast') return 'clair'
         if (theme === 'system') return isDark ? 'oled' : 'sombre'
         if (isDark) return 'oled'
         return 'sombre'
     }
     const nextThemeLabel = getNextThemeLabel()
-    const themeDisplay = theme === 'system' ? 'Systeme' : theme === 'oled' ? 'OLED' : isDark ? 'Sombre' : 'Clair'
+    const themeDisplay =
+        theme === 'system'
+            ? 'Systeme'
+            : theme === 'oled'
+              ? 'OLED'
+              : theme === 'high-contrast'
+                ? 'Contraste eleve'
+                : isDark
+                  ? 'Sombre'
+                  : 'Clair'
     const { directItems, groupedItems } = buildNavigationStructure(navigationItems)
     const isMobileNavigationOpen =
         mobileNavigationState.open && mobileNavigationState.routeKey === routeKey

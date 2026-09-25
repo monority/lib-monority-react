@@ -14,8 +14,11 @@ import {
     Switch,
     Textarea,
     Toast,
+    ThemeProvider,
+    ThemeScope,
     ToastProvider,
     Tooltip,
+    getThemeScript,
     useToast,
 } from '@monority/ui'
 import { NumberInput } from '@monority/ui/number-input'
@@ -30,8 +33,13 @@ export function RootImports() {
     const [checked, setChecked] = useState(false)
     const [value, setValue] = useState(60)
     const { pushToast } = useToast()
+    const themeScript: string = getThemeScript({ storageKey: 'fixture-theme' })
     return (
-        <ToastProvider>
+        <ThemeProvider>
+            <ThemeScope theme="dark" brand="studio" density="compact">
+                <span>{themeScript.length}</span>
+            </ThemeScope>
+            <ToastProvider>
             <Button onClick={() => pushToast({ title: 'Hello' })}>Push</Button>
             <Checkbox
                 label="Accept"
@@ -80,6 +88,7 @@ export function RootImports() {
             <Modal open={false} title="Review" onClose={() => {}}>
                 <p>Closed by default.</p>
             </Modal>
-        </ToastProvider>
+            </ToastProvider>
+        </ThemeProvider>
     )
 }

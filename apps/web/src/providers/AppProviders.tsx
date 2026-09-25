@@ -1,4 +1,4 @@
-import { ThemeProvider, ThemeRoot, ToastProvider } from '@monority/ui'
+import { ThemeProvider, ToastProvider } from '@monority/ui'
 import { AuthProvider } from './AuthProvider'
 
 interface AppProvidersProps {
@@ -9,9 +9,7 @@ export function AppProviders({ children }: AppProvidersProps) {
     return (
         <ThemeProvider>
             <AuthProvider>
-                <ToastProvider>
-                    <ThemeRoot>{children}</ThemeRoot>
-                </ToastProvider>
+                <ToastProvider>{children}</ToastProvider>
             </AuthProvider>
         </ThemeProvider>
     )

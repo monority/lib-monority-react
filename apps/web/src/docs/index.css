@@ -30,10 +30,7 @@
 /* Dark themes need their own code palette — light hexes fail on #18181b. */
 :root[data-theme="dark"] .docs-layout,
 :root[data-theme="oled"] .docs-layout,
-:root[data-theme="dim"] .docs-layout,
-.monority-theme-root[data-theme="dark"] .docs-layout,
-.monority-theme-root[data-theme="oled"] .docs-layout,
-.monority-theme-root[data-theme="dim"] .docs-layout {
+:root[data-theme="dim"] .docs-layout {
     --docs-code-keyword: var(--mr-accent);
     --docs-code-string: var(--mr-success);
     --docs-code-number: var(--mr-warning);

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "baseUrl": ".",
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "vite/client", "vitest/globals", "@testing-library/jest-dom"],
     // Mirror Vite resolution (vite.config.mjs):
     // - `development` condition resolves @monority/ui/* to package sources
     // - `@/` falls back to package sources when web has no match

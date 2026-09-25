@@ -781,7 +781,10 @@ test('Step33 select, alignment, Card, and Carousel geometry stays coherent', asy
         })
     )
     for (const metric of sizeMetrics.filter(({ size }) => size !== null)) {
-        const expected = metric.size === 'lg' ? 18 : metric.size === 'sm' ? 14 : 15
+        // Phase 2a : les recettes restent inchangées et consomment désormais
+        // --mr-icon-size-sm/md (16px). La recette dérive md de sm (15px) et
+        // lg de md (16px) jusqu'à la migration de la famille Select en phase 3.
+        const expected = metric.size === 'sm' ? 14 : metric.size === 'lg' ? 16 : 15
         expect(metric.width).toBeCloseTo(expected, 0)
     }
 
