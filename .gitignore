@@ -52,5 +52,6 @@ opencode.json
 test-results
 playwright-report
 blob-report
-docs/
+apps/web/e2e/audit-baseline.spec.ts-snapshots/
+docs/roadmap/
 memory-ai/

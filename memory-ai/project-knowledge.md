@@ -1,5 +1,7 @@
 ﻿# Monority React - AI Memory
 
+> `docs/design/` fait foi. Une convention qui le contredit est une erreur.
+
 ## Project Structure
 - `packages/ui/src/components/` — Composants React (forms, feedback, layout, navigation, overlays, typography, display, actions)
 - `packages/ui/src/primitives/` — Primitives (FormControl, InputBase)
@@ -13,7 +15,8 @@
 ### CSS Strategy
 - **@layer recipes** pour tous les styles de composants
 - Chaque composant a son propre `.recipe.css` dans `packages/styles/src/recipes/`
-- Les classes BEM (`.mr-component__element--modifier`)
+- Un seul jeu de sélecteurs : une classe de base par composant (`.mr-component`) + attributs `data-*` pour variantes et états. Plus aucune classe modificatrice BEM (`--modifier`).
+- Aucune valeur visuelle en dur : tokens `--mr-*` uniquement (exceptions `0`, `1px`, `2px`, pourcentages de mise en page).
 - Import via `packages/styles/src/recipes/index.css`
 - `@layer recipes` cascade APRÈS base/tokens mais AVANT utilities/overrides
 
@@ -21,15 +24,21 @@
 - **Field** : Provider pattern avec subcomponents (FieldLabel, FieldContent, FieldError, etc.)
 - **Form primitives** : FormControl (contexte) + InputBase (render input)
 - **Switch** : Checkbox pattern (input hidden + control visuel)
-- **Drawer** : Portal + closing state (200ms delay pour animation sortie)
-- **Tooltip** : CSS hover/focus-within (pas de JS state)
+- **Drawer / Modal / AlertDialog** : `<dialog>` natif ouvert par `showModal()`, sans portail React ; animations par tokens de durée (`--mr-duration-slow` / `--mr-duration-fast`), jamais de délai fixe JS
+- **Tooltip** : couche `popover="manual"` + JS d'ancrage (spec 7.11), ouverture après `--mr-tooltip-delay` au survol et immédiate au focus, `Escape` ferme ; plus de CSS `hover`/`focus-within` seul
+- **État désactivé** : couleurs `--mr-text-disabled` / `--mr-bg-hover` / `--mr-border-subtle`, jamais d'opacité
+- **`as`** : interdit sur les composants interactifs (P3) ; réservé aux primitives de mise en page et de texte (liste fermée de balises)
+- **Overlays** : attribut `popover` natif ou `<dialog>` ; aucun `createPortal`
 
 ### Bug Patterns Connus
 1. Template strings échappées mal écrites par agents (`\\\n\\` au lieu de template literal)
 2. CSS legacy qui override recipes (maintenant fixé)
 3. Composants sans gestion d'état interne (Checkbox, Switch)
-4. @keyframes dans @layer peuvent ne pas fonctionner (mettre hors @layer)
+4. @keyframes : toujours à l'intérieur de leur bloc `@layer` (convention retenue ; ne pas les sortir du layer)
 5. Components with `data-*` attributes need CSS selectors for those attributes
+
+### Positionnement overlays (décision phase 1b)
+- Utilitaire interne sans dépendance `packages/ui/src/internal/position` : 12 placements, écart par token, retournement et décalage dans la fenêtre, maj au défilement et au redimensionnement tant qu'ouvert (1/frame). Créé en phase 3 avant Select/Combobox. Référence versionnée : `docs/design/reference/`.
 
 ## Pipeline Rules
 1. reasoner → coder → reviewer → report

@@ -1,0 +1,76 @@
+/*
+ * Monority UI — alias dépréciés (retirés à la version majeure suivante).
+ * "approx" : rôle proche mais rendu différent ; à vérifier chez les consommateurs.
+ * Les tokens core sans équivalent (--mr-space-*, --mr-radius-xs/sm/md/lg, --mr-text-*, --mr-dur-*, --mr-opacity-*, --mr-leading-*, --mr-color-neutral-*, --mr-shadow-xs/sm/md/raised/surface/focus)
+ * sont déplacés ici avec leur valeur actuelle inchangée (aucun changement visuel silencieux).
+ */
+
+:root, [data-theme] {
+  --mr-bg-subtle: var(--mr-bg-sunken); /* exact */
+  --mr-bg-surface-elevated: var(--mr-bg-raised); /* exact */
+  --mr-bg-surface-strong: var(--mr-bg-raised); /* approx */
+  --mr-bg-control: var(--mr-bg-sunken); /* approx */
+  --mr-bg-inverse: var(--mr-tooltip-bg); /* approx */
+  --mr-bg-accent-soft: var(--mr-accent-subtle); /* exact */
+  --mr-bg-accent-strong: var(--mr-accent-active); /* approx */
+  --mr-border-strong: var(--mr-border-default); /* exact */
+  --mr-border-accent: var(--mr-accent-border); /* exact */
+  --mr-elevation-overlay: var(--mr-shadow-overlay); /* exact */
+  --mr-info: var(--mr-info-text); /* exact */
+  --mr-info-soft: var(--mr-info-subtle); /* exact */
+  --mr-info-contrast: var(--mr-info-text); /* approx */
+  --mr-success: var(--mr-success-text); /* exact */
+  --mr-success-soft: var(--mr-success-subtle); /* exact */
+  --mr-success-contrast: var(--mr-success-text); /* approx */
+  --mr-warning: var(--mr-warning-text); /* exact */
+  --mr-warning-soft: var(--mr-warning-subtle); /* exact */
+  --mr-warning-contrast: var(--mr-warning-text); /* approx */
+  --mr-danger: var(--mr-danger-solid); /* exact */
+  --mr-danger-soft: var(--mr-danger-subtle); /* exact */
+  --mr-danger-contrast: var(--mr-on-danger-solid); /* exact */
+  --mr-fg-strong: var(--mr-text-primary); /* exact */
+  --mr-fg-base: var(--mr-text-primary); /* approx */
+  --mr-fg-muted: var(--mr-text-secondary); /* approx */
+  --mr-fg-inverse: var(--mr-tooltip-text); /* approx */
+  --mr-fg-accent: var(--mr-accent-text); /* exact */
+  --mr-accent-strong: var(--mr-accent-hover); /* exact */
+  --mr-accent-contrast: var(--mr-on-accent); /* exact */
+  --mr-accent-foreground: var(--mr-on-accent); /* approx */
+  --mr-accent-soft: var(--mr-accent-subtle); /* exact */
+  --mr-state-hover: var(--mr-bg-hover); /* exact */
+  --mr-state-active: var(--mr-bg-active); /* exact */
+  --mr-state-disabled: var(--mr-text-disabled); /* approx */
+  --mr-state-focus-ring: var(--mr-focus-color); /* exact */
+  --mr-surface-default: var(--mr-bg-surface); /* exact */
+  --mr-surface-strong: var(--mr-bg-raised); /* approx */
+  --mr-surface-control: var(--mr-bg-sunken); /* approx */
+  --mr-btn-radius: var(--mr-radius-control); /* exact */
+  --mr-btn-height-sm: var(--mr-control-size-sm); /* exact */
+  --mr-btn-height-md: var(--mr-control-size-md); /* exact */
+  --mr-btn-height-lg: var(--mr-control-size-lg); /* exact */
+  --mr-btn-padding-x: var(--mr-control-padding-inline-md); /* exact */
+  --mr-input-radius: var(--mr-radius-control); /* exact */
+  --mr-input-height: var(--mr-control-size-md); /* exact */
+  --mr-input-padding-inline: var(--mr-control-padding-inline-md); /* exact */
+  --mr-textarea-min-height-md: var(--mr-textarea-min-height); /* exact */
+  --mr-card-radius: var(--mr-radius-card); /* exact */
+  --mr-card-padding-md: var(--mr-card-padding); /* exact */
+  --mr-card-gap-md: var(--mr-card-gap); /* exact */
+  --mr-modal-radius: var(--mr-radius-overlay); /* exact */
+  --mr-modal-width: var(--mr-dialog-width-md); /* exact */
+  --mr-modal-padding: var(--mr-spacing-6); /* exact */
+  --mr-font-body: var(--mr-font-sans); /* exact */
+  --mr-font-display: var(--mr-font-sans); /* exact */
+  --mr-border-width-focus: var(--mr-focus-width); /* exact */
+  --mr-ease-in-out: var(--mr-ease-standard); /* approx */
+  --mr-ease-out: var(--mr-ease-enter); /* approx */
+  --mr-ease-decelerate: var(--mr-ease-enter); /* approx */
+  --mr-ease-in: var(--mr-ease-exit); /* approx */
+  --mr-ease-accelerate: var(--mr-ease-exit); /* exact */
+  --mr-ease-spring: var(--mr-ease-standard); /* approx */
+  --mr-duration-normal: var(--mr-duration-base); /* exact */
+  --mr-duration-enter: var(--mr-duration-base); /* approx */
+  --mr-duration-exit: var(--mr-duration-fast); /* approx */
+  --mr-duration-loop: var(--mr-duration-spin); /* approx */
+  /* --mr-focus-color est le nouveau nom de l'anneau de focus (défini par thème dans le fichier de référence) */
+}
