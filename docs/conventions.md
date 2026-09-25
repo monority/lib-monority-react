@@ -28,6 +28,7 @@
 - `as` est interdit sur tout composant interactif (règle P3) ; il n'est autorisé que sur les primitives de mise en page et de texte, avec une union fermée de balises.
 - État désactivé : par couleurs (`--mr-text-disabled`, `--mr-bg-hover`, `--mr-border-subtle`), jamais par opacité.
 - Overlays (Modal, AlertDialog, Drawer, Popover, menus, Tooltip) : couche native `<dialog>` + `showModal()` ou attribut `popover` ; aucun `createPortal`. Animations par tokens de durée (`--mr-duration-*`), jamais par délai fixe en JavaScript.
+- Thème : insérer `getThemeScript()` dans `<head>` avant le premier rendu. `ThemeProvider`lit l'attribut via `useSyncExternalStore`, jamais le stockage ou `matchMedia` pendant le rendu. Utiliser `ThemeScope` pour un sous-arbre ; `brand` exige `theme` par type.
 - Tooltip : couche `popover="manual"`, ouverture au survol après `--mr-tooltip-delay` et immédiate au focus, `Escape` ferme (spec 7.11) — plus de CSS `hover`/`focus-within` seul.
 - Import path des composants : `@monority/ui/<composant>`.
 - Tout attribut `data-*` du JSX a son sélecteur CSS correspondant.

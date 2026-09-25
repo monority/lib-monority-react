@@ -18,8 +18,8 @@ Menu contextuel d'actions déclenché au clic sur un bouton d'en-tête ou de lig
 | toutes | ombre panneau | `--mr-shadow-overlay` | ombre overlay | ombre overlay |
 | toutes | largeur minimale | `--mr-menu-min-width` | 180px | 180px |
 | toutes | largeur maximale | `--mr-menu-max-width` | 320px | 320px |
-| toutes | hauteur maximale | `--mr-menu-max-height` | 360px | 360px |
-| toutes | écart déclencheur/panneau | `--mr-popover-offset` | 6px | 6px |
+| toutes | hauteur maximale | `--mr-menu-max-height` | 400px | 400px |
+| toutes | écart déclencheur/panneau | `--mr-popover-offset` | 4px | 4px |
 | toutes | hauteur élément | `--mr-menu-item-height` | 32px | 28px |
 | toutes | padding-inline élément | `--mr-spacing-2` | 8px | 8px |
 | toutes | rayon élément | `--mr-radius-control` | 6px | 6px |

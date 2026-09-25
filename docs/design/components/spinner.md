@@ -14,7 +14,7 @@ Indicateur rotatif d'attente indéterminée pour des opérations asynchrones en 
 | sm | diamètre | `--mr-icon-size-sm` | 16px (ou 12px intégré inline) | 16px (ou 12px inline) |
 | md | diamètre | `--mr-icon-size-md` | 16px | 16px |
 | lg | diamètre | `--mr-icon-size-lg` | 20px | 20px |
-| toutes | épaisseur du trait | `--mr-border-width` × 2 | 2px | 2px |
+| toutes | épaisseur du trait | `--mr-border-width` × 2 | 1px × 2 | 1px × 2 |
 | toutes | angle d'ouverture de l'arc | constante géométrique | 270° | 270° |
 | standard | durée de rotation | `--mr-duration-spin` | 800ms linéaire | 800ms linéaire |
 | mouvement réduit | durée de rotation ralentie | double de `--mr-duration-spin` | 1600ms linéaire | 1600ms linéaire |
@@ -23,7 +23,7 @@ Indicateur rotatif d'attente indéterminée pour des opérations asynchrones en 
 | Variante | État | Fond | Couleur du trait | Bordure | Autre |
 |---|---|---|---|---|---|
 | standard | rotation continue | transparent | `currentColor` | — | animation `@keyframes mr-spin` linéaire infinie |
-| mouvement réduit | rotation ralentie | transparent | `currentColor` | — | 1600ms au lieu de 800ms |
+| mouvement réduit | rotation ralentie | transparent | `currentColor` | — | `--mr-duration-spin` : 1600ms au lieu de 800ms |
 
 ## Comportement et clavier
 - Rotation continue infinie par `transform: rotate(0deg) -> rotate(360deg)`.

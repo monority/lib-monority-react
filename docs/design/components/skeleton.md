@@ -18,7 +18,7 @@ Bloc de substitution animé préfigurant la disposition visuelle d'un composant 
 | toutes | écart entre lignes | `--mr-spacing-2` | 8px | 8px |
 | toutes | dernière ligne d'un bloc | — | 60 % de la largeur | 60 % de la largeur |
 | standard | durée de pulsation | `--mr-duration-pulse` | 1200ms | 1200ms |
-| mouvement réduit | durée de pulsation | — | 0ms (statique) | 0ms (statique) |
+| mouvement réduit | durée de pulsation | `--mr-duration-pulse` | 0ms (statique) | 0ms (statique) |
 
 ## États
 | Variante | État | Fond | Texte | Bordure | Autre |

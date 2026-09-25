@@ -12,7 +12,7 @@ Boîte de dialogue d'alerte ou de confirmation critique pour une action irréver
 | Taille | Propriété | Token | Valeur comfortable | Valeur compact |
 |---|---|---|---|---|
 | sm | max-inline-size | `--mr-dialog-width-sm` | 400px | 400px |
-| md | max-inline-size | `--mr-dialog-width-md` | 540px | 540px |
+| md | max-inline-size | `--mr-dialog-width-md` | 560px | 560px |
 | toutes | padding panneau | `--mr-spacing-6` | 24px | 24px |
 | toutes | border-radius | `--mr-radius-overlay` | 12px | 12px |
 | toutes | bordure | `--mr-border-default` | 1px solid | 1px solid |

@@ -14,8 +14,8 @@ Présentation sobre de paires métadonnée clé / valeur pour des fiches de dét
 | toutes | police de clé (dt) | `--mr-type-label` | 11px / 16px, 500, mono | 11px / 16px, 500, mono |
 | comfortable | police de valeur (dd) | `--mr-type-body` | 14px / 20px, 400, sans | — |
 | compact | police de valeur (dd) | `--mr-type-small` | — | 13px / 20px, 400, sans |
-| toutes | écart clé → valeur (horizontal) | `--mr-spacing-4` | 16px | 12px |
-| toutes | écart vertical entre rangées | `--mr-spacing-3` | 12px | 8px |
+| toutes | écart clé → valeur (horizontal) | `--mr-spacing-4` | 16px | 16px |
+| toutes | écart vertical entre rangées | `--mr-spacing-3` | 12px | 12px |
 | toutes | bordure séparatrice | `--mr-border-width` | 1px | 1px |
 
 ## États

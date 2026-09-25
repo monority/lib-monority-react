@@ -17,14 +17,14 @@ Menu déroulant de sélection unique parmi une liste fermée d'options. Choisir 
 | sm | padding-inline-start | `--mr-control-padding-inline-sm` | 12px | 8px |
 | md | padding-inline-start | `--mr-control-padding-inline-md` | 16px | 12px |
 | lg | padding-inline-start | `--mr-control-padding-inline-lg` | 20px | 16px |
-| sm/md/lg | padding-inline-end | padding inline + chevron + `--mr-spacing-2` | 36 / 40 / 48px | 32 / 36 / 44px |
+| sm/md/lg | padding-inline-end | composite (padding inline + chevron + `--mr-spacing-2`) | 36 / 40 / 48px | 32 / 36 / 44px |
 | sm/md | chevron | `--mr-icon-size-sm` / `--mr-icon-size-md` | 16px | 16px |
 | lg | chevron | `--mr-icon-size-lg` | 20px | 20px |
 | toutes | border-radius déclencheur | `--mr-radius-control` | 6px | 6px |
 | toutes | border-radius popover | `--mr-radius-overlay` | 12px | 12px |
 | toutes | border-radius élément | `--mr-radius-control` | 6px | 6px |
 | toutes | hauteur élément liste | `--mr-menu-item-height` | 32px | 28px |
-| toutes | max-block-size liste | `--mr-listbox-max-height` | 280px | 280px |
+| toutes | max-block-size liste | `--mr-listbox-max-height` | 320px | 320px |
 | toutes | min-inline-size liste | largeur du déclencheur | 100 % min | 100 % min |
 | toutes | rail élément sélectionné | `--mr-rail-width` | 2px | 2px |
 

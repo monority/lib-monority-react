@@ -12,14 +12,14 @@ Menu de navigation horizontal enrichi avec panneaux déroulants détaillés pour
 | Taille | Propriété | Token | Valeur comfortable | Valeur compact |
 |---|---|---|---|---|
 | toutes | hauteur de barre | `--mr-control-size-md` | 40px | 32px |
-| toutes | padding-inline déclencheur | `--mr-spacing-3` | 12px | 8px |
+| toutes | padding-inline déclencheur | `--mr-spacing-3` | 12px | 12px |
 | toutes | rayon déclencheur | `--mr-radius-control` | 6px | 6px |
 | toutes | police déclencheur | `--mr-type-small-strong` | 13px / 20px, 500, sans | 13px / 20px, 500, sans |
 | toutes | rail élément ouvert/actif | `--mr-rail-width` | 2px | 2px |
 | toutes | fond panneau déroulant | `--mr-bg-overlay` | `#ffffff` (light) | `#ffffff` (light) |
 | toutes | bordure panneau déroulant | `--mr-border-default` | 1px solid | 1px solid |
 | toutes | rayon panneau déroulant | `--mr-radius-overlay` | 12px | 12px |
-| toutes | padding panneau déroulant | `--mr-spacing-4` | 16px | 12px |
+| toutes | padding panneau déroulant | `--mr-spacing-4` | 16px | 16px |
 | toutes | ombre panneau déroulant | `--mr-shadow-overlay` | ombre overlay | ombre overlay |
 
 ## États

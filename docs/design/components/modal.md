@@ -12,7 +12,7 @@ Boîte de dialogue modale interrompant le flux applicatif pour une tâche ciblé
 | Taille | Propriété | Token | Valeur comfortable | Valeur compact |
 |---|---|---|---|---|
 | sm | max-inline-size | `--mr-dialog-width-sm` | 400px | 400px |
-| md | max-inline-size | `--mr-dialog-width-md` | 540px | 540px |
+| md | max-inline-size | `--mr-dialog-width-md` | 560px | 560px |
 | lg | max-inline-size | `--mr-dialog-width-lg` | 720px | 720px |
 | toutes | max-inline-size absolu | `calc(100vw - 32px)` | 100vw − 32px | 100vw − 32px |
 | toutes | max-block-size absolu | `calc(100dvh - 64px)` | 100dvh − 64px | 100dvh − 64px |

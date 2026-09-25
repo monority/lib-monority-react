@@ -18,7 +18,7 @@ Champ de saisie avec complétion dynamique et filtrage d'une liste déroulante d
 | toutes | border-radius champ | `--mr-radius-control` | 6px | 6px |
 | toutes | border-radius popover | `--mr-radius-overlay` | 12px | 12px |
 | toutes | hauteur élément liste | `--mr-menu-item-height` | 32px | 28px |
-| toutes | max-block-size liste | `--mr-listbox-max-height` | 280px | 280px |
+| toutes | max-block-size liste | `--mr-listbox-max-height` | 320px | 320px |
 | toutes | min-inline-size liste | `--mr-menu-min-width` | 180px | 180px |
 | toutes | rail élément sélectionné | `--mr-rail-width` | 2px | 2px |
 

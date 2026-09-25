@@ -71,7 +71,7 @@ Callbacks : `onValueChange(value)` et futur événement DOM `value-change` (P6).
 4. Survol : `background-color` = `--mr-bg-hover` ; pression : `--mr-bg-active` ; aucune transformation.
 5. Focus : `outline-width` = 2px, `outline-color` = `--mr-focus-color`, `outline-offset` = 2px, uniquement sur `:focus-visible`.
 6. Section ouverte : `aria-expanded="true"`, chevron `rotate(180deg)` ; fermée : `aria-expanded="false"`, contenu `hidden`.
-7. Contenu : `transition-property` = `opacity` seule, durée 180ms, courbe `--mr-ease-standard`.
+7. Contenu : `transition-property` = `opacity` seule, `--mr-duration-base` (180ms), courbe `--mr-ease-standard`.
 8. Désactivé : `color` = `--mr-text-disabled`, `cursor` = `not-allowed`, aucun changement au survol.
 
 ## Interdits

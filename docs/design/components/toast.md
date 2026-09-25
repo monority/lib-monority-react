@@ -74,7 +74,7 @@ Callbacks : `onOpenChange(open)` et `onClose` conservé comme alias (migration �
 5. Position : bas à droite, empilement vertical dans un conteneur `aria-live` unique.
 6. Durée : 5000ms par défaut, pause au survol et au focus, reprise au départ du pointeur.
 7. Fermeture : IconButton `ghost` 32px (28px compact), `Escape` local, émet `onOpenChange(false)`.
-8. Apparition : `opacity` + `translateY`, 180ms `--mr-ease-enter` ; disparition 120ms `--mr-ease-exit`.
+8. Apparition : `opacity` + `translateY`, `--mr-duration-base` (180ms) / `--mr-ease-enter` ; disparition `--mr-duration-fast` (120ms) / `--mr-ease-exit`.
 
 ## Interdits
 - Jamais de vol de focus à l'apparition, jamais d'annonce sans conteneur live.

@@ -22,7 +22,7 @@ Champ de saisie numérique avec boutons de pas intégrés et alignement tabulair
 | md | font-size / line-height | `--mr-control-font-size-md` | 14px / 20px | 13px / 20px |
 | lg | font-size / line-height | `--mr-control-font-size-lg` | 16px / 24px | 14px / 24px |
 | toutes | chiffres tabulaires | `font-variant-numeric: tabular-nums` | tabular-nums | tabular-nums |
-| toutes | boutons pas | `--mr-control-size-sm` (IconButton sm) | 28px ou 32px | 24px ou 28px |
+| toutes | boutons pas | `--mr-control-size-sm` (IconButton sm) | 32px | 28px |
 | toutes | border-radius | `--mr-radius-control` | 6px | 6px |
 | toutes | border-width | `--mr-border-width` | 1px | 1px |
 

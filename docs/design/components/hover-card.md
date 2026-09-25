@@ -14,12 +14,12 @@ Panneau flottant d'aperçu enrichi déclenché au survol ou au focus d'un lien o
 | toutes | fond panneau | `--mr-bg-overlay` | `#ffffff` (light) | `#ffffff` (light) |
 | toutes | bordure panneau | `--mr-border-default` | 1px solid | 1px solid |
 | toutes | rayon panneau | `--mr-radius-overlay` | 12px | 12px |
-| toutes | padding panneau | `--mr-spacing-4` | 16px | 12px |
+| toutes | padding panneau | `--mr-spacing-4` | 16px | 16px |
 | toutes | ombre panneau | `--mr-shadow-overlay` | ombre overlay | ombre overlay |
 | toutes | largeur minimale | `--mr-menu-min-width` | 180px | 180px |
 | toutes | largeur maximale | `--mr-menu-max-width` | 320px | 320px |
-| toutes | écart déclencheur/panneau | `--mr-popover-offset` | 6px | 6px |
-| toutes | délai d'ouverture | `--mr-hover-card-delay` | 200ms | 200ms |
+| toutes | écart déclencheur/panneau | `--mr-popover-offset` | 4px | 4px |
+| toutes | délai d'ouverture | `--mr-hover-card-delay` | 400ms | 400ms |
 
 Décision issue de l'audit (phase 0 bis) : la HoverCard est sans flèche, sans remplacement (S8).
 
@@ -30,10 +30,10 @@ Décision issue de l'audit (phase 0 bis) : la HoverCard est sans flèche, sans r
 | standard | ouvert | `--mr-bg-overlay` | `--mr-text-primary` | `--mr-border-default` | ombre `--mr-shadow-overlay`, couche `popover` |
 
 ## Comportement et clavier
-- Déclencheur survolé : ouverture automatique après un délai de `--mr-hover-card-delay` (200ms).
+- Déclencheur survolé : ouverture automatique après un délai de `--mr-hover-card-delay` (400ms).
 - Déclencheur focusé : ouverture immédiate au focus clavier.
 - Le panneau reste ouvert tant que le pointeur survole le déclencheur ou pénètre à l'intérieur de la carte elle-même.
-- Déplacement du pointeur hors de la zone combinée : fermeture après un court délai de grâce (150ms).
+- Déplacement du pointeur hors de la zone combinée : fermeture après un court délai de grâce.
 - Touche `Escape` : referme immédiatement la carte et conserve le focus sur le déclencheur.
 - Apparition : `opacity` + `scale(0.98 -> 1)` en `--mr-duration-base` (180ms) / `--mr-ease-enter` ; disparition en `--mr-duration-fast` (120ms) / `--mr-ease-exit`.
 - Positionnement : utilitaire interne `packages/ui/src/internal/position` (décision phase 1b, `docs/design/language.md`) — 12 placements, écart `--mr-popover-offset` (4px), retournement et décalage dans la fenêtre, mise à jour au défilement et au redimensionnement tant qu'ouvert, limitée à une fois par image. Pas d'anchor positioning CSS (note X6).
@@ -53,7 +53,7 @@ Décision issue de l'audit (phase 0 bis) : la HoverCard est sans flèche, sans r
 | `open` | `boolean` | — | ouverture contrôlée (P5) |
 | `defaultOpen` | `boolean` | `false` | ouverture initiale non contrôlée (P5) |
 | `onOpenChange` | `(open: boolean) => void` | — | futur événement DOM `open-change` (P6) |
-| `delay` | `number` | `200` | délai avant ouverture au survol (ms) |
+| `delay` | `number` | `400` | délai avant ouverture au survol (ms) |
 | `placement` | `'top' \| 'bottom' \| 'left' \| 'right' \| 'top-start' \| 'top-end' \| 'bottom-start' \| 'bottom-end'` | `'bottom-start'` | ancrage |
 | `className` | `string` | — | fusion de classe (P9) |
 
@@ -70,7 +70,7 @@ Décision issue de l'audit (phase 0 bis) : la HoverCard est sans flèche, sans r
 2. `border-radius` du panneau = 12px (`--mr-radius-overlay`).
 3. ombre = `--mr-shadow-overlay`.
 4. absence totale de flèche géométrique ou de pseudo-élément flèche (décision audit S8).
-5. ouverture au survol après un délai de 200ms (`--mr-hover-card-delay`).
+5. ouverture au survol après un délai de 400ms (`--mr-hover-card-delay`).
 6. ouverture immédiate dès la prise de focus clavier sur le déclencheur.
 7. le panneau reste affiché lorsque la souris quitte le déclencheur pour entrer dans la carte.
 8. touche `Escape` referme immédiatement la carte.

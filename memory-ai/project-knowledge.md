@@ -37,6 +37,12 @@
 4. @keyframes : toujours à l'intérieur de leur bloc `@layer` (convention retenue ; ne pas les sortir du layer)
 5. Components with `data-*` attributes need CSS selectors for those attributes
 
+### Thème (phase 2b)
+- Bootstrap: `getThemeScript()` injecté dans `<head>` via le plugin Vite; stocke le choix dans `data-theme-choice`, résolu dans `data-theme`.
+- `ThemeProvider`: `useSyncExternalStore`, snapshot serveur `system`; aucune lecture localStorage/matchMedia pendant le rendu. `dim` migre vers `dark`, `high-contrast` disponible, `isDark` déprécié avec un warning unique.
+- `ThemeScope theme brand density`: portée statique recommandée; `brand` exige `theme` par type.
+- Couleurs: poser thème et marque ensemble; rayons et typography suivent `data-brand` seul.
+
 ### Positionnement overlays (décision phase 1b)
 - Utilitaire interne sans dépendance `packages/ui/src/internal/position` : 12 placements, écart par token, retournement et décalage dans la fenêtre, maj au défilement et au redimensionnement tant qu'ouvert (1/frame). Créé en phase 3 avant Select/Combobox. Référence versionnée : `docs/design/reference/`.
 

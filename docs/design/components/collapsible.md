@@ -65,7 +65,7 @@ Callbacks : `onOpenChange(open)` et futur événement DOM `open-change` (P6). Ca
 3. Survol : `background-color` = `--mr-bg-hover` ; pression : `--mr-bg-active` ; aucune transformation.
 4. Focus : `outline` 2px `--mr-focus-color`, offset 2px, uniquement sur `:focus-visible`.
 5. Ouvert : `aria-expanded="true"`, chevron `rotate(180deg)` ; fermé : `aria-expanded="false"`, contenu `hidden`.
-6. Contenu : `transition-property` = `opacity` seule, 180ms, `--mr-ease-standard`.
+6. Contenu : `transition-property` = `opacity` seule, `--mr-duration-base` (180ms), courbe `--mr-ease-standard`.
 7. Padding contenu : 12px bloc, 16px inline.
 8. Désactivé : `color` = `--mr-text-disabled`, `cursor` = `not-allowed`, aucun changement au survol.
 

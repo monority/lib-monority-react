@@ -62,7 +62,7 @@ Callbacks : `onValueChange(index)` et futur événement DOM `value-change` (P6).
 1. Boutons précédent/suivant : 40px × 40px en comfortable, 32px en compact, variante IconButton `secondary`.
 2. Flèches : 16px × 16px en `currentColor`, `vector-effect: non-scaling-stroke`.
 3. Piste : `gap` = 16px en comfortable, 12px en compact ; un seul panneau visible à la fois.
-4. Transition de piste : `transform` seul, 180ms, `--mr-ease-standard`.
+4. Transition de piste : `transform` seul, `--mr-duration-base` (180ms), `--mr-ease-standard`.
 5. Région : `aria-roledescription` = `carousel` ; panneaux : `aria-roledescription` = `slide`, `aria-label` « n / total ».
 6. Panneaux masqués : `aria-hidden="true"`, aucun élément tabulable.
 7. `autoplay` sans pause : interdit ; bouton pause avec `aria-pressed`, état mémorisé.

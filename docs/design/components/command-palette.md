@@ -11,7 +11,7 @@ Palette de commande globale (recherche rapide, navigation et raccourcis d'action
 ## Dimensions
 | Taille | Propriété | Token | Valeur comfortable | Valeur compact |
 |---|---|---|---|---|
-| md | max-inline-size | `--mr-dialog-width-md` | 540px | 540px |
+| md | max-inline-size | `--mr-dialog-width-md` | 560px | 560px |
 | toutes | max-block-size | `calc(100dvh - 128px)` | 100dvh − 128px | 100dvh − 128px |
 | toutes | fond panneau | `--mr-bg-overlay` | `#ffffff` (light) | `#ffffff` (light) |
 | toutes | border-radius | `--mr-radius-overlay` | 12px | 12px |
@@ -22,7 +22,7 @@ Palette de commande globale (recherche rapide, navigation et raccourcis d'action
 | toutes | hauteur élément de commande | `--mr-menu-item-height` | 32px | 28px |
 | toutes | hauteur titre groupe | `--mr-menu-group-label-height` | 24px | 24px |
 | toutes | police titre groupe | `--mr-type-label` | 11px / 16px, 500, mono | 11px / 16px, 500, mono |
-| toutes | police élément commande | `--mr-type-body` | 14px / 20px, 400 | 13px / 20px, 400 |
+| toutes | police élément commande | `--mr-type-body` | 14px / 20px, 400 | 14px / 20px, 400 |
 
 ## États
 | Variante | État | Fond | Texte | Bordure | Autre |

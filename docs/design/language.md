@@ -84,6 +84,7 @@ Les tokens sémantiques ne contiennent jamais de hex ni de teinte en dur pour l'
 - `dim` est servi par le bloc `dark` pendant une version majeure, puis retiré.
 - Résolution de `system` : `prefers-contrast: more` → `high-contrast` ; sinon `prefers-color-scheme` → `dark` ou `light`.
 - `getThemeScript()` (exporté) renvoie un script à insérer dans `<head>` : il lit le choix stocké, résout `system` et pose `data-theme` sur `<html>` avant le premier rendu.
+- Portée de la marque : les rayons dérivés et les 14 styles `--mr-type-*` sont déclarés sur `:root, [data-theme], [data-brand]`. Ainsi `data-brand="studio"` s'applique seul à tout niveau pour les rayons et la typographie. Les couleurs sémantiques sont résolues là où `data-theme` est déclaré : une marque doit donc être posée sur le même élément que le thème ou sur un de ses ancêtres. `ThemeScope theme="…" brand="studio"` est la manière recommandée de poser les deux attributs sur un sous-arbre.
 - `ThemeProvider` : aucune lecture de `localStorage` ni de `matchMedia` pendant le rendu. Il lit l'attribut posé par le script via `useSyncExternalStore`, écrit le choix et met à jour l'attribut. Il expose `theme`, `resolvedTheme`, `setTheme`. `isDark` est déprécié.
 - Tous les thèmes sont atteignables par l'API (`light | dark | oled | high-contrast | system`).
 - `@media (forced-colors: active)` est géré en plus de `high-contrast` (section 6).

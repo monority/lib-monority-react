@@ -38,10 +38,6 @@
   --mr-spacing-24: 96px;
 
   /* ---------- Rayons (par rôle) ---------- */
-  --mr-radius-inline: calc(4px * var(--mr-radius-scale));
-  --mr-radius-control: calc(6px * var(--mr-radius-scale));
-  --mr-radius-card: calc(10px * var(--mr-radius-scale));
-  --mr-radius-overlay: calc(12px * var(--mr-radius-scale));
   --mr-radius-full: 9999px;
 
   /* ---------- Bordures, rail, focus ---------- */
@@ -62,21 +58,7 @@
   --mr-font-weight-regular: 400;
   --mr-font-weight-medium: 500;
   --mr-font-weight-semibold: 600;
-  /* Styles composites pour la propriété font ; poser font-variant-numeric et letter-spacing APRÈS font */
-  --mr-type-display: 600 2rem/2.5rem var(--mr-font-sans);
-  --mr-type-h1: 600 1.5rem/2rem var(--mr-font-sans);
-  --mr-type-h2: 600 1.125rem/1.5rem var(--mr-font-sans);
-  --mr-type-h3: 600 1rem/1.5rem var(--mr-font-sans);
-  --mr-type-body-lg: 400 1rem/1.5rem var(--mr-font-sans);
-  --mr-type-body: 400 0.875rem/1.25rem var(--mr-font-sans);
-  --mr-type-body-strong: 500 0.875rem/1.25rem var(--mr-font-sans);
-  --mr-type-small: 400 0.8125rem/1.25rem var(--mr-font-sans);
-  --mr-type-small-strong: 500 0.8125rem/1.25rem var(--mr-font-sans);
-  --mr-type-caption: 400 0.75rem/1rem var(--mr-font-sans);
-  --mr-type-label: 500 0.6875rem/1rem var(--mr-font-mono);
-  --mr-type-code: 400 0.8125rem/1.25rem var(--mr-font-mono);
-  --mr-type-code-sm: 400 0.75rem/1rem var(--mr-font-mono);
-  --mr-type-data-lg: 600 2rem/2.5rem var(--mr-font-sans);
+  /* Styles composites : voir le bloc de portée marque ci-dessous. */
   --mr-tracking-display: -0.02em;
   --mr-tracking-h1: -0.01em;
   --mr-tracking-label: 0.08em;
@@ -178,6 +160,30 @@
   --mr-metric-chart-height: 32px;
   --mr-skeleton-line-height: 12px;
   --mr-min-target: 24px;
+}
+
+/* Rayons et styles composites : recalculés sur toute portée de marque. */
+:root,
+[data-theme],
+[data-brand] {
+  --mr-radius-inline: calc(4px * var(--mr-radius-scale));
+  --mr-radius-control: calc(6px * var(--mr-radius-scale));
+  --mr-radius-card: calc(10px * var(--mr-radius-scale));
+  --mr-radius-overlay: calc(12px * var(--mr-radius-scale));
+  --mr-type-display: 600 2rem/2.5rem var(--mr-font-sans);
+  --mr-type-h1: 600 1.5rem/2rem var(--mr-font-sans);
+  --mr-type-h2: 600 1.125rem/1.5rem var(--mr-font-sans);
+  --mr-type-h3: 600 1rem/1.5rem var(--mr-font-sans);
+  --mr-type-body-lg: 400 1rem/1.5rem var(--mr-font-sans);
+  --mr-type-body: 400 0.875rem/1.25rem var(--mr-font-sans);
+  --mr-type-body-strong: 500 0.875rem/1.25rem var(--mr-font-sans);
+  --mr-type-small: 400 0.8125rem/1.25rem var(--mr-font-sans);
+  --mr-type-small-strong: 500 0.8125rem/1.25rem var(--mr-font-sans);
+  --mr-type-caption: 400 0.75rem/1rem var(--mr-font-sans);
+  --mr-type-label: 500 0.6875rem/1rem var(--mr-font-mono);
+  --mr-type-code: 400 0.8125rem/1.25rem var(--mr-font-mono);
+  --mr-type-code-sm: 400 0.75rem/1rem var(--mr-font-mono);
+  --mr-type-data-lg: 600 2rem/2.5rem var(--mr-font-sans);
 }
 
 /* ---------- Thème light (défaut) ---------- */

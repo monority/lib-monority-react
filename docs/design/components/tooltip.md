@@ -18,9 +18,9 @@ Bulle d'aide textuelle courte affichée au survol ou au focus d'un contrôle int
 | toutes | padding-inline | `--mr-spacing-2` | 8px | 8px |
 | toutes | border-radius | `--mr-radius-control` | 6px | 6px |
 | toutes | max-inline-size | `--mr-tooltip-max-width` | 240px | 240px |
-| toutes | décalage | `--mr-tooltip-offset` | 6px | 6px |
+| toutes | décalage | `--mr-tooltip-offset` | 8px | 8px |
 | toutes | ombre | `--mr-shadow-overlay` | ombre overlay | ombre overlay |
-| toutes | délai survol | `--mr-tooltip-delay` | 300ms | 300ms |
+| toutes | délai survol | `--mr-tooltip-delay` | 400ms | 400ms |
 
 Thème inversé : fond sombre en thème clair, fond clair en thème sombre (5.3, 5.4).
 
@@ -31,7 +31,7 @@ Thème inversé : fond sombre en thème clair, fond clair en thème sombre (5.3,
 | standard | ouvert | `--mr-tooltip-bg` | `--mr-tooltip-text` | transparent | ombre `--mr-shadow-overlay`, sans flèche |
 
 ## Comportement et clavier
-- Survol du déclencheur : apparition après un délai de `--mr-tooltip-delay` (300ms).
+- Survol du déclencheur : apparition après un délai de `--mr-tooltip-delay` (400ms).
 - Focus clavier du déclencheur : apparition immédiate (aucun délai).
 - Fermeture immédiate dès que le pointeur quitte à la fois le déclencheur et la bulle.
 - Reste affiché tant que le pointeur survole la surface de la bulle d'aide.
@@ -51,7 +51,7 @@ Thème inversé : fond sombre en thème clair, fond clair en thème sombre (5.3,
 | `content` | `ReactNode` | requis | texte d'aide de la bulle |
 | `children` | `ReactNode` | requis | déclencheur interactif |
 | `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | position relative |
-| `delay` | `number` | `300` | délai avant affichage au survol (ms) |
+| `delay` | `number` | `400` | délai avant affichage au survol (ms) |
 | `className` | `string` | — | fusion de classe (P9) |
 
 Callbacks : aucun callback maison nécessaire.
@@ -72,7 +72,7 @@ Callbacks : aucun callback maison nécessaire.
 5. `max-inline-size` = 240px (`--mr-tooltip-max-width`).
 6. décalage par rapport au déclencheur = 6px (`--mr-tooltip-offset`).
 7. absence totale de flèche triangulaire (bulle épurée sans flèche).
-8. ouverture après 300ms au survol souris (`--mr-tooltip-delay`).
+8. ouverture après 400ms au survol souris (`--mr-tooltip-delay`).
 9. ouverture immédiate au focus clavier sans aucun délai.
 10. `Escape` ferme immédiatement la bulle sans déplacer le focus.
 11. `role="tooltip"` présent avec id relié au déclencheur via `aria-describedby`.
