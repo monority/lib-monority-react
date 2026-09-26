@@ -1,57 +1,159 @@
-import { fireEvent, screen, within } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { renderWithProviders } from '@/test/test-utils'
+import { screen, within, fireEvent } from '@testing-library/react'
 import { MoodboardPage } from './MoodboardPage'
+import { renderWithProviders } from '@/test/test-utils'
 
-const themes = ['dark', 'light', 'oled', 'ocean', 'night'] as const
+beforeEach(() => {
+    localStorage.clear()
+})
 
 describe('MoodboardPage', () => {
-    it('renders the same interface across all five atmosphere panels', () => {
+    it('renders one canonical interface with config sidebar and preview', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         expect(screen.getByTestId('moodboard-page')).toBeInTheDocument()
-        expect(screen.getByText('One language, independent axes.')).toBeInTheDocument()
-        expect(screen.getAllByTestId(/moodboard-panel-/)).toHaveLength(5)
+        expect(screen.getByText('Design Studio')).toBeInTheDocument()
+        expect(screen.getByText('MONORITY UI')).toBeInTheDocument()
 
-        for (const theme of themes) {
-            const panel = screen.getByTestId(`moodboard-panel-${theme}`)
-            expect(panel).toHaveAttribute('data-moodboard-theme', theme)
-            expect(within(panel).getByRole('heading', { name: 'Release control' })).toBeInTheDocument()
-            expect(within(panel).getByText('Component language')).toBeInTheDocument()
-            expect(within(panel).getByText('TOKEN STRIP')).toBeInTheDocument()
-            expect(within(panel).getByText('Surface')).toBeInTheDocument()
-            expect(within(panel).getByText('Geometry')).toBeInTheDocument()
-            expect(within(panel).getByTestId(`moodboard-${theme}-tokens`)).toBeInTheDocument()
-            expect(panel.querySelectorAll('.moodboard-card')).toHaveLength(6)
-            expect(within(panel).getByRole('button', { name: 'primary' })).toBeInTheDocument()
-            expect(within(panel).getByRole('button', { name: 'danger' })).toBeInTheDocument()
-            expect(within(panel).getByRole('button', { name: 'loading' })).toBeInTheDocument()
-        }
+        /* Single preview scope */
+        expect(screen.getByTestId('moodboard-preview-scope')).toBeInTheDocument()
+        expect(screen.getByTestId('moodboard-preview')).toBeInTheDocument()
+
+        /* Config axes present */
+        expect(screen.getByRole('group', { name: 'Theme axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Brand axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Accent axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Component color axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Chart palette axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Radius axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Spacing axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Layout density axis' })).toBeInTheDocument()
     })
 
-    it('shares controls and resets them from the global toolbar', () => {
+    it('preview contains real components: topbar, metrics, chart, table, forms, buttons', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        const lightPanel = screen.getByTestId('moodboard-panel-light')
-        const darkPanel = screen.getByTestId('moodboard-panel-dark')
-        expect(within(lightPanel).getByLabelText('Workspace')).toHaveValue('monority-prod')
-        expect(within(darkPanel).getByLabelText('Workspace')).toHaveValue('monority-prod')
+        expect(screen.getByText('Release control')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Deploy' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Inspect' })).toBeInTheDocument()
 
-        fireEvent.change(within(lightPanel).getByLabelText('Workspace'), {
-            target: { value: 'shared-workspace' },
-        })
-        expect(within(darkPanel).getByLabelText('Workspace')).toHaveValue('shared-workspace')
+        /* Metrics */
+        expect(screen.getByText('REQUESTS / MIN')).toBeInTheDocument()
+        expect(screen.getByText('98.4%')).toBeInTheDocument()
+        expect(screen.getByText('P95 LATENCY')).toBeInTheDocument()
 
-        fireEvent.click(within(screen.getByRole('group', { name: 'Layout density axis' })).getByRole('button', { name: 'Compact' }))
-        expect(screen.getByTestId('moodboard-panel-light')).toHaveAttribute('data-density', 'compact')
-        expect(screen.getByTestId('moodboard-panel-dark')).toHaveAttribute('data-density', 'compact')
+        /* Chart */
+        expect(screen.getByTestId('moodboard-chart')).toBeInTheDocument()
+
+        /* Table */
+        expect(screen.getByText('SERVICE HEALTH')).toBeInTheDocument()
+        expect(screen.getByText(/edge-router/)).toBeInTheDocument()
+
+        /* Form controls */
+        expect(screen.getByLabelText('Workspace')).toBeInTheDocument()
+        expect(screen.getByLabelText('Region')).toBeInTheDocument()
+        expect(screen.getByLabelText('Release notes')).toBeInTheDocument()
+        expect(screen.getByText('Signed builds only')).toBeInTheDocument()
+        expect(screen.getByText('Notifications')).toBeInTheDocument()
+
+        /* Buttons */
+        expect(screen.getByRole('button', { name: 'primary' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'danger' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'loading' })).toBeInTheDocument()
+
+        /* Badges */
+        expect(screen.getByText('success')).toBeInTheDocument()
+        expect(screen.getByText('warning')).toBeInTheDocument()
+
+        /* Progress */
+        expect(screen.getByText('Migrations')).toBeInTheDocument()
+        expect(screen.getByText('Tests')).toBeInTheDocument()
+    })
+
+    it('changing accent axis updates preview scope attribute', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
 
         fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
-        expect(screen.getByTestId('moodboard-page').parentElement).toHaveAttribute('data-design-accent', 'violet')
-        fireEvent.click(screen.getByRole('button', { name: 'Rounded' }))
-        fireEvent.click(screen.getByRole('button', { name: 'Réinitialiser l’état' }))
-        expect(screen.getByTestId('moodboard-panel-light')).toHaveAttribute('data-density', 'comfortable')
-        expect(screen.getByTestId('moodboard-page').parentElement).toHaveAttribute('data-design-accent', 'cyan')
-        expect(within(lightPanel).getByLabelText('Workspace')).toHaveValue('monority-prod')
+        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+
+        /* Verify the resolved CSS variable changes on DesignProvider root */
+        const root = screen.getByTestId('moodboard-page').parentElement!
+        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('295')
+    })
+
+    it('changing radius axis updates preview scope attribute', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-radius', 'default')
+
+        fireEvent.click(within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', { name: 'Rounded' }))
+        expect(scope).toHaveAttribute('data-design-radius', 'rounded')
+    })
+
+    it('changing theme axis updates preview scope data-design-theme', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        fireEvent.click(within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('button', { name: 'Light' }))
+        expect(scope).toHaveAttribute('data-design-theme', 'light')
+    })
+
+    it('reset button restores default configuration', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+
+        /* Change some axes */
+        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        fireEvent.click(within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', { name: 'Rounded' }))
+
+        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+        expect(scope).toHaveAttribute('data-design-radius', 'rounded')
+
+        /* Reset */
+        fireEvent.click(screen.getByTestId('moodboard-reset'))
+
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
+        expect(scope).toHaveAttribute('data-design-radius', 'default')
+    })
+
+    it('copy button copies configuration to clipboard', async () => {
+        const writeText = vi.fn().mockResolvedValue(undefined)
+        Object.assign(navigator, { clipboard: { writeText } })
+
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        fireEvent.click(screen.getByTestId('moodboard-copy'))
+
+        expect(writeText).toHaveBeenCalled()
+        const copiedJson = JSON.parse(String(writeText.mock.calls[0]?.[0]))
+        expect(copiedJson.accent).toBe('violet')
+    })
+
+    it('persists configuration to localStorage', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+
+        const stored = localStorage.getItem('monority-design-config')
+        expect(stored).toBeTruthy()
+        expect(JSON.parse(stored!).accent).toBe('violet')
+    })
+
+    it('sidebar token details are collapsible', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const details = screen.getByText('Token Details').closest('details')!
+        expect(details).not.toHaveAttribute('open')
+
+        fireEvent.click(screen.getByText('Token Details'))
+        expect(details).toHaveAttribute('open')
+
+        /* JSON content visible when open */
+        expect(screen.getByText(/"theme"/)).toBeInTheDocument()
     })
 })

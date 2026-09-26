@@ -906,56 +906,38 @@ test('Step33 select, alignment, Card, and Carousel geometry stays coherent', asy
     )
 })
 
-test('Step34 moodboard presents one system across five themes', async ({ page }) => {
+test('Step34 moodboard presents one canonical Design Studio', async ({ page }) => {
     const width = page.viewportSize()?.width ?? 0
     await page.goto('/moodboard')
     await expect(page.getByTestId('moodboard-page')).toBeVisible()
-    const panels = page.locator('[data-testid^="moodboard-panel-"]')
-    await expect(panels).toHaveCount(5)
-    await expect(page.getByTestId('moodboard-theme-grid')).toBeVisible()
-    await expect(page.getByTestId('moodboard-light-tokens')).toBeVisible()
-    await expect(page.getByTestId('moodboard-dark-tokens')).toBeVisible()
-    await expect(page.getByTestId('moodboard-oled-tokens')).toBeVisible()
-    await expect(page.getByTestId('moodboard-ocean-tokens')).toBeVisible()
-    await expect(page.getByTestId('moodboard-night-tokens')).toBeVisible()
 
-    const panelMetrics: string[] = []
-    for (const theme of ['light', 'dark', 'oled', 'ocean', 'night'] as const) {
-        const panel = page.getByTestId(`moodboard-panel-${theme}`)
-        const metrics = await panel.evaluate((element) => {
-            const style = getComputedStyle(element)
-            const card = element.querySelector('.moodboard-card')
-            const cardStyle = card ? getComputedStyle(card) : null
-            return {
-                canvas: style.backgroundColor,
-                surface: cardStyle?.backgroundColor ?? '',
-                cards: element.querySelectorAll('.moodboard-card').length,
-                controls: element.querySelectorAll(
-                    '.mr-input-base, .mr-btn, .mr-checkbox, .mr-toggle'
-                ).length,
-                overflow: document.documentElement.scrollWidth <= window.innerWidth + 1,
-                backgroundImage: style.backgroundImage,
-            }
-        })
-        expect(metrics.cards).toBe(6)
-        expect(metrics.controls).toBeGreaterThan(10)
-        expect(metrics.overflow).toBe(true)
-        expect(metrics.backgroundImage).toBe('none')
-        expect(metrics.surface).not.toBe('rgba(0, 0, 0, 0)')
-        panelMetrics.push(`${theme}:${metrics.canvas}:${metrics.surface}`)
-    }
-    expect(new Set(panelMetrics).size).toBe(5)
+    /* Single preview scope — no more 5-panel grid */
+    const scope = page.getByTestId('moodboard-preview-scope')
+    await expect(scope).toBeVisible()
 
-    const primary = page
-        .getByTestId('moodboard-panel-light')
-        .getByRole('button', { name: 'Deploy' })
+    /* Config sidebar with all 8 axes */
+    await expect(page.getByRole('group', { name: 'Theme axis' })).toBeVisible()
+    await expect(page.getByRole('group', { name: 'Accent axis' })).toBeVisible()
+    await expect(page.getByRole('group', { name: 'Radius axis' })).toBeVisible()
+
+    /* Preview content */
+    const preview = page.getByTestId('moodboard-preview')
+    const controls = await preview.locator('.mr-input-base, .mr-btn, .mr-checkbox, .mr-toggle').count()
+    expect(controls).toBeGreaterThan(10)
+
+    /* No horizontal overflow */
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
+    expect(overflow).toBe(true)
+
+    /* Keyboard focus */
+    const primary = page.getByRole('button', { name: 'Deploy' }).first()
     await primary.focus()
     expect(
         await primary.evaluate((element) =>
             Number.parseFloat(getComputedStyle(element).outlineWidth)
         )
     ).toBeGreaterThan(0)
-    console.log(`MOODBOARD ${width} ${JSON.stringify(panelMetrics)}`)
+    console.log(`MOODBOARD ${width} controls=${controls}`)
 })
 
 test('control families expose the shared density ladder', async ({ page }) => {
