@@ -138,7 +138,7 @@ function ConfigPanel({
             <div className="moodboard-sidebar__axes">
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Theme</span>
-                    <ToggleGroup size="sm" value={config.theme} onValueChange={onValue('theme')}
+                    <ToggleGroup value={config.theme} onValueChange={onValue('theme')}
                         items={[
                             { value: 'dark', label: 'Dark' },
                             { value: 'light', label: 'Light' },
@@ -152,7 +152,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Brand</span>
-                    <ToggleGroup size="sm" value={config.brand} onValueChange={onValue('brand')}
+                    <ToggleGroup value={config.brand} onValueChange={onValue('brand')}
                         items={DESIGN_PRESETS.brands}
                         aria-label="Brand axis"
                     />
@@ -160,7 +160,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Accent</span>
-                    <ToggleGroup size="sm" value={config.accent} onValueChange={onValue('accent')}
+                    <ToggleGroup value={config.accent} onValueChange={onValue('accent')}
                         items={DESIGN_PRESETS.accents}
                         aria-label="Accent axis"
                     />
@@ -168,7 +168,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Components</span>
-                    <ToggleGroup size="sm" value={config.componentColor} onValueChange={onValue('componentColor')}
+                    <ToggleGroup value={config.componentColor} onValueChange={onValue('componentColor')}
                         items={DESIGN_PRESETS.componentColors}
                         aria-label="Component color axis"
                     />
@@ -176,7 +176,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Charts</span>
-                    <ToggleGroup size="sm" value={config.chartPalette} onValueChange={onValue('chartPalette')}
+                    <ToggleGroup value={config.chartPalette} onValueChange={onValue('chartPalette')}
                         items={DESIGN_PRESETS.chartPalettes}
                         aria-label="Chart palette axis"
                     />
@@ -184,7 +184,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Radius</span>
-                    <ToggleGroup size="sm" value={config.radius} onValueChange={onValue('radius')}
+                    <ToggleGroup value={config.radius} onValueChange={onValue('radius')}
                         items={DESIGN_PRESETS.radii}
                         aria-label="Radius axis"
                     />
@@ -192,7 +192,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Spacing</span>
-                    <ToggleGroup size="sm" value={config.spacing} onValueChange={onValue('spacing')}
+                    <ToggleGroup value={config.spacing} onValueChange={onValue('spacing')}
                         items={DESIGN_PRESETS.spacings}
                         aria-label="Spacing axis"
                     />
@@ -200,7 +200,7 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Layout</span>
-                    <ToggleGroup size="sm" value={config.density} onValueChange={onValue('density')}
+                    <ToggleGroup value={config.density} onValueChange={onValue('density')}
                         items={DESIGN_PRESETS.densities}
                         aria-label="Layout density axis"
                     />

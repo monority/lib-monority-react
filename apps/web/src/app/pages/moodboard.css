@@ -1,13 +1,13 @@
 /* ------------------------------------------------------------------ */
 /*  Phase 6 — Canonical Monority Design Studio                         */
-/*  Layout: sidebar config + single live preview                       */
+/*  Layout: horizontal config bar + single live preview                */
 /* ------------------------------------------------------------------ */
 
 /* === Page shell === */
 
 .moodboard-page {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr;
     min-height: 100vh;
     overflow-x: hidden;
     background: var(--mr-bg-canvas);
@@ -18,54 +18,67 @@
     display: contents;
 }
 
-/* === Sidebar === */
+/* === Config bar (sticky top) === */
 
 .moodboard-sidebar {
     position: sticky;
+    z-index: var(--mr-z-sticky);
     top: 0;
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: var(--mr-spacing-4);
-    height: 100vh;
-    overflow-y: auto;
-    padding: var(--mr-spacing-4);
-    border-inline-end: var(--mr-border-width) solid var(--mr-border-subtle);
+    gap: var(--mr-spacing-3);
+    padding: var(--mr-spacing-3) var(--mr-spacing-4);
+    border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: var(--mr-bg-surface);
 }
 
 .moodboard-sidebar__header {
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--mr-spacing-3);
+    min-block-size: var(--mr-topbar-height);
 }
 
 .moodboard-sidebar__title {
-    display: grid;
-    gap: var(--mr-spacing-1);
+    display: flex;
+    align-items: baseline;
+    gap: var(--mr-spacing-2);
+    color: var(--mr-text-tertiary);
+    font: var(--mr-type-label);
+    letter-spacing: var(--mr-tracking-label);
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .moodboard-sidebar__title strong {
     color: var(--mr-text-primary);
-    font: var(--mr-type-h3);
+    font: var(--mr-type-small-strong);
+    letter-spacing: 0;
+    text-transform: none;
 }
 
 .moodboard-sidebar__actions {
     display: flex;
     gap: var(--mr-spacing-2);
+    flex-shrink: 0;
 }
 
+/* Axes grid — responsive rows of toggle groups */
 .moodboard-sidebar__axes {
     display: grid;
-    gap: var(--mr-spacing-4);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--mr-spacing-3) var(--mr-spacing-4);
 }
 
 .moodboard-axis {
     display: grid;
-    gap: var(--mr-spacing-2);
+    gap: var(--mr-spacing-1);
+    min-inline-size: 0;
 }
 
 .moodboard-sidebar__tokens {
     border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
-    padding-block-start: var(--mr-spacing-3);
+    padding-block-start: var(--mr-spacing-2);
 }
 
 .moodboard-sidebar__tokens summary {
@@ -94,7 +107,7 @@
 
 .moodboard-preview-scope {
     display: grid;
-    min-block-size: 100vh;
+    min-block-size: 0;
     background: var(--mr-bg-canvas);
     color: var(--mr-text-primary);
 }
@@ -106,7 +119,6 @@
     gap: var(--mr-spacing-4);
     min-inline-size: 0;
     padding: var(--mr-spacing-4) var(--mr-spacing-6);
-    padding-block-start: 0;
 }
 
 .moodboard-preview__body {
@@ -114,6 +126,8 @@
     gap: var(--mr-spacing-4);
     min-inline-size: 0;
     max-inline-size: 1200px;
+    margin-inline: auto;
+    inline-size: 100%;
 }
 
 .moodboard-preview__grid {
@@ -395,22 +409,9 @@
 
 /* === Responsive === */
 
-@media (max-width: 1024px) {
-    .moodboard-page {
-        grid-template-columns: 280px 1fr;
-    }
-}
-
 @media (max-width: 768px) {
-    .moodboard-page {
+    .moodboard-sidebar__axes {
         grid-template-columns: 1fr;
-    }
-
-    .moodboard-sidebar {
-        position: relative;
-        height: auto;
-        border-inline-end: 0;
-        border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     }
 
     .moodboard-preview__grid {
@@ -425,14 +426,18 @@
     .moodboard-data-grid {
         grid-template-columns: 1fr;
     }
+
+    .moodboard-preview {
+        padding: var(--mr-spacing-3);
+    }
 }
 
 @media (max-width: 480px) {
     .moodboard-sidebar {
-        padding: var(--mr-spacing-3);
+        padding: var(--mr-spacing-2);
     }
 
-    .moodboard-preview {
-        padding: var(--mr-spacing-3);
+    .moodboard-sidebar__header {
+        flex-wrap: wrap;
     }
 }
