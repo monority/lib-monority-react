@@ -21,6 +21,7 @@ import {
     DesignProvider,
     DESIGN_PRESETS,
     DEFAULT_DESIGN_CONFIG,
+    resolveDesignConfig,
     type Column,
     designConfigToJSON,
     type DesignConfig,
@@ -112,7 +113,9 @@ function ConfigPanel({
     copied: boolean
 }) {
     const onValue = (key: keyof DesignConfig) => (value: string | string[]) => {
-        onConfig(key, String(value) as DesignConfig[typeof key])
+        const v = Array.isArray(value) ? value[0] ?? '' : String(value)
+        if (v === '') return /* ignore deselect in single mode */
+        onConfig(key, v as DesignConfig[typeof key])
     }
 
     return (
@@ -540,6 +543,7 @@ export function MoodboardPage() {
     }, [copied])
 
     const density: DensityName = config.density === 'compact' ? 'compact' : 'comfortable'
+    const resolved = resolveDesignConfig(config)
 
     return (
         <DesignProvider config={config} className="moodboard-design-root">
@@ -556,6 +560,7 @@ export function MoodboardPage() {
                     density={density}
                     brand={config.brand === 'studio' ? 'studio' : undefined}
                     className="moodboard-preview-scope"
+                    style={resolved.style}
                     data-testid="moodboard-preview-scope"
                     data-design-theme={config.theme}
                     data-design-accent={config.accent}
