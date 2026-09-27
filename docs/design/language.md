@@ -202,7 +202,7 @@ Toute modification d'une couleur doit être re-vérifiée avec le même jeu de p
 
 ### 5.6 Espacement
 
-Grille de 4px. Nouveau nom `--mr-spacing-*` (numérotation × 4px) ; l'ancienne échelle `--mr-space-*` est conservée telle quelle dans le fichier déprécié, pour éviter tout changement de valeur silencieux. Les demi-pas 2px et 6px sont réservés à l'intérieur des petits composants.
+**Migration en cours** vers la grille 4px (`--mr-spacing-*`). L'échelle `--mr-space-*` (3/6/9/14/20/28/40/56/80px) n'est **pas** une grille 4px : elle reste la référence de fait de la librairie (504 occurrences, 85 fichiers, dont 11 alias dépréciés qui en dépendent) et demeure **dépréciée sans date de retrait**. Tout nouveau code doit utiliser `--mr-spacing-*` ; la table de correspondance indicative (cas ambigus 9px et 14px, pas 28px et 56px absents) est dans `docs/design/audit/migration-table.md` §2.1, et le suivi se fait avec `node packages/tokens/scripts/check-deprecated.mjs --warn`. Les demi-pas 2px et 6px sont réservés à l'intérieur des petits composants.
 
 | Token | Valeur | Usage type |
 |---|---|---|
