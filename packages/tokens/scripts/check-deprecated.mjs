@@ -7,11 +7,17 @@
  * valeurs actuelles extraites (deprecated.json) sont présents dans
  * `deprecated.css` avec leur valeur exacte.
  *
- *   node packages/tokens/scripts/check-deprecated.mjs
+ *   node packages/tokens/scripts/check-deprecated.mjs [--warn]
+ *
+ * `--warn` ajoute un rapport (sans échec) des usages restants de
+ * `--mr-space-*`, échelle dépréciée en cours de migration vers
+ * `--mr-spacing-*` (grille 4px). Voir docs/design/audit/migration-table.md.
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+const WARN = process.argv.includes('--warn')
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const pkgDir = path.join(repoRoot, 'packages/tokens')
@@ -51,14 +57,29 @@ function walk(dir, cb) {
     }
 }
 
+// Échelle dépréciée « douce » : encore utilisée partout, sans date de retrait.
+// On ne casse rien, on signale pour que la migration vers --mr-spacing-* puisse
+// être suivie (le total doit baisser ; le rapport est diffable en CI).
+const SOFT_DEPRECATED = /^--mr-space-(\d+)$/
+const SOFT_DEPRECATED_HINT = '--mr-space-* est déprécié : préférer --mr-spacing-* (grille 4px)'
+
 const used = new Set()
 const liveDefs = new Set()
+/** fichier -> nombre d'usages de --mr-space-* (hors sources de tokens). */
+const softUsage = new Map()
 for (const root of ['packages', 'apps']) {
     walk(path.join(repoRoot, root), (f) => {
         const src = fs.readFileSync(f, 'utf8')
         for (const m of src.matchAll(/var\((--mr-[\w-]+)/g)) used.add(m[1])
         if (f.endsWith('.css')) {
             for (const m of src.matchAll(/(--mr-[\w-]+)\s*:/g)) liveDefs.add(m[1])
+        }
+        if (!f.includes(`${path.sep}tokens${path.sep}src${path.sep}`)) {
+            let n = 0
+            for (const m of src.matchAll(/var\((--mr-[\w-]+)/g)) {
+                if (SOFT_DEPRECATED.test(m[1])) n++
+            }
+            if (n) softUsage.set(path.relative(repoRoot, f).split(path.sep).join('/'), n)
         }
     })
 }
@@ -121,3 +142,19 @@ if (failures.length) {
 console.log(
     `T6 PASS — 0 manquant (${used.size} utilisés couverts ; ${aliases.length} alias + ${valuesChecked} valeurs actuelles vérifiés ; audit-8 à part : ${auditUsed.sort().join(', ') || 'aucun utilisé'})`,
 )
+
+if (WARN) {
+    const byToken = new Map()
+    for (const [name] of used) {
+        const m = name.match(SOFT_DEPRECATED)
+        if (m) byToken.set(name, (byToken.get(name) ?? 0) + 1)
+    }
+    const total = [...softUsage.values()].reduce((a, b) => a + b, 0)
+    const files = [...softUsage.entries()].sort((a, b) => b[1] - a[1])
+    console.log(`\nT6 WARN — ${SOFT_DEPRECATED_HINT}`)
+    console.log(`  ${total} occurrence(s) dans ${files.length} fichier(s) — objectif : 0`)
+    for (const [f, n] of files) console.log(`  ${String(n).padStart(4)}  ${f}`)
+    console.log(
+        ` Jetons concernés : ${[...byToken.keys()].sort().join(', ') || 'aucun'}`,
+    )
+}
