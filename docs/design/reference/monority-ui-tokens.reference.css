@@ -100,6 +100,7 @@
   --mr-control-size-sm: 32px;
   --mr-control-size-md: 40px;
   --mr-control-size-lg: 48px;
+  --mr-control-padding-inline-xs: 8px;
   --mr-control-padding-inline-sm: 12px;
   --mr-control-padding-inline-md: 16px;
   --mr-control-padding-inline-lg: 20px;
@@ -549,6 +550,7 @@
   --mr-control-size-sm: 28px;
   --mr-control-size-md: 32px;
   --mr-control-size-lg: 40px;
+  --mr-control-padding-inline-xs: 4px;
   --mr-control-padding-inline-sm: 8px;
   --mr-control-padding-inline-md: 12px;
   --mr-control-padding-inline-lg: 16px;

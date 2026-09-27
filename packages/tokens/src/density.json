@@ -5,6 +5,7 @@
       "control-size-sm": { "$value": "28px", "$type": "dimension" },
       "control-size-md": { "$value": "32px", "$type": "dimension" },
       "control-size-lg": { "$value": "40px", "$type": "dimension" },
+      "control-padding-inline-xs": { "$value": "4px", "$type": "dimension" },
       "control-padding-inline-sm": { "$value": "8px", "$type": "dimension" },
       "control-padding-inline-md": { "$value": "12px", "$type": "dimension" },
       "control-padding-inline-lg": { "$value": "16px", "$type": "dimension" },

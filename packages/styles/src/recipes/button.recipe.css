@@ -18,7 +18,7 @@
       color var(--mr-dur-150) var(--mr-ease-in-out),
       opacity var(--mr-dur-150) var(--mr-ease-in-out);
     outline: none;
-    padding: 0 var(--mr-control-padding-inline-md);
+    padding: 0 var(--mr-control-padding-inline-sm);
   }
 
   .mr-btn:focus-visible {
@@ -36,14 +36,14 @@
   .mr-btn--sm,
   .mr-btn[data-size='sm'] {
     min-block-size: var(--mr-btn-height-sm);
-    padding: 0 var(--mr-control-padding-inline-sm);
+    padding: 0 var(--mr-control-padding-inline-xs);
     font-size: var(--mr-text-xs);
   }
 
   .mr-btn--md,
   .mr-btn[data-size='md'] {
     min-block-size: var(--mr-btn-height-md);
-    padding: 0 var(--mr-control-padding-inline-md);
+    padding: 0 var(--mr-control-padding-inline-sm);
   }
 
   .mr-btn--lg,

@@ -88,6 +88,7 @@
     "control-size-sm": { "$value": "32px", "$type": "dimension" },
     "control-size-md": { "$value": "40px", "$type": "dimension" },
     "control-size-lg": { "$value": "48px", "$type": "dimension" },
+    "control-padding-inline-xs": { "$value": "8px", "$type": "dimension" },
     "control-padding-inline-sm": { "$value": "12px", "$type": "dimension" },
     "control-padding-inline-md": { "$value": "16px", "$type": "dimension" },
     "control-padding-inline-lg": { "$value": "20px", "$type": "dimension" },
