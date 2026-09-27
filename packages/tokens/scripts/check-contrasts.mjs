@@ -49,12 +49,12 @@ const PAIRS = [
     ['disabled', '--mr-text-disabled', SIX, 3, 4.5],
     ['accent', '--mr-accent-text', ACCENT_SIX, 4.5, 7],
     ['focus', '--mr-focus-color', SIX, 3, 4.5],
-    ['border', '--mr-border-control', FOUR, 3, 3],
+    ['border', '--mr-border-control', FOUR, 3, 4.3],
     /* Bordure de contrôle AU REPOS : c'est l'état dans lequel on identifie le
        champ (WCAG 1.4.11). Le fond réel des 9 contrôles à bordure est
        `bg-control` = `bg-sunken` ; la liste combobox en est exclue (c'est un
        conteneur d'overlay, pas une limite de contrôle). */
-    ['rest', '--mr-border-control', ['--mr-bg-sunken'], 3, 3],
+    ['rest', '--mr-border-control', ['--mr-bg-sunken'], 3, 4.3],
     ['onaccent', '--mr-on-accent', ['--mr-accent', '--mr-accent-hover', '--mr-accent-active'], 4.5, 7],
     ['ondanger', '--mr-on-danger-solid', ['--mr-danger-solid'], 4.5, 7],
     ...TONES.flatMap((tone) => [
@@ -84,7 +84,8 @@ const HOVER_PAIRS = [
     ['hover-tertiary', '--mr-text-tertiary', 4.5, 3, 7],
     ['hover-accent', '--mr-accent-text', 4.5, 4.5, 7],
     /* Bordure de contrôle SURVOLÉE : seuil 3:1 (WCAG 1.4.11) sur les 4 bases,
-       tous thèmes. */
+       tous thèmes. Le seuil high-contrast reste à 7 (non assoupli : la valeur
+       de survol HC le tient avec 12.32:1). */
     ['hover-border', '--mr-border-control-hover', 3, 3, 7],
 ]
 

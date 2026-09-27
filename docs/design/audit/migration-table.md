@@ -428,13 +428,36 @@ non branché dans `loadSources` / `THEMES`). Il échappe donc aux contrôles X2 
 porterait une bordure de contrôle **au repos à ~1.5:1**, sous le seuil WCAG 1.4.11 —
 seul `high-contrast` est aujourd'hui conforme (4.38:1).
 
-À la réintégration, appliquer la même correction que les autres thèmes :
+Valeurs recalculées sur les **fonds réels du thème** (cible repos ≥ 3.3:1, écart
+repos → hover ≥ 0.06), et non recopiées de `dark` :
 
-| Champ | Valeur à poser |
-|---|---|
-| `border-control` (repos) | 0.545 (chroma/hue de la variante), ratio ≥ 3.3:1 vs `bg-sunken` |
-| `border-control-hover` | 0.595 — reprend la valeur de survol historique du thème, écart ΔL ≥ 0.06 |
+| Champ | Sur les fonds actuels du fichier | Si `slate` suit aussi la neutralisation dark |
+|---|---|---|
+| `border-control` (repos) | **0.5575** — ratio 3.31 | **0.565** — ratio 3.32 |
+| `border-control-hover` | **0.6175** — ΔL 0.060 | **0.625** — ΔL 0.060 |
 
-et vérifier `X2` (`rest` ≥ 3, `hover-border` ≥ 3) ainsi que `T8` (fond opaque des
-contrôles). Ne pas réutiliser les valeurs de `dark`/`slate` telles quelles : recalculer
-sur les fonds réels du thème.
+Teinte `215` et chroma des neutres de la variante (≈ 0.013), à conserver.
+
+> Choisir la colonne selon les fonds réellement en place au moment de la
+> réintégration : `slate.json` porte encore les valeurs antérieures à la
+> neutralisation (`bg-sunken` 0.205), alors que `dark` est passé à 0.215. Le
+> recalcul est à refaire si les fonds bougent encore.
+
+À vérifier après coup : `X2` (`rest` ≥ 3, seuil high-contrast 4.3 ; `hover-border` ≥ 3)
+et `T8` (fond opaque des contrôles). La marge de régression sur le repos est faible
+(≈ 0.002 L avant de repasser sous 3.3) : c'est le seuil `rest` de X2, et non la
+valeur, qui empêche une future régression.
+
+## 2.3 Écarts doc/code relevés, non corrigés
+
+Suivi à arbitrer plus tard (hors périmètre du travail sur les bordures de contrôle) :
+
+| Fichier | Ce que la doc annonce | Ce que le code fait |
+|---|---|---|
+| `docs/design/components/file-upload.md` | bordure au repos de la zone de dépôt : `--mr-border-control` | `.mr-drop-zone` utilise `border-subtle` ; `--mr-border-control` n'est posé qu'au survol et au focus |
+| `docs/design/components/slider.md` | bordure du pouce au repos : `--mr-border-control` | le pouce porte un anneau de séparation `2px solid var(--mr-bg-surface)`, pas une bordure de contrôle |
+
+Les deux remontent au même constat que le correctif appliqué : la doc décrit un
+comportement que la recette n'implémentait pas. Trancher entre aligner la recette
+sur la doc (élargir les contrôles couverts par `border-control` au repos) ou
+corriger la doc.
