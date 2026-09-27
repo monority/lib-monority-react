@@ -17,7 +17,7 @@ function collectHeadings(): HeadingInfo[] {
     const elements = document.querySelectorAll<HTMLHeadingElement>('.docs-page h2, .docs-page h3')
     const headings: HeadingInfo[] = []
 
-    elements.forEach((el) => {
+    for (const el of elements) {
         if (!el.id) {
             el.id = generateId(el.textContent || '')
         }
@@ -26,7 +26,7 @@ function collectHeadings(): HeadingInfo[] {
             text: el.textContent || '',
             level: el.tagName === 'H2' ? 2 : 3,
         })
-    })
+    }
 
     return headings
 }

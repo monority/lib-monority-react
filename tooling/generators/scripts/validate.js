@@ -115,14 +115,14 @@ function getExportedComponents() {
 function validateExports(components, exportedComponents) {
     const missingExports = components.filter((comp) => !exportedComponents.includes(comp))
 
-    missingExports.forEach((comp) => {
+    for (const comp of missingExports) {
         results.errors.push(`Component "${comp}" is not exported in index.js`)
-    })
+    }
 
     const extraExports = exportedComponents.filter((exp) => !components.includes(exp))
-    extraExports.forEach((exp) => {
+    for (const exp of extraExports) {
         results.warnings.push(`Export "${exp}" in index.js has no corresponding component file`)
-    })
+    }
 }
 
 /**
@@ -131,15 +131,15 @@ function validateExports(components, exportedComponents) {
 function validateShowcase(components, showcaseSections) {
     const missingShowcase = components.filter((comp) => !showcaseSections.includes(comp))
 
-    missingShowcase.forEach((comp) => {
+    for (const comp of missingShowcase) {
         results.warnings.push(`Component "${comp}" has no showcase section`)
         results.info.push(`  → Run: npm run generate:component ${comp} --no-test`)
-    })
+    }
 
     const orphanedShowcase = showcaseSections.filter((comp) => !components.includes(comp))
-    orphanedShowcase.forEach((comp) => {
+    for (const comp of orphanedShowcase) {
         results.warnings.push(`Orphaned showcase section for "${comp}" (component doesn't exist)`)
-    })
+    }
 }
 
 /**
@@ -148,12 +148,12 @@ function validateShowcase(components, showcaseSections) {
 function validateTests(components) {
     const dir = path.join(ROOT_DIR, CONFIG.uiComponentsDir)
 
-    components.forEach((comp) => {
+    for (const comp of components) {
         const testFile = path.join(dir, `${comp}.test.jsx`)
         if (!fs.existsSync(testFile)) {
             results.info.push(`Component "${comp}" has no test file`)
         }
-    })
+    }
 }
 
 /**
@@ -166,19 +166,19 @@ function printResults() {
 
     if (results.errors.length > 0) {
         console.log(`${colors.red}❌ Errors (${results.errors.length}):${colors.reset}`)
-        results.errors.forEach((msg) => console.log(`   ${msg}`))
+        for (const msg of results.errors) console.log(`   ${msg}`)
         console.log()
     }
 
     if (results.warnings.length > 0) {
         console.log(`${colors.yellow}⚠️  Warnings (${results.warnings.length}):${colors.reset}`)
-        results.warnings.forEach((msg) => console.log(`   ${msg}`))
+        for (const msg of results.warnings) console.log(`   ${msg}`)
         console.log()
     }
 
     if (results.info.length > 0) {
         console.log(`${colors.blue}ℹ️  Info:${colors.reset}`)
-        results.info.forEach((msg) => console.log(`   ${msg}`))
+        for (const msg of results.info) console.log(`   ${msg}`)
         console.log()
     }
 

@@ -75,7 +75,7 @@ describe('NavigationMenu', () => {
         const view = render(<NavigationMenu items={simpleItems} />)
         const nav = view.querySelector('nav')
         expect(nav).toBeTruthy()
-        expect(nav?.getAttribute('role')).toBe('navigation')
+        expect(nav?.tagName).toBe('NAV') // role navigation implicite, pas d'attribut redondant
         expect(nav?.getAttribute('aria-label')).toBe('Main navigation')
         expect(view.querySelectorAll('.mr-nav-menu__item').length).toBe(3)
     })
@@ -195,7 +195,7 @@ describe('NavigationMenu', () => {
         const ref = createRef<HTMLElement>()
         render(<NavigationMenu ref={ref} items={simpleItems} />)
         expect(ref.current?.tagName).toBe('NAV')
-        expect(ref.current?.getAttribute('role')).toBe('navigation')
+        expect(ref.current?.tagName).toBe('NAV') // role navigation implicite, pas d'attribut redondant
     })
 
     it('supports controlled value', () => {

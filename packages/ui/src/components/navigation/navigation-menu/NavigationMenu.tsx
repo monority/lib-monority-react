@@ -60,10 +60,6 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
         <nav
             ref={ref}
             className={cn('mr-nav-menu', className)}
-            // biome-ignore lint/a11y/noRedundantRoles: <nav> porte deja le role
-            // implicite, mais NavigationMenu.test.tsx epingle l'attribut explicite :
-            // on le conserve tant que le test n'a pas ete aligne.
-            role="navigation"
             aria-label="Main navigation"
             onMouseLeave={handleMouseLeave}
             {...props}

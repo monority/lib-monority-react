@@ -58,22 +58,22 @@ if (missingShowcase.length === 0 && orphanedShowcase.length === 0) {
 
 if (missingShowcase.length > 0) {
     console.log(`\n⚠️  Missing showcase sections (${missingShowcase.length}):`)
-    missingShowcase.forEach((comp) => {
+    for (const comp of missingShowcase) {
         console.log(`   - ${comp}`)
-    })
+    }
 }
 
 if (orphanedShowcase.length > 0) {
     console.log(`\n🗑️  Orphaned showcase sections (${orphanedShowcase.length}):`)
-    orphanedShowcase.forEach((comp) => {
+    for (const comp of orphanedShowcase) {
         console.log(`   - ${comp}`)
-    })
+    }
 }
 
 console.log('\n💡 Run the following to create missing sections:')
-missingShowcase.forEach((comp) => {
+for (const comp of missingShowcase) {
     console.log(`   node scripts/generate-component.js ${comp} --no-test`)
-})
+}
 console.log()
 
 process.exit(1)
