@@ -1068,7 +1068,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1078,7 +1078,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1088,7 +1088,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1098,7 +1098,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1108,7 +1108,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1118,7 +1118,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1128,7 +1128,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1138,7 +1138,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1148,7 +1148,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },
@@ -1158,7 +1158,7 @@
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\spacing.css",
           "deprecated": true,
-          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
+          "note": "Depreciee, sans date de retrait : migrer vers --mr-spacing-* (grille 4px). Correspondances indicatives dans docs/design/audit/migration-table.md ; 3px, 9px et 14px n'ont pas d'equivalent 4px exact, a choisir selon le contexte. Suivi : node packages/tokens/scripts/check-deprecated.mjs --warn"
         }
       }
     },

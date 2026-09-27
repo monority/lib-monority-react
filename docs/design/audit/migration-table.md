@@ -320,7 +320,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 | `--mr-sidebar-layout-gap` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-sidebar-width` | oui | présent dans la référence v4 | `--mr-sidebar-width` (valeur de référence appliquée en phase 2) |
 | `--mr-space-0` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
-| `--mr-space-1` | oui | `--mr-spacing-0-5` | 3px, voir table 2.1 (migration en cours) |
+| `--mr-space-1` | oui | `--mr-spacing-0-5` ou `--mr-spacing-1` | 3px, sans équivalent exact, voir table 2.1 (migration en cours) |
 | `--mr-space-2` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-space-3` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-space-4` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
@@ -409,7 +409,7 @@ L'échelle `space-*` n'est pas une grille de 4px (progression ≈ ×1,4) ; `spac
 | `--mr-space-*` | Valeur | Candidat `--mr-spacing-*` | Remarque |
 |---|---|---|---|
 | `space-0` | 0 | `spacing-0` | exact |
-| `space-1` | 3px | `spacing-0-5` (2px) | **ambigu** : 1px d'écart, invisible sauf en alignement serré |
+| `space-1` | 3px | `spacing-0-5` (2px) ou `spacing-1` (4px) | **ambigu** : pas d'équivalent exact (2px ou 4px), choisir selon le contexte |
 | `space-2` | 6px | `spacing-1-5` (6px) | exact |
 | `space-3` | 9px | `spacing-2` (8px) ou `spacing-3` (12px) | **ambigu** : choisir selon le contexte (gap serré vs padding de cellule) |
 | `space-4` | 14px | `spacing-3` (12px) ou `spacing-4` (16px) | **ambigu** : idem |
