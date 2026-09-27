@@ -983,7 +983,7 @@
       }
     },
     "radius-xs": {
-      "$value": "0.375rem",
+      "$value": "calc(0.375rem * var(--mr-radius-scale))",
       "$extensions": {
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\radius.css"
@@ -991,7 +991,7 @@
       }
     },
     "radius-sm": {
-      "$value": "0.625rem",
+      "$value": "calc(0.625rem * var(--mr-radius-scale))",
       "$extensions": {
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\radius.css"
@@ -999,7 +999,7 @@
       }
     },
     "radius-md": {
-      "$value": "0.875rem",
+      "$value": "calc(0.875rem * var(--mr-radius-scale))",
       "$extensions": {
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\radius.css"
@@ -1007,7 +1007,7 @@
       }
     },
     "radius-lg": {
-      "$value": "1rem",
+      "$value": "calc(1rem * var(--mr-radius-scale))",
       "$extensions": {
         "com.monority.deprecated": {
           "origin": "packages\\styles\\src\\tokens\\core\\radius.css"
