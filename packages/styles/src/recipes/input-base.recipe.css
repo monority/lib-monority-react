@@ -13,7 +13,6 @@
     font-size: var(--mr-text-sm);
     font-weight: var(--mr-font-weight-regular);
     line-height: var(--mr-leading-control);
-    box-shadow: var(--mr-shadow-surface);
     transition:
       border-color var(--mr-duration-fast) var(--mr-ease-standard),
       background-color var(--mr-duration-fast) var(--mr-ease-standard),
@@ -26,7 +25,6 @@
 
   .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-input-base:focus-visible {
@@ -54,7 +52,7 @@
 
   .mr-input-base[data-tone='accent']:focus-visible {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
+    box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
   }
 
   .mr-input-base[data-tone='danger'] {

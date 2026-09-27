@@ -10,7 +10,6 @@
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         color: var(--mr-fg-base);
-        box-shadow: var(--mr-shadow-xs);
         overflow-x: auto;
         scrollbar-width: none;
     }
@@ -74,7 +73,7 @@
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
         color: var(--mr-fg-base);
-        box-shadow: var(--mr-shadow-md);
+        box-shadow: var(--mr-elevation-overlay);
         animation: mr-menubar-enter var(--mr-duration-fast) var(--mr-ease-standard);
     }
 

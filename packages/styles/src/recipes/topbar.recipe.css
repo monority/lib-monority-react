@@ -13,7 +13,6 @@
          border: var(--mr-border-width) solid color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
-        box-shadow: var(--mr-shadow-xs);
     }
 
     .mr-topbar__brand,

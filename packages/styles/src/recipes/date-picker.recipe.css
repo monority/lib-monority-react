@@ -20,7 +20,6 @@
 
   .mr-datepicker__trigger:hover {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
   }
 
   .mr-datepicker__trigger:focus-visible {

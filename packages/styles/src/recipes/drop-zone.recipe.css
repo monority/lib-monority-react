@@ -23,12 +23,11 @@
   .mr-drop-zone:hover {
     border-color: var(--mr-border-strong);
     background: var(--mr-bg-surface-strong);
-    box-shadow: var(--mr-shadow-sm);
   }
 
   .mr-drop-zone:focus-within {
     border-color: var(--mr-border-strong);
-    box-shadow: var(--mr-shadow-focus);
+    box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
   }
 
   .mr-drop-zone--dragover {

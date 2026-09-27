@@ -13,7 +13,6 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
-        box-shadow: var(--mr-shadow-xs);
     }
 
     .mr-toolbar--start {

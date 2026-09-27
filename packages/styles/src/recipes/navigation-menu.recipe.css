@@ -17,7 +17,6 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
         list-style: none;
     }
 
@@ -98,7 +97,7 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
-        box-shadow: var(--mr-shadow-md);
+        box-shadow: var(--mr-elevation-overlay);
         animation: mr-nav-menu-enter var(--mr-duration-fast) var(--mr-ease-standard);
     }
 

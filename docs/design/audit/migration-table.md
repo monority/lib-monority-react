@@ -115,7 +115,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 | `--mr-bg-accent-soft` | oui | mappé (exact) | `--mr-accent-subtle` |
 | `--mr-bg-accent-strong` | non | mappé (approx) | `--mr-accent-active` |
 | `--mr-bg-canvas` | oui | conservé (même nom, même rôle) | `--mr-bg-canvas` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
-| `--mr-bg-canvas-rgb` | oui | supprimé (5.15) | → fichier déprécié, retrait en fin de version majeure |
+| `--mr-bg-canvas-rgb` | oui | déprécié (valeur figée) | 0 usage interne depuis la migration vers `color-mix(in srgb, var(--mr-bg-canvas) …%, transparent)` (avatar, kbd) ; **définition conservée** (les valeurs par thème sont fausses, ne pas les utiliser) ; retrait en fin de version majeure |
 | `--mr-bg-control` | oui | mappé (approx) | `--mr-bg-sunken` |
 | `--mr-bg-inverse` | non | mappé (approx) | `--mr-tooltip-bg` |
 | `--mr-bg-subtle` | oui | mappé (exact) | `--mr-bg-sunken` |

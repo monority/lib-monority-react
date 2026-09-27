@@ -33,7 +33,6 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
     }
 
     .mr-sidebar-layout__main {
@@ -56,7 +55,6 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
-        box-shadow: var(--mr-shadow-xs);
     }
 
     .mr-sidebar-layout__content {
@@ -64,7 +62,6 @@
          border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-shadow-xs);
     }
 
     @media (max-width: 900px) {
