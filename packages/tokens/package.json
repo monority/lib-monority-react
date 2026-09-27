@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "node ./scripts/build.mjs",
-    "test": "pnpm build && node ./scripts/check-equivalence.mjs && node ./scripts/check-no-hardcoded.mjs && node ./scripts/check-deprecated.mjs && node ./scripts/check-contrasts.mjs && node ./scripts/check-spec-values.mjs",
+    "build:downstream": "node ./scripts/build-downstream.mjs",
+    "build:downstream:web": "node ./scripts/build-downstream.mjs --web",
+    "test": "pnpm build && node ./scripts/check-equivalence.mjs && node ./scripts/check-no-hardcoded.mjs && node ./scripts/check-deprecated.mjs && node ./scripts/check-contrasts.mjs && node ./scripts/check-spec-values.mjs && node ./scripts/check-dist-freshness.mjs",
     "clean": "node -e \"const fs=require('fs'); for (const p of ['dist','../styles/src/tokens/generated']) fs.rmSync(p,{recursive:true,force:true})\""
   },
   "devDependencies": {
