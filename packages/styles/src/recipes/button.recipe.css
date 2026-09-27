@@ -18,8 +18,7 @@
       color var(--mr-dur-150) var(--mr-ease-in-out),
       opacity var(--mr-dur-150) var(--mr-ease-in-out);
     outline: none;
-    /* Default (== md) : padding reduit, le texte reste proche des bords. */
-    padding: 0 var(--mr-control-padding-inline-sm);
+    padding: 0 var(--mr-control-padding-inline-md);
   }
 
   .mr-btn:focus-visible {
@@ -37,14 +36,14 @@
   .mr-btn--sm,
   .mr-btn[data-size='sm'] {
     min-block-size: var(--mr-btn-height-sm);
-    padding: 0 var(--mr-control-padding-inline-xs);
+    padding: 0 var(--mr-control-padding-inline-sm);
     font-size: var(--mr-text-xs);
   }
 
   .mr-btn--md,
   .mr-btn[data-size='md'] {
     min-block-size: var(--mr-btn-height-md);
-    padding: 0 var(--mr-control-padding-inline-sm);
+    padding: 0 var(--mr-control-padding-inline-md);
   }
 
   .mr-btn--lg,
@@ -56,9 +55,6 @@
 
   .mr-btn--primary,
   .mr-btn[data-variant='primary'] {
-    /* Inset shadow, not `border`: a transparent border would still grow every
-       primary button by 2px in the box model. */
-    box-shadow: inset 0 0 0 var(--mr-border-width) var(--mr-control-accent-border, transparent);
     background-color: var(--mr-control-accent, var(--mr-accent));
     color: var(--mr-control-on-accent, var(--mr-on-accent));
   }
@@ -93,13 +89,13 @@
 
   .mr-btn--danger,
   .mr-btn[data-variant='danger'] {
-    background-color: var(--mr-danger-solid);
+    background-color: var(--mr-danger);
     color: var(--mr-danger-contrast);
   }
 
   .mr-btn--danger:hover:not(:disabled),
   .mr-btn[data-variant='danger']:hover:not(:disabled) {
-    background-color: var(--mr-danger-solid-hover);
+    background-color: color-mix(in srgb, var(--mr-danger) 80%, black);
   }
 
   .mr-btn--warning,
