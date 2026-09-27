@@ -534,7 +534,7 @@ describe('Step 11 · TypeScript strict consumer DX', () => {
             min: 0,
             max: 100,
             step: 1,
-            onValueChange: (v: number) => {},
+            onValueChange: () => {},
             onChange: () => {},
             invalid: true,
         }

@@ -50,7 +50,7 @@ export function InfiniteScrollErrorExample() {
     const [items] = useState(['Item 1', 'Item 2', 'Item 3'])
     const [error, setError] = useState<string | null>('Failed to load more items')
     const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null)
-    const [retryCount, setRetryCount] = useState(0)
+    const [, setRetryCount] = useState(0)
 
     const handleRetry = useCallback(() => {
         setRetryCount((c) => c + 1)

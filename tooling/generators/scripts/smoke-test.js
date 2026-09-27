@@ -55,7 +55,7 @@ try {
 
 console.log('\n[3/4] Running tests...')
 try {
-    const testOutput = execSync('pnpm vitest run ' + TMP_SLUG + ' --reporter=verbose', {
+    execSync('pnpm vitest run ' + TMP_SLUG + ' --reporter=verbose', {
         cwd: path.join(ROOT, 'packages/ui'),
         stdio: 'pipe',
         timeout: 60000,

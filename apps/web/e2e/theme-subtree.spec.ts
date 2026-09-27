@@ -47,7 +47,7 @@ const expectRgbClose = (actual: string, expected: string, tolerance = 1) => {
     }
 }
 
-const declarationsFor = (theme: string, token: string): Record<string, string> => ({
+const declarationsFor = (_theme: string, token: string): Record<string, string> => ({
     'background-color': `var(${token})`,
     color: 'var(--mr-text-primary)',
     borderColor: 'var(--mr-accent)',

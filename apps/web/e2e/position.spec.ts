@@ -15,7 +15,6 @@ test('position overlay utilise le token, le scroll et le resize une fois par ima
     })
     await page.goto('/harness/__position?theme=light&density=comfortable')
 
-    const anchor = page.getByTestId('position-anchor')
     const overlay = page.getByTestId('position-overlay')
     await expect(overlay).toBeVisible()
 

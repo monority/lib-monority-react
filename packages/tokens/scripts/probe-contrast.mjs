@@ -22,14 +22,8 @@ const SIX = [
     '--mr-bg-hover',
     '--mr-bg-overlay',
 ]
-const FOUR = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover']
 
 // statuts : candidats d'ensembles de fonds
-const sets = {
-    six: SIX,
-    sixSubtle: [...SIX, '--mr-SUBTLE'],
-    eight: [...SIX, '--mr-bg-active', '--mr-SUBTLE'],
-}
 for (const theme of ['light', 'dark', 'oled', 'high-contrast']) {
     console.log(`--- ${theme} ---`)
     for (const [tone, sub] of [

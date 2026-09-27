@@ -108,7 +108,7 @@ try {
         { cwd: ROOT, stdio: 'pipe', encoding: 'utf8' }
     )
     pass('Contract tests pass')
-} catch (e) {
+} catch {
     fail('Contract tests failed')
 }
 

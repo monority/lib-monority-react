@@ -408,7 +408,7 @@ function addSubpathExport(packageJsonPath, slug, category) {
     log(`Updated package.json exports with ./${slug}`)
 }
 
-function addTsupEntry(tsupPath, componentName, slug, category) {
+function addTsupEntry(tsupPath, _componentName, slug, category) {
     if (options.dryRun) {
         const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
         log(`Would update tsup.config.ts entry: ${entryKey}`)

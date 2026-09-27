@@ -30,7 +30,6 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
     ref
 ) {
     const [internalValue, setInternalValue] = useState(defaultValue)
-    const ctx = useFormControl()
     const isControlled = value !== undefined
     const isInvalid = invalid || Boolean(error)
     const displayValue = isControlled ? value : internalValue

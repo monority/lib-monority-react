@@ -36,7 +36,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(function Menubar
         setActiveMenu((prev) => (prev === label ? null : label))
     }
 
-    const handleItemClick = (menuLabel: string, item: MenuItem) => {
+    const handleItemClick = (_menuLabel: string, item: MenuItem) => {
         if (item.disabled) return
         item.onClick?.()
         setActiveMenu(null)
