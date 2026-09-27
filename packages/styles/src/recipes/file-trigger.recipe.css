@@ -69,7 +69,7 @@
 
     .mr-file-trigger--default:hover:not(:disabled) {
         background: var(--mr-bg-surface-strong);
-        border-color: var(--mr-border-control);
+        border-color: var(--mr-border-control-hover);
     }
 
     .mr-file-trigger--default:disabled {

@@ -420,3 +420,21 @@ L'échelle `space-*` n'est pas une grille de 4px (progression ≈ ×1,4) ; `spac
 | `space-9` | 80px | `spacing-20` (80px) | exact |
 
 Suivi : `node packages/tokens/scripts/check-deprecated.mjs --warn` (rapport, n'échoue pas). Objectif : le total doit descendre à 0 ; la table ci-dessus sert de garde-fou pour les nouveaux usages.
+
+## 2.2 À appliquer à `slate` lors de sa réintégration
+
+`slate` est absent du pipeline de tokens (chantier en cours, cf. `src/themes/slate.json`
+non branché dans `loadSources` / `THEMES`). Il échappe donc aux contrôles X2 et
+porterait une bordure de contrôle **au repos à ~1.5:1**, sous le seuil WCAG 1.4.11 —
+seul `high-contrast` est aujourd'hui conforme (4.38:1).
+
+À la réintégration, appliquer la même correction que les autres thèmes :
+
+| Champ | Valeur à poser |
+|---|---|
+| `border-control` (repos) | 0.545 (chroma/hue de la variante), ratio ≥ 3.3:1 vs `bg-sunken` |
+| `border-control-hover` | 0.595 — reprend la valeur de survol historique du thème, écart ΔL ≥ 0.06 |
+
+et vérifier `X2` (`rest` ≥ 3, `hover-border` ≥ 3) ainsi que `T8` (fond opaque des
+contrôles). Ne pas réutiliser les valeurs de `dark`/`slate` telles quelles : recalculer
+sur les fonds réels du thème.

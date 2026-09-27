@@ -19,11 +19,11 @@
   }
 
   .mr-datepicker__trigger:hover {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-datepicker__trigger:focus-visible {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-datepicker__trigger--invalid,

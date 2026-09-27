@@ -64,7 +64,7 @@
         flex-shrink: 0;
         width: var(--mr-radio-size);
         height: var(--mr-radio-size);
-        border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
         background: var(--mr-bg-control);
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), border-color

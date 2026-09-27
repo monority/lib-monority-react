@@ -21,12 +21,12 @@
   }
 
   .mr-drop-zone:hover {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
     background: var(--mr-bg-surface-strong);
   }
 
   .mr-drop-zone:focus-within {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
     box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
   }
 

@@ -106,7 +106,8 @@ Valeurs pour la marque par défaut : hex indicatif, puis luminosité / chroma / 
 | `--mr-bg-active` | `#e1e8e9` 0.925 / 0.008 / 215 | `#2e393b` 0.335 / 0.015 / 215 | `#1f282a` 0.27 / 0.013 / 215 | `#d7dee0` 0.895 / 0.008 / 215 |
 | `--mr-border-subtle` | `#dde4e6` 0.915 / 0.008 / 215 | `#293234` 0.31 / 0.013 / 215 | `#1c2325` 0.25 / 0.01 / 215 | `#6a7376` 0.55 / 0.012 / 215 |
 | `--mr-border-default` | `#ccd4d7` 0.865 / 0.01 / 215 | `#384244` 0.37 / 0.014 / 215 | `#2a3234` 0.31 / 0.012 / 215 | `#454f52` 0.42 / 0.014 / 215 |
-| `--mr-border-control` | `#7c878a` 0.615 / 0.014 / 215 | `#6f7b7e` 0.575 / 0.015 / 215 | `#626d6f` 0.525 / 0.014 / 215 | `#253033` 0.3 / 0.015 / 215 |
+| `--mr-border-control` | `#868686` 0.62 / 0 / 0 | `#767676` 0.565 / 0 / 0 | `#686868` 0.5175 / 0 / 0 | `#717171` 0.55 / 0 / 0 |
+| `--mr-border-control-hover` | `#747474` 0.56 / 0 / 0 | `#9b9b9b` 0.69 / 0 / 0 | `#909090` 0.655 / 0 / 0 | `#2e2e2e` 0.3 / 0 / 0 |
 | `--mr-text-primary` | `#131c1f` 0.22 / 0.015 / 215 | `#eef3f4` 0.96 / 0.005 / 215 | `#eef3f4` 0.96 / 0.005 / 215 | `#010405` 0.1 / 0.012 / 215 |
 | `--mr-text-secondary` | `#4a5558` 0.44 / 0.015 / 215 | `#b6c0c2` 0.8 / 0.012 / 215 | `#b6c0c2` 0.8 / 0.012 / 215 | `#253033` 0.3 / 0.015 / 215 |
 | `--mr-text-tertiary` | `#5d686b` 0.51 / 0.014 / 215 | `#95a1a4` 0.7 / 0.014 / 215 | `#95a1a4` 0.7 / 0.014 / 215 | `#343f42` 0.36 / 0.015 / 215 |
@@ -159,7 +160,8 @@ Ombre et voile :
 | `bg-active` | Pression, piste de switch désactivé, piste de slider et de progress | Survol |
 | `border-subtle` | Cartes, séparateurs, lignes de table | Bordure d'un contrôle interactif |
 | `border-default` | Button secondary, overlays, carte interactive au survol | Séparateurs |
-| `border-control` | Champ, case à cocher, radio, piste de switch off (≥ 3:1 garanti, 7:1 en high-contrast) | Décoration |
+| `border-control` | Limite AU REPOS d'un contrôle : champ, case à cocher, radio, piste de switch off (≥ 3:1 garanti) | Décoration, bordures de conteneurs et d'overlays |
+| `border-control-hover` | Limite d'un contrôle survolé, focalisé ou accentué (≥ 3:1 garanti) | Décoration |
 | `text-primary` | Contenu, titres, valeurs | — |
 | `text-secondary` | Descriptions, aide, onglets inactifs | Titres |
 | `text-tertiary` | Labels instrument, placeholders, métadonnées | Contenu principal |
@@ -198,7 +200,7 @@ Valeur minimale mesurée (WCAG 2.1) sur tous les fonds concernés : `bg-canvas`,
 | Tooltip | 7:1 | 14.63 | 14.72 | 14.72 | 7:1 | 20.57 | 14.66 |
 | Pouce de switch / piste off | 3:1 | 3.70 | 3.88 | 4.78 | 3:1 | 13.57 | 3.71 |
 
-Toute modification d'une couleur doit être re-vérifiée avec le même jeu de paires, en CI (critère X2). Deux valeurs sont volontairement proches du seuil pour préserver la légèreté du thème light : `text-tertiary` (4.88:1) et `border-control` (3.15:1). Ne jamais les éclaircir.
+Toute modification d'une couleur doit être re-vérifiée avec le même jeu de paires, en CI (critère X2). `text-tertiary` (4.88:1 en light) reste volontairement proche du seuil pour préserver la légèreté du thème light : ne pas l'éclaircir. `border-control` est en revanche calibrée au-dessus du seuil de conformité (3.3:1 au repos) : c'est la limite qui identifie le contrôle, elle ne peut pas descendre.
 
 ### 5.6 Espacement
 

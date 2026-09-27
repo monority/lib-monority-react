@@ -24,11 +24,11 @@
   }
 
   .mr-combobox__input:hover {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-combobox__input:focus-visible {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-combobox[data-invalid='true'] .mr-combobox__input,
@@ -82,7 +82,7 @@
     padding: var(--mr-space-2);
      border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface-elevated);
+    background: var(--mr-bg-raised);
     box-shadow: var(--mr-elevation-overlay);
     animation: mr-combobox-in var(--mr-duration-fast) var(--mr-ease-standard);
   }
@@ -105,7 +105,7 @@
 
   .mr-combobox__item:hover,
   .mr-combobox__item[data-active='true'] {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
     background: var(--mr-bg-surface-strong);
   }
 
@@ -117,7 +117,7 @@
   .mr-combobox__item:focus-visible {
      outline: var(--mr-focus-width) solid var(--mr-accent);
      outline-offset: calc(-1 * var(--mr-focus-width));
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-combobox__item-label {

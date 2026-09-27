@@ -25,7 +25,7 @@ Zone de dépôt (icône 20px, titre `small-strong`, aide `caption`, bouton « Pa
 |---|---|---|---|---|---|
 | zone | repos | `--mr-bg-sunken` | titre `--mr-text-primary`, aide `--mr-text-secondary` | 1px `dashed` `--mr-border-control` | icône `--mr-text-tertiary` |
 | zone | survol de dépôt | `--mr-bg-hover` | titre `--mr-text-primary` | 1px `dashed` `--mr-focus-color` | icône `--mr-accent-text` |
-| zone | focus | `--mr-bg-sunken` | `--mr-text-primary` | 1px `dashed` `--mr-border-control` | `outline: var(--mr-focus-width) solid var(--mr-focus-color)` sur `:focus-visible` |
+| zone | focus | `--mr-bg-sunken` | `--mr-text-primary` | 1px `dashed` `--mr-border-control-hover` | `outline: var(--mr-focus-width) solid var(--mr-focus-color)` sur `:focus-visible` |
 | zone | désactivé | `--mr-bg-hover` | `--mr-text-disabled` | 1px `dashed` `--mr-border-subtle` | `cursor: not-allowed` |
 | zone | invalide | `--mr-bg-sunken` | `--mr-text-primary` | 1px `dashed` `--mr-danger-text` | message lié par `aria-describedby` |
 | fichier | erreur | transparent | nom `--mr-text-primary`, erreur `--mr-danger-text` | aucune | suppression conservée |

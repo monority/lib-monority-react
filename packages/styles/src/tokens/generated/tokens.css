@@ -189,7 +189,8 @@
   --mr-bg-active: oklch(0.925 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.915 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.865 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.615 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.62 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.56 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.22 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.44 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.51 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -238,7 +239,8 @@
   --mr-bg-active: oklch(0.925 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.915 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.865 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.615 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.62 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.56 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.22 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.44 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.51 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -272,7 +274,8 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.565 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -321,7 +324,8 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.565 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -351,7 +355,8 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.25 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.31 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.5175 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -398,7 +403,8 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.25 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.31 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.5175 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -428,7 +434,8 @@
   --mr-bg-active: oklch(0.335 0.06 230);
   --mr-border-subtle: oklch(0.32 0.035 230);
   --mr-border-default: oklch(0.39 0.045 230);
-  --mr-border-control: oklch(0.6 0.06 230);
+  --mr-border-control: oklch(0.56 0.06 230);
+  --mr-border-control-hover: oklch(0.62 0.06 230);
   --mr-text-primary: oklch(0.96 0.015 230);
   --mr-text-secondary: oklch(0.8 0.025 230);
   --mr-text-tertiary: oklch(0.7 0.035 230);
@@ -475,7 +482,8 @@
   --mr-bg-active: oklch(0.33 0.07 275);
   --mr-border-subtle: oklch(0.3 0.04 275);
   --mr-border-default: oklch(0.37 0.05 275);
-  --mr-border-control: oklch(0.58 0.06 275);
+  --mr-border-control: oklch(0.5525 0.06 275);
+  --mr-border-control-hover: oklch(0.6125 0.06 275);
   --mr-text-primary: oklch(0.96 0.02 275);
   --mr-text-secondary: oklch(0.8 0.03 275);
   --mr-text-tertiary: oklch(0.7 0.04 275);
@@ -522,7 +530,8 @@
   --mr-bg-active: oklch(0.895 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.1 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.36 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -569,7 +578,8 @@
   --mr-bg-active: oklch(0.895 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control-hover: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.1 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.3 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.36 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -614,7 +624,8 @@
     --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
     --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-    --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control: oklch(0.565 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control-hover: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -663,7 +674,8 @@
     --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
     --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-    --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control: oklch(0.565 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control-hover: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));

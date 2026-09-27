@@ -5,7 +5,7 @@
     padding-block: var(--mr-input-padding-block, var(--mr-control-padding-block-md));
      padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
      padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-input-padding-inline, var(--mr-control-padding-inline-md)));
-    border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-control);
     border-radius: var(--mr-input-radius);
     background: var(--mr-bg-control);
     color: var(--mr-fg-base);
@@ -24,11 +24,11 @@
   }
 
   .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-input-base:focus-visible {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
   }
 
   .mr-input-base:disabled,
@@ -51,7 +51,7 @@
   }
 
   .mr-input-base[data-tone='accent']:focus-visible {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
     box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
   }
 

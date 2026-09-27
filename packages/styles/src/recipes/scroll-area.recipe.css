@@ -20,7 +20,7 @@
   }
 
   .mr-scroll-area::-webkit-scrollbar-thumb:hover {
-    background: var(--mr-border-control);
+    background: var(--mr-border-control-hover);
   }
 
   .mr-scroll-area--hide {

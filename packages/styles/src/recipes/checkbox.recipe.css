@@ -34,7 +34,7 @@
     flex-shrink: 0;
     width: var(--mr-checkbox-size);
     height: var(--mr-checkbox-size);
-    border: var(--mr-border-width) solid var(--mr-border-subtle);
+    border: var(--mr-border-width) solid var(--mr-border-control);
     border-radius: var(--mr-radius-xs);
     background: var(--mr-bg-control);
     transition:

@@ -49,7 +49,12 @@ const PAIRS = [
     ['disabled', '--mr-text-disabled', SIX, 3, 4.5],
     ['accent', '--mr-accent-text', ACCENT_SIX, 4.5, 7],
     ['focus', '--mr-focus-color', SIX, 3, 4.5],
-    ['border', '--mr-border-control', FOUR, 3, 7],
+    ['border', '--mr-border-control', FOUR, 3, 3],
+    /* Bordure de contrôle AU REPOS : c'est l'état dans lequel on identifie le
+       champ (WCAG 1.4.11). Le fond réel des 9 contrôles à bordure est
+       `bg-control` = `bg-sunken` ; la liste combobox en est exclue (c'est un
+       conteneur d'overlay, pas une limite de contrôle). */
+    ['rest', '--mr-border-control', ['--mr-bg-sunken'], 3, 3],
     ['onaccent', '--mr-on-accent', ['--mr-accent', '--mr-accent-hover', '--mr-accent-active'], 4.5, 7],
     ['ondanger', '--mr-on-danger-solid', ['--mr-danger-solid'], 4.5, 7],
     ...TONES.flatMap((tone) => [
@@ -65,23 +70,22 @@ const PAIRS = [
 
 /* Fonds d'état translucides (ex. --mr-bg-hover en dark) : un fond alpha n'est
    testable que composité sur un fond opaque. On le compose sur les cinq
-   niveaux qui le reçoivent (canvas/surface/raised/sunken/overlay) ; les fonds
+   niveaux qui le reçoivent (canvas/surface/raised/sunken) ; les fonds
    opaques (autres thèmes) gardent le test direct unique. Seuils : les seuils AA/HC de
    la table principale pour les cas opaques, des seuils d'état (transitoire)
    pour les cas translucides — [clé, fg, seuil AA opaque, seuil état, seuil HC]. */
 const HOVER_BG = '--mr-bg-hover'
-const HOVER_BASES = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-overlay']
+// bg-overlay exclu : un contrôle à fond opaque (bg-control) ne repose jamais
+// directement sur un overlay survolé. Voir aussi check-opaque-control-bgs.
+const HOVER_BASES = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken']
 const HOVER_PAIRS = [
     ['hover-primary', '--mr-text-primary', 7, 7, 7],
     ['hover-secondary', '--mr-text-secondary', 4.5, 4.5, 7],
     ['hover-tertiary', '--mr-text-tertiary', 4.5, 3, 7],
     ['hover-accent', '--mr-accent-text', 4.5, 4.5, 7],
-    /* Bordure de contrôle sur fond hoveré : seuil 3:1 (WCAG 1.4.11) sur les
-       5 bases, tous thèmes. Tenu par border-control >= 0.69 (dark) /
-       0.655 (oled). La paire `switch` mesure l'adjacent réel (pouce sur
-       piste sunken) et non plus un proxy border-control, ce qui libère
-       ce plafond. */
-    ['hover-border', '--mr-border-control', 3, 3, 7],
+    /* Bordure de contrôle SURVOLÉE : seuil 3:1 (WCAG 1.4.11) sur les 4 bases,
+       tous thèmes. */
+    ['hover-border', '--mr-border-control-hover', 3, 3, 7],
 ]
 
 const toLinear = (css) =>
@@ -115,7 +119,8 @@ const TABLE = {
     disabled: [3.09, 3.18, 3.9, 4.87, 3.1],
     accent: [5.14, 7.81, 9.16, 7.81, 5.36],
     focus: [3.97, 7.67, 9.59, 10.84, 4.15],
-    border: [3.39, 5.43, 5.82, 12.32, 3.39],
+    border: [3.32, 3.31, 3.32, 4.38, 3.31],
+    rest: [3.32, 3.84, 3.65, 4.38, 3.32],
     onaccent: [5.29, 9.04, 9.04, 8.81, 5.53],
     ondanger: [5.58, 6.96, 6.96, 9.19, 5.58],
     success: [5.5, 6.99, 8.47, 7.15, 5.49],

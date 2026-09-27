@@ -26,8 +26,8 @@ Déclencheur comme un champ de saisie (icône calendrier 16px, chevron comme le 
 | Variante | État | Fond | Texte | Bordure | Autre (rail, glyphe, ombre) |
 |---|---|---|---|---|---|
 | déclencheur | repos | `--mr-bg-sunken` | `--mr-text-primary` | `--mr-border-control` | icône `--mr-text-tertiary` |
-| déclencheur | survol | `--mr-bg-hover` | `--mr-text-primary` | `--mr-border-control` | aucune transformation |
-| déclencheur | focus | `--mr-bg-sunken` | `--mr-text-primary` | `--mr-border-control` | `outline: var(--mr-focus-width) solid var(--mr-focus-color)` sur `:focus-visible` |
+| déclencheur | survol | `--mr-bg-hover` | `--mr-text-primary` | `--mr-border-control-hover` | aucune transformation |
+| déclencheur | focus | `--mr-bg-sunken` | `--mr-text-primary` | `--mr-border-control-hover` | `outline: var(--mr-focus-width) solid var(--mr-focus-color)` sur `:focus-visible` |
 | déclencheur | désactivé | `--mr-bg-hover` | `--mr-text-disabled` | `--mr-border-subtle` | `cursor: not-allowed` |
 | déclencheur | invalide | `--mr-bg-sunken` | `--mr-text-primary` | `--mr-danger-text` | message lié par `aria-describedby` |
 | déclencheur | lecture seule | transparent | `--mr-text-primary` | `--mr-border-subtle` | pas de survol, focusable |

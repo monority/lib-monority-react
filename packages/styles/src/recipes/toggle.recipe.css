@@ -31,7 +31,7 @@
   }
 
   .mr-toggle:hover:not(:disabled) {
-    border-color: var(--mr-border-control);
+    border-color: var(--mr-border-control-hover);
     color: var(--mr-fg-strong);
     background: var(--mr-bg-surface-strong);
   }
@@ -58,7 +58,7 @@
 
   .mr-toggle--pressed,
   .mr-toggle[data-state='on'] {
-    border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-control));
+    border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-control-hover));
     background: var(--mr-bg-accent-soft);
     color: var(--mr-fg-strong);
      box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-accent) 10%, transparent);

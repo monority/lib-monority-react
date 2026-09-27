@@ -53,10 +53,11 @@ passe automatiquement dès que `build:downstream` a été lancé.
 | T3 | `check-no-hardcoded.mjs` | aucun hex / teinte en dur hors statut |
 | T6 | `check-deprecated.mjs` | tout `var(--mr-*)` utilisé est défini ; `--warn` rapporte les usages de `--mr-space-*` (échelle dépréciée, migration en cours) |
 | T7 | `check-dist-freshness.mjs` | le bundle CSS consommé n'est pas périmé |
+| T8 | `check-opaque-control-bgs.mjs` | les 9 contrôles à bordure ont un fond opaque (sinon la bordure au repos n'a pas de fond stable pour être mesurée) |
 | S11 | `check-spec-values.mjs` | les valeurs des tables de spec correspondent aux tokens résolus |
 | X2 | `check-contrasts.mjs` | contraste WCAG 2.1 sur toutes les paires (seuils AA / HC) |
 
-`pnpm --filter @monority/tokens test` enchaîne build + T1 + T3 + T6 + X2 + S11 + T7.
+`pnpm --filter @monority/tokens test` enchaîne build + T1 + T3 + T6 + X2 + S11 + T7 + T8.
 
 ## Ajouter un token
 
