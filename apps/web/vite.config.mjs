@@ -64,7 +64,7 @@ export default defineConfig({
     },
   ],
   resolve: {
-    conditions: ['development'],
+    conditions: ['monority-source'],
   },
   optimizeDeps: {
     exclude: ['@monority/ui'],

@@ -11,7 +11,7 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts'],
   },
   resolve: {
-    conditions: ['development'],
+    conditions: ['monority-source'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },

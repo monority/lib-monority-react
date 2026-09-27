@@ -2,7 +2,7 @@
 
 // ──────────────────────────────────────────────
 // Root barrel import — verifies `@monority/ui` resolves correctly
-// Uses `resolve.conditions: ['development']` to match the exports map
+// Uses `resolve.conditions: ['monority-source']` to match the exports map
 // ──────────────────────────────────────────────
 import {
   // Actions
