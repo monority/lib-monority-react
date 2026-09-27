@@ -1,1 +1,48 @@
+# Normalisation des fins de ligne.
+#
+# `core.autocrlf=true` est regle au niveau global (donc invisible et propre au
+# poste de dev). Sans regle ici, la conversion CRLF/LF depende de la machine :
+# `biome format` voyait 846 anomalies de fin de ligne, et `git status` pouvait
+# montrer des fichiers "modifies" alors que le contenu etait identique.
+#
+# `text=auto` laisse git detecter le type ; `eol=lf` impose LF dans le depot ET
+# dans le worktree, donc l'echangement est reproductible partout (CI comprise).
+* text=auto eol=lf
+
+# Fichiers Windows qui doivent rester en CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Artefacts de build et bibliotheques : jamais renormalises.
+node_modules/** -text
+dist/** -text
+.turbo/** -text
+coverage/** -text
+packages/styles/src/tokens/generated/** -text
+packages/ui/dist/** -text
+apps/web/dist/** -text
+
+# Images : binaires (les snapshots e2e passent aussi par LFS, cf. plus bas).
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.avif binary
+
+# Polices.
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+
+# Archives.
+*.zip binary
+*.gz binary
+*.tar binary
+
+# Git LFS : les snapshots e2e sont versionnes via LFS.
 apps/web/e2e/**/*-snapshots/**/*.png filter=lfs diff=lfs merge=lfs -text
