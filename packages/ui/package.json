@@ -504,6 +504,7 @@
         "build": "tsup",
         "typecheck": "tsc --noEmit",
         "test": "vitest run",
+        "test:dist": "pnpm build && vitest run src/__tests__/dist-exports.test.ts src/__tests__/dist-form-context.test.tsx",
         "test:watch": "vitest",
         "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
         "prepublishOnly": "pnpm build"

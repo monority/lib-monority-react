@@ -83,7 +83,12 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  splitting: false,
+  // true : le code partagé (FormControlContext, cn, cva, useFormControl...)
+  // est extrait dans des chunks communs. Avec `false`, chaque entrée
+  // embarquait sa propre copie de chaque createContext : 17 contextes
+  // distincts dans le dist, donc un <Field> et un <Input> importés
+  // d'entrées différentes ne partageaient plus la même instance.
+  splitting: true,
   treeshake: true,
   minify: false,
   external: ['react', 'react-dom'],
