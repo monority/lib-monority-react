@@ -5,7 +5,8 @@ const demoItems = [
     {
         value: 'tokens',
         title: 'What changed in the token system?',
-        content: 'Surface, border, and emphasis tokens were tightened so docs and product read as one family.',
+        content:
+            'Surface, border, and emphasis tokens were tightened so docs and product read as one family.',
     },
     {
         value: 'migration',
@@ -57,8 +58,8 @@ function AccordionPreview(props: PlaygroundProps) {
                 size={props.size as 'md'}
             />
             <p className="sc-muted" style={{ margin: '0.75rem 0 0', fontSize: '0.8125rem' }}>
-                Tab to the triggers, then use ArrowUp/ArrowDown, Home/End. Enter or Space
-                toggles. The legacy item is disabled.
+                Tab to the triggers, then use ArrowUp/ArrowDown, Home/End. Enter or Space toggles.
+                The legacy item is disabled.
             </p>
         </div>
     )

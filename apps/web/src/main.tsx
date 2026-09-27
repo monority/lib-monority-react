@@ -20,5 +20,5 @@ createRoot(rootElement).render(
                 <App />
             </AppProviders>
         </AppErrorBoundary>
-    </StrictMode>,
+    </StrictMode>
 )

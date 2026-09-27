@@ -40,5 +40,5 @@ if (withWeb) run('ui     -> apps/web/dist', '@monority/web')
 
 console.log(
     `\n[build:downstream] OK${withWeb ? ' (tokens + ui + web)' : ' (tokens + ui)'}. ` +
-        'Le bundle consomme par apps/web est a jour.',
+        'Le bundle consomme par apps/web est a jour.'
 )

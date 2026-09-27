@@ -9,32 +9,31 @@ import { usePortalTarget } from '@/internal/use-portal-target'
 import type { AlertDialogProps } from './AlertDialog.types'
 
 const alertDialogVariants = cva({
-  base: 'mr-alert-dialog',
-  variants: {
-    tone: {
-      default: 'mr-alert-dialog--default',
-      danger: 'mr-alert-dialog--danger',
+    base: 'mr-alert-dialog',
+    variants: {
+        tone: {
+            default: 'mr-alert-dialog--default',
+            danger: 'mr-alert-dialog--danger',
+        },
     },
-  },
-  defaultVariants: { tone: 'default' },
+    defaultVariants: { tone: 'default' },
 })
 
-export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(
-  function AlertDialog(
+export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(function AlertDialog(
     {
-      open,
-      title,
-      description,
-      confirmLabel = 'Confirmer',
-      cancelLabel = 'Annuler',
-      tone = 'default',
-      onConfirm,
-      onCancel,
-      className,
-      ...props
+        open,
+        title,
+        description,
+        confirmLabel = 'Confirmer',
+        cancelLabel = 'Annuler',
+        tone = 'default',
+        onConfirm,
+        onCancel,
+        className,
+        ...props
     },
-    ref,
-  ) {
+    ref
+) {
     const generatedId = useId()
     const titleId = `${generatedId}-title`
     const descriptionId = description ? `${generatedId}-description` : undefined
@@ -42,68 +41,76 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(
     const cancelButtonRef = useRef<HTMLButtonElement>(null)
 
     useBodyScrollLock(open)
-    useFocusTrap({ active: open, containerRef: panelRef, initialFocusRef: cancelButtonRef, onEscape: onCancel })
+    useFocusTrap({
+        active: open,
+        containerRef: panelRef,
+        initialFocusRef: cancelButtonRef,
+        onEscape: onCancel,
+    })
     const portalTarget = usePortalTarget()
 
     useEffect(() => {
-      if (open) cancelButtonRef.current?.focus()
+        if (open) cancelButtonRef.current?.focus()
     }, [open])
 
     if (!open || !portalTarget) return null
 
     return createPortal(
-      <div
-        ref={ref}
-        className={cn('mr-alert-dialog__backdrop', className)}
-        data-open={open ? true : undefined}
-        {...props}
-      >
         <div
-          className="mr-alert-dialog__backdrop-surface"
-          onClick={onCancel}
-          aria-hidden="true"
-        />
-        <div
-          ref={panelRef}
-          className={cn(alertDialogVariants({ tone }), 'mr-alert-dialog__panel')}
-          role="alertdialog"
-          aria-modal="true"
-          aria-labelledby={titleId}
-          aria-describedby={descriptionId}
-          data-tone={tone}
-          data-open={open ? true : undefined}
-          tabIndex={-1}
-      >
-        <div className="mr-alert-dialog__header">
-            <div className="mr-alert-dialog__heading">
-              <h2 id={titleId} className="mr-alert-dialog__title">{title}</h2>
+            ref={ref}
+            className={cn('mr-alert-dialog__backdrop', className)}
+            data-open={open ? true : undefined}
+            {...props}
+        >
+            <div
+                className="mr-alert-dialog__backdrop-surface"
+                onClick={onCancel}
+                aria-hidden="true"
+            />
+            <div
+                ref={panelRef}
+                className={cn(alertDialogVariants({ tone }), 'mr-alert-dialog__panel')}
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
+                aria-describedby={descriptionId}
+                data-tone={tone}
+                data-open={open ? true : undefined}
+                tabIndex={-1}
+            >
+                <div className="mr-alert-dialog__header">
+                    <div className="mr-alert-dialog__heading">
+                        <h2 id={titleId} className="mr-alert-dialog__title">
+                            {title}
+                        </h2>
+                    </div>
+                </div>
+                {description ? (
+                    <p id={descriptionId} className="mr-alert-dialog__description">
+                        {description}
+                    </p>
+                ) : null}
+                <div className="mr-alert-dialog__actions">
+                    <Button
+                        ref={cancelButtonRef}
+                        className="mr-alert-dialog__cancel"
+                        variant="ghost"
+                        onClick={onCancel}
+                    >
+                        {cancelLabel}
+                    </Button>
+                    <Button
+                        className="mr-alert-dialog__confirm"
+                        variant={tone === 'danger' ? 'danger' : 'primary'}
+                        onClick={onConfirm}
+                    >
+                        {confirmLabel}
+                    </Button>
+                </div>
             </div>
-          </div>
-          {description ? (
-            <p id={descriptionId} className="mr-alert-dialog__description">{description}</p>
-          ) : null}
-          <div className="mr-alert-dialog__actions">
-            <Button
-              ref={cancelButtonRef}
-              className="mr-alert-dialog__cancel"
-              variant="ghost"
-              onClick={onCancel}
-            >
-              {cancelLabel}
-            </Button>
-            <Button
-              className="mr-alert-dialog__confirm"
-              variant={tone === 'danger' ? 'danger' : 'primary'}
-              onClick={onConfirm}
-            >
-              {confirmLabel}
-            </Button>
-          </div>
-        </div>
-      </div>,
-      portalTarget,
+        </div>,
+        portalTarget
     )
-  },
-)
+})
 
 export type { AlertDialogProps, AlertDialogTone } from './AlertDialog.types'

@@ -55,7 +55,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
         [isControlled, onChange]
     )
 
-    const isItemDisabled = useCallback((index: number) => disabled || items[index]?.disabled === true, [disabled, items])
+    const isItemDisabled = useCallback(
+        (index: number) => disabled || items[index]?.disabled === true,
+        [disabled, items]
+    )
 
     const getNextEnabledIndex = useCallback(
         (currentIndex: number, direction: number) => {
@@ -88,8 +91,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
         (e: KeyboardEvent, index: number) => {
             if (!items.length) return
             let nextIndex: number | null = null
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextIndex = getNextEnabledIndex(index, 1)
-            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextIndex = getNextEnabledIndex(index, -1)
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown')
+                nextIndex = getNextEnabledIndex(index, 1)
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp')
+                nextIndex = getNextEnabledIndex(index, -1)
             else if (e.key === 'Home') nextIndex = getFirstEnabledIndex()
             else if (e.key === 'End') nextIndex = getLastEnabledIndex()
             if (nextIndex === null || nextIndex < 0) return
@@ -101,7 +106,14 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
             // must follow, otherwise focus strands on a tab with tabIndex -1.
             document.getElementById(`${instanceId}-tab-${nextIndex}`)?.focus()
         },
-        [items, handleChange, getNextEnabledIndex, getFirstEnabledIndex, getLastEnabledIndex, instanceId]
+        [
+            items,
+            handleChange,
+            getNextEnabledIndex,
+            getFirstEnabledIndex,
+            getLastEnabledIndex,
+            instanceId,
+        ]
     )
 
     return (

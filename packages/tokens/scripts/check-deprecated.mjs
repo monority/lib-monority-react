@@ -86,7 +86,9 @@ for (const root of ['packages', 'apps']) {
 
 const parseDecls = (css) => {
     const map = new Map()
-    for (const m of css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(--mr-[\w-]+)\s*:\s*([^;{}]+);/g)) {
+    for (const m of css
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .matchAll(/(--mr-[\w-]+)\s*:\s*([^;{}]+);/g)) {
         map.set(m[1], m[2].trim().replace(/\s+/g, ' '))
     }
     return map
@@ -109,7 +111,7 @@ for (const t of [...used].sort()) {
 // Alias de la référence : tous présents dans deprecated.css
 const depRef = fs.readFileSync(
     path.join(repoRoot, 'docs/design/reference/monority-ui-tokens.deprecated.reference.css'),
-    'utf8',
+    'utf8'
 )
 const aliases = [...depRef.matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1])
 for (const a of aliases) {
@@ -140,7 +142,7 @@ if (failures.length) {
     process.exit(1)
 }
 console.log(
-    `T6 PASS — 0 manquant (${used.size} utilisés couverts ; ${aliases.length} alias + ${valuesChecked} valeurs actuelles vérifiés ; audit-8 à part : ${auditUsed.sort().join(', ') || 'aucun utilisé'})`,
+    `T6 PASS — 0 manquant (${used.size} utilisés couverts ; ${aliases.length} alias + ${valuesChecked} valeurs actuelles vérifiés ; audit-8 à part : ${auditUsed.sort().join(', ') || 'aucun utilisé'})`
 )
 
 if (WARN) {
@@ -154,7 +156,5 @@ if (WARN) {
     console.log(`\nT6 WARN — ${SOFT_DEPRECATED_HINT}`)
     console.log(`  ${total} occurrence(s) dans ${files.length} fichier(s) — objectif : 0`)
     for (const [f, n] of files) console.log(`  ${String(n).padStart(4)}  ${f}`)
-    console.log(
-        ` Jetons concernés : ${[...byToken.keys()].sort().join(', ') || 'aucun'}`,
-    )
+    console.log(` Jetons concernés : ${[...byToken.keys()].sort().join(', ') || 'aucun'}`)
 }

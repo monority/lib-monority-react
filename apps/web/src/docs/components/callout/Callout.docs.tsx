@@ -7,7 +7,8 @@ import {
 
 const docData: DocPageData = {
     title: 'Callout',
-    description: 'Styled callout box for notes, tips, and contextual highlights. Use for explanatory content inline with surrounding content.',
+    description:
+        'Styled callout box for notes, tips, and contextual highlights. Use for explanatory content inline with surrounding content.',
     importCode: "import { Callout } from '@monority/ui/callout'",
     usageCode: `<Callout
   title="Migration"
@@ -33,7 +34,12 @@ const docData: DocPageData = {
             defaultValue: "'neutral'",
             description: 'Visual tone.',
         },
-        { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Custom content rendered below title and description.' },
+        {
+            name: 'children',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Custom content rendered below title and description.',
+        },
         {
             name: 'role',
             type: "'note' | 'alert' | 'status' | string",

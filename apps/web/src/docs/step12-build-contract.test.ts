@@ -6,9 +6,9 @@ declare const process: { cwd(): string }
 
 const root = `${process.cwd()}/../..`
 
-const pkg = JSON.parse(
-    readFileSync(`${root}/packages/ui/package.json`, 'utf8'),
-) as { exports: Record<string, { import?: string; types?: string } | string> }
+const pkg = JSON.parse(readFileSync(`${root}/packages/ui/package.json`, 'utf8')) as {
+    exports: Record<string, { import?: string; types?: string } | string>
+}
 
 // Build a map: subpath -> expected dist JS filename (from package.json exports)
 const exportDistPaths: Map<string, string> = new Map()
@@ -76,8 +76,22 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
 
     it('every tsup entry has a package.json export', () => {
         // Match keys like: button:, 'radio-group':, commandPalette:, etc.
-        const tsupKeys = [...tsupSrc.matchAll(/^\s+['"]?([a-zA-Z][\w-]*)['"]?\s*:/gm)].map((m) => m[1]!)
-        const skipKeys = new Set(['entry', 'publicDir', 'format', 'dts', 'sourcemap', 'clean', 'splitting', 'treeshake', 'minify', 'external', 'tsconfig'])
+        const tsupKeys = [...tsupSrc.matchAll(/^\s+['"]?([a-zA-Z][\w-]*)['"]?\s*:/gm)].map(
+            (m) => m[1]!
+        )
+        const skipKeys = new Set([
+            'entry',
+            'publicDir',
+            'format',
+            'dts',
+            'sourcemap',
+            'clean',
+            'splitting',
+            'treeshake',
+            'minify',
+            'external',
+            'tsconfig',
+        ])
         const missing: string[] = []
         for (const key of tsupKeys) {
             if (skipKeys.has(key) || key === 'index') continue
@@ -85,9 +99,15 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
             const distFileFromKey = `${key}.js`
             let found = false
             for (const [, jsFile] of exportDistPaths) {
-                if (jsFile === distFileFromKey) { found = true; break }
+                if (jsFile === distFileFromKey) {
+                    found = true
+                    break
+                }
                 // Also check camelCase mapping
-                if (jsFile === `${toCamel(key)}.js`) { found = true; break }
+                if (jsFile === `${toCamel(key)}.js`) {
+                    found = true
+                    break
+                }
             }
             if (!found) missing.push(key)
         }

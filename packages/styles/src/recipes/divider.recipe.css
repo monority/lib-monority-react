@@ -12,7 +12,7 @@
     }
 
     .mr-divider::before {
-        content: "";
+        content: '';
         position: absolute;
         inset-inline: 0;
         top: 50%;
@@ -20,7 +20,7 @@
         transform: translateY(-50%);
     }
 
-    .mr-divider[data-orientation="vertical"] {
+    .mr-divider[data-orientation='vertical'] {
         display: inline-flex;
         min-height: auto;
         width: auto;
@@ -28,7 +28,7 @@
         align-self: stretch;
     }
 
-    .mr-divider[data-orientation="vertical"]::before {
+    .mr-divider[data-orientation='vertical']::before {
         inset-inline: unset;
         top: 0;
         inset-block: 0;
@@ -48,7 +48,7 @@
         line-height: 1;
     }
 
-    .mr-divider[data-orientation="vertical"] .mr-divider__label {
+    .mr-divider[data-orientation='vertical'] .mr-divider__label {
         padding: 0.5rem 0;
         writing-mode: vertical-rl;
         text-orientation: mixed;

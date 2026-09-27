@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const resolved = JSON.parse(
-    fs.readFileSync(path.join(repoRoot, 'packages/tokens/dist/resolved.json'), 'utf8'),
+    fs.readFileSync(path.join(repoRoot, 'packages/tokens/dist/resolved.json'), 'utf8')
 )
 const COMFORTABLE = 'light.comfortable.monority'
 const COMPACT = 'light.compact.monority'
@@ -36,15 +36,14 @@ const px = (value) => {
 }
 
 /** Tailles attendues depuis une cellule de spec : [1er px, 2e px?]. */
-const cellNumbers = (cell) => [...cell.matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => `${Number(m[1])}px`)
+const cellNumbers = (cell) =>
+    [...cell.matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => `${Number(m[1])}px`)
 
 /** Valeurs attendues depuis le token résolu : null si non comparable. */
 function tokenNumbers(value) {
     if (value.startsWith('#')) return { kind: 'couleur' }
     if (value === 'none') return null
-    const font = value.match(
-        /^(?:\d+\s+)?([\d.]+)(rem|px)\/([\d.]+)(rem|px)\s+/,
-    )
+    const font = value.match(/^(?:\d+\s+)?([\d.]+)(rem|px)\/([\d.]+)(rem|px)\s+/)
     if (font) {
         return { kind: 'police', numbers: [px(`${font[1]}${font[2]}`), px(`${font[3]}${font[4]}`)] }
     }
@@ -117,7 +116,7 @@ for (const file of files) {
             const actual = expected.slice(0, info.numbers.length)
             if (actual.join('/') !== info.numbers.join('/')) {
                 failures.push(
-                    `${file} ${label} : ${token} → spec « ${actual.join(' / ')} », tokens « ${info.numbers.join(' / ')} »`,
+                    `${file} ${label} : ${token} → spec « ${actual.join(' / ')} », tokens « ${info.numbers.join(' / ')} »`
                 )
             }
         }
@@ -131,5 +130,5 @@ if (failures.length) {
 }
 console.log(
     `S11 PASS — ${compared} valeurs de specs identiques aux tokens résolus ` +
-        `(${ignoredColor} largeurs de bordure sur jeton de couleur, ${ignoredOther} cellules non comparables)`,
+        `(${ignoredColor} largeurs de bordure sur jeton de couleur, ${ignoredOther} cellules non comparables)`
 )

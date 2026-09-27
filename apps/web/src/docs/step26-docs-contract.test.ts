@@ -34,9 +34,9 @@ function registrySlugs(): string[] {
 describe('Step 26 - every public export has docs or a redirect', () => {
     it('no exported subpath is a dead docs route', () => {
         const pkg = readJson(join(root, 'packages', 'ui', 'package.json'))
-        const subpaths = Object.keys(pkg.exports).filter(
-            (k) => k !== '.' && !k.endsWith('.css'),
-        ).map((k) => k.replace('./', ''))
+        const subpaths = Object.keys(pkg.exports)
+            .filter((k) => k !== '.' && !k.endsWith('.css'))
+            .map((k) => k.replace('./', ''))
 
         const slugs = new Set(registrySlugs())
         const offenders = subpaths.filter((s) => !slugs.has(s) && !REDIRECTS[s])

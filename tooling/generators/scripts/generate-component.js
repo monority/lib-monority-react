@@ -12,12 +12,12 @@ const componentName = args.find((arg) => !arg.startsWith('--'))
 const options = parseOptions(args)
 
 if (options.help || !componentName) {
-  printHelp()
-  process.exit(0)
+    printHelp()
+    process.exit(0)
 }
 
 if (!/^[A-Z][a-zA-Z0-9]*$/.test(componentName)) {
-  fail('Component name must be PascalCase, e.g. Button or DatePicker.')
+    fail('Component name must be PascalCase, e.g. Button or DatePicker.')
 }
 
 const category = options.category
@@ -31,99 +31,88 @@ const docsRegistryFile = path.join(ROOT_DIR, 'apps/web/src/docs/components/regis
 const recipeFile = path.join(ROOT_DIR, 'packages/styles/src/recipes', `${slug}.recipe.css`)
 
 const files = [
-  {
-    path: path.join(componentDir, `${componentName}.types.ts`),
-    content: typesTemplate(componentName),
-  },
-  {
-    path: path.join(componentDir, `${componentName}.tsx`),
-    content: componentTemplate(componentName, cssBlock),
-  },
-  {
-    path: path.join(componentDir, `${componentName}.test.tsx`),
-    content: testTemplate(componentName, cssBlock),
-  },
-  {
-    path: path.join(componentDir, 'index.ts'),
-    content: indexTemplate(componentName),
-  },
-  {
-    path: path.join(docsDir, `${componentName}.meta.ts`),
-    content: docsMetaTemplate(componentName, category),
-  },
-  {
-    path: path.join(docsDir, `${componentName}.examples.tsx`),
-    content: docsExamplesTemplate(componentName),
-  },
-  {
-    path: path.join(docsDir, `${componentName}.docs.tsx`),
-    content: docsPageTemplate(componentName),
-  },
-  {
-    path: path.join(docsDir, 'index.ts'),
-    content: docsIndexTemplate(componentName),
-  },
-  {
-    path: recipeFile,
-    content: recipeTemplate(cssBlock),
-  },
+    {
+        path: path.join(componentDir, `${componentName}.types.ts`),
+        content: typesTemplate(componentName),
+    },
+    {
+        path: path.join(componentDir, `${componentName}.tsx`),
+        content: componentTemplate(componentName, cssBlock),
+    },
+    {
+        path: path.join(componentDir, `${componentName}.test.tsx`),
+        content: testTemplate(componentName, cssBlock),
+    },
+    {
+        path: path.join(componentDir, 'index.ts'),
+        content: indexTemplate(componentName),
+    },
+    {
+        path: path.join(docsDir, `${componentName}.meta.ts`),
+        content: docsMetaTemplate(componentName, category),
+    },
+    {
+        path: path.join(docsDir, `${componentName}.examples.tsx`),
+        content: docsExamplesTemplate(componentName),
+    },
+    {
+        path: path.join(docsDir, `${componentName}.docs.tsx`),
+        content: docsPageTemplate(componentName),
+    },
+    {
+        path: path.join(docsDir, 'index.ts'),
+        content: docsIndexTemplate(componentName),
+    },
+    {
+        path: recipeFile,
+        content: recipeTemplate(cssBlock),
+    },
 ]
 
 if (fs.existsSync(componentDir)) {
-  fail(`Component already exists: ${relative(componentDir)}`)
+    fail(`Component already exists: ${relative(componentDir)}`)
 }
 
 for (const file of files) {
-  writeFile(file.path, file.content)
+    writeFile(file.path, file.content)
 }
 
 appendExport(categoryIndexFile, `export * from './${slug}'`)
 appendDocsRegistry(docsRegistryFile, { category, componentName, slug })
 
 // --- Auto-update sub-path exports, tsup entries, recipe imports ---
-addSubpathExport(
-  path.join(ROOT_DIR, 'packages/ui/package.json'),
-  slug,
-  category,
-)
+addSubpathExport(path.join(ROOT_DIR, 'packages/ui/package.json'), slug, category)
 
-addTsupEntry(
-  path.join(ROOT_DIR, 'packages/ui/tsup.config.ts'),
-  componentName,
-  slug,
-  category,
-)
+addTsupEntry(path.join(ROOT_DIR, 'packages/ui/tsup.config.ts'), componentName, slug, category)
 
-addRecipeImport(
-  path.join(ROOT_DIR, 'packages/styles/src/recipes/index.css'),
-  slug,
-)
+addRecipeImport(path.join(ROOT_DIR, 'packages/styles/src/recipes/index.css'), slug)
 
 log(`Generated ${componentName} in ${relative(componentDir)}`)
 log(`Category: ${category}`)
 if (options.dryRun) {
-  log('Dry run only. No files written.')
+    log('Dry run only. No files written.')
 }
 
 function parseOptions(argv) {
-  const categoryArg = argv.find((arg) => arg.startsWith('--category='))
-  const categoryValue = categoryArg?.split('=')[1] ?? readOptionValue(argv, '--category') ?? 'display'
+    const categoryArg = argv.find((arg) => arg.startsWith('--category='))
+    const categoryValue =
+        categoryArg?.split('=')[1] ?? readOptionValue(argv, '--category') ?? 'display'
 
-  return {
-    category: categoryValue,
-    dryRun: argv.includes('--dry-run'),
-    help: argv.includes('--help') || argv.includes('-h'),
-  }
+    return {
+        category: categoryValue,
+        dryRun: argv.includes('--dry-run'),
+        help: argv.includes('--help') || argv.includes('-h'),
+    }
 }
 
 function readOptionValue(argv, name) {
-  const index = argv.indexOf(name)
-  if (index === -1) return undefined
-  return argv[index + 1]
+    const index = argv.indexOf(name)
+    if (index === -1) return undefined
+    return argv[index + 1]
 }
 
 function printHelp() {
-  console.log(`
+    console.log(`
 Component Generator for Monority UI
 
 Usage:
@@ -141,72 +130,72 @@ Examples:
 }
 
 function findRepoRoot(startDir) {
-  let current = startDir
+    let current = startDir
 
-  while (current !== path.dirname(current)) {
-    const packageJson = path.join(current, 'package.json')
-    if (fs.existsSync(packageJson)) {
-      const pkg = JSON.parse(fs.readFileSync(packageJson, 'utf8').replace(/^\uFEFF/, ''))
-      if (pkg.name === 'monority') return current
+    while (current !== path.dirname(current)) {
+        const packageJson = path.join(current, 'package.json')
+        if (fs.existsSync(packageJson)) {
+            const pkg = JSON.parse(fs.readFileSync(packageJson, 'utf8').replace(/^\uFEFF/, ''))
+            if (pkg.name === 'monority') return current
+        }
+        current = path.dirname(current)
     }
-    current = path.dirname(current)
-  }
 
-  fail('Could not find repo root package.json.')
+    fail('Could not find repo root package.json.')
 }
 
 function writeFile(filePath, content) {
-  if (options.dryRun) {
-    log(`Would create ${relative(filePath)}`)
-    return
-  }
+    if (options.dryRun) {
+        log(`Would create ${relative(filePath)}`)
+        return
+    }
 
-  fs.mkdirSync(path.dirname(filePath), { recursive: true })
-  fs.writeFileSync(filePath, content)
-  log(`Created ${relative(filePath)}`)
+    fs.mkdirSync(path.dirname(filePath), { recursive: true })
+    fs.writeFileSync(filePath, content)
+    log(`Created ${relative(filePath)}`)
 }
 
 function appendExport(indexPath, exportLine) {
-  if (options.dryRun) {
-    log(`Would update ${relative(indexPath)} with: ${exportLine}`)
-    return
-  }
+    if (options.dryRun) {
+        log(`Would update ${relative(indexPath)} with: ${exportLine}`)
+        return
+    }
 
-  const current = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : ''
-  if (current.includes(exportLine)) return
+    const current = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : ''
+    if (current.includes(exportLine)) return
 
-  const next = current.trimEnd() ? `${current.trimEnd()}\n${exportLine}\n` : `${exportLine}\n`
-  fs.writeFileSync(indexPath, next)
-  log(`Updated ${relative(indexPath)}`)
+    const next = current.trimEnd() ? `${current.trimEnd()}\n${exportLine}\n` : `${exportLine}\n`
+    fs.writeFileSync(indexPath, next)
+    log(`Updated ${relative(indexPath)}`)
 }
 
 function appendDocsRegistry(registryPath, { category, componentName, slug }) {
-  const registryEntry = `  { category: '${category}', label: '${componentName}', path: '/docs/${slug}', slug: '${slug}', status: 'draft' },`
-  const marker = '  // generator:component-registry'
+    const registryEntry = `  { category: '${category}', label: '${componentName}', path: '/docs/${slug}', slug: '${slug}', status: 'draft' },`
+    const marker = '  // generator:component-registry'
 
-  if (options.dryRun) {
-    log(`Would update ${relative(registryPath)} with: ${registryEntry.trim()}`)
-    return
-  }
+    if (options.dryRun) {
+        log(`Would update ${relative(registryPath)} with: ${registryEntry.trim()}`)
+        return
+    }
 
-  if (!fs.existsSync(registryPath)) {
-    writeFile(registryPath, docsRegistryTemplate(registryEntry))
-    return
-  }
+    if (!fs.existsSync(registryPath)) {
+        writeFile(registryPath, docsRegistryTemplate(registryEntry))
+        return
+    }
 
-  const current = fs.readFileSync(registryPath, 'utf8')
-  if (current.includes(`slug: '${slug}'`)) return
+    const current = fs.readFileSync(registryPath, 'utf8')
+    if (current.includes(`slug: '${slug}'`)) return
 
-  const next = current.includes(marker)
-    ? current.replace(marker, `${registryEntry}\n${marker}`)
-    : current.replace(/\]\s*$/, `${registryEntry}\n]\n`)
+    const next = current.includes(marker)
+        ? current.replace(marker, `${registryEntry}\n${marker}`)
+        : current.replace(/\]\s*$/, `${registryEntry}\n]\n`)
 
-  fs.writeFileSync(registryPath, next)
-  log(`Updated ${relative(registryPath)}`)
+    fs.writeFileSync(registryPath, next)
+    log(`Updated ${relative(registryPath)}`)
 }
 
 function typesTemplate(name) {
-  return `import type { ButtonHTMLAttributes, ReactNode } from 'react'
+    return `import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
 export type ${name}Variant = 'primary' | 'secondary'
 export type ${name}Size = 'sm' | 'md' | 'lg'
@@ -220,8 +209,8 @@ export interface ${name}Props extends React.ComponentPropsWithoutRef<'button'> {
 }
 
 function componentTemplate(name, cssBlock) {
-  const camelName = camelCase(name)
-  return `import { forwardRef } from 'react'
+    const camelName = camelCase(name)
+    return `import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { ${name}Props } from './${name}.types'
@@ -267,7 +256,7 @@ export type { ${name}Props, ${name}Variant, ${name}Size } from './${name}.types'
 }
 
 function testTemplate(name, cssBlock) {
-  return `import { act } from 'react'
+    return `import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
@@ -318,14 +307,14 @@ describe('${name}', () => {
 }
 
 function indexTemplate(name) {
-  return `export { ${name} } from './${name}'
+    return `export { ${name} } from './${name}'
 export type { ${name}Props } from './${name}.types'
 `
 }
 
 function docsMetaTemplate(name, category) {
-  const slug = kebabCase(name)
-  return `export const ${camelCase(name)}Meta = {
+    const slug = kebabCase(name)
+    return `export const ${camelCase(name)}Meta = {
   title: '${name}',
   status: 'draft',
   package: '@monority/ui/${slug}',
@@ -338,7 +327,7 @@ function docsMetaTemplate(name, category) {
 }
 
 function docsExamplesTemplate(name) {
-  return `import { ${name} } from '@monority/ui'
+    return `import { ${name} } from '@monority/ui'
 
 export function ${name}BasicExample() {
   return <${name}>Basic ${name}</${name}>
@@ -347,7 +336,7 @@ export function ${name}BasicExample() {
 }
 
 function docsPageTemplate(name) {
-  return `import { ComponentDocsPage } from '../componentDocs'
+    return `import { ComponentDocsPage } from '../componentDocs'
 import { ${camelCase(name)}Meta } from './${name}.meta'
 
 export function ${name}Docs() {
@@ -357,14 +346,14 @@ export function ${name}Docs() {
 }
 
 function docsIndexTemplate(name) {
-  return `export { ${name}Docs } from './${name}.docs'
+    return `export { ${name}Docs } from './${name}.docs'
 export { ${name}BasicExample } from './${name}.examples'
 export { ${camelCase(name)}Meta } from './${name}.meta'
 `
 }
 
 function docsRegistryTemplate(registryEntry) {
-  return `export interface DocsComponentRegistryItem {
+    return `export interface DocsComponentRegistryItem {
   category: string
   label: string
   path: string
@@ -380,7 +369,7 @@ ${registryEntry}
 }
 
 function recipeTemplate(cssBlock) {
-  return `@layer recipes {
+    return `@layer recipes {
   .${cssBlock} {
     display: inline-flex;
     align-items: center;
@@ -397,85 +386,86 @@ function recipeTemplate(cssBlock) {
 }
 
 function addSubpathExport(packageJsonPath, slug, category) {
-  if (options.dryRun) {
-    log(`Would update package.json exports with ./${slug}`)
-    return
-  }
+    if (options.dryRun) {
+        log(`Would update package.json exports with ./${slug}`)
+        return
+    }
 
-  const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
-  const exportKey = `./${slug}`
-  if (pkg.exports[exportKey]) return // already exists
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
+    const exportKey = `./${slug}`
+    if (pkg.exports[exportKey]) return // already exists
 
-  const exportEntry = slug.replace(/-/g, '')
-  const exportConfig = {
-    types: `./dist/${exportEntry}.d.ts`,
-    development: `./src/components/${category}/${slug}/index.ts`,
-    import: `./dist/${exportEntry}.js`,
-    default: `./dist/${exportEntry}.js`,
-  }
+    const exportEntry = slug.replace(/-/g, '')
+    const exportConfig = {
+        types: `./dist/${exportEntry}.d.ts`,
+        development: `./src/components/${category}/${slug}/index.ts`,
+        import: `./dist/${exportEntry}.js`,
+        default: `./dist/${exportEntry}.js`,
+    }
 
-  pkg.exports[exportKey] = exportConfig
-  fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
-  log(`Updated package.json exports with ./${slug}`)
+    pkg.exports[exportKey] = exportConfig
+    fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
+    log(`Updated package.json exports with ./${slug}`)
 }
 
 function addTsupEntry(tsupPath, componentName, slug, category) {
-  if (options.dryRun) {
+    if (options.dryRun) {
+        const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+        log(`Would update tsup.config.ts entry: ${entryKey}`)
+        return
+    }
+
+    let content = fs.readFileSync(tsupPath, 'utf8')
     const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
-    log(`Would update tsup.config.ts entry: ${entryKey}`)
-    return
-  }
+    const entryPath = `src/components/${category}/${slug}/index.ts`
+    const entryLine = `    ${entryKey}: '${entryPath}',`
 
-  let content = fs.readFileSync(tsupPath, 'utf8')
-  const entryKey = slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
-  const entryPath = `src/components/${category}/${slug}/index.ts`
-  const entryLine = `    ${entryKey}: '${entryPath}',`
+    if (content.includes(entryPath)) return // already exists
 
-  if (content.includes(entryPath)) return // already exists
-
-  // Insert before the closing brace of the entry object
-  const closingBraceIndex = content.lastIndexOf('  },\n  format:')
-  if (closingBraceIndex === -1) return
-  content = content.slice(0, closingBraceIndex) + `${entryLine}\n` + content.slice(closingBraceIndex)
-  fs.writeFileSync(tsupPath, content)
-  log(`Updated tsup.config.ts entry: ${entryKey}`)
+    // Insert before the closing brace of the entry object
+    const closingBraceIndex = content.lastIndexOf('  },\n  format:')
+    if (closingBraceIndex === -1) return
+    content =
+        content.slice(0, closingBraceIndex) + `${entryLine}\n` + content.slice(closingBraceIndex)
+    fs.writeFileSync(tsupPath, content)
+    log(`Updated tsup.config.ts entry: ${entryKey}`)
 }
 
 function addRecipeImport(recipesIndexPath, slug) {
-  if (options.dryRun) {
-    log(`Would update recipes/index.css with ${slug}`)
-    return
-  }
+    if (options.dryRun) {
+        log(`Would update recipes/index.css with ${slug}`)
+        return
+    }
 
-  const importLine = `@import './${slug}.recipe.css';`
-  const content = fs.readFileSync(recipesIndexPath, 'utf8')
-  if (content.includes(importLine)) return
+    const importLine = `@import './${slug}.recipe.css';`
+    const content = fs.readFileSync(recipesIndexPath, 'utf8')
+    if (content.includes(importLine)) return
 
-  // Append as last import, in alphabetical order
-  const lines = content.trim().split('\n')
-  lines.push(importLine)
-  lines.sort()
-  fs.writeFileSync(recipesIndexPath, lines.join('\n') + '\n')
-  log(`Updated recipes/index.css with ${slug}`)
+    // Append as last import, in alphabetical order
+    const lines = content.trim().split('\n')
+    lines.push(importLine)
+    lines.sort()
+    fs.writeFileSync(recipesIndexPath, lines.join('\n') + '\n')
+    log(`Updated recipes/index.css with ${slug}`)
 }
 
 function kebabCase(value) {
-  return value.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+    return value.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 
 function camelCase(value) {
-  return `${value[0].toLowerCase()}${value.slice(1)}`
+    return `${value[0].toLowerCase()}${value.slice(1)}`
 }
 
 function relative(filePath) {
-  return path.relative(ROOT_DIR, filePath).replaceAll(path.sep, '/')
+    return path.relative(ROOT_DIR, filePath).replaceAll(path.sep, '/')
 }
 
 function log(message) {
-  console.log(message)
+    console.log(message)
 }
 
 function fail(message) {
-  console.error(`Error: ${message}`)
-  process.exit(1)
+    console.error(`Error: ${message}`)
+    process.exit(1)
 }

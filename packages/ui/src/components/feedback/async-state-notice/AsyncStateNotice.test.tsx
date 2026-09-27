@@ -8,51 +8,51 @@ let container: HTMLDivElement | null = null
 let root: Root | null = null
 
 function render(ui: ReactElement) {
-  container = document.createElement('div')
-  document.body.appendChild(container)
-  root = createRoot(container)
+    container = document.createElement('div')
+    document.body.appendChild(container)
+    root = createRoot(container)
 
-  act(() => {
-    root?.render(ui)
-  })
+    act(() => {
+        root?.render(ui)
+    })
 
-  return container
+    return container
 }
 
 afterEach(() => {
-  act(() => {
-    root?.unmount()
-  })
-  container?.remove()
-  root = null
-  container = null
+    act(() => {
+        root?.unmount()
+    })
+    container?.remove()
+    root = null
+    container = null
 })
 
 describe('AsyncStateNotice', () => {
-  it('returns null when neither loading nor error', () => {
-    const view = render(<AsyncStateNotice />)
-    expect(view.innerHTML).toBe('')
-  })
+    it('returns null when neither loading nor error', () => {
+        const view = render(<AsyncStateNotice />)
+        expect(view.innerHTML).toBe('')
+    })
 
-  it('renders loading message when isLoading', () => {
-    const view = render(<AsyncStateNotice isLoading />)
-    const el = view.querySelector('div')
-    expect(el?.textContent).toBe('Loading...')
-  })
+    it('renders loading message when isLoading', () => {
+        const view = render(<AsyncStateNotice isLoading />)
+        const el = view.querySelector('div')
+        expect(el?.textContent).toBe('Loading...')
+    })
 
-  it('renders error message when isError', () => {
-    const view = render(<AsyncStateNotice isError />)
-    const el = view.querySelector('div')
-    expect(el?.textContent).toBe('An error occurred')
-  })
+    it('renders error message when isError', () => {
+        const view = render(<AsyncStateNotice isError />)
+        const el = view.querySelector('div')
+        expect(el?.textContent).toBe('An error occurred')
+    })
 
-  it('uses role="status" for loading and role="alert" for error', () => {
-    const loading = render(<AsyncStateNotice isLoading />)
-    expect(loading.querySelector('div')?.getAttribute('role')).toBe('status')
+    it('uses role="status" for loading and role="alert" for error', () => {
+        const loading = render(<AsyncStateNotice isLoading />)
+        expect(loading.querySelector('div')?.getAttribute('role')).toBe('status')
 
-    const error = render(<AsyncStateNotice isError />)
-    expect(error.querySelector('div')?.getAttribute('role')).toBe('alert')
-  })
+        const error = render(<AsyncStateNotice isError />)
+        expect(error.querySelector('div')?.getAttribute('role')).toBe('alert')
+    })
 
     it('switches state hooks and live-region semantics on transition', () => {
         const view = render(<AsyncStateNotice isLoading />)
@@ -72,9 +72,7 @@ describe('AsyncStateNotice', () => {
     it('marks loading and error states for styling', () => {
         const loading = render(<AsyncStateNotice isLoading />)
         expect(loading.querySelector('[data-state="loading"]')).toBeTruthy()
-        expect(
-            loading.querySelector('.mr-async-state-notice--loading'),
-        ).toBeTruthy()
+        expect(loading.querySelector('.mr-async-state-notice--loading')).toBeTruthy()
 
         const error = render(<AsyncStateNotice isError />)
         expect(error.querySelector('[data-state="error"]')).toBeTruthy()

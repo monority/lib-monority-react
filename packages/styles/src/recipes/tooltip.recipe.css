@@ -12,25 +12,27 @@
     .mr-tooltip__content {
         position: absolute;
         left: 50%;
-         bottom: calc(100% + var(--mr-overlay-offset));
+        bottom: calc(100% + var(--mr-overlay-offset));
         z-index: var(--mr-z-overlay);
         min-width: max-content;
-         max-inline-size: min(var(--mr-overlay-width-tooltip), calc(100vw - 2 * var(--mr-overlay-gutter)));
-         padding: var(--mr-space-2) var(--mr-space-3);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
-         border-radius: var(--mr-radius-sm);
+        max-inline-size: min(
+            var(--mr-overlay-width-tooltip),
+            calc(100vw - 2 * var(--mr-overlay-gutter))
+        );
+        padding: var(--mr-space-2) var(--mr-space-3);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-sm);
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 96%, transparent);
         color: var(--mr-fg-strong);
         font-size: var(--mr-text-xs);
-         line-height: var(--mr-leading-normal);
+        line-height: var(--mr-leading-normal);
         text-align: center;
-         box-shadow: var(--mr-elevation-raised);
+        box-shadow: var(--mr-elevation-raised);
         opacity: 0;
         pointer-events: none;
-         transform: translateX(-50%) translateY(var(--mr-space-1));
-        transition:
-            opacity var(--mr-duration-fast) var(--mr-ease-standard),
-            transform var(--mr-duration-fast) var(--mr-ease-standard);
+        transform: translateX(-50%) translateY(var(--mr-space-1));
+        transition: opacity var(--mr-duration-fast) var(--mr-ease-standard), transform
+            var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-tooltip:hover .mr-tooltip__content,
@@ -42,7 +44,7 @@
     /* Escape dismissal (APG): overrides hover/focus until pointer leaves or focus moves */
     .mr-tooltip[data-hidden='true'] .mr-tooltip__content {
         opacity: 0;
-         transform: translateX(-50%) translateY(var(--mr-space-1));
+        transform: translateX(-50%) translateY(var(--mr-space-1));
     }
 
     @media (prefers-reduced-motion: reduce) {

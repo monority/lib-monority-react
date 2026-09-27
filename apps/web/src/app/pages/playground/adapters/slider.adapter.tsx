@@ -30,9 +30,7 @@ function codeFor(props: PlaygroundProps): string {
 }
 
 function SliderPreview(props: PlaygroundProps) {
-    const [internal, setInternal] = useState(
-        typeof props.value === 'number' ? props.value : 50,
-    )
+    const [internal, setInternal] = useState(typeof props.value === 'number' ? props.value : 50)
     return (
         <Slider
             label={String(props.label ?? '') || undefined}

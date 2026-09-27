@@ -26,9 +26,7 @@ const read = (p) => fs.readFileSync(path.join(repoRoot, p), 'utf8')
 
 const reference = read('docs/design/reference/monority-ui-tokens.reference.css')
 const deprecated = read('docs/design/reference/monority-ui-tokens.deprecated.reference.css')
-const known = new Set(
-    [...(reference + deprecated).matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]),
-)
+const known = new Set([...(reference + deprecated).matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]))
 
 // Tokens encore définis dans le dépôt (état actuel avant refonte).
 const legacy = new Set()
@@ -79,8 +77,11 @@ for (const file of files) {
 
     // Colonne « Actuel » = première cellule de chaque ligne de tableau
     // (hors ligne d'en-tête et séparateur).
-    const rows = ecarts.split('\n').filter((l) => l.trim().startsWith('|')).slice(2)
-    const actuelText = rows.map((r) => (r.split('|')[1] ?? '')).join('\n')
+    const rows = ecarts
+        .split('\n')
+        .filter((l) => l.trim().startsWith('|'))
+        .slice(2)
+    const actuelText = rows.map((r) => r.split('|')[1] ?? '').join('\n')
     const actuelTokens = new Set(tokensOf(actuelText))
     const ecartsTokens = tokensOf(ecarts)
 
@@ -99,7 +100,9 @@ for (const file of files) {
         } else if (auditOnly.has(token)) {
             continue
         } else {
-            failures.push(`${file} : ${token} en « Écarts » hors colonne « Actuel », absent des références`)
+            failures.push(
+                `${file} : ${token} en « Écarts » hors colonne « Actuel », absent des références`
+            )
         }
     }
 }
@@ -114,5 +117,5 @@ if (failures.length) {
     process.exit(1)
 }
 console.log(
-    `S3 PASS — ${files.length} specs, 0 token inconnu (${legacyCited.size} tokens d'état actuel cités en colonne « Actuel » : ${[...legacyCited].sort().join(', ') || 'aucun'})`,
+    `S3 PASS — ${files.length} specs, 0 token inconnu (${legacyCited.size} tokens d'état actuel cités en colonne « Actuel » : ${[...legacyCited].sort().join(', ') || 'aucun'})`
 )

@@ -15,7 +15,11 @@ export type { ScrollAreaProps } from './scroll-area'
 export { Separator } from './separator'
 export type { SeparatorProps } from './separator'
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './resizable'
-export type { ResizablePanelGroupProps, ResizablePanelProps, ResizableHandleProps } from './resizable'
+export type {
+    ResizablePanelGroupProps,
+    ResizablePanelProps,
+    ResizableHandleProps,
+} from './resizable'
 export { Stack } from './stack'
 export type { StackProps, StackGap } from './stack'
 export { Toolbar } from './toolbar'

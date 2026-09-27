@@ -30,7 +30,7 @@
         gap: var(--mr-space-3);
         min-width: 0;
         padding: var(--mr-space-3);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
     }
@@ -52,14 +52,14 @@
         justify-content: space-between;
         gap: var(--mr-space-3);
         padding: var(--mr-space-3) var(--mr-space-4);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
     }
 
     .mr-sidebar-layout__content {
         padding: var(--mr-space-4);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
     }

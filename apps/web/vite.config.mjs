@@ -11,66 +11,79 @@ const monorepoRoot = path.resolve(webDir, '../..')
 const uiSrc = path.resolve(monorepoRoot, 'packages/ui/src')
 const exts = ['.tsx', '.ts', '.jsx', '.js', '.mjs', '.json', '.css']
 
-const isFile = (p) => { try { return fs.statSync(p).isFile() } catch { return false } }
-const isDir = (p) => { try { return fs.statSync(p).isDirectory() } catch { return false } }
+const isFile = (p) => {
+    try {
+        return fs.statSync(p).isFile()
+    } catch {
+        return false
+    }
+}
+const isDir = (p) => {
+    try {
+        return fs.statSync(p).isDirectory()
+    } catch {
+        return false
+    }
+}
 
 function tryResolve(basePath) {
-  if (isFile(basePath)) return basePath
-  for (const ext of exts) {
-    const candidate = basePath + ext
-    if (isFile(candidate)) return candidate
-    const tsFromJs = basePath.replace(/\.js$/, ext)
-    if (tsFromJs !== basePath && isFile(tsFromJs)) return tsFromJs
-  }
-  if (isDir(basePath)) {
+    if (isFile(basePath)) return basePath
     for (const ext of exts) {
-      const indexFile = path.join(basePath, 'index' + ext)
-      if (isFile(indexFile)) return indexFile
+        const candidate = basePath + ext
+        if (isFile(candidate)) return candidate
+        const tsFromJs = basePath.replace(/\.js$/, ext)
+        if (tsFromJs !== basePath && isFile(tsFromJs)) return tsFromJs
     }
-  }
-  return null
+    if (isDir(basePath)) {
+        for (const ext of exts) {
+            const indexFile = path.join(basePath, 'index' + ext)
+            if (isFile(indexFile)) return indexFile
+        }
+    }
+    return null
 }
 
 const themeBootstrap = () => ({
-  name: 'monority-theme-bootstrap',
-  transformIndexHtml() {
-    return [
-      {
-        tag: 'script',
-        children: getThemeScript(),
-        injectTo: 'head-prepend',
-      },
-    ]
-  },
+    name: 'monority-theme-bootstrap',
+    transformIndexHtml() {
+        return [
+            {
+                tag: 'script',
+                children: getThemeScript(),
+                injectTo: 'head-prepend',
+            },
+        ]
+    },
 })
 
 export default defineConfig({
-  plugins: [
-    themeBootstrap(),
-    react(),
-    {
-      name: 'monority-path-aliases',
-      enforce: 'pre',
-      resolveId(source) {
-        if (!source.startsWith('@/')) return null
-        const relative = source.slice(2)
-        // Normalize to forward slashes: Rollup compares module IDs as strings,
-        // and a backslash path would register as a second instance of the same
-        // file (this previously duplicated auth-context and broke useAuth).
-        const resolved =
-          tryResolve(path.resolve(webSrc, relative)) || tryResolve(path.resolve(uiSrc, relative))
-        return resolved ? normalizePath(resolved) : null
-      },
+    plugins: [
+        themeBootstrap(),
+        react(),
+        {
+            name: 'monority-path-aliases',
+            enforce: 'pre',
+            resolveId(source) {
+                if (!source.startsWith('@/')) return null
+                const relative = source.slice(2)
+                // Normalize to forward slashes: Rollup compares module IDs as strings,
+                // and a backslash path would register as a second instance of the same
+                // file (this previously duplicated auth-context and broke useAuth).
+                const resolved =
+                    tryResolve(path.resolve(webSrc, relative)) ||
+                    tryResolve(path.resolve(uiSrc, relative))
+                return resolved ? normalizePath(resolved) : null
+            },
+        },
+    ],
+    resolve: {
+        conditions: ['monority-source'],
     },
-  ],
-  resolve: {
-    conditions: ['monority-source'],
-  },
-  optimizeDeps: {
-    exclude: ['@monority/ui'],
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-  },
+    optimizeDeps: {
+        exclude: ['@monority/ui'],
+    },
+    build: {
+        outDir: 'dist',
+        sourcemap: true,
+    },
 })

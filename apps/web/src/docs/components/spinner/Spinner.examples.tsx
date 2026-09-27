@@ -22,7 +22,7 @@ export function SpinnerTonesExample() {
             <div
                 style={{
                     background: 'var(--mr-fg-base)',
-                     padding: 'var(--mr-space-3)',
+                    padding: 'var(--mr-space-3)',
                     borderRadius: 'var(--mr-radius-md)',
                 }}
             >

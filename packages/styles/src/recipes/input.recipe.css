@@ -1,58 +1,58 @@
 @layer recipes {
-  .mr-input,
-  .mr-input-base {
-    /* Inherits from .mr-input-base; add component-specific overrides here */
-  }
+    .mr-input,
+    .mr-input-base {
+        /* Inherits from .mr-input-base; add component-specific overrides here */
+    }
 
-  .mr-input--accent,
-  .mr-input[data-tone='accent'] {
-    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
-  }
+    .mr-input--accent,
+    .mr-input[data-tone='accent'] {
+        border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+    }
 
-  .mr-input--accent:focus-visible,
-  .mr-input[data-tone='accent']:focus-visible {
-    border-color: var(--mr-border-control-hover);
-  }
+    .mr-input--accent:focus-visible,
+    .mr-input[data-tone='accent']:focus-visible {
+        border-color: var(--mr-border-control-hover);
+    }
 
-  .mr-input--danger,
-  .mr-input[data-tone='danger'],
-  .mr-input--invalid,
-  .mr-input[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
-  }
+    .mr-input--danger,
+    .mr-input[data-tone='danger'],
+    .mr-input--invalid,
+    .mr-input[data-invalid='true'] {
+        border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
+    }
 
-  .mr-input--danger:focus-visible,
-  .mr-input[data-tone='danger']:focus-visible,
-  .mr-input--invalid:focus-visible {
-    border-color: var(--mr-danger-text);
-    outline-color: var(--mr-danger-text);
-  }
+    .mr-input--danger:focus-visible,
+    .mr-input[data-tone='danger']:focus-visible,
+    .mr-input--invalid:focus-visible {
+        border-color: var(--mr-danger-text);
+        outline-color: var(--mr-danger-text);
+    }
 
-  .mr-input--error {
-    /* backward compatibility — same as --invalid */
-    border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
-  }
+    .mr-input--error {
+        /* backward compatibility — same as --invalid */
+        border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
+    }
 
-  .mr-input--sm,
-  .mr-input[data-size='sm'] {
-    padding-inline: var(--mr-control-padding-inline-sm);
-    font-size: var(--mr-text-xs);
-  }
+    .mr-input--sm,
+    .mr-input[data-size='sm'] {
+        padding-inline: var(--mr-control-padding-inline-sm);
+        font-size: var(--mr-text-xs);
+    }
 
-  .mr-input--md,
-  .mr-input[data-size='md'] {
-    padding-inline: var(--mr-control-padding-inline-md);
-  }
+    .mr-input--md,
+    .mr-input[data-size='md'] {
+        padding-inline: var(--mr-control-padding-inline-md);
+    }
 
-  .mr-input--lg,
-  .mr-input[data-size='lg'] {
-    padding-inline: var(--mr-control-padding-inline-lg);
-    font-size: var(--mr-text-md);
-  }
+    .mr-input--lg,
+    .mr-input[data-size='lg'] {
+        padding-inline: var(--mr-control-padding-inline-lg);
+        font-size: var(--mr-text-md);
+    }
 
-  .mr-input--disabled,
-  .mr-input[data-disabled='true'] {
-    cursor: not-allowed;
-     opacity: var(--mr-opacity-disabled);
-  }
+    .mr-input--disabled,
+    .mr-input[data-disabled='true'] {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled);
+    }
 }

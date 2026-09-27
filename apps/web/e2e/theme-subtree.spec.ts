@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
  */
 
 const resolvedPath = fileURLToPath(
-    new URL('../../../packages/tokens/dist/resolved.json', import.meta.url),
+    new URL('../../../packages/tokens/dist/resolved.json', import.meta.url)
 )
 const resolved = JSON.parse(readFileSync(resolvedPath, 'utf8'))
 
@@ -32,12 +32,18 @@ const hexToRgb = (hex: string): string => {
 }
 
 const expectRgbClose = (actual: string, expected: string, tolerance = 1) => {
-    const values = (value: string) => value.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? []
+    const values = (value: string) =>
+        value
+            .match(/[\d.]+/g)
+            ?.slice(0, 3)
+            .map(Number) ?? []
     const actualValues = values(actual)
     const expectedValues = values(expected)
     expect(actualValues).toHaveLength(3)
     for (let index = 0; index < 3; index += 1) {
-        expect(Math.abs((actualValues[index] ?? 0) - (expectedValues[index] ?? 0))).toBeLessThanOrEqual(tolerance)
+        expect(
+            Math.abs((actualValues[index] ?? 0) - (expectedValues[index] ?? 0))
+        ).toBeLessThanOrEqual(tolerance)
     }
 }
 
@@ -100,7 +106,7 @@ test.describe('phase 2a — thèmes sur sous-arbre', () => {
                     hostTheme: opposite[theme],
                     panelTheme: theme,
                     vars: declarationsFor(theme, '--mr-bg-canvas'),
-                },
+                }
             )
 
             expectRgbClose(result.background, hexToRgb(expected['--mr-bg-canvas']))

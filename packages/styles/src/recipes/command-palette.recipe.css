@@ -8,7 +8,7 @@
     }
 
     .mr-command {
-         inline-size: min(var(--mr-overlay-width-command), 100%);
+        inline-size: min(var(--mr-overlay-width-command), 100%);
     }
 
     .mr-command__layout {
@@ -42,8 +42,8 @@
         gap: var(--mr-space-2);
         align-items: center;
         width: 100%;
-         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
-         border: var(--mr-border-width) solid transparent;
+        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        border: var(--mr-border-width) solid transparent;
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface);
         color: var(--mr-fg-base);
@@ -62,8 +62,8 @@
     }
 
     .mr-command__item:focus-visible {
-         outline: var(--mr-focus-width) solid var(--mr-accent);
-         outline-offset: calc(-1 * var(--mr-focus-width));
+        outline: var(--mr-focus-width) solid var(--mr-accent);
+        outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
     .mr-command__item-main {
@@ -72,7 +72,7 @@
     }
 
     .mr-command__item-group {
-         font-size: var(--mr-text-xs);
+        font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-semibold);
         text-transform: uppercase;
         letter-spacing: 0.04em;
@@ -88,11 +88,11 @@
     .mr-command__item-description {
         font-size: var(--mr-text-xs);
         color: var(--mr-fg-muted);
-         line-height: var(--mr-leading-normal);
+        line-height: var(--mr-leading-normal);
     }
 
     .mr-command__shortcut {
-         padding: var(--mr-space-1) var(--mr-space-2);
+        padding: var(--mr-space-1) var(--mr-space-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-xs);
         background: var(--mr-bg-surface-strong);
@@ -103,8 +103,8 @@
 
     .mr-command__empty {
         padding: var(--mr-space-4);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
-         border-radius: var(--mr-radius-md);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface);
         color: var(--mr-fg-muted);
         text-align: center;

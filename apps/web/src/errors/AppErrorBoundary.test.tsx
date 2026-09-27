@@ -15,13 +15,13 @@ describe('AppErrorBoundary', () => {
         renderWithProviders(
             <AppErrorBoundary>
                 <ThrowingComponent />
-            </AppErrorBoundary>,
+            </AppErrorBoundary>
         )
 
         expect(
             screen.getByRole('heading', {
                 name: /une erreur a interrompu le rendu de l'application/i,
-            }),
+            })
         ).toBeInTheDocument()
 
         consoleErrorSpy.mockRestore()
@@ -38,7 +38,7 @@ describe('AppErrorBoundary', () => {
         renderWithProviders(
             <AppErrorBoundary>
                 <ThrowingComponent />
-            </AppErrorBoundary>,
+            </AppErrorBoundary>
         )
 
         fireEvent.click(screen.getByRole('button', { name: /recharger/i }))

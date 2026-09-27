@@ -2,20 +2,20 @@
 
 /**
  * Monority Validation Script
- * 
+ *
  * Validates the monorepo structure and consistency:
  * - Checks that all UI components have showcase sections
  * - Checks that all components are properly exported
  * - Checks that there are no orphaned files
- * 
+ *
  * Usage: node scripts/validate.js
- * 
+ *
  * Can be used in:
  * - Pre-commit hooks (husky)
  * - CI/CD pipelines
  * - IDE/AI workflows
  * - Manual validation
- * 
+ *
  * Exit codes:
  *   0 - All validations passed
  *   1 - Validation errors found
@@ -62,10 +62,11 @@ function getUIComponents() {
         return []
     }
 
-    return fs.readdirSync(dir)
-        .filter(file => file.endsWith('.jsx') && !file.includes('.test.'))
-        .map(file => file.replace('.jsx', ''))
-        .filter(name => !CONFIG.excludeComponents.includes(name))
+    return fs
+        .readdirSync(dir)
+        .filter((file) => file.endsWith('.jsx') && !file.includes('.test.'))
+        .map((file) => file.replace('.jsx', ''))
+        .filter((name) => !CONFIG.excludeComponents.includes(name))
 }
 
 /**
@@ -74,13 +75,16 @@ function getUIComponents() {
 function getShowcaseSections() {
     const dir = path.join(ROOT_DIR, CONFIG.showcaseSectionsDir)
     if (!fs.existsSync(dir)) {
-        results.warnings.push(`Showcase sections directory not found: ${CONFIG.showcaseSectionsDir}`)
+        results.warnings.push(
+            `Showcase sections directory not found: ${CONFIG.showcaseSectionsDir}`
+        )
         return []
     }
 
-    return fs.readdirSync(dir)
-        .filter(file => file.startsWith('Showcase') && file.endsWith('Section.jsx'))
-        .map(file => file.replace('Showcase', '').replace('Section.jsx', ''))
+    return fs
+        .readdirSync(dir)
+        .filter((file) => file.startsWith('Showcase') && file.endsWith('Section.jsx'))
+        .map((file) => file.replace('Showcase', '').replace('Section.jsx', ''))
 }
 
 /**
@@ -109,14 +113,14 @@ function getExportedComponents() {
  * Check that all components are exported
  */
 function validateExports(components, exportedComponents) {
-    const missingExports = components.filter(comp => !exportedComponents.includes(comp))
+    const missingExports = components.filter((comp) => !exportedComponents.includes(comp))
 
-    missingExports.forEach(comp => {
+    missingExports.forEach((comp) => {
         results.errors.push(`Component "${comp}" is not exported in index.js`)
     })
 
-    const extraExports = exportedComponents.filter(exp => !components.includes(exp))
-    extraExports.forEach(exp => {
+    const extraExports = exportedComponents.filter((exp) => !components.includes(exp))
+    extraExports.forEach((exp) => {
         results.warnings.push(`Export "${exp}" in index.js has no corresponding component file`)
     })
 }
@@ -125,15 +129,15 @@ function validateExports(components, exportedComponents) {
  * Check that all components have showcase sections
  */
 function validateShowcase(components, showcaseSections) {
-    const missingShowcase = components.filter(comp => !showcaseSections.includes(comp))
+    const missingShowcase = components.filter((comp) => !showcaseSections.includes(comp))
 
-    missingShowcase.forEach(comp => {
+    missingShowcase.forEach((comp) => {
         results.warnings.push(`Component "${comp}" has no showcase section`)
         results.info.push(`  → Run: npm run generate:component ${comp} --no-test`)
     })
 
-    const orphanedShowcase = showcaseSections.filter(comp => !components.includes(comp))
-    orphanedShowcase.forEach(comp => {
+    const orphanedShowcase = showcaseSections.filter((comp) => !components.includes(comp))
+    orphanedShowcase.forEach((comp) => {
         results.warnings.push(`Orphaned showcase section for "${comp}" (component doesn't exist)`)
     })
 }
@@ -144,7 +148,7 @@ function validateShowcase(components, showcaseSections) {
 function validateTests(components) {
     const dir = path.join(ROOT_DIR, CONFIG.uiComponentsDir)
 
-    components.forEach(comp => {
+    components.forEach((comp) => {
         const testFile = path.join(dir, `${comp}.test.jsx`)
         if (!fs.existsSync(testFile)) {
             results.info.push(`Component "${comp}" has no test file`)
@@ -162,19 +166,19 @@ function printResults() {
 
     if (results.errors.length > 0) {
         console.log(`${colors.red}❌ Errors (${results.errors.length}):${colors.reset}`)
-        results.errors.forEach(msg => console.log(`   ${msg}`))
+        results.errors.forEach((msg) => console.log(`   ${msg}`))
         console.log()
     }
 
     if (results.warnings.length > 0) {
         console.log(`${colors.yellow}⚠️  Warnings (${results.warnings.length}):${colors.reset}`)
-        results.warnings.forEach(msg => console.log(`   ${msg}`))
+        results.warnings.forEach((msg) => console.log(`   ${msg}`))
         console.log()
     }
 
     if (results.info.length > 0) {
         console.log(`${colors.blue}ℹ️  Info:${colors.reset}`)
-        results.info.forEach(msg => console.log(`   ${msg}`))
+        results.info.forEach((msg) => console.log(`   ${msg}`))
         console.log()
     }
 

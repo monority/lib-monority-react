@@ -97,8 +97,8 @@ function App() {
                         CopyButton redirect to the Button page
                     </li>
                     <li>
-                        <strong>Typography</strong> - Text, Title, Kbd - plus the PreCode code
-                        block export
+                        <strong>Typography</strong> - Text, Title, Kbd - plus the PreCode code block
+                        export
                     </li>
                     <li>
                         <strong>Display</strong> - Accordion, Avatar, Card, Carousel, Collapsible,

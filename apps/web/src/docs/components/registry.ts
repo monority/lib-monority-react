@@ -279,7 +279,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'accordion',
         status: 'stable',
     },
-    { category: 'display', label: 'Avatar', path: '/docs/avatar', slug: 'avatar', status: 'stable' },
+    {
+        category: 'display',
+        label: 'Avatar',
+        path: '/docs/avatar',
+        slug: 'avatar',
+        status: 'stable',
+    },
     { category: 'display', label: 'Card', path: '/docs/card', slug: 'card', status: 'stable' },
     {
         category: 'display',

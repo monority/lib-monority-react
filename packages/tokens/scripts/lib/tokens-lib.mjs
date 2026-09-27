@@ -23,15 +23,26 @@ const num = (v) => {
 /** Formule oklch() depuis l'extension, pour une marque donnée (CSS var). */
 export function oklchDecl(ext) {
     const l = num(ext.l)
-    const c = typeof ext.c === 'number' ? num(ext.c) : ext.c === 'neutral' ? 'var(--mr-neutral-chroma)' : `calc(var(--mr-brand-chroma) * ${num(ext.c.factor)})`
-    const h = ext.h === 'brand' ? 'var(--mr-brand-hue)' : ext.h === 'neutral' ? 'var(--mr-neutral-hue)' : num(ext.h)
+    const c =
+        typeof ext.c === 'number'
+            ? num(ext.c)
+            : ext.c === 'neutral'
+              ? 'var(--mr-neutral-chroma)'
+              : `calc(var(--mr-brand-chroma) * ${num(ext.c.factor)})`
+    const h =
+        ext.h === 'brand'
+            ? 'var(--mr-brand-hue)'
+            : ext.h === 'neutral'
+              ? 'var(--mr-neutral-hue)'
+              : num(ext.h)
     return `oklch(${l} ${c} ${h})`
 }
 
 /** Couleur résolue (l, c, h numériques) pour marque × thème. */
 export function resolveOklch(ext, brand) {
     const b = BRANDS[brand]
-    const c = typeof ext.c === 'number' ? ext.c : ext.c === 'neutral' ? 0 : b.brandChroma * ext.c.factor
+    const c =
+        typeof ext.c === 'number' ? ext.c : ext.c === 'neutral' ? 0 : b.brandChroma * ext.c.factor
     const h = ext.h === 'brand' ? b.brandHue : ext.h === 'neutral' ? b.neutralHue : ext.h
     return { l: ext.l, c, h }
 }
@@ -74,7 +85,16 @@ export function cssName(segments) {
     const [ns, ...rest] = segments
     if (ns !== 'mr') throw new Error('racine attendue: mr')
     const head = rest[0]
-    if (['theme-light', 'theme-dark', 'theme-oled', 'theme-ocean', 'theme-night', 'theme-high-contrast'].includes(head)) {
+    if (
+        [
+            'theme-light',
+            'theme-dark',
+            'theme-oled',
+            'theme-ocean',
+            'theme-night',
+            'theme-high-contrast',
+        ].includes(head)
+    ) {
         return { scope: head, name: '--mr-' + rest.slice(1).join('-').split('~')[0] }
     }
     if (head === 'density-compact' || head === 'media-max640' || head === 'motion-reduced') {

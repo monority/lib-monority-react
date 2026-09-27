@@ -86,19 +86,27 @@ describe('Step 11 · Render representative components', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
     })
 
     it('renders Button with all props', () => {
-        render(<Button variant="ghost" size="sm" disabled loading>Go</Button>)
+        render(
+            <Button variant="ghost" size="sm" disabled loading>
+                Go
+            </Button>
+        )
         const btn = container!.querySelector('button')
         expect(btn).toBeTruthy()
         expect(btn?.disabled).toBe(true)
@@ -124,7 +132,7 @@ describe('Step 11 · Render representative components', () => {
         render(
             <Select label="Country">
                 <option value="fr">France</option>
-            </Select>,
+            </Select>
         )
         expect(container!.querySelector('select')).toBeTruthy()
     })
@@ -144,10 +152,13 @@ describe('Step 11 · Render representative components', () => {
     it('renders RadioGroup', () => {
         render(
             <RadioGroup
-                items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]}
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
                 value="a"
                 onChange={() => {}}
-            />,
+            />
         )
         expect(container!.querySelector('[role="radiogroup"]')).toBeTruthy()
     })
@@ -173,22 +184,13 @@ describe('Step 11 · Render representative components', () => {
 
     it('renders Accordion', () => {
         render(
-            <Accordion
-                items={[{ value: 'a', title: 'Title', content: 'Body' }]}
-                defaultValue="a"
-            />,
+            <Accordion items={[{ value: 'a', title: 'Title', content: 'Body' }]} defaultValue="a" />
         )
         expect(container!.querySelector('[data-open="true"]')).toBeTruthy()
     })
 
     it('renders Tabs', () => {
-        render(
-            <Tabs
-                items={[{ value: 'a', label: 'Tab A' }]}
-                value="a"
-                onChange={() => {}}
-            />,
-        )
+        render(<Tabs items={[{ value: 'a', label: 'Tab A' }]} value="a" onChange={() => {}} />)
         expect(container!.querySelector('[role="tablist"]')).toBeTruthy()
     })
 
@@ -196,7 +198,7 @@ describe('Step 11 · Render representative components', () => {
         render(
             <Tooltip content="Help text">
                 <button type="button">Hover</button>
-            </Tooltip>,
+            </Tooltip>
         )
         expect(container!.querySelector('.mr-tooltip')).toBeTruthy()
     })
@@ -215,7 +217,11 @@ describe('Step 11 · Render representative components', () => {
 
     it('renders Modal when open', () => {
         // Modal portals to document.body
-        render(<Modal open title="Title" onClose={() => {}}>Content</Modal>)
+        render(
+            <Modal open title="Title" onClose={() => {}}>
+                Content
+            </Modal>
+        )
         expect(document.body.querySelector('[role="dialog"]')).toBeTruthy()
         // cleanup portal
         act(() => {
@@ -227,14 +233,7 @@ describe('Step 11 · Render representative components', () => {
     })
 
     it('renders AlertDialog when open', () => {
-        render(
-            <AlertDialog
-                open
-                title="Confirm"
-                onConfirm={() => {}}
-                onCancel={() => {}}
-            />,
-        )
+        render(<AlertDialog open title="Confirm" onConfirm={() => {}} onCancel={() => {}} />)
         expect(document.body.querySelector('[role="alertdialog"]')).toBeTruthy()
         act(() => {
             root?.unmount()
@@ -253,12 +252,16 @@ describe('Step 11 · Interaction contracts', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -284,9 +287,13 @@ describe('Step 11 · Interaction contracts', () => {
         render(<App />)
         const input = container!.querySelector('input[type="checkbox"]') as HTMLInputElement
         expect(input.checked).toBe(false)
-        act(() => { input.click() })
+        act(() => {
+            input.click()
+        })
         // Re-render to pick up state change
-        act(() => { root!.render(<App />) })
+        act(() => {
+            root!.render(<App />)
+        })
         expect(input.checked).toBe(true)
     })
 
@@ -303,8 +310,12 @@ describe('Step 11 · Interaction contracts', () => {
         render(<App />)
         const input = container!.querySelector('input[role="switch"]') as HTMLInputElement
         expect(input.checked).toBe(false)
-        act(() => { input.click() })
-        act(() => { root!.render(<App />) })
+        act(() => {
+            input.click()
+        })
+        act(() => {
+            root!.render(<App />)
+        })
         expect(input.checked).toBe(true)
     })
 
@@ -314,7 +325,10 @@ describe('Step 11 · Interaction contracts', () => {
         const input = container!.querySelector('input') as HTMLInputElement
         // Use the same pattern as the Input unit tests: native setter + input event
         act(() => {
-            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
             setter?.call(input, 'changed')
             input.dispatchEvent(new Event('input', { bubbles: true }))
         })
@@ -326,7 +340,10 @@ describe('Step 11 · Interaction contracts', () => {
         render(<Slider value={50} onValueChange={onValueChange} />)
         const input = container!.querySelector('input[type="range"]') as HTMLInputElement
         act(() => {
-            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
             setter?.call(input, '75')
             input.dispatchEvent(new Event('input', { bubbles: true }))
         })
@@ -337,25 +354,29 @@ describe('Step 11 · Interaction contracts', () => {
         const onChange = vi.fn()
         render(
             <RadioGroup
-                items={[{ value: 'x', label: 'X' }, { value: 'y', label: 'Y' }]}
+                items={[
+                    { value: 'x', label: 'X' },
+                    { value: 'y', label: 'Y' },
+                ]}
                 onChange={onChange}
-            />,
+            />
         )
         const radio = container!.querySelector('input[type="radio"]') as HTMLInputElement
-        act(() => { radio.click() })
+        act(() => {
+            radio.click()
+        })
         expect(onChange).toHaveBeenCalledWith('x')
     })
 
     it('Accordion toggle fires onChange', () => {
         const onChange = vi.fn()
         render(
-            <Accordion
-                items={[{ value: 'a', title: 'A', content: 'body' }]}
-                onChange={onChange}
-            />,
+            <Accordion items={[{ value: 'a', title: 'A', content: 'body' }]} onChange={onChange} />
         )
         const trigger = container!.querySelector('.mr-accordion__trigger') as HTMLButtonElement
-        act(() => { trigger.click() })
+        act(() => {
+            trigger.click()
+        })
         expect(onChange).toHaveBeenCalledOnce()
     })
 
@@ -363,24 +384,33 @@ describe('Step 11 · Interaction contracts', () => {
         const onChange = vi.fn()
         render(
             <Tabs
-                items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]}
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
                 onChange={onChange}
-            />,
+            />
         )
         const secondTab = container!.querySelectorAll('.mr-tabs__tab')[1] as HTMLButtonElement
-        act(() => { secondTab.click() })
+        act(() => {
+            secondTab.click()
+        })
         expect(onChange).toHaveBeenCalledWith('b')
     })
 
     it('useToast push works inside ToastProvider', () => {
         function App() {
             const { pushToast } = useToast()
-            return (
-                <button onClick={() => pushToast({ title: 'hi' })}>Push</button>
-            )
+            return <button onClick={() => pushToast({ title: 'hi' })}>Push</button>
         }
-        render(<ToastProvider><App /></ToastProvider>)
-        act(() => { container!.querySelector('button')!.click() })
+        render(
+            <ToastProvider>
+                <App />
+            </ToastProvider>
+        )
+        act(() => {
+            container!.querySelector('button')!.click()
+        })
         // Should not throw
     })
 })
@@ -393,12 +423,16 @@ describe('Step 11 · Ref forwarding', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -406,35 +440,45 @@ describe('Step 11 · Ref forwarding', () => {
 
     it('Button forwards ref to button element', () => {
         const ref = { current: null as HTMLButtonElement | null }
-        function App() { return <Button ref={ref}>Go</Button> }
+        function App() {
+            return <Button ref={ref}>Go</Button>
+        }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLButtonElement)
     })
 
     it('Input forwards ref to input element', () => {
         const ref = { current: null as HTMLInputElement | null }
-        function App() { return <Input ref={ref} /> }
+        function App() {
+            return <Input ref={ref} />
+        }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLInputElement)
     })
 
     it('Slider forwards ref to input element', () => {
         const ref = { current: null as HTMLInputElement | null }
-        function App() { return <Slider ref={ref} /> }
+        function App() {
+            return <Slider ref={ref} />
+        }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLInputElement)
     })
 
     it('Checkbox forwards ref to input element', () => {
         const ref = { current: null as HTMLInputElement | null }
-        function App() { return <Checkbox ref={ref} /> }
+        function App() {
+            return <Checkbox ref={ref} />
+        }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLInputElement)
     })
 
     it('Select forwards ref to select element', () => {
         const ref = { current: null as HTMLSelectElement | null }
-        function App() { return <Select ref={ref} /> }
+        function App() {
+            return <Select ref={ref} />
+        }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLSelectElement)
     })
@@ -442,12 +486,7 @@ describe('Step 11 · Ref forwarding', () => {
     it('Accordion forwards ref to div element', () => {
         const ref = { current: null as HTMLDivElement | null }
         function App() {
-            return (
-                <Accordion
-                    ref={ref}
-                    items={[{ value: 'a', title: 'T', content: 'C' }]}
-                />
-            )
+            return <Accordion ref={ref} items={[{ value: 'a', title: 'T', content: 'C' }]} />
         }
         render(<App />)
         expect(ref.current).toBeInstanceOf(HTMLDivElement)
@@ -521,12 +560,16 @@ describe('Step 11 · Native prop forwarding', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -541,7 +584,7 @@ describe('Step 11 · Native prop forwarding', () => {
                 disabled
                 data-testid="field"
                 aria-describedby="desc"
-            />,
+            />
         )
         const input = container!.querySelector('input')!
         expect(input.name).toBe('email')
@@ -575,12 +618,16 @@ describe('Step 11 · ARIA / accessibility integration', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -621,9 +668,12 @@ describe('Step 11 · ARIA / accessibility integration', () => {
         render(
             <RadioGroup
                 name="choice"
-                items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]}
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
                 value="a"
-            />,
+            />
         )
         const radios = container!.querySelectorAll('input[type="radio"]')
         expect(radios.length).toBe(2)
@@ -653,24 +703,14 @@ describe('Step 11 · ARIA / accessibility integration', () => {
     })
 
     it('Accordion triggers expose aria-expanded/controls', () => {
-        render(
-            <Accordion
-                items={[{ value: 'a', title: 'T', content: 'C' }]}
-                defaultValue="a"
-            />,
-        )
+        render(<Accordion items={[{ value: 'a', title: 'T', content: 'C' }]} defaultValue="a" />)
         const trigger = container!.querySelector('.mr-accordion__trigger') as HTMLButtonElement
         expect(trigger.getAttribute('aria-expanded')).toBe('true')
         expect(trigger.getAttribute('aria-controls')).toBeTruthy()
     })
 
     it('Accordion panels are labelled by their trigger', () => {
-        render(
-            <Accordion
-                items={[{ value: 'a', title: 'T', content: 'C' }]}
-                defaultValue="a"
-            />,
-        )
+        render(<Accordion items={[{ value: 'a', title: 'T', content: 'C' }]} defaultValue="a" />)
         const trigger = container!.querySelector('.mr-accordion__trigger') as HTMLButtonElement
         const panel = container!.querySelector('[aria-labelledby]')!
         expect(panel.getAttribute('aria-labelledby')).toBe(trigger.id)
@@ -685,10 +725,13 @@ describe('Step 11 · ARIA / accessibility integration', () => {
     it('Tabs tabs have aria-selected', () => {
         render(
             <Tabs
-                items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]}
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
                 value="a"
                 onChange={() => {}}
-            />,
+            />
         )
         const tabs = container!.querySelectorAll('[role="tab"]')
         expect(tabs[0].getAttribute('aria-selected')).toBe('true')
@@ -696,24 +739,38 @@ describe('Step 11 · ARIA / accessibility integration', () => {
     })
 
     it('Modal panel has role dialog and aria-modal when open', () => {
-        render(<Modal open title="T" onClose={() => {}}>C</Modal>)
+        render(
+            <Modal open title="T" onClose={() => {}}>
+                C
+            </Modal>
+        )
         const panel = document.body.querySelector('[role="dialog"]')!
         expect(panel.getAttribute('aria-modal')).toBe('true')
-        act(() => { root!.unmount(); container!.remove(); container = null; root = null })
+        act(() => {
+            root!.unmount()
+            container!.remove()
+            container = null
+            root = null
+        })
     })
 
     it('AlertDialog panel has role alertdialog when open', () => {
         render(<AlertDialog open title="T" onConfirm={() => {}} onCancel={() => {}} />)
         const panel = document.body.querySelector('[role="alertdialog"]')!
         expect(panel.getAttribute('role')).toBe('alertdialog')
-        act(() => { root!.unmount(); container!.remove(); container = null; root = null })
+        act(() => {
+            root!.unmount()
+            container!.remove()
+            container = null
+            root = null
+        })
     })
 
     it('Tooltip trigger has aria-describedby', () => {
         render(
             <Tooltip content="Tip">
                 <button type="button">Trigger</button>
-            </Tooltip>,
+            </Tooltip>
         )
         const btn = container!.querySelector('button')!
         expect(btn.getAttribute('aria-describedby')).toBeTruthy()
@@ -748,12 +805,16 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -766,7 +827,10 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
         expect(input.value).toBe('fixed')
         // Direct DOM mutation bypasses React; onChange fires but controlled value stays
         act(() => {
-            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
             setter?.call(input, 'changed')
             input.dispatchEvent(new Event('input', { bubbles: true }))
         })
@@ -778,7 +842,9 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
         render(<Checkbox defaultChecked={false} />)
         const input = container!.querySelector('input[type="checkbox"]') as HTMLInputElement
         expect(input.checked).toBe(false)
-        act(() => { input.click() })
+        act(() => {
+            input.click()
+        })
         expect(input.checked).toBe(true)
     })
 
@@ -786,7 +852,9 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
         render(<Switch defaultChecked={false} />)
         const input = container!.querySelector('input[role="switch"]') as HTMLInputElement
         expect(input.checked).toBe(false)
-        act(() => { input.click() })
+        act(() => {
+            input.click()
+        })
         expect(input.checked).toBe(true)
     })
 
@@ -802,7 +870,14 @@ describe('Step 11 · Controlled/uncontrolled contracts', () => {
     })
 
     it('Tabs uncontrolled selects first item', () => {
-        render(<Tabs items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]} />)
+        render(
+            <Tabs
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
+            />
+        )
         const tabs = container!.querySelectorAll('[role="tab"]')
         expect(tabs[0].getAttribute('aria-selected')).toBe('true')
     })
@@ -816,12 +891,16 @@ describe('Step 22 · Public contract hardening', () => {
         container = document.createElement('div')
         document.body.appendChild(container)
         root = createRoot(container)
-        act(() => { root?.render(ui) })
+        act(() => {
+            root?.render(ui)
+        })
         return container
     }
 
     afterEach(() => {
-        act(() => { root?.unmount() })
+        act(() => {
+            root?.unmount()
+        })
         container?.remove()
         container = null
         root = null
@@ -832,17 +911,29 @@ describe('Step 22 · Public contract hardening', () => {
         render(
             <>
                 <FormControl>
-                    <RadioGroup items={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]} />
+                    <RadioGroup
+                        items={[
+                            { value: 'a', label: 'A' },
+                            { value: 'b', label: 'B' },
+                        ]}
+                    />
                 </FormControl>
                 <FormControl>
-                    <RadioGroup items={[{ value: 'a', label: 'A2' }, { value: 'b', label: 'B2' }]} />
+                    <RadioGroup
+                        items={[
+                            { value: 'a', label: 'A2' },
+                            { value: 'b', label: 'B2' },
+                        ]}
+                    />
                 </FormControl>
             </>
         )
         const radios = container!.querySelectorAll('input[type="radio"]')
         expect(radios.length).toBe(4)
         expect(new Set([...radios].map((r) => r.getAttribute('name'))).size).toBe(2)
-        act(() => { (radios[0] as HTMLInputElement).click() })
+        act(() => {
+            ;(radios[0] as HTMLInputElement).click()
+        })
         expect((radios[0] as HTMLInputElement).checked).toBe(true)
         expect((radios[2] as HTMLInputElement).checked).toBe(false)
     })
@@ -850,8 +941,12 @@ describe('Step 22 · Public contract hardening', () => {
     it('two Tooltips expose unique describedby ids', () => {
         render(
             <>
-                <Tooltip content="one"><Button>first</Button></Tooltip>
-                <Tooltip content="two"><Button>second</Button></Tooltip>
+                <Tooltip content="one">
+                    <Button>first</Button>
+                </Tooltip>
+                <Tooltip content="two">
+                    <Button>second</Button>
+                </Tooltip>
             </>
         )
         const tips = container!.querySelectorAll('[role="tooltip"]')
@@ -865,7 +960,10 @@ describe('Step 22 · Public contract hardening', () => {
         const input = container!.querySelector('input[type="range"]') as HTMLInputElement
         expect(input.value).toBe('30')
         act(() => {
-            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
             setter?.call(input, '80')
             input.dispatchEvent(new Event('input', { bubbles: true }))
         })
@@ -874,9 +972,15 @@ describe('Step 22 · Public contract hardening', () => {
     })
 
     it('Modal unmount while open restores body scroll and removes portal', () => {
-        render(<Modal open title="T" onClose={() => {}}>body</Modal>)
+        render(
+            <Modal open title="T" onClose={() => {}}>
+                body
+            </Modal>
+        )
         expect(document.body.style.overflow).toBe('hidden')
-        act(() => { root?.render(<div />) })
+        act(() => {
+            root?.render(<div />)
+        })
         expect(document.body.style.overflow).not.toBe('hidden')
         expect(container!.querySelector('[role="dialog"]')).toBeNull()
     })

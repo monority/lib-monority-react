@@ -36,7 +36,8 @@ const [value, setValue] = useState('overview')
             name: 'items',
             type: `{ value: string; label: ReactNode; disabled?: boolean }[]`,
             defaultValue: '[]',
-            description: 'Tab definitions. Set disabled per item to skip it in keyboard navigation.',
+            description:
+                'Tab definitions. Set disabled per item to skip it in keyboard navigation.',
         },
         {
             name: 'value',

@@ -7,7 +7,7 @@
         width: 100%;
         min-width: 0;
         padding: var(--mr-space-3);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-elevation-surface);
@@ -51,8 +51,8 @@
         display: inline-flex;
         align-items: center;
         min-block-size: var(--mr-control-size-sm);
-         padding-inline: var(--mr-control-padding-inline-sm);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        padding-inline: var(--mr-control-padding-inline-sm);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-full);
         background: color-mix(in srgb, var(--mr-bg-control) 76%, transparent);
         color: var(--mr-fg-muted);
@@ -60,7 +60,8 @@
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
         white-space: nowrap;
-         box-shadow: inset 0 var(--mr-border-width) 0 color-mix(in srgb, var(--mr-fg-base) 4%, transparent);
+        box-shadow: inset 0 var(--mr-border-width) 0
+            color-mix(in srgb, var(--mr-fg-base) 4%, transparent);
     }
 
     .mr-filter-bar :where(.mr-input, .mr-select, .mr-button) {
@@ -84,13 +85,13 @@
         max-inline-size: 100%;
     }
 
-    .mr-filter-bar__main>.mr-field,
-    .mr-filter-bar__leading>.mr-field {
+    .mr-filter-bar__main > .mr-field,
+    .mr-filter-bar__leading > .mr-field {
         flex: 0 1 auto;
         min-inline-size: 0;
     }
 
-    .mr-filter-bar__leading>.mr-field {
+    .mr-filter-bar__leading > .mr-field {
         flex: 1 1 14rem;
     }
 
@@ -119,8 +120,8 @@
             inline-size: 100%;
         }
 
-        .mr-filter-bar__main>.mr-field,
-        .mr-filter-bar__leading>.mr-field {
+        .mr-filter-bar__main > .mr-field,
+        .mr-filter-bar__leading > .mr-field {
             flex: 0 1 auto;
         }
     }

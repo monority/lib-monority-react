@@ -23,7 +23,14 @@ export function buildMaps(sources) {
     const rootRaw = new Map()
     const compactRaw = new Map()
     const studioPrim = new Map()
-    const themeRaw = { light: new Map(), dark: new Map(), oled: new Map(), ocean: new Map(), night: new Map(), 'high-contrast': new Map() }
+    const themeRaw = {
+        light: new Map(),
+        dark: new Map(),
+        oled: new Map(),
+        ocean: new Map(),
+        night: new Map(),
+        'high-contrast': new Map(),
+    }
     const themeFile = {
         'themes/light.json': 'light',
         'themes/dark.json': 'dark',

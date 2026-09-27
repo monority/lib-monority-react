@@ -3,17 +3,17 @@ import react from '@vitejs/plugin-react'
 import path from 'node:path'
 
 export default defineConfig({
-  plugins: [react()],
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
-    setupFiles: ['./src/test-setup.ts'],
-  },
-  resolve: {
-    conditions: ['monority-source'],
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+    plugins: [react()],
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        include: ['src/**/*.{test,spec}.{ts,tsx}'],
+        setupFiles: ['./src/test-setup.ts'],
     },
-  },
+    resolve: {
+        conditions: ['monority-source'],
+        alias: {
+            '@': path.resolve(__dirname, './src'),
+        },
+    },
 })

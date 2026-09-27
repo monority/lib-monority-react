@@ -4,43 +4,52 @@ import { cva } from '@/lib/variants'
 import type { SectionProps } from './Section.types'
 
 const sectionVariants = cva({
-  base: 'mr-section',
-  variants: {
-    spacing: {
-      sm: 'mr-section--sm',
-      md: 'mr-section--md',
-      lg: 'mr-section--lg',
-      xl: 'mr-section--xl',
+    base: 'mr-section',
+    variants: {
+        spacing: {
+            sm: 'mr-section--sm',
+            md: 'mr-section--md',
+            lg: 'mr-section--lg',
+            xl: 'mr-section--xl',
+        },
+        variant: {
+            default: '',
+            bordered: 'mr-section--bordered',
+            muted: 'mr-section--muted',
+            card: 'mr-section--card',
+        },
     },
-    variant: {
-      default: '',
-      bordered: 'mr-section--bordered',
-      muted: 'mr-section--muted',
-      card: 'mr-section--card',
+    defaultVariants: {
+        spacing: 'md',
+        variant: 'default',
     },
-  },
-  defaultVariants: {
-    spacing: 'md',
-    variant: 'default',
-  },
 })
 
 export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
-  { className, spacing = 'md', variant = 'default', as, title, titleAs: TitleTag = 'h2', children, ...props },
-  ref,
+    {
+        className,
+        spacing = 'md',
+        variant = 'default',
+        as,
+        title,
+        titleAs: TitleTag = 'h2',
+        children,
+        ...props
+    },
+    ref
 ) {
-  const Component = as ?? 'section'
+    const Component = as ?? 'section'
 
-  return (
-    <Component
-      ref={ref}
-      className={cn(sectionVariants({ spacing, variant }), className)}
-      data-spacing={spacing}
-      data-variant={variant}
-      {...props}
-    >
-      {title != null && <TitleTag className="mr-section__title">{title}</TitleTag>}
-      {children}
-    </Component>
-  )
+    return (
+        <Component
+            ref={ref}
+            className={cn(sectionVariants({ spacing, variant }), className)}
+            data-spacing={spacing}
+            data-variant={variant}
+            {...props}
+        >
+            {title != null && <TitleTag className="mr-section__title">{title}</TitleTag>}
+            {children}
+        </Component>
+    )
 })

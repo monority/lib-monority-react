@@ -8,158 +8,158 @@ let container: HTMLDivElement | null = null
 let root: Root | null = null
 
 function render(ui: ReactElement) {
-  container = document.createElement('div')
-  document.body.appendChild(container)
-  root = createRoot(container)
+    container = document.createElement('div')
+    document.body.appendChild(container)
+    root = createRoot(container)
 
-  act(() => {
-    root?.render(ui)
-  })
+    act(() => {
+        root?.render(ui)
+    })
 
-  return container
+    return container
 }
 
 afterEach(() => {
-  act(() => {
-    root?.unmount()
-  })
-  container?.remove()
-  root = null
-  container = null
+    act(() => {
+        root?.unmount()
+    })
+    container?.remove()
+    root = null
+    container = null
 })
 
 describe('Input', () => {
-  it('renders label and default input hooks', () => {
-    const view = render(<Input id="email" label="Email" placeholder="you@example.com" />)
-    const label = view.querySelector('label')
-    const input = view.querySelector('input')
+    it('renders label and default input hooks', () => {
+        const view = render(<Input id="email" label="Email" placeholder="you@example.com" />)
+        const label = view.querySelector('label')
+        const input = view.querySelector('input')
 
-    expect(label?.getAttribute('for')).toBe('email')
-    expect(label?.textContent).toBe('Email')
-    expect(input?.className).toContain('mr-input')
-    expect(input?.getAttribute('id')).toBe('email')
-    expect(input?.getAttribute('placeholder')).toBe('you@example.com')
-    expect(input?.getAttribute('aria-invalid')).toBeNull()
-  })
-
-  it('maps hint, error, required and disabled state to stable hooks', () => {
-    const view = render(
-      <Input
-        id="name"
-        label="Name"
-        hint="Visible to teammates"
-        error="Name is required"
-        required
-        disabled
-      />,
-    )
-    const input = view.querySelector('input')
-    const hint = view.querySelector('#name-hint')
-    const error = view.querySelector('#name-error')
-
-    expect(hint?.textContent).toBe('Visible to teammates')
-    expect(error?.getAttribute('role')).toBe('alert')
-    expect(input?.className).toContain('mr-input--error')
-    expect(input?.getAttribute('aria-invalid')).toBe('true')
-    expect(input?.getAttribute('aria-describedby')).toBe('name-hint name-error')
-    expect(input?.getAttribute('data-invalid')).toBe('true')
-    expect(input?.getAttribute('data-required')).toBe('true')
-    expect(input?.getAttribute('data-disabled')).toBe('true')
-    expect(input?.hasAttribute('required')).toBe(true)
-    expect(input?.hasAttribute('disabled')).toBe(true)
-  })
-
-  it('forwards ref to the input element', () => {
-    const ref = createRef<HTMLInputElement>()
-    render(<Input ref={ref} id="ref-test" />)
-    expect(ref.current).toBeInstanceOf(HTMLInputElement)
-    expect(ref.current?.id).toBe('ref-test')
-  })
-
-  it('calls onChange when value changes', () => {
-    const onChange = vi.fn()
-    const view = render(<Input onChange={onChange} />)
-    const input = view.querySelector('input') as HTMLInputElement
-    act(() => {
-      // React tracks value internally; bypass tracker to simulate user input
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLInputElement.prototype,
-        'value',
-      )?.set
-      nativeInputValueSetter?.call(input, 'test value')
-      input.dispatchEvent(new Event('input', { bubbles: true }))
+        expect(label?.getAttribute('for')).toBe('email')
+        expect(label?.textContent).toBe('Email')
+        expect(input?.className).toContain('mr-input')
+        expect(input?.getAttribute('id')).toBe('email')
+        expect(input?.getAttribute('placeholder')).toBe('you@example.com')
+        expect(input?.getAttribute('aria-invalid')).toBeNull()
     })
-    expect(onChange).toHaveBeenCalledTimes(1)
-  })
 
-  it('renders with auto-generated id and linked label', () => {
-    const view = render(<Input label="Name" />)
-    const label = view.querySelector('label')
-    const input = view.querySelector('input')
-    const inputId = input?.getAttribute('id')
-    expect(inputId).toBeTruthy()
-    expect(inputId?.length).toBeGreaterThan(0)
-    expect(label?.getAttribute('for')).toBe(inputId)
-  })
+    it('maps hint, error, required and disabled state to stable hooks', () => {
+        const view = render(
+            <Input
+                id="name"
+                label="Name"
+                hint="Visible to teammates"
+                error="Name is required"
+                required
+                disabled
+            />
+        )
+        const input = view.querySelector('input')
+        const hint = view.querySelector('#name-hint')
+        const error = view.querySelector('#name-error')
 
-  it('passes className to the wrapper', () => {
-    const view = render(<Input className="custom" />)
-    const wrapper = view.querySelector('.mr-field')
-    expect(wrapper?.className).toContain('custom')
-  })
+        expect(hint?.textContent).toBe('Visible to teammates')
+        expect(error?.getAttribute('role')).toBe('alert')
+        expect(input?.className).toContain('mr-input--error')
+        expect(input?.getAttribute('aria-invalid')).toBe('true')
+        expect(input?.getAttribute('aria-describedby')).toBe('name-hint name-error')
+        expect(input?.getAttribute('data-invalid')).toBe('true')
+        expect(input?.getAttribute('data-required')).toBe('true')
+        expect(input?.getAttribute('data-disabled')).toBe('true')
+        expect(input?.hasAttribute('required')).toBe(true)
+        expect(input?.hasAttribute('disabled')).toBe(true)
+    })
 
-  it('renders with default neutral tone and md size', () => {
-    const view = render(<Input id="default" />)
-    const input = view.querySelector('input')
-    expect(input?.getAttribute('data-tone')).toBe('neutral')
-    expect(input?.getAttribute('data-size')).toBe('md')
-    expect(input?.className).toContain('mr-input--neutral')
-    expect(input?.className).toContain('mr-input--md')
-  })
+    it('forwards ref to the input element', () => {
+        const ref = createRef<HTMLInputElement>()
+        render(<Input ref={ref} id="ref-test" />)
+        expect(ref.current).toBeInstanceOf(HTMLInputElement)
+        expect(ref.current?.id).toBe('ref-test')
+    })
 
-  it.each(['neutral', 'accent', 'danger'] as const)(
-    'sets data-tone="%s" and variant class for tone="%s"',
-    (tone) => {
-      const view = render(<Input id={`t-${tone}`} tone={tone} />)
-      const input = view.querySelector('input')
-      expect(input?.getAttribute('data-tone')).toBe(tone)
-      // neutral has no dedicated class
-      if (tone !== 'neutral') {
-        expect(input?.className).toContain(`mr-input--${tone}`)
-      }
-    },
-  )
+    it('calls onChange when value changes', () => {
+        const onChange = vi.fn()
+        const view = render(<Input onChange={onChange} />)
+        const input = view.querySelector('input') as HTMLInputElement
+        act(() => {
+            // React tracks value internally; bypass tracker to simulate user input
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
+            nativeInputValueSetter?.call(input, 'test value')
+            input.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(onChange).toHaveBeenCalledTimes(1)
+    })
 
-  it.each(['sm', 'md', 'lg'] as const)(
-    'sets data-size="%s" and variant class for size="%s"',
-    (size) => {
-      const view = render(<Input id={`s-${size}`} size={size} />)
-      const input = view.querySelector('input')
-      expect(input?.getAttribute('data-size')).toBe(size)
-      expect(input?.className).toContain(`mr-input--${size}`)
-    },
-  )
+    it('renders with auto-generated id and linked label', () => {
+        const view = render(<Input label="Name" />)
+        const label = view.querySelector('label')
+        const input = view.querySelector('input')
+        const inputId = input?.getAttribute('id')
+        expect(inputId).toBeTruthy()
+        expect(inputId?.length).toBeGreaterThan(0)
+        expect(label?.getAttribute('for')).toBe(inputId)
+    })
 
-  it('connects hint and error via aria-describedby', () => {
-    const view = render(<Input id="test" hint="hint text" error="error text" />)
-    const input = view.querySelector('input')
-    expect(input?.getAttribute('aria-describedby')).toContain('test-hint')
-    expect(input?.getAttribute('aria-describedby')).toContain('test-error')
-  })
+    it('passes className to the wrapper', () => {
+        const view = render(<Input className="custom" />)
+        const wrapper = view.querySelector('.mr-field')
+        expect(wrapper?.className).toContain('custom')
+    })
 
-  it('sets aria-invalid via invalid prop', () => {
-    const view = render(<Input id="invalid" invalid />)
-    const input = view.querySelector('input')
-    expect(input?.getAttribute('aria-invalid')).toBe('true')
-    expect(input?.getAttribute('data-invalid')).toBe('true')
-    expect(input?.className).toContain('mr-input--invalid')
-  })
+    it('renders with default neutral tone and md size', () => {
+        const view = render(<Input id="default" />)
+        const input = view.querySelector('input')
+        expect(input?.getAttribute('data-tone')).toBe('neutral')
+        expect(input?.getAttribute('data-size')).toBe('md')
+        expect(input?.className).toContain('mr-input--neutral')
+        expect(input?.className).toContain('mr-input--md')
+    })
 
-  it('applies mr-input--error class when error prop is set', () => {
-    const view = render(<Input id="err" error="error text" />)
-    const input = view.querySelector('input')
-    expect(input?.className).toContain('mr-input--error')
-    expect(input?.className).toContain('mr-input--invalid')
-    expect(input?.getAttribute('aria-invalid')).toBe('true')
-  })
+    it.each(['neutral', 'accent', 'danger'] as const)(
+        'sets data-tone="%s" and variant class for tone="%s"',
+        (tone) => {
+            const view = render(<Input id={`t-${tone}`} tone={tone} />)
+            const input = view.querySelector('input')
+            expect(input?.getAttribute('data-tone')).toBe(tone)
+            // neutral has no dedicated class
+            if (tone !== 'neutral') {
+                expect(input?.className).toContain(`mr-input--${tone}`)
+            }
+        }
+    )
+
+    it.each(['sm', 'md', 'lg'] as const)(
+        'sets data-size="%s" and variant class for size="%s"',
+        (size) => {
+            const view = render(<Input id={`s-${size}`} size={size} />)
+            const input = view.querySelector('input')
+            expect(input?.getAttribute('data-size')).toBe(size)
+            expect(input?.className).toContain(`mr-input--${size}`)
+        }
+    )
+
+    it('connects hint and error via aria-describedby', () => {
+        const view = render(<Input id="test" hint="hint text" error="error text" />)
+        const input = view.querySelector('input')
+        expect(input?.getAttribute('aria-describedby')).toContain('test-hint')
+        expect(input?.getAttribute('aria-describedby')).toContain('test-error')
+    })
+
+    it('sets aria-invalid via invalid prop', () => {
+        const view = render(<Input id="invalid" invalid />)
+        const input = view.querySelector('input')
+        expect(input?.getAttribute('aria-invalid')).toBe('true')
+        expect(input?.getAttribute('data-invalid')).toBe('true')
+        expect(input?.className).toContain('mr-input--invalid')
+    })
+
+    it('applies mr-input--error class when error prop is set', () => {
+        const view = render(<Input id="err" error="error text" />)
+        const input = view.querySelector('input')
+        expect(input?.className).toContain('mr-input--error')
+        expect(input?.className).toContain('mr-input--invalid')
+        expect(input?.getAttribute('aria-invalid')).toBe('true')
+    })
 })

@@ -3,7 +3,8 @@ import { SectionBasicExample, SectionSpacingExample } from './Section.examples'
 
 const docData: DocPageData = {
     title: 'Section',
-    description: 'Content section with configurable spacing, visual variants, and polymorphic element.',
+    description:
+        'Content section with configurable spacing, visual variants, and polymorphic element.',
     importCode: "import { Section } from '@monority/ui/section'",
     usageCode: `<Section spacing="lg" variant="card" title="Features">
   <p>Content grouped in a card-style section.</p>
@@ -48,12 +49,7 @@ const docData: DocPageData = {
             description: 'Content inside the section.',
         },
     ],
-    cssHooks: [
-        '.mr-section',
-        '.mr-section__title',
-        '[data-spacing]',
-        '[data-variant]',
-    ],
+    cssHooks: ['.mr-section', '.mr-section__title', '[data-spacing]', '[data-variant]'],
     tokens: [
         '--mr-section-gap',
         '--mr-section-padding-x',

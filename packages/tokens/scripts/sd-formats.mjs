@@ -13,7 +13,14 @@ function block(selector, entries) {
 function collect(sources) {
     const root = []
     const rootBrand = []
-    const themes = { 'theme-light': [], 'theme-dark': [], 'theme-oled': [], 'theme-ocean': [], 'theme-night': [], 'theme-high-contrast': [] }
+    const themes = {
+        'theme-light': [],
+        'theme-dark': [],
+        'theme-oled': [],
+        'theme-ocean': [],
+        'theme-night': [],
+        'theme-high-contrast': [],
+    }
     const compact = []
     const media640 = []
     const reduced = []
@@ -25,16 +32,16 @@ function collect(sources) {
             scope === 'root' && leaf.$extensions?.['com.monority.scope'] === 'root-brand'
                 ? rootBrand
                 : scope === 'root'
-                ? root
-                : scope.startsWith('theme-')
-                  ? themes[scope]
-                  : scope === 'density-compact'
-                    ? compact
-                    : scope === 'media-max640'
-                      ? media640
-                      : scope === 'motion-reduced'
-                        ? reduced
-                        : studio
+                  ? root
+                  : scope.startsWith('theme-')
+                    ? themes[scope]
+                    : scope === 'density-compact'
+                      ? compact
+                      : scope === 'media-max640'
+                        ? media640
+                        : scope === 'motion-reduced'
+                          ? reduced
+                          : studio
         target.push([cssProp, declOf(leaf), file])
     }
     for (const f of ['primitives.json', 'core.json', 'components.json']) {
@@ -112,7 +119,7 @@ export function emitTokensCss(sources) {
         '@media (prefers-color-scheme: dark) {',
         indent(block(':root:not([data-theme])', stripFile(themes['theme-dark']))),
         '}',
-        '',
+        ''
     )
     {
         const dep = brandDep(themes['theme-dark'])
@@ -121,7 +128,7 @@ export function emitTokensCss(sources) {
                 '@media (prefers-color-scheme: dark) {',
                 indent(block(withBrandScope(':root:not([data-theme])'), stripFile(dep))),
                 '}',
-                '',
+                ''
             )
     }
     parts.push(
@@ -136,12 +143,16 @@ export function emitTokensCss(sources) {
         '@media (prefers-reduced-motion: reduce) {',
         indent(block(':root', stripFile(reduced))),
         '}',
-        '',
+        ''
     )
     return parts.join('\n')
 }
 
-const indent = (s) => s.split('\n').map((l) => '  ' + l).join('\n')
+const indent = (s) =>
+    s
+        .split('\n')
+        .map((l) => '  ' + l)
+        .join('\n')
 
 /** Alias déprécié : références token→token, gelées par héritage dans les
  *  sous-arbres [data-brand]/[data-density] sans [data-theme]. On les redéclare
@@ -166,7 +177,7 @@ export function emitDeprecatedCss(sources) {
         const raw = segs.slice(1).join('-')
         const name = '--mr-' + raw.split('~')[0]
         const sel = withAliasScope(
-            leaf.$extensions?.['com.monority.deprecated']?.selector ?? ':root, [data-theme]',
+            leaf.$extensions?.['com.monority.deprecated']?.selector ?? ':root, [data-theme]'
         )
         if (!groups.has(sel)) groups.set(sel, [])
         groups.get(sel).push([name, leaf.$value])

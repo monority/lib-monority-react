@@ -1,10 +1,10 @@
 @media print {
-  body {
-    background: white;
-    color: black;
-  }
+    body {
+        background: white;
+        color: black;
+    }
 
-  .no-print {
-    display: none !important;
-  }
+    .no-print {
+        display: none !important;
+    }
 }

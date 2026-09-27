@@ -7,21 +7,26 @@ const brands = ['monority', 'studio'] as const
 const densities = ['comfortable', 'compact'] as const
 
 test.describe('brand visual harness', () => {
-  test.skip(({ viewport }) => (viewport?.width ?? 0) !== 1440, 'desktop visual baseline only')
+    test.skip(({ viewport }) => (viewport?.width ?? 0) !== 1440, 'desktop visual baseline only')
 
-  for (const component of components) {
-    for (const brand of brands) {
-      for (const density of densities) {
-        test(`${component} — ${brand} — ${density}`, async ({ page }) => {
-          await page.goto(`/harness/${component}?theme=light&brand=${brand}&density=${density}`)
-          const harness = page.getByTestId('harness-page')
-          await expect(harness).toBeVisible()
-          await expect(harness).toHaveScreenshot(`${component}--${brand}--${density}.png`, {
-            animations: 'disabled',
-            caret: 'hide',
-          })
-        })
-      }
+    for (const component of components) {
+        for (const brand of brands) {
+            for (const density of densities) {
+                test(`${component} — ${brand} — ${density}`, async ({ page }) => {
+                    await page.goto(
+                        `/harness/${component}?theme=light&brand=${brand}&density=${density}`
+                    )
+                    const harness = page.getByTestId('harness-page')
+                    await expect(harness).toBeVisible()
+                    await expect(harness).toHaveScreenshot(
+                        `${component}--${brand}--${density}.png`,
+                        {
+                            animations: 'disabled',
+                            caret: 'hide',
+                        }
+                    )
+                })
+            }
+        }
     }
-  }
 })

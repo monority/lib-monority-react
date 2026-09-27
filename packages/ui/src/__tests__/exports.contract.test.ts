@@ -11,9 +11,9 @@ import { describe, expect, it } from 'vitest'
 // ─────────────────────────────────────────────────────────────────────────────
 declare const process: { cwd(): string }
 const root = `${process.cwd()}/../..`
-const pkg = JSON.parse(
-    readFileSync(resolve(root, 'packages/ui/package.json'), 'utf8'),
-) as { exports: Record<string, unknown> }
+const pkg = JSON.parse(readFileSync(resolve(root, 'packages/ui/package.json'), 'utf8')) as {
+    exports: Record<string, unknown>
+}
 
 const exportedSubpaths = Object.keys(pkg.exports)
     .filter((key) => key !== '.' && !key.endsWith('.css'))

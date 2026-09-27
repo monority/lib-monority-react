@@ -65,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             isLoading: status === 'loading',
             signOut,
         }),
-        [error, session, signOut, status],
+        [error, session, signOut, status]
     )
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

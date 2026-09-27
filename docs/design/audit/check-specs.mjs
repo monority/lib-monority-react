@@ -138,7 +138,7 @@ for (const name of expected) {
     const found = src.split('\n').filter((l) => l.startsWith('## '))
     if (found.length !== headings.length || found.some((l, i) => l.trim() !== headings[i])) {
         failures.push(
-            `S2 titres non conformes : ${name}.md → ${found.map((l) => l.trim()).join(' | ')}`,
+            `S2 titres non conformes : ${name}.md → ${found.map((l) => l.trim()).join(' | ')}`
         )
     }
 
@@ -172,5 +172,5 @@ const totalEcarts = counts.reduce((s, c) => s + c.ecartRows, 0)
 console.log(
     `S2 PASS — ${present.length} specs, 10 titres exacts chacune\n` +
         `S5 PASS — ${totalEcarts} lignes d'écarts cumulées (min par fichier : ${Math.min(...counts.map((c) => c.ecartRows))})\n` +
-        `S6 PASS — ${totalCriteria} critères cumulés (min : ${counts[0].name}=${counts[0].criteria}, non interactif min : ${minCriteria})`,
+        `S6 PASS — ${totalCriteria} critères cumulés (min : ${counts[0].name}=${counts[0].criteria}, non interactif min : ${minCriteria})`
 )

@@ -50,7 +50,7 @@
     .mr-accordion__item[data-disabled='true'] .mr-accordion__trigger {
         cursor: not-allowed;
         color: var(--mr-fg-muted);
-         opacity: var(--mr-opacity-disabled);
+        opacity: var(--mr-opacity-disabled);
     }
 
     .mr-accordion__item[data-disabled='true'] .mr-accordion__trigger:hover {
@@ -105,7 +105,7 @@
     }
 
     .mr-accordion__icon::before {
-        content: "";
+        content: '';
         width: 0.5rem;
         height: 0.5rem;
         border-right: 2px solid currentColor;

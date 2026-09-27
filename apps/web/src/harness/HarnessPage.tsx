@@ -1,12 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import {
-    Button,
-    CopyButton,
-    IconButton,
-    Spinner,
-    ThemeScope,
-} from '@monority/ui'
+import { Button, CopyButton, IconButton, Spinner, ThemeScope } from '@monority/ui'
 import { positionOverlay } from '../../../../packages/ui/src/internal/position/position'
 import './harness.css'
 
@@ -22,7 +16,10 @@ const isAllowed = <T extends string>(values: readonly T[], value: string | null)
 
 function Sample({ label, children }: { label: string; children: React.ReactNode }) {
     return (
-        <section data-harness-sample data-testid={`sample-${label.toLowerCase().replaceAll(' ', '-')}`}>
+        <section
+            data-harness-sample
+            data-testid={`sample-${label.toLowerCase().replaceAll(' ', '-')}`}
+        >
             <span>{label}</span>
             {children}
         </section>
@@ -37,12 +34,18 @@ function ButtonHarness() {
             {variants.flatMap((variant) =>
                 (['sm', 'md', 'lg'] as const).map((size) => (
                     <Sample key={`${variant}-${size}`} label={`${variant} ${size}`}>
-                        <Button variant={variant} size={size}>Action</Button>
+                        <Button variant={variant} size={size}>
+                            Action
+                        </Button>
                     </Sample>
-                )),
+                ))
             )}
-            <Sample label="disabled"><Button disabled>Action</Button></Sample>
-            <Sample label="loading"><Button loading>Action</Button></Sample>
+            <Sample label="disabled">
+                <Button disabled>Action</Button>
+            </Sample>
+            <Sample label="loading">
+                <Button loading>Action</Button>
+            </Sample>
             {previews.map((preview) => (
                 <Sample key={preview} label={`preview ${preview}`}>
                     <Button data-mr-preview={preview}>Action</Button>
@@ -58,12 +61,22 @@ function IconButtonHarness() {
             {(['neutral', 'accent', 'danger'] as const).flatMap((tone) =>
                 (['sm', 'md', 'lg'] as const).map((size) => (
                     <Sample key={`${tone}-${size}`} label={`${tone} ${size}`}>
-                        <IconButton tone={tone} size={size} label="Ajouter">+</IconButton>
+                        <IconButton tone={tone} size={size} label="Ajouter">
+                            +
+                        </IconButton>
                     </Sample>
-                )),
+                ))
             )}
-            <Sample label="disabled"><IconButton disabled label="Ajouter">+</IconButton></Sample>
-            <Sample label="loading"><IconButton loading label="Ajouter">+</IconButton></Sample>
+            <Sample label="disabled">
+                <IconButton disabled label="Ajouter">
+                    +
+                </IconButton>
+            </Sample>
+            <Sample label="loading">
+                <IconButton loading label="Ajouter">
+                    +
+                </IconButton>
+            </Sample>
         </>
     )
 }
@@ -76,9 +89,11 @@ function CopyButtonHarness() {
                     <Sample key={`${variant}-${size}`} label={`${variant} ${size}`}>
                         <CopyButton value="monority" variant={variant} size={size} />
                     </Sample>
-                )),
+                ))
             )}
-            <Sample label="disabled"><CopyButton value="monority" disabled /></Sample>
+            <Sample label="disabled">
+                <CopyButton value="monority" disabled />
+            </Sample>
         </>
     )
 }
@@ -87,14 +102,20 @@ function SpinnerHarness() {
     return (
         <>
             {(['sm', 'md', 'lg'] as const).map((size) => (
-                <Sample key={size} label={size}><Spinner size={size} /></Sample>
+                <Sample key={size} label={size}>
+                    <Spinner size={size} />
+                </Sample>
             ))}
         </>
     )
 }
 
 function ButtonLinkHarness() {
-    return <Sample label="pending 3.1"><span data-testid="button-link-pending">ButtonLink · étape 3.1</span></Sample>
+    return (
+        <Sample label="pending 3.1">
+            <span data-testid="button-link-pending">ButtonLink · étape 3.1</span>
+        </Sample>
+    )
 }
 
 function PositionHarness() {
@@ -111,7 +132,11 @@ function PositionHarness() {
 
     return (
         <div data-testid="position-harness" style={{ height: 480, position: 'relative' }}>
-            <button ref={anchorRef} data-testid="position-anchor" style={{ position: 'absolute', left: 180, top: 120 }}>
+            <button
+                ref={anchorRef}
+                data-testid="position-anchor"
+                style={{ position: 'absolute', left: 180, top: 120 }}
+            >
                 Anchor
             </button>
             <div ref={overlayRef} data-testid="position-overlay" style={{ width: 96, height: 48 }}>
@@ -133,13 +158,23 @@ const harnesses: Record<string, () => React.JSX.Element> = {
 export function HarnessPage() {
     const { component = 'button' } = useParams()
     const [searchParams] = useSearchParams()
-    const theme = isAllowed(themes, searchParams.get('theme')) ? searchParams.get('theme') as Theme : 'light'
-    const density = isAllowed(densities, searchParams.get('density')) ? searchParams.get('density') as Density : 'comfortable'
-    const brand = isAllowed(brands, searchParams.get('brand')) ? searchParams.get('brand') as Brand : 'monority'
+    const theme = isAllowed(themes, searchParams.get('theme'))
+        ? (searchParams.get('theme') as Theme)
+        : 'light'
+    const density = isAllowed(densities, searchParams.get('density'))
+        ? (searchParams.get('density') as Density)
+        : 'comfortable'
+    const brand = isAllowed(brands, searchParams.get('brand'))
+        ? (searchParams.get('brand') as Brand)
+        : 'monority'
     const Harness = harnesses[component] ?? harnesses.button!
 
     return (
-        <main className="harness-page" data-testid="harness-page" data-harness-component={component}>
+        <main
+            className="harness-page"
+            data-testid="harness-page"
+            data-harness-component={component}
+        >
             <ThemeScope theme={theme} density={density} {...(brand === 'studio' ? { brand } : {})}>
                 <Harness />
             </ThemeScope>

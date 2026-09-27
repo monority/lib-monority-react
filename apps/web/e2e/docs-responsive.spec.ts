@@ -16,7 +16,7 @@ test.describe('docs responsive navigation', () => {
 
         // No horizontal overflow in the resting state.
         expect(
-            await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+            await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
         ).toBe(true)
 
         if (!isMobile) {
@@ -42,7 +42,7 @@ test.describe('docs responsive navigation', () => {
         await expect(page.locator('.docs-mobile-nav__backdrop')).toBeVisible()
         await expect(page.locator('.docs-mobile-nav__panel')).toBeVisible()
         expect(
-            await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+            await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
         ).toBe(true)
 
         // Scroll is locked while open and restored after close.
@@ -69,10 +69,12 @@ test.describe('docs responsive navigation', () => {
         await expect(page.locator(DIALOG)).toHaveCount(0)
     })
 
-    test('neutralizes drawer motion when reduced motion is preferred', async ({ page }, testInfo) => {
+    test('neutralizes drawer motion when reduced motion is preferred', async ({
+        page,
+    }, testInfo) => {
         test.skip(
             testInfo.project.name !== 'mobile-reduced-motion',
-            'only the reduced-motion project asserts here',
+            'only the reduced-motion project asserts here'
         )
         await page.goto('/docs')
         await page.locator(BURGER).click()

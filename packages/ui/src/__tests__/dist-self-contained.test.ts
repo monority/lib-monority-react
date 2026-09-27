@@ -18,44 +18,52 @@ const distDir = resolve(pkgDir, 'dist')
 const norm = (p: string) => p.split(sep).join('/')
 
 const walk = (dir: string): string[] =>
-  readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
-    const p = resolve(dir, e.name)
-    return e.isDirectory() ? walk(p) : [p]
-  })
+    readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+        const p = resolve(dir, e.name)
+        return e.isDirectory() ? walk(p) : [p]
+    })
 
 const SOURCE = /\.(js|css|d\.ts|json)$/
-const SPECIFIER = /(?:@import\s+["']|from\s+["']|import\s*\(\s*["']|require\s*\(\s*["'])([^"']+)["']/g
-const ALLOWED_BARE = new Set(['react', 'react-dom', 'react/jsx-runtime', 'react-dom/client', 'node:path', 'node:url'])
+const SPECIFIER =
+    /(?:@import\s+["']|from\s+["']|import\s*\(\s*["']|require\s*\(\s*["'])([^"']+)["']/g
+const ALLOWED_BARE = new Set([
+    'react',
+    'react-dom',
+    'react/jsx-runtime',
+    'react-dom/client',
+    'node:path',
+    'node:url',
+])
 
 describe('dist — étanchéité du paquet', () => {
-  it('ne publie pas globals.css (copie de src/styles)', () => {
-    expect(readdirSync(distDir).filter((f) => f === 'globals.css')).toHaveLength(0)
-  })
+    it('ne publie pas globals.css (copie de src/styles)', () => {
+        expect(readdirSync(distDir).filter((f) => f === 'globals.css')).toHaveLength(0)
+    })
 
-  it('le CSS publié est autoportant (aucun @import résiduel)', () => {
-    const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
-    expect(css).not.toMatch(/@import/)
-    // Il contient bien le contenu résolu des layers.
-    expect(css).toContain('@layer tokens')
-    expect(css.length).toBeGreaterThan(10_000)
-  })
+    it('le CSS publié est autoportant (aucun @import résiduel)', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).not.toMatch(/@import/)
+        // Il contient bien le contenu résolu des layers.
+        expect(css).toContain('@layer tokens')
+        expect(css.length).toBeGreaterThan(10_000)
+    })
 
-  it('aucun fichier du dist ne référence un chemin hors du paquet', () => {
-    const escape: string[] = []
-    for (const file of walk(distDir)) {
-      if (!SOURCE.test(file)) continue
-      const content = readFileSync(file, 'utf8')
-      const rel = relative(distDir, file).split(sep).join('/')
-      for (const m of content.matchAll(SPECIFIER)) {
-        const spec = m[1]
-        if (spec.startsWith('.')) {
-          const target = norm(resolve(dirname(file), spec))
-          if (!target.startsWith(norm(distDir))) escape.push(`${rel} -> ${spec}`)
-        } else if (!spec.startsWith('node:') && !ALLOWED_BARE.has(spec)) {
-          escape.push(`${rel} -> ${spec}`)
+    it('aucun fichier du dist ne référence un chemin hors du paquet', () => {
+        const escape: string[] = []
+        for (const file of walk(distDir)) {
+            if (!SOURCE.test(file)) continue
+            const content = readFileSync(file, 'utf8')
+            const rel = relative(distDir, file).split(sep).join('/')
+            for (const m of content.matchAll(SPECIFIER)) {
+                const spec = m[1]
+                if (spec.startsWith('.')) {
+                    const target = norm(resolve(dirname(file), spec))
+                    if (!target.startsWith(norm(distDir))) escape.push(`${rel} -> ${spec}`)
+                } else if (!spec.startsWith('node:') && !ALLOWED_BARE.has(spec)) {
+                    escape.push(`${rel} -> ${spec}`)
+                }
+            }
         }
-      }
-    }
-    expect(escape, `références sortantes : ${escape.join(', ')}`).toHaveLength(0)
-  })
+        expect(escape, `références sortantes : ${escape.join(', ')}`).toHaveLength(0)
+    })
 })

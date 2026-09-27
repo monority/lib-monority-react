@@ -3,46 +3,47 @@ import { cn } from './cn'
 type Variants = Record<string, Record<string, string>>
 
 type Props<T extends Variants> = {
-  [K in keyof T]?: keyof T[K] | null | undefined
+    [K in keyof T]?: keyof T[K] | null | undefined
 }
 
 type CompoundVariant<T extends Variants> = {
-  [K in keyof T]?: keyof T[K]
+    [K in keyof T]?: keyof T[K]
 } & { className: string }
 
 type VariantFn<T extends Variants> = (props?: Props<T>) => string
 
 function cva<T extends Variants>(schema: {
-  base?: string
-  variants: T
-  defaultVariants?: Partial<Props<T>>
-  compoundVariants?: CompoundVariant<T>[]
+    base?: string
+    variants: T
+    defaultVariants?: Partial<Props<T>>
+    compoundVariants?: CompoundVariant<T>[]
 }): VariantFn<T> {
-  return (props?: Props<T>): string => {
-    const resolved = { ...schema.defaultVariants, ...props } as Record<string, string | undefined>
-    const classes: string[] = schema.base ? [schema.base] : []
+    return (props?: Props<T>): string => {
+        const resolved = { ...schema.defaultVariants, ...props } as Record<
+            string,
+            string | undefined
+        >
+        const classes: string[] = schema.base ? [schema.base] : []
 
-    if (schema.variants) {
-      for (const key of Object.keys(schema.variants)) {
-        const value = resolved[key]
-        const map = schema.variants[key]
-        const className = value != null ? map?.[value] : undefined
-        if (className) classes.push(className)
-      }
+        if (schema.variants) {
+            for (const key of Object.keys(schema.variants)) {
+                const value = resolved[key]
+                const map = schema.variants[key]
+                const className = value != null ? map?.[value] : undefined
+                if (className) classes.push(className)
+            }
+        }
+
+        if (schema.compoundVariants) {
+            for (const compound of schema.compoundVariants) {
+                const { className, ...matches } = compound
+                const match = Object.entries(matches).every(([key, val]) => resolved[key] === val)
+                if (match) classes.push(className)
+            }
+        }
+
+        return cn(...classes)
     }
-
-    if (schema.compoundVariants) {
-      for (const compound of schema.compoundVariants) {
-        const { className, ...matches } = compound
-        const match = Object.entries(matches).every(
-          ([key, val]) => resolved[key] === val,
-        )
-        if (match) classes.push(className)
-      }
-    }
-
-    return cn(...classes)
-  }
 }
 
 export { cva }

@@ -7,11 +7,15 @@ const syntheticSpec = `# Harness
 `
 
 test('button#1 le banc expose le composant', async ({ page }) => {
-  await page.goto('/harness/button?theme=light&density=comfortable')
-  await expect(page.getByTestId('harness-page')).toBeVisible()
+    await page.goto('/harness/button?theme=light&density=comfortable')
+    await expect(page.getByTestId('harness-page')).toBeVisible()
 })
 
 test('criteria utility detects complete and missing coverage', () => {
-  const report = buildCriteriaReport('button', syntheticSpec, "test('button#1 coverage', () => {})")
-  expect(report).toEqual({ component: 'button', total: 1, covered: ['1'], missing: [] })
+    const report = buildCriteriaReport(
+        'button',
+        syntheticSpec,
+        "test('button#1 coverage', () => {})"
+    )
+    expect(report).toEqual({ component: 'button', total: 1, covered: ['1'], missing: [] })
 })

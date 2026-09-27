@@ -1,39 +1,35 @@
 {
-  "name": "monority",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "tooling/*"
-  ],
-  "scripts": {
-    "dev": "pnpm --filter @monority/web dev",
-    "build": "turbo run build",
-    "build:ui": "pnpm --filter @monority/ui build",
-    "build:web": "pnpm --filter @monority/web build",
-    "lint": "biome lint .",
-    "test": "turbo run test",
-    "test:watch": "turbo run test:watch",
-    "clean": "turbo run clean && node -e \"require('fs').rmSync('node_modules',{recursive:true,force:true})\"",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "typecheck": "turbo run typecheck",
-    "changeset": "changeset",
-    "version": "changeset version",
-    "release": "turbo run build && changeset publish",
-    "generate:component": "pnpm --filter @monority/generators generate:component",
-    "validate": "node tooling/scripts/validate.js"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
-    "@changesets/cli": "^2.27.0",
-    "turbo": "^2.3.0",
-    "typescript": "^5.7.0"
-  },
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=20"
-  }
+    "name": "monority",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "workspaces": ["apps/*", "packages/*", "tooling/*"],
+    "scripts": {
+        "dev": "pnpm --filter @monority/web dev",
+        "build": "turbo run build",
+        "build:ui": "pnpm --filter @monority/ui build",
+        "build:web": "pnpm --filter @monority/web build",
+        "lint": "biome lint .",
+        "test": "turbo run test",
+        "test:watch": "turbo run test:watch",
+        "clean": "turbo run clean && node -e \"require('fs').rmSync('node_modules',{recursive:true,force:true})\"",
+        "format": "biome format --write .",
+        "format:check": "biome format .",
+        "typecheck": "turbo run typecheck",
+        "changeset": "changeset",
+        "version": "changeset version",
+        "release": "turbo run build && changeset publish",
+        "generate:component": "pnpm --filter @monority/generators generate:component",
+        "validate": "node tooling/scripts/validate.js"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.9.0",
+        "@changesets/cli": "^2.27.0",
+        "turbo": "^2.3.0",
+        "typescript": "^5.7.0"
+    },
+    "packageManager": "pnpm@9.0.0",
+    "engines": {
+        "node": ">=20"
+    }
 }

@@ -4,49 +4,46 @@ import { cva } from '@/lib/variants'
 import type { DataListProps, DataListItem } from './DataList.types'
 
 const dataListVariants = cva({
-  base: 'mr-data-list',
-  variants: {
-    columns: {
-      auto: 'mr-data-list--auto',
-      split: 'mr-data-list--split',
+    base: 'mr-data-list',
+    variants: {
+        columns: {
+            auto: 'mr-data-list--auto',
+            split: 'mr-data-list--split',
+        },
     },
-  },
-  defaultVariants: { columns: 'auto' },
+    defaultVariants: { columns: 'auto' },
 })
 
-export const DataList = forwardRef<HTMLDListElement, DataListProps>(
-  function DataList(
+export const DataList = forwardRef<HTMLDListElement, DataListProps>(function DataList(
     { items = [], columns, className, itemClassName, ...props },
-    ref,
-  ) {
+    ref
+) {
     return (
-      <dl
-        ref={ref}
-        className={cn(dataListVariants({ columns }), className)}
-        data-columns={columns}
-        {...props}
-      >
-        {items.map((item, index) => {
-          const itemKey =
-            item.key ??
-            (typeof item.label === 'string' ? item.label : String(index))
+        <dl
+            ref={ref}
+            className={cn(dataListVariants({ columns }), className)}
+            data-columns={columns}
+            {...props}
+        >
+            {items.map((item, index) => {
+                const itemKey =
+                    item.key ?? (typeof item.label === 'string' ? item.label : String(index))
 
-          return (
-            <div
-              key={itemKey}
-              className={cn('mr-data-list__item', itemClassName)}
-              data-row-index={index}
-            >
-              <dt className="mr-data-list__label">{item.label}</dt>
-              <dd className="mr-data-list__value">
-                {item.render ? item.render(item.value, item, index) : item.value}
-              </dd>
-            </div>
-          )
-        })}
-      </dl>
+                return (
+                    <div
+                        key={itemKey}
+                        className={cn('mr-data-list__item', itemClassName)}
+                        data-row-index={index}
+                    >
+                        <dt className="mr-data-list__label">{item.label}</dt>
+                        <dd className="mr-data-list__value">
+                            {item.render ? item.render(item.value, item, index) : item.value}
+                        </dd>
+                    </div>
+                )
+            })}
+        </dl>
     )
-  },
-)
+})
 
 export type { DataListProps, DataListItem, DataListColumns } from './DataList.types'

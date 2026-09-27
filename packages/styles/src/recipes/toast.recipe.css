@@ -1,12 +1,18 @@
 @layer recipes {
     @keyframes mr-toast-in {
-        from { opacity: 0; transform: translateY(0.5rem); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .mr-toast {
         padding: var(--mr-space-4);
-         border: var(--mr-border-width) solid var(--mr-border-subtle);
+        border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-elevated);
         box-shadow: var(--mr-elevation-overlay);

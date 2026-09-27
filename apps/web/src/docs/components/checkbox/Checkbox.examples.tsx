@@ -20,7 +20,10 @@ export function CheckboxDisabledExample() {
 
 export function CheckboxWithErrorExample() {
     return (
-        <Checkbox label="Confirm retention policy" error="Required before archiving this workspace." />
+        <Checkbox
+            label="Confirm retention policy"
+            error="Required before archiving this workspace."
+        />
     )
 }
 

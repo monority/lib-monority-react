@@ -38,7 +38,10 @@ function parseCss(css) {
             }
             if (text.startsWith('@media', i)) {
                 const open = text.indexOf('{', i)
-                const q = text.slice(i + 6, open).trim().replace(/\s+/g, ' ')
+                const q = text
+                    .slice(i + 6, open)
+                    .trim()
+                    .replace(/\s+/g, ' ')
                 let d = 1
                 let j = open + 1
                 while (j < n && d > 0) {
@@ -60,7 +63,8 @@ function parseCss(css) {
                 else if (text[j] === '}') d--
                 j++
             }
-            if (sel && !sel.startsWith('@')) add(media ? `@media ${media} @@ ${sel}` : sel, text.slice(open + 1, j - 1))
+            if (sel && !sel.startsWith('@'))
+                add(media ? `@media ${media} @@ ${sel}` : sel, text.slice(open + 1, j - 1))
             i = j
         }
     }
@@ -106,4 +110,6 @@ if (diffs.length) {
     for (const d of diffs.slice(0, 40)) console.error('  ' + d)
     process.exit(1)
 }
-console.log(`T1 PASS — 0 différence (${refN.size} sélecteurs, ${[...refN.values()].reduce((a, v) => a + v.length, 0)} déclarations)`)
+console.log(
+    `T1 PASS — 0 différence (${refN.size} sélecteurs, ${[...refN.values()].reduce((a, v) => a + v.length, 0)} déclarations)`
+)

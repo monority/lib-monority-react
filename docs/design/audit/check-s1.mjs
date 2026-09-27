@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url'
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const prompt = fs.readFileSync(
     path.join(repoRoot, 'docs/roadmap/refonte/prompt-refonte-monority-ui.md'),
-    'utf8',
+    'utf8'
 )
 const language = fs.readFileSync(path.join(repoRoot, 'docs/design/language.md'), 'utf8')
 

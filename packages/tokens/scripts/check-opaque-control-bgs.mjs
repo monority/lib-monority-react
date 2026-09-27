@@ -28,7 +28,11 @@ const RECIPES = path.join(repoRoot, 'packages/styles/src/recipes')
 // Sélecteur de la RECETTE ->propriété background attendue. On lit les recipes
 // (source de vérité du style), pas le CSS généré.
 const CONTROLS = [
-    { recipe: 'input-base.recipe.css', selector: '.mr-input-base', covers: 'input, select, textarea, date-picker, combobox input, number-input, password-input' },
+    {
+        recipe: 'input-base.recipe.css',
+        selector: '.mr-input-base',
+        covers: 'input, select, textarea, date-picker, combobox input, number-input, password-input',
+    },
     { recipe: 'checkbox.recipe.css', selector: '.mr-checkbox__control', covers: 'checkbox' },
     { recipe: 'radio-group.recipe.css', selector: '.mr-radio__control', covers: 'radio' },
     { recipe: 'switch.recipe.css', selector: '.mr-switch__control', covers: 'switch (piste off)' },
@@ -64,7 +68,7 @@ for (const c of CONTROLS) {
     if (!opaque) {
         failures.push(
             `${c.selector} (${c.recipe}) : fond non opaque \`${value}\` — ` +
-                `la bordure au repos n'a pas de fond stable pour etre mesuree`,
+                `la bordure au repos n'a pas de fond stable pour etre mesuree`
         )
     }
     checked.push({ ...c, value })
@@ -77,5 +81,5 @@ if (failures.length) {
 }
 console.log(
     `T8 PASS — ${checked.length} contrôles à bordure ont un fond opaque ` +
-        `(${EXCLUDED.length} conteneur(s) d'overlay exclus : ${EXCLUDED.map((e) => e.selector).join(', ')})`,
+        `(${EXCLUDED.length} conteneur(s) d'overlay exclus : ${EXCLUDED.map((e) => e.selector).join(', ')})`
 )

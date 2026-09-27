@@ -52,7 +52,11 @@ export function DocsLayout({ children }: DocsLayoutProps) {
     return (
         <div className="docs-layout">
             <aside className="docs-sidebar docs-sidebar--desktop">
-                <DocsSidebarBody query={query} onQueryChange={setQuery} pathname={location.pathname} />
+                <DocsSidebarBody
+                    query={query}
+                    onQueryChange={setQuery}
+                    pathname={location.pathname}
+                />
             </aside>
             <div className="docs-mobile-bar">
                 <button

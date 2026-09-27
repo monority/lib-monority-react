@@ -5,5 +5,9 @@ export const accordionMeta = {
     import: "import { Accordion } from '@monority/ui'",
     category: 'display',
     anatomy: ['root'],
-    accessibility: ['Triggers expose aria-expanded and aria-controls', 'Roving tabindex with ArrowUp/Down, Home/End', 'Enter/Space toggle; disabled items are skipped'],
+    accessibility: [
+        'Triggers expose aria-expanded and aria-controls',
+        'Roving tabindex with ArrowUp/Down, Home/End',
+        'Enter/Space toggle; disabled items are skipped',
+    ],
 }

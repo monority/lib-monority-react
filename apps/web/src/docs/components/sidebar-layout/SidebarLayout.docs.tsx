@@ -40,12 +40,7 @@ const docData: DocPageData = {
         '.mr-sidebar-layout__main',
         '[data-collapsed]',
     ],
-    tokens: [
-        '--mr-sidebar-width',
-        '--mr-bg-surface',
-        '--mr-border-subtle',
-        '--mr-space-*',
-    ],
+    tokens: ['--mr-sidebar-width', '--mr-bg-surface', '--mr-border-subtle', '--mr-space-*'],
     a11y: [
         'Navigation landmark.',
         'aria-label on sidebar nav.',

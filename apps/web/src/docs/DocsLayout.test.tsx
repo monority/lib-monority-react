@@ -9,7 +9,7 @@ function renderDocsLayout(initialEntries = ['/docs']) {
             <DocsLayout>
                 <div>Documentation content</div>
             </DocsLayout>
-        </MemoryRouter>,
+        </MemoryRouter>
     )
 }
 
@@ -18,9 +18,10 @@ describe('DocsLayout mobile navigation', () => {
         renderDocsLayout()
         expect(screen.getByText('Documentation content')).toBeInTheDocument()
         expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
-        expect(
-            screen.getByRole('button', { name: 'Open documentation menu' }),
-        ).toHaveAttribute('aria-expanded', 'false')
+        expect(screen.getByRole('button', { name: 'Open documentation menu' })).toHaveAttribute(
+            'aria-expanded',
+            'false'
+        )
     })
 
     it('opens the navigation on burger toggle and closes it on second toggle', () => {
@@ -46,11 +47,10 @@ describe('DocsLayout mobile navigation', () => {
         expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
     })
 
-    it('closes the navigation on Escape', () => {        renderDocsLayout()
+    it('closes the navigation on Escape', () => {
+        renderDocsLayout()
         fireEvent.click(screen.getByRole('button', { name: 'Open documentation menu' }))
-        expect(
-            screen.getByRole('dialog', { name: 'Documentation navigation' }),
-        ).toBeInTheDocument()
+        expect(screen.getByRole('dialog', { name: 'Documentation navigation' })).toBeInTheDocument()
 
         fireEvent.keyDown(document, { key: 'Escape' })
         expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull()
@@ -72,8 +72,7 @@ describe('DocsLayout component search', () => {
         expect(screen.getByText(/No components match/)).toBeInTheDocument()
         fireEvent.click(screen.getByRole('button', { name: 'Clear search' }))
         expect(
-            (screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement)
-                .value,
+            (screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement).value
         ).toBe('')
     })
 
@@ -92,6 +91,8 @@ describe('DocsLayout component search', () => {
         expect(screen.getByText(/No components match/)).toBeInTheDocument()
         fireEvent.click(screen.getByRole('link', { name: /Installation/ }))
         expect(screen.queryByText(/No components match/)).toBeNull()
-        expect((screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement).value).toBe('')
+        expect(
+            (screen.getByRole('searchbox', { name: 'Search components' }) as HTMLInputElement).value
+        ).toBe('')
     })
 })

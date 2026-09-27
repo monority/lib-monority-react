@@ -21,9 +21,24 @@ const docData: DocPageData = {
         { title: 'Indeterminate', content: <CheckboxIndeterminateExample /> },
     ],
     props: [
-        { name: 'label', type: `ReactNode`, defaultValue: '-', description: 'Checkbox label, rendered next to the control.' },
-        { name: 'hint', type: `ReactNode`, defaultValue: '-', description: 'Helpful description below the control.' },
-        { name: 'error', type: `ReactNode`, defaultValue: '-', description: 'Error message; also toggles the invalid state.' },
+        {
+            name: 'label',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Checkbox label, rendered next to the control.',
+        },
+        {
+            name: 'hint',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Helpful description below the control.',
+        },
+        {
+            name: 'error',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Error message; also toggles the invalid state.',
+        },
         {
             name: 'checked',
             type: `boolean`,

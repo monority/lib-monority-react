@@ -5,9 +5,9 @@ export type StackAlign = 'stretch' | 'start' | 'center' | 'end'
 export type StackJustify = 'start' | 'center' | 'end' | 'between'
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
-  gap?: StackGap
-  direction?: StackDirection
-  align?: StackAlign
-  justify?: StackJustify
-  children?: ReactNode
+    gap?: StackGap
+    direction?: StackDirection
+    align?: StackAlign
+    justify?: StackJustify
+    children?: ReactNode
 }

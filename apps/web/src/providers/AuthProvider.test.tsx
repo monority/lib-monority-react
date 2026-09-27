@@ -40,7 +40,7 @@ describe('AuthProvider', () => {
         render(
             <AuthProvider>
                 <AuthProbe />
-            </AuthProvider>,
+            </AuthProvider>
         )
 
         await waitFor(() => {
@@ -57,7 +57,7 @@ describe('AuthProvider', () => {
         render(
             <AuthProvider>
                 <AuthProbe />
-            </AuthProvider>,
+            </AuthProvider>
         )
 
         await waitFor(() => {

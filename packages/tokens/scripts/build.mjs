@@ -56,11 +56,21 @@ sd.registerFormat({
 })
 sd.registerFormat({
     name: 'mr/resolved',
-    format: () => JSON.stringify({ meta: { combos: resolved.combos, count: resolved.names.length }, values: resolved.values }, null, 2) + '\n',
+    format: () =>
+        JSON.stringify(
+            {
+                meta: { combos: resolved.combos, count: resolved.names.length },
+                values: resolved.values,
+            },
+            null,
+            2
+        ) + '\n',
 })
 
 fs.mkdirSync(stylesGenerated, { recursive: true })
 fs.mkdirSync(distDir, { recursive: true })
 await sd.buildAllPlatforms()
 console.log(`tokens.css + deprecated.css → ${stylesGenerated}`)
-console.log(`tokens.d.ts + resolved.json → ${distDir} (${resolved.names.length} tokens, ${resolved.combos.length} combos)`)
+console.log(
+    `tokens.d.ts + resolved.json → ${distDir} (${resolved.names.length} tokens, ${resolved.combos.length} combos)`
+)

@@ -32,7 +32,10 @@ function loadEsbuild() {
 
 const esbuild = loadEsbuild()
 const dist = path.join(repoRoot, 'packages/ui/dist')
-const entries = fs.readdirSync(dist).filter((f) => f.endsWith('.js')).sort()
+const entries = fs
+    .readdirSync(dist)
+    .filter((f) => f.endsWith('.js'))
+    .sort()
 
 const rows = []
 for (const file of entries) {
@@ -54,5 +57,5 @@ console.log(`${pad('entry', 28)}${padL('min B', 10)}${padL('gzip B', 10)}`)
 for (const r of rows) console.log(`${pad(r.file, 28)}${padL(r.min, 10)}${padL(r.gzip, 10)}`)
 console.log(`entries: ${rows.length}`)
 console.log(
-    `index.js: min ${rows.find((r) => r.file === 'index.js').min} B / gzip ${rows.find((r) => r.file === 'index.js').gzip} B`,
+    `index.js: min ${rows.find((r) => r.file === 'index.js').min} B / gzip ${rows.find((r) => r.file === 'index.js').gzip} B`
 )

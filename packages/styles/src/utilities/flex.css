@@ -1,2 +1,9 @@
-.cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--mr-space-3); }
-.between { justify-content: space-between; }
+.cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--mr-space-3);
+}
+.between {
+    justify-content: space-between;
+}

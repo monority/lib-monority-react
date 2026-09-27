@@ -119,7 +119,7 @@ describe('Step 10 · docs props match the TypeScript API', () => {
             const typeProps = extractTypeProps(typesText)
             const known = new Set([...typeProps, ...NATIVE_ATTRS])
 
-            const unknown = docProps.filter(p => !known.has(p))
+            const unknown = docProps.filter((p) => !known.has(p))
             expect(unknown, `unknown props in ${slug} docs`).toEqual([])
         })
     }
@@ -127,13 +127,13 @@ describe('Step 10 · docs props match the TypeScript API', () => {
 
 describe('Step 10 · import paths are subpath-stable', () => {
     it('every stable component uses a real subpath importCode', () => {
-        const pkg = JSON.parse(
-            readFileSync(`${root}/packages/ui/package.json`, 'utf8'),
-        ) as { exports: Record<string, unknown> }
+        const pkg = JSON.parse(readFileSync(`${root}/packages/ui/package.json`, 'utf8')) as {
+            exports: Record<string, unknown>
+        }
         const exported = new Set(
             Object.keys(pkg.exports)
-                .filter(k => k !== '.' && !k.endsWith('.css'))
-                .map(k => k.replace('./', '')),
+                .filter((k) => k !== '.' && !k.endsWith('.css'))
+                .map((k) => k.replace('./', ''))
         )
 
         const offenders: string[] = []

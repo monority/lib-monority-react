@@ -23,28 +23,28 @@
     }
 
     .mr-badge--primary,
-    .mr-badge[data-variant="primary"] {
+    .mr-badge[data-variant='primary'] {
         border-color: var(--mr-border-accent);
         background: var(--mr-bg-accent-soft);
         color: var(--mr-fg-accent);
     }
 
     .mr-badge--success,
-    .mr-badge[data-variant="success"] {
+    .mr-badge[data-variant='success'] {
         border-color: color-mix(in srgb, var(--mr-success) 28%, var(--mr-border-subtle));
         background: var(--mr-success-soft);
         color: var(--mr-success);
     }
 
     .mr-badge--danger,
-    .mr-badge[data-variant="danger"] {
+    .mr-badge[data-variant='danger'] {
         border-color: color-mix(in srgb, var(--mr-danger-solid) 28%, var(--mr-border-subtle));
         background: var(--mr-danger-soft);
         color: var(--mr-danger-text);
     }
 
     .mr-badge--warning,
-    .mr-badge[data-variant="warning"] {
+    .mr-badge[data-variant='warning'] {
         border-color: color-mix(in srgb, var(--mr-warning) 28%, var(--mr-border-subtle));
         background: var(--mr-warning-soft);
         color: var(--mr-warning);

@@ -33,9 +33,21 @@ const pkgDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const maps = buildMaps(loadSources(path.join(pkgDir, 'src')))
 const col = (tok, theme, brand = 'monority') => comboOklch(tok, theme, 'comfortable', brand, maps)
 
-const SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-overlay']
+const SIX = [
+    '--mr-bg-canvas',
+    '--mr-bg-surface',
+    '--mr-bg-raised',
+    '--mr-bg-sunken',
+    '--mr-bg-overlay',
+]
 const FOUR = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken']
-const ACCENT_SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-accent-subtle']
+const ACCENT_SIX = [
+    '--mr-bg-canvas',
+    '--mr-bg-surface',
+    '--mr-bg-raised',
+    '--mr-bg-sunken',
+    '--mr-accent-subtle',
+]
 const TONES = ['success', 'warning', 'danger', 'info']
 const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
 const TABLE_THEMES = ['light', 'dark', 'oled', 'high-contrast']
@@ -55,7 +67,13 @@ const PAIRS = [
        `bg-control` = `bg-sunken` ; la liste combobox en est exclue (c'est un
        conteneur d'overlay, pas une limite de contrôle). */
     ['rest', '--mr-border-control', ['--mr-bg-sunken'], 3, 4.3],
-    ['onaccent', '--mr-on-accent', ['--mr-accent', '--mr-accent-hover', '--mr-accent-active'], 4.5, 7],
+    [
+        'onaccent',
+        '--mr-on-accent',
+        ['--mr-accent', '--mr-accent-hover', '--mr-accent-active'],
+        4.5,
+        7,
+    ],
     ['ondanger', '--mr-on-danger-solid', ['--mr-danger-solid'], 4.5, 7],
     ...TONES.flatMap((tone) => [
         [tone, `--mr-${tone}-text`, [...SIX, `--mr-${tone}-subtle`], 4.5, 7],
@@ -96,7 +114,7 @@ const toLinear = (css) =>
 const fromLinear = (coords) =>
     new Color(
         'srgb',
-        coords.map((v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055)),
+        coords.map((v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055))
     ).toString()
 
 /** Cas de test du fond d'état : direct si opaque, 5 composites si translucide. */
@@ -149,7 +167,9 @@ for (const [key, fg, bgs, aa, hc] of PAIRS) {
                     mins[key][theme] = Math.min(mins[key][theme] ?? Infinity, ratio)
                 }
                 if (ratio + 1e-9 < threshold) {
-                    failures.push(`${key} ${cell} sur ${bg} : ${ratio.toFixed(2)} < seuil ${threshold}`)
+                    failures.push(
+                        `${key} ${cell} sur ${bg} : ${ratio.toFixed(2)} < seuil ${threshold}`
+                    )
                 }
             }
         }
@@ -162,10 +182,16 @@ for (const [key, fg, aaOpaque, etatAlpha, hcOpaque] of HOVER_PAIRS) {
             for (const bg of hoverBgCases(theme, brand)) {
                 pairCount++
                 const ratio = contrast(col(fg, theme, brand), bg.css)
-                const threshold = bg.translucent ? etatAlpha : theme === 'high-contrast' ? hcOpaque : aaOpaque
+                const threshold = bg.translucent
+                    ? etatAlpha
+                    : theme === 'high-contrast'
+                      ? hcOpaque
+                      : aaOpaque
                 const cell = `${theme}.${brand}`
                 if (ratio + 1e-9 < threshold) {
-                    failures.push(`${key} ${cell} sur ${bg.label} : ${ratio.toFixed(2)} < seuil ${threshold}`)
+                    failures.push(
+                        `${key} ${cell} sur ${bg.label} : ${ratio.toFixed(2)} < seuil ${threshold}`
+                    )
                 }
             }
         }
@@ -176,15 +202,17 @@ for (const [key, expected] of Object.entries(TABLE)) {
     TABLE_THEMES.forEach((theme, i) => {
         const computed = mins[key][theme]
         if (computed + TOLERANCE < expected[i]) {
-            failures.push(`tableau 5.5 ${key}/${theme} : calculé ${computed.toFixed(2)} < ${expected[i]}`)
+            failures.push(
+                `tableau 5.5 ${key}/${theme} : calculé ${computed.toFixed(2)} < ${expected[i]}`
+            )
         }
     })
     const studio = Math.min(
         ...TABLE_THEMES.flatMap((theme) =>
             PAIRS.filter(([k]) => k === key || k === `primary-${key}`).flatMap(([, fg, bgs]) =>
-                bgs.map((bg) => contrast(col(fg, theme, 'studio'), col(bg, theme, 'studio'))),
-            ),
-        ),
+                bgs.map((bg) => contrast(col(fg, theme, 'studio'), col(bg, theme, 'studio')))
+            )
+        )
     )
     if (studio + TOLERANCE < expected[4]) {
         failures.push(`tableau 5.5 ${key}/studio : calculé ${studio.toFixed(2)} < ${expected[4]}`)

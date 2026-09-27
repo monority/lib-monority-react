@@ -1,92 +1,96 @@
 @layer recipes {
-  .mr-infinite-scroll {
-    position: relative;
-    min-height: 1px;
-    width: 100%;
-  }
-
-  .mr-infinite-scroll__sentinel {
-    display: block;
-    width: 100%;
-    min-height: 1px;
-    pointer-events: none;
-  }
-
-  .mr-infinite-scroll__loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-     gap: var(--mr-surface-gap-sm);
-    padding: var(--mr-space-4);
-    color: var(--mr-fg-muted);
-     font-size: var(--mr-text-sm);
-  }
-
-  .mr-infinite-scroll__loader::before {
-    content: "";
-    display: inline-block;
-     width: var(--mr-icon-size-md);
-     height: var(--mr-icon-size-md);
-    border-radius: var(--mr-radius-full);
-     border: var(--mr-border-width) solid currentColor;
-    border-top-color: transparent;
-    animation: mr-infinite-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
-  }
-
-  .mr-infinite-scroll__end {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--mr-space-4);
-    color: var(--mr-fg-muted);
-     font-size: var(--mr-text-sm);
-  }
-
-  .mr-infinite-scroll__error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--mr-space-2);
-    padding: var(--mr-space-4);
-    color: var(--mr-danger-text);
-     font-size: var(--mr-text-sm);
-  }
-
-  .mr-infinite-scroll__empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--mr-space-4);
-    color: var(--mr-fg-muted);
-     font-size: var(--mr-text-sm);
-  }
-
-  .mr-infinite-scroll__retry {
-    padding: var(--mr-space-2) var(--mr-space-3);
-    min-height: var(--mr-control-size-sm);
-     border: var(--mr-border-width) solid currentColor;
-    border-radius: var(--mr-radius-sm);
-    background: transparent;
-    cursor: pointer;
-    font: inherit;
-    font-size: var(--mr-text-sm);
-    color: var(--mr-fg-base);
-    transition: background-color var(--mr-dur-150) var(--mr-ease-standard);
-  }
-
-  .mr-infinite-scroll__retry:hover {
-    background: color-mix(in srgb, currentColor 8%, transparent);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mr-infinite-scroll__loader::before {
-      animation: none;
-      border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+    .mr-infinite-scroll {
+        position: relative;
+        min-height: 1px;
+        width: 100%;
     }
-  }
 
-  @keyframes mr-infinite-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+    .mr-infinite-scroll__sentinel {
+        display: block;
+        width: 100%;
+        min-height: 1px;
+        pointer-events: none;
+    }
+
+    .mr-infinite-scroll__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--mr-surface-gap-sm);
+        padding: var(--mr-space-4);
+        color: var(--mr-fg-muted);
+        font-size: var(--mr-text-sm);
+    }
+
+    .mr-infinite-scroll__loader::before {
+        content: '';
+        display: inline-block;
+        width: var(--mr-icon-size-md);
+        height: var(--mr-icon-size-md);
+        border-radius: var(--mr-radius-full);
+        border: var(--mr-border-width) solid currentColor;
+        border-top-color: transparent;
+        animation: mr-infinite-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
+    }
+
+    .mr-infinite-scroll__end {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--mr-space-4);
+        color: var(--mr-fg-muted);
+        font-size: var(--mr-text-sm);
+    }
+
+    .mr-infinite-scroll__error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--mr-space-2);
+        padding: var(--mr-space-4);
+        color: var(--mr-danger-text);
+        font-size: var(--mr-text-sm);
+    }
+
+    .mr-infinite-scroll__empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--mr-space-4);
+        color: var(--mr-fg-muted);
+        font-size: var(--mr-text-sm);
+    }
+
+    .mr-infinite-scroll__retry {
+        padding: var(--mr-space-2) var(--mr-space-3);
+        min-height: var(--mr-control-size-sm);
+        border: var(--mr-border-width) solid currentColor;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-size: var(--mr-text-sm);
+        color: var(--mr-fg-base);
+        transition: background-color var(--mr-dur-150) var(--mr-ease-standard);
+    }
+
+    .mr-infinite-scroll__retry:hover {
+        background: color-mix(in srgb, currentColor 8%, transparent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mr-infinite-scroll__loader::before {
+            animation: none;
+            border-top-color: color-mix(in srgb, currentColor 26%, transparent);
+        }
+    }
+
+    @keyframes mr-infinite-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 }

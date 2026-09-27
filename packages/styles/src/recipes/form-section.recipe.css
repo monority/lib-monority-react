@@ -44,7 +44,7 @@
         gap: var(--mr-space-4);
         min-width: 0;
     }
-    .mr-form-section[data-has-actions="true"] .mr-form-section__footer {
+    .mr-form-section[data-has-actions='true'] .mr-form-section__footer {
         display: flex;
         flex-wrap: wrap;
         align-items: center;

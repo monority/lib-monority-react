@@ -27,35 +27,44 @@ console.log('Category: ' + CATEGORY)
 
 console.log('\n[1/4] Generating ' + TMP_NAME + '...')
 try {
-  execSync('node scripts/generate-component.js ' + TMP_NAME + ' --category=' + CATEGORY, {
-    cwd: path.dirname(__dirname), stdio: 'pipe', timeout: 30000
-  })
-  console.log('  [OK] Generated successfully')
+    execSync('node scripts/generate-component.js ' + TMP_NAME + ' --category=' + CATEGORY, {
+        cwd: path.dirname(__dirname),
+        stdio: 'pipe',
+        timeout: 30000,
+    })
+    console.log('  [OK] Generated successfully')
 } catch (err) {
-  console.error('  [FAIL] Generation failed:', err.stderr?.toString() || err.message)
-  cleanup(); process.exit(1)
+    console.error('  [FAIL] Generation failed:', err.stderr?.toString() || err.message)
+    cleanup()
+    process.exit(1)
 }
 
 console.log('\n[2/4] Running typecheck...')
 try {
-  execSync('pnpm tsc --noEmit --noUnusedLocals false --noUnusedParameters false', {
-    cwd: path.join(ROOT, 'packages/ui'), stdio: 'pipe', timeout: 60000
-  })
-  console.log('  [OK] TypeScript: 0 errors')
+    execSync('pnpm tsc --noEmit --noUnusedLocals false --noUnusedParameters false', {
+        cwd: path.join(ROOT, 'packages/ui'),
+        stdio: 'pipe',
+        timeout: 60000,
+    })
+    console.log('  [OK] TypeScript: 0 errors')
 } catch (err) {
-  console.error('  [FAIL] TypeScript errors:', err.stderr?.toString() || err.message)
-  cleanup(); process.exit(1)
+    console.error('  [FAIL] TypeScript errors:', err.stderr?.toString() || err.message)
+    cleanup()
+    process.exit(1)
 }
 
 console.log('\n[3/4] Running tests...')
 try {
-  const testOutput = execSync('pnpm vitest run ' + TMP_SLUG + ' --reporter=verbose', {
-    cwd: path.join(ROOT, 'packages/ui'), stdio: 'pipe', timeout: 60000
-  })
-  console.log('  [OK] All tests passed')
+    const testOutput = execSync('pnpm vitest run ' + TMP_SLUG + ' --reporter=verbose', {
+        cwd: path.join(ROOT, 'packages/ui'),
+        stdio: 'pipe',
+        timeout: 60000,
+    })
+    console.log('  [OK] All tests passed')
 } catch (err) {
-  console.error('  [FAIL] Tests failed:', err.stderr?.toString() || err.message)
-  cleanup(); process.exit(1)
+    console.error('  [FAIL] Tests failed:', err.stderr?.toString() || err.message)
+    cleanup()
+    process.exit(1)
 }
 
 console.log('\n[4/4] Cleaning up...')
@@ -66,69 +75,95 @@ console.log('\n=== Smoke Test: PASSED ===\n')
 process.exit(0)
 
 function cleanup() {
-  for (const p of CLEANUP_PATHS) {
-    if (fs.existsSync(p)) { fs.rmSync(p, { recursive: true, force: true }) }
-  }
-  revertAutoUpdates()
+    for (const p of CLEANUP_PATHS) {
+        if (fs.existsSync(p)) {
+            fs.rmSync(p, { recursive: true, force: true })
+        }
+    }
+    revertAutoUpdates()
 }
 
 function revertAutoUpdates() {
-  revertCategoryIndex()
-  revertRegistry()
-  revertPackageJson()
-  revertTsup()
-  revertRecipesIndex()
+    revertCategoryIndex()
+    revertRegistry()
+    revertPackageJson()
+    revertTsup()
+    revertRecipesIndex()
 }
 
 function revertCategoryIndex() {
-  const p = path.join(ROOT, 'packages/ui/src/components', CATEGORY, 'index.ts')
-  if (!fs.existsSync(p)) return
-  let c = fs.readFileSync(p, 'utf8')
-  const e = "export * from './" + TMP_SLUG + "'"
-  if (c.includes(e)) { c = c.replace(e + '\n', ''); fs.writeFileSync(p, c) }
+    const p = path.join(ROOT, 'packages/ui/src/components', CATEGORY, 'index.ts')
+    if (!fs.existsSync(p)) return
+    let c = fs.readFileSync(p, 'utf8')
+    const e = "export * from './" + TMP_SLUG + "'"
+    if (c.includes(e)) {
+        c = c.replace(e + '\n', '')
+        fs.writeFileSync(p, c)
+    }
 }
 
 function revertRegistry() {
-  const p = path.join(ROOT, 'apps/web/src/docs/components/registry.ts')
-  if (!fs.existsSync(p)) return
-  let c = fs.readFileSync(p, 'utf8')
-  const e = "{ category: '" + CATEGORY + "', label: '" + TMP_NAME + "', path: '/docs/" + TMP_SLUG + "', slug: '" + TMP_SLUG + "', status: 'draft' },"
-  if (c.includes(e)) { c = c.replace(e + '\n', ''); fs.writeFileSync(p, c) }
+    const p = path.join(ROOT, 'apps/web/src/docs/components/registry.ts')
+    if (!fs.existsSync(p)) return
+    let c = fs.readFileSync(p, 'utf8')
+    const e =
+        "{ category: '" +
+        CATEGORY +
+        "', label: '" +
+        TMP_NAME +
+        "', path: '/docs/" +
+        TMP_SLUG +
+        "', slug: '" +
+        TMP_SLUG +
+        "', status: 'draft' },"
+    if (c.includes(e)) {
+        c = c.replace(e + '\n', '')
+        fs.writeFileSync(p, c)
+    }
 }
 
 function revertPackageJson() {
-  const p = path.join(ROOT, 'packages/ui/package.json')
-  if (!fs.existsSync(p)) return
-  const pkg = JSON.parse(fs.readFileSync(p, 'utf8'))
-  const key = './' + TMP_SLUG
-  if (pkg.exports?.[key]) { delete pkg.exports[key]; fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + '\n') }
+    const p = path.join(ROOT, 'packages/ui/package.json')
+    if (!fs.existsSync(p)) return
+    const pkg = JSON.parse(fs.readFileSync(p, 'utf8'))
+    const key = './' + TMP_SLUG
+    if (pkg.exports?.[key]) {
+        delete pkg.exports[key]
+        fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + '\n')
+    }
 }
 
 function revertTsup() {
-  const p = path.join(ROOT, 'packages/ui/tsup.config.ts')
-  if (!fs.existsSync(p)) return
-  let c = fs.readFileSync(p, 'utf8')
-  const e = "    smokeTestProbe: 'src/components/" + CATEGORY + "/" + TMP_SLUG + "/index.ts',"
-  if (c.includes(e)) { c = c.replace(e + '\n', ''); fs.writeFileSync(p, c) }
+    const p = path.join(ROOT, 'packages/ui/tsup.config.ts')
+    if (!fs.existsSync(p)) return
+    let c = fs.readFileSync(p, 'utf8')
+    const e = "    smokeTestProbe: 'src/components/" + CATEGORY + '/' + TMP_SLUG + "/index.ts',"
+    if (c.includes(e)) {
+        c = c.replace(e + '\n', '')
+        fs.writeFileSync(p, c)
+    }
 }
 
 function revertRecipesIndex() {
-  const p = path.join(ROOT, 'packages/styles/src/recipes/index.css')
-  if (!fs.existsSync(p)) return
-  let c = fs.readFileSync(p, 'utf8')
-  const e = "@import './" + TMP_SLUG + ".recipe.css';"
-  if (c.includes(e)) { c = c.replace(e + '\n', ''); fs.writeFileSync(p, c) }
+    const p = path.join(ROOT, 'packages/styles/src/recipes/index.css')
+    if (!fs.existsSync(p)) return
+    let c = fs.readFileSync(p, 'utf8')
+    const e = "@import './" + TMP_SLUG + ".recipe.css';"
+    if (c.includes(e)) {
+        c = c.replace(e + '\n', '')
+        fs.writeFileSync(p, c)
+    }
 }
 
 function findRepoRoot(startDir) {
-  let current = startDir
-  while (current !== path.dirname(current)) {
-    const pkgPath = path.join(current, 'package.json')
-    if (fs.existsSync(pkgPath)) {
-      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8').replace(/^\uFEFF/, ''))
-      if (pkg.name === 'monority') return current
+    let current = startDir
+    while (current !== path.dirname(current)) {
+        const pkgPath = path.join(current, 'package.json')
+        if (fs.existsSync(pkgPath)) {
+            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8').replace(/^\uFEFF/, ''))
+            if (pkg.name === 'monority') return current
+        }
+        current = path.dirname(current)
     }
-    current = path.dirname(current)
-  }
-  throw new Error('Could not find repo root')
+    throw new Error('Could not find repo root')
 }

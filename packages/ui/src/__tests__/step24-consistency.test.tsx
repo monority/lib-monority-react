@@ -44,7 +44,13 @@ describe('Step 24 · Tabs vertical keyboard parity with Accordion', () => {
     it('navigates down with ArrowDown like ArrowRight', () => {
         let selected = 'tab1'
         const view = render(
-            <Tabs items={items} value="tab1" onChange={(v) => { selected = v }} />
+            <Tabs
+                items={items}
+                value="tab1"
+                onChange={(v) => {
+                    selected = v
+                }}
+            />
         )
         act(() => {
             view.querySelectorAll('[role="tab"]')[0].dispatchEvent(
@@ -57,7 +63,13 @@ describe('Step 24 · Tabs vertical keyboard parity with Accordion', () => {
     it('navigates up with ArrowUp like ArrowLeft', () => {
         let selected = 'tab2'
         const view = render(
-            <Tabs items={items} value="tab2" onChange={(v) => { selected = v }} />
+            <Tabs
+                items={items}
+                value="tab2"
+                onChange={(v) => {
+                    selected = v
+                }}
+            />
         )
         act(() => {
             view.querySelectorAll('[role="tab"]')[1].dispatchEvent(
@@ -89,7 +101,13 @@ describe('Step 24 · Tabs per-item disabled skips like Accordion', () => {
     it('skips the disabled item on ArrowRight', () => {
         let selected = 'tab1'
         const view = render(
-            <Tabs items={items} value="tab1" onChange={(v) => { selected = v }} />
+            <Tabs
+                items={items}
+                value="tab1"
+                onChange={(v) => {
+                    selected = v
+                }}
+            />
         )
         act(() => {
             view.querySelectorAll('[role="tab"]')[0].dispatchEvent(
@@ -107,7 +125,13 @@ describe('Step 24 · Tabs per-item disabled skips like Accordion', () => {
         ]
         let selected = 'tab2'
         const view = render(
-            <Tabs items={edgeItems} value="tab2" onChange={(v) => { selected = v }} />
+            <Tabs
+                items={edgeItems}
+                value="tab2"
+                onChange={(v) => {
+                    selected = v
+                }}
+            />
         )
         act(() => {
             view.querySelectorAll('[role="tab"]')[1].dispatchEvent(

@@ -17,7 +17,7 @@ const uiPkg = JSON.parse(readFileSync(`${root}/packages/ui/package.json`, 'utf8'
 const exportedSubpaths = new Set(
     Object.keys(uiPkg.exports)
         .filter((key) => key !== '.' && !key.endsWith('.css'))
-        .map((key) => key.replace('./', '')),
+        .map((key) => key.replace('./', ''))
 )
 
 const componentsDir = `${process.cwd()}/src/docs/components`
@@ -64,7 +64,8 @@ describe('Step 09 · documented import paths are real exports', () => {
                 if (!file.endsWith('.tsx') && !file.endsWith('.ts')) continue
                 const text = readFileSync(`${dir}/${file}`, 'utf8')
                 for (const subpath of subpathsIn(text)) {
-                    if (!exportedSubpaths.has(subpath)) offenders.push(`${slug}/${file} → ${subpath}`)
+                    if (!exportedSubpaths.has(subpath))
+                        offenders.push(`${slug}/${file} → ${subpath}`)
                 }
             }
         }

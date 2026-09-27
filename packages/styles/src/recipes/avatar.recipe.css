@@ -8,7 +8,8 @@
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-full);
         background: var(--mr-bg-accent-soft);
-        box-shadow: inset 0 0 0 var(--mr-border-width) color-mix(in srgb, var(--mr-bg-canvas) 45%, transparent);
+        box-shadow: inset 0 0 0 var(--mr-border-width)
+            color-mix(in srgb, var(--mr-bg-canvas) 45%, transparent);
         color: var(--mr-fg-strong);
     }
 
@@ -25,7 +26,7 @@
     }
 
     .mr-avatar--sm,
-    .mr-avatar[data-size="sm"] {
+    .mr-avatar[data-size='sm'] {
         width: 2rem;
         height: 2rem;
     }
@@ -35,7 +36,7 @@
     }
 
     .mr-avatar--md,
-    .mr-avatar[data-size="md"] {
+    .mr-avatar[data-size='md'] {
         width: 2.5rem;
         height: 2.5rem;
     }
@@ -45,7 +46,7 @@
     }
 
     .mr-avatar--lg,
-    .mr-avatar[data-size="lg"] {
+    .mr-avatar[data-size='lg'] {
         width: 3rem;
         height: 3rem;
     }

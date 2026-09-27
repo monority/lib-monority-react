@@ -218,7 +218,9 @@ describe('Tabs', () => {
             ;(tabs[0] as HTMLElement).focus()
         })
         act(() => {
-            tabs[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+            tabs[0].dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+            )
         })
         const updated = view.querySelectorAll('[role="tab"]')
         expect(updated[1].getAttribute('aria-selected')).toBe('true')

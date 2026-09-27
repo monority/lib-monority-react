@@ -31,7 +31,8 @@ import { useToast } from '@monority/ui'`,
             name: 'onClose',
             type: `() => void`,
             defaultValue: '-',
-            description: 'Close button callback. Queued toasts also accept duration via pushToast (default 3600ms, Infinity stays).',
+            description:
+                'Close button callback. Queued toasts also accept duration via pushToast (default 3600ms, Infinity stays).',
         },
     ],
     cssHooks: [

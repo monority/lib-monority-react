@@ -4,39 +4,39 @@ import { cva } from '@/lib/variants'
 import type { CalloutProps, CalloutTone } from './Callout.types'
 
 const calloutVariants = cva({
-  base: 'mr-callout',
-  variants: {
-    tone: {
-      neutral: 'mr-callout--neutral',
-      info: 'mr-callout--info',
-      success: 'mr-callout--success',
-      warning: 'mr-callout--warning',
-      danger: 'mr-callout--danger',
+    base: 'mr-callout',
+    variants: {
+        tone: {
+            neutral: 'mr-callout--neutral',
+            info: 'mr-callout--info',
+            success: 'mr-callout--success',
+            warning: 'mr-callout--warning',
+            danger: 'mr-callout--danger',
+        },
     },
-  },
-  defaultVariants: { tone: 'neutral' },
+    defaultVariants: { tone: 'neutral' },
 })
 
 export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout(
-  { tone = 'neutral', title, description, children, className, role = 'note', ...props },
-  ref,
+    { tone = 'neutral', title, description, children, className, role = 'note', ...props },
+    ref
 ) {
-  return (
-    <div
-      ref={ref}
-      className={cn(calloutVariants({ tone }), className)}
-      role={role}
-      data-tone={tone}
-      {...props}
-    >
-      <div className="mr-callout__indicator" aria-hidden="true" />
-      <div className="mr-callout__content">
-        {title ? <strong className="mr-callout__title">{title}</strong> : null}
-        {description ? <p className="mr-callout__description">{description}</p> : null}
-        {children}
-      </div>
-    </div>
-  )
+    return (
+        <div
+            ref={ref}
+            className={cn(calloutVariants({ tone }), className)}
+            role={role}
+            data-tone={tone}
+            {...props}
+        >
+            <div className="mr-callout__indicator" aria-hidden="true" />
+            <div className="mr-callout__content">
+                {title ? <strong className="mr-callout__title">{title}</strong> : null}
+                {description ? <p className="mr-callout__description">{description}</p> : null}
+                {children}
+            </div>
+        </div>
+    )
 })
 
 export type { CalloutProps, CalloutTone } from './Callout.types'

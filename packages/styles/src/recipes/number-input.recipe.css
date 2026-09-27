@@ -1,107 +1,106 @@
 @layer recipes {
-  .mr-number-input__wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    inline-size: var(--mr-input-width);
-  }
+    .mr-number-input__wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        inline-size: var(--mr-input-width);
+    }
 
-  .mr-number-input {
-    inline-size: 100%;
-    padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-sm));
-  }
+    .mr-number-input {
+        inline-size: 100%;
+        padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-sm));
+    }
 
-  .mr-number-input__actions {
-    position: absolute;
-    inset-block: var(--mr-border-width);
-    inset-inline-end: var(--mr-border-width);
-    inline-size: var(--mr-control-size-sm);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-start-end-radius: var(--mr-input-radius);
-    border-end-end-radius: var(--mr-input-radius);
-  }
+    .mr-number-input__actions {
+        position: absolute;
+        inset-block: var(--mr-border-width);
+        inset-inline-end: var(--mr-border-width);
+        inline-size: var(--mr-control-size-sm);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-start-end-radius: var(--mr-input-radius);
+        border-end-end-radius: var(--mr-input-radius);
+    }
 
-  .mr-number-input__btn {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    inline-size: 100%;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--mr-fg-muted);
-    cursor: pointer;
-    font-size: var(--mr-text-xs);
-    transition:
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      color var(--mr-duration-fast) var(--mr-ease-standard);
-  }
+    .mr-number-input__btn {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        inline-size: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--mr-fg-muted);
+        cursor: pointer;
+        font-size: var(--mr-text-xs);
+        transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
+            var(--mr-duration-fast) var(--mr-ease-standard);
+    }
 
-  .mr-number-input__btn:hover:not(:disabled) {
-    background: var(--mr-bg-subtle);
-    color: var(--mr-fg-base);
-  }
+    .mr-number-input__btn:hover:not(:disabled) {
+        background: var(--mr-bg-subtle);
+        color: var(--mr-fg-base);
+    }
 
-  .mr-number-input__btn:disabled {
-    cursor: not-allowed;
-    opacity: var(--mr-opacity-disabled, 0.4);
-  }
+    .mr-number-input__btn:disabled {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled, 0.4);
+    }
 
-  .mr-number-input__btn:focus-visible {
-    z-index: 1;
-    outline: var(--mr-focus-width) solid var(--mr-accent);
-    outline-offset: calc(-1 * var(--mr-focus-width));
-  }
+    .mr-number-input__btn:focus-visible {
+        z-index: 1;
+        outline: var(--mr-focus-width) solid var(--mr-accent);
+        outline-offset: calc(-1 * var(--mr-focus-width));
+    }
 
-  .mr-number-input__btn + .mr-number-input__btn {
-    border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
-  }
+    .mr-number-input__btn + .mr-number-input__btn {
+        border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
+    }
 
-  .mr-number-input[data-size='md'] {
-    padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-md));
-  }
+    .mr-number-input[data-size='md'] {
+        padding-inline-end: calc(var(--mr-control-padding-inline-md) + var(--mr-control-size-md));
+    }
 
-  .mr-number-input[data-size='sm'] {
-    padding-inline-end: calc(var(--mr-control-padding-inline-sm) + var(--mr-control-size-sm));
-  }
+    .mr-number-input[data-size='sm'] {
+        padding-inline-end: calc(var(--mr-control-padding-inline-sm) + var(--mr-control-size-sm));
+    }
 
-  .mr-number-input[data-size='lg'] {
-    padding-inline-end: calc(var(--mr-control-padding-inline-lg) + var(--mr-control-size-lg));
-  }
+    .mr-number-input[data-size='lg'] {
+        padding-inline-end: calc(var(--mr-control-padding-inline-lg) + var(--mr-control-size-lg));
+    }
 
-  .mr-number-input[data-size='sm'] ~ .mr-number-input__actions {
-    inline-size: var(--mr-control-size-sm);
-  }
+    .mr-number-input[data-size='sm'] ~ .mr-number-input__actions {
+        inline-size: var(--mr-control-size-sm);
+    }
 
-  .mr-number-input[data-size='md'] ~ .mr-number-input__actions {
-    inline-size: var(--mr-control-size-md);
-  }
+    .mr-number-input[data-size='md'] ~ .mr-number-input__actions {
+        inline-size: var(--mr-control-size-md);
+    }
 
-  .mr-number-input[data-size='lg'] ~ .mr-number-input__actions {
-    inline-size: var(--mr-control-size-lg);
-  }
+    .mr-number-input[data-size='lg'] ~ .mr-number-input__actions {
+        inline-size: var(--mr-control-size-lg);
+    }
 
-  .mr-number-input--disabled,
-  .mr-number-input[data-disabled='true'] {
-    cursor: not-allowed;
-    opacity: var(--mr-opacity-disabled, 0.5);
-  }
+    .mr-number-input--disabled,
+    .mr-number-input[data-disabled='true'] {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled, 0.5);
+    }
 
-  .mr-number-input[data-disabled='true'] ~ .mr-number-input__actions {
-    opacity: var(--mr-opacity-disabled, 0.5);
-  }
+    .mr-number-input[data-disabled='true'] ~ .mr-number-input__actions {
+        opacity: var(--mr-opacity-disabled, 0.5);
+    }
 
-  .mr-number-input--error,
-  .mr-number-input[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
-  }
+    .mr-number-input--error,
+    .mr-number-input[data-invalid='true'] {
+        border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
+    }
 
-  .mr-number-input--error:focus-visible,
-  .mr-number-input[data-invalid='true']:focus-visible {
-    border-color: var(--mr-danger-text);
-    outline-color: var(--mr-danger-text);
-  }
+    .mr-number-input--error:focus-visible,
+    .mr-number-input[data-invalid='true']:focus-visible {
+        border-color: var(--mr-danger-text);
+        outline-color: var(--mr-danger-text);
+    }
 }

@@ -4,13 +4,13 @@ export type CheckboxTone = 'accent' | 'neutral' | 'danger'
 export type CheckboxSize = 'sm' | 'md' | 'lg'
 
 export interface CheckboxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'children'> {
-  tone?: CheckboxTone
-  size?: CheckboxSize
-  label?: ReactNode
-  hint?: ReactNode
-  error?: ReactNode
-  className?: string
-  indeterminate?: boolean
-  invalid?: boolean
+    extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'children'> {
+    tone?: CheckboxTone
+    size?: CheckboxSize
+    label?: ReactNode
+    hint?: ReactNode
+    error?: ReactNode
+    className?: string
+    indeterminate?: boolean
+    invalid?: boolean
 }

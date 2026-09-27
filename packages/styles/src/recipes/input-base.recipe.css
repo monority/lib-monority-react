@@ -1,89 +1,91 @@
 @layer recipes {
-  .mr-input-base {
-    inline-size: var(--mr-input-width);
-    min-block-size: var(--mr-input-height);
-    padding-block: var(--mr-input-padding-block, var(--mr-control-padding-block-md));
-     padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
-     padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-input-padding-inline, var(--mr-control-padding-inline-md)));
-    border: var(--mr-border-width) solid var(--mr-border-control);
-    border-radius: var(--mr-input-radius);
-    background: var(--mr-bg-control);
-    color: var(--mr-fg-base);
-    font-family: inherit;
-    font-size: var(--mr-text-sm);
-    font-weight: var(--mr-font-weight-regular);
-    line-height: var(--mr-leading-control);
-    transition:
-      border-color var(--mr-duration-fast) var(--mr-ease-standard),
-      background-color var(--mr-duration-fast) var(--mr-ease-standard),
-      box-shadow var(--mr-duration-fast) var(--mr-ease-standard);
-  }
+    .mr-input-base {
+        inline-size: var(--mr-input-width);
+        min-block-size: var(--mr-input-height);
+        padding-block: var(--mr-input-padding-block, var(--mr-control-padding-block-md));
+        padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
+        padding-inline-end: var(
+            --mr-input-padding-inline-end,
+            var(--mr-input-padding-inline, var(--mr-control-padding-inline-md))
+        );
+        border: var(--mr-border-width) solid var(--mr-border-control);
+        border-radius: var(--mr-input-radius);
+        background: var(--mr-bg-control);
+        color: var(--mr-fg-base);
+        font-family: inherit;
+        font-size: var(--mr-text-sm);
+        font-weight: var(--mr-font-weight-regular);
+        line-height: var(--mr-leading-control);
+        transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
+            var(--mr-duration-fast) var(--mr-ease-standard), box-shadow var(--mr-duration-fast)
+            var(--mr-ease-standard);
+    }
 
-  .mr-input-base::placeholder {
-    color: var(--mr-fg-muted);
-  }
+    .mr-input-base::placeholder {
+        color: var(--mr-fg-muted);
+    }
 
-  .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
-    border-color: var(--mr-border-control-hover);
-  }
+    .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
+        border-color: var(--mr-border-control-hover);
+    }
 
-  .mr-input-base:focus-visible {
-    border-color: var(--mr-border-control-hover);
-  }
+    .mr-input-base:focus-visible {
+        border-color: var(--mr-border-control-hover);
+    }
 
-  .mr-input-base:disabled,
-  .mr-input-base[data-disabled='true'] {
-    cursor: not-allowed;
-    opacity: var(--mr-opacity-disabled, 0.5);
-  }
+    .mr-input-base:disabled,
+    .mr-input-base[data-disabled='true'] {
+        cursor: not-allowed;
+        opacity: var(--mr-opacity-disabled, 0.5);
+    }
 
-  .mr-input-base[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
-  }
+    .mr-input-base[data-invalid='true'] {
+        border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
+    }
 
-  .mr-input-base[data-invalid='true']:focus-visible {
-    border-color: var(--mr-danger-text);
-    outline-color: var(--mr-danger-text);
-  }
+    .mr-input-base[data-invalid='true']:focus-visible {
+        border-color: var(--mr-danger-text);
+        outline-color: var(--mr-danger-text);
+    }
 
-  .mr-input-base[data-tone='accent'] {
-    border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
-  }
+    .mr-input-base[data-tone='accent'] {
+        border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
+    }
 
-  .mr-input-base[data-tone='accent']:focus-visible {
-    border-color: var(--mr-border-control-hover);
-    box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
-  }
+    .mr-input-base[data-tone='accent']:focus-visible {
+        border-color: var(--mr-border-control-hover);
+        box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
+    }
 
-  .mr-input-base[data-tone='danger'] {
-    border-color: color-mix(in srgb, var(--mr-danger-text) 30%, var(--mr-border-subtle));
-  }
+    .mr-input-base[data-tone='danger'] {
+        border-color: color-mix(in srgb, var(--mr-danger-text) 30%, var(--mr-border-subtle));
+    }
 
-  .mr-input-base[data-tone='danger']:focus-visible {
-    border-color: var(--mr-danger-text);
-    outline-color: var(--mr-danger-text);
-  }
+    .mr-input-base[data-tone='danger']:focus-visible {
+        border-color: var(--mr-danger-text);
+        outline-color: var(--mr-danger-text);
+    }
 
-  .mr-input-base[data-size='sm'] {
-    min-block-size: var(--mr-control-size-sm);
-    padding-block: var(--mr-control-padding-block-sm);
-    padding-inline-start: var(--mr-control-padding-inline-sm);
-    padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-sm));
-    font-size: var(--mr-text-xs);
-  }
+    .mr-input-base[data-size='sm'] {
+        min-block-size: var(--mr-control-size-sm);
+        padding-block: var(--mr-control-padding-block-sm);
+        padding-inline-start: var(--mr-control-padding-inline-sm);
+        padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-sm));
+        font-size: var(--mr-text-xs);
+    }
 
-  .mr-input-base[data-size='md'] {
-    min-block-size: var(--mr-control-size-md);
-    padding-block: var(--mr-control-padding-block-md);
-    padding-inline-start: var(--mr-control-padding-inline-md);
-    padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-md));
-  }
+    .mr-input-base[data-size='md'] {
+        min-block-size: var(--mr-control-size-md);
+        padding-block: var(--mr-control-padding-block-md);
+        padding-inline-start: var(--mr-control-padding-inline-md);
+        padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-md));
+    }
 
-  .mr-input-base[data-size='lg'] {
-    min-block-size: var(--mr-control-size-lg);
-    padding-block: var(--mr-control-padding-block-lg);
-    padding-inline-start: var(--mr-control-padding-inline-lg);
-    padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-lg));
-    font-size: var(--mr-text-md);
-  }
+    .mr-input-base[data-size='lg'] {
+        min-block-size: var(--mr-control-size-lg);
+        padding-block: var(--mr-control-padding-block-lg);
+        padding-inline-start: var(--mr-control-padding-inline-lg);
+        padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-lg));
+        font-size: var(--mr-text-md);
+    }
 }

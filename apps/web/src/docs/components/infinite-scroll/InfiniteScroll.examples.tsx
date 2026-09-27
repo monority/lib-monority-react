@@ -60,10 +60,7 @@ export function InfiniteScrollErrorExample() {
     }, [])
 
     return (
-        <div
-            ref={setScrollParent}
-            className="docs-infinite-scroll-viewport"
-        >
+        <div ref={setScrollParent} className="docs-infinite-scroll-viewport">
             <InfiniteScroll
                 scrollableParent={scrollParent}
                 hasMore={true}
@@ -86,10 +83,7 @@ export function InfiniteScrollEndMessageExample() {
     const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null)
 
     return (
-        <div
-            ref={setScrollParent}
-            className="docs-infinite-scroll-viewport"
-        >
+        <div ref={setScrollParent} className="docs-infinite-scroll-viewport">
             <InfiniteScroll
                 scrollableParent={scrollParent}
                 hasMore={false}

@@ -10,7 +10,8 @@
         min-width: 0;
         min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-space-2) var(--mr-topbar-padding-inline);
-         border: var(--mr-border-width) solid color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
+        border: var(--mr-border-width) solid
+            color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
         border-radius: var(--mr-radius-md);
         background: var(--mr-bg-surface-strong);
     }
@@ -50,9 +51,8 @@
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         text-decoration: none;
-        transition:
-            background-color var(--mr-duration-fast) var(--mr-ease-standard),
-            color var(--mr-duration-fast) var(--mr-ease-standard);
+        transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
+            var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-topbar__navigation a:hover,
@@ -92,7 +92,7 @@
         .mr-topbar__navigation {
             overflow-x: auto;
             flex-wrap: nowrap;
-             padding-bottom: var(--mr-space-1);
+            padding-bottom: var(--mr-space-1);
         }
 
         .mr-topbar__actions {

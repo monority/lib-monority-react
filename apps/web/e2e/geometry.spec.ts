@@ -922,11 +922,15 @@ test('Step34 moodboard presents one canonical Design Studio', async ({ page }) =
 
     /* Preview content */
     const preview = page.getByTestId('moodboard-preview')
-    const controls = await preview.locator('.mr-input-base, .mr-btn, .mr-checkbox, .mr-toggle').count()
+    const controls = await preview
+        .locator('.mr-input-base, .mr-btn, .mr-checkbox, .mr-toggle')
+        .count()
     expect(controls).toBeGreaterThan(10)
 
     /* No horizontal overflow */
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
+    const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth + 1
+    )
     expect(overflow).toBe(true)
 
     /* Keyboard focus */

@@ -59,31 +59,31 @@ export function DocsPage() {
         <>
             <AppHeader />
             <DocsLayout>
-            {!slug ? (
-                <Introduction />
-            ) : slug === 'installation' ? (
-                <Installation />
-            ) : DocComponent ? (
-                <Suspense fallback={<LoadingFallback />}>
-                    <DocPageWithToc key={slug} DocComponent={DocComponent} />
-                </Suspense>
-            ) : (
-                <div className="docs-page">
-                    <div className="docs-hero">
-                        <span className="docs-kicker">Component</span>
-                        <h1>Not Found</h1>
-                        <p className="docs-description">
-                            No documentation found for this component.
-                        </p>
-                        <p>
-                            <Link to="/docs" className="docs-text-link">
-                                Back to the component list
-                            </Link>
-                        </p>
+                {!slug ? (
+                    <Introduction />
+                ) : slug === 'installation' ? (
+                    <Installation />
+                ) : DocComponent ? (
+                    <Suspense fallback={<LoadingFallback />}>
+                        <DocPageWithToc key={slug} DocComponent={DocComponent} />
+                    </Suspense>
+                ) : (
+                    <div className="docs-page">
+                        <div className="docs-hero">
+                            <span className="docs-kicker">Component</span>
+                            <h1>Not Found</h1>
+                            <p className="docs-description">
+                                No documentation found for this component.
+                            </p>
+                            <p>
+                                <Link to="/docs" className="docs-text-link">
+                                    Back to the component list
+                                </Link>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            )}
-        </DocsLayout>
+                )}
+            </DocsLayout>
         </>
     )
 }

@@ -1,64 +1,65 @@
 @layer recipes {
-  .mr-pre-code {
-    min-inline-size: 0;
-    max-inline-size: 100%;
-    margin: 0;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    background: var(--mr-code-bg, var(--mr-bg-surface-strong));
-    color: var(--mr-code-fg, var(--mr-fg-base));
-    font-family: var(--mr-font-mono);
-    scrollbar-color: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent)) transparent;
-    box-shadow: var(--mr-code-shadow, none);
-  }
+    .mr-pre-code {
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        margin: 0;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        background: var(--mr-code-bg, var(--mr-bg-surface-strong));
+        color: var(--mr-code-fg, var(--mr-fg-base));
+        font-family: var(--mr-font-mono);
+        scrollbar-color: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent))
+            transparent;
+        box-shadow: var(--mr-code-shadow, none);
+    }
 
-  .mr-pre-code::-webkit-scrollbar {
-     height: var(--mr-space-3);
-  }
+    .mr-pre-code::-webkit-scrollbar {
+        height: var(--mr-space-3);
+    }
 
-  .mr-pre-code::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    .mr-pre-code::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-  .mr-pre-code::-webkit-scrollbar-thumb {
-    background: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent));
-     border: var(--mr-space-1) solid transparent;
-    border-radius: var(--mr-radius-full);
-    background-clip: padding-box;
-  }
+    .mr-pre-code::-webkit-scrollbar-thumb {
+        background: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent));
+        border: var(--mr-space-1) solid transparent;
+        border-radius: var(--mr-radius-full);
+        background-clip: padding-box;
+    }
 
-  .mr-pre-code code {
-    display: block;
-    min-width: max-content;
-    color: inherit;
-    font-family: inherit;
-    line-height: var(--mr-leading-relaxed);
-     white-space: pre;
-     overflow-wrap: normal;
-     tab-size: 2;
-  }
+    .mr-pre-code code {
+        display: block;
+        min-width: max-content;
+        color: inherit;
+        font-family: inherit;
+        line-height: var(--mr-leading-relaxed);
+        white-space: pre;
+        overflow-wrap: normal;
+        tab-size: 2;
+    }
 
-  .mr-pre-code--sm {
-    padding: var(--mr-space-3);
-    border-radius: var(--mr-radius-sm);
-    font-size: var(--mr-text-xs);
-  }
+    .mr-pre-code--sm {
+        padding: var(--mr-space-3);
+        border-radius: var(--mr-radius-sm);
+        font-size: var(--mr-text-xs);
+    }
 
-  .mr-pre-code--md {
-    padding: var(--mr-code-padding, var(--mr-space-4));
-    border-radius: var(--mr-radius-md);
-    font-size: var(--mr-text-sm);
-  }
+    .mr-pre-code--md {
+        padding: var(--mr-code-padding, var(--mr-space-4));
+        border-radius: var(--mr-radius-md);
+        font-size: var(--mr-text-sm);
+    }
 
-  .mr-pre-code--wrap {
-    overflow-x: hidden;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
+    .mr-pre-code--wrap {
+        overflow-x: hidden;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
 
-  .mr-pre-code--wrap code {
-    min-width: 0;
-    white-space: inherit;
-  }
+    .mr-pre-code--wrap code {
+        min-width: 0;
+        white-space: inherit;
+    }
 }

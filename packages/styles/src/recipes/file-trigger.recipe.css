@@ -37,7 +37,7 @@
         outline-offset: var(--mr-focus-offset);
     }
 
-    .mr-file-trigger[aria-disabled="true"] {
+    .mr-file-trigger[aria-disabled='true'] {
         opacity: var(--mr-opacity-disabled);
         cursor: not-allowed;
         pointer-events: none;
@@ -55,13 +55,13 @@
         font-weight: var(--mr-font-weight-medium);
     }
 
-    .mr-file-trigger--default[data-size="sm"] {
+    .mr-file-trigger--default[data-size='sm'] {
         min-block-size: var(--mr-control-size-sm);
         padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-file-trigger--default[data-size="lg"] {
+    .mr-file-trigger--default[data-size='lg'] {
         min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
         font-size: var(--mr-text-md);

@@ -40,54 +40,54 @@ export function RootImports() {
                 <span>{themeScript.length}</span>
             </ThemeScope>
             <ToastProvider>
-            <Button onClick={() => pushToast({ title: 'Hello' })}>Push</Button>
-            <Checkbox
-                label="Accept"
-                checked={checked}
-                onChange={(event) => setChecked(event.target.checked)}
-            />
-            <Slider label="Volume" value={value} onValueChange={setValue} invalid />
-            <Progress value={68} label={<span>Migration</span>} />
-            <Tooltip content="Details">
-                <button type="button">Trigger</button>
-            </Tooltip>
-            <Toast title="Saved" tone="success" />
-            <Avatar name="Maya Chen" size="lg" />
-            <Accordion
-                items={[{ value: 'a', title: 'Section', content: 'Body' }]}
-                defaultValue="a"
-                size="lg"
-                collapsible
-            />
-            <NumberInput label="Qty" />
-            <PageHeader title="Title" />
-            <Input label="Email" defaultValue="team@company.com" />
-            <Textarea label="Mission" rows={3} />
-            <Select label="Country" defaultValue="">
-                <option value="">Select</option>
-                <option value="fr">France</option>
-            </Select>
-            <Switch label="Digest" defaultChecked />
-            <Badge variant="success">Synced</Badge>
-            <Callout title="Note" tone="info">
-                Billing inherits from the parent account.
-            </Callout>
-            <Banner tone="info" title="Maintenance">
-                Service may be briefly unavailable.
-            </Banner>
-            <Card>
-                <span>Step 26 families resolve from the barrel.</span>
-            </Card>
-            <Tabs
-                items={[
-                    { value: 'a', label: 'Alpha' },
-                    { value: 'b', label: 'Beta', disabled: true },
-                ]}
-                defaultValue="a"
-            />
-            <Modal open={false} title="Review" onClose={() => {}}>
-                <p>Closed by default.</p>
-            </Modal>
+                <Button onClick={() => pushToast({ title: 'Hello' })}>Push</Button>
+                <Checkbox
+                    label="Accept"
+                    checked={checked}
+                    onChange={(event) => setChecked(event.target.checked)}
+                />
+                <Slider label="Volume" value={value} onValueChange={setValue} invalid />
+                <Progress value={68} label={<span>Migration</span>} />
+                <Tooltip content="Details">
+                    <button type="button">Trigger</button>
+                </Tooltip>
+                <Toast title="Saved" tone="success" />
+                <Avatar name="Maya Chen" size="lg" />
+                <Accordion
+                    items={[{ value: 'a', title: 'Section', content: 'Body' }]}
+                    defaultValue="a"
+                    size="lg"
+                    collapsible
+                />
+                <NumberInput label="Qty" />
+                <PageHeader title="Title" />
+                <Input label="Email" defaultValue="team@company.com" />
+                <Textarea label="Mission" rows={3} />
+                <Select label="Country" defaultValue="">
+                    <option value="">Select</option>
+                    <option value="fr">France</option>
+                </Select>
+                <Switch label="Digest" defaultChecked />
+                <Badge variant="success">Synced</Badge>
+                <Callout title="Note" tone="info">
+                    Billing inherits from the parent account.
+                </Callout>
+                <Banner tone="info" title="Maintenance">
+                    Service may be briefly unavailable.
+                </Banner>
+                <Card>
+                    <span>Step 26 families resolve from the barrel.</span>
+                </Card>
+                <Tabs
+                    items={[
+                        { value: 'a', label: 'Alpha' },
+                        { value: 'b', label: 'Beta', disabled: true },
+                    ]}
+                    defaultValue="a"
+                />
+                <Modal open={false} title="Review" onClose={() => {}}>
+                    <p>Closed by default.</p>
+                </Modal>
             </ToastProvider>
         </ThemeProvider>
     )

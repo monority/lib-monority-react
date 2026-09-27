@@ -18,8 +18,8 @@ export function ShowcasePage() {
                 <h1>Showcase</h1>
                 <p>
                     What can you build with this library? Four curated compositions, built
-                    exclusively with stable components. No isolated grids, no fake components,
-                    no draft APIs.
+                    exclusively with stable components. No isolated grids, no fake components, no
+                    draft APIs.
                 </p>
             </header>
 

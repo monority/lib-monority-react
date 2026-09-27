@@ -44,7 +44,7 @@ const bundle = read(CONSUMED)
 if (bundle === null) {
     console.log(
         `T7 SKIP — ${CONSUMED} absent. Construire @monority/ui ` +
-            `(pnpm --filter @monority/tokens build:downstream) pour pouvoir verifier.`,
+            `(pnpm --filter @monority/tokens build:downstream) pour pouvoir verifier.`
     )
     process.exit(0)
 }
@@ -65,12 +65,10 @@ for (const rel of GENERATED) {
 if (missing.length) {
     console.error(
         `T7 FAIL — ${missing.length} déclaration(s) générée(s) absente(s) du bundle consommé ` +
-            `(${CONSUMED}) : le CSS de l'application est périmé.`,
+            `(${CONSUMED}) : le CSS de l'application est périmé.`
     )
     for (const m of missing.slice(0, 10)) console.error(`  ${m}`)
     console.error('  Relancer : pnpm --filter @monority/tokens build:downstream')
     process.exit(1)
 }
-console.log(
-    `T7 PASS — ${checked} déclarations générées présentes dans ${CONSUMED} (bundle à jour)`,
-)
+console.log(`T7 PASS — ${checked} déclarations générées présentes dans ${CONSUMED} (bundle à jour)`)

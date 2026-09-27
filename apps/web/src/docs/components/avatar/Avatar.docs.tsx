@@ -26,7 +26,13 @@ const docData: DocPageData = {
             defaultValue: "'md'",
             description: 'Rendered size.',
         },
-        { name: 'src', type: `string`, defaultValue: '-', description: 'Image source URL. Falls back to children/initials when absent or on load error.' },
+        {
+            name: 'src',
+            type: `string`,
+            defaultValue: '-',
+            description:
+                'Image source URL. Falls back to children/initials when absent or on load error.',
+        },
         {
             name: 'alt',
             type: `string`,
@@ -37,7 +43,8 @@ const docData: DocPageData = {
             name: 'name',
             type: `string`,
             defaultValue: '-',
-            description: 'Person name. Provides the accessible name (unless alt is set) and the initials fallback.',
+            description:
+                'Person name. Provides the accessible name (unless alt is set) and the initials fallback.',
         },
         {
             name: 'children',

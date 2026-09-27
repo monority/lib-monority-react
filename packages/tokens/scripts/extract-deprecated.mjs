@@ -28,7 +28,7 @@ const stripComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '')
 // --- noms du nouveau système (référence v4) ---
 const refCss = read('docs/design/reference/monority-ui-tokens.reference.css')
 const newNames = new Set(
-    [...refCss.matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]).filter((t) => t !== '--mr-'),
+    [...refCss.matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]).filter((t) => t !== '--mr-')
 )
 
 // --- mini-parseur CSS (corpus contraint : règles, @layer, @media 1 niveau) ---

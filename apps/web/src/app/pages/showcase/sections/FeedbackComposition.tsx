@@ -54,7 +54,8 @@ export function FeedbackComposition() {
                             setConfirmed(true)
                             pushToast({
                                 title: 'Release confirmed',
-                                description: 'The changelog is now visible to every workspace member.',
+                                description:
+                                    'The changelog is now visible to every workspace member.',
                                 tone: 'success',
                             })
                         }}
