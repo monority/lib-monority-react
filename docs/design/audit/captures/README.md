@@ -37,3 +37,33 @@ Ratios mesurés contre un fond `bg-hover` composite (blanc 4,5 %), 5 bases :
 
 `border-control-*` : zoom sur le champ survolé. `form-dense-*` : vue complète
 (6 inputs, select, textarea, table).
+
+## Bordures de contrôles AU REPOS (proposition NON appliquée)
+
+WCAG 1.4.11 s'applique à l'identification du contrôle **au repos** : c'est
+l'état dans lequel on reconnaît le champ. Mesuré au navigateur
+(`getComputedStyle`, ratio calculé avec le moteur colorjs du dépôt) :
+
+| Contrôle | light | dark | oled | ocean | night | high-contrast |
+|---|---|---|---|---|---|---|
+| input | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| select | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| textarea | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| date-picker | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| combobox input | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| combobox list | 1.29 | 1.33 | 1.15 | 1.21 | 1.18 | 4.85 |
+| checkbox | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| radio | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+| switch (off) | 1.17 | 1.55 | 1.27 | 1.42 | 1.35 | 4.38 |
+
+**54 combinaisons sur 63 sont sous 3:1** ; seul `high-contrast` passe. Cause :
+les neuf contrôles utilisent `border-subtle` au repos.
+
+`slate` est absent du pipeline de tokens (chantier en cours) : la valeur
+mesurée pour `slate` est en réalité celle de `light` (le thème n'existe pas
+dans le CSS construit, le sélecteur retombe sur `:root`).
+
+`rest-*-before/after.png` : formulaire au repos dans les trois thèmes, avant /
+avec la valeur proposée pour le repos. Couleurs injectées dans la page de
+capture uniquement — le rendu est identique au changement réel, aucune source
+de token n'a été modifiée en attendant la validation.
