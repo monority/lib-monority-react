@@ -170,7 +170,7 @@ describe('ToastProvider', () => {
         container2 = render(
             <MountedReader
                 actions={({ pushToast }) => {
-                    pushToast({ title: 'Sticky', duration: Infinity })
+                    pushToast({ title: 'Sticky', duration: Number.POSITIVE_INFINITY })
                 }}
             />
         )
@@ -184,12 +184,12 @@ describe('ToastProvider', () => {
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(0)
     })
 
-    it('keeps duration=Infinity toasts until manually dismissed', () => {
+    it('keeps duration=Number.POSITIVE_INFINITY toasts until manually dismissed', () => {
         let container2: HTMLElement | null = null
         container2 = render(
             <MountedReader
                 actions={({ pushToast }) => {
-                    pushToast({ title: 'Persistent', duration: Infinity })
+                    pushToast({ title: 'Persistent', duration: Number.POSITIVE_INFINITY })
                 }}
             />
         )

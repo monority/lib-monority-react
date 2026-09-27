@@ -164,7 +164,7 @@ for (const [key, fg, bgs, aa, hc] of PAIRS) {
                 const ratio = contrast(col(fg, theme, brand), col(bg, theme, brand))
                 const cell = `${theme}.${brand}`
                 if (brand === 'monority') {
-                    mins[key][theme] = Math.min(mins[key][theme] ?? Infinity, ratio)
+                    mins[key][theme] = Math.min(mins[key][theme] ?? Number.POSITIVE_INFINITY, ratio)
                 }
                 if (ratio + 1e-9 < threshold) {
                     failures.push(

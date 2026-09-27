@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom'
+import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
+
+const headerLinks = [
+    { label: 'Docs', to: '/docs' },
+    { label: 'Showcase', to: '/showcase' },
+    { label: 'Playground', to: '/playground' },
+    { label: 'Moodboard', to: '/moodboard' },
+]
 
 interface AppHeaderProps {
     homeNav?: boolean
@@ -13,10 +21,15 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                     Monority
                 </Link>
                 <nav className="app-header__nav" aria-label="Navigation principale">
-                    <Link to="/docs">Docs</Link>
-                    <Link to="/showcase">Showcase</Link>
-                    <Link to="/playground">Playground</Link>
+                    {headerLinks.map((link) => (
+                        <Link key={link.to} to={link.to}>
+                            {link.label}
+                        </Link>
+                    ))}
                 </nav>
+                <div className="app-header__controls">
+                    <ThemeToggle className="app-header__theme" />
+                </div>
             </div>
         </header>
     )

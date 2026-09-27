@@ -70,7 +70,7 @@ describe('Calendar', () => {
         })
 
         expect(selected).toBeTruthy()
-        expect(selected?.getDate()).toBe(parseInt(firstDay.textContent!, 10))
+        expect(selected?.getDate()).toBe(Number.parseInt(firstDay.textContent!, 10))
     })
 
     it('respects controlled value', () => {

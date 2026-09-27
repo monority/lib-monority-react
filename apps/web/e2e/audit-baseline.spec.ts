@@ -13,7 +13,7 @@ import { docsComponentRegistry } from '../src/docs/components/registry'
  *   AUDIT_BASELINE=1 pnpm exec playwright test audit-baseline --project=desktop --update-snapshots
  */
 
-const themes = ['light', 'dim', 'dark', 'oled', 'high-contrast'] as const
+const themes = ['light', 'dim', 'dark', 'slate', 'oled', 'high-contrast'] as const
 const enabled = process.env.AUDIT_BASELINE === '1'
 
 test.describe('audit-baseline phase 0 bis', () => {
@@ -53,7 +53,7 @@ test.describe('audit-baseline phase 0 bis', () => {
                         // audit capture.
                         maxDiffPixels: 64,
                         maxDiffPixelRatio: 0.0005,
-                    },
+                    }
                 )
             })
         }

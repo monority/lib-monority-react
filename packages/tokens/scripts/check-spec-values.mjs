@@ -29,7 +29,7 @@ const COMPACT = 'light.compact.monority'
 
 const px = (value) => {
     const rem = value.match(/^([\d.]+)rem$/)
-    if (rem) return `${Math.round(parseFloat(rem[1]) * 16 * 1000) / 1000}px`
+    if (rem) return `${Math.round(Number.parseFloat(rem[1]) * 16 * 1000) / 1000}px`
     const pxm = value.match(/^([\d.]+)px$/)
     if (pxm) return `${Number(pxm[1])}px`
     return null

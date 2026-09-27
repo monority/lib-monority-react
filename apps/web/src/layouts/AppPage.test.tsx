@@ -19,7 +19,6 @@ describe('AppPage SEO', () => {
     it('met a jour les metadonnees principales de la page', () => {
         renderWithProviders(
             <AppPage
-                navigationItems={[]}
                 seo={{
                     title: 'Documentation UI',
                     description: 'Une doc complete pour la librairie UI.',
@@ -28,26 +27,26 @@ describe('AppPage SEO', () => {
             >
                 <div>Page docs</div>
             </AppPage>,
-            { initialEntries: ['/docs'] },
+            { initialEntries: ['/docs'] }
         )
 
         expect(screen.getByText('Page docs')).toBeInTheDocument()
         expect(document.title).toBe('Documentation UI | Model Starter')
         expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
             'content',
-            'Une doc complete pour la librairie UI.',
+            'Une doc complete pour la librairie UI.'
         )
         expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute(
             'content',
-            'index,follow',
+            'index,follow'
         )
         expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute(
             'href',
-            'http://localhost:3000/docs',
+            'http://localhost:3000/docs'
         )
         expect(document.head.querySelector('meta[property="og:title"]')).toHaveAttribute(
             'content',
-            'Documentation UI | Model Starter',
+            'Documentation UI | Model Starter'
         )
     })
 })

@@ -38,7 +38,7 @@ function TimedToast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: st
     const { id, title, description, tone, duration } = toast
 
     useEffect(() => {
-        if (duration === Infinity) {
+        if (duration === Number.POSITIVE_INFINITY) {
             return undefined
         }
         const timer = window.setTimeout(() => onDismiss(id), duration)

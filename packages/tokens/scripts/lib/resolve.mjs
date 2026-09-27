@@ -77,12 +77,12 @@ function normalizeLength(raw) {
     const s = raw.trim()
     const calc = s.match(/^calc\(\s*([\d.]+)px\s*\*\s*([\d.]+)\s*\)$/)
     if (calc) {
-        const px = Math.round(parseFloat(calc[1]) * parseFloat(calc[2]) * 1000) / 1000
+        const px = Math.round(Number.parseFloat(calc[1]) * Number.parseFloat(calc[2]) * 1000) / 1000
         return `${px}px`
     }
     const rem = s.match(/^([\d.]+)rem$/)
     if (rem) {
-        const px = Math.round(parseFloat(rem[1]) * 16 * 1000) / 1000
+        const px = Math.round(Number.parseFloat(rem[1]) * 16 * 1000) / 1000
         return `${px}px`
     }
     return s

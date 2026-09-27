@@ -22,11 +22,13 @@ import {
     DESIGN_PRESETS,
     DEFAULT_DESIGN_CONFIG,
     resolveDesignConfig,
+    sanitizeDesignConfig,
     type Column,
     designConfigToJSON,
     type DesignConfig,
 } from '@monority/ui'
 import { usePageSeo } from '@/seo/usePageSeo'
+import { AppHeader } from '@/layouts/AppHeader'
 import './moodboard.css'
 
 /* ------------------------------------------------------------------ */
@@ -113,7 +115,7 @@ function ConfigPanel({
     copied: boolean
 }) {
     const onValue = (key: keyof DesignConfig) => (value: string | string[]) => {
-        const v = Array.isArray(value) ? value[0] ?? '' : String(value)
+        const v = Array.isArray(value) ? (value[0] ?? '') : String(value)
         if (v === '') return /* ignore deselect in single mode */
         onConfig(key, v as DesignConfig[typeof key])
     }
@@ -129,7 +131,12 @@ function ConfigPanel({
                     <Button variant="ghost" size="sm" onClick={onCopy} data-testid="moodboard-copy">
                         {copied ? 'Copied' : 'Copy'}
                     </Button>
-                    <Button variant="secondary" size="sm" onClick={onReset} data-testid="moodboard-reset">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={onReset}
+                        data-testid="moodboard-reset"
+                    >
                         Reset
                     </Button>
                 </div>
@@ -138,21 +145,19 @@ function ConfigPanel({
             <div className="moodboard-sidebar__axes">
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Theme</span>
-                    <ToggleGroup value={config.theme} onValueChange={onValue('theme')}
-                        items={[
-                            { value: 'dark', label: 'Dark' },
-                            { value: 'light', label: 'Light' },
-                            { value: 'oled', label: 'OLED' },
-                            { value: 'ocean', label: 'Ocean' },
-                            { value: 'night', label: 'Night' },
-                        ]}
+                    <ToggleGroup
+                        value={config.theme}
+                        onValueChange={onValue('theme')}
+                        items={DESIGN_PRESETS.themes}
                         aria-label="Theme axis"
                     />
                 </div>
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Brand</span>
-                    <ToggleGroup value={config.brand} onValueChange={onValue('brand')}
+                    <ToggleGroup
+                        value={config.brand}
+                        onValueChange={onValue('brand')}
                         items={DESIGN_PRESETS.brands}
                         aria-label="Brand axis"
                     />
@@ -160,7 +165,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Accent</span>
-                    <ToggleGroup value={config.accent} onValueChange={onValue('accent')}
+                    <ToggleGroup
+                        value={config.accent}
+                        onValueChange={onValue('accent')}
                         items={DESIGN_PRESETS.accents}
                         aria-label="Accent axis"
                     />
@@ -168,7 +175,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Components</span>
-                    <ToggleGroup value={config.componentColor} onValueChange={onValue('componentColor')}
+                    <ToggleGroup
+                        value={config.componentColor}
+                        onValueChange={onValue('componentColor')}
                         items={DESIGN_PRESETS.componentColors}
                         aria-label="Component color axis"
                     />
@@ -176,7 +185,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Charts</span>
-                    <ToggleGroup value={config.chartPalette} onValueChange={onValue('chartPalette')}
+                    <ToggleGroup
+                        value={config.chartPalette}
+                        onValueChange={onValue('chartPalette')}
                         items={DESIGN_PRESETS.chartPalettes}
                         aria-label="Chart palette axis"
                     />
@@ -184,7 +195,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Radius</span>
-                    <ToggleGroup value={config.radius} onValueChange={onValue('radius')}
+                    <ToggleGroup
+                        value={config.radius}
+                        onValueChange={onValue('radius')}
                         items={DESIGN_PRESETS.radii}
                         aria-label="Radius axis"
                     />
@@ -192,7 +205,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Spacing</span>
-                    <ToggleGroup value={config.spacing} onValueChange={onValue('spacing')}
+                    <ToggleGroup
+                        value={config.spacing}
+                        onValueChange={onValue('spacing')}
                         items={DESIGN_PRESETS.spacings}
                         aria-label="Spacing axis"
                     />
@@ -200,7 +215,9 @@ function ConfigPanel({
 
                 <div className="moodboard-axis">
                     <span className="moodboard-kicker">Layout</span>
-                    <ToggleGroup value={config.density} onValueChange={onValue('density')}
+                    <ToggleGroup
+                        value={config.density}
+                        onValueChange={onValue('density')}
                         items={DESIGN_PRESETS.densities}
                         aria-label="Layout density axis"
                     />
@@ -219,17 +236,24 @@ function ConfigPanel({
 /*  Live preview                                                       */
 /* ------------------------------------------------------------------ */
 
-function LivePreview({ state, onState }: { state: PanelState; onState: (next: Partial<PanelState>) => void }) {
+function LivePreview({
+    state,
+    onState,
+}: { state: PanelState; onState: (next: Partial<PanelState>) => void }) {
     return (
         <div className="moodboard-preview" data-testid="moodboard-preview">
             {/* Product topbar */}
             <Topbar className="moodboard-topbar" role="group" aria-label="Product navigation">
                 <div className="moodboard-brand-lockup">
-                    <span className="moodboard-brand-mark" aria-hidden="true">M</span>
+                    <span className="moodboard-brand-mark" aria-hidden="true">
+                        M
+                    </span>
                     <span>MONORITY</span>
                 </div>
                 <nav className="moodboard-compact-nav" aria-label="Compact navigation">
-                    <a className="is-active" href="#overview">Overview</a>
+                    <a className="is-active" href="#overview">
+                        Overview
+                    </a>
                     <a href="#activity">Activity</a>
                     <a href="#settings">Settings</a>
                 </nav>
@@ -246,8 +270,12 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                     <h2>Release control</h2>
                     <p>One system for shipping observable changes across every environment.</p>
                     <div className="moodboard-actions">
-                        <Button variant="primary" size="sm">Deploy</Button>
-                        <Button variant="ghost" size="sm">Inspect</Button>
+                        <Button variant="primary" size="sm">
+                            Deploy
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                            Inspect
+                        </Button>
                     </div>
                 </PageHeader>
 
@@ -255,9 +283,27 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                 <MetricGrid
                     className="moodboard-metrics"
                     items={[
-                        { key: 'requests', label: 'REQUESTS / MIN', value: '98.4%', trend: '+4.8%', trendTone: 'success' },
-                        { key: 'latency', label: 'P95 LATENCY', value: '84 ms', trend: '-12 ms', trendTone: 'success' },
-                        { key: 'errors', label: 'ERROR RATE', value: '0.02%', trend: '-0.01%', trendTone: 'success' },
+                        {
+                            key: 'requests',
+                            label: 'REQUESTS / MIN',
+                            value: '98.4%',
+                            trend: '+4.8%',
+                            trendTone: 'success',
+                        },
+                        {
+                            key: 'latency',
+                            label: 'P95 LATENCY',
+                            value: '84 ms',
+                            trend: '-12 ms',
+                            trendTone: 'success',
+                        },
+                        {
+                            key: 'errors',
+                            label: 'ERROR RATE',
+                            value: '0.02%',
+                            trend: '-0.01%',
+                            trendTone: 'success',
+                        },
                     ]}
                 />
 
@@ -269,7 +315,11 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                             <span className="moodboard-kicker">THROUGHPUT</span>
                             <span className="moodboard-mono">7-DAY TREND</span>
                         </div>
-                        <div className="moodboard-chart" data-testid="moodboard-chart" aria-label="Bar chart visualization">
+                        <div
+                            className="moodboard-chart"
+                            data-testid="moodboard-chart"
+                            aria-label="Bar chart visualization"
+                        >
                             {chartData.map((day) => (
                                 <div key={day.label} className="moodboard-chart__bar-group">
                                     <div className="moodboard-chart__bars">
@@ -277,7 +327,10 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                                             <div
                                                 key={i}
                                                 className="moodboard-chart__segment"
-                                                style={{ height: `${v}%`, backgroundColor: chartVars[i] }}
+                                                style={{
+                                                    height: `${v}%`,
+                                                    backgroundColor: chartVars[i],
+                                                }}
                                             />
                                         ))}
                                     </div>
@@ -296,22 +349,32 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                         <Table
                             columns={tableColumns.map((column) =>
                                 column.key === 'status'
-                                    ? { ...column, render: (value) => badgeForStatus(String(value)) }
+                                    ? {
+                                          ...column,
+                                          render: (value) => badgeForStatus(String(value)),
+                                      }
                                     : column.key === 'service'
-                                        ? {
+                                      ? {
                                             ...column,
                                             render: (value) => (
                                                 <button
                                                     className="moodboard-row-button"
                                                     type="button"
-                                                    onClick={() => onState({ selectedRow: String(value) })}
-                                                    aria-pressed={state.selectedRow === String(value)}
+                                                    onClick={() =>
+                                                        onState({ selectedRow: String(value) })
+                                                    }
+                                                    aria-pressed={
+                                                        state.selectedRow === String(value)
+                                                    }
                                                 >
-                                                    {String(value)}{String(value) === state.selectedRow ? ' ·' : ''}
+                                                    {String(value)}
+                                                    {String(value) === state.selectedRow
+                                                        ? ' ·'
+                                                        : ''}
                                                 </button>
                                             ),
                                         }
-                                        : column,
+                                      : column
                             )}
                             rows={tableRows}
                             tableClassName="moodboard-table"
@@ -391,22 +454,41 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                     <Card className="moodboard-card" padding="md">
                         <span className="moodboard-kicker">BUTTON VARIANTS</span>
                         <div className="moodboard-button-row">
-                            {(['primary', 'secondary', 'ghost', 'danger'] as const).map((variant) => (
-                                <Button key={variant} variant={variant} size="sm" data-mr-preview="hover">{variant}</Button>
-                            ))}
-                            <Button size="sm" disabled>disabled</Button>
-                            <Button size="sm" loading>loading</Button>
+                            {(['primary', 'secondary', 'ghost', 'danger'] as const).map(
+                                (variant) => (
+                                    <Button
+                                        key={variant}
+                                        variant={variant}
+                                        size="sm"
+                                        data-mr-preview="hover"
+                                    >
+                                        {variant}
+                                    </Button>
+                                )
+                            )}
+                            <Button size="sm" disabled>
+                                disabled
+                            </Button>
+                            <Button size="sm" loading>
+                                loading
+                            </Button>
                         </div>
                         <span className="moodboard-kicker">BADGE VARIANTS</span>
                         <div className="moodboard-badge-row">
-                            {(['default', 'primary', 'success', 'warning', 'danger'] as const).map((variant) => (
-                                <Badge key={variant} variant={variant}>{variant}</Badge>
-                            ))}
+                            {(['default', 'primary', 'success', 'warning', 'danger'] as const).map(
+                                (variant) => (
+                                    <Badge key={variant} variant={variant}>
+                                        {variant}
+                                    </Badge>
+                                )
+                            )}
                         </div>
                         <span className="moodboard-kicker">SIZE LADDER</span>
                         <div className="moodboard-size-row">
                             {(['sm', 'md', 'lg'] as const).map((size) => (
-                                <Button key={size} size={size}>Button {size}</Button>
+                                <Button key={size} size={size}>
+                                    Button {size}
+                                </Button>
                             ))}
                         </div>
                     </Card>
@@ -414,9 +496,17 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
                     <Card className="moodboard-card" padding="md">
                         <span className="moodboard-kicker">DATA STATES</span>
                         <div className="moodboard-data-grid">
-                            <StatCard label="LOADING" value="—" description="Waiting for the next release" />
-                            <Callout tone="info" title="No incidents">All regions are inside the error budget.</Callout>
-                            <Callout tone="warning" title="Review required">One deploy is waiting for approval.</Callout>
+                            <StatCard
+                                label="LOADING"
+                                value="—"
+                                description="Waiting for the next release"
+                            />
+                            <Callout tone="info" title="No incidents">
+                                All regions are inside the error budget.
+                            </Callout>
+                            <Callout tone="warning" title="Review required">
+                                One deploy is waiting for approval.
+                            </Callout>
                         </div>
                         <span className="moodboard-kicker">PROGRESS</span>
                         <div className="moodboard-progress-group">
@@ -497,13 +587,20 @@ function LivePreview({ state, onState }: { state: PanelState; onState: (next: Pa
 /* ------------------------------------------------------------------ */
 
 export function MoodboardPage() {
-    usePageSeo({ title: 'Design Studio', description: 'Monority UI design system — one interface, one configuration, one live preview.' })
+    usePageSeo({
+        title: 'Design Studio',
+        description:
+            'Monority UI design system — one interface, one configuration, one live preview.',
+    })
 
     const [config, setConfig] = useState<DesignConfig>(() => {
         if (typeof window === 'undefined') return DEFAULT_DESIGN_CONFIG
         try {
             const stored = localStorage.getItem('monority-design-config')
-            return stored ? { ...DEFAULT_DESIGN_CONFIG, ...JSON.parse(stored) } : DEFAULT_DESIGN_CONFIG
+            /* sanitize, not spread: a stored config predating an axis change can hold
+               values the current presets no longer accept, and resolveDesignConfig
+               indexes those values directly. */
+            return stored ? sanitizeDesignConfig(JSON.parse(stored)) : DEFAULT_DESIGN_CONFIG
         } catch {
             return DEFAULT_DESIGN_CONFIG
         }
@@ -512,7 +609,8 @@ export function MoodboardPage() {
     const [state, setState] = useState<PanelState>(initialState)
     const [copied, setCopied] = useState(false)
 
-    const updateState = (next: Partial<PanelState>) => setState((current) => ({ ...current, ...next }))
+    const updateState = (next: Partial<PanelState>) =>
+        setState((current) => ({ ...current, ...next }))
 
     const updateConfig = <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => {
         setConfig((current) => ({ ...current, [key]: value }))
@@ -532,7 +630,9 @@ export function MoodboardPage() {
     useEffect(() => {
         try {
             localStorage.setItem('monority-design-config', designConfigToJSON(config))
-        } catch { /* noop */ }
+        } catch {
+            /* noop */
+        }
     }, [config])
 
     /* Reset copied flag */
@@ -546,33 +646,36 @@ export function MoodboardPage() {
     const resolved = resolveDesignConfig(config)
 
     return (
-        <DesignProvider config={config} className="moodboard-design-root">
-            <div className="moodboard-page" data-testid="moodboard-page">
-                <ConfigPanel
-                    config={config}
-                    onConfig={updateConfig}
-                    onReset={handleReset}
-                    onCopy={handleCopy}
-                    copied={copied}
-                />
-                <ThemeScope
-                    theme={config.theme}
-                    density={density}
-                    brand={config.brand === 'studio' ? 'studio' : undefined}
-                    className="moodboard-preview-scope"
-                    style={resolved.style}
-                    data-testid="moodboard-preview-scope"
-                    data-design-theme={config.theme}
-                    data-design-accent={config.accent}
-                    data-design-component-color={config.componentColor}
-                    data-design-chart-palette={config.chartPalette}
-                    data-design-radius={config.radius}
-                    data-design-spacing={config.spacing}
-                    data-design-density={config.density}
-                >
-                    <LivePreview state={state} onState={updateState} />
-                </ThemeScope>
-            </div>
-        </DesignProvider>
+        <>
+            <AppHeader />
+            <DesignProvider config={config} className="moodboard-design-root">
+                <div className="moodboard-page" data-testid="moodboard-page">
+                    <ConfigPanel
+                        config={config}
+                        onConfig={updateConfig}
+                        onReset={handleReset}
+                        onCopy={handleCopy}
+                        copied={copied}
+                    />
+                    <ThemeScope
+                        theme={config.theme}
+                        density={density}
+                        brand={config.brand === 'studio' ? 'studio' : undefined}
+                        className="moodboard-preview-scope"
+                        style={resolved.style}
+                        data-testid="moodboard-preview-scope"
+                        data-design-theme={config.theme}
+                        data-design-accent={config.accent}
+                        data-design-component-color={config.componentColor}
+                        data-design-chart-palette={config.chartPalette}
+                        data-design-radius={config.radius}
+                        data-design-spacing={config.spacing}
+                        data-design-density={config.density}
+                    >
+                        <LivePreview state={state} onState={updateState} />
+                    </ThemeScope>
+                </div>
+            </DesignProvider>
+        </>
     )
 }

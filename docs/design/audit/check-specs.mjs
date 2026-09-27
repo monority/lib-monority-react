@@ -127,7 +127,7 @@ const failures = []
 for (const name of expected) if (!present.includes(name)) failures.push(`S2 manquant : ${name}.md`)
 for (const name of present) if (!expected.includes(name)) failures.push(`S2 en trop : ${name}.md`)
 
-let minCriteria = Infinity
+let minCriteria = Number.POSITIVE_INFINITY
 const counts = []
 for (const name of expected) {
     const file = path.join(dir, `${name}.md`)

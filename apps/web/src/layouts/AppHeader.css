@@ -20,9 +20,10 @@
 
 .app-header__inner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-space-5);
+    gap: var(--mr-space-3) var(--mr-space-5);
     min-block-size: calc(var(--mr-control-size-lg) + var(--mr-space-2));
     inline-size: 100%;
     max-inline-size: var(--mr-page-max-width);
@@ -35,7 +36,7 @@
     font-size: var(--mr-text-sm);
     font-weight: var(--mr-font-weight-semibold);
     letter-spacing: -0.01em;
-     line-height: var(--mr-leading-tight);
+    line-height: var(--mr-leading-tight);
     text-decoration: none;
     white-space: nowrap;
 }
@@ -46,8 +47,10 @@
 
 .app-header__nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--mr-space-1);
+    min-inline-size: 0;
 }
 
 .app-header__nav a {
@@ -59,9 +62,8 @@
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-sm);
     text-decoration: none;
-    transition:
-        color var(--mr-duration-fast) var(--mr-ease-standard),
-        background-color var(--mr-duration-fast) var(--mr-ease-standard);
+    transition: color var(--mr-duration-fast) var(--mr-ease-standard), background-color
+        var(--mr-duration-fast) var(--mr-ease-standard);
 }
 
 .app-header__nav a:hover {
@@ -76,6 +78,41 @@
 .home-page .app-header__nav a:hover {
     color: rgba(255, 248, 226, 0.92);
     background: transparent;
+}
+
+/* Theme control follows the dark home chrome instead of the page tokens. */
+.app-header__controls {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--mr-space-2);
+    min-inline-size: 0;
+}
+
+.app-header__theme {
+    white-space: nowrap;
+}
+
+.home-page .app-header--home .app-header__theme {
+    color: rgba(244, 239, 228, 0.82);
+}
+
+.home-page .app-header--home .app-header__theme:hover {
+    color: rgba(255, 248, 226, 0.95);
+    background: rgba(255, 248, 226, 0.08);
+}
+
+/* Narrow viewports: the nav drops to its own line instead of pushing the theme
+   control out of the bar. */
+@media (max-width: 640px) {
+    .app-header__inner {
+        gap: var(--mr-space-2);
+    }
+
+    .app-header__nav {
+        order: 3;
+        flex: 1 0 100%;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

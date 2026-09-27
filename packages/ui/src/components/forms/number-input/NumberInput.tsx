@@ -18,8 +18,8 @@ const PlusIcon = () => (
 
 function parseNumeric(value: string): number | null {
     if (value === '' || value === '-' || value === '.') return null
-    const n = parseFloat(value)
-    if (isNaN(n) || !isFinite(n)) return null
+    const n = Number.parseFloat(value)
+    if (Number.isNaN(n) || !Number.isFinite(n)) return null
     return n
 }
 
@@ -110,7 +110,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
     const stepValue = useCallback(
         (dir: 1 | -1) => {
             const current = numericValue ?? 0
-            let next = parseFloat((current + dir * step).toFixed(10))
+            let next = Number.parseFloat((current + dir * step).toFixed(10))
             if (min !== undefined) next = Math.max(next, min)
             if (max !== undefined) next = Math.min(next, max)
             const str = String(next)

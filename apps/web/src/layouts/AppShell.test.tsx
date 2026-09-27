@@ -1,219 +1,57 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { screen, within } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 import { AppShell } from '@/layouts/AppShell'
-
-interface NavigationItem {
-    label: string
-    to?: string
-    href?: string
-}
-
-interface AuthOverrides {
-    user?: { name: string; role?: string } | null
-    workspace?: { name: string; plan?: string } | null
-    isAuthenticated?: boolean
-    isLoading?: boolean
-    signOut?: ReturnType<typeof vi.fn>
-    errorMessage?: string | null
-}
-
-const { useAuth, useToast } = vi.hoisted(() => ({
-    useAuth: vi.fn(),
-    useToast: vi.fn(),
-}))
-
-vi.mock('@/hooks/useAuth', () => ({
-    useAuth,
-}))
-
-vi.mock('@monority/ui', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('@monority/ui')>()
-    return {
-        ...actual,
-        useToast,
-    }
-})
-
-function renderAppShell(overrides: AuthOverrides = {}, navigationItems: NavigationItem[] = []) {
-    const pushToast = vi.fn()
-    const signOut = vi.fn().mockResolvedValue(undefined)
-
-    useAuth.mockReturnValue({
-        user: { name: 'Alice Martin', role: 'Admin' },
-        workspace: { name: 'Model Workspace', plan: 'Pro' },
-        isAuthenticated: true,
-        isLoading: false,
-        signOut,
-        errorMessage: null,
-        ...overrides,
-    })
-
-    useToast.mockReturnValue({ pushToast })
-
-    render(
-        <MemoryRouter>
-            <AppShell
-                isDark={false}
-                theme="light"
-                onToggleTheme={vi.fn()}
-                navigationItems={navigationItems}
-            >
-                <div>Content</div>
-            </AppShell>
-        </MemoryRouter>,
-    )
-
-    return { pushToast, signOut }
-}
+import { renderWithProviders } from '@/test/test-utils'
 
 describe('AppShell', () => {
-    beforeEach(() => {
-        useAuth.mockReset()
-        useToast.mockReset()
-    })
-
-    it('declenche un toast de succes apres la deconnexion', async () => {
-        const { pushToast, signOut } = renderAppShell()
-
-        fireEvent.click(screen.getByRole('button', { name: 'Se deconnecter' }))
-
-        await waitFor(() => {
-            expect(signOut).toHaveBeenCalledTimes(1)
-        })
-
-        expect(pushToast).toHaveBeenCalledWith({
-            title: 'Session fermee',
-            description: 'La deconnexion de demonstration a ete effectuee.',
-            tone: 'success',
-        })
-    })
-
-    it('declenche un toast d erreur si la deconnexion echoue', async () => {
-        const error = new Error('Sign out failed')
-        const { pushToast } = renderAppShell({
-            signOut: vi.fn().mockRejectedValue(error),
-        })
-
-        fireEvent.click(screen.getByRole('button', { name: 'Se deconnecter' }))
-
-        await waitFor(() => {
-            expect(pushToast).toHaveBeenCalledWith({
-                title: 'Deconnexion impossible',
-                description: 'Sign out failed',
-                tone: 'danger',
-            })
-        })
-    })
-
-    it('declenche un toast si la session demo est indisponible', async () => {
-        const { pushToast } = renderAppShell({
-            user: null,
-            workspace: null,
-            isAuthenticated: false,
-            errorMessage: 'Session unavailable',
-        })
-
-        await waitFor(() => {
-            expect(pushToast).toHaveBeenCalledWith({
-                title: 'Session demo indisponible',
-                description: 'Session unavailable',
-                tone: 'danger',
-            })
-        })
-    })
-
-    it('regroupe les liens de navigation dans des menus deroulants', () => {
-        renderAppShell(
-            {},
-            [
-                { label: 'Accueil', to: '/' },
-                { label: 'Dashboard', to: '/dashboard' },
-                { label: 'Admin', to: '/admin' },
-                { label: 'Playground', to: '/playground' },
-                { label: 'Showcase', to: '/showcase' },
-                { label: 'Docs', to: '/docs' },
-                { label: 'Features', href: '#features' },
-            ],
+    it('rend un seul header global et le contenu de la page', () => {
+        const { container } = renderWithProviders(
+            <AppShell>
+                <div>Content</div>
+            </AppShell>,
+            { initialEntries: ['/showcase'] }
         )
 
-        expect(screen.getByRole('link', { name: 'Accueil' })).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: /Produit/ })).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: /Ressources/ })).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: /Sections/ })).toBeInTheDocument()
+        expect(screen.getByText('Content')).toBeInTheDocument()
+
+        // The shared header: brand + main nav + Light/Dark toggle.
+        const header = container.querySelector('.app-header')
+        expect(header).toBeInTheDocument()
+        expect(
+            within(header as HTMLElement).getByRole('link', { name: 'Monority' })
+        ).toHaveAttribute('href', '/')
+        expect(
+            within(header as HTMLElement).getByRole('navigation', { name: 'Navigation principale' })
+        ).toBeInTheDocument()
+
+        // No secondary chrome bar.
+        expect(container.querySelector('.app-shell__chrome')).not.toBeInTheDocument()
+        expect(container.querySelector('.app-nav')).not.toBeInTheDocument()
     })
 
     it('expose un skip link vers le contenu principal', () => {
-        renderAppShell()
+        renderWithProviders(
+            <AppShell>
+                <div>Content</div>
+            </AppShell>,
+            { initialEntries: ['/playground'] }
+        )
 
         expect(screen.getByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute(
             'href',
-            '#main-content',
+            '#main-content'
         )
         expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
     })
 
-    it('ouvre une navigation mobile dans un drawer', () => {
-        renderAppShell(
-            {},
-            [
-                { label: 'Accueil', to: '/' },
-                { label: 'Dashboard', to: '/dashboard' },
-                { label: 'Docs', to: '/docs' },
-            ],
+    it('garde la bascule Light/Dark accessible depuis le header', () => {
+        renderWithProviders(
+            <AppShell>
+                <div>Content</div>
+            </AppShell>,
+            { initialEntries: ['/dashboard'] }
         )
 
-        fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le menu principal' }))
-
-        const dialog = screen.getByRole('dialog', { name: 'Navigation' })
-
-        expect(dialog).toBeInTheDocument()
-        expect(within(dialog).getByText('Dashboard')).toBeInTheDocument()
-        expect(within(dialog).getByRole('button', { name: /Theme:/ })).toBeInTheDocument()
-        expect(within(dialog).getByRole('button', { name: 'Se deconnecter' })).toBeInTheDocument()
-    })
-
-    it('ferme le groupe ouvert avec Escape uniquement depuis la navigation', () => {
-        renderAppShell(
-            {},
-            [
-                { label: 'Accueil', to: '/' },
-                { label: 'Dashboard', to: '/dashboard' },
-                { label: 'Docs', to: '/docs' },
-            ],
-        )
-
-        fireEvent.click(screen.getByRole('button', { name: /Produit/ }))
-        expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument()
-
-        // Escape outside the nav must not disturb overlays or nav state.
-        fireEvent.keyDown(document.body, { key: 'Escape' })
-        expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument()
-
-        // Escape from inside the nav closes the open group.
-        fireEvent.keyDown(screen.getByRole('button', { name: /Produit/ }), {
-            key: 'Escape',
-        })
-        expect(screen.queryByRole('link', { name: 'Dashboard' })).not.toBeInTheDocument()
-    })
-
-    it('referme le drawer mobile apres une navigation', async () => {
-        renderAppShell(
-            {},
-            [
-                { label: 'Accueil', to: '/' },
-                { label: 'Dashboard', to: '/dashboard' },
-                { label: 'Docs', to: '/docs' },
-            ],
-        )
-
-        fireEvent.click(screen.getByRole('button', { name: 'Ouvrir le menu principal' }))
-
-        const dialog = screen.getByRole('dialog', { name: 'Navigation' })
-        fireEvent.click(within(dialog).getByText('Dashboard'))
-
-        await waitFor(() => {
-            expect(screen.queryByRole('dialog', { name: 'Navigation' })).not.toBeInTheDocument()
-        })
+        expect(screen.getByRole('button', { name: /thème/i })).toBeInTheDocument()
     })
 })

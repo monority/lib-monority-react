@@ -29,6 +29,16 @@ describe('MoodboardPage', () => {
         expect(screen.getByRole('group', { name: 'Layout density axis' })).toBeInTheDocument()
     })
 
+    it('renders the shared app header above the studio', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        expect(screen.getByRole('link', { name: 'Monority' })).toHaveAttribute('href', '/')
+        expect(
+            screen.getByRole('navigation', { name: 'Navigation principale' })
+        ).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /thème/i })).toBeInTheDocument()
+    })
+
     it('preview contains real components: topbar, metrics, chart, table, forms, buttons', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
@@ -73,9 +83,13 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
-        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
+        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
 
-        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
+                name: 'Violet',
+            })
+        )
         expect(scope).toHaveAttribute('data-design-accent', 'violet')
 
         /* Verify the resolved CSS variable changes on DesignProvider root */
@@ -89,7 +103,11 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
 
-        fireEvent.click(within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', { name: 'Rounded' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
+                name: 'Rounded',
+            })
+        )
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
     })
 
@@ -97,7 +115,11 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
-        fireEvent.click(within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('button', { name: 'Light' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('button', {
+                name: 'Light',
+            })
+        )
         expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
 
@@ -107,8 +129,16 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
 
         /* Change some axes */
-        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
-        fireEvent.click(within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', { name: 'Rounded' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
+                name: 'Violet',
+            })
+        )
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
+                name: 'Rounded',
+            })
+        )
 
         expect(scope).toHaveAttribute('data-design-accent', 'violet')
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
@@ -116,7 +146,7 @@ describe('MoodboardPage', () => {
         /* Reset */
         fireEvent.click(screen.getByTestId('moodboard-reset'))
 
-        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
+        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
     })
 
@@ -126,7 +156,11 @@ describe('MoodboardPage', () => {
 
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
+                name: 'Violet',
+            })
+        )
         fireEvent.click(screen.getByTestId('moodboard-copy'))
 
         expect(writeText).toHaveBeenCalled()
@@ -137,7 +171,11 @@ describe('MoodboardPage', () => {
     it('persists configuration to localStorage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', { name: 'Violet' }))
+        fireEvent.click(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
+                name: 'Violet',
+            })
+        )
 
         const stored = localStorage.getItem('monority-design-config')
         expect(stored).toBeTruthy()
@@ -155,5 +193,41 @@ describe('MoodboardPage', () => {
 
         /* JSON content visible when open */
         expect(screen.getByText(/"theme"/)).toBeInTheDocument()
+    })
+
+    it('recovers from a stored config predating the component color axis change', () => {
+        localStorage.setItem(
+            'monority-design-config',
+            JSON.stringify({
+                theme: 'oled',
+                brand: 'studio',
+                accent: 'rose',
+                componentColor: 'cyan',
+                chartPalette: 'ocean',
+                radius: 'pill',
+                spacing: 'dense',
+                density: 'compact',
+            })
+        )
+
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        /* Valid axes are restored, the retired hue falls back instead of crashing. */
+        expect(scope).toHaveAttribute('data-design-theme', 'oled')
+        expect(scope).toHaveAttribute('data-design-accent', 'rose')
+        expect(scope).toHaveAttribute('data-design-radius', 'pill')
+        expect(scope).toHaveAttribute('data-design-component-color', 'theme')
+    })
+
+    it('recovers from a corrupt stored config', () => {
+        localStorage.setItem('monority-design-config', '{ not json')
+
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        expect(screen.getByTestId('moodboard-preview-scope')).toHaveAttribute(
+            'data-design-accent',
+            'neutral'
+        )
     })
 })

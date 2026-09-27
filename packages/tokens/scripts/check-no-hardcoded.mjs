@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const css = fs.readFileSync(
     path.join(repoRoot, 'packages/styles/src/tokens/generated/tokens.css'),
-    'utf8',
+    'utf8'
 )
 const failures = []
 
@@ -53,7 +53,7 @@ for (const [name, values] of decls) {
         if (!value.includes('var(--mr-brand-hue)') && !value.includes('var(--mr-neutral-hue)')) {
             // `none`, `color-mix` sans teinte, ombres noires pures : cas autorisés
             if (/oklch\(0 0 0/.test(value)) continue
-            if (/\b(?:195|230|275)\)/.test(value)) continue // Ocean / Night semantic hues
+            if (/\b(?:195|215|230|275)\)/.test(value)) continue // Slate / Ocean / Night semantic hues
             failures.push(`${name} : teinte sans référence de marque → ${value}`)
         }
     }
@@ -64,4 +64,6 @@ if (failures.length) {
     for (const f of failures.slice(0, 20)) console.error('  ' + f)
     process.exit(1)
 }
-console.log(`T3 PASS — 0 hex, accent et neutres par variables de marque (${decls.size} déclarations)`)
+console.log(
+    `T3 PASS — 0 hex, accent et neutres par variables de marque (${decls.size} déclarations)`
+)

@@ -41,7 +41,7 @@ function ToastProviderButtons() {
                         title: 'Deploy blocked',
                         description: 'Stays visible until dismissed.',
                         tone: 'danger',
-                        duration: Infinity,
+                        duration: Number.POSITIVE_INFINITY,
                     })
                 }
             >

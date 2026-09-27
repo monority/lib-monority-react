@@ -13,7 +13,7 @@ const config: DesignConfig = {
   ...DEFAULT_DESIGN_CONFIG,
   theme: 'dark',
   accent: 'violet',
-  componentColor: 'cyan',
+  componentColor: 'soft',
   chartPalette: 'ocean',
   radius: 'rounded',
   spacing: 'dense',
@@ -27,10 +27,10 @@ const config: DesignConfig = {
 
 ## Axes
 
-- `theme` : `dark`, `light`, `oled`, `ocean`, `night`.
+- `theme` : `dark` (défaut, gris pur), `light`, `slate`, `oled`, `ocean`, `night`. `high-contrast` est piloté par `prefers-contrast`, ce n'est pas un choix.
 - `brand` : `monority`, `studio`.
-- `accent` : cyan, blue, violet, indigo, green, amber, orange, red, rose.
-- `componentColor` : `theme`, cyan, blue, violet, neutral.
+- `accent` : `neutral` (défaut), cyan, blue, violet, indigo, green, amber, orange, red, rose. `neutral` = chroma 0, donc l'accent est gris tant qu'aucune teinte n'est choisie.
+- `componentColor` : `theme`, `neutral`, `soft`, `inverse`. Ce sont des **rôles**, pas des teintes : seul `theme` suit l'axe `accent`, donc les deux axes ne peuvent jamais résoudre vers la même couleur.
 - `chartPalette` : default, ocean, spectrum, warm.
 - `radius` : sharp, compact, default, rounded, pill.
 - `spacing` : dense, default, comfortable, airy.

@@ -1,15 +1,25 @@
 /* ------------------------------------------------------------------ */
 /*  Phase 6 — Canonical Monority Design Studio                         */
-/*  Layout: horizontal config bar + single live preview                */
+/*  Layout: sticky config rail + single live preview                    */
 /* ------------------------------------------------------------------ */
 
 /* === Page shell === */
 
 .moodboard-page {
+    /* Config rail width. */
+    --moodboard-rail: 17rem;
+    /* Global app header height (AppHeader, sticky). Mirrors
+       .app-header__inner min-block-size so the rail sticks below it. */
+    --moodboard-header-h: calc(var(--mr-control-size-lg) + var(--mr-space-2));
+
     display: grid;
-    grid-template-rows: auto 1fr;
-    min-height: 100vh;
-    overflow-x: hidden;
+    grid-template-columns: minmax(0, var(--moodboard-rail)) minmax(0, 1fr);
+    align-items: start;
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    /* `clip` (not `hidden`) — `hidden` would turn the page into a scrollport
+       and silently kill vertical `position: sticky` for the rail below. */
+    overflow-x: clip;
     background: var(--mr-bg-canvas);
     color: var(--mr-text-primary);
 }
@@ -18,36 +28,45 @@
     display: contents;
 }
 
-/* === Config bar (sticky top) === */
+/* === Config rail (sticky, inline-start) === */
 
+/* /moodboard is a standalone route (app-routes.tsx): no AppShell, but the
+   shared AppHeader sits above the page. The rail sticks below that header
+   and scrolls internally. */
 .moodboard-sidebar {
     position: sticky;
     z-index: var(--mr-z-sticky);
-    top: 0;
+    top: var(--moodboard-header-h);
+    align-self: start;
     display: grid;
     gap: var(--mr-spacing-3);
-    padding: var(--mr-spacing-3) var(--mr-spacing-4);
-    border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-block-size: calc(100dvh - var(--moodboard-header-h) - var(--mr-spacing-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--mr-spacing-4) var(--mr-spacing-4) var(--mr-spacing-5);
+    border-inline-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: var(--mr-bg-surface);
 }
 
 .moodboard-sidebar__header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-spacing-3);
-    min-block-size: var(--mr-topbar-height);
+    gap: var(--mr-spacing-2);
+    min-inline-size: 0;
 }
 
 .moodboard-sidebar__title {
-    display: flex;
-    align-items: baseline;
-    gap: var(--mr-spacing-2);
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
     color: var(--mr-text-tertiary);
     font: var(--mr-type-label);
     letter-spacing: var(--mr-tracking-label);
     text-transform: uppercase;
-    white-space: nowrap;
 }
 
 .moodboard-sidebar__title strong {
@@ -59,15 +78,18 @@
 
 .moodboard-sidebar__actions {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--mr-spacing-2);
-    flex-shrink: 0;
+    min-inline-size: 0;
+    margin-inline-start: auto;
 }
 
-/* Axes grid — responsive rows of toggle groups */
+/* Axes grid — one column in the rail. minmax() must stay 0-based: a fixed
+   track minimum (280px) overflows the rail and pushes toggles out of view. */
 .moodboard-sidebar__axes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--mr-spacing-3) var(--mr-spacing-4);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mr-spacing-3);
 }
 
 .moodboard-axis {
@@ -76,7 +98,24 @@
     min-inline-size: 0;
 }
 
+/* Rail toggle groups wrap instead of scrolling sideways — a hidden
+   scrollbar (recipe sets scrollbar-width: none) hides the extra presets. */
+.moodboard-axis .mr-toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mr-spacing-1);
+    inline-size: 100%;
+    max-inline-size: 100%;
+    overflow-x: visible;
+}
+
+.moodboard-axis .mr-toggle-group__item {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+}
+
 .moodboard-sidebar__tokens {
+    min-inline-size: 0;
     border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
     padding-block-start: var(--mr-spacing-2);
 }
@@ -91,6 +130,7 @@
 }
 
 .moodboard-sidebar__json {
+    max-inline-size: 100%;
     margin: var(--mr-spacing-2) 0 0;
     padding: var(--mr-spacing-3);
     overflow-x: auto;
@@ -100,14 +140,15 @@
     color: var(--mr-text-secondary);
     font: var(--mr-type-code-sm);
     white-space: pre-wrap;
-    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 /* === Preview scope === */
 
 .moodboard-preview-scope {
     display: grid;
-    min-block-size: 0;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
     background: var(--mr-bg-canvas);
     color: var(--mr-text-primary);
 }
@@ -118,16 +159,16 @@
     display: grid;
     gap: var(--mr-spacing-4);
     min-inline-size: 0;
-    padding: var(--mr-spacing-4) var(--mr-spacing-6);
+    padding: var(--mr-spacing-4) var(--mr-spacing-5) var(--mr-spacing-8);
 }
 
 .moodboard-preview__body {
     display: grid;
     gap: var(--mr-spacing-4);
     min-inline-size: 0;
-    max-inline-size: 1200px;
-    margin-inline: auto;
     inline-size: 100%;
+    max-inline-size: min(100%, 1200px);
+    margin-inline: auto;
 }
 
 .moodboard-preview__grid {
@@ -140,11 +181,13 @@
 
 .moodboard-topbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-spacing-3);
+    gap: var(--mr-spacing-2) var(--mr-spacing-3);
+    min-inline-size: 0;
     min-block-size: var(--mr-topbar-height);
-    padding-inline: var(--mr-spacing-6);
+    padding-inline: var(--mr-spacing-4);
     border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: var(--mr-bg-surface);
 }
@@ -153,14 +196,17 @@
     display: flex;
     align-items: center;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
     color: var(--mr-text-secondary);
     font: var(--mr-type-label);
     letter-spacing: var(--mr-tracking-label);
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .moodboard-brand-mark {
     display: grid;
+    flex-shrink: 0;
     width: var(--mr-brand-mark-size);
     height: var(--mr-brand-mark-size);
     place-items: center;
@@ -172,12 +218,15 @@
 
 .moodboard-compact-nav {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--mr-spacing-3);
+    min-inline-size: 0;
 }
 
 .moodboard-compact-nav a {
     color: var(--mr-text-tertiary);
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .moodboard-compact-nav a.is-active,
@@ -189,13 +238,17 @@
     display: flex;
     align-items: center;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
+    margin-inline-start: auto;
     color: var(--mr-text-secondary);
     font: var(--mr-type-label);
     letter-spacing: var(--mr-tracking-label);
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .moodboard-status-dot {
+    flex-shrink: 0;
     width: var(--mr-status-dot-size);
     height: var(--mr-status-dot-size);
     border-radius: var(--mr-radius-full);
@@ -207,6 +260,7 @@
 .moodboard-page-header {
     display: grid;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
     padding-block-end: var(--mr-spacing-2);
 }
 
@@ -215,12 +269,14 @@
     margin: 0;
     color: var(--mr-text-primary);
     font: var(--mr-type-h3);
+    text-wrap: balance;
 }
 
 .moodboard-page-header p {
     margin: 0;
     color: var(--mr-text-secondary);
     font: var(--mr-type-small);
+    text-wrap: pretty;
 }
 
 /* === Shared labels === */
@@ -248,9 +304,20 @@
 
 .moodboard-card__topline {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
+}
+
+.moodboard-card__topline > * {
+    min-inline-size: 0;
+}
+
+.moodboard-card__topline > div {
+    display: grid;
+    gap: var(--mr-spacing-1);
 }
 
 /* === Actions row === */
@@ -261,11 +328,21 @@
 .moodboard-size-row {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
+    max-inline-size: 100%;
 }
 
 .moodboard-actions {
     justify-content: flex-end;
+}
+
+.moodboard-actions > *,
+.moodboard-button-row > *,
+.moodboard-badge-row > *,
+.moodboard-size-row > * {
+    max-inline-size: 100%;
 }
 
 /* === Form grid === */
@@ -273,23 +350,25 @@
 .moodboard-form-grid,
 .moodboard-form-row {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--mr-spacing-3);
+    min-inline-size: 0;
 }
 
-.moodboard-form-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.moodboard-form-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.moodboard-form-row > * {
+    min-inline-size: 0;
 }
 
 /* === Data grid === */
 
 .moodboard-data-grid {
     display: grid;
-    gap: var(--mr-spacing-3);
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mr-spacing-3);
+}
+
+.moodboard-data-grid > * {
+    min-inline-size: 0;
 }
 
 .moodboard-data-grid > *:first-child {
@@ -308,6 +387,7 @@
 }
 
 .moodboard-row-button {
+    max-inline-size: 100%;
     padding: 0;
     border: 0;
     background: transparent;
@@ -330,13 +410,14 @@
     display: flex;
     align-items: flex-end;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
     block-size: 160px;
 }
 
 .moodboard-chart__bar-group {
     display: grid;
     gap: var(--mr-spacing-1);
-    flex: 1;
+    flex: 1 1 0;
     min-inline-size: 0;
 }
 
@@ -344,22 +425,28 @@
     display: flex;
     align-items: flex-end;
     gap: 2px;
+    min-inline-size: 0;
     block-size: 140px;
 }
 
 .moodboard-chart__segment {
-    flex: 1;
+    flex: 1 1 0;
+    min-inline-size: 2px;
     min-block-size: 2px;
     border-radius: var(--mr-radius-inline);
     transition: height var(--mr-duration-base) var(--mr-ease-standard);
 }
 
 .moodboard-chart__label {
+    min-inline-size: 0;
+    overflow: hidden;
     color: var(--mr-text-tertiary);
     font: var(--mr-type-label);
     letter-spacing: var(--mr-tracking-label);
     text-align: center;
+    text-overflow: clip;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 /* === Progress === */
@@ -367,6 +454,7 @@
 .moodboard-progress-group {
     display: grid;
     gap: var(--mr-spacing-3);
+    min-inline-size: 0;
 }
 
 /* === Token matrix === */
@@ -374,22 +462,27 @@
 .moodboard-token-matrix {
     display: grid;
     gap: var(--mr-spacing-3);
+    min-inline-size: 0;
 }
 
 .moodboard-token-row {
     display: grid;
     gap: var(--mr-spacing-2);
+    min-inline-size: 0;
 }
 
 .moodboard-swatches,
 .moodboard-geometry-samples {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--mr-spacing-1);
+    min-inline-size: 0;
 }
 
 .moodboard-swatches i,
 .moodboard-geometry-samples i {
     display: block;
+    flex-shrink: 0;
     width: var(--mr-spacing-6);
     height: var(--mr-spacing-6);
     border: var(--mr-border-width) solid var(--mr-border-default);
@@ -404,40 +497,85 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--mr-spacing-4);
+    min-inline-size: 0;
     color: var(--mr-text-secondary);
+}
+
+.moodboard-typography-strip span {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
 }
 
 /* === Responsive === */
 
-@media (max-width: 768px) {
+/* Rail narrows before it collapses. */
+@media (max-width: 1280px) {
+    .moodboard-page {
+        --moodboard-rail: 15rem;
+    }
+}
+
+/* Below the sidebar-layout/topbar breakpoint the rail cannot stay sticky:
+   eight axes would eat the whole viewport. Fall back to a static panel. */
+@media (max-width: 900px) {
+    .moodboard-page {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .moodboard-sidebar {
+        position: static;
+        max-block-size: none;
+        overflow-y: visible;
+        padding-inline: 0;
+        border-inline-end: 0;
+        border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
+        padding-block-end: var(--mr-spacing-4);
+    }
+
     .moodboard-sidebar__axes {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
+        gap: var(--mr-spacing-3) var(--mr-spacing-4);
     }
 
     .moodboard-preview__grid {
-        grid-template-columns: 1fr;
-    }
-
-    .moodboard-form-grid,
-    .moodboard-form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .moodboard-data-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .moodboard-preview {
-        padding: var(--mr-spacing-3);
+        padding: var(--mr-spacing-3) 0 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .moodboard-form-grid,
+    .moodboard-form-row,
+    .moodboard-data-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .moodboard-actions {
+        justify-content: flex-start;
     }
 }
 
 @media (max-width: 480px) {
-    .moodboard-sidebar {
-        padding: var(--mr-spacing-2);
+    .moodboard-sidebar__axes {
+        grid-template-columns: minmax(0, 1fr);
     }
 
-    .moodboard-sidebar__header {
-        flex-wrap: wrap;
+    .moodboard-sidebar__title {
+        font: var(--mr-type-label);
+    }
+
+    .moodboard-sidebar__actions {
+        margin-inline-start: 0;
+    }
+
+    .moodboard-topbar {
+        padding-inline: var(--mr-spacing-3);
+    }
+
+    .moodboard-status {
+        margin-inline-start: 0;
     }
 }
