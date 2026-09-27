@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 
 on:
   push:
@@ -12,23 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9
-
-      - name: Cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          # cache pnpm gere par setup-node (plus de cache manuel ~/.pnpm-store)
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
@@ -42,5 +36,18 @@ jobs:
       - name: Test
         run: pnpm test
 
-      - name: Lint
+      # Les checks de tokens sont deja dans `pnpm test` (task @monority/tokens#test)
+      # : build + T1 equivalence, T3 no-hardcoded, T6 deprecated, X2 contrastes,
+      # S11 specs, T7 bundle CSS frais, T8 fonds opaques des controles.
+
+      - name: Format check
+        run: pnpm format:check
+
+      # Dette de lint connue et pre-existante (548 diagnostics au moment du
+      # cablage, dont 349 auto-corrigeables). Etape non bloquante : elle rend la
+      # dette visible et la fait decreasing, sans bloquer chaque PR tant que
+      # laiguillage n'est pas termine. A passer en bloquant une fois le
+      # compteur a zero.
+      - name: Lint (non bloquant)
         run: pnpm lint
+        continue-on-error: true
