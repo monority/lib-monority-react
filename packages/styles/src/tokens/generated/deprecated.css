@@ -1,6 +1,6 @@
 /* GENERE — ne pas modifier. Source : packages/tokens/src/*.json (DTCG). */
 
-:root, [data-theme] {
+:root, [data-theme], [data-brand], [data-density] {
   --mr-bg-subtle: var(--mr-bg-sunken);
   --mr-bg-surface-elevated: var(--mr-bg-raised);
   --mr-bg-surface-strong: var(--mr-bg-raised);
@@ -212,7 +212,7 @@
   --mr-elevation-raised: var(--mr-shadow-raised);
 }
 
-[data-theme="dark"] {
+[data-theme="dark"], [data-theme="dark"][data-brand], [data-theme="dark"] [data-brand], [data-theme="dark"][data-density], [data-theme="dark"] [data-density], [data-theme="dark"][data-brand][data-density], [data-theme="dark"] [data-brand][data-density] {
   --mr-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
   --mr-shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.28);
   --mr-shadow-md: 0 24px 64px rgba(0, 0, 0, 0.34);
@@ -220,11 +220,11 @@
   --mr-bg-canvas-rgb: 9, 9, 11;
 }
 
-[data-theme="dim"] {
+[data-theme="dim"], [data-theme="dim"][data-brand], [data-theme="dim"] [data-brand], [data-theme="dim"][data-density], [data-theme="dim"] [data-density], [data-theme="dim"][data-brand][data-density], [data-theme="dim"] [data-brand][data-density] {
   --mr-bg-canvas-rgb: 26, 26, 46;
 }
 
-[data-theme="oled"] {
+[data-theme="oled"], [data-theme="oled"][data-brand], [data-theme="oled"] [data-brand], [data-theme="oled"][data-density], [data-theme="oled"] [data-density], [data-theme="oled"][data-brand][data-density], [data-theme="oled"] [data-brand][data-density] {
   --mr-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
   --mr-shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.4);
   --mr-shadow-md: 0 24px 64px rgba(0, 0, 0, 0.5);

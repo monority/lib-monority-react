@@ -57,8 +57,43 @@ function collect(sources) {
 
 const stripFile = (entries) => entries.map(([n, v]) => [n, v])
 
+/** Vrai si la valeur gèle une var de marque ou un token de thème (substitution
+ *  faite à la déclaration : un sous-arbre [data-brand] sans [data-theme]
+ *  hériterait sinon la valeur calculée de l'ancêtre). */
+function isBrandDependent(value, themeNames) {
+    const v = String(value)
+    if (/var\(--mr-(?:brand|neutral)-/.test(v)) return true
+    for (const m of v.matchAll(/var\((--mr-[\w-]+)\)/g)) {
+        if (themeNames.has(m[1])) return true
+    }
+    return false
+}
+
+/** Sélecteur + variantes [data-brand] (même élément : spécificité 0,2,0 —
+ *  gagne contre le bloc de base 0,1,0 à valeurs identiques ; et descendant).
+ *  Limite connue : thèmes imbriqués + marque sur l'élément interne partagent
+ *  la même spécificité (ordre source) — cas non supporté par ailleurs. */
+function withBrandScope(selector) {
+    return selector
+        .split(',\n')
+        .flatMap((s) => [`${s}[data-brand]`, `${s} [data-brand]`])
+        .join(',\n')
+}
+
 export function emitTokensCss(sources) {
     const { root, rootBrand, themes, compact, media640, reduced, studio } = collect(sources)
+    const themeNames = new Set()
+    for (const list of Object.values(themes)) for (const [n] of list) themeNames.add(n)
+    const brandDep = (list) => list.filter(([, v]) => isBrandDependent(v, themeNames))
+    const rootDep = brandDep(root)
+    const themeSels = [
+        [':root,\n[data-theme="light"]', themes['theme-light']],
+        ['[data-theme="dark"],\n[data-theme="dim"]', themes['theme-dark']],
+        ['[data-theme="oled"]', themes['theme-oled']],
+        ['[data-theme="ocean"]', themes['theme-ocean']],
+        ['[data-theme="night"]', themes['theme-night']],
+        ['[data-theme="high-contrast"]', themes['theme-high-contrast']],
+    ]
     const parts = [
         HEADER,
         '',
@@ -66,22 +101,30 @@ export function emitTokensCss(sources) {
         '',
         block(':root,\n[data-theme],\n[data-brand]', stripFile(rootBrand)),
         '',
-        block(':root,\n[data-theme="light"]', stripFile(themes['theme-light'])),
-        '',
-        block('[data-theme="dark"],\n[data-theme="dim"]', stripFile(themes['theme-dark'])),
-        '',
+    ]
+    for (const [sel, list] of themeSels) {
+        parts.push(block(sel, stripFile(list)), '')
+        const dep = brandDep(list)
+        if (dep.length) parts.push(block(withBrandScope(sel), stripFile(dep)), '')
+    }
+    if (rootDep.length) parts.push(block('[data-brand]', stripFile(rootDep)), '')
+    parts.push(
         '@media (prefers-color-scheme: dark) {',
         indent(block(':root:not([data-theme])', stripFile(themes['theme-dark']))),
         '}',
         '',
-        block('[data-theme="oled"]', stripFile(themes['theme-oled'])),
-        '',
-        block('[data-theme="ocean"]', stripFile(themes['theme-ocean'])),
-        '',
-        block('[data-theme="night"]', stripFile(themes['theme-night'])),
-        '',
-        block('[data-theme="high-contrast"]', stripFile(themes['theme-high-contrast'])),
-        '',
+    )
+    {
+        const dep = brandDep(themes['theme-dark'])
+        if (dep.length)
+            parts.push(
+                '@media (prefers-color-scheme: dark) {',
+                indent(block(withBrandScope(':root:not([data-theme])'), stripFile(dep))),
+                '}',
+                '',
+            )
+    }
+    parts.push(
         block('[data-brand="studio"]', stripFile(studio)),
         '',
         block('[data-density="compact"]', stripFile(compact)),
@@ -94,18 +137,37 @@ export function emitTokensCss(sources) {
         indent(block(':root', stripFile(reduced))),
         '}',
         '',
-    ]
+    )
     return parts.join('\n')
 }
 
 const indent = (s) => s.split('\n').map((l) => '  ' + l).join('\n')
+
+/** Alias déprécié : références token→token, gelées par héritage dans les
+ *  sous-arbres [data-brand]/[data-density] sans [data-theme]. On les redéclare
+ *  dans ces contextes (mêmes valeurs, re-substitution locale). Les surcharges
+ *  par thème reçoivent en plus les variantes combinées. */
+function withAliasScope(sel) {
+    if (sel === ':root, [data-theme]') return ':root, [data-theme], [data-brand], [data-density]'
+    return [
+        sel,
+        `${sel}[data-brand]`,
+        `${sel} [data-brand]`,
+        `${sel}[data-density]`,
+        `${sel} [data-density]`,
+        `${sel}[data-brand][data-density]`,
+        `${sel} [data-brand][data-density]`,
+    ].join(', ')
+}
 
 export function emitDeprecatedCss(sources) {
     const groups = new Map() // selector -> [[name, value]]
     eachLeaf(sources['deprecated.json'], (segs, leaf) => {
         const raw = segs.slice(1).join('-')
         const name = '--mr-' + raw.split('~')[0]
-        const sel = leaf.$extensions?.['com.monority.deprecated']?.selector ?? ':root, [data-theme]'
+        const sel = withAliasScope(
+            leaf.$extensions?.['com.monority.deprecated']?.selector ?? ':root, [data-theme]',
+        )
         if (!groups.has(sel)) groups.set(sel, [])
         groups.get(sel).push([name, leaf.$value])
     })

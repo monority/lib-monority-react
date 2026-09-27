@@ -4,6 +4,7 @@
     "brand-hue": { "$value": "200", "$type": "number" },
     "brand-chroma": { "$value": "0.12", "$type": "number" },
     "neutral-hue": { "$value": "215", "$type": "number" },
+    "neutral-chroma": { "$value": "0", "$type": "number" },
     "font-sans": {
       "$value": "\"Geist Variable\", \"Geist\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
       "$type": "fontFamily"

@@ -23,7 +23,7 @@ const num = (v) => {
 /** Formule oklch() depuis l'extension, pour une marque donnée (CSS var). */
 export function oklchDecl(ext) {
     const l = num(ext.l)
-    const c = typeof ext.c === 'number' ? num(ext.c) : `calc(var(--mr-brand-chroma) * ${num(ext.c.factor)})`
+    const c = typeof ext.c === 'number' ? num(ext.c) : ext.c === 'neutral' ? 'var(--mr-neutral-chroma)' : `calc(var(--mr-brand-chroma) * ${num(ext.c.factor)})`
     const h = ext.h === 'brand' ? 'var(--mr-brand-hue)' : ext.h === 'neutral' ? 'var(--mr-neutral-hue)' : num(ext.h)
     return `oklch(${l} ${c} ${h})`
 }
@@ -31,7 +31,7 @@ export function oklchDecl(ext) {
 /** Couleur résolue (l, c, h numériques) pour marque × thème. */
 export function resolveOklch(ext, brand) {
     const b = BRANDS[brand]
-    const c = typeof ext.c === 'number' ? ext.c : b.brandChroma * ext.c.factor
+    const c = typeof ext.c === 'number' ? ext.c : ext.c === 'neutral' ? 0 : b.brandChroma * ext.c.factor
     const h = ext.h === 'brand' ? b.brandHue : ext.h === 'neutral' ? b.neutralHue : ext.h
     return { l: ext.l, c, h }
 }

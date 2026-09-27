@@ -24,6 +24,7 @@
  */
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import Color from 'colorjs.io'
 import { contrast, loadSources } from './lib/tokens-lib.mjs'
 import { buildMaps, comboOklch } from './lib/resolve.mjs'
 
@@ -31,9 +32,9 @@ const pkgDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const maps = buildMaps(loadSources(path.join(pkgDir, 'src')))
 const col = (tok, theme, brand = 'monority') => comboOklch(tok, theme, 'comfortable', brand, maps)
 
-const SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover', '--mr-bg-overlay']
-const FOUR = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover']
-const ACCENT_SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-hover', '--mr-accent-subtle']
+const SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-overlay']
+const FOUR = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken']
+const ACCENT_SIX = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-accent-subtle']
 const TONES = ['success', 'warning', 'danger', 'info']
 const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
 const TABLE_THEMES = ['light', 'dark', 'oled', 'high-contrast']
@@ -58,23 +59,66 @@ const PAIRS = [
     ['switch', '--mr-switch-thumb-off', ['--mr-border-control'], 3, 3],
 ]
 
+/* Fonds d'état translucides (ex. --mr-bg-hover en dark) : un fond alpha n'est
+   testable que composité sur un fond opaque. On le compose sur les trois
+   niveaux qui le reçoivent (surface/raised/overlay) ; les fonds opaques
+   (autres thèmes) gardent le test direct unique. Seuils : les seuils AA/HC de
+   la table principale pour les cas opaques, des seuils d'état (transitoire)
+   pour les cas translucides — [clé, fg, seuil AA opaque, seuil état, seuil HC]. */
+const HOVER_BG = '--mr-bg-hover'
+const HOVER_BASES = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-overlay']
+const HOVER_PAIRS = [
+    ['hover-primary', '--mr-text-primary', 7, 7, 7],
+    ['hover-secondary', '--mr-text-secondary', 4.5, 4.5, 7],
+    ['hover-tertiary', '--mr-text-tertiary', 4.5, 3, 7],
+    ['hover-accent', '--mr-accent-text', 4.5, 4.5, 7],
+    /* Plafond structurel : border-control doit rester sous le pouce de switch
+       (L<=~0.63 pour >=3:1) et ne peut donc pas atteindre 3:1 sur un fond
+       hoveré (il faudrait L>=~0.68). Seuil d'état 2:1 — la bordure reste
+       visible et le contrôle identifiable par son fond solide. */
+    ['hover-border', '--mr-border-control', 3, 2, 7],
+]
+
+const toLinear = (css) =>
+    new Color(css)
+        .to('srgb')
+        .coords.map((v) => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)))
+const fromLinear = (coords) =>
+    new Color(
+        'srgb',
+        coords.map((v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055)),
+    ).toString()
+
+/** Cas de test du fond d'état : direct si opaque, 3 composites si translucide. */
+function hoverBgCases(theme, brand) {
+    const css = col(HOVER_BG, theme, brand)
+    const alpha = new Color(css).alpha ?? 1
+    if (alpha >= 1) return [{ label: HOVER_BG, css, translucent: false }]
+    return HOVER_BASES.map((base) => {
+        const b = toLinear(col(base, theme, brand))
+        const f = toLinear(css)
+        const m = b.map((v, i) => alpha * f[i] + (1 - alpha) * v)
+        return { label: `${HOVER_BG}x${base}`, css: fromLinear(m), translucent: true }
+    })
+}
+
 // Minimums du tableau 5.5 : [light, dark, oled, high-contrast, studio]
 const TABLE = {
-    primary: [14.72, 12.1, 14.82, 16.77, 12.13],
-    secondary: [6.59, 7.29, 8.93, 11.06, 6.6],
+    primary: [14.72, 11.93, 14.82, 16.77, 11.93],
+    secondary: [6.59, 7.17, 8.93, 11.06, 6.6],
     tertiary: [4.88, 5.11, 6.25, 8.8, 4.89],
     disabled: [3.09, 3.18, 3.9, 4.87, 3.1],
-    accent: [5.14, 8.02, 9.46, 7.81, 5.36],
-    focus: [3.97, 8.13, 9.95, 10.84, 4.15],
+    accent: [5.14, 7.81, 9.16, 7.81, 5.36],
+    focus: [3.97, 7.67, 9.59, 10.84, 4.15],
     border: [3.15, 3.12, 3.1, 11.06, 3.09],
-    onaccent: [5.29, 9.41, 9.41, 8.81, 5.53],
-    ondanger: [5.58, 7.43, 7.43, 9.19, 5.58],
-    success: [5.5, 7.68, 9.16, 7.15, 5.49],
-    warning: [5.29, 8.22, 9.74, 7.71, 5.29],
+    onaccent: [5.29, 9.04, 9.04, 8.81, 5.53],
+    ondanger: [5.58, 6.96, 6.96, 9.19, 5.58],
+    success: [5.5, 6.99, 8.47, 7.15, 5.49],
+    warning: [5.29, 7.11, 8.54, 7.71, 5.29],
     danger: [5.16, 5.96, 7.3, 7.49, 5.15],
     info: [5.16, 6.79, 8.24, 7.59, 5.16],
     tooltip: [14.63, 14.72, 14.72, 20.57, 14.66],
-    switch: [3.7, 3.88, 4.78, 13.57, 3.71],
+    switch: [3.7, 3.51, 4.32, 13.57, 3.51],
 }
 
 const TOLERANCE = 0.1
@@ -95,6 +139,22 @@ for (const [key, fg, bgs, aa, hc] of PAIRS) {
                 }
                 if (ratio + 1e-9 < threshold) {
                     failures.push(`${key} ${cell} sur ${bg} : ${ratio.toFixed(2)} < seuil ${threshold}`)
+                }
+            }
+        }
+    }
+}
+
+for (const [key, fg, aaOpaque, etatAlpha, hcOpaque] of HOVER_PAIRS) {
+    for (const theme of THEMES) {
+        for (const brand of BRANDS) {
+            for (const bg of hoverBgCases(theme, brand)) {
+                pairCount++
+                const ratio = contrast(col(fg, theme, brand), bg.css)
+                const threshold = bg.translucent ? etatAlpha : theme === 'high-contrast' ? hcOpaque : aaOpaque
+                const cell = `${theme}.${brand}`
+                if (ratio + 1e-9 < threshold) {
+                    failures.push(`${key} ${cell} sur ${bg.label} : ${ratio.toFixed(2)} < seuil ${threshold}`)
                 }
             }
         }
