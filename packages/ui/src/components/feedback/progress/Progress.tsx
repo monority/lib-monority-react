@@ -1,7 +1,7 @@
 import { forwardRef, useId } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
-import type { ProgressProps, ProgressTone } from './Progress.types'
+import type { ProgressProps } from './Progress.types'
 
 const progressVariants = cva({
     base: 'mr-progress',

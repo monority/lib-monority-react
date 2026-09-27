@@ -31,12 +31,12 @@ function createDragEvent(type: string, files?: File[]) {
     const event = new Event(type, { bubbles: true }) as DragEvent
     Object.defineProperty(event, 'dataTransfer', { value: dataTransfer })
     Object.defineProperty(event, 'preventDefault', {
-        value: function () {
+        value: () => {
             /* noop */
         },
     })
     Object.defineProperty(event, 'stopPropagation', {
-        value: function () {
+        value: () => {
             /* noop */
         },
     })

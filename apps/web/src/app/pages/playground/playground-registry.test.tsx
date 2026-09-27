@@ -30,7 +30,7 @@ describe('playground registry', () => {
 
     it('renders every default preview without crashing', () => {
         for (const item of playgroundRegistry) {
-            const { container, unmount } = render(<>{item.render({ ...item.defaultProps })}</>)
+            const { container, unmount } = render(item.render({ ...item.defaultProps }))
             expect(container.querySelector('*'), `${item.slug} renders nothing`).not.toBeNull()
             unmount()
         }

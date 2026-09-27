@@ -62,7 +62,7 @@ const tokensOf = (text) =>
 const dir = path.join(repoRoot, 'docs/design/components')
 const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.md')) : []
 const failures = []
-let legacyCited = new Set()
+const legacyCited = new Set()
 
 for (const file of files) {
     const src = fs.readFileSync(path.join(dir, file), 'utf8')
@@ -97,9 +97,7 @@ for (const file of files) {
                 continue
             }
             failures.push(`${file} : ${token} en colonne « Actuel », ni référence ni état actuel`)
-        } else if (auditOnly.has(token)) {
-            continue
-        } else {
+        } else if (!auditOnly.has(token)) {
             failures.push(
                 `${file} : ${token} en « Écarts » hors colonne « Actuel », absent des références`
             )

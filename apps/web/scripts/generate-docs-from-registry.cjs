@@ -5,8 +5,8 @@
  * Run from workspace root: node apps/web/scripts/generate-docs-from-registry.cjs
  */
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 const ROOT = path.resolve(__dirname, '..')
 const SRC_DOCS = path.join(ROOT, 'src', 'docs', 'components')

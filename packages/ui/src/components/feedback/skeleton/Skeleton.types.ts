@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes } from 'react'
 
 export type SkeletonSize = 'sm' | 'md' | 'lg'
 

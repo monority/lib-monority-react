@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
-import type { BannerProps, BannerTone } from './Banner.types'
+import type { BannerProps } from './Banner.types'
 
 const bannerVariants = cva({
     base: 'mr-banner',

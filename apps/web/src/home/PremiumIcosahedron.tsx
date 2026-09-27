@@ -282,5 +282,8 @@ export function PremiumIcosahedron() {
         }
     }, [])
 
+    // Canvas purement decoratif : sans tabIndex, sans listener et sans contenu
+    // de repli, aria-hidden est correct et n'expose aucun noeud focusable.
+    // biome-ignore lint/a11y/noAriaHiddenOnFocusable: faux positif, element non focusable
     return <canvas ref={canvasRef} className="home-icosahedron" aria-hidden="true" />
 }

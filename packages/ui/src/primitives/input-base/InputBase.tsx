@@ -1,4 +1,3 @@
-import { type ReactNode, type Ref } from 'react'
 import { cn } from '@/lib/cn'
 import { useFormControl } from '@/primitives/form-control/useFormControl'
 import type { InputBaseProps } from './InputBase.types'

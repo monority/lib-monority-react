@@ -1,5 +1,4 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { Badge } from '@monority/ui/badge'
 import {
     BadgeDefaultExample,
     BadgePrimaryExample,

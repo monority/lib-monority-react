@@ -1,5 +1,4 @@
 import type { ButtonProps } from '../button/Button.types'
-import type { ReactNode } from 'react'
 
 export type CopyButtonSize = ButtonProps['size']
 export type CopyButtonVariant = 'subtle' | 'outline' | 'solid'

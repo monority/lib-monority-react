@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, type ComponentType } from 'react'
+import { lazy, Suspense, type ComponentType } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { DocsLayout } from './DocsLayout'
 import { Introduction } from './Introduction'

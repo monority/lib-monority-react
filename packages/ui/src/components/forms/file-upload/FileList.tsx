@@ -7,7 +7,7 @@ function formatSize(bytes?: number): string {
     const units = ['B', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(1024))
     const clamped = Math.min(i, units.length - 1)
-    return `${(bytes / Math.pow(1024, clamped)).toFixed(clamped === 0 ? 0 : 1)} ${units[clamped]}`
+    return `${(bytes / 1024 ** clamped).toFixed(clamped === 0 ? 0 : 1)} ${units[clamped]}`
 }
 
 export function FileList({

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
-import type { DataListProps, DataListItem } from './DataList.types'
+import type { DataListProps } from './DataList.types'
 
 const dataListVariants = cva({
     base: 'mr-data-list',

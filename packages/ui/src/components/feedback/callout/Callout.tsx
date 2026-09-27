@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
-import type { CalloutProps, CalloutTone } from './Callout.types'
+import type { CalloutProps } from './Callout.types'
 
 const calloutVariants = cva({
     base: 'mr-callout',

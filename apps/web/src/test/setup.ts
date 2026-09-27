@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom/vitest'
-import { describe, expect, it } from 'vitest'
 
 Object.defineProperty(window, 'matchMedia', {
     writable: true,

@@ -33,7 +33,7 @@ export function checkRecipeSource(source, options = {}) {
     let hoverMediaDepth = 0
     let depth = 0
     let disabledSelector = false
-    let mediaStack = []
+    const mediaStack = []
 
     const add = (line, rule, message) => violations.push({ line, rule, message })
 

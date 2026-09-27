@@ -1,5 +1,4 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { RadioGroup } from '@monority/ui/radio-group'
 import {
     RadioGroupBasicExample,
     RadioGroupInvalidExample,
