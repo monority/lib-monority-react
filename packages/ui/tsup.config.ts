@@ -92,6 +92,10 @@ export default defineConfig({
   treeshake: true,
   minify: false,
   external: ['react', 'react-dom'],
-  publicDir: 'src/styles',
+  // Pas de `publicDir` : il copiait `src/styles/globals.css` tel quel dans
+  // dist/. Ce fichier ne fait qu'un `@import '../../../styles/src/index.css'`,
+  // chemin qui sort du paquet publié et casse à l'installation. Le CSS utile
+  // est déjà produit par tsup en `dist/index.css` (importé via src/index.ts),
+  // avec les layers et les chemins résolus.
   tsconfig: resolve(__dirname, 'tsconfig.json'),
 })
