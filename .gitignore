@@ -1,4 +1,6 @@
 ﻿# Dependencies
+# projet sous pnpm : ne pas reintroduire de lock npm
+package-lock.json
 node_modules
 .pnpm-store
 

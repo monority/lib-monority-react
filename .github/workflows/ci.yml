@@ -21,7 +21,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache pnpm gere par setup-node (plus de cache manuel ~/.pnpm-store)
+          # Cache pnpm gere nativement par setup-node : remplace le cache
+          # manuel ~/.pnpm-store (qui ne coverait pas le virtual store).
           cache: pnpm
 
       - name: Install dependencies
@@ -33,21 +34,20 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # Les checks de tokens sont deja dans `pnpm test` (task @monority/tokens#test) :
+      # build + T1 equivalence, T3 no-hardcoded, T6 deprecated, X2 contrastes,
+      # S11 specs, T7 bundle CSS frais, T8 fonds opaques des controles.
       - name: Test
         run: pnpm test
-
-      # Les checks de tokens sont deja dans `pnpm test` (task @monority/tokens#test)
-      # : build + T1 equivalence, T3 no-hardcoded, T6 deprecated, X2 contrastes,
-      # S11 specs, T7 bundle CSS frais, T8 fonds opaques des controles.
 
       - name: Format check
         run: pnpm format:check
 
-      # Dette de lint connue et pre-existante (548 diagnostics au moment du
-      # cablage, dont 349 auto-corrigeables). Etape non bloquante : elle rend la
-      # dette visible et la fait decreasing, sans bloquer chaque PR tant que
-      # laiguillage n'est pas termine. A passer en bloquant une fois le
-      # compteur a zero.
+      # Dette de lint connue et pre-existante (401 diagnostics au moment du
+      # cablage, dont 328 sur deux regles de gout : noUnusedTemplateLiteral et
+      # useTemplate). Etape non bloquante : elle rend la dette visible et
+      # permet de la faire baisser, sans bloquer chaque PR. A passer en
+      # bloquante une fois le compteur a zero.
       - name: Lint (non bloquant)
         run: pnpm lint
         continue-on-error: true
