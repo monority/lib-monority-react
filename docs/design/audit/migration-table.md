@@ -320,7 +320,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 | `--mr-sidebar-layout-gap` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-sidebar-width` | oui | présent dans la référence v4 | `--mr-sidebar-width` (valeur de référence appliquée en phase 2) |
 | `--mr-space-0` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
-| `--mr-space-1` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
+| `--mr-space-1` | oui | `--mr-spacing-0-5` | 3px, voir table 2.1 (migration en cours) |
 | `--mr-space-2` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-space-3` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
 | `--mr-space-4` | oui | sans équivalent | → fichier déprécié, valeur actuelle conservée |
@@ -399,3 +399,24 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 Tokens utilisés via `var()` mais jamais définis dans `packages/styles/src` : 8 (`--mr-combobox-list-min-width`, `--mr-hovercard-arrow-left`, `--mr-hovercard-arrow-top`, `--mr-code-bg`, `--mr-code-fg`, `--mr-code-scrollbar`, `--mr-code-shadow`, `--mr-code-padding`) — référence rompue préexistante, bruit connu.
 
 Mapping 5.16 appliqué depuis le prompt : 66 paires exact/approx. Fichier déprécié de référence : `docs/roadmap/refonte/monority-ui-tokens.deprecated.reference.css` (71 alias ; les valeurs core `--mr-space-*`, `--mr-radius-xs/sm/md/lg`, `--mr-text-*`, `--mr-dur-*`, `--mr-opacity-*`, `--mr-leading-*`, `--mr-color-neutral-*`, anciennes ombres y seront reportées en phase 2 avec leur valeur actuelle, conformément à 5.16).
+
+## 2.1 Migration `space-*` → `spacing-*` (en cours, sans date de retrait)
+
+`--mr-space-*` est **déprécié** (extension `com.monority.deprecated.deprecated: true`, sans date de retrait) mais **toujours défini et inchangé** : 504 occurrences réparties dans 85 fichiers, majoritairement la librairie (`--mr-space-*` est référencé par 11 alias dépréciés : `control-padding-block-*`, `surface-padding-*`, `surface-gap-*`, `overlay-offset`, `overlay-gutter`). Aucun remap en masse n'est appliqué : chaque site demande un choix.
+
+L'échelle `space-*` n'est pas une grille de 4px (progression ≈ ×1,4) ; `spacing-*` l'est (0/2/4/6/8/12/16/20/24/32/40/48/64/80/96).
+
+| `--mr-space-*` | Valeur | Candidat `--mr-spacing-*` | Remarque |
+|---|---|---|---|
+| `space-0` | 0 | `spacing-0` | exact |
+| `space-1` | 3px | `spacing-0-5` (2px) | **ambigu** : 1px d'écart, invisible sauf en alignement serré |
+| `space-2` | 6px | `spacing-1-5` (6px) | exact |
+| `space-3` | 9px | `spacing-2` (8px) ou `spacing-3` (12px) | **ambigu** : choisir selon le contexte (gap serré vs padding de cellule) |
+| `space-4` | 14px | `spacing-3` (12px) ou `spacing-4` (16px) | **ambigu** : idem |
+| `space-5` | 20px | `spacing-5` (20px) | exact |
+| `space-6` | 28px | `spacing-7` (28px) **absent** | pas de pas 28px : garder `space-6` ou passer à 24/32px |
+| `space-7` | 40px | `spacing-10` (40px) | exact |
+| `space-8` | 56px | `spacing-14` (56px) **absent** | pas de pas 56px : garder `space-8` ou passer à 64px |
+| `space-9` | 80px | `spacing-20` (80px) | exact |
+
+Suivi : `node packages/tokens/scripts/check-deprecated.mjs --warn` (rapport, n'échoue pas). Objectif : le total doit descendre à 0 ; la table ci-dessus sert de garde-fou pour les nouveaux usages.
