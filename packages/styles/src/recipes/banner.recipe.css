@@ -93,7 +93,7 @@
 
   .mr-banner--danger,
   .mr-banner[data-tone='danger'] {
-    --mr-banner-tone: var(--mr-danger);
+    --mr-banner-tone: var(--mr-danger-solid);
   }
 
    @media (max-width: 768px) {

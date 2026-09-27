@@ -24,11 +24,11 @@
   }
 
   .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
   }
 
   .mr-input-base:focus-visible {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
   }
 
   .mr-input-base:disabled,
@@ -38,12 +38,12 @@
   }
 
   .mr-input-base[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
   }
 
   .mr-input-base[data-invalid='true']:focus-visible {
-    border-color: var(--mr-danger);
-    outline-color: var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    outline-color: var(--mr-danger-text);
   }
 
   .mr-input-base[data-tone='accent'] {
@@ -51,17 +51,17 @@
   }
 
   .mr-input-base[data-tone='accent']:focus-visible {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
     box-shadow: 0 0 0 var(--mr-focus-width) var(--mr-focus-color);
   }
 
   .mr-input-base[data-tone='danger'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 30%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 30%, var(--mr-border-subtle));
   }
 
   .mr-input-base[data-tone='danger']:focus-visible {
-    border-color: var(--mr-danger);
-    outline-color: var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    outline-color: var(--mr-danger-text);
   }
 
   .mr-input-base[data-size='sm'] {

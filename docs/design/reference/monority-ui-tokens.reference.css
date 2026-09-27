@@ -1,7 +1,7 @@
 /*
  * Monority UI — tokens de référence (v4, préfixe --mr-)
  * Source de vérité pour la phase 2 : à convertir en DTCG dans packages/tokens ; le CSS de packages/styles sera ensuite GÉNÉRÉ.
- * Contrastes vérifiés (WCAG 2.1) : 6 thèmes x 2 marques, 904 paires, 0 échec.
+ * Contrastes vérifiés (WCAG 2.1) : 6 thèmes x 2 marques, 944 paires, 0 échec.
  *
  * Application :
  * - data-theme, data-brand et data-density fonctionnent sur :root ET sur n'importe quel élément.
@@ -90,6 +90,7 @@
   --mr-z-modal: 1200;
   --mr-z-toast: 1300;
   --mr-z-tooltip: 1400;
+  --mr-shadow-thumb: 0 1px 2px oklch(0 0 0 / 0.3);
 
   /* ---------- Mise en page ---------- */
   --mr-page-max-width: 1440px;
@@ -166,6 +167,7 @@
   --mr-control-accent-hover: var(--mr-accent-hover);
   --mr-control-accent-active: var(--mr-accent-active);
   --mr-control-accent-subtle: var(--mr-accent-subtle);
+  --mr-control-accent-border: transparent;
   --mr-control-on-accent: var(--mr-on-accent);
   --mr-chart-1: var(--mr-accent);
   --mr-chart-2: var(--mr-info-text);
@@ -260,7 +262,7 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.6 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -308,7 +310,7 @@
     --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
     --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-    --mr-border-control: oklch(0.6 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -357,7 +359,7 @@
   --mr-bg-active: oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09);
   --mr-border-subtle: oklch(0.25 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.31 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-primary: oklch(0.96 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-secondary: oklch(0.8 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-text-tertiary: oklch(0.7 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -636,7 +638,7 @@
   --mr-bg-raised: oklch(0.27 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-bg-sunken: oklch(0.215 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-bg-surface: oklch(0.235 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.6 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-chart-muted: oklch(0.45 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -667,7 +669,7 @@
   --mr-bg-raised: oklch(0.19 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-bg-sunken: oklch(0.12 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-bg-surface: oklch(0.155 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-  --mr-border-control: oklch(0.55 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+  --mr-border-control: oklch(0.655 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-default: oklch(0.31 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-border-subtle: oklch(0.25 var(--mr-neutral-chroma) var(--mr-neutral-hue));
   --mr-chart-muted: oklch(0.31 var(--mr-neutral-chroma) var(--mr-neutral-hue));
@@ -743,7 +745,7 @@
     --mr-bg-raised: oklch(0.27 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-bg-sunken: oklch(0.215 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-bg-surface: oklch(0.235 var(--mr-neutral-chroma) var(--mr-neutral-hue));
-    --mr-border-control: oklch(0.6 var(--mr-neutral-chroma) var(--mr-neutral-hue));
+    --mr-border-control: oklch(0.69 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-border-default: oklch(0.42 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-border-subtle: oklch(0.35 var(--mr-neutral-chroma) var(--mr-neutral-hue));
     --mr-chart-muted: oklch(0.45 var(--mr-neutral-chroma) var(--mr-neutral-hue));

@@ -115,7 +115,7 @@
 
     .mr-dropdown__item.is-danger:hover,
     .mr-dropdown__item.is-danger:focus-visible {
-        background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
+        background: color-mix(in srgb, var(--mr-danger-solid) 9%, transparent);
         color: var(--mr-danger-text);
     }
 

@@ -15,7 +15,7 @@
     }
 
     .mr-collapsible[data-state="open"] {
-        border-color: var(--mr-border-strong);
+        border-color: var(--mr-border-default);
     }
 
     .mr-collapsible__trigger {
@@ -84,7 +84,7 @@
 
     .mr-collapsible[data-open] .mr-collapsible__icon {
         transform: rotate(180deg);
-        border-color: var(--mr-border-strong);
+        border-color: var(--mr-border-default);
         background: var(--mr-bg-surface-strong);
         color: var(--mr-fg-strong);
     }

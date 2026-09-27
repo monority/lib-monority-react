@@ -3,18 +3,19 @@
  * Phase 2a — X2. Contraste en CI, calculé depuis les sources DTCG avec
  * colorjs.io (valeurs oklch non arrondies, jamais le rendu hex 8 bits).
  *
- * Composition (78 paires × 6 thèmes × 2 marques = 936) :
+ * Composition (total mesuré affiché par le runner) :
  *   textes (primary, secondary, tertiary, disabled)      4 × 6 = 24
  *   accent-text (six fonds dont accent-subtle)                6
  *   anneau de focus                                           6
- *   bordure de contrôle (surface, raised, sunken, hover)       4
+ *   bordure de contrôle (surface, raised, sunken)                       3
+ *   bordure de contrôle sur hover composite (5 bases × alpha)           5
  *   texte sur accent (3 états)                                 3
  *   texte sur danger-solid                                     1
  *   statuts : {ton}-text sur 6 fonds + {ton}-subtle        4 × 7 = 28
  *   texte principal sur {ton}-subtle                       4 × 1 = 4
  *   tooltip                                                    1
- *   pouce de switch / piste off                                1
- *                                                          total 78
+ *   pouce de switch (fg-strong) sur piste sunken                   1
+ *   contrôles sur hover composite (voir HOVER_PAIRS, cas par thème)
  *
  * Un écart au seuil AA (ou HC pour high-contrast) est un échec. Les minimums
  * du tableau 5.5 sont comparés avec une tolérance de 0.10 (le tableau est
@@ -56,27 +57,31 @@ const PAIRS = [
         [`primary-${tone}`, '--mr-text-primary', [`--mr-${tone}-subtle`], 7, 7],
     ]),
     ['tooltip', '--mr-tooltip-text', ['--mr-tooltip-bg'], 7, 7],
-    ['switch', '--mr-switch-thumb-off', ['--mr-border-control'], 3, 3],
+    /* Pouce réel = fg-strong sur piste sunken (switch-thumb-off n'a aucun
+       usage interne : l'ancienne paire pouce/border-control testait un
+       proxy). */
+    ['switch', '--mr-text-primary', ['--mr-bg-sunken'], 3, 3],
 ]
 
 /* Fonds d'état translucides (ex. --mr-bg-hover en dark) : un fond alpha n'est
-   testable que composité sur un fond opaque. On le compose sur les trois
-   niveaux qui le reçoivent (surface/raised/overlay) ; les fonds opaques
-   (autres thèmes) gardent le test direct unique. Seuils : les seuils AA/HC de
+   testable que composité sur un fond opaque. On le compose sur les cinq
+   niveaux qui le reçoivent (canvas/surface/raised/sunken/overlay) ; les fonds
+   opaques (autres thèmes) gardent le test direct unique. Seuils : les seuils AA/HC de
    la table principale pour les cas opaques, des seuils d'état (transitoire)
    pour les cas translucides — [clé, fg, seuil AA opaque, seuil état, seuil HC]. */
 const HOVER_BG = '--mr-bg-hover'
-const HOVER_BASES = ['--mr-bg-surface', '--mr-bg-raised', '--mr-bg-overlay']
+const HOVER_BASES = ['--mr-bg-canvas', '--mr-bg-surface', '--mr-bg-raised', '--mr-bg-sunken', '--mr-bg-overlay']
 const HOVER_PAIRS = [
     ['hover-primary', '--mr-text-primary', 7, 7, 7],
     ['hover-secondary', '--mr-text-secondary', 4.5, 4.5, 7],
     ['hover-tertiary', '--mr-text-tertiary', 4.5, 3, 7],
     ['hover-accent', '--mr-accent-text', 4.5, 4.5, 7],
-    /* Plafond structurel : border-control doit rester sous le pouce de switch
-       (L<=~0.63 pour >=3:1) et ne peut donc pas atteindre 3:1 sur un fond
-       hoveré (il faudrait L>=~0.68). Seuil d'état 2:1 — la bordure reste
-       visible et le contrôle identifiable par son fond solide. */
-    ['hover-border', '--mr-border-control', 3, 2, 7],
+    /* Bordure de contrôle sur fond hoveré : seuil 3:1 (WCAG 1.4.11) sur les
+       5 bases, tous thèmes. Tenu par border-control >= 0.69 (dark) /
+       0.655 (oled). La paire `switch` mesure l'adjacent réel (pouce sur
+       piste sunken) et non plus un proxy border-control, ce qui libère
+       ce plafond. */
+    ['hover-border', '--mr-border-control', 3, 3, 7],
 ]
 
 const toLinear = (css) =>
@@ -89,7 +94,7 @@ const fromLinear = (coords) =>
         coords.map((v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055)),
     ).toString()
 
-/** Cas de test du fond d'état : direct si opaque, 3 composites si translucide. */
+/** Cas de test du fond d'état : direct si opaque, 5 composites si translucide. */
 function hoverBgCases(theme, brand) {
     const css = col(HOVER_BG, theme, brand)
     const alpha = new Color(css).alpha ?? 1
@@ -110,7 +115,7 @@ const TABLE = {
     disabled: [3.09, 3.18, 3.9, 4.87, 3.1],
     accent: [5.14, 7.81, 9.16, 7.81, 5.36],
     focus: [3.97, 7.67, 9.59, 10.84, 4.15],
-    border: [3.15, 3.12, 3.1, 11.06, 3.09],
+    border: [3.39, 5.43, 5.82, 12.32, 3.39],
     onaccent: [5.29, 9.04, 9.04, 8.81, 5.53],
     ondanger: [5.58, 6.96, 6.96, 9.19, 5.58],
     success: [5.5, 6.99, 8.47, 7.15, 5.49],
@@ -118,7 +123,7 @@ const TABLE = {
     danger: [5.16, 5.96, 7.3, 7.49, 5.15],
     info: [5.16, 6.79, 8.24, 7.59, 5.16],
     tooltip: [14.63, 14.72, 14.72, 20.57, 14.66],
-    switch: [3.7, 3.51, 4.32, 13.57, 3.51],
+    switch: [15.78, 15.59, 18.07, 18.6, 15.59],
 }
 
 const TOLERANCE = 0.1

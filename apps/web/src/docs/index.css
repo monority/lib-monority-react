@@ -579,7 +579,7 @@
 }
 
 .docs-feature-card__accent--danger {
-    background: var(--mr-danger);
+    background: var(--mr-danger-solid);
 }
 
 .docs-feature-card__accent--info {

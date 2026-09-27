@@ -48,7 +48,7 @@
     align-items: center;
     gap: var(--mr-space-2);
     padding: var(--mr-space-4);
-    color: var(--mr-danger);
+    color: var(--mr-danger-text);
      font-size: var(--mr-text-sm);
   }
 

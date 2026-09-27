@@ -19,16 +19,16 @@
   }
 
   .mr-datepicker__trigger:hover {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
   }
 
   .mr-datepicker__trigger:focus-visible {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
   }
 
   .mr-datepicker__trigger--invalid,
   .mr-datepicker[data-invalid='true'] .mr-datepicker__trigger {
-    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
   }
 
      .mr-datepicker__trigger--disabled,
@@ -61,12 +61,12 @@
   }
 
   .mr-datepicker[data-tone='danger'] .mr-datepicker__trigger {
-    border-color: color-mix(in srgb, var(--mr-danger) 30%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 30%, var(--mr-border-subtle));
   }
 
   .mr-datepicker[data-tone='danger'] .mr-datepicker__trigger:focus-visible {
-    border-color: var(--mr-danger);
-    outline-color: var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    outline-color: var(--mr-danger-text);
   }
 
   /* ─── Calendar icon ───────────────────────────────────────── */

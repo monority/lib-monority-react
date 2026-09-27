@@ -48,7 +48,7 @@
     }
 
     .mr-pagination__btn:hover {
-        border-color: var(--mr-border-strong);
+        border-color: var(--mr-border-control);
         background: var(--mr-bg-surface-strong);
         color: var(--mr-fg-strong);
     }

@@ -129,7 +129,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 | `--mr-blur-sm` | non | supprimé (5.15) | → fichier déprécié, retrait en fin de version majeure |
 | `--mr-blur-xl` | non | supprimé (5.15) | → fichier déprécié, retrait en fin de version majeure |
 | `--mr-border-accent` | oui | mappé (exact) | `--mr-accent-border` |
-| `--mr-border-strong` | oui | mappé (exact) | `--mr-border-default` |
+| `--mr-border-strong` | oui | mappé (exact) | `--mr-border-default` (alias gelé : 29 usages internes migrés — 21 vers `border-control` pour les états interactifs, 8 vers `border-default` pour repos/décoratif) |
 | `--mr-border-subtle` | oui | conservé (même nom, même rôle) | `--mr-border-subtle` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
 | `--mr-border-width` | oui | conservé (même nom, même rôle) | `--mr-border-width` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
 | `--mr-border-width-focus` | non | mappé (exact) | `--mr-focus-width` |
@@ -190,7 +190,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 | `--mr-control-size-lg` | oui | conservé (même nom, même rôle) | `--mr-control-size-lg` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
 | `--mr-control-size-md` | oui | conservé (même nom, même rôle) | `--mr-control-size-md` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
 | `--mr-control-size-sm` | oui | conservé (même nom, même rôle) | `--mr-control-size-sm` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |
-| `--mr-danger` | oui | mappé (exact) | `--mr-danger-solid` |
+| `--mr-danger` | oui | mappé (exact) | `--mr-danger-solid` (alias gelé : 67 usages internes migrés — fonds vers `danger-solid`/`danger-solid-hover`, textes et bordures de contrôle vers `danger-text`) |
 | `--mr-danger-contrast` | oui | mappé (exact) | `--mr-on-danger-solid` |
 | `--mr-danger-soft` | oui | mappé (exact) | `--mr-danger-subtle` |
 | `--mr-danger-text` | oui | conservé (même nom, même rôle) | `--mr-danger-text` (valeur : comparer à la référence, changement éventuel → MIGRATION.md) |

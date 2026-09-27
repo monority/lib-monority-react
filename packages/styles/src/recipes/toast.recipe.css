@@ -22,7 +22,7 @@
     }
 
     .mr-toast--danger {
-        border-color: color-mix(in srgb, var(--mr-danger) 35%, var(--mr-border-subtle));
+        border-color: color-mix(in srgb, var(--mr-danger-solid) 35%, var(--mr-border-subtle));
     }
 
     .mr-toast__title {

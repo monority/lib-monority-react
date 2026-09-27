@@ -20,7 +20,7 @@
   }
 
   .mr-alert-dialog--danger {
-    border-color: color-mix(in srgb, var(--mr-danger) 28%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-solid) 28%, var(--mr-border-subtle));
   }
 
   .mr-alert-dialog__backdrop {

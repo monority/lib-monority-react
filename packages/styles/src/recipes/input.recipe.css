@@ -11,26 +11,26 @@
 
   .mr-input--accent:focus-visible,
   .mr-input[data-tone='accent']:focus-visible {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-control);
   }
 
   .mr-input--danger,
   .mr-input[data-tone='danger'],
   .mr-input--invalid,
   .mr-input[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 42%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
   }
 
   .mr-input--danger:focus-visible,
   .mr-input[data-tone='danger']:focus-visible,
   .mr-input--invalid:focus-visible {
-    border-color: var(--mr-danger);
-    outline-color: var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    outline-color: var(--mr-danger-text);
   }
 
   .mr-input--error {
     /* backward compatibility — same as --invalid */
-    border-color: color-mix(in srgb, var(--mr-danger) 42%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
   }
 
   .mr-input--sm,

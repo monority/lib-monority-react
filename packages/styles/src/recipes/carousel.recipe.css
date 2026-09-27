@@ -96,7 +96,7 @@
     padding: 0;
     border: 0;
     border-radius: var(--mr-radius-full);
-    background: var(--mr-border-strong);
+    background: var(--mr-border-default);
     cursor: pointer;
     opacity: 0.5;
     transition:

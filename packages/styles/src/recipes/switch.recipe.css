@@ -91,7 +91,7 @@
     height: var(--mr-switch-thumb-size);
     border-radius: var(--mr-radius-full);
     background: var(--mr-fg-strong);
-     box-shadow: var(--mr-shadow-xs);
+    box-shadow: var(--mr-shadow-thumb);
     transform: translateX(0);
     transition:
       transform var(--mr-duration-fast) var(--mr-ease-standard),
@@ -123,13 +123,13 @@
 
   .mr-switch--invalid .mr-switch__control,
   .mr-switch[data-invalid='true'] .mr-switch__control {
-    border-color: var(--mr-danger);
-    box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger-text);
   }
 
   .mr-switch--neutral .mr-switch__control,
   .mr-switch[data-tone='neutral'] .mr-switch__control {
-    border-color: var(--mr-border-strong);
+    border-color: var(--mr-border-default);
     background: var(--mr-bg-surface);
   }
 
@@ -146,13 +146,13 @@
 
   .mr-switch--danger .mr-switch__control,
   .mr-switch[data-tone='danger'] .mr-switch__control {
-    border-color: color-mix(in srgb, var(--mr-danger) 50%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 50%, var(--mr-border-subtle));
   }
 
   .mr-switch--checked.mr-switch--danger .mr-switch__control,
   .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__control {
-    background: var(--mr-danger);
-    border-color: var(--mr-danger);
+    background: var(--mr-danger-solid);
+    border-color: var(--mr-danger-solid);
   }
 
   .mr-switch--checked.mr-switch--danger .mr-switch__thumb,

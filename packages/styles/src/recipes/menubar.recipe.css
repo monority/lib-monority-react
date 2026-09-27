@@ -124,7 +124,7 @@
     }
 
     .mr-menubar__item--danger:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--mr-danger) 9%, transparent);
+        background: color-mix(in srgb, var(--mr-danger-solid) 9%, transparent);
         color: var(--mr-danger-text);
     }
 

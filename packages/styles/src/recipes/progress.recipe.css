@@ -78,7 +78,7 @@
   .mr-progress--danger .mr-progress__bar,
   .mr-progress[data-tone='danger'] .mr-progress__bar {
     background:
-      linear-gradient(90deg, var(--mr-danger), color-mix(in srgb, var(--mr-danger) 72%, white));
+      linear-gradient(90deg, var(--mr-danger-solid), color-mix(in srgb, var(--mr-danger-solid) 72%, white));
   }
 
   @media (prefers-reduced-motion: reduce) {

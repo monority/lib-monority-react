@@ -56,7 +56,7 @@
 
     .mr-command__item:hover,
     .mr-command__item.is-active {
-        border-color: var(--mr-border-strong);
+        border-color: var(--mr-border-control);
         background: var(--mr-bg-control);
         color: var(--mr-fg-strong);
     }

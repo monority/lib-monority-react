@@ -142,13 +142,13 @@
 
     .mr-radio-group--invalid .mr-radio__control,
     .mr-radio-group[data-invalid="true"] .mr-radio__control {
-        border-color: var(--mr-danger);
-        box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger);
+        border-color: var(--mr-danger-text);
+        box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger-text);
     }
 
     .mr-radio-group--neutral .mr-radio__control,
     .mr-radio-group[data-tone="neutral"] .mr-radio__control {
-        border-color: var(--mr-border-strong);
+        border-color: var(--mr-border-default);
         background: var(--mr-bg-surface);
     }
 
@@ -168,15 +168,15 @@
 
     .mr-radio-group--danger .mr-radio__control,
     .mr-radio-group[data-tone="danger"] .mr-radio__control {
-        border-color: color-mix(in srgb, var(--mr-danger) 50%, var(--mr-border-subtle));
+        border-color: color-mix(in srgb, var(--mr-danger-text) 50%, var(--mr-border-subtle));
     }
 
     .mr-radio-group--danger .mr-radio--checked .mr-radio__control,
     .mr-radio-group--danger .mr-radio[data-checked="true"] .mr-radio__control,
     .mr-radio-group[data-tone="danger"] .mr-radio--checked .mr-radio__control,
     .mr-radio-group[data-tone="danger"] .mr-radio[data-checked="true"] .mr-radio__control {
-        border-color: var(--mr-danger);
-        background: var(--mr-danger);
+        border-color: var(--mr-danger-solid);
+        background: var(--mr-danger-solid);
     }
 
     .mr-radio-group--danger .mr-radio--checked .mr-radio__dot,

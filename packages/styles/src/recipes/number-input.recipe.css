@@ -96,12 +96,12 @@
 
   .mr-number-input--error,
   .mr-number-input[data-invalid='true'] {
-    border-color: color-mix(in srgb, var(--mr-danger) 44%, var(--mr-border-subtle));
+    border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
   }
 
   .mr-number-input--error:focus-visible,
   .mr-number-input[data-invalid='true']:focus-visible {
-    border-color: var(--mr-danger);
-    outline-color: var(--mr-danger);
+    border-color: var(--mr-danger-text);
+    outline-color: var(--mr-danger-text);
   }
 }

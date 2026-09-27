@@ -12,7 +12,7 @@
       "bg-active": { "$value": "oklch(1 var(--mr-neutral-chroma) var(--mr-neutral-hue) / 0.09)", "$type": "color" },
       "border-subtle": { "$value": "oklch(0.25 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.25, "c": "neutral", "h": "neutral" } } },
       "border-default": { "$value": "oklch(0.31 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.31, "c": "neutral", "h": "neutral" } } },
-      "border-control": { "$value": "oklch(0.55 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.55, "c": "neutral", "h": "neutral" } } },
+      "border-control": { "$value": "oklch(0.655 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.655, "c": "neutral", "h": "neutral" } } },
       "text-primary": { "$value": "oklch(0.96 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.96, "c": "neutral", "h": "neutral" } } },
       "text-secondary": { "$value": "oklch(0.8 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.8, "c": "neutral", "h": "neutral" } } },
       "text-tertiary": { "$value": "oklch(0.7 0 0)", "$type": "color", "$extensions": { "com.monority.oklch": { "l": 0.7, "c": "neutral", "h": "neutral" } } },

@@ -65,7 +65,7 @@
     border-radius: var(--mr-radius-full);
     background: var(--mr-accent);
     border: 2px solid var(--mr-bg-surface);
-    box-shadow: var(--mr-shadow-sm);
+    box-shadow: var(--mr-shadow-thumb);
     cursor: pointer;
   }
 
@@ -75,13 +75,13 @@
     border-radius: var(--mr-radius-full);
     background: var(--mr-accent);
     border: 2px solid var(--mr-bg-surface);
-    box-shadow: var(--mr-shadow-sm);
+    box-shadow: var(--mr-shadow-thumb);
     cursor: pointer;
   }
 
   .mr-slider--error::-webkit-slider-runnable-track,
   .mr-slider--error::-moz-range-track {
-    background: color-mix(in srgb, var(--mr-danger) 24%, var(--mr-bg-control));
+    background: color-mix(in srgb, var(--mr-danger-solid) 24%, var(--mr-bg-control));
   }
 
   .mr-slider--sm,
@@ -156,7 +156,7 @@
   .mr-slider--error::-moz-range-track,
   .mr-slider[data-invalid='true']::-webkit-slider-runnable-track,
   .mr-slider[data-invalid='true']::-moz-range-track {
-    background: color-mix(in srgb, var(--mr-danger) 24%, var(--mr-bg-control));
+    background: color-mix(in srgb, var(--mr-danger-solid) 24%, var(--mr-bg-control));
   }
 
   .mr-slider__value {
