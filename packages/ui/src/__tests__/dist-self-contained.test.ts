@@ -100,13 +100,6 @@ describe('dist — étanchéité du paquet', () => {
         expect(utilities).toContain('.mr-stack-m')
     })
 
-    it('tous les fichiers JS du dist portent la bannière "use client"', () => {
-        const jsFiles = walk(distDir).filter((f) => f.endsWith('.js'))
-        expect(jsFiles.length).toBeGreaterThan(0)
-        const missing = jsFiles.filter((f) => !readFileSync(f, 'utf8').startsWith('"use client";'))
-        expect(missing, `bannière "use client" absente : ${missing.join(', ')}`).toHaveLength(0)
-    })
-
     it('aucun fichier du dist ne référence un chemin hors du paquet', () => {
         const escape: string[] = []
         for (const file of walk(distDir)) {

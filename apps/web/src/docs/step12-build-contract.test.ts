@@ -94,6 +94,7 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
             'publicDir',
             'format',
             'banner',
+            'onSuccess',
             'dts',
             'sourcemap',
             'clean',

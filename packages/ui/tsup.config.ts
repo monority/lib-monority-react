@@ -80,12 +80,21 @@ export default defineConfig({
         topbar: 'src/components/navigation/topbar/index.ts',
         reset: 'src/styles/reset.css',
         utilities: 'src/styles/utilities.css',
+        components: 'src/components/index.ts',
+        hooks: 'src/hooks/index.ts',
+        providers: 'src/providers/index.ts',
+        primitives: 'src/primitives/index.ts',
+        lib: 'src/lib/index.ts',
+        'get-theme-script': 'src/providers/get-theme-script.ts',
     },
     format: ['esm'],
-    banner: { js: '"use client";' },
     dts: true,
     sourcemap: true,
     clean: true,
+    // La directive « use client » est posée par script, fichier par fichier :
+    // seuls ceux qui utilisent React en ont besoin (les barrels et les modules
+    // purs doivent rester importables depuis un Server Component).
+    onSuccess: 'node scripts/use-client.mjs',
     // true : le code partagé (FormControlContext, cn, cva, useFormControl...)
     // est extrait dans des chunks communs. Avec `false`, chaque entrée
     // embarquait sa propre copie de chaque createContext : 17 contextes

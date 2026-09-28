@@ -32,6 +32,16 @@ function registrySlugs(): string[] {
 }
 
 describe('Step 26 - every public export has docs or a redirect', () => {
+    // Entrées de librairie sans page de composant (barrels, helper serveur).
+    const NON_COMPONENT_SUBPATHS = new Set([
+        'components',
+        'hooks',
+        'lib',
+        'primitives',
+        'providers',
+        'get-theme-script',
+    ])
+
     it('no exported subpath is a dead docs route', () => {
         const pkg = readJson(join(root, 'packages', 'ui', 'package.json'))
         const subpaths = Object.keys(pkg.exports)
@@ -39,7 +49,9 @@ describe('Step 26 - every public export has docs or a redirect', () => {
             .map((k) => k.replace('./', ''))
 
         const slugs = new Set(registrySlugs())
-        const offenders = subpaths.filter((s) => !slugs.has(s) && !REDIRECTS[s])
+        const offenders = subpaths.filter(
+            (s) => !slugs.has(s) && !REDIRECTS[s] && !NON_COMPONENT_SUBPATHS.has(s)
+        )
         expect(offenders, 'exported without docs page or redirect').toEqual([])
     })
 })
