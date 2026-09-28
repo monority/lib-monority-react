@@ -11,8 +11,8 @@
 - En fin d'étape : coche l'étape ci-dessous, commite PLAN.md, fais un rapport court avec les preuves.
 
 ## Décisions
-- D1 Classes utilitaires non préfixées (.hidden, .grid, .container…) et doublons avec les composants Stack/Grid/Container/Section : [DÉCISION] préfixer en mr-* / sortir dans un export optionnel / supprimer au profit des composants.
-- D2 Reset global (reset.css + normalize.css) : [DÉCISION] export opt-in "./reset.css" / conserver dans le bundle.
+- D1 Utilitaires : RETENU — supprimer .stack/.grid/.container/.section (doublons des composants Stack/Grid/Container/Section). Autres familles : supprimer si 0 usage dans ui et web (git grep), sinon export optionnel ./utilities.css avec préfixe mr-. legacy-layout.css supprimé si 0 usage. Donne le tableau usage par famille avant d'agir.
+- D2 Reset global : RETENU — export opt-in "./reset.css", importé explicitement par apps/web, documenté dans le README du package.
 - D3 Scripts d'audit ponctuels (tokens/scripts/probe-contrast.mjs, extract-deprecated.mjs, docs/design/audit/*.mjs) : [DÉCISION] archiver / supprimer.
 - D4 Pages de faux SaaS dans apps/web (auth simulée, Admin, Dashboard, services/, useAuth, AuthProvider) : [DÉCISION] démo volontaire à regrouper / à supprimer.
 - D5 Source de vérité de la doc composant (docs/design/components/*.md vs .docs/.meta/.examples de apps/web) : [DÉCISION] laquelle fait foi, l'autre en dérive.
@@ -27,4 +27,4 @@
 - [ ] 7. État contrôlé : useControllableState (updates fonctionnels, tests) adopté par les ~19 composants concernés ; useFieldIds adopté ou supprimé. Tests existants inchangés.
 - [ ] 8. forwardRef → ref comme prop (React 19) dans les 76 fichiers, par lots. Supprime le "ref as any" d'InputBase.
 - [ ] 9. Build et outillage : déclarations via tsc --emitDeclarationOnly (mesure avant/après), import de @monority/styles par nom de package, un seul export CSS, publint + arethetypeswrong + test:dist en CI, snapshots Playwright régénérés dans l'image Docker officielle (suppression des *-win32.png) + job e2e en CI, size-limit sur dist/index.css et dist/index.js.
-- [ ] 10. Lint : derniers diagnostics traités, étape lint bloquante en CI. Suppression de PLAN.md.
+- [ ] 10. Lint : 144 erreurs et 28 warnings au 28/09 (dont ~75 a11y). Traiter les a11y une par une, ce sont de vrais problèmes pour une librairie de composants, dont les exemples sont copiés par les utilisateurs. Pour les règles de pur style dans les tests et exemples (noArrayIndexKey sur listes statiques, noExplicitAny dans les tests), proposer des overrides Biome ciblés plutôt que des corrections en masse. Puis lint bloquant en CI.
