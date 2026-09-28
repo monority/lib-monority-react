@@ -1,19 +1,6 @@
 import { forwardRef, useId, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { CollapsibleProps } from './Collapsible.types'
-
-const collapsibleVariants = cva({
-    base: 'mr-collapsible',
-    variants: {
-        size: {
-            sm: 'mr-collapsible--sm',
-            md: 'mr-collapsible--md',
-            lg: 'mr-collapsible--lg',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function Collapsible(
     {
@@ -33,6 +20,7 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
     const isOpen = isControlled ? controlledOpen : internalOpen
     const instanceId = useId()
     const state = isOpen ? 'open' : 'closed'
+    const resolvedSize = size ?? 'md'
 
     function toggle() {
         if (!isControlled) setInternalOpen(!isOpen)
@@ -42,8 +30,9 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
     return (
         <div
             ref={ref}
-            className={cn(collapsibleVariants({ size }), className)}
+            className={cn('mr-collapsible', className)}
             data-open={isOpen || undefined}
+            data-size={resolvedSize}
             data-state={state}
             {...props}
         >

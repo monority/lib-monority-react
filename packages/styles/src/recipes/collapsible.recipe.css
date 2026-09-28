@@ -127,40 +127,40 @@
     }
 
     /* Sizes */
-    .mr-collapsible--sm {
+    .mr-collapsible[data-size='sm'] {
         --mr-collapsible-trigger-padding-block: var(--mr-space-2);
         --mr-collapsible-trigger-padding-inline: var(--mr-space-3);
         --mr-collapsible-content-padding-block: var(--mr-space-2) var(--mr-space-3);
         --mr-collapsible-content-padding-inline: var(--mr-space-3);
     }
 
-    .mr-collapsible--sm .mr-collapsible__trigger {
+    .mr-collapsible[data-size='sm'] .mr-collapsible__trigger {
         min-block-size: var(--mr-control-size-md);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-collapsible--sm .mr-collapsible__content {
+    .mr-collapsible[data-size='sm'] .mr-collapsible__content {
         font-size: var(--mr-text-xs);
     }
 
-    .mr-collapsible--sm .mr-collapsible__icon {
+    .mr-collapsible[data-size='sm'] .mr-collapsible__icon {
         width: 1.5rem;
         height: 1.5rem;
     }
 
-    .mr-collapsible--lg {
+    .mr-collapsible[data-size='lg'] {
         --mr-collapsible-trigger-padding-block: var(--mr-space-4);
         --mr-collapsible-trigger-padding-inline: var(--mr-space-5);
         --mr-collapsible-content-padding-block: var(--mr-space-4) var(--mr-space-5);
         --mr-collapsible-content-padding-inline: var(--mr-space-5);
     }
 
-    .mr-collapsible--lg .mr-collapsible__trigger {
+    .mr-collapsible[data-size='lg'] .mr-collapsible__trigger {
         min-block-size: var(--mr-control-size-lg);
         font-size: var(--mr-text-md);
     }
 
-    .mr-collapsible--lg .mr-collapsible__content {
+    .mr-collapsible[data-size='lg'] .mr-collapsible__content {
         font-size: var(--mr-text-md);
     }
 

@@ -68,16 +68,12 @@
     }
 
     .mr-textarea[data-tone='danger'],
-    /* `:where()` préserve la cascade d'avant migration : le sélecteur BEM
-     * (`.mr-textarea--invalid`, spécificité 0,1,0) perdait face à la règle de
-     * base `.mr-textarea.mr-textarea` (0,2,0), donc l'état invalid n'était pas
-     * stylé. Bug latent signalé, hors périmètre de la migration. */
-        :where(.mr-textarea[data-invalid='true']) {
+    .mr-textarea[data-invalid='true'] {
         border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
     }
 
     .mr-textarea[data-tone='danger']:focus-visible,
-    :where(.mr-textarea[data-invalid='true']):focus-visible {
+    .mr-textarea[data-invalid='true']:focus-visible {
         border-color: var(--mr-danger-text);
         outline-color: var(--mr-danger-text);
     }

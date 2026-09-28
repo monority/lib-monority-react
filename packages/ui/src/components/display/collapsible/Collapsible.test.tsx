@@ -136,28 +136,28 @@ describe('Collapsible', () => {
                 Content
             </Collapsible>
         )
-        expect(viewSm.querySelector('.mr-collapsible')?.className).toContain('mr-collapsible--sm')
+        expect(viewSm.querySelector('.mr-collapsible')?.getAttribute('data-size')).toBe('sm')
 
         const viewMd = render(
             <Collapsible title="Title" size="md">
                 Content
             </Collapsible>
         )
-        expect(viewMd.querySelector('.mr-collapsible')?.className).toContain('mr-collapsible--md')
+        expect(viewMd.querySelector('.mr-collapsible')?.getAttribute('data-size')).toBe('md')
 
         const viewLg = render(
             <Collapsible title="Title" size="lg">
                 Content
             </Collapsible>
         )
-        expect(viewLg.querySelector('.mr-collapsible')?.className).toContain('mr-collapsible--lg')
+        expect(viewLg.querySelector('.mr-collapsible')?.getAttribute('data-size')).toBe('lg')
     })
 
     it('default size has no size modifier class', () => {
         const view = render(<Collapsible title="Title">Content</Collapsible>)
         const el = view.querySelector('.mr-collapsible')
-        expect(el?.className).not.toContain('mr-collapsible--sm')
-        expect(el?.className).not.toContain('mr-collapsible--lg')
+        expect(el?.getAttribute('data-size')).not.toBe('sm')
+        expect(el?.getAttribute('data-size')).not.toBe('lg')
     })
 
     it('has correct ARIA attributes', () => {

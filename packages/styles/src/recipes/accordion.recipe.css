@@ -63,18 +63,18 @@
         color: var(--mr-fg-base);
     }
 
-    .mr-accordion--sm .mr-accordion__trigger {
+    .mr-accordion[data-size='sm'] .mr-accordion__trigger {
         padding: var(--mr-space-2) var(--mr-space-3);
         font-size: var(--mr-text-xs);
     }
-    .mr-accordion--sm .mr-accordion__panel {
+    .mr-accordion[data-size='sm'] .mr-accordion__panel {
         padding: 0 var(--mr-space-3) var(--mr-space-3);
     }
-    .mr-accordion--lg .mr-accordion__trigger {
+    .mr-accordion[data-size='lg'] .mr-accordion__trigger {
         padding: var(--mr-space-4) var(--mr-space-5);
         font-size: var(--mr-text-md);
     }
-    .mr-accordion--lg .mr-accordion__panel {
+    .mr-accordion[data-size='lg'] .mr-accordion__panel {
         padding: 0 var(--mr-space-5) var(--mr-space-5);
     }
 

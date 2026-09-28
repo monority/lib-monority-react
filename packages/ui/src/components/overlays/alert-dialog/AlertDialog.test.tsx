@@ -85,7 +85,7 @@ describe('AlertDialog', () => {
     it('applies danger tone', () => {
         render(<AlertDialog open title="Delete?" tone="danger" />)
         const panel = document.body.querySelector('.mr-alert-dialog__panel')
-        expect(panel?.className).toContain('mr-alert-dialog--danger')
+        expect(panel?.getAttribute('data-tone')).toBe('danger')
         expect(panel?.getAttribute('data-tone')).toBe('danger')
     })
 

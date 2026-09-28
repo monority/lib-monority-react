@@ -3,26 +3,7 @@ import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
-import { cva } from '@/lib/variants'
 import type { PopoverProps } from './Popover.types'
-
-const popoverVariants = cva({
-    base: 'mr-popover',
-    variants: {
-        align: {
-            start: 'mr-popover--align-start',
-            center: 'mr-popover--align-center',
-            end: 'mr-popover--align-end',
-        },
-        side: {
-            top: 'mr-popover--side-top',
-            bottom: 'mr-popover--side-bottom',
-            left: 'mr-popover--side-left',
-            right: 'mr-popover--side-right',
-        },
-    },
-    defaultVariants: { align: 'center', side: 'bottom' },
-})
 
 export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover(
     {
@@ -118,7 +99,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
     return (
         <div
             ref={ref}
-            className={cn(popoverVariants({ align, side }), className)}
+            className={cn('mr-popover', className)}
             data-open={isOpen ? true : undefined}
             data-align={align}
             data-side={side}
@@ -160,12 +141,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
                       <div
                           ref={contentRef}
                           id={`${instanceId}-content`}
-                          className={cn(
-                              'mr-popover__content',
-                              `mr-popover__content--${side}`,
-                              `mr-popover__content--${align}`,
-                              contentClassName
-                          )}
+                          className={cn('mr-popover__content', contentClassName)}
                           role="dialog"
                           aria-modal="false"
                           tabIndex={-1}

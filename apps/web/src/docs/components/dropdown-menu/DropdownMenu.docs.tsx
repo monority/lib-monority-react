@@ -16,7 +16,7 @@ const docData: DocPageData = {
     { value: 'open', label: 'Open record' },
     { value: 'duplicate', label: 'Duplicate view' },
     { value: 'separator-1', label: '', type: 'separator' as const },
-    { value: 'archive', label: 'Archive', danger: true },
+    { value: 'archive', label: 'Archive', danger: true }
   ]}
 />`,
     preview: () => <DropdownMenuBasicExample />,
@@ -66,10 +66,6 @@ const docData: DocPageData = {
     cssHooks: [
         '.mr-dropdown',
         '.mr-dropdown__content',
-        '.mr-dropdown__content--top',
-        '.mr-dropdown__content--bottom',
-        '.mr-dropdown__content--left',
-        '.mr-dropdown__content--right',
         '.mr-dropdown__item',
         '.mr-dropdown__separator',
         '[data-open]',

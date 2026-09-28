@@ -3,26 +3,7 @@ import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
-import { cva } from '@/lib/variants'
 import type { DropdownMenuProps, DropdownMenuItem } from './DropdownMenu.types'
-
-const dropdownMenuVariants = cva({
-    base: 'mr-dropdown',
-    variants: {
-        align: {
-            start: 'mr-dropdown--align-start',
-            center: 'mr-dropdown--align-center',
-            end: 'mr-dropdown--align-end',
-        },
-        side: {
-            top: 'mr-dropdown--side-top',
-            bottom: 'mr-dropdown--side-bottom',
-            left: 'mr-dropdown--side-left',
-            right: 'mr-dropdown--side-right',
-        },
-    },
-    defaultVariants: { align: 'start', side: 'bottom' },
-})
 
 function isActionableItem(item: DropdownMenuItem) {
     return item.type !== 'separator' && !item.disabled
@@ -142,7 +123,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
     return (
         <div
             ref={ref}
-            className={cn(dropdownMenuVariants({ align, side }), className)}
+            className={cn('mr-dropdown', className)}
             data-open={isOpen ? true : undefined}
             data-align={align}
             data-side={side}
@@ -201,12 +182,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
                       <div
                           ref={contentRef}
                           id={`${instanceId}-content`}
-                          className={cn(
-                              'mr-dropdown__content',
-                              `mr-dropdown__content--${side}`,
-                              `mr-dropdown__content--${align}`,
-                              contentClassName
-                          )}
+                          className={cn('mr-dropdown__content', contentClassName)}
                           role="menu"
                           aria-orientation="vertical"
                           style={{

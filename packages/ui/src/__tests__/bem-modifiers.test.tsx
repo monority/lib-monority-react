@@ -23,6 +23,12 @@ import { Textarea } from '@/components/forms/textarea'
 import { Toggle } from '@/components/actions/toggle'
 import { ToggleGroup } from '@/components/actions/toggle-group'
 import { Switch } from '@/components/forms/switch'
+import { Collapsible } from '@/components/display/collapsible'
+import { Accordion } from '@/components/display/accordion'
+import { DropdownMenu } from '@/components/overlays/dropdown-menu'
+import { Popover } from '@/components/overlays/popover'
+import { AlertDialog } from '@/components/overlays/alert-dialog'
+import { Toast } from '@/components/feedback/toast'
 
 /**
  * Vague A1 de la migration BEM → `data-*` : ces composants portaient leurs
@@ -105,8 +111,69 @@ const B1_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
     { name: 'Slider', element: <Slider />, hook: 'data-size' },
 ]
 
+/**
+ * Vague C1 (overlays / interactions / états composés). DropdownMenu et Popover
+ * portaient en plus des element modifiers `__content--side` redondants avec
+ * `data-side` / `data-align` de la racine : ces derniers sont désormais l'unique
+ * source de vérité.
+ */
+const C1_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
+    {
+        name: 'Collapsible',
+        element: <Collapsible title="Section">Contenu</Collapsible>,
+        hook: 'data-size',
+    },
+    {
+        name: 'Collapsible ouvert',
+        element: (
+            <Collapsible title="Section" open>
+                Contenu
+            </Collapsible>
+        ),
+        hook: 'data-state',
+    },
+    {
+        name: 'Accordion',
+        element: (
+            <Accordion>
+                <Accordion.Item title="A">A</Accordion.Item>
+            </Accordion>
+        ),
+        hook: 'data-size',
+    },
+    {
+        name: 'AlertDialog',
+        element: (
+            <AlertDialog open title="T" description="D" onCancel={() => {}} onConfirm={() => {}}>
+                Contenu
+            </AlertDialog>
+        ),
+        hook: 'data-tone',
+    },
+    {
+        name: 'Toast',
+        element: <Toast title="T" tone="success" onClose={() => {}} />,
+        hook: 'data-tone',
+    },
+    {
+        name: 'DropdownMenu',
+        element: <DropdownMenu trigger="Ouvrir">Contenu</DropdownMenu>,
+        hook: 'data-align',
+    },
+    {
+        name: 'DropdownMenu aligné',
+        element: (
+            <DropdownMenu trigger="Ouvrir" align="center" side="top">
+                Contenu
+            </DropdownMenu>
+        ),
+        hook: 'data-side',
+    },
+    { name: 'Popover', element: <Popover trigger="Ouvrir">Contenu</Popover>, hook: 'data-align' },
+]
+
 describe('modifiers BEM → data-* (vague A1)', () => {
-    for (const { name, element, hook } of [...CASES, ...B1_CASES]) {
+    for (const { name, element, hook } of [...CASES, ...B1_CASES, ...C1_CASES]) {
         it(`${name} n’émet aucun modifier BEM et expose ${hook}`, () => {
             const view = render(element)
             const scope = [view, document]

@@ -23,7 +23,7 @@
         inline-size: min(var(--mr-overlay-width-alert), 100%);
     }
 
-    .mr-alert-dialog--danger {
+    .mr-alert-dialog[data-tone='danger'] {
         border-color: color-mix(in srgb, var(--mr-danger-solid) 28%, var(--mr-border-subtle));
     }
 

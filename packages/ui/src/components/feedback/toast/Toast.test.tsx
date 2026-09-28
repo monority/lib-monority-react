@@ -47,7 +47,7 @@ describe('Toast', () => {
     it('applies tone data-*', () => {
         const view = render(<Toast tone="success" title="OK" />)
         const el = view.querySelector('div')
-        expect(el?.className).toContain('mr-toast--success')
+        expect(el?.getAttribute('data-tone')).toBe('success')
         expect(el?.getAttribute('data-tone')).toBe('success')
     })
 

@@ -1,19 +1,6 @@
 import { forwardRef, useCallback, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { AccordionItem, AccordionProps } from './Accordion.types'
-
-const accordionVariants = cva({
-    base: 'mr-accordion',
-    variants: {
-        size: {
-            sm: 'mr-accordion--sm',
-            md: 'mr-accordion--md',
-            lg: 'mr-accordion--lg',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 /**
  * Accordion with WAI-ARIA APG keyboard behavior:
@@ -123,7 +110,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Acc
     return (
         <div
             ref={ref}
-            className={cn(accordionVariants({ size: resolvedSize }), className)}
+            className={cn('mr-accordion', className)}
             data-size={resolvedSize}
             {...props}
         >

@@ -44,8 +44,6 @@ import { useToast } from '@monority/ui'`,
         '.mr-toast__description',
         '.mr-toast__close',
         '.mr-toast-viewport',
-        '.mr-toast--success',
-        '.mr-toast--danger',
     ],
     tokens: [
         '--mr-bg-surface-elevated',

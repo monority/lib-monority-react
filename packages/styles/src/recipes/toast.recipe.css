@@ -19,15 +19,15 @@
         animation: mr-toast-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
-    .mr-toast--neutral {
+    .mr-toast[data-tone='neutral'] {
         border-color: var(--mr-border-subtle);
     }
 
-    .mr-toast--success {
+    .mr-toast[data-tone='success'] {
         border-color: color-mix(in srgb, var(--mr-success) 35%, var(--mr-border-subtle));
     }
 
-    .mr-toast--danger {
+    .mr-toast[data-tone='danger'] {
         border-color: color-mix(in srgb, var(--mr-danger-solid) 35%, var(--mr-border-subtle));
     }
 

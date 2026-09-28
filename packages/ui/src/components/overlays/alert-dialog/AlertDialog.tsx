@@ -1,23 +1,11 @@
 import { forwardRef, useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { AlertDialogProps } from './AlertDialog.types'
-
-const alertDialogVariants = cva({
-    base: 'mr-alert-dialog',
-    variants: {
-        tone: {
-            default: 'mr-alert-dialog--default',
-            danger: 'mr-alert-dialog--danger',
-        },
-    },
-    defaultVariants: { tone: 'default' },
-})
 
 export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(function AlertDialog(
     {
@@ -69,7 +57,7 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(function
             />
             <div
                 ref={panelRef}
-                className={cn(alertDialogVariants({ tone }), 'mr-alert-dialog__panel')}
+                className={cn('mr-alert-dialog', 'mr-alert-dialog__panel')}
                 role="alertdialog"
                 aria-modal="true"
                 aria-labelledby={titleId}

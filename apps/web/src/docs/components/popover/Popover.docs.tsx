@@ -60,8 +60,6 @@ const docData: DocPageData = {
         '.mr-popover__trigger',
         '.mr-popover__anchor',
         '.mr-popover__content',
-        '.mr-popover__content--top',
-        '.mr-popover__content--bottom',
         '[data-open]',
         '[data-align]',
         '[data-side]',

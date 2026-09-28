@@ -1,20 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
 import type { ToastProps, ToastTone } from './Toast.types'
-
-const toastVariants = cva({
-    base: 'mr-toast',
-    variants: {
-        tone: {
-            neutral: 'mr-toast--neutral',
-            success: 'mr-toast--success',
-            danger: 'mr-toast--danger',
-        },
-    },
-    defaultVariants: { tone: 'neutral' },
-})
 
 const roleByTone: Record<ToastTone, string> = {
     neutral: 'status',
@@ -37,7 +24,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
     return (
         <div
             ref={ref}
-            className={cn(toastVariants({ tone: resolvedTone }), className)}
+            className={cn('mr-toast', className)}
             role={roleByTone[resolvedTone]}
             aria-live={ariaLiveByTone[resolvedTone]}
             data-tone={resolvedTone}
