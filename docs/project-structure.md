@@ -26,8 +26,7 @@ library-monority-react/
 │       │   │   ├── navigation/            # (empty)
 │       │   │   └── providers/             # (empty)
 │       │   ├── config/
-│       │   │   ├── app-routes.tsx
-│       │   │   └── navigation.js
+│       │   │   └── app-routes.tsx
 │       │   ├── docs/                      # Doc pages for UI kit
 │       │   │   ├── components/
 │       │   │   │   ├── AvatarDocs.tsx
@@ -56,15 +55,12 @@ library-monority-react/
 │       │   │   ├── AppPage.tsx
 │       │   │   ├── AppShell.test.jsx
 │       │   │   └── AppShell.tsx
-│       │   ├── lib/
-│       │   │   └── cn.js
 │       │   ├── providers/
 │       │   │   ├── auth-context.js
 │       │   │   ├── AuthProvider.test.jsx
 │       │   │   ├── AuthProvider.tsx
 │       │   │   └── AppProviders.tsx
 │       │   ├── routes/
-│       │   │   ├── route-config.ts
 │       │   │   └── router.tsx
 │       │   ├── seo/
 │       │   │   ├── site-config.js
@@ -283,12 +279,9 @@ library-monority-react/
 │   │   ├── package.json
 │   │   └── scripts/
 │   │       ├── generate-component.js
-│   │       ├── sync-showcase.js
-│   │       └── validate.js
+│   │       └── sync-showcase.js
 │   └── scripts/
 │       ├── README.md
-│       ├── generate-component.js
-│       ├── sync-showcase.js
 │       └── validate.js
 ├── docs/
 │   └── REORGANIZATION_STATUS.md
