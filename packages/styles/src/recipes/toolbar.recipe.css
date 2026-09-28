@@ -15,25 +15,11 @@
         background: var(--mr-bg-surface-strong);
     }
 
-    .mr-toolbar__group,
-    .mr-toolbar__center {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--mr-space-1);
-        align-items: center;
-        min-width: 0;
-    }
-
     @media (max-width: 900px) {
         .mr-toolbar {
             flex-direction: column;
             align-items: stretch;
             --mr-toolbar-padding: var(--mr-space-3);
-        }
-
-        .mr-toolbar__group,
-        .mr-toolbar__center {
-            width: 100%;
         }
     }
 }

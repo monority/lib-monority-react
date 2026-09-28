@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { Button, CopyButton, IconButton, Spinner, ThemeScope } from '@monority/ui'
-import { positionOverlay } from '../../../../packages/ui/src/internal/position/position'
+import { Button, CopyButton, IconButton, positionOverlay, Spinner, ThemeScope } from '@monority/ui'
 import './harness.css'
 
 const themes = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast'] as const

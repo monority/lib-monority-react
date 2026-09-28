@@ -79,9 +79,6 @@
     }
 
     /* Legacy sub-classes from legacy.css */
-    .mr-accordion__heading {
-        margin: 0;
-    }
     .mr-accordion__label {
         flex: 1 1 auto;
         min-width: 0;

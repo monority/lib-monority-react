@@ -47,8 +47,7 @@
         text-wrap: pretty;
     }
 
-    .mr-page-header__meta,
-    .mr-page-header__content {
+    .mr-page-header__meta {
         display: flex;
         flex-wrap: wrap;
         gap: var(--mr-space-3);

@@ -47,9 +47,6 @@
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-fg-strong);
     }
-    .mr-table__cell--center {
-        text-align: center;
-    }
     .mr-table__cell--right {
         text-align: right;
     }
