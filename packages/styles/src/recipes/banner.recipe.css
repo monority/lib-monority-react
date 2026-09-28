@@ -38,7 +38,7 @@
 
     .mr-banner__eyebrow {
         color: var(--mr-banner-marker);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-bold);
         letter-spacing: 0.02em;
         line-height: var(--mr-leading-snug);
@@ -47,7 +47,7 @@
     .mr-banner__title {
         margin: 0;
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);
         text-wrap: balance;
@@ -57,7 +57,7 @@
         max-width: 64ch;
         margin: 0;
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-relaxed);
         text-wrap: pretty;
     }
@@ -66,7 +66,7 @@
         display: flex;
         flex-shrink: 0;
         flex-wrap: wrap;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
         align-items: center;
         justify-content: flex-end;

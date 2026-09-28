@@ -14,7 +14,7 @@
     .mr-date-range-picker__separator {
         flex: 0 0 auto;
         padding-bottom: var(--mr-space-1);
-        font-size: var(--mr-text-lg);
+        font-size: var(--mr-fs-18);
         color: var(--mr-text-secondary);
         line-height: var(--mr-control-size-md);
     }

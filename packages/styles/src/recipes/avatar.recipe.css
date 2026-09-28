@@ -31,7 +31,7 @@
     }
 
     .mr-avatar[data-size='sm'] .mr-avatar__initials {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-avatar[data-size='md'] {
@@ -40,7 +40,7 @@
     }
 
     .mr-avatar[data-size='md'] .mr-avatar__initials {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-avatar[data-size='lg'] {
@@ -49,6 +49,6 @@
     }
 
     .mr-avatar[data-size='lg'] .mr-avatar__initials {
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 }

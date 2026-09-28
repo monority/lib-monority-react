@@ -11,7 +11,7 @@
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
-        gap: var(--mr-space-0);
+        gap: var(--mr-spacing-0);
         min-inline-size: 0;
     }
 
@@ -50,7 +50,7 @@
         flex-shrink: 0;
         color: var(--mr-text-primary);
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-control);
         cursor: pointer;
         user-select: none;
@@ -150,7 +150,7 @@
 
     .mr-switch[data-size='sm'] {
         --mr-switch-scale: var(--mr-switch-scale-sm);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-switch[data-size='md'] {
@@ -159,7 +159,7 @@
 
     .mr-switch[data-size='lg'] {
         --mr-switch-scale: var(--mr-switch-scale-lg);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 }
 

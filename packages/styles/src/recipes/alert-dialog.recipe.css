@@ -71,14 +71,14 @@
     .mr-alert-dialog__title {
         margin: 0;
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-lg);
+        font-size: var(--mr-fs-18);
         font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-alert-dialog__description {
         margin: 0;
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-base);
     }
 
@@ -86,7 +86,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-alert-dialog__confirm:hover {

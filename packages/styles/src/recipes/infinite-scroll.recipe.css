@@ -19,7 +19,7 @@
         gap: var(--mr-surface-gap-sm);
         padding: var(--mr-space-4);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-infinite-scroll__loader::before {
@@ -39,17 +39,17 @@
         justify-content: center;
         padding: var(--mr-space-4);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-infinite-scroll__error {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         padding: var(--mr-space-4);
         color: var(--mr-danger-text);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-infinite-scroll__empty {
@@ -58,18 +58,18 @@
         justify-content: center;
         padding: var(--mr-space-4);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-infinite-scroll__retry {
-        padding: var(--mr-space-2) var(--mr-space-3);
+        padding: var(--mr-spacing-1-5) var(--mr-space-3);
         min-height: var(--mr-control-size-sm);
         border: var(--mr-border-width) solid currentColor;
         border-radius: var(--mr-radius-scale);
         background: transparent;
         cursor: pointer;
         font: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
         transition: background-color var(--mr-dur-150) var(--mr-ease-standard);
     }

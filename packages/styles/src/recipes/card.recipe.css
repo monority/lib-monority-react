@@ -47,14 +47,14 @@
 
     .mr-card__title {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-lg);
+        font-size: var(--mr-fs-18);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-heading);
     }
 
     .mr-card__description {
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-normal);
     }
 
@@ -69,7 +69,7 @@
         padding-block-start: var(--mr-space-3);
         border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-normal);
     }
 

@@ -19,7 +19,7 @@
     }
 
     .mr-stack[data-gap='sm'] {
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-stack[data-gap='md'] {

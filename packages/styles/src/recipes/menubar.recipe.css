@@ -35,7 +35,7 @@
         color: var(--mr-text-secondary);
         cursor: pointer;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         white-space: nowrap;
@@ -96,17 +96,17 @@
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         width: 100%;
         min-block-size: var(--mr-control-size-sm);
-        padding: 0 var(--mr-space-2);
+        padding: 0 var(--mr-spacing-1-5);
         border: 0;
         border-radius: var(--mr-radius-scale);
         background: transparent;
         color: var(--mr-text-primary);
         cursor: pointer;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-snug);
         text-align: start;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
@@ -150,7 +150,7 @@
         margin-inline-start: var(--mr-space-4);
         color: var(--mr-text-secondary);
         font-family: var(--mr-font-mono, ui-monospace, monospace);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-variant-numeric: tabular-nums;
         letter-spacing: 0;
         white-space: nowrap;

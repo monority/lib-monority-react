@@ -89,7 +89,7 @@
             var(--mr-space-1)
         );
         padding-inline-start: var(--mr-control-padding-inline-sm);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-select.mr-select[data-size='md'] {
@@ -105,7 +105,7 @@
             var(--mr-space-1)
         );
         padding-inline-start: var(--mr-control-padding-inline-lg);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 
     .mr-select[multiple],

@@ -43,14 +43,14 @@
     .mr-pre-code--sm {
         padding: var(--mr-space-3);
         border-radius: var(--mr-radius-scale);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-pre-code[data-size='md'],
     .mr-pre-code--md {
         padding: var(--mr-code-padding, var(--mr-space-4));
         border-radius: var(--mr-radius-scale);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     .mr-pre-code[data-wrap='true'],

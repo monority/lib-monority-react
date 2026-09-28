@@ -4,7 +4,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: var(--mr-space-5);
+        gap: var(--mr-spacing-5);
         min-height: 15rem;
         padding: var(--mr-space-8);
         border: var(--mr-border-width) dashed
@@ -25,7 +25,7 @@
     }
     .mr-empty-state__content {
         display: grid;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         max-width: 32rem;
     }
     .mr-empty-state__title {

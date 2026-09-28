@@ -28,7 +28,7 @@
         border: none;
         background: transparent;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
         cursor: pointer;
@@ -59,23 +59,23 @@
 
     .mr-accordion__panel {
         padding: 0 var(--mr-space-4) var(--mr-space-4);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
     }
 
     .mr-accordion[data-size='sm'] .mr-accordion__trigger {
-        padding: var(--mr-space-2) var(--mr-space-3);
-        font-size: var(--mr-text-xs);
+        padding: var(--mr-spacing-1-5) var(--mr-space-3);
+        font-size: var(--mr-fs-12);
     }
     .mr-accordion[data-size='sm'] .mr-accordion__panel {
         padding: 0 var(--mr-space-3) var(--mr-space-3);
     }
     .mr-accordion[data-size='lg'] .mr-accordion__trigger {
-        padding: var(--mr-space-4) var(--mr-space-5);
-        font-size: var(--mr-text-md);
+        padding: var(--mr-space-4) var(--mr-spacing-5);
+        font-size: var(--mr-fs-16);
     }
     .mr-accordion[data-size='lg'] .mr-accordion__panel {
-        padding: 0 var(--mr-space-5) var(--mr-space-5);
+        padding: 0 var(--mr-spacing-5) var(--mr-spacing-5);
     }
 
     /* Legacy sub-classes from legacy.css */

@@ -77,7 +77,7 @@
         min-width: var(--mr-combobox-list-min-width, 12rem);
         max-height: min(18rem, 50vh);
         overflow-y: auto;
-        padding: var(--mr-space-2);
+        padding: var(--mr-spacing-1-5);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -119,13 +119,13 @@
 
     .mr-combobox__item-label {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-combobox__item-description {
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         line-height: var(--mr-leading-control);
     }
 
@@ -133,7 +133,7 @@
         padding: var(--mr-space-4);
         color: var(--mr-text-secondary);
         text-align: center;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 
     @media (prefers-reduced-motion: reduce) {

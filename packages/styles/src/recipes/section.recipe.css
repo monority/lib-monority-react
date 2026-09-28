@@ -18,12 +18,12 @@
         padding-block: var(--mr-space-8);
     }
     .mr-section[data-spacing='lg'] {
-        --mr-section-gap: var(--mr-space-5);
+        --mr-section-gap: var(--mr-spacing-5);
         padding-block: var(--mr-space-8);
     }
     .mr-section[data-spacing='xl'] {
         --mr-section-gap: var(--mr-space-6);
-        padding-block: var(--mr-space-9);
+        padding-block: var(--mr-spacing-20);
     }
 
     /* Variants */
@@ -37,7 +37,7 @@
     }
 
     .mr-section[data-variant='card'] {
-        padding: var(--mr-space-5);
+        padding: var(--mr-spacing-5);
         background: var(--mr-bg-raised);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
@@ -46,7 +46,7 @@
     /* Title */
     .mr-section__title {
         margin: 0;
-        font-size: var(--mr-text-lg);
+        font-size: var(--mr-fs-18);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
         letter-spacing: 0;
@@ -66,7 +66,7 @@
             padding-block: var(--mr-space-8);
         }
         .mr-section[data-spacing='xl'] {
-            padding-block: var(--mr-space-7);
+            padding-block: var(--mr-spacing-10);
         }
     }
 }

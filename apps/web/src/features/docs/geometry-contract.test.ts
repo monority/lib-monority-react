@@ -104,7 +104,7 @@ describe('Step 31 geometry contracts', () => {
         expect(navigation).not.toContain('var(--mr-z-dropdown, 50)')
         expect(menubar).not.toContain('var(--mr-z-dropdown, 50)')
         expect(source('recipes/skeleton.recipe.css')).toContain('var(--mr-duration-spin)')
-        expect(source('recipes/progress.recipe.css')).toContain('var(--mr-dur-1200)')
+        expect(source('recipes/progress.recipe.css')).toContain('var(--mr-duration-pulse)')
     })
 
     it('uses the corrected aspect ratio token', () => {

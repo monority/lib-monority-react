@@ -11,7 +11,7 @@
     .mr-progress {
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         width: 100%;
     }
 
@@ -19,18 +19,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
     }
 
     .mr-progress__label {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
     }
 
     .mr-progress__value {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-bold);
         letter-spacing: 0.04em;
         color: var(--mr-text-secondary);
@@ -68,7 +68,8 @@
     .mr-progress[data-mode='indeterminate'] .mr-progress__bar,
     .mr-progress__bar--indeterminate {
         width: 40% !important;
-        animation: mr-progress-indeterminate var(--mr-dur-1200) var(--mr-ease-standard) infinite;
+        animation: mr-progress-indeterminate var(--mr-duration-pulse) var(--mr-ease-standard)
+            infinite;
     }
 
     .mr-progress[data-tone='neutral'] .mr-progress__bar {

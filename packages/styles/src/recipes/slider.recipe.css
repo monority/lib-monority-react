@@ -1,13 +1,13 @@
 @layer monority.recipes {
     .mr-slider-field {
         display: grid;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-slider__row {
         display: flex;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-slider {
@@ -142,7 +142,7 @@
     .mr-slider__value {
         min-width: 2.5rem;
         text-align: center;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
     }

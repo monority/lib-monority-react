@@ -30,7 +30,7 @@
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-normal);
         box-shadow: var(--mr-shadow-overlay);
         /* Opacity-only: placement rules own transform. */

@@ -2,17 +2,17 @@
     .mr-file-list {
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-2);
-        margin-block-start: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
+        margin-block-start: var(--mr-spacing-1-5);
     }
 
     .mr-file-list__item {
-        --mr-file-list-item-padding-block: var(--mr-space-2);
+        --mr-file-list-item-padding-block: var(--mr-spacing-1-5);
         --mr-file-list-item-padding-inline: var(--mr-space-3);
 
         display: flex;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-file-list-item-padding-block) var(--mr-file-list-item-padding-inline);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
@@ -43,7 +43,7 @@
     }
 
     .mr-file-list__name {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-relaxed);
@@ -53,7 +53,7 @@
     }
 
     .mr-file-list__size {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         color: var(--mr-text-secondary);
         line-height: var(--mr-leading-snug);
     }
@@ -70,7 +70,7 @@
         background: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         line-height: 1;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
             var(--mr-duration-fast) var(--mr-ease-standard);

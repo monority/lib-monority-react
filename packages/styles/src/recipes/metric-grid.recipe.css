@@ -38,7 +38,7 @@
         .mr-metric-grid {
             --mr-metric-grid-gap: var(--mr-space-3);
 
-            padding: var(--mr-space-2);
+            padding: var(--mr-spacing-1-5);
         }
     }
 }

@@ -35,7 +35,7 @@
 
     .mr-filter-bar__chips {
         flex: 1 1 auto;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-filter-bar__meta {
@@ -43,7 +43,7 @@
         justify-content: flex-end;
         align-self: center;
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-normal);
     }
 
@@ -56,7 +56,7 @@
         border-radius: var(--mr-radius-full);
         background: color-mix(in srgb, var(--mr-bg-sunken) 76%, transparent);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
         white-space: nowrap;
