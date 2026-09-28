@@ -1,603 +1,107 @@
-# AGENTS.md
+# AGENTS.md — Monority UI
+
+Instructions pour tout agent (IA ou humain) qui modifie ce dépôt. Ce fichier décrit l'état actuel du projet et ses règles. En cas de conflit : ce fichier et `docs/design/` font foi, puis le code existant.
+
+## 1. Le projet
+
+Monority UI est une librairie de composants React 19 pilotée par des design tokens : changement de thème au runtime, rebranding par client via les tokens, densités adaptables. Seul `@monority/ui` est destiné à être publié sur npm. Tout le reste sert à le produire, le tester ou le documenter.
+
+| Chemin | Rôle |
+| --- | --- |
+| `packages/tokens/` | Source des tokens (JSON DTCG dans `src/`), générateur, checks de conformité (`scripts/`) |
+| `packages/styles/` | CSS source : `recipes/` (une recette par composant), `base/`, `utilities/`, `tokens/generated/` (**généré**) |
+| `packages/ui/` | Composants React (`src/components/<catégorie>/<composant>/`), primitives, providers, hooks internes |
+| `apps/web/` | Site de documentation, playground, moodboard, tests e2e (Playwright) |
+| `tooling/generators/` | Générateur de composant, validation |
+| `docs/design/` | Langage visuel (`language.md`), specs par composant (`components/`), références |
+
+## 2. Commandes
+
+| Besoin | Commande |
+| --- | --- |
+| Tout construire (ordre géré par turbo) | `pnpm build` |
+| Tous les tests (inclut les checks de tokens) | `pnpm test` |
+| Types | `pnpm typecheck` |
+| Format (bloquant en CI) | `pnpm format:check` / `pnpm format` |
+| Lint | `pnpm lint` |
+| Reconstruire après un changement de token | `pnpm --filter @monority/tokens build:downstream` (`:web` pour inclure l'app) |
+| Tests du package construit | `pnpm --filter @monority/ui test:dist` |
+| E2E | `pnpm --filter @monority/web test:e2e` |
+
+## 3. Chaîne de build et fichiers générés
+
+Ordre : `tokens → styles → ui → web`. Il est déclaré par les dépendances workspace ; turbo l'applique.
+
+- **Ne jamais modifier** `packages/styles/src/tokens/generated/*`. Modifier les JSON de `packages/tokens/src/` ou le générateur (`scripts/sd-formats.mjs`), puis reconstruire.
+- `apps/web` consomme le CSS **construit** de `@monority/ui`. Reconstruire les tokens seuls ne change pas le rendu de l'app : utiliser `build:downstream`. Avant de conclure qu'un changement visuel fonctionne, le vérifier par `getComputedStyle` dans le navigateur, pas seulement dans le code.
+- Les fichiers générés et `docs/design/reference/` sont exclus de Biome : leur format est imposé et vérifié par T1.
+
+## 4. Tokens et couleurs
+
+- Aucune valeur visuelle en dur dans les recettes et les composants : uniquement des tokens `--mr-*` (exceptions : `0`, `1px`, `2px`, pourcentages de mise en page). Vérifié par T3.
+- Couleurs en OKLCH. Les neutres passent par `--mr-neutral-chroma` et `--mr-neutral-hue`, la marque par `--mr-brand-*`. Ne jamais coder une chroma ou une hue en dur dans un thème neutre.
+- Tout token dépendant de la marque doit rester réévalué sur `[data-brand]` (le générateur s'en charge : ne pas contourner).
+- Contrastes : chaque paire est vérifiée par X2. Une valeur ne descend jamais sous son seuil ; le thème high-contrast a des seuils propres qui interdisent toute régression. Viser une marge (≈ 3.3 pour un seuil de 3), pas le minimum.
+- Tokens dépréciés (`deprecated.json`, `--mr-space-*`, alias de `deprecated.css`) : ne jamais les utiliser dans du code nouveau. Ne jamais changer la cible d'un alias déprécié : il existe pour la rétrocompatibilité, donc on migre les usages, pas l'alias.
+
+## 5. CSS et composants
+
+- Une classe de base préfixée par composant (`.mr-button`, `.mr-input`…). Variantes et états via attributs `data-*` (`[data-variant]`, `[data-size]`, `[data-state]`).
+- Les modificateurs BEM (`.mr-btn--primary`) sont **en cours de suppression** : ne pas en ajouter. Voir `PLAN.md`.
+- Une recette par composant dans `packages/styles/src/recipes/`, dans la layer des recettes.
+- Anatomie d'un composant : `Component.tsx`, `Component.types.ts`, `Component.test.tsx`, `index.ts`. Un nouveau composant public doit aussi être ajouté à `tsup.config.ts`, aux `exports` de `packages/ui/package.json` et aux tests d'exports.
+- État contrôlé / non contrôlé : utiliser `useControllableState` (`src/internal/`), pas une réimplémentation locale.
+- React 19 uniquement : `ref` est une prop. `forwardRef` est en cours de retrait ; ne pas l'utiliser dans du code nouveau.
+- TypeScript strict. Pas de `any`, pas d'index signature `[key: string]: any`, pas de cast pour faire taire le compilateur.
+- Accessibilité : rôles implicites plutôt qu'explicites redondants ; les tests vérifient le comportement accessible (`getByRole`), pas les détails d'implémentation (`tagName`, attributs redondants). Les bordures de contrôle au repos atteignent 3:1 (WCAG 1.4.11), et un contrôle à bordure a toujours un fond opaque (T8).
+
+## 6. Règles du package publié
+
+Tout ce qui part sur npm doit fonctionner chez un consommateur qui n'a pas ce monorepo.
+
+- Aucun fichier de `dist/` ne référence un chemin hors du package.
+- Pas de condition d'export pointant vers `./src` en dehors de `monority-source`, réservée au monorepo.
+- Code partagé entre points d'entrée : jamais dupliqué (`splitting: true`). Un contexte React n'est défini qu'une fois dans tout le `dist/`.
+- Détection de la production : uniquement la forme littérale `process.env.NODE_ENV`, jamais via `globalThis`.
+- Ne pas imposer de styles globaux ni de noms génériques (layers, classes) qui entrent en collision avec l'application hôte.
+
+## 7. Checks de conformité
+
+Tous lancés par `pnpm test` (package tokens) :
+
+| Check | Vérifie |
+| --- | --- |
+| T1 | Équivalence entre sources JSON et CSS généré |
+| T3 | Aucune valeur en dur |
+| T6 | Tokens dépréciés et références manquantes |
+| T7 | Fraîcheur du CSS construit (`dist/`) |
+| T8 | Fond opaque des contrôles à bordure |
+| X2 | Contrastes, tous thèmes, toutes paires |
+| S11 | Valeurs conformes aux specs |
+
+Un nouveau check doit être testé en négatif : prouver qu'il échoue quand la règle est violée.
+
+## 8. Git et travail en sessions
+
+- Plusieurs sessions peuvent travailler dans le même worktree. Stager **par liste de chemins**, jamais `git add .` ni `git add -A`. Vérifier l'index (`git diff --cached --stat`) avant chaque commit.
+- Ne jamais modifier, formater ou commiter un fichier qu'on n'a pas soi-même modifié dans la tâche.
+- Interdits sans instruction explicite : `git reset --hard`, `git clean`, `git push --force`, réécriture d'historique.
+- Un commit par sujet, message court au format `type(portée): description` en français (`fix`, `feat`, `refactor`, `build`, `ci`, `test`, `docs`, `style`, `lint`). Un commit de formatage ne contient que du formatage.
+- Renommer un fichier en changeant seulement la casse (Windows) : `git mv A tmp && git mv tmp a`.
+- Fins de ligne LF (`.gitattributes`). Ne pas commiter de BOM.
+- Le chantier en cours est décrit dans `PLAN.md`. N'exécuter que l'étape demandée ; si une décision marquée `[DÉCISION]` n'est pas tranchée, s'arrêter et demander.
+- Contexte presque épuisé : s'arrêter sur un commit propre et écrire `HANDOFF.md` (non commité) : commits faits, travail restant, pièges rencontrés. En début de session, lire `HANDOFF.md` s'il existe.
+
+## 9. Méthode
+
+- **Ne rien inventer** : comportement, API, décision produit, résultat de test. Inspecter le dépôt ; si l'ambiguïté persiste, demander.
+- **Pas de hors-périmètre** : une amélioration repérée en dehors de la tâche est signalée dans le rapport, pas implémentée.
+- **Pas de système en double** : chercher l'existant avant de créer un composant, hook, utilitaire, token ou test. Un seul moyen évident par responsabilité.
+- **Avant de supprimer** un fichier ou un symbole : `git grep` pour prouver qu'il n'est plus utilisé. Pour un diagnostic de lint, lire la ligne **et la colonne** : le symbole visé n'est pas forcément celui qu'on croit.
+- **Aucun changement de rendu non annoncé** : si une modification change l'apparence, montrer l'avant/après et attendre validation.
+- **Preuves plutôt qu'affirmations** : « compile » n'est pas « fonctionne ». Un changement visuel se vérifie dans le navigateur ; une affirmation de performance se mesure.
+- **Corriger à la source** : ne pas abaisser un seuil, désactiver une règle ou ajouter une exception pour faire passer un check sans le justifier dans le rapport.
 
-## Mission
+## 10. Rapport de fin de tâche
 
-You are an implementation agent working inside an existing software project.
-
-Your job is to make **correct, complete, minimal, verifiable changes**.
-
-Do not optimize for producing code quickly.
-Optimize for producing a repository state that is correct, coherent, tested, and reviewable.
-
-The repository is the source of truth.
-
----
-
-# 1. Non-Negotiable Rules
-
-## 1.1 Never Invent
-
-Never invent:
-
-- product behavior
-- domain rules
-- APIs
-- data
-- database fields
-- persistence formats
-- UI states
-- scientific facts
-- architectural boundaries
-- test results
-- tool output
-- files or functions that have not been inspected
-
-If something is ambiguous:
-
-1. inspect the repository
-2. inspect tests and related code
-3. derive the behavior only if it is unambiguous
-4. otherwise state the assumption or ask for clarification
-
-Never silently invent product decisions.
-
----
-
-## 1.2 Follow the Existing Architecture
-
-Before implementing anything:
-
-- inspect the relevant files
-- inspect nearby consumers
-- inspect existing tests
-- inspect existing models/utilities/components
-- inspect repository conventions
-
-Prefer existing patterns over introducing new ones.
-
-Do not redesign the architecture because another architecture appears cleaner.
-
-Do not create a parallel implementation when an existing implementation can be extended.
-
----
-
-## 1.3 No Scope Creep
-
-Implement the requested change and the changes strictly required for it.
-
-Do not silently add:
-
-- unrelated refactors
-- speculative abstractions
-- new features
-- new dependencies
-- redesigns
-- migrations
-- cleanup unrelated to the task
-
-If you discover a useful improvement outside the scope, report it instead of implementing it.
-
----
-
-# 2. Component Architecture
-
-## 2.1 Componentize Everything
-
-Give every meaningful visual concept its own component.
-
-Prefer clear, descriptive names such as:
-
-```text
-Gallery
-Masonry
-Lightbox
-Sidebar
-Logo
-Glass
-Splash
-SearchField
-GalleryItem
-```
-
-If a UI structure could reasonably appear twice, make it a component with props instead of duplicating markup.
-
-Prefer:
-
-```tsx
-<GalleryItem item={item} onOpen={onOpen} />
-```
-
-over duplicated JSX.
-
----
-
-## 2.2 Components Render
-
-Components should primarily describe presentation.
-
-Components may own genuinely local UI state:
-
-- hover
-- focus
-- temporary animation state
-- input draft
-- local open/closed state
-
-Do not put domain/application logic inside presentation components.
-
-Prefer:
-
-```text
-Model / Application
-        ↓
-     derived data
-        ↓
-    UI components
-        ↓
-        DOM
-```
-
-not:
-
-```text
-UI component
- ├── domain rules
- ├── persistence
- ├── data orchestration
- ├── business decisions
- └── rendering
-```
-
----
-
-## 2.3 Models Own Behavior
-
-When a concept has meaningful state or behavior, give it a model/application layer.
-
-For example:
-
-```text
-Gallery
-GalleryModel
-```
-
-The UI consumes the model.
-
-The model owns:
-
-- state
-- derived state
-- transitions
-- domain rules
-- calculations
-- behavior
-
-Do not duplicate the same logic in multiple components.
-
----
-
-## 2.4 Single Source of Truth
-
-Persist and own the minimum necessary state.
-
-Prefer:
-
-```text
-source state
-    ↓
-derived state
-    ↓
-presentation
-```
-
-Avoid storing values that can be deterministically derived.
-
-Do not synchronize the same state manually across multiple unrelated systems unless synchronization is explicitly part of the design.
-
----
-
-# 3. Implementation Principles
-
-## 3.1 Prefer Simple Code
-
-Use the smallest implementation that correctly solves the problem.
-
-Prefer:
-
-- explicit code
-- clear names
-- focused functions
-- predictable control flow
-- composition
-- pure logic where practical
-
-Avoid:
-
-- clever abstractions
-- premature generalization
-- unnecessary configuration
-- excessive indirection
-- framework tricks
-
-If an abstraction exists only "for future flexibility", remove it unless the task requires it.
-
----
-
-## 3.2 No Abstraction Without Evidence
-
-Before creating an abstraction, ask:
-
-- Is this actually repeated?
-- Is the repetition meaningful?
-- Does the abstraction reduce complexity?
-- Does it clarify the architecture?
-- Is it easier to test?
-
-Do not create abstractions merely because code could theoretically be reused.
-
----
-
-## 3.3 No Duplicate Systems
-
-Before creating a:
-
-- component
-- hook
-- utility
-- model
-- query
-- API client
-- state mechanism
-- type
-
-search for an existing equivalent.
-
-Extend the existing system when appropriate.
-
-There must be one obvious implementation for each important responsibility.
-
----
-
-## 3.4 Keep Public APIs Small
-
-Expose only what consumers need.
-
-Do not expose internal implementation details unnecessarily.
-
-Prefer stable semantic APIs over leaking internal state.
-
----
-
-# 4. TypeScript
-
-Use strict typing.
-
-Avoid `any`.
-
-Prefer `unknown` with explicit narrowing when the type is genuinely unknown.
-
-Avoid unnecessary type assertions.
-
-Do not silence compiler errors without understanding the underlying problem.
-
-Prefer types that make invalid states difficult to represent.
-
----
-
-# 5. Testing
-
-Tests must prove behavior.
-
-Use the appropriate level:
-
-```text
-Pure/domain logic       → unit tests
-Application workflows  → integration tests
-Critical user flows    → browser/E2E tests
-Visual interaction     → real browser verification
-```
-
-Do not replace domain tests with E2E tests.
-
-Do not consider compilation proof of correctness.
-
----
-
-## 5.1 Regression Rule
-
-Every reproducible bug should receive regression coverage when practical.
-
-Workflow:
-
-```text
-reproduce
-→ test
-→ fix
-→ test
-→ verify related behavior
-```
-
-Do not only test the happy path.
-
----
-
-# 6. Browser Verification
-
-If the change affects UI, the real application must be verified in a browser.
-
-Do not consider the task complete because tests compile or pass.
-
-Verify the relevant:
-
-- user interaction
-- layout
-- responsive behavior
-- loading/empty/error states
-- scrolling
-- keyboard interaction
-- overlays/modals
-- navigation
-- console
-- runtime errors
-- network failures
-
-Use the actual development application whenever possible.
-
-Never claim browser verification that was not actually performed.
-
----
-
-# 7. Evidence Over Assumptions
-
-The level of verification must match the risk.
-
-Examples:
-
-```text
-Pure function
-→ targeted unit test
-
-Domain rule
-→ domain test + related tests
-
-Persistence change
-→ persistence test
-
-API change
-→ API/integration verification
-
-UI change
-→ browser verification
-
-Rendering / GPU change
-→ browser + rendering verification
-
-Performance claim
-→ measurement
-```
-
-Do not say "works" when the evidence only shows "compiles".
-
----
-
-# 8. Work as Complete Vertical Slices
-
-For non-trivial work, prefer:
-
-```text
-understand
-→ model/domain
-→ application behavior
-→ UI
-→ tests
-→ browser verification
-→ review
-```
-
-Do not stop after creating scaffolding unless explicitly requested.
-
-A completed step should leave the repository in a coherent state.
-
-Prefer one complete feature slice over several disconnected partial implementations.
-
----
-
-# 9. Repository Safety
-
-Never destroy existing user work.
-
-Before editing:
-
-```bash
-git status
-```
-
-Before finishing:
-
-```bash
-git diff
-git status
-```
-
-Never use destructive commands such as:
-
-```bash
-git reset --hard
-git clean -fd
-```
-
-unless explicitly instructed.
-
-Do not overwrite unrelated changes.
-
-Do not commit:
-
-- secrets
-- generated garbage
-- temporary debugging code
-- unrelated changes
-- local environment files
-
----
-
-# 10. Dependency Discipline
-
-Before adding a dependency:
-
-1. check whether the repository already provides the functionality
-2. check existing dependencies
-3. check whether the platform/runtime provides it
-4. consider bundle/runtime cost
-5. consider maintenance cost
-
-Do not add a dependency for trivial functionality.
-
----
-
-# 11. Documentation
-
-Update documentation when the change modifies:
-
-- architecture
-- public APIs
-- important invariants
-- developer workflow
-- persistent formats
-- significant behavior
-
-Do not create documentation that merely repeats obvious code.
-
-Documentation must describe the current system, not the intended future system.
-
----
-
-# 12. Context Discipline
-
-Do not read the entire repository indiscriminately.
-
-Start with:
-
-1. task
-2. relevant files
-3. call sites
-4. tests
-5. architecture boundaries
-
-Expand the investigation only when evidence requires it.
-
-Prefer targeted searches over massive file dumps.
-
-Keep the working context focused.
-
----
-
-# 13. Agent Execution Protocol
-
-For every non-trivial task:
-
-### Step 1 — Inspect
-
-Understand:
-
-- current behavior
-- architecture
-- relevant files
-- existing tests
-- constraints
-- git state
-
-### Step 2 — Plan
-
-Identify:
-
-- what changes
-- what does not change
-- where the logic belongs
-- how it will be tested
-- how it will be verified
-
-### Step 3 — Implement
-
-Make the smallest coherent change.
-
-Follow existing patterns.
-
-### Step 4 — Validate
-
-Run the relevant tests.
-
-Fix failures rather than ignoring them.
-
-### Step 5 — Browser QA
-
-When UI is affected, verify the actual application.
-
-### Step 6 — Review
-
-Inspect:
-
-```bash
-git diff
-git status
-```
-
-Look specifically for:
-
-- accidental changes
-- duplicated logic
-- dead code
-- architecture drift
-- missing tests
-- unfinished integration
-
-### Step 7 — Report
-
-Report facts, not assumptions.
-
-Include:
-
-```text
-Implemented
-Tests
-Browser verification
-Files changed
-Known limitations
-Commit
-```
-
-Only report checks that were actually performed.
-
----
-
-# 14. Definition of Done
-
-A task is done only when:
-
-- the requested behavior is implemented
-- the architecture remains coherent
-- TypeScript/type checks pass where applicable
-- relevant tests pass
-- regression coverage exists where appropriate
-- UI is browser-verified when applicable
-- unexpected runtime errors are resolved or reported
-- the diff has been reviewed
-- no unrelated work was introduced
-- known limitations are reported
-
----
-
-# Final Rule
-
-**Correctness > completeness > simplicity > speed.**
-
-When uncertain, investigate.
-
-When something is already implemented, reuse it.
-
-When behavior belongs to the model, keep it out of the UI.
-
-When something is repeated, componentize it.
-
-When something is not verified, do not claim that it works.
-
-When a task is complete, leave the repository in a clean, coherent, testable state.
+Court et factuel : ce qui a été fait (hash des commits), preuves (commandes et résultats), ce qui n'a pas été fait et pourquoi, décisions en attente, améliorations repérées hors périmètre. Ne mentionner que les vérifications réellement effectuées.
