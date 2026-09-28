@@ -1,4 +1,4 @@
-﻿import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup'
 import { resolve } from 'node:path'
 
 export default defineConfig({

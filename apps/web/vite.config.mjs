@@ -1,4 +1,4 @@
-﻿import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import fs from 'node:fs'
 import { defineConfig, normalizePath } from 'vite'

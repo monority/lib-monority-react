@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 // ──────────────────────────────────────────────
 // Root barrel import — verifies `@monority/ui` resolves correctly

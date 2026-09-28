@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { DatePicker } from '@monority/ui/date-picker'
 
 export function DatePickerBasicExample() {

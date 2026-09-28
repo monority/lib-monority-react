@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 # projet sous pnpm : ne pas reintroduire de lock npm
 package-lock.json
 node_modules
@@ -45,6 +45,7 @@ npm-debug.log*
 # Misc
 *.tsbuildinfo
 CLAUDE.md
+HANDOFF.md
 .cline/config.json
 .continue/config.json
 .opencode/skills/frontend-design/SKILL.md
