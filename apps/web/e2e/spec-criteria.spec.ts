@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { buildCriteriaReport } from '../src/test/spec-criteria'
+import { buildCriteriaReport } from '../src/shared/test/spec-criteria'
 
 const syntheticSpec = `# Harness
 ## Critères de vérification

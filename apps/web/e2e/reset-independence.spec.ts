@@ -15,7 +15,7 @@ import { expect, test, type Page } from '@playwright/test'
  * Les styles calculés (box-sizing, police, marges) doivent être identiques
  * dans les deux cas.
  */
-const REGISTRY = resolve(process.cwd(), 'src/docs/components/registry.ts')
+const REGISTRY = resolve(process.cwd(), 'src/features/docs/components/registry.ts')
 const slugs = [...readFileSync(REGISTRY, 'utf8').matchAll(/slug: '([^']+)'/g)].map((m) => m[1])
 
 const PROPS = [

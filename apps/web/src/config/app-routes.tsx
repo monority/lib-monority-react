@@ -1,12 +1,10 @@
-import { AppLayout } from '@/app/AppLayout'
-import { AdminPage } from '@/app/pages/AdminPage'
-import { DashboardPage } from '@/app/pages/DashboardPage'
-import { MoodboardPage } from '@/app/pages/MoodboardPage'
-import { NotFoundPage } from '@/app/pages/NotFoundPage'
-import { PlaygroundPage } from '@/app/pages/PlaygroundPage'
-import { ShowcasePage } from '@/app/pages/ShowcasePage'
-import { HomePage } from '@/home/HomePage'
-import { HarnessPage } from '@/harness/HarnessPage'
+import { AppLayout } from '@/shared/layouts/AppLayout'
+import { MoodboardPage } from '@/features/moodboard/MoodboardPage'
+import { NotFoundPage } from '@/shared/NotFoundPage'
+import { PlaygroundPage } from '@/features/playground/PlaygroundPage'
+import { ShowcasePage } from '@/features/showcase/ShowcasePage'
+import { HomePage } from '@/features/home/HomePage'
+import { HarnessPage } from '@/features/harness/HarnessPage'
 import type { RouteObject } from 'react-router-dom'
 
 interface AppRouteDefinition {
@@ -24,21 +22,9 @@ const appRouteDefinitions: AppRouteDefinition[] = [
         includeInPrimaryNavigation: true,
     },
     {
-        key: 'dashboard',
-        label: 'Dashboard',
-        path: '/dashboard',
-        includeInPrimaryNavigation: true,
-    },
-    {
         key: 'playground',
         label: 'Playground',
         path: '/playground',
-        includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'admin',
-        label: 'Admin',
-        path: '/admin',
         includeInPrimaryNavigation: true,
     },
     {
@@ -74,8 +60,6 @@ export const appRoutes: RouteObject[] = [
     {
         element: <AppLayout />,
         children: [
-            { path: 'dashboard', element: <DashboardPage /> },
-            { path: 'admin', element: <AdminPage /> },
             { path: 'playground', element: <PlaygroundPage /> },
             { path: 'showcase', element: <ShowcasePage /> },
         ],
@@ -95,7 +79,7 @@ export const appRoutes: RouteObject[] = [
     {
         path: '/docs/*',
         lazy: async () => {
-            const { DocsPage } = await import('@/docs/DocsPage')
+            const { DocsPage } = await import('@/features/docs/DocsPage')
             return { Component: DocsPage }
         },
     },
