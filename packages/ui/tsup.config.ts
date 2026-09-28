@@ -79,6 +79,7 @@ export default defineConfig({
         sidebarLayout: 'src/components/navigation/sidebar-layout/index.ts',
         topbar: 'src/components/navigation/topbar/index.ts',
         reset: 'src/styles/reset.css',
+        utilities: 'src/styles/utilities.css',
     },
     format: ['esm'],
     banner: { js: '"use client";' },

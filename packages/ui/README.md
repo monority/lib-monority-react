@@ -87,7 +87,7 @@ tree-shaking (74 total, mirroring `package.json` `exports`):
 | `./tooltip` | `./topbar` |
 | `./async-state-notice` | `./popover` |
 | `./styles.css` | `./index.css` |
-| `./reset.css` | |
+| `./reset.css` | `./utilities.css` |
 
 ```tsx
 import { Button } from '@monority/ui/button'
@@ -99,6 +99,7 @@ import '@monority/ui/styles.css'
 
 - Import one CSS file once in the app entry (`@monority/ui/styles.css`).
 - The reset is opt-in: import `@monority/ui/reset.css` explicitly (see above).
+- The utility classes are opt-in too: import `@monority/ui/utilities.css` and use the `mr-` prefixed classes (`mr-surface`, `mr-cluster`, `mr-between`, `mr-stack-xs|s|m|l|xl`). Nothing generic (`.container`, `.grid`, `.section`, `.stack`) ships in the main bundle.
 - Component CSS ships with this package (built from `packages/styles` CSS recipes into `dist/index.css`).
 - Public CSS hooks use the `mr-` prefix.
 - Prefer stable `data-*` hooks for variants and states.

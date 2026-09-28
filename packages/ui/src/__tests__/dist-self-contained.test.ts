@@ -75,6 +75,19 @@ describe('dist — étanchéité du paquet', () => {
         expect(reset).toContain('text-rendering')
     })
 
+    it('les utilitaires génériques sont hors du bundle principal', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).not.toContain('.mr-surface')
+        expect(css).not.toContain('.mr-cluster')
+        expect(css).not.toContain('.container {')
+        expect(css).not.toContain('.stack-m')
+
+        const utilities = readFileSync(resolve(distDir, 'utilities.css'), 'utf8')
+        expect(utilities).toContain('.mr-surface')
+        expect(utilities).toContain('.mr-cluster')
+        expect(utilities).toContain('.mr-stack-m')
+    })
+
     it('tous les fichiers JS du dist portent la bannière "use client"', () => {
         const jsFiles = walk(distDir).filter((f) => f.endsWith('.js'))
         expect(jsFiles.length).toBeGreaterThan(0)

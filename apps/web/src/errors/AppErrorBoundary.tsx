@@ -38,8 +38,8 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
 
         return (
             <Container size="md">
-                <Section spacing="lg" className="stack-m">
-                    <div className="surface mr-app-error">
+                <Section spacing="lg" className="mr-stack-m">
+                    <div className="mr-surface mr-app-error">
                         <Stack gap="md">
                             <Text tone="strong" className="eyebrow">
                                 Application error
@@ -51,7 +51,7 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
                                 Le starter reste maintenant capable d&apos;afficher un etat
                                 d&apos;erreur propre plutot qu&apos;un ecran casse.
                             </Text>
-                            <div className="cluster">
+                            <div className="mr-cluster">
                                 <Button onClick={this.handleReload}>Recharger</Button>
                             </div>
                         </Stack>
