@@ -1,26 +1,8 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl, useFormControl } from '@/primitives/form-control'
 import { Field } from '@/components/forms/field/Field'
 import type { CheckboxProps } from './Checkbox.types'
-
-const checkboxVariants = cva({
-    base: 'mr-checkbox',
-    variants: {
-        tone: {
-            accent: 'mr-checkbox--accent',
-            neutral: 'mr-checkbox--neutral',
-            danger: 'mr-checkbox--danger',
-        },
-        size: {
-            sm: 'mr-checkbox--sm',
-            md: 'mr-checkbox--md',
-            lg: 'mr-checkbox--lg',
-        },
-    },
-    defaultVariants: { tone: 'accent', size: 'md' },
-})
 
 const CheckboxInner = forwardRef<HTMLInputElement, Omit<CheckboxProps, 'id'>>(
     function CheckboxInner(
@@ -85,13 +67,7 @@ const CheckboxInner = forwardRef<HTMLInputElement, Omit<CheckboxProps, 'id'>>(
         return (
             <Field className={className} hint={hint} error={error}>
                 <label
-                    className={cn(
-                        checkboxVariants({ tone: resolvedTone, size: resolvedSize }),
-                        resolvedChecked && 'mr-checkbox--checked',
-                        disabled && 'mr-checkbox--disabled',
-                        isInvalid && 'mr-checkbox--invalid',
-                        indeterminate && 'mr-checkbox--indeterminate'
-                    )}
+                    className={cn('mr-checkbox')}
                     htmlFor={ctx.inputId}
                     data-tone={resolvedTone}
                     data-size={resolvedSize}

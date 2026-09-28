@@ -1,27 +1,9 @@
 import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { forwardRef, useState } from 'react'
 import type { TextareaProps } from './Textarea.types'
-
-const textareaVariants = cva({
-    base: 'mr-textarea',
-    variants: {
-        tone: {
-            neutral: 'mr-textarea--neutral',
-            accent: 'mr-textarea--accent',
-            danger: 'mr-textarea--danger',
-        },
-        size: {
-            sm: 'mr-textarea--sm',
-            md: 'mr-textarea--md',
-            lg: 'mr-textarea--lg',
-        },
-    },
-    defaultVariants: { tone: 'neutral', size: 'md' },
-})
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
     {
@@ -82,11 +64,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
                 <InputBase
                     as="textarea"
                     ref={ref}
-                    className={cn(
-                        textareaVariants({ tone: resolvedTone, size: resolvedSize }),
-                        disabled && 'mr-textarea--disabled',
-                        isInvalid && 'mr-textarea--invalid'
-                    )}
+                    className={cn('mr-textarea')}
                     data-resize={resize}
                     value={value}
                     defaultValue={defaultValue}

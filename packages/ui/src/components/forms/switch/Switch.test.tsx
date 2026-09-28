@@ -34,8 +34,6 @@ describe('Switch', () => {
         expect(view.textContent).toContain('Enable notifications')
         expect(switchEl?.getAttribute('data-tone')).toBe('accent')
         expect(switchEl?.getAttribute('data-size')).toBe('md')
-        expect(switchEl?.className).toContain('mr-switch--accent')
-        expect(switchEl?.className).toContain('mr-switch--md')
         expect(switchEl?.getAttribute('data-checked')).toBeNull()
         expect(input?.type).toBe('checkbox')
         expect(input?.checked).toBe(false)
@@ -47,9 +45,6 @@ describe('Switch', () => {
         const view = render(<Switch label="Required" checked disabled invalid required />)
         const switchEl = view.querySelector('.mr-switch')
         const input = view.querySelector('input')
-        expect(switchEl?.className).toContain('mr-switch--checked')
-        expect(switchEl?.className).toContain('mr-switch--disabled')
-        expect(switchEl?.className).toContain('mr-switch--invalid')
         expect(switchEl?.getAttribute('data-checked')).toBe('true')
         expect(switchEl?.getAttribute('data-disabled')).toBe('true')
         expect(switchEl?.getAttribute('data-invalid')).toBe('true')
@@ -70,22 +65,18 @@ describe('Switch', () => {
     it('applies danger tone when specified', () => {
         const view = render(<Switch tone="danger" label="Danger" />)
         expect(view.querySelector('.mr-switch')?.getAttribute('data-tone')).toBe('danger')
-        expect(view.querySelector('.mr-switch')?.className).toContain('mr-switch--danger')
     })
 
     it('applies neutral tone when specified', () => {
         const view = render(<Switch tone="neutral" />)
         expect(view.querySelector('.mr-switch')?.getAttribute('data-tone')).toBe('neutral')
-        expect(view.querySelector('.mr-switch')?.className).toContain('mr-switch--neutral')
     })
 
     it('applies sm and lg sizes with correct data-size', () => {
         const viewSm = render(<Switch size="sm" />)
         expect(viewSm.querySelector('.mr-switch')?.getAttribute('data-size')).toBe('sm')
-        expect(viewSm.querySelector('.mr-switch')?.className).toContain('mr-switch--sm')
         const viewLg = render(<Switch size="lg" />)
         expect(viewLg.querySelector('.mr-switch')?.getAttribute('data-size')).toBe('lg')
-        expect(viewLg.querySelector('.mr-switch')?.className).toContain('mr-switch--lg')
     })
 
     it('renders hint and error via Field wrapper', () => {

@@ -1,26 +1,8 @@
 import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl, useFormControl } from '@/primitives/form-control'
 import { forwardRef, useState } from 'react'
 import type { RadioGroupProps } from './RadioGroup.types'
-
-const radioGroupVariants = cva({
-    base: 'mr-radio-group',
-    variants: {
-        tone: {
-            accent: 'mr-radio-group--accent',
-            neutral: 'mr-radio-group--neutral',
-            danger: 'mr-radio-group--danger',
-        },
-        size: {
-            sm: 'mr-radio-group--sm',
-            md: 'mr-radio-group--md',
-            lg: 'mr-radio-group--lg',
-        },
-    },
-    defaultVariants: { tone: 'accent', size: 'md' },
-})
 
 const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroupInner(
     {
@@ -63,11 +45,7 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
         >
             <div
                 ref={ref}
-                className={cn(
-                    radioGroupVariants({ tone: resolvedTone, size: resolvedSize }),
-                    ctx.isDisabled && 'mr-radio-group--disabled',
-                    isInvalid && 'mr-radio-group--invalid'
-                )}
+                className={cn('mr-radio-group')}
                 role="radiogroup"
                 aria-invalid={isInvalid || undefined}
                 aria-describedby={ctx.describedBy}
@@ -88,11 +66,7 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
                     return (
                         <label
                             key={item.value}
-                            className={cn(
-                                'mr-radio',
-                                checked && 'mr-radio--checked',
-                                isItemDisabled && 'mr-radio--disabled'
-                            )}
+                            className={cn('mr-radio')}
                             htmlFor={itemId}
                             data-checked={checked ? true : undefined}
                             data-disabled={isItemDisabled ? true : undefined}

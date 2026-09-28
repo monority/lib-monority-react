@@ -32,16 +32,12 @@ describe('Textarea', () => {
         const textarea = view.querySelector('textarea')
         expect(textarea?.getAttribute('data-tone')).toBe('neutral')
         expect(textarea?.getAttribute('data-size')).toBe('md')
-        expect(textarea?.className).toContain('mr-textarea--neutral')
-        expect(textarea?.className).toContain('mr-textarea--md')
         expect(textarea?.getAttribute('aria-invalid')).toBeNull()
     })
 
     it('maps disabled, required, invalid and error states', () => {
         const view = render(<Textarea label="Comment" disabled required invalid error="Required" />)
         const textarea = view.querySelector('textarea')
-        expect(textarea?.className).toContain('mr-textarea--disabled')
-        expect(textarea?.className).toContain('mr-textarea--invalid')
         expect(textarea?.getAttribute('data-disabled')).toBe('true')
         expect(textarea?.getAttribute('data-required')).toBe('true')
         expect(textarea?.getAttribute('data-invalid')).toBe('true')
@@ -65,13 +61,11 @@ describe('Textarea', () => {
     it('applies accent tone when specified', () => {
         const view = render(<Textarea tone="accent" />)
         expect(view.querySelector('textarea')?.getAttribute('data-tone')).toBe('accent')
-        expect(view.querySelector('textarea')?.className).toContain('mr-textarea--accent')
     })
 
     it('applies lg size when specified', () => {
         const view = render(<Textarea size="lg" />)
         expect(view.querySelector('textarea')?.getAttribute('data-size')).toBe('lg')
-        expect(view.querySelector('textarea')?.className).toContain('mr-textarea--lg')
     })
 
     it('renders label, hint, and error via Field wrapper', () => {
@@ -129,24 +123,19 @@ describe('Textarea', () => {
     })
 
     it.each(['neutral', 'accent', 'danger'] as const)(
-        'sets data-tone="%s" and variant class for tone="%s"',
+        'sets data-tone="%s" for tone="%s"',
         (tone) => {
             const view = render(<Textarea tone={tone} />)
             const textarea = view.querySelector('textarea')
             expect(textarea?.getAttribute('data-tone')).toBe(tone)
-            expect(textarea?.className).toContain(`mr-textarea--${tone}`)
         }
     )
 
-    it.each(['sm', 'md', 'lg'] as const)(
-        'sets data-size="%s" and variant class for size="%s"',
-        (size) => {
-            const view = render(<Textarea size={size} />)
-            const textarea = view.querySelector('textarea')
-            expect(textarea?.getAttribute('data-size')).toBe(size)
-            expect(textarea?.className).toContain(`mr-textarea--${size}`)
-        }
-    )
+    it.each(['sm', 'md', 'lg'] as const)('sets data-size="%s" for size="%s"', (size) => {
+        const view = render(<Textarea size={size} />)
+        const textarea = view.querySelector('textarea')
+        expect(textarea?.getAttribute('data-size')).toBe(size)
+    })
 
     it('calls onChange when value changes', () => {
         const onChange = vi.fn()

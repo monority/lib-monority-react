@@ -80,8 +80,6 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-toggle-group',
-        '.mr-toggle-group--horizontal',
-        '.mr-toggle-group--vertical',
         '.mr-toggle-group__item',
         '.mr-toggle-group__item--active',
         '[data-orientation]',

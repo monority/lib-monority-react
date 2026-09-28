@@ -59,12 +59,8 @@ export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(function
             role={type === 'multiple' ? 'toolbar' : 'group'}
             aria-orientation={type === 'multiple' ? orientation : undefined}
             data-orientation={orientation}
-            className={cn(
-                'mr-toggle-group',
-                `mr-toggle-group--${orientation}`,
-                size && `mr-toggle-group--${size}`,
-                className
-            )}
+            data-size={size}
+            className={cn('mr-toggle-group', className)}
             {...props}
         >
             {items.map((item) => (

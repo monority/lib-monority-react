@@ -83,7 +83,6 @@
         inline-size: var(--mr-control-size-lg);
     }
 
-    .mr-number-input--disabled,
     .mr-number-input[data-disabled='true'] {
         cursor: not-allowed;
         opacity: var(--mr-opacity-disabled, 0.5);
@@ -93,12 +92,10 @@
         opacity: var(--mr-opacity-disabled, 0.5);
     }
 
-    .mr-number-input--error,
     .mr-number-input[data-invalid='true'] {
         border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
     }
 
-    .mr-number-input--error:focus-visible,
     .mr-number-input[data-invalid='true']:focus-visible {
         border-color: var(--mr-danger-text);
         outline-color: var(--mr-danger-text);

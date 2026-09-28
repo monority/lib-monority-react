@@ -108,80 +108,59 @@
         outline-offset: var(--mr-focus-offset);
     }
 
-    .mr-radio--checked .mr-radio__control,
     .mr-radio[data-checked='true'] .mr-radio__control {
         border-color: var(--mr-control-accent, var(--mr-accent));
     }
 
-    .mr-radio--checked .mr-radio__dot,
     .mr-radio[data-checked='true'] .mr-radio__dot {
         opacity: 1;
         transform: scale(1);
     }
 
-    .mr-radio-group--disabled,
     .mr-radio-group[data-disabled='true'] {
         opacity: var(--mr-opacity-disabled);
     }
 
-    .mr-radio-group--disabled .mr-radio,
     .mr-radio-group[data-disabled='true'] .mr-radio {
         opacity: 1;
     }
 
-    .mr-radio-group--disabled .mr-radio,
     .mr-radio-group[data-disabled='true'] .mr-radio {
         cursor: not-allowed;
     }
 
-    .mr-radio--disabled,
     .mr-radio[data-disabled='true'] {
         cursor: not-allowed;
         opacity: var(--mr-opacity-disabled);
     }
 
-    .mr-radio-group--invalid .mr-radio__control,
     .mr-radio-group[data-invalid='true'] .mr-radio__control {
         border-color: var(--mr-danger-text);
         box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger-text);
     }
 
-    .mr-radio-group--neutral .mr-radio__control,
     .mr-radio-group[data-tone='neutral'] .mr-radio__control {
         border-color: var(--mr-border-default);
         background: var(--mr-bg-surface);
     }
 
-    .mr-radio-group--neutral .mr-radio--checked .mr-radio__control,
-    .mr-radio-group--neutral .mr-radio[data-checked='true'] .mr-radio__control,
-    .mr-radio-group[data-tone='neutral'] .mr-radio--checked .mr-radio__control,
     .mr-radio-group[data-tone='neutral'] .mr-radio[data-checked='true'] .mr-radio__control {
         border-color: var(--mr-fg-strong);
     }
 
-    .mr-radio-group--neutral .mr-radio--checked .mr-radio__dot,
-    .mr-radio-group--neutral .mr-radio[data-checked='true'] .mr-radio__dot,
-    .mr-radio-group[data-tone='neutral'] .mr-radio--checked .mr-radio__dot,
     .mr-radio-group[data-tone='neutral'] .mr-radio[data-checked='true'] .mr-radio__dot {
         background: var(--mr-fg-strong);
     }
 
-    .mr-radio-group--danger .mr-radio__control,
     .mr-radio-group[data-tone='danger'] .mr-radio__control {
         border-color: color-mix(in srgb, var(--mr-danger-text) 50%, var(--mr-border-subtle));
     }
 
-    .mr-radio-group--danger .mr-radio--checked .mr-radio__control,
-    .mr-radio-group--danger .mr-radio[data-checked='true'] .mr-radio__control,
-    .mr-radio-group[data-tone='danger'] .mr-radio--checked .mr-radio__control,
     .mr-radio-group[data-tone='danger'] .mr-radio[data-checked='true'] .mr-radio__control {
         border-color: var(--mr-danger-solid);
         background: var(--mr-danger-solid);
     }
 
-    .mr-radio-group--danger .mr-radio--checked .mr-radio__dot,
-    .mr-radio-group--danger .mr-radio[data-checked='true'] .mr-radio__dot,
-    .mr-radio-group[data-tone='danger'] .mr-radio--checked .mr-radio__dot,
     .mr-radio-group[data-tone='danger'] .mr-radio[data-checked='true'] .mr-radio__dot {
         background: var(--mr-accent-contrast);
     }

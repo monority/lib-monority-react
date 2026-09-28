@@ -37,8 +37,6 @@ describe('RadioGroup', () => {
         const group = view.querySelector('[role="radiogroup"]')
         expect(group?.getAttribute('data-tone')).toBe('accent')
         expect(group?.getAttribute('data-size')).toBe('md')
-        expect(group?.className).toContain('mr-radio-group--accent')
-        expect(group?.className).toContain('mr-radio-group--md')
     })
 
     it('renders all radio items with correct labels', () => {
@@ -72,7 +70,6 @@ describe('RadioGroup', () => {
         const view = render(<RadioGroup items={items} value="yes" />)
         const labels = view.querySelectorAll('.mr-radio')
         expect(labels[0].getAttribute('data-checked')).toBe('true')
-        expect(labels[0].className).toContain('mr-radio--checked')
         expect(labels[1].getAttribute('data-checked')).toBeNull()
     })
 
@@ -80,7 +77,6 @@ describe('RadioGroup', () => {
         const view = render(<RadioGroup items={items} disabled />)
         const group = view.querySelector('[role="radiogroup"]')
         expect(group?.getAttribute('data-disabled')).toBe('true')
-        expect(group?.className).toContain('mr-radio-group--disabled')
         for (const input of view.querySelectorAll('input[type="radio"]')) {
             expect(input.disabled).toBe(true)
         }
@@ -179,7 +175,6 @@ describe('RadioGroup', () => {
         const view = render(<RadioGroup size={size} items={items} />)
         const group = view.querySelector('[role="radiogroup"]')
         expect(group?.getAttribute('data-size')).toBe(size)
-        expect(group?.className).toContain(`mr-radio-group--${size}`)
     })
 
     it('renders multiline and unbreakable item content', () => {

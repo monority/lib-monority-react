@@ -1,26 +1,8 @@
 import { FieldDescription, FieldError, FieldLabel } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl, useFormControl } from '@/primitives/form-control'
 import { forwardRef, useCallback, useState } from 'react'
 import type { SwitchProps } from './Switch.types'
-
-const switchVariants = cva({
-    base: 'mr-switch',
-    variants: {
-        tone: {
-            accent: 'mr-switch--accent',
-            neutral: 'mr-switch--neutral',
-            danger: 'mr-switch--danger',
-        },
-        size: {
-            sm: 'mr-switch--sm',
-            md: 'mr-switch--md',
-            lg: 'mr-switch--lg',
-        },
-    },
-    defaultVariants: { tone: 'accent', size: 'md' },
-})
 
 const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInner(
     {
@@ -81,12 +63,7 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
                     </div>
                 ) : null}
                 <label
-                    className={cn(
-                        switchVariants({ tone: resolvedTone, size: resolvedSize }),
-                        resolvedChecked && 'mr-switch--checked',
-                        disabled && 'mr-switch--disabled',
-                        isInvalid && 'mr-switch--invalid'
-                    )}
+                    className={cn('mr-switch')}
                     htmlFor={inputId || undefined}
                     data-tone={resolvedTone}
                     data-size={resolvedSize}

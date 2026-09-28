@@ -101,75 +101,62 @@
         outline-offset: var(--mr-focus-offset);
     }
 
-    .mr-switch--checked .mr-switch__control,
     .mr-switch[data-checked='true'] .mr-switch__control {
         background: var(--mr-control-accent, var(--mr-accent));
         border-color: var(--mr-control-accent, var(--mr-accent));
     }
 
-    .mr-switch--checked .mr-switch__thumb,
     .mr-switch[data-checked='true'] .mr-switch__thumb {
         background: var(--mr-control-on-accent, var(--mr-on-accent));
         transform: translateX(var(--mr-switch-thumb-shift));
     }
 
-    .mr-switch--disabled,
     .mr-switch[data-disabled='true'] {
         cursor: not-allowed;
         opacity: var(--mr-opacity-disabled);
     }
 
-    .mr-switch--invalid .mr-switch__control,
     .mr-switch[data-invalid='true'] .mr-switch__control {
         border-color: var(--mr-danger-text);
         box-shadow: 0 0 0 var(--mr-border-width) var(--mr-danger-text);
     }
 
-    .mr-switch--neutral .mr-switch__control,
     .mr-switch[data-tone='neutral'] .mr-switch__control {
         border-color: var(--mr-border-default);
         background: var(--mr-bg-surface);
     }
 
-    .mr-switch--checked.mr-switch--neutral .mr-switch__control,
     .mr-switch[data-checked='true'][data-tone='neutral'] .mr-switch__control {
         background: var(--mr-fg-strong);
         border-color: var(--mr-fg-strong);
     }
 
-    .mr-switch--checked.mr-switch--neutral .mr-switch__thumb,
     .mr-switch[data-checked='true'][data-tone='neutral'] .mr-switch__thumb {
         background: var(--mr-fg-inverse);
     }
 
-    .mr-switch--danger .mr-switch__control,
     .mr-switch[data-tone='danger'] .mr-switch__control {
         border-color: color-mix(in srgb, var(--mr-danger-text) 50%, var(--mr-border-subtle));
     }
 
-    .mr-switch--checked.mr-switch--danger .mr-switch__control,
     .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__control {
         background: var(--mr-danger-solid);
         border-color: var(--mr-danger-solid);
     }
 
-    .mr-switch--checked.mr-switch--danger .mr-switch__thumb,
     .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__thumb {
         background: var(--mr-accent-contrast);
     }
 
-    .mr-switch--sm,
     .mr-switch[data-size='sm'] {
         --mr-switch-scale: var(--mr-switch-scale-sm);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-switch--md,
     .mr-switch[data-size='md'] {
         --mr-switch-scale: 1;
     }
 
-    .mr-switch--lg,
     .mr-switch[data-size='lg'] {
         --mr-switch-scale: var(--mr-switch-scale-lg);
         font-size: var(--mr-text-md);

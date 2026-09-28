@@ -48,7 +48,6 @@ describe('Slider', () => {
         expect(input?.getAttribute('data-disabled')).toBe('true')
         expect(input?.getAttribute('data-required')).toBe('true')
         expect(input?.getAttribute('data-invalid')).toBe('true')
-        expect(input?.className).toContain('mr-slider--error')
     })
 
     it('forwards ref to the native input element', () => {

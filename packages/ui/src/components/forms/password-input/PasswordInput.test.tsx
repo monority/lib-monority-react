@@ -28,7 +28,6 @@ describe('PasswordInput', () => {
         const input = view.querySelector('input')
         expect(input?.type).toBe('password')
         expect(input?.getAttribute('data-size')).toBe('md')
-        expect(input?.className).toContain('mr-password-input--md')
     })
 
     it('maps disabled, required and error states', () => {
@@ -36,9 +35,9 @@ describe('PasswordInput', () => {
         const input = view.querySelector('input')
         expect(input?.disabled).toBe(true)
         expect(input?.required).toBe(true)
+        expect(input?.getAttribute('data-disabled')).toBe('true')
+        expect(input?.getAttribute('data-invalid')).toBe('true')
         expect(input?.getAttribute('aria-invalid')).toBe('true')
-        expect(input?.className).toContain('mr-password-input--disabled')
-        expect(input?.className).toContain('mr-password-input--error')
     })
 
     it('forwards ref to the native input', () => {

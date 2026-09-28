@@ -251,7 +251,6 @@ describe('ToggleGroup', () => {
         const group = view.querySelector('[data-orientation="horizontal"]')
 
         expect(group).not.toBeNull()
-        expect(group?.className).toContain('mr-toggle-group--horizontal')
     })
 
     it('applies vertical orientation', () => {
@@ -259,7 +258,6 @@ describe('ToggleGroup', () => {
         const group = view.querySelector('[data-orientation="vertical"]')
 
         expect(group).not.toBeNull()
-        expect(group?.className).toContain('mr-toggle-group--vertical')
     })
 
     it('passes variant to toggle items', () => {

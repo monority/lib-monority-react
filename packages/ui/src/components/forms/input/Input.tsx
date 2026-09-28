@@ -1,27 +1,9 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { InputProps } from './Input.types'
-
-const inputVariants = cva({
-    base: 'mr-input',
-    variants: {
-        tone: {
-            neutral: 'mr-input--neutral',
-            accent: 'mr-input--accent',
-            danger: 'mr-input--danger',
-        },
-        size: {
-            sm: 'mr-input--sm',
-            md: 'mr-input--md',
-            lg: 'mr-input--lg',
-        },
-    },
-    defaultVariants: { tone: 'neutral', size: 'md' },
-})
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     {
@@ -59,12 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                 <InputBase
                     as="input"
                     ref={ref}
-                    className={cn(
-                        inputVariants({ tone: resolvedTone, size: resolvedSize }),
-                        isInvalid && 'mr-input--invalid',
-                        isInvalid && 'mr-input--error',
-                        inputClassName
-                    )}
+                    className={cn('mr-input', inputClassName)}
                     {...props}
                 />
             </Field>

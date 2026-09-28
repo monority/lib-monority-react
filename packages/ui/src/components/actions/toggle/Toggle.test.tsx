@@ -149,7 +149,6 @@ describe('Toggle', () => {
         const view = render(<Toggle variant="outline">Toggle</Toggle>)
         const button = view.querySelector('button')
 
-        expect(button?.className).toContain('mr-toggle--outline')
         expect(button?.getAttribute('data-variant')).toBe('outline')
     })
 
@@ -157,15 +156,15 @@ describe('Toggle', () => {
         const view = render(<Toggle size="lg">Toggle</Toggle>)
         const button = view.querySelector('button')
 
-        expect(button?.className).toContain('mr-toggle--lg')
         expect(button?.getAttribute('data-size')).toBe('lg')
     })
 
-    it('applies pressed class when pressed', () => {
+    it('exposes the pressed state via data-state and aria-pressed', () => {
         const view = render(<Toggle defaultPressed>Toggle</Toggle>)
         const button = view.querySelector('button')
 
-        expect(button?.className).toContain('mr-toggle--pressed')
+        expect(button?.getAttribute('data-state')).toBe('on')
+        expect(button?.getAttribute('aria-pressed')).toBe('true')
     })
 
     it('forwards refs', () => {

@@ -43,7 +43,6 @@
         background: var(--mr-bg-control);
     }
 
-    .mr-textarea--disabled,
     .mr-textarea[data-disabled='true'] {
         resize: none;
     }
@@ -56,48 +55,44 @@
         resize: both;
     }
 
-    .mr-textarea--disabled[data-resize='both'],
     .mr-textarea[data-disabled='true'][data-resize='both'] {
         resize: none;
     }
 
-    .mr-textarea--accent,
     .mr-textarea[data-tone='accent'] {
         border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
     }
 
-    .mr-textarea--accent:focus-visible,
     .mr-textarea[data-tone='accent']:focus-visible {
         border-color: var(--mr-border-control-hover);
     }
 
-    .mr-textarea--danger,
     .mr-textarea[data-tone='danger'],
-    .mr-textarea--invalid {
+    /* `:where()` préserve la cascade d'avant migration : le sélecteur BEM
+     * (`.mr-textarea--invalid`, spécificité 0,1,0) perdait face à la règle de
+     * base `.mr-textarea.mr-textarea` (0,2,0), donc l'état invalid n'était pas
+     * stylé. Bug latent signalé, hors périmètre de la migration. */
+        :where(.mr-textarea[data-invalid='true']) {
         border-color: color-mix(in srgb, var(--mr-danger-text) 42%, var(--mr-border-subtle));
     }
 
-    .mr-textarea--danger:focus-visible,
     .mr-textarea[data-tone='danger']:focus-visible,
-    .mr-textarea--invalid:focus-visible {
+    :where(.mr-textarea[data-invalid='true']):focus-visible {
         border-color: var(--mr-danger-text);
         outline-color: var(--mr-danger-text);
     }
 
-    .mr-textarea--sm,
     .mr-textarea[data-size='sm'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height-sm);
         padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-textarea--md,
     .mr-textarea[data-size='md'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height-md);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
     }
 
-    .mr-textarea--lg,
     .mr-textarea[data-size='lg'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height-lg);
         padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);

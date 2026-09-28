@@ -93,11 +93,7 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-radio-group',
-        '.mr-radio-group--disabled',
-        '.mr-radio-group--invalid',
         '.mr-radio',
-        '.mr-radio--checked',
-        '.mr-radio--disabled',
         '.mr-radio__input',
         '.mr-radio__control',
         '.mr-radio__dot',

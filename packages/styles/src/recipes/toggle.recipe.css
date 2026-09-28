@@ -44,17 +44,14 @@
         opacity: var(--mr-opacity-disabled, 0.5);
     }
 
-    .mr-toggle--default,
     .mr-toggle[data-variant='default'] {
         background: var(--mr-bg-control);
     }
 
-    .mr-toggle--outline,
     .mr-toggle[data-variant='outline'] {
         background: transparent;
     }
 
-    .mr-toggle--pressed,
     .mr-toggle[data-state='on'] {
         border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-control-hover));
         background: var(--mr-bg-accent-soft);
@@ -63,7 +60,6 @@
             color-mix(in srgb, var(--mr-accent) 10%, transparent);
     }
 
-    .mr-toggle--sm,
     .mr-toggle[data-size='sm'] {
         --mr-toggle-height: var(--mr-control-size-sm);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-sm);
@@ -71,12 +67,10 @@
         font-size: var(--mr-text-xs);
     }
 
-    .mr-toggle--md,
     .mr-toggle[data-size='md'] {
         --mr-toggle-height: var(--mr-control-size-md);
     }
 
-    .mr-toggle--lg,
     .mr-toggle[data-size='lg'] {
         --mr-toggle-height: var(--mr-control-size-lg);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-lg);

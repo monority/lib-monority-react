@@ -92,7 +92,7 @@ describe('Step 09 · form family shares the invalid contract', () => {
     it('Slider marks aria-invalid from invalid without an error message', () => {
         const view = render(<Slider invalid />)
         expect(view.querySelector('input[type="range"]')?.getAttribute('aria-invalid')).toBe('true')
-        expect(view.querySelector('input[type="range"]')?.className).toContain('mr-slider--error')
+        expect(view.querySelector('input[type="range"]')?.getAttribute('data-invalid')).toBe('true')
     })
 
     it('RadioGroup marks aria-invalid from invalid without an error message', () => {

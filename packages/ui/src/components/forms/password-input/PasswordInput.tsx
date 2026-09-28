@@ -1,6 +1,5 @@
 import { forwardRef, useId, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
 import { InputBase } from '@/primitives/input-base'
 import type { PasswordInputProps } from './PasswordInput.types'
@@ -35,18 +34,6 @@ const EyeOffIcon = () => (
         />
     </svg>
 )
-
-const passwordInputVariants = cva({
-    base: 'mr-password-input',
-    variants: {
-        size: {
-            sm: 'mr-password-input--sm',
-            md: 'mr-password-input--md',
-            lg: 'mr-password-input--lg',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     function PasswordInput(
@@ -91,12 +78,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
                         ref={ref}
                         id={inputId}
                         type={showPassword ? 'text' : 'password'}
-                        className={cn(
-                            passwordInputVariants({ size: resolvedSize }),
-                            disabled && 'mr-password-input--disabled',
-                            isInvalid && 'mr-password-input--error',
-                            inputClassName
-                        )}
+                        className={cn('mr-password-input', inputClassName)}
                         size={resolvedSize}
                         invalid={isInvalid}
                         disabled={disabled}

@@ -79,81 +79,61 @@
         cursor: pointer;
     }
 
-    .mr-slider--error::-webkit-slider-runnable-track,
-    .mr-slider--error::-moz-range-track {
-        background: color-mix(in srgb, var(--mr-danger-solid) 24%, var(--mr-bg-control));
-    }
-
-    .mr-slider--sm,
     .mr-slider[data-size='sm'] {
         height: 0.25rem;
         width: min(16rem, 100%);
     }
 
-    .mr-slider--sm::-webkit-slider-thumb,
     .mr-slider[data-size='sm']::-webkit-slider-thumb {
         width: 1rem;
         height: 1rem;
         margin-top: -0.375rem;
     }
 
-    .mr-slider--sm::-moz-range-thumb,
     .mr-slider[data-size='sm']::-moz-range-thumb {
         width: 1rem;
         height: 1rem;
     }
 
-    .mr-slider--lg,
     .mr-slider[data-size='lg'] {
         height: 0.75rem;
         width: min(28rem, 100%);
     }
 
-    .mr-slider--sm[type='range'],
     .mr-slider[data-size='sm'][type='range'] {
         height: 2rem;
     }
 
-    .mr-slider--sm::-webkit-slider-runnable-track,
     .mr-slider[data-size='sm']::-webkit-slider-runnable-track,
-    .mr-slider--sm::-moz-range-track,
     .mr-slider[data-size='sm']::-moz-range-track {
         height: 0.25rem;
     }
 
-    .mr-slider--lg[type='range'],
     .mr-slider[data-size='lg'][type='range'] {
         height: 2rem;
     }
 
-    .mr-slider--lg::-webkit-slider-runnable-track,
     .mr-slider[data-size='lg']::-webkit-slider-runnable-track,
-    .mr-slider--lg::-moz-range-track,
     .mr-slider[data-size='lg']::-moz-range-track {
         height: 0.75rem;
     }
 
-    .mr-slider--lg::-webkit-slider-thumb,
     .mr-slider[data-size='lg']::-webkit-slider-thumb {
         width: 1.5rem;
         height: 1.5rem;
         margin-top: -0.375rem;
     }
 
-    .mr-slider--lg::-moz-range-thumb,
     .mr-slider[data-size='lg']::-moz-range-thumb {
         width: 1.5rem;
         height: 1.5rem;
     }
 
-    .mr-slider--disabled,
     .mr-slider[data-disabled='true'] {
         opacity: var(--mr-opacity-disabled);
         cursor: not-allowed;
     }
 
-    .mr-slider--error::-webkit-slider-runnable-track,
-    .mr-slider--error::-moz-range-track,
     .mr-slider[data-invalid='true']::-webkit-slider-runnable-track,
     .mr-slider[data-invalid='true']::-moz-range-track {
         background: color-mix(in srgb, var(--mr-danger-solid) 24%, var(--mr-bg-control));

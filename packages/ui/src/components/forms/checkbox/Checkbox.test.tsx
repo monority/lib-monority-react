@@ -37,8 +37,6 @@ describe('Checkbox', () => {
         expect(label?.textContent).toBe('Accept terms')
         expect(label?.getAttribute('data-tone')).toBe('accent')
         expect(label?.getAttribute('data-size')).toBe('md')
-        expect(label?.className).toContain('mr-checkbox--accent')
-        expect(label?.className).toContain('mr-checkbox--md')
         expect(label?.getAttribute('data-checked')).toBeNull()
         expect(input?.type).toBe('checkbox')
         expect(input?.checked).toBe(false)
@@ -52,10 +50,6 @@ describe('Checkbox', () => {
         const label = view.querySelector('label')
         const input = view.querySelector('input')
 
-        expect(label?.className).toContain('mr-checkbox--checked')
-        expect(label?.className).toContain('mr-checkbox--disabled')
-        expect(label?.className).toContain('mr-checkbox--invalid')
-        expect(label?.className).toContain('mr-checkbox--indeterminate')
         expect(label?.getAttribute('data-checked')).toBe('true')
         expect(label?.getAttribute('data-disabled')).toBe('true')
         expect(label?.getAttribute('data-invalid')).toBe('true')
@@ -129,7 +123,6 @@ describe('Checkbox', () => {
         const input = view.querySelector('input') as HTMLInputElement
 
         expect(input.getAttribute('aria-invalid')).toBe('true')
-        expect(view.querySelector('label.mr-checkbox')?.className).toContain('mr-checkbox--invalid')
     })
 
     it('shares the explicit id between input and wrapper label', () => {

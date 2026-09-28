@@ -13,6 +13,16 @@ import { Spinner } from '@/components/feedback/spinner'
 import { Drawer } from '@/components/overlays/drawer'
 import { Text } from '@/components/typography/text'
 import { Title } from '@/components/typography/title'
+import { Checkbox } from '@/components/forms/checkbox'
+import { Input } from '@/components/forms/input'
+import { NumberInput } from '@/components/forms/number-input'
+import { PasswordInput } from '@/components/forms/password-input'
+import { RadioGroup } from '@/components/forms/radio-group'
+import { Slider } from '@/components/forms/slider'
+import { Textarea } from '@/components/forms/textarea'
+import { Toggle } from '@/components/actions/toggle'
+import { ToggleGroup } from '@/components/actions/toggle-group'
+import { Switch } from '@/components/forms/switch'
 
 /**
  * Vague A1 de la migration BEM → `data-*` : ces composants portaient leurs
@@ -65,8 +75,38 @@ const CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
     { name: 'Title', element: <Title>Title</Title>, hook: 'data-size' },
 ]
 
+/**
+ * Vague B1 (contrôles de formulaire). Le motif de détection ignore
+ * volontairement les modifiers d'**élément** (`mr-x__y--z`) : ils conservent
+ * une fonction structurelle (boutons incrémentaux, item actif d'un groupe).
+ */
+const B1_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
+    { name: 'Input', element: <Input label="Nom" />, hook: 'data-size' },
+    { name: 'Textarea', element: <Textarea label="Bio" />, hook: 'data-size' },
+    { name: 'NumberInput', element: <NumberInput label="Quantité" />, hook: 'data-size' },
+    { name: 'PasswordInput', element: <PasswordInput label="Mot de passe" />, hook: 'data-size' },
+    { name: 'Checkbox', element: <Checkbox label="Accepter" />, hook: 'data-tone' },
+    { name: 'RadioGroup', element: <RadioGroup />, hook: 'data-size' },
+    { name: 'Switch', element: <Switch label="Actif" />, hook: 'data-size' },
+    { name: 'Toggle', element: <Toggle>Toggle</Toggle>, hook: 'data-size' },
+    {
+        name: 'ToggleGroup',
+        element: (
+            <ToggleGroup
+                orientation="vertical"
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
+            />
+        ),
+        hook: 'data-orientation',
+    },
+    { name: 'Slider', element: <Slider />, hook: 'data-size' },
+]
+
 describe('modifiers BEM → data-* (vague A1)', () => {
-    for (const { name, element, hook } of CASES) {
+    for (const { name, element, hook } of [...CASES, ...B1_CASES]) {
         it(`${name} n’émet aucun modifier BEM et expose ${hook}`, () => {
             const view = render(element)
             const scope = [view, document]

@@ -169,12 +169,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
                     value={internalValue}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
-                    className={cn(
-                        'mr-number-input',
-                        disabled && 'mr-number-input--disabled',
-                        isInvalid && 'mr-number-input--error',
-                        inputClassName
-                    )}
+                    className={cn('mr-number-input', inputClassName)}
                     size={resolvedSize}
                     invalid={isInvalid}
                     disabled={disabled}
