@@ -1,4 +1,5 @@
 import { act, createRef } from 'react'
+import { screen } from '@testing-library/react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -73,10 +74,8 @@ const itemsWithDisabled = [
 describe('NavigationMenu', () => {
     it('renders all top-level items', () => {
         const view = render(<NavigationMenu items={simpleItems} />)
-        const nav = view.querySelector('nav')
-        expect(nav).toBeTruthy()
-        expect(nav?.tagName).toBe('NAV') // role navigation implicite, pas d'attribut redondant
-        expect(nav?.getAttribute('aria-label')).toBe('Main navigation')
+        const nav = screen.getByRole('navigation')
+        expect(nav.getAttribute('aria-label')).toBe('Main navigation')
         expect(view.querySelectorAll('.mr-nav-menu__item').length).toBe(3)
     })
 
@@ -194,8 +193,7 @@ describe('NavigationMenu', () => {
     it('forwards ref to the nav element', () => {
         const ref = createRef<HTMLElement>()
         render(<NavigationMenu ref={ref} items={simpleItems} />)
-        expect(ref.current?.tagName).toBe('NAV')
-        expect(ref.current?.tagName).toBe('NAV') // role navigation implicite, pas d'attribut redondant
+        expect(ref.current).toBe(screen.getByRole('navigation'))
     })
 
     it('supports controlled value', () => {
