@@ -4,7 +4,6 @@ import { NotFoundPage } from '@/shared/NotFoundPage'
 import { PlaygroundPage } from '@/features/playground/PlaygroundPage'
 import { ShowcasePage } from '@/features/showcase/ShowcasePage'
 import { HomePage } from '@/features/home/HomePage'
-import { HarnessPage } from '@/features/harness/HarnessPage'
 import type { RouteObject } from 'react-router-dom'
 
 interface AppRouteDefinition {
@@ -67,7 +66,12 @@ export const appRoutes: RouteObject[] = [
 
     {
         path: '/harness/:component',
-        element: <HarnessPage />,
+        // Lazy comme la doc : le harness est un bac a sable de developpement,
+        // il ne doit pas peser dans le chunk d entree de production.
+        lazy: async () => {
+            const { HarnessPage } = await import('@/features/harness/HarnessPage')
+            return { Component: HarnessPage }
+        },
     },
 
     {
