@@ -1,12 +1,19 @@
 #!/usr/bin/env node
 /**
  * Ajoute la directive `"use client"` aux seuls fichiers du `dist` qui en ont
- * besoin : ceux dont le code utilise React (hooks, contexte, état).
+ * besoin : ceux dont le code utilise React (hooks, contexte, état) ou React DOM
+ * (`createPortal`).
  *
  * Les barrels (`index.js`, `button.js`…) et les modules purs (`getThemeScript`,
  * `cn`, `cva`, constantes) restent hors bannière : un Server Component peut les
  * importer, et les composants clients restent atteignables via les chunks
  * marqués.
+ *
+ * Audit (étape 2c) : les seuls fichiers sans bannière qui mentionnent des APIs
+ * navigateur sont `get-theme-script.ts` (le `document`/`localStorage` est dans
+ * la **chaîne** du script injecté) et `internal/dom.ts` (`typeof window` dans
+ * une fonction) — aucune exécution au chargement, donc aucun besoin de
+ * bannière. Le critère reste donc « importe React/React DOM ».
  *
  * Lancé par tsup (`onSuccess`) après chaque build.
  */
