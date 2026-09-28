@@ -63,9 +63,15 @@ const script = getThemeScript()
 ```
 
 Les helpers purs (`cn`, `cva`, constantes, design config) sont disponibles via
-`@monority/ui/lib`, et les barrels (`./components`, `./hooks`, `./providers`,
-`./primitives`) restent hors bannière : seuls les fichiers qui utilisent React
-sont marqués `"use client"`.
+`@monority/ui/lib`. Dans les deux cas, `"use client"` n'est posé que sur les
+fichiers qui utilisent React ou React DOM (`createPortal`) ; le barrel racine,
+les sous-chemins de composant et les modules purs restent hors bannière.
+
+Cette garantie est vérifiée par **analyse du graphe du `dist`**
+(`src/__tests__/dist-use-client.test.ts` : bannière ⟺ import React/React DOM,
+fermeture des entrées serveur sans fichier banni). Elle n'est **pas encore**
+vérifiée par un build Next.js : une fixture App Router est prévue à l'étape 9
+du plan.
 
 ## Development
 
