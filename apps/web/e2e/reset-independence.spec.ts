@@ -28,6 +28,9 @@ const PROPS = [
     'margin-left',
 ] as const
 
+/** Propriétés qui doivent aussi être fournies aux descendants (contenu de l'hôte). */
+const SHARED_PROPS = ['box-sizing', 'font-family', 'font-size'] as const
+
 /** Sélecteurs des resets globaux d'éléments à retirer pour simuler l'absence de reset.css. */
 const GLOBAL_RESETS = new Set([
     '*,*::before,*::after',
@@ -142,7 +145,12 @@ for (const slug of slugs) {
                 gaps.push(`${key}: élément absent sans reset`)
                 continue
             }
-            for (const prop of PROPS) {
+            // Les marges du **contenu de l'hôte** (un `<p>` rendu dans un
+            // `Section`…) appartiennent au reset de page : elles ne sont
+            // comparées que pour les éléments qui portent eux-mêmes une classe
+            // `mr-` (voir `library-scope.spec.ts` pour le cas inverse).
+            const props = key.includes('mr-') ? PROPS : SHARED_PROPS
+            for (const prop of props) {
                 if (properties[prop] !== other[prop]) {
                     gaps.push(`${key} ${prop}: "${properties[prop]}" → "${other[prop]}"`)
                 }

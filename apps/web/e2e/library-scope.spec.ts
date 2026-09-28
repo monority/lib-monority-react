@@ -23,6 +23,8 @@ const HOST_CONTENT = `
 const FIXTURE = `<!doctype html><html><head><style>${libraryCss}</style></head><body>
     <div class="mr-container" data-testid="container">${HOST_CONTENT}</div>
     <div class="mr-card" data-testid="card">${HOST_CONTENT}</div>
+    <section class="mr-section" data-testid="section">${HOST_CONTENT}</section>
+    <div class="mr-stack" data-testid="stack">${HOST_CONTENT}</div>
     <p class="mr-text" data-testid="library-p">Texte de la librairie</p>
     <div class="mr-container">
         <p class="mr-text" data-testid="library-p-in-container">Texte de la librairie</p>
@@ -54,8 +56,10 @@ test.beforeEach(async ({ page }) => {
     await page.setContent(FIXTURE)
 })
 
-test('le contenu de l’hôte garde ses marges dans Container et Card', async ({ page }) => {
-    for (const testId of ['container', 'card']) {
+test('le contenu de l’hôte garde ses marges dans Container, Card, Section et Stack', async ({
+    page,
+}) => {
+    for (const testId of ['container', 'card', 'section', 'stack']) {
         for (const tag of ['p', 'ul']) {
             const margins = (await marginsOf(page, `host-${tag}`)) as Margins
             expect(margins.marginTop, `${tag} de l'hôte dans .mr-${testId} : marge haute`).not.toBe(
