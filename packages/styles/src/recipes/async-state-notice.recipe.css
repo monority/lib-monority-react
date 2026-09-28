@@ -27,10 +27,10 @@
     .mr-async-state-notice {
         display: flex;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-control);
     }
 

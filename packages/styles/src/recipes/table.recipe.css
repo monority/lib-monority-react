@@ -18,7 +18,7 @@
     }
     .mr-table__th {
         padding: var(--mr-space-3) var(--mr-space-4);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-normal);
         color: var(--mr-text-secondary);
@@ -28,7 +28,7 @@
     }
     .mr-table__td {
         padding: var(--mr-space-3) var(--mr-space-4);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-normal);
         color: var(--mr-text-primary);
         vertical-align: middle;

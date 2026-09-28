@@ -9,7 +9,7 @@
     }
 
     .mr-title[data-size='sm'] {
-        font-size: var(--mr-text-lg);
+        font-size: var(--mr-fs-18);
     }
     .mr-title[data-size='md'] {
         font-size: var(--mr-text-xl);

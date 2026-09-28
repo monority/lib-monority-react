@@ -12,12 +12,12 @@
         color: var(--mr-text-primary);
     }
     .mr-text[data-size='sm'] {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
     .mr-text[data-size='md'] {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
     .mr-text[data-size='lg'] {
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 }

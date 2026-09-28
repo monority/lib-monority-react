@@ -7,7 +7,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: var(--mr-toggle-height);
         min-height: var(--mr-toggle-height);
         padding: 0 var(--mr-toggle-padding-x);
@@ -17,7 +17,7 @@
         color: var(--mr-text-primary);
         cursor: pointer;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         touch-action: manipulation;
@@ -64,7 +64,7 @@
         --mr-toggle-height: var(--mr-control-size-sm);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-sm);
         --mr-toggle-radius: var(--mr-radius-scale);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-toggle[data-size='md'] {
@@ -74,7 +74,7 @@
     .mr-toggle[data-size='lg'] {
         --mr-toggle-height: var(--mr-control-size-lg);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-lg);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 }
 

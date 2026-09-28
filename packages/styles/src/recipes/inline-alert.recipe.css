@@ -30,7 +30,7 @@
 
     .mr-inline-alert__title {
         font-weight: var(--mr-font-weight-semibold);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
         letter-spacing: 0;
     }
@@ -38,7 +38,7 @@
     .mr-inline-alert__description,
     .mr-inline-alert__content {
         margin: 0;
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         color: var(--mr-text-primary);
         line-height: var(--mr-leading-relaxed);
     }

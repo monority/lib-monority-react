@@ -139,12 +139,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: var(--mr-space-2);
+        margin-bottom: var(--mr-spacing-1-5);
     }
 
     .mr-datepicker__month-label {
         font-weight: var(--mr-font-weight-semibold);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
     }
 
@@ -181,7 +181,7 @@
 
     .mr-datepicker__day-name {
         text-align: center;
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-text-secondary);
         padding: var(--mr-space-1) 0;
@@ -205,7 +205,7 @@
         background: transparent;
         border-radius: var(--mr-radius-scale);
         cursor: pointer;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
         font-family: inherit;
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);

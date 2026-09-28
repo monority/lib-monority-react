@@ -3,10 +3,10 @@
     .mr-checkbox {
         display: inline-flex;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         cursor: pointer;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-control);
         color: var(--mr-text-primary);
         user-select: none;
@@ -67,7 +67,7 @@
 
     /* === Label === */
     .mr-checkbox__label {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-control);
     }
 
@@ -134,7 +134,7 @@
     .mr-checkbox[data-size='sm'] {
         --mr-checkbox-size: 0.875rem;
         gap: var(--mr-space-1);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     /* === Size: medium (default) === */
@@ -146,6 +146,6 @@
     .mr-checkbox[data-size='lg'] {
         --mr-checkbox-size: 1.5rem;
         gap: var(--mr-space-3);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 }

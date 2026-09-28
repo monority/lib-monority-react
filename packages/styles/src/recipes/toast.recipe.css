@@ -33,14 +33,14 @@
 
     .mr-toast__title {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
     }
 
     .mr-toast__body {
         display: grid;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-toast__heading {
@@ -64,7 +64,7 @@
 
     .mr-toast__description {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-base);
         margin: 0;
     }

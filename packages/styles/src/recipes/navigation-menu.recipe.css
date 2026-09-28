@@ -38,7 +38,7 @@
         color: var(--mr-text-secondary);
         cursor: pointer;
         font-family: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
         text-decoration: none;
@@ -126,13 +126,13 @@
     .mr-nav-menu__sub-item {
         display: flex;
         align-items: flex-start;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
-        padding: var(--mr-space-2) var(--mr-space-2);
+        padding: var(--mr-spacing-1-5) var(--mr-spacing-1-5);
         border-radius: var(--mr-radius-scale);
         color: var(--mr-text-primary);
         cursor: pointer;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         text-decoration: none;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
             var(--mr-duration-fast) var(--mr-ease-standard);
@@ -171,7 +171,7 @@
 
     .mr-nav-menu__sub-desc {
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         line-height: var(--mr-leading-relaxed);
     }
 

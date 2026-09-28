@@ -38,7 +38,7 @@
             var(--mr-overlay-width-menu),
             calc(100vw - 2 * var(--mr-overlay-gutter))
         );
-        padding: var(--mr-space-2);
+        padding: var(--mr-spacing-1-5);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -87,7 +87,7 @@
         background: transparent;
         color: var(--mr-text-primary);
         font: inherit;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         text-align: left;
         cursor: pointer;

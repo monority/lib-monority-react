@@ -20,14 +20,14 @@
         border-bottom: none;
     }
     .mr-data-list__label {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-secondary);
         line-height: var(--mr-leading-normal);
     }
     .mr-data-list__value {
         margin: 0;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-text-primary);
         line-height: var(--mr-leading-normal);
@@ -45,7 +45,7 @@
         .mr-data-list[data-columns='split'] .mr-data-list__item,
         .mr-data-list[data-columns='auto'] .mr-data-list__item {
             grid-template-columns: 1fr;
-            gap: var(--mr-space-2);
+            gap: var(--mr-spacing-1-5);
         }
     }
 }

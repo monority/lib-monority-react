@@ -31,7 +31,7 @@
         border: none;
         cursor: pointer;
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         text-align: left;
         outline: none;
@@ -113,7 +113,7 @@
             var(--mr-collapsible-content-padding-inline);
         border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-relaxed);
         text-wrap: pretty;
     }
@@ -128,19 +128,19 @@
 
     /* Sizes */
     .mr-collapsible[data-size='sm'] {
-        --mr-collapsible-trigger-padding-block: var(--mr-space-2);
+        --mr-collapsible-trigger-padding-block: var(--mr-spacing-1-5);
         --mr-collapsible-trigger-padding-inline: var(--mr-space-3);
-        --mr-collapsible-content-padding-block: var(--mr-space-2) var(--mr-space-3);
+        --mr-collapsible-content-padding-block: var(--mr-spacing-1-5) var(--mr-space-3);
         --mr-collapsible-content-padding-inline: var(--mr-space-3);
     }
 
     .mr-collapsible[data-size='sm'] .mr-collapsible__trigger {
         min-block-size: var(--mr-control-size-md);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-collapsible[data-size='sm'] .mr-collapsible__content {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .mr-collapsible[data-size='sm'] .mr-collapsible__icon {
@@ -150,18 +150,18 @@
 
     .mr-collapsible[data-size='lg'] {
         --mr-collapsible-trigger-padding-block: var(--mr-space-4);
-        --mr-collapsible-trigger-padding-inline: var(--mr-space-5);
-        --mr-collapsible-content-padding-block: var(--mr-space-4) var(--mr-space-5);
-        --mr-collapsible-content-padding-inline: var(--mr-space-5);
+        --mr-collapsible-trigger-padding-inline: var(--mr-spacing-5);
+        --mr-collapsible-content-padding-block: var(--mr-space-4) var(--mr-spacing-5);
+        --mr-collapsible-content-padding-inline: var(--mr-spacing-5);
     }
 
     .mr-collapsible[data-size='lg'] .mr-collapsible__trigger {
         min-block-size: var(--mr-control-size-lg);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 
     .mr-collapsible[data-size='lg'] .mr-collapsible__content {
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
     }
 
     @media (prefers-reduced-motion: reduce) {

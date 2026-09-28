@@ -1,7 +1,7 @@
 @layer monority.recipes {
     .mr-drop-zone {
         --mr-drop-zone-min-height: 8rem;
-        --mr-drop-zone-padding: var(--mr-space-5);
+        --mr-drop-zone-padding: var(--mr-spacing-5);
 
         position: relative;
         display: flex;
@@ -44,7 +44,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         text-align: center;
         pointer-events: none;
     }
@@ -57,7 +57,7 @@
 
     .mr-drop-zone__text {
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         line-height: var(--mr-leading-control);
     }
 }

@@ -2,7 +2,7 @@ body {
     background: var(--mr-bg-canvas);
     color: var(--mr-text-primary);
     font-family: var(--mr-font-sans);
-    font-size: var(--mr-text-md);
+    font-size: var(--mr-fs-16);
     line-height: var(--mr-leading-base);
     transition: background-color var(--mr-duration-base) var(--mr-ease-standard), color
         var(--mr-duration-fast) var(--mr-ease-standard);

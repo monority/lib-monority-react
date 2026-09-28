@@ -2,14 +2,14 @@
     .mr-field {
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
     }
 
     .mr-field__label,
     .mr-field__legend {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);
         letter-spacing: 0;
@@ -34,7 +34,7 @@
     .mr-field__hint,
     .mr-field__error {
         display: block;
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         line-height: var(--mr-leading-relaxed);
         transition: color var(--mr-duration-fast) var(--mr-ease-standard), opacity
             var(--mr-duration-fast) var(--mr-ease-standard);
@@ -62,7 +62,7 @@
 
     .mr-field__group {
         display: flex;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         min-width: 0;
     }
 
@@ -83,7 +83,7 @@
     .mr-field__separator {
         border: none;
         border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
-        margin: var(--mr-space-2) 0;
+        margin: var(--mr-spacing-1-5) 0;
     }
 
     .mr-field__set {
@@ -95,7 +95,7 @@
 
     .mr-field__title {
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);
         margin: 0;

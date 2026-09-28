@@ -19,12 +19,12 @@
             var(--mr-overlay-width-tooltip),
             calc(100vw - 2 * var(--mr-overlay-gutter))
         );
-        padding: var(--mr-space-2) var(--mr-space-3);
+        padding: var(--mr-spacing-1-5) var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: color-mix(in srgb, var(--mr-bg-raised) 96%, transparent);
         color: var(--mr-text-primary);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         line-height: var(--mr-leading-normal);
         text-align: center;
         box-shadow: var(--mr-elevation-raised);

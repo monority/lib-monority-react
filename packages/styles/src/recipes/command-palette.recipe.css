@@ -18,7 +18,7 @@
 
     .mr-command__header {
         display: grid;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .mr-command__heading {
@@ -31,7 +31,7 @@
 
     .mr-command__list {
         display: grid;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         max-height: min(24rem, 60vh);
         overflow-y: auto;
     }
@@ -39,7 +39,7 @@
     .mr-command__item {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         align-items: center;
         width: 100%;
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
@@ -72,7 +72,7 @@
     }
 
     .mr-command__item-group {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-semibold);
         text-transform: uppercase;
         letter-spacing: 0.04em;
@@ -80,24 +80,24 @@
     }
 
     .mr-command__item-label {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
     }
 
     .mr-command__item-description {
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         color: var(--mr-text-secondary);
         line-height: var(--mr-leading-normal);
     }
 
     .mr-command__shortcut {
-        padding: var(--mr-space-1) var(--mr-space-2);
+        padding: var(--mr-space-1) var(--mr-spacing-1-5);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-secondary);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         font-family: var(--mr-font-mono);
     }
 

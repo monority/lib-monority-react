@@ -47,7 +47,7 @@ describe('step23 design token contracts', () => {
 
     it('routes menu item density through the space scale', () => {
         for (const name of ['context-menu.recipe.css', 'dropdown-menu.recipe.css']) {
-            expect(recipe(name)).toContain('var(--mr-space-2)')
+            expect(recipe(name)).toContain('var(--mr-spacing-1-5)')
             expect(recipe(name)).not.toMatch(/padding:\s*0\.375rem/)
         }
     })

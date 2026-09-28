@@ -1,11 +1,11 @@
 @layer monority.recipes {
     .mr-toolbar {
-        --mr-toolbar-padding: var(--mr-space-2);
+        --mr-toolbar-padding: var(--mr-spacing-1-5);
 
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
         width: 100%;
         min-width: 0;
         min-height: 2.75rem;

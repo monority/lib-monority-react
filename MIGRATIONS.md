@@ -118,6 +118,32 @@ supprimé deux fonctionnalités et le sous-chemin public `@monority/ui/divider`.
 
 ---
 
+## Alias dépréciés conservés (option retenue)
+
+Ces familles n’ont pas d’équivalent vivant dans leur échelle. Elles restent
+des alias dépréciés, volontairement, et **aucun token n’a été créé**. Elles
+sont suivies par `node packages/tokens/scripts/check-deprecated.mjs --warn`.
+
+| Famille | Occurrences | État |
+| --- | ---: | --- |
+| `space` (hors lot 5a) | 214 | alias conservés, normalisation renvoyée à l’étape 5b |
+| `leading` | 62 | aucun équivalent dans l’échelle `--mr-lh-*` |
+| `overlay` | 36 | aucun équivalent |
+| `control` | 22 | aucun équivalent |
+| `dur` | 21 | `--mr-duration-{fast,base,slow}` ne couvrent pas 100/150/200/600 ms |
+| `elevation` | 19 | ombres non couvertes par `--mr-shadow-*` |
+| `surface` | 16 | aucun équivalent |
+| `opacity` | 15 | à arbitrer |
+| `spinner` | 14 | à arbitrer |
+| `z` | 10 | à arbitrer |
+| `input` | 6 | à arbitrer |
+| `text` | 5 | `clamp()` fluides, voir 5b |
+| `font`, `switch`, `content`, `textarea`, `ease`, `shadow` | 12 | à arbitrer |
+
+**Date de revue : à fixer.** Ces alias n’ont pas de date de retrait tant
+qu’aucune décision n’est prise sur les familles sans équivalent ; la date
+sera inscrite ici au moment de l’arbitrage, pas avant.
+
 ## Suivi
 
 | Quoi | Où |

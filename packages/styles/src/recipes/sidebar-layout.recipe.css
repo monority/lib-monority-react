@@ -1,7 +1,7 @@
 @layer monority.recipes {
     .mr-sidebar-layout {
         --mr-sidebar-width: 16rem;
-        --mr-sidebar-layout-gap: var(--mr-space-5);
+        --mr-sidebar-layout-gap: var(--mr-spacing-5);
 
         display: grid;
         grid-template-columns: minmax(0, var(--mr-sidebar-width)) minmax(0, 1fr);
@@ -13,7 +13,7 @@
 
     .mr-sidebar-layout__sidebar {
         position: sticky;
-        top: calc(var(--mr-space-5) + 5rem);
+        top: calc(var(--mr-spacing-5) + 5rem);
         display: grid;
         gap: var(--mr-space-3);
         min-width: 0;

@@ -19,21 +19,21 @@
     .mr-kbd[data-size='sm'],
     .mr-kbd--sm {
         min-height: 1.375rem;
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
         padding: 0 0.3125rem;
         border-radius: var(--mr-radius-scale);
     }
     .mr-kbd[data-size='md'],
     .mr-kbd--md {
         min-height: 1.625rem;
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
         padding: 0 0.4375rem;
         border-radius: var(--mr-radius-scale);
     }
     .mr-kbd[data-size='lg'],
     .mr-kbd--lg {
         min-height: 1.875rem;
-        font-size: var(--mr-text-md);
+        font-size: var(--mr-fs-16);
         padding: 0 0.5625rem;
         border-radius: var(--mr-radius-scale);
     }
