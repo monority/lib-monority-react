@@ -5,7 +5,7 @@
         gap: var(--mr-space-1);
         padding: var(--mr-space-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         font-family: inherit;
@@ -25,7 +25,7 @@
         min-height: var(--mr-control-size-md);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         font-family: inherit;

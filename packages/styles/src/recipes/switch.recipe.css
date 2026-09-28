@@ -145,7 +145,7 @@
     }
 
     .mr-switch[data-checked='true'][data-tone='danger'] .mr-switch__thumb {
-        background: var(--mr-accent-contrast);
+        background: var(--mr-on-accent);
     }
 
     .mr-switch[data-size='sm'] {

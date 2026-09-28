@@ -7,7 +7,7 @@
         width: 100%;
         padding: var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
         box-shadow: var(--mr-elevation-surface);
     }
@@ -49,21 +49,21 @@
     }
 
     .mr-inline-alert[data-tone='info'] {
-        color: var(--mr-info);
-        background: color-mix(in srgb, var(--mr-info) 7%, var(--mr-bg-raised));
-        border-color: color-mix(in srgb, var(--mr-info) 18%, var(--mr-border-subtle));
+        color: var(--mr-info-text);
+        background: color-mix(in srgb, var(--mr-info-text) 7%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-info-text) 18%, var(--mr-border-subtle));
     }
 
     .mr-inline-alert[data-tone='success'] {
-        color: var(--mr-success);
-        background: color-mix(in srgb, var(--mr-success) 7%, var(--mr-bg-raised));
-        border-color: color-mix(in srgb, var(--mr-success) 18%, var(--mr-border-subtle));
+        color: var(--mr-success-text);
+        background: color-mix(in srgb, var(--mr-success-text) 7%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-success-text) 18%, var(--mr-border-subtle));
     }
 
     .mr-inline-alert[data-tone='warning'] {
-        color: var(--mr-warning);
-        background: color-mix(in srgb, var(--mr-warning) 8%, var(--mr-bg-raised));
-        border-color: color-mix(in srgb, var(--mr-warning) 18%, var(--mr-border-subtle));
+        color: var(--mr-warning-text);
+        background: color-mix(in srgb, var(--mr-warning-text) 8%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-warning-text) 18%, var(--mr-border-subtle));
     }
 
     .mr-inline-alert[data-tone='danger'] {

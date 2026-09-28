@@ -1,6 +1,6 @@
 @layer monority.recipes {
     .mr-banner {
-        --mr-banner-tone: var(--mr-info);
+        --mr-banner-tone: var(--mr-info-text);
         --mr-banner-soft: color-mix(in srgb, var(--mr-banner-tone) 6%, var(--mr-bg-raised));
         --mr-banner-border: color-mix(in srgb, var(--mr-banner-tone) 30%, var(--mr-border-subtle));
         --mr-banner-marker: color-mix(in srgb, var(--mr-banner-tone) 92%, var(--mr-text-primary));
@@ -13,7 +13,7 @@
         min-width: 0;
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-banner-border);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-banner-soft);
         color: var(--mr-text-primary);
         box-shadow: var(--mr-elevation-surface);
@@ -77,15 +77,15 @@
     }
 
     .mr-banner[data-tone='info'] {
-        --mr-banner-tone: var(--mr-info);
+        --mr-banner-tone: var(--mr-info-text);
     }
 
     .mr-banner[data-tone='success'] {
-        --mr-banner-tone: var(--mr-success);
+        --mr-banner-tone: var(--mr-success-text);
     }
 
     .mr-banner[data-tone='warning'] {
-        --mr-banner-tone: var(--mr-warning);
+        --mr-banner-tone: var(--mr-warning-text);
     }
 
     .mr-banner[data-tone='danger'] {

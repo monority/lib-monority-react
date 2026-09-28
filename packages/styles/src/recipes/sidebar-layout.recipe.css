@@ -19,7 +19,7 @@
         min-width: 0;
         padding: var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
     }
 
@@ -41,14 +41,14 @@
         gap: var(--mr-space-3);
         padding: var(--mr-space-3) var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
     }
 
     .mr-sidebar-layout__content {
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
     }
 

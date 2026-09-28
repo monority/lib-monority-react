@@ -44,7 +44,7 @@
         block-size: var(--mr-control-size-sm);
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         cursor: pointer;
         color: var(--mr-text-secondary);
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
@@ -97,7 +97,7 @@
         aspect-ratio: 1;
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         cursor: pointer;
         font-size: var(--mr-text-sm);
         color: var(--mr-text-primary);
@@ -130,12 +130,12 @@
     /* Selected */
     .mr-calendar__day[data-selected='true'] {
         background: var(--mr-accent);
-        color: var(--mr-accent-contrast);
+        color: var(--mr-on-accent);
         font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-calendar__day[data-selected='true']:hover {
-        background: var(--mr-accent-strong);
+        background: var(--mr-accent-hover);
     }
 
     /* Disabled */

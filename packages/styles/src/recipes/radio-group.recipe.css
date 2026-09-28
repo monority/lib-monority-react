@@ -2,7 +2,7 @@
     .mr-radio-group {
         --mr-radio-group-gap: var(--mr-space-2);
         --mr-radio-gap: var(--mr-space-2);
-        --mr-radio-size: var(--mr-control-icon-size-md);
+        --mr-radio-size: var(--mr-icon-size-md);
         --mr-radio-label-size: var(--mr-text-sm);
         --mr-radio-description-size: var(--mr-text-xs);
         display: flex;
@@ -15,14 +15,14 @@
     .mr-radio-group[data-size='sm'] {
         --mr-radio-group-gap: var(--mr-space-1);
         --mr-radio-gap: var(--mr-space-1);
-        --mr-radio-size: var(--mr-control-icon-size-sm);
+        --mr-radio-size: var(--mr-icon-size-sm);
         --mr-radio-label-size: var(--mr-text-xs);
     }
 
     .mr-radio-group[data-size='lg'] {
         --mr-radio-group-gap: var(--mr-space-3);
         --mr-radio-gap: var(--mr-space-3);
-        --mr-radio-size: var(--mr-control-icon-size-lg);
+        --mr-radio-size: var(--mr-icon-size-lg);
         --mr-radio-label-size: var(--mr-text-md);
         --mr-radio-description-size: var(--mr-text-sm);
     }
@@ -162,6 +162,6 @@
     }
 
     .mr-radio-group[data-tone='danger'] .mr-radio[data-checked='true'] .mr-radio__dot {
-        background: var(--mr-accent-contrast);
+        background: var(--mr-on-accent);
     }
 }

@@ -6,7 +6,7 @@
         --mr-collapsible-content-padding-inline: var(--mr-space-4);
 
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         overflow: hidden;
@@ -94,9 +94,9 @@
         grid-template-rows: 0fr;
         opacity: 0;
         visibility: hidden;
-        transition: grid-template-rows var(--mr-duration-normal) var(--mr-ease-standard), opacity
+        transition: grid-template-rows var(--mr-duration-base) var(--mr-ease-standard), opacity
             var(--mr-duration-fast) var(--mr-ease-standard), visibility 0ms linear
-            var(--mr-duration-normal);
+            var(--mr-duration-base);
     }
 
     .mr-collapsible[data-open] .mr-collapsible__panel {

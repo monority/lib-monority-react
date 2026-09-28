@@ -70,7 +70,7 @@
     .mr-stack[data-surface='true'] {
         padding: var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
     }
 }

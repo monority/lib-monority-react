@@ -4,7 +4,7 @@
         wins by specificity and collapses textarea min-height to input height. */
         display: block;
         box-sizing: border-box;
-        min-height: var(--mr-textarea-min-height, var(--mr-textarea-min-height-md));
+        min-height: var(--mr-textarea-min-height, var(--mr-textarea-min-height));
         vertical-align: top;
         line-height: var(--mr-leading-relaxed);
         resize: vertical;
@@ -85,7 +85,7 @@
     }
 
     .mr-textarea[data-size='md'] {
-        --mr-textarea-min-height: var(--mr-textarea-min-height-md);
+        --mr-textarea-min-height: var(--mr-textarea-min-height);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
     }
 
@@ -101,7 +101,7 @@
         align-items: center;
         min-block-size: var(--mr-space-5);
         padding-inline: var(--mr-space-1);
-        border-radius: var(--mr-radius-xs);
+        border-radius: var(--mr-radius-scale);
         color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         line-height: 1;
@@ -109,7 +109,7 @@
     }
 
     .mr-textarea__counter[data-near-limit='true'] {
-        color: var(--mr-warning);
-        background: color-mix(in srgb, var(--mr-warning) 8%, transparent);
+        color: var(--mr-warning-text);
+        background: color-mix(in srgb, var(--mr-warning-text) 8%, transparent);
     }
 }

@@ -16,7 +16,7 @@
         min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-file-list-item-padding-block) var(--mr-file-list-item-padding-inline);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
@@ -66,7 +66,7 @@
         inline-size: var(--mr-control-size-sm);
         block-size: var(--mr-control-size-sm);
         border: none;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
@@ -77,7 +77,7 @@
     }
 
     .mr-file-list__remove:hover {
-        background: var(--mr-danger-soft);
+        background: var(--mr-danger-subtle);
         color: var(--mr-danger-text);
     }
 

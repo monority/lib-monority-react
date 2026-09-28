@@ -40,7 +40,7 @@
         padding: var(--mr-space-5);
         background: var(--mr-bg-raised);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
     }
 
     /* Title */

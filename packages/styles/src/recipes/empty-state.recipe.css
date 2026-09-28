@@ -9,7 +9,7 @@
         padding: var(--mr-space-8);
         border: var(--mr-border-width) dashed
             color-mix(in srgb, var(--mr-border-subtle) 88%, transparent);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
         text-align: center;
     }

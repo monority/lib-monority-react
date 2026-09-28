@@ -45,7 +45,7 @@
         min-block-size: var(--mr-control-size-md);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-sunken);
         color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
@@ -78,7 +78,7 @@
 
     .mr-file-trigger:not(:disabled) .mr-file-upload__action:hover,
     .mr-file-trigger:not(:disabled) .mr-file-upload__default-action:hover {
-        background: var(--mr-bg-accent-soft);
+        background: var(--mr-accent-subtle);
         border-color: color-mix(in srgb, var(--mr-accent) 32%, var(--mr-border-subtle));
         color: var(--mr-text-primary);
     }

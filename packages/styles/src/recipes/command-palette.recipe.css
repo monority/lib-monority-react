@@ -44,7 +44,7 @@
         width: 100%;
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid transparent;
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
         color: var(--mr-text-primary);
         text-align: left;
@@ -94,7 +94,7 @@
     .mr-command__shortcut {
         padding: var(--mr-space-1) var(--mr-space-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-xs);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
@@ -104,7 +104,7 @@
     .mr-command__empty {
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
         color: var(--mr-text-secondary);
         text-align: center;

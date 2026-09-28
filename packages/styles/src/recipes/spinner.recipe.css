@@ -67,6 +67,6 @@
     }
 
     .mr-spinner[data-tone='inverse'] {
-        color: var(--mr-accent-contrast);
+        color: var(--mr-on-accent);
     }
 }

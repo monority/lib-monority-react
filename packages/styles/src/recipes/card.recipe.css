@@ -5,10 +5,10 @@
         flex-direction: column;
         gap: var(--mr-card-current-gap);
         min-width: 0;
-        padding: var(--mr-card-padding, var(--mr-card-padding-md));
+        padding: var(--mr-card-padding, var(--mr-card-padding));
         overflow-wrap: anywhere;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-card-radius, var(--mr-radius-md));
+        border-radius: var(--mr-card-radius, var(--mr-radius-scale));
         background: var(--mr-bg-surface);
         color: var(--mr-text-primary);
         box-shadow: var(--mr-elevation-surface);

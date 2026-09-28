@@ -7,7 +7,7 @@
         min-width: 0;
         padding: var(--mr-space-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
         overflow-x: auto;
@@ -30,7 +30,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-control-padding-inline-md);
         border: 0;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
@@ -74,10 +74,10 @@
         );
         padding: var(--mr-space-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
-        box-shadow: var(--mr-elevation-overlay);
+        box-shadow: var(--mr-shadow-overlay);
         animation: mr-menubar-enter var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
@@ -101,7 +101,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-space-2);
         border: 0;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: transparent;
         color: var(--mr-text-primary);
         cursor: pointer;
@@ -114,7 +114,7 @@
     }
 
     .mr-menubar__item:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--mr-bg-accent-soft) 82%, transparent);
+        background: color-mix(in srgb, var(--mr-accent-subtle) 82%, transparent);
         color: var(--mr-text-primary);
     }
 

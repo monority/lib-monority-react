@@ -10,7 +10,7 @@
         min-height: var(--mr-drop-zone-min-height);
         padding: var(--mr-drop-zone-padding);
         border: var(--mr-border-width) dashed var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         cursor: pointer;
         box-shadow: var(--mr-elevation-surface);
@@ -31,7 +31,7 @@
 
     .mr-drop-zone--dragover {
         border-color: var(--mr-accent);
-        background: var(--mr-bg-accent-soft);
+        background: var(--mr-accent-subtle);
     }
 
     .mr-drop-zone--disabled {

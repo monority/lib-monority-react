@@ -2,7 +2,7 @@
     .mr-toggle {
         --mr-toggle-height: var(--mr-control-size-md);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-md);
-        --mr-toggle-radius: var(--mr-radius-sm);
+        --mr-toggle-radius: var(--mr-radius-scale);
 
         display: inline-flex;
         align-items: center;
@@ -54,7 +54,7 @@
 
     .mr-toggle[data-state='on'] {
         border-color: color-mix(in srgb, var(--mr-accent) 36%, var(--mr-border-control-hover));
-        background: var(--mr-bg-accent-soft);
+        background: var(--mr-accent-subtle);
         color: var(--mr-text-primary);
         box-shadow: inset 0 0 0 var(--mr-border-width)
             color-mix(in srgb, var(--mr-accent) 10%, transparent);
@@ -63,7 +63,7 @@
     .mr-toggle[data-size='sm'] {
         --mr-toggle-height: var(--mr-control-size-sm);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-sm);
-        --mr-toggle-radius: var(--mr-radius-xs);
+        --mr-toggle-radius: var(--mr-radius-scale);
         font-size: var(--mr-text-xs);
     }
 

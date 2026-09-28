@@ -32,21 +32,21 @@
         position: absolute;
         inset: 0;
         background: color-mix(in srgb, var(--mr-bg-canvas) 64%, transparent);
-        animation: mr-modal-backdrop-in var(--mr-duration-base) var(--mr-ease-out);
+        animation: mr-modal-backdrop-in var(--mr-duration-base) var(--mr-ease-enter);
     }
 
     .mr-modal__panel {
         position: relative;
-        inline-size: var(--mr-modal-width);
+        inline-size: var(--mr-dialog-width-md);
         max-block-size: min(42rem, calc(100vh - 2 * var(--mr-overlay-gutter)));
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);
-        padding: var(--mr-modal-padding);
+        padding: var(--mr-spacing-6);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-modal-radius);
+        border-radius: var(--mr-radius-overlay);
         background: var(--mr-bg-raised);
-        box-shadow: var(--mr-elevation-overlay);
-        animation: mr-modal-panel-in var(--mr-duration-base) var(--mr-ease-out);
+        box-shadow: var(--mr-shadow-overlay);
+        animation: mr-modal-panel-in var(--mr-duration-base) var(--mr-ease-enter);
     }
 
     .mr-modal__title {

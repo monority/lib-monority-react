@@ -13,9 +13,9 @@
     .mr-toast {
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
-        box-shadow: var(--mr-elevation-overlay);
+        box-shadow: var(--mr-shadow-overlay);
         animation: mr-toast-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
@@ -24,7 +24,7 @@
     }
 
     .mr-toast[data-tone='success'] {
-        border-color: color-mix(in srgb, var(--mr-success) 35%, var(--mr-border-subtle));
+        border-color: color-mix(in srgb, var(--mr-success-text) 35%, var(--mr-border-subtle));
     }
 
     .mr-toast[data-tone='danger'] {

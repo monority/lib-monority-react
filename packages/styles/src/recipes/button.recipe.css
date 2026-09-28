@@ -11,10 +11,10 @@
         font-weight: var(--mr-font-weight-regular);
         line-height: var(--mr-leading-control);
         text-decoration: none;
-        border-radius: var(--mr-btn-radius);
-        transition: background-color var(--mr-dur-150) var(--mr-ease-in-out), border-color
-            var(--mr-dur-150) var(--mr-ease-in-out), color var(--mr-dur-150) var(--mr-ease-in-out),
-            opacity var(--mr-dur-150) var(--mr-ease-in-out);
+        border-radius: var(--mr-radius-control);
+        transition: background-color var(--mr-dur-150) var(--mr-ease-standard), border-color
+            var(--mr-dur-150) var(--mr-ease-standard), color var(--mr-dur-150)
+            var(--mr-ease-standard), opacity var(--mr-dur-150) var(--mr-ease-standard);
         outline: none;
         padding: 0 var(--mr-control-padding-inline-md);
     }
@@ -32,18 +32,18 @@
     }
 
     .mr-btn[data-size='sm'] {
-        min-block-size: var(--mr-btn-height-sm);
+        min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-control-padding-inline-sm);
         font-size: var(--mr-text-xs);
     }
 
     .mr-btn[data-size='md'] {
-        min-block-size: var(--mr-btn-height-md);
+        min-block-size: var(--mr-control-size-md);
         padding: 0 var(--mr-control-padding-inline-md);
     }
 
     .mr-btn[data-size='lg'] {
-        min-block-size: var(--mr-btn-height-lg);
+        min-block-size: var(--mr-control-size-lg);
         padding: 0 var(--mr-control-padding-inline-lg);
         font-size: var(--mr-text-md);
     }
@@ -77,21 +77,21 @@
     }
 
     .mr-btn[data-variant='danger'] {
-        background-color: var(--mr-danger);
-        color: var(--mr-danger-contrast);
+        background-color: var(--mr-danger-solid);
+        color: var(--mr-on-danger-solid);
     }
 
     .mr-btn[data-variant='danger']:hover:not(:disabled) {
-        background-color: color-mix(in srgb, var(--mr-danger) 80%, black);
+        background-color: color-mix(in srgb, var(--mr-danger-solid) 80%, black);
     }
 
     .mr-btn[data-variant='warning'] {
-        background-color: var(--mr-warning);
-        color: var(--mr-warning-contrast);
+        background-color: var(--mr-warning-text);
+        color: var(--mr-warning-text);
     }
 
     .mr-btn[data-variant='warning']:hover:not(:disabled) {
-        background-color: color-mix(in srgb, var(--mr-warning) 85%, black);
+        background-color: color-mix(in srgb, var(--mr-warning-text) 85%, black);
     }
 
     .mr-btn[data-variant='ghost'] {
@@ -100,7 +100,7 @@
     }
 
     .mr-btn[data-variant='ghost']:hover:not(:disabled) {
-        background-color: var(--mr-bg-accent-soft);
+        background-color: var(--mr-accent-subtle);
     }
 
     .mr-btn[data-variant='subtle'] {
@@ -124,9 +124,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        inline-size: var(--mr-icon-size);
-        block-size: var(--mr-icon-size);
-        font-size: var(--mr-icon-size);
+        inline-size: var(--mr-icon-size-md);
+        block-size: var(--mr-icon-size-md);
+        font-size: var(--mr-icon-size-md);
     }
 
     .mr-btn__icon svg {
@@ -142,18 +142,18 @@
 
     /* Icon-only mode: square controls that reuse the exact button height ladder. */
     .mr-btn[data-icon-only='true'] {
-        inline-size: var(--mr-btn-height-md);
-        block-size: var(--mr-btn-height-md);
+        inline-size: var(--mr-control-size-md);
+        block-size: var(--mr-control-size-md);
         padding: 0;
     }
 
     .mr-btn[data-icon-only='true'][data-size='sm'] {
-        inline-size: var(--mr-btn-height-sm);
-        block-size: var(--mr-btn-height-sm);
+        inline-size: var(--mr-control-size-sm);
+        block-size: var(--mr-control-size-sm);
     }
 
     .mr-btn[data-icon-only='true'][data-size='lg'] {
-        inline-size: var(--mr-btn-height-lg);
-        block-size: var(--mr-btn-height-lg);
+        inline-size: var(--mr-control-size-lg);
+        block-size: var(--mr-control-size-lg);
     }
 }

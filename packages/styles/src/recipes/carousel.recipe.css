@@ -14,12 +14,12 @@
         grid-area: viewport;
         width: 100%;
         overflow: hidden;
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
     }
 
     .mr-carousel__track {
         display: flex;
-        transition: transform var(--mr-duration-normal) var(--mr-ease-standard);
+        transition: transform var(--mr-duration-base) var(--mr-ease-standard);
     }
 
     .mr-carousel[data-orientation='vertical'] .mr-carousel__track,
@@ -43,8 +43,8 @@
         align-items: center;
         align-self: center;
         justify-content: center;
-        inline-size: var(--mr-btn-height-md);
-        block-size: var(--mr-btn-height-md);
+        inline-size: var(--mr-control-size-md);
+        block-size: var(--mr-control-size-md);
         padding: 0;
         border: 0;
         border-radius: var(--mr-radius-full);

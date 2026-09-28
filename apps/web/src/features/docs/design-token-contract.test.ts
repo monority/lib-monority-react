@@ -36,8 +36,8 @@ describe('step23 design token contracts', () => {
         const drawer = recipe('drawer.recipe.css')
         expect(drawer).not.toMatch(/animation:[^;]*\b200ms\b/)
         expect(drawer).toContain('var(--mr-dur-200)')
-        expect(drawer).toContain('var(--mr-ease-out)')
-        expect(drawer).toContain('var(--mr-ease-in)')
+        expect(drawer).toContain('var(--mr-ease-enter)')
+        expect(drawer).toContain('var(--mr-ease-exit)')
     })
 
     it('uses radius tokens for circular spinners instead of raw 50%', () => {

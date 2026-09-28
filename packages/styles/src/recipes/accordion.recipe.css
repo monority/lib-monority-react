@@ -3,7 +3,7 @@
         display: flex;
         flex-direction: column;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         overflow: hidden;
@@ -112,7 +112,7 @@
 
     .mr-accordion__item[data-open] .mr-accordion__icon {
         transform: rotate(180deg);
-        background: var(--mr-bg-accent-soft);
+        background: var(--mr-accent-subtle);
     }
 
     .mr-accordion__content {

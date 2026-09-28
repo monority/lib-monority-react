@@ -47,7 +47,7 @@
 
     .mr-select.mr-select {
         appearance: none;
-        min-block-size: var(--mr-input-height);
+        min-block-size: var(--mr-control-size-md);
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-md) +
             var(--mr-select-chevron-size) +

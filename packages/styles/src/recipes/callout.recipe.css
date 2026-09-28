@@ -8,7 +8,7 @@
         gap: var(--mr-space-3);
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
     }
@@ -20,7 +20,7 @@
         /* Centers the 10px marker on the 18px title first line. Stays top-anchored for multiline. */
         margin-top: 0.3125rem;
         border: var(--mr-border-width) solid var(--mr-callout-accent);
-        border-radius: var(--mr-radius-xs);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-callout-accent-bg);
     }
 
@@ -58,27 +58,27 @@
     }
 
     .mr-callout[data-tone='info'] {
-        --mr-callout-accent: var(--mr-info);
-        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-info) 14%, var(--mr-bg-raised));
+        --mr-callout-accent: var(--mr-info-text);
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-info-text) 14%, var(--mr-bg-raised));
 
-        border-color: color-mix(in srgb, var(--mr-info) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-info) 5%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-info-text) 38%, var(--mr-border-subtle));
+        background: color-mix(in srgb, var(--mr-info-text) 5%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='success'] {
-        --mr-callout-accent: var(--mr-success);
-        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-success) 14%, var(--mr-bg-raised));
+        --mr-callout-accent: var(--mr-success-text);
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-success-text) 14%, var(--mr-bg-raised));
 
-        border-color: color-mix(in srgb, var(--mr-success) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-success) 5%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-success-text) 38%, var(--mr-border-subtle));
+        background: color-mix(in srgb, var(--mr-success-text) 5%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='warning'] {
-        --mr-callout-accent: var(--mr-warning);
-        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-warning) 16%, var(--mr-bg-raised));
+        --mr-callout-accent: var(--mr-warning-text);
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-warning-text) 16%, var(--mr-bg-raised));
 
-        border-color: color-mix(in srgb, var(--mr-warning) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-warning) 6%, var(--mr-bg-raised));
+        border-color: color-mix(in srgb, var(--mr-warning-text) 38%, var(--mr-border-subtle));
+        background: color-mix(in srgb, var(--mr-warning-text) 6%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='neutral'] {

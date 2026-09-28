@@ -4,8 +4,8 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--mr-fg-strong);
-    font-family: var(--mr-font-display);
+    color: var(--mr-text-primary);
+    font-family: var(--mr-font-sans);
     letter-spacing: -0.03em;
     text-wrap: balance;
 }
@@ -32,5 +32,5 @@ a {
 }
 
 a:hover {
-    color: var(--mr-fg-strong);
+    color: var(--mr-text-primary);
 }

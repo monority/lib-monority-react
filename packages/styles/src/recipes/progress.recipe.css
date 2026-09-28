@@ -45,7 +45,7 @@
         border-radius: var(--mr-radius-full);
         background: linear-gradient(
             180deg,
-            color-mix(in srgb, var(--mr-bg-sunken) 90%, var(--mr-accent-contrast)),
+            color-mix(in srgb, var(--mr-bg-sunken) 90%, var(--mr-on-accent)),
             var(--mr-bg-sunken)
         );
         box-shadow: inset 0 var(--mr-border-width) var(--mr-border-width)
@@ -58,17 +58,17 @@
         background: linear-gradient(
             90deg,
             var(--mr-text-primary),
-            color-mix(in srgb, var(--mr-text-primary) 70%, var(--mr-accent-contrast))
+            color-mix(in srgb, var(--mr-text-primary) 70%, var(--mr-on-accent))
         );
         box-shadow: inset 0 calc(-1 * var(--mr-border-width)) 0
-            color-mix(in srgb, var(--mr-accent-contrast) 18%, transparent);
+            color-mix(in srgb, var(--mr-on-accent) 18%, transparent);
         transition: width var(--mr-duration-base) var(--mr-ease-standard);
     }
 
     .mr-progress[data-mode='indeterminate'] .mr-progress__bar,
     .mr-progress__bar--indeterminate {
         width: 40% !important;
-        animation: mr-progress-indeterminate var(--mr-dur-1200) var(--mr-ease-in-out) infinite;
+        animation: mr-progress-indeterminate var(--mr-dur-1200) var(--mr-ease-standard) infinite;
     }
 
     .mr-progress[data-tone='neutral'] .mr-progress__bar {
@@ -78,16 +78,16 @@
     .mr-progress[data-tone='success'] .mr-progress__bar {
         background: linear-gradient(
             90deg,
-            var(--mr-success),
-            color-mix(in srgb, var(--mr-success) 70%, white)
+            var(--mr-success-text),
+            color-mix(in srgb, var(--mr-success-text) 70%, white)
         );
     }
 
     .mr-progress[data-tone='warning'] .mr-progress__bar {
         background: linear-gradient(
             90deg,
-            var(--mr-warning),
-            color-mix(in srgb, var(--mr-warning) 76%, white)
+            var(--mr-warning-text),
+            color-mix(in srgb, var(--mr-warning-text) 76%, white)
         );
     }
 

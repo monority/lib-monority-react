@@ -19,8 +19,8 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        border-start-end-radius: var(--mr-input-radius);
-        border-end-end-radius: var(--mr-input-radius);
+        border-start-end-radius: var(--mr-radius-control);
+        border-end-end-radius: var(--mr-radius-control);
     }
 
     .mr-number-input__btn {

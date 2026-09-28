@@ -1,7 +1,7 @@
 @layer monority.recipes {
     .mr-input-base {
         inline-size: var(--mr-input-width);
-        min-block-size: var(--mr-input-height);
+        min-block-size: var(--mr-control-size-md);
         padding-block: var(--mr-input-padding-block, var(--mr-control-padding-block-md));
         padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
         padding-inline-end: var(
@@ -9,7 +9,7 @@
             var(--mr-input-padding-inline, var(--mr-control-padding-inline-md))
         );
         border: var(--mr-border-width) solid var(--mr-border-control);
-        border-radius: var(--mr-input-radius);
+        border-radius: var(--mr-radius-control);
         background: var(--mr-bg-sunken);
         color: var(--mr-text-primary);
         font-family: inherit;

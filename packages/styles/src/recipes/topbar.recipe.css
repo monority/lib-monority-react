@@ -12,7 +12,7 @@
         padding: var(--mr-space-2) var(--mr-topbar-padding-inline);
         border: var(--mr-border-width) solid
             color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
     }
 
@@ -46,7 +46,7 @@
         align-items: center;
         min-block-size: var(--mr-control-size-sm);
         padding-inline: var(--mr-space-3);
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         color: var(--mr-text-secondary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);

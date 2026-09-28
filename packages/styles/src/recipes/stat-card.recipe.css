@@ -61,7 +61,7 @@
         inline-size: var(--mr-control-size-sm);
         block-size: var(--mr-control-size-sm);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-sunken);
         color: var(--mr-text-secondary);
         font-size: var(--mr-text-lg);
@@ -76,7 +76,7 @@
         min-block-size: var(--mr-control-size-sm);
         max-inline-size: 100%;
         padding: 0 var(--mr-space-2);
-        border-radius: var(--mr-radius-xs);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-stat-card-trend-bg);
         color: var(--mr-stat-card-trend-fg);
         font-variant-numeric: tabular-nums;
@@ -99,15 +99,15 @@
     }
 
     .mr-stat-card__trend[data-trend-tone='success'] {
-        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-success) 10%, transparent);
-        --mr-stat-card-trend-fg: var(--mr-success);
-        --mr-stat-card-trend-marker: var(--mr-success);
+        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-success-text) 10%, transparent);
+        --mr-stat-card-trend-fg: var(--mr-success-text);
+        --mr-stat-card-trend-marker: var(--mr-success-text);
     }
 
     .mr-stat-card__trend[data-trend-tone='warning'] {
-        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-warning) 11%, transparent);
-        --mr-stat-card-trend-fg: var(--mr-warning);
-        --mr-stat-card-trend-marker: var(--mr-warning);
+        --mr-stat-card-trend-bg: color-mix(in srgb, var(--mr-warning-text) 11%, transparent);
+        --mr-stat-card-trend-fg: var(--mr-warning-text);
+        --mr-stat-card-trend-marker: var(--mr-warning-text);
     }
 
     .mr-stat-card__trend[data-trend-tone='danger'] {
