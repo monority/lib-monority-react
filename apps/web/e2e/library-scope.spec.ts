@@ -58,10 +58,9 @@ test('le contenu de l’hôte garde ses marges dans Container et Card', async ({
     for (const testId of ['container', 'card']) {
         for (const tag of ['p', 'ul']) {
             const margins = (await marginsOf(page, `host-${tag}`)) as Margins
-            expect(
-                margins.marginTop,
-                `${tag} de l'hôte dans .mr-${testId} : marge haute`
-            ).not.toBe('0px')
+            expect(margins.marginTop, `${tag} de l'hôte dans .mr-${testId} : marge haute`).not.toBe(
+                '0px'
+            )
             expect(
                 margins.marginBottom,
                 `${tag} de l'hôte dans .mr-${testId} : marge basse`
