@@ -83,6 +83,7 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
             'entry',
             'publicDir',
             'format',
+            'banner',
             'dts',
             'sourcemap',
             'clean',
