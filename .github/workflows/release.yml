@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # La version de pnpm vient de `packageManager` (package.json) : ne pas
+      # ajouter `with.version`, pnpm/action-setup refuse les deux.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
