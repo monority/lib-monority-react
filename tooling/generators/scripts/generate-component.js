@@ -369,7 +369,7 @@ ${registryEntry}
 }
 
 function recipeTemplate(cssBlock) {
-    return `@layer recipes {
+    return `@layer monority.recipes {
   .${cssBlock} {
     display: inline-flex;
     align-items: center;
