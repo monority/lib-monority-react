@@ -84,6 +84,7 @@ const items = [
         '.mr-combobox__input',
         '.mr-combobox__list',
         '.mr-combobox__item',
+        '[data-tone]',
         '[data-size]',
         '[data-disabled]',
         '[data-invalid]',

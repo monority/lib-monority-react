@@ -114,39 +114,34 @@
         outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
-    /* Other month */
+    /* Other month — class still emitted by Calendar; no data-* equivalent
+       exists (data-current-month is inverted and absent when false) */
     .mr-calendar__day--other-month {
         color: var(--mr-fg-muted);
         opacity: 0.5;
     }
 
     /* Today */
-    .mr-calendar__day--today {
+    .mr-calendar__day[data-today='true'] {
         font-weight: var(--mr-font-weight-bold);
         color: var(--mr-accent);
     }
 
     /* Selected */
-    .mr-calendar__day--selected {
+    .mr-calendar__day[data-selected='true'] {
         background: var(--mr-accent);
         color: var(--mr-accent-contrast);
         font-weight: var(--mr-font-weight-semibold);
     }
 
-    .mr-calendar__day--selected:hover {
+    .mr-calendar__day[data-selected='true']:hover {
         background: var(--mr-accent-strong);
     }
 
     /* Disabled */
-    .mr-calendar__day--disabled {
+    .mr-calendar__day[data-disabled='true'] {
         opacity: 0.3;
         cursor: not-allowed;
-        pointer-events: none;
-    }
-
-    /* Hidden (outside days when showOutsideDays=false) */
-    .mr-calendar__day--hidden {
-        visibility: hidden;
         pointer-events: none;
     }
 }

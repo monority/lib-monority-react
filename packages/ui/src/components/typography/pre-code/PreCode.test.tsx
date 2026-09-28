@@ -46,8 +46,7 @@ describe('PreCode', () => {
         )
         const pre = view.querySelector('pre')
 
-        expect(pre?.className).toContain('mr-pre-code--sm')
-        expect(pre?.className).toContain('mr-pre-code--wrap')
+        expect(pre?.getAttribute('data-size')).toBe('sm')
         expect(pre?.getAttribute('data-wrap')).toBe('true')
     })
 

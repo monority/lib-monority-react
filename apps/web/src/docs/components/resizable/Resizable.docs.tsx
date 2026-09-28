@@ -70,6 +70,9 @@ const docData: DocPageData = {
         '.mr-resizable__handle--vertical',
         '.mr-resizable__handle--active',
         '.mr-resizable__handle-indicator',
+        '[data-direction]',
+        '[data-dragging]',
+        '[data-active]',
     ],
     tokens: ['--mr-bg-surface', '--mr-bg-surface-strong', '--mr-border-subtle', '--mr-fg-muted'],
     a11y: [

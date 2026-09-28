@@ -37,7 +37,20 @@ describe('DataList', () => {
     it('applies columns variant', () => {
         const view = render(<DataList items={items} columns="split" />)
         expect(view.querySelector('dl')?.getAttribute('data-columns')).toBe('split')
-        expect(view.querySelector('dl')?.className).toContain('mr-data-list--split')
+    })
+
+    it('has no columns variant when the prop is absent', () => {
+        const view = render(<DataList items={items} />)
+        const dl = view.querySelector('dl')
+        // sans prop `columns`, aucune variante n'est appliquée : le comportement
+        // historique (base) doit être conservé
+        expect(dl?.getAttribute('data-columns')).toBeNull()
+        expect(dl?.className).toBe('mr-data-list')
+    })
+
+    it('applies the auto columns when specified explicitly', () => {
+        const view = render(<DataList items={items} columns="auto" />)
+        expect(view.querySelector('dl')?.getAttribute('data-columns')).toBe('auto')
     })
 
     it('uses render function when provided', () => {

@@ -11,18 +11,6 @@
         align-items: start;
     }
 
-    .mr-sidebar-layout--sidebar-sm {
-        --mr-sidebar-width: 13rem;
-    }
-
-    .mr-sidebar-layout--sidebar-md {
-        --mr-sidebar-width: 16rem;
-    }
-
-    .mr-sidebar-layout--sidebar-lg {
-        --mr-sidebar-width: 20rem;
-    }
-
     .mr-sidebar-layout__sidebar {
         position: sticky;
         top: calc(var(--mr-space-5) + 5rem);

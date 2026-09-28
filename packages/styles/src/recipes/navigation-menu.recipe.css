@@ -49,6 +49,8 @@
 
     .mr-nav-menu__trigger:hover:not(:disabled):not([data-disabled='true']),
     .mr-nav-menu__link:hover:not([aria-disabled='true']),
+    .mr-nav-menu__item[data-active='true'] > .mr-nav-menu__trigger,
+    .mr-nav-menu__item[data-active='true'] > .mr-nav-menu__link,
     .mr-nav-menu__item--active > .mr-nav-menu__trigger,
     .mr-nav-menu__item--active > .mr-nav-menu__link {
         background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
@@ -63,6 +65,8 @@
         outline-offset: var(--mr-focus-offset);
     }
 
+    .mr-nav-menu__item[data-disabled='true'] .mr-nav-menu__trigger,
+    .mr-nav-menu__item[data-disabled='true'] .mr-nav-menu__link,
     .mr-nav-menu__item--disabled .mr-nav-menu__trigger,
     .mr-nav-menu__item--disabled .mr-nav-menu__link,
     .mr-nav-menu__trigger:disabled,
@@ -76,6 +80,7 @@
         transition: transform var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
+    .mr-nav-menu__item[data-active='true'] .mr-nav-menu__chevron,
     .mr-nav-menu__item--active .mr-nav-menu__chevron {
         transform: rotate(180deg);
     }

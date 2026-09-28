@@ -50,7 +50,14 @@ const docData: DocPageData = {
             description: 'Additional class for the inner <code> element.',
         },
     ],
-    cssHooks: ['.mr-pre-code', '.mr-pre-code--sm', '.mr-pre-code--md', '.mr-pre-code--wrap'],
+    cssHooks: [
+        '.mr-pre-code',
+        '.mr-pre-code--sm',
+        '.mr-pre-code--md',
+        '.mr-pre-code--wrap',
+        '[data-size]',
+        '[data-wrap]',
+    ],
     tokens: [
         '--mr-font-mono',
         '--mr-text-xs',

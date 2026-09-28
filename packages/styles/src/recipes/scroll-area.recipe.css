@@ -32,16 +32,19 @@
         display: none;
     }
 
+    .mr-scroll-area[data-orientation='vertical'],
     .mr-scroll-area--vertical {
         overflow-y: auto;
         overflow-x: hidden;
     }
 
+    .mr-scroll-area[data-orientation='horizontal'],
     .mr-scroll-area--horizontal {
         overflow-x: auto;
         overflow-y: hidden;
     }
 
+    .mr-scroll-area[data-orientation='both'],
     .mr-scroll-area--both {
         overflow: auto;
     }

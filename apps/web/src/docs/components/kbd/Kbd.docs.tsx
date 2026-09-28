@@ -38,6 +38,7 @@ const docData: DocPageData = {
         '.mr-kbd--sm',
         '.mr-kbd--md',
         '.mr-kbd--lg',
+        '[data-size]',
         '.mr-kbd__key',
         '.mr-kbd__separator',
     ],

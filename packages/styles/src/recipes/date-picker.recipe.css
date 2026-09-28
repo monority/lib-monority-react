@@ -30,12 +30,10 @@
         border-color: var(--mr-border-control-hover);
     }
 
-    .mr-datepicker__trigger--invalid,
     .mr-datepicker[data-invalid='true'] .mr-datepicker__trigger {
         border-color: color-mix(in srgb, var(--mr-danger-text) 44%, var(--mr-border-subtle));
     }
 
-    .mr-datepicker__trigger--disabled,
     .mr-datepicker[data-disabled='true'] .mr-datepicker__trigger {
         cursor: not-allowed;
         opacity: var(--mr-opacity-disabled);

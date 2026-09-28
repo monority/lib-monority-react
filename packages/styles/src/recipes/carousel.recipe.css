@@ -22,6 +22,7 @@
         transition: transform var(--mr-duration-normal) var(--mr-ease-standard);
     }
 
+    .mr-carousel[data-orientation='vertical'] .mr-carousel__track,
     .mr-carousel__track--vertical {
         flex-direction: column;
     }
@@ -72,16 +73,6 @@
         opacity: var(--mr-opacity-disabled, 0.5);
     }
 
-    .mr-carousel__arrow--prev {
-        justify-self: start;
-        margin-inline-start: var(--mr-space-2);
-    }
-
-    .mr-carousel__arrow--next {
-        justify-self: end;
-        margin-inline-end: var(--mr-space-2);
-    }
-
     .mr-carousel__dots {
         grid-area: dots;
         display: flex;
@@ -104,11 +95,13 @@
     }
 
     .mr-carousel__dot:hover,
+    .mr-carousel__dot[data-active='true'],
     .mr-carousel__dot--active {
         background: var(--mr-fg-strong);
         opacity: 1;
     }
 
+    .mr-carousel__dot[data-active='true'],
     .mr-carousel__dot--active {
         transform: scale(1.25);
     }

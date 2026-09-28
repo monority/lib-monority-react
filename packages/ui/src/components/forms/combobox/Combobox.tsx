@@ -2,30 +2,12 @@ import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } 
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
-import { cva } from '@/lib/variants'
 import { Field } from '@/components/forms/field/Field'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ComboboxProps, ComboboxItem } from './Combobox.types'
 import type { ComboboxTone, ComboboxSize } from './Combobox.types'
-
-const comboboxVariants = cva({
-    base: 'mr-combobox',
-    variants: {
-        tone: {
-            neutral: 'mr-combobox--neutral',
-            accent: 'mr-combobox--accent',
-            danger: 'mr-combobox--danger',
-        },
-        size: {
-            sm: 'mr-combobox--sm',
-            md: 'mr-combobox--md',
-            lg: 'mr-combobox--lg',
-        },
-    },
-    defaultVariants: { tone: 'neutral', size: 'md' },
-})
 
 export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
     {
@@ -173,7 +155,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
             <Field className={className} label={label} hint={hint} error={error}>
                 <div
                     ref={rootRef}
-                    className={comboboxVariants({ tone: resolvedTone, size: resolvedSize })}
+                    className="mr-combobox"
                     data-tone={resolvedTone}
                     data-size={resolvedSize}
                     data-open={open ? true : undefined}
@@ -186,11 +168,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
                         ref={handleRef}
                         type="text"
                         role="combobox"
-                        className={cn(
-                            'mr-combobox__input',
-                            isInvalid && 'mr-combobox__input--invalid',
-                            disabled && 'mr-combobox__input--disabled'
-                        )}
+                        className="mr-combobox__input"
+                        data-invalid={isInvalid ? true : undefined}
+                        data-disabled={disabled ? true : undefined}
                         aria-expanded={open}
                         aria-controls={`${inputId}-list`}
                         aria-activedescendant={

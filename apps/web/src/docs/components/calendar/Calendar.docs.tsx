@@ -97,10 +97,9 @@ const docData: DocPageData = {
         '.mr-calendar__week',
         '.mr-calendar__day',
         '.mr-calendar__day--other-month',
-        '.mr-calendar__day--today',
-        '.mr-calendar__day--selected',
-        '.mr-calendar__day--disabled',
-        '.mr-calendar__day--hidden',
+        '[data-today]',
+        '[data-selected]',
+        '[data-disabled]',
     ],
     tokens: [
         '--mr-space-1',

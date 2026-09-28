@@ -39,8 +39,6 @@ describe('Combobox', () => {
         const wrapper = view.querySelector('.mr-combobox')
         expect(wrapper?.getAttribute('data-tone')).toBe('neutral')
         expect(wrapper?.getAttribute('data-size')).toBe('md')
-        expect(wrapper?.className).toContain('mr-combobox--neutral')
-        expect(wrapper?.className).toContain('mr-combobox--md')
         expect(wrapper?.getAttribute('data-open')).toBeNull()
         expect(wrapper?.getAttribute('data-invalid')).toBeNull()
     })
@@ -62,6 +60,8 @@ describe('Combobox', () => {
         expect(wrapper?.getAttribute('data-required')).toBe('true')
         expect(wrapper?.getAttribute('data-invalid')).toBe('true')
         expect(input?.getAttribute('aria-invalid')).toBe('true')
+        expect(input?.getAttribute('data-invalid')).toBe('true')
+        expect(input?.getAttribute('data-disabled')).toBe('true')
         expect(input?.disabled).toBe(true)
         expect(input?.required).toBe(true)
     })
@@ -91,28 +91,24 @@ describe('Combobox', () => {
         const view = render(<Combobox tone="accent" items={sampleItems} />)
         const wrapper = view.querySelector('.mr-combobox')
         expect(wrapper?.getAttribute('data-tone')).toBe('accent')
-        expect(wrapper?.className).toContain('mr-combobox--accent')
     })
 
     it('applies lg size when specified', () => {
         const view = render(<Combobox size="lg" items={sampleItems} />)
         const wrapper = view.querySelector('.mr-combobox')
         expect(wrapper?.getAttribute('data-size')).toBe('lg')
-        expect(wrapper?.className).toContain('mr-combobox--lg')
     })
 
     it('applies sm size when specified', () => {
         const view = render(<Combobox size="sm" items={sampleItems} />)
         const wrapper = view.querySelector('.mr-combobox')
         expect(wrapper?.getAttribute('data-size')).toBe('sm')
-        expect(wrapper?.className).toContain('mr-combobox--sm')
     })
 
     it('applies danger tone when specified', () => {
         const view = render(<Combobox tone="danger" items={sampleItems} />)
         const wrapper = view.querySelector('.mr-combobox')
         expect(wrapper?.getAttribute('data-tone')).toBe('danger')
-        expect(wrapper?.className).toContain('mr-combobox--danger')
     })
 
     it('opens dropdown on focus and sets aria-expanded', () => {

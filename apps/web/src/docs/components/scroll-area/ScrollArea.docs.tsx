@@ -40,6 +40,7 @@ const docData: DocPageData = {
         '.mr-scroll-area--horizontal',
         '.mr-scroll-area--both',
         '.mr-scroll-area--hide',
+        '[data-orientation]',
     ],
     tokens: ['--mr-border-subtle', '--mr-border-strong', '--mr-radius-full'],
     a11y: [

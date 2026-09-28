@@ -31,7 +31,7 @@ describe('Resizable', () => {
         )
         const group = view.querySelector('.mr-resizable')
         expect(group).not.toBeNull()
-        expect(group?.className).toContain('mr-resizable--horizontal')
+        expect(group?.getAttribute('data-direction')).toBe('horizontal')
     })
 
     it('renders panel group with vertical direction', () => {
@@ -41,7 +41,7 @@ describe('Resizable', () => {
             </ResizablePanelGroup>
         )
         const group = view.querySelector('.mr-resizable')
-        expect(group?.className).toContain('mr-resizable--vertical')
+        expect(group?.getAttribute('data-direction')).toBe('vertical')
     })
 
     it('renders panels inside group', () => {
@@ -234,5 +234,41 @@ describe('Resizable', () => {
         )
         const panel = view.querySelector('.mr-resizable__panel')
         expect(panel?.getAttribute('data-size')).toBe('40')
+    })
+
+    it('exposes data-dragging on the group and data-active on the handle while dragging', () => {
+        const view = render(
+            <ResizablePanelGroup>
+                <ResizablePanel>Panel 1</ResizablePanel>
+                <ResizableHandle />
+            </ResizablePanelGroup>
+        )
+        const group = view.querySelector('.mr-resizable')
+        const handle = view.querySelector('.mr-resizable__handle')
+        expect(group?.getAttribute('data-dragging')).toBeNull()
+        expect(handle?.getAttribute('data-active')).toBeNull()
+
+        act(() => {
+            handle?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
+        })
+        expect(group?.getAttribute('data-dragging')).toBe('true')
+        expect(handle?.getAttribute('data-active')).toBe('true')
+
+        act(() => {
+            window.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }))
+        })
+        expect(group?.getAttribute('data-dragging')).toBeNull()
+        expect(handle?.getAttribute('data-active')).toBeNull()
+    })
+
+    it('handle exposes the direction of its group', () => {
+        const view = render(
+            <ResizablePanelGroup direction="vertical">
+                <ResizablePanel>Panel 1</ResizablePanel>
+                <ResizableHandle />
+            </ResizablePanelGroup>
+        )
+        const handle = view.querySelector('.mr-resizable__handle')
+        expect(handle?.getAttribute('data-direction')).toBe('vertical')
     })
 })

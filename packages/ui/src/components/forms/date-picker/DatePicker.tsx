@@ -2,7 +2,6 @@ import { Field } from '@/components/forms/field/Field'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import { cn } from '@/lib/cn'
 import { DATEPICKER_MIN_WIDTH, OVERLAY_OFFSET } from '@/lib/constants'
-import { cva } from '@/lib/variants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
@@ -126,23 +125,6 @@ function toISODateString(date: Date | null): string {
 }
 
 // ─── Variant ──────────────────────────────────────────────────────────
-
-const datePickerVariants = cva({
-    base: 'mr-datepicker',
-    variants: {
-        size: {
-            sm: 'mr-datepicker--sm',
-            md: 'mr-datepicker--md',
-            lg: 'mr-datepicker--lg',
-        },
-        tone: {
-            neutral: 'mr-datepicker--neutral',
-            accent: 'mr-datepicker--accent',
-            danger: 'mr-datepicker--danger',
-        },
-    },
-    defaultVariants: { size: 'md', tone: 'neutral' },
-})
 
 // ─── Sub-components ───────────────────────────────────────────────────
 
@@ -543,7 +525,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                 <Field label={label} hint={hint} error={error}>
                     <div
                         ref={rootRef}
-                        className={datePickerVariants({ size: resolvedSize, tone: resolvedTone })}
+                        className="mr-datepicker"
                         data-size={resolvedSize}
                         data-tone={resolvedTone}
                         data-open={open ? true : undefined}
@@ -556,12 +538,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                             ref={triggerRef}
                             type="text"
                             readOnly
-                            className={cn(
-                                'mr-datepicker__trigger',
-                                isInvalid && 'mr-datepicker__trigger--invalid',
-                                disabled && 'mr-datepicker__trigger--disabled',
-                                inputClassName
-                            )}
+                            className={cn('mr-datepicker__trigger', inputClassName)}
+                            data-invalid={isInvalid ? true : undefined}
+                            data-disabled={disabled ? true : undefined}
                             value={displayValue}
                             placeholder={placeholder}
                             aria-expanded={open}

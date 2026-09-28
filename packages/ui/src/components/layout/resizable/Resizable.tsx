@@ -105,12 +105,9 @@ export const ResizablePanelGroup = forwardRef<HTMLDivElement, ResizablePanelGrou
             >
                 <div
                     ref={ref}
-                    className={cn(
-                        'mr-resizable',
-                        `mr-resizable--${direction}`,
-                        isDragging && 'mr-resizable--dragging',
-                        className
-                    )}
+                    className={cn('mr-resizable', className)}
+                    data-direction={direction}
+                    data-dragging={isDragging ? 'true' : undefined}
                     {...props}
                 >
                     {children}
@@ -342,12 +339,9 @@ export const ResizableHandle = forwardRef<HTMLDivElement, ResizableHandleProps>(
                 aria-valuenow={ariaValue}
                 aria-label={`Resize panel. Current size: ${ariaValue}%`}
                 tabIndex={0}
-                className={cn(
-                    'mr-resizable__handle',
-                    `mr-resizable__handle--${ctx.direction}`,
-                    ctx.isDragging && 'mr-resizable__handle--active',
-                    className
-                )}
+                className={cn('mr-resizable__handle', className)}
+                data-direction={ctx.direction}
+                data-active={ctx.isDragging ? 'true' : undefined}
                 onMouseDown={handleMouseDown}
                 onKeyDown={handleKeyDown}
                 {...props}

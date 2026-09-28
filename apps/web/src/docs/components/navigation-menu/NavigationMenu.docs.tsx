@@ -64,7 +64,6 @@ const docData: DocPageData = {
         '.mr-nav-menu__item--disabled',
         '.mr-nav-menu__trigger',
         '.mr-nav-menu__link',
-        '.mr-nav-menu__link--disabled',
         '.mr-nav-menu__content',
         '.mr-nav-menu__sub-list',
         '.mr-nav-menu__sub-item',

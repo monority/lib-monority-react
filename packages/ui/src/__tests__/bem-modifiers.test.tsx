@@ -35,6 +35,15 @@ import { Grid } from '@/components/layout/grid'
 import { Stack } from '@/components/layout/stack'
 import { Skeleton } from '@/components/feedback/skeleton'
 import { Tabs } from '@/components/navigation/tabs'
+import { Kbd } from '@/components/typography/kbd'
+import { PreCode } from '@/components/typography/pre-code'
+import { Separator } from '@/components/layout/separator'
+import { DataList } from '@/components/data-display/data-list'
+import { Combobox } from '@/components/forms/combobox'
+import { DatePicker } from '@/components/forms/date-picker'
+import { HoverCard } from '@/components/overlays/hover-card'
+import { Carousel } from '@/components/display/carousel'
+import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from '@/components/layout/resizable'
 
 /**
  * Vague A1 de la migration BEM → `data-*` : ces composants portaient leurs
@@ -210,8 +219,62 @@ const B2_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
     },
 ]
 
+/**
+ * Vague C2 (composants restants). Kbd expose désormais `data-size`, PreCode
+ * `data-size`/`data-wrap`, Separator `data-orientation`, DataList `data-columns`,
+ * Combobox `data-tone`/`data-size`, DatePicker `data-size`/`data-tone`, HoverCard
+ * `data-side`/`data-align`, Carousel `data-orientation` et Resizable
+ * `data-direction`/`data-dragging`.
+ *
+ * ScrollArea et FileTrigger sont volontairement ABSENTS : `mr-scroll-area--hide`
+ * et `mr-file-trigger--default` sont des exceptions C2 légitimes, mais le
+ * détecteur de ce test ne voit que les BEM de racine et les déclarerait en
+ * régression. Le test garde sa convention actuelle ; il n'est pas élargi aux
+ * BEM d'élément ni transformé en inventaire exhaustif.
+ */
+const C2_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
+    // `size` / `columns` sont fournis explicitement : sans prop, le composant
+    // n'émet volontairement aucune variante (comportement historique conservé).
+    { name: 'Kbd', element: <Kbd size="md">F1</Kbd>, hook: 'data-size' },
+    { name: 'PreCode', element: <PreCode>code</PreCode>, hook: 'data-size' },
+    { name: 'Separator', element: <Separator />, hook: 'data-orientation' },
+    {
+        name: 'DataList',
+        element: <DataList items={[]} columns="split" />,
+        hook: 'data-columns',
+    },
+    { name: 'Combobox', element: <Combobox />, hook: 'data-tone' },
+    { name: 'DatePicker', element: <DatePicker />, hook: 'data-size' },
+    {
+        name: 'HoverCard',
+        element: <HoverCard content="contenu">survol</HoverCard>,
+        hook: 'data-side',
+    },
+    {
+        name: 'Carousel',
+        element: <Carousel slides={[<div key="0">A</div>]} />,
+        hook: 'data-orientation',
+    },
+    {
+        name: 'Resizable',
+        element: (
+            <ResizablePanelGroup>
+                <ResizablePanel>Panneau</ResizablePanel>
+                <ResizableHandle />
+            </ResizablePanelGroup>
+        ),
+        hook: 'data-direction',
+    },
+]
+
 describe('modifiers BEM → data-* (vague A1)', () => {
-    for (const { name, element, hook } of [...CASES, ...B1_CASES, ...C1_CASES, ...B2_CASES]) {
+    for (const { name, element, hook } of [
+        ...CASES,
+        ...B1_CASES,
+        ...C1_CASES,
+        ...B2_CASES,
+        ...C2_CASES,
+    ]) {
         it(`${name} n’émet aucun modifier BEM et expose ${hook}`, () => {
             const view = render(element)
             const scope = [view, document]

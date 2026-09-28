@@ -44,15 +44,7 @@ const docData: DocPageData = {
             description: 'Required field indicator.',
         },
     ],
-    cssHooks: [
-        '.mr-date-picker',
-        '.mr-date-picker--sm',
-        '.mr-date-picker--md',
-        '.mr-date-picker--lg',
-        '[data-size]',
-        '[data-disabled]',
-        '[data-invalid]',
-    ],
+    cssHooks: ['.mr-datepicker', '[data-tone]', '[data-size]', '[data-disabled]', '[data-invalid]'],
     tokens: [
         '--mr-border-subtle',
         '--mr-bg-control',

@@ -58,8 +58,6 @@ const docData: DocPageData = {
         '.mr-menubar__trigger',
         '.mr-menubar__menu',
         '.mr-menubar__item',
-        '.mr-menubar__item--danger',
-        '.mr-menubar__item--disabled',
         '.mr-menubar__item-icon',
         '.mr-menubar__item-label',
         '.mr-menubar__shortcut',

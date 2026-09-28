@@ -30,6 +30,16 @@ afterEach(() => {
 
 const slides = [<div key="0">Slide 1</div>, <div key="1">Slide 2</div>, <div key="2">Slide 3</div>]
 
+/* Les flèches sont désignées par leur nom accessible (aria-label) et le dot
+   courant par son état `data-active` : ni l'un ni l'autre ne dépend d'une
+   classe de style interne. */
+const getNextArrow = (view: HTMLElement) =>
+    view.querySelector('[aria-label="Next slide"]') as HTMLButtonElement
+const getPrevArrow = (view: HTMLElement) =>
+    view.querySelector('[aria-label="Previous slide"]') as HTMLButtonElement
+const getActiveDot = (view: HTMLElement) =>
+    view.querySelector('.mr-carousel__dot[data-active="true"]')
+
 describe('Carousel', () => {
     it('renders slides', () => {
         const view = render(<Carousel slides={slides} />)
@@ -64,27 +74,27 @@ describe('Carousel', () => {
             ;(dots[2] as HTMLButtonElement).click()
         })
 
-        const activeDot = view.querySelector('.mr-carousel__dot--active')
+        const activeDot = getActiveDot(view)
         expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 3')
     })
 
     it('prev/next buttons navigate', () => {
         const view = render(<Carousel slides={slides} />)
-        const nextBtn = view.querySelector('.mr-carousel__arrow--next') as HTMLButtonElement
+        const nextBtn = getNextArrow(view)
 
         act(() => {
             nextBtn.click()
         })
 
-        const activeDot = view.querySelector('.mr-carousel__dot--active')
+        const activeDot = getActiveDot(view)
         expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 2')
 
-        const prevBtn = view.querySelector('.mr-carousel__arrow--prev') as HTMLButtonElement
+        const prevBtn = getPrevArrow(view)
         act(() => {
             prevBtn.click()
         })
 
-        const activeDotAfter = view.querySelector('.mr-carousel__dot--active')
+        const activeDotAfter = getActiveDot(view)
         expect(activeDotAfter?.getAttribute('aria-label')).toBe('Go to slide 1')
     })
 
@@ -96,14 +106,14 @@ describe('Carousel', () => {
             vi.advanceTimersByTime(100)
         })
 
-        const activeDot = view.querySelector('.mr-carousel__dot--active')
+        const activeDot = getActiveDot(view)
         expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 2')
 
         act(() => {
             vi.advanceTimersByTime(100)
         })
 
-        const activeDot2 = view.querySelector('.mr-carousel__dot--active')
+        const activeDot2 = getActiveDot(view)
         expect(activeDot2?.getAttribute('aria-label')).toBe('Go to slide 3')
 
         vi.useRealTimers()
@@ -111,7 +121,7 @@ describe('Carousel', () => {
 
     it('loop wraps around', () => {
         const view = render(<Carousel slides={slides} loop />)
-        const nextBtn = view.querySelector('.mr-carousel__arrow--next') as HTMLButtonElement
+        const nextBtn = getNextArrow(view)
 
         // Go to last slide
         act(() => {
@@ -123,14 +133,14 @@ describe('Carousel', () => {
             nextBtn.click()
         })
 
-        const activeDot = view.querySelector('.mr-carousel__dot--active')
+        const activeDot = getActiveDot(view)
         expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 1')
     })
 
     it('disabled arrows at boundaries (no loop)', () => {
         const view = render(<Carousel slides={slides} loop={false} />)
-        const prevBtn = view.querySelector('.mr-carousel__arrow--prev') as HTMLButtonElement
-        const nextBtn = view.querySelector('.mr-carousel__arrow--next') as HTMLButtonElement
+        const prevBtn = getPrevArrow(view)
+        const nextBtn = getNextArrow(view)
 
         // At start: prev disabled, next enabled
         expect(prevBtn.disabled).toBe(true)
@@ -142,8 +152,8 @@ describe('Carousel', () => {
         })
 
         // At end: prev enabled, next disabled
-        const prevBtnAfter = view.querySelector('.mr-carousel__arrow--prev') as HTMLButtonElement
-        const nextBtnAfter = view.querySelector('.mr-carousel__arrow--next') as HTMLButtonElement
+        const prevBtnAfter = getPrevArrow(view)
+        const nextBtnAfter = getNextArrow(view)
         expect(prevBtnAfter.disabled).toBe(false)
         expect(nextBtnAfter.disabled).toBe(true)
     })
@@ -178,12 +188,20 @@ describe('Carousel', () => {
         expect(dots.length).toBe(0)
     })
 
-    it('applies correct orientation classes', () => {
+    it('marks only the current dot with data-active', () => {
+        const view = render(<Carousel slides={slides} />)
+        const activeDots = view.querySelectorAll('.mr-carousel__dot[data-active="true"]')
+        expect(activeDots.length).toBe(1)
+        expect(activeDots[0]?.getAttribute('aria-label')).toBe('Go to slide 1')
+    })
+
+    it('applies correct orientation', () => {
         const view = render(<Carousel slides={slides} orientation="vertical" />)
         const root = view.querySelector('.mr-carousel')
         const track = view.querySelector('.mr-carousel__track')
-        expect(root?.className).toContain('mr-carousel--vertical')
-        expect(track?.className).toContain('mr-carousel__track--vertical')
+        expect(root?.getAttribute('data-orientation')).toBe('vertical')
+        // le track hérite de l'orientation de la racine : pas de hook propre
+        expect(track).not.toBeNull()
     })
 
     it('no arrows or dots for single slide', () => {

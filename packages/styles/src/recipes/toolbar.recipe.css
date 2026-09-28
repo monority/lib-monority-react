@@ -24,15 +24,6 @@
         min-width: 0;
     }
 
-    .mr-toolbar__group--leading {
-        flex: 1 1 auto;
-        min-width: 0;
-    }
-
-    .mr-toolbar__group--trailing {
-        justify-content: flex-end;
-    }
-
     @media (max-width: 900px) {
         .mr-toolbar {
             flex-direction: column;
@@ -43,10 +34,6 @@
         .mr-toolbar__group,
         .mr-toolbar__center {
             width: 100%;
-        }
-
-        .mr-toolbar__group--trailing {
-            justify-content: flex-start;
         }
     }
 }

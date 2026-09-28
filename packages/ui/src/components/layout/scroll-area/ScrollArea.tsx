@@ -9,12 +9,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     return (
         <div
             ref={ref}
-            className={cn(
-                'mr-scroll-area',
-                `mr-scroll-area--${orientation}`,
-                hideScrollbar && 'mr-scroll-area--hide',
-                className
-            )}
+            className={cn('mr-scroll-area', hideScrollbar && 'mr-scroll-area--hide', className)}
+            data-orientation={orientation}
             style={style}
             {...props}
         >

@@ -35,20 +35,20 @@ describe('ScrollArea', () => {
     it('applies vertical orientation by default', () => {
         const view = render(<ScrollArea />)
         const wrapper = view.querySelector('div')
-        expect(wrapper?.className).toContain('mr-scroll-area--vertical')
+        expect(wrapper?.getAttribute('data-orientation')).toBe('vertical')
         expect(wrapper?.className).not.toContain('mr-scroll-area--hide')
     })
 
     it('applies horizontal orientation', () => {
         const view = render(<ScrollArea orientation="horizontal" />)
         const wrapper = view.querySelector('div')
-        expect(wrapper?.className).toContain('mr-scroll-area--horizontal')
+        expect(wrapper?.getAttribute('data-orientation')).toBe('horizontal')
     })
 
     it('applies both orientation', () => {
         const view = render(<ScrollArea orientation="both" />)
         const wrapper = view.querySelector('div')
-        expect(wrapper?.className).toContain('mr-scroll-area--both')
+        expect(wrapper?.getAttribute('data-orientation')).toBe('both')
     })
 
     it('applies hideScrollbar modifier', () => {

@@ -1,19 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { KbdProps } from './Kbd.types'
-
-const kbdVariants = cva({
-    base: 'mr-kbd',
-    variants: {
-        size: {
-            sm: 'mr-kbd--sm',
-            md: 'mr-kbd--md',
-            lg: 'mr-kbd--lg',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 export const Kbd = forwardRef<HTMLElement, KbdProps>(function Kbd(
     { children, size, keys, className, ...props },
@@ -21,7 +8,7 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(function Kbd(
 ) {
     if (keys) {
         return (
-            <kbd ref={ref} className={cn(kbdVariants({ size }), className)} {...props}>
+            <kbd ref={ref} className={cn('mr-kbd', className)} data-size={size} {...props}>
                 {keys.map((key, i) => (
                     <span key={i}>
                         {i > 0 && <span className="mr-kbd__separator">+</span>}
@@ -32,7 +19,7 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(function Kbd(
         )
     }
     return (
-        <kbd ref={ref} className={cn(kbdVariants({ size }), className)} {...props}>
+        <kbd ref={ref} className={cn('mr-kbd', className)} data-size={size} {...props}>
             {children}
         </kbd>
     )

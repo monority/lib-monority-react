@@ -49,14 +49,15 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carou
             role="region"
             aria-roledescription="carousel"
             aria-label="Image carousel"
-            className={cn('mr-carousel', `mr-carousel--${orientation}`, className)}
+            className={cn('mr-carousel', className)}
+            data-orientation={orientation}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             {...props}
         >
             <div className="mr-carousel__viewport">
                 <div
-                    className={cn('mr-carousel__track', `mr-carousel__track--${orientation}`)}
+                    className="mr-carousel__track"
                     style={{
                         transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${current * 100}%)`,
                     }}
@@ -82,7 +83,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carou
                         type="button"
                         onClick={prev}
                         disabled={!loop && current === 0}
-                        className="mr-carousel__arrow mr-carousel__arrow--prev"
+                        className="mr-carousel__arrow"
                         aria-label="Previous slide"
                     >
                         ‹
@@ -91,7 +92,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carou
                         type="button"
                         onClick={next}
                         disabled={!loop && current === total - 1}
-                        className="mr-carousel__arrow mr-carousel__arrow--next"
+                        className="mr-carousel__arrow"
                         aria-label="Next slide"
                     >
                         ›
@@ -109,10 +110,8 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carou
                             aria-selected={i === current}
                             aria-label={`Go to slide ${i + 1}`}
                             onClick={() => goTo(i)}
-                            className={cn(
-                                'mr-carousel__dot',
-                                i === current && 'mr-carousel__dot--active'
-                            )}
+                            className="mr-carousel__dot"
+                            data-active={i === current ? 'true' : undefined}
                         />
                     ))}
                 </div>

@@ -39,18 +39,21 @@
         tab-size: 2;
     }
 
+    .mr-pre-code[data-size='sm'],
     .mr-pre-code--sm {
         padding: var(--mr-space-3);
         border-radius: var(--mr-radius-sm);
         font-size: var(--mr-text-xs);
     }
 
+    .mr-pre-code[data-size='md'],
     .mr-pre-code--md {
         padding: var(--mr-code-padding, var(--mr-space-4));
         border-radius: var(--mr-radius-md);
         font-size: var(--mr-text-sm);
     }
 
+    .mr-pre-code[data-wrap='true'],
     .mr-pre-code--wrap {
         overflow-x: hidden;
         white-space: pre-wrap;
@@ -58,6 +61,7 @@
         word-break: break-word;
     }
 
+    .mr-pre-code[data-wrap='true'] code,
     .mr-pre-code--wrap code {
         min-width: 0;
         white-space: inherit;

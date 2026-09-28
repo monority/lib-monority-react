@@ -44,13 +44,13 @@ describe('Separator', () => {
         const view = render(<Separator />)
         const el = view.querySelector('div')
         expect(el?.className).toContain('mr-separator')
-        expect(el?.className).toContain('mr-separator--horizontal')
+        expect(el?.getAttribute('data-orientation')).toBe('horizontal')
     })
 
     it('applies vertical CSS classes', () => {
         const view = render(<Separator orientation="vertical" />)
         const el = view.querySelector('div')
-        expect(el?.className).toContain('mr-separator--vertical')
+        expect(el?.getAttribute('data-orientation')).toBe('vertical')
     })
 
     it('sets role="separator" on vertical by default', () => {

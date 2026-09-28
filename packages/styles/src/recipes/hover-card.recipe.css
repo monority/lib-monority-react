@@ -46,7 +46,7 @@
         transform: rotate(45deg);
     }
 
-    .mr-hovercard__content--top .mr-hovercard__arrow {
+    .mr-hovercard__content[data-side='top'] .mr-hovercard__arrow {
         bottom: -0.375rem;
         left: var(--mr-hovercard-arrow-left, 50%);
         margin-left: -0.3125rem;
@@ -54,7 +54,7 @@
         border-left: none;
     }
 
-    .mr-hovercard__content--bottom .mr-hovercard__arrow {
+    .mr-hovercard__content[data-side='bottom'] .mr-hovercard__arrow {
         top: -0.375rem;
         left: var(--mr-hovercard-arrow-left, 50%);
         margin-left: -0.3125rem;
@@ -62,7 +62,7 @@
         border-bottom: none;
     }
 
-    .mr-hovercard__content--left .mr-hovercard__arrow {
+    .mr-hovercard__content[data-side='left'] .mr-hovercard__arrow {
         right: -0.375rem;
         top: var(--mr-hovercard-arrow-top, 50%);
         margin-top: -0.3125rem;
@@ -70,7 +70,7 @@
         border-left: none;
     }
 
-    .mr-hovercard__content--right .mr-hovercard__arrow {
+    .mr-hovercard__content[data-side='right'] .mr-hovercard__arrow {
         left: -0.375rem;
         top: var(--mr-hovercard-arrow-top, 50%);
         margin-top: -0.3125rem;

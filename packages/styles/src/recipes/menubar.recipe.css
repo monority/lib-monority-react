@@ -123,16 +123,6 @@
         outline-offset: calc(-1 * var(--mr-focus-width));
     }
 
-    .mr-menubar__item--danger {
-        color: var(--mr-danger-text);
-    }
-
-    .mr-menubar__item--danger:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--mr-danger-solid) 9%, transparent);
-        color: var(--mr-danger-text);
-    }
-
-    .mr-menubar__item--disabled,
     .mr-menubar__item:disabled {
         cursor: not-allowed;
         opacity: var(--mr-opacity-disabled, 0.5);

@@ -56,19 +56,28 @@ describe('Kbd', () => {
     it('applies size variant sm', () => {
         const view = render(<Kbd size="sm">Esc</Kbd>)
         const el = view.querySelector('kbd')
-        expect(el?.className).toContain('mr-kbd--sm')
+        expect(el?.getAttribute('data-size')).toBe('sm')
     })
 
     it('applies size variant md (default)', () => {
         const view = render(<Kbd>Tab</Kbd>)
         const el = view.querySelector('kbd')
         expect(el?.className).toBe('mr-kbd')
+        // sans prop `size`, aucune variante n'est appliquée : le comportement
+        // historique (base) doit être conservé
+        expect(el?.getAttribute('data-size')).toBeNull()
+    })
+
+    it('applies the md size when specified explicitly', () => {
+        const view = render(<Kbd size="md">Tab</Kbd>)
+        const el = view.querySelector('kbd')
+        expect(el?.getAttribute('data-size')).toBe('md')
     })
 
     it('applies size variant lg', () => {
         const view = render(<Kbd size="lg">Delete</Kbd>)
         const el = view.querySelector('kbd')
-        expect(el?.className).toContain('mr-kbd--lg')
+        expect(el?.getAttribute('data-size')).toBe('lg')
     })
 
     it('forwards ref', () => {

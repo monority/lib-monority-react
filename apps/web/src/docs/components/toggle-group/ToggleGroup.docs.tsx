@@ -83,6 +83,7 @@ const docData: DocPageData = {
         '.mr-toggle-group__item',
         '.mr-toggle-group__item--active',
         '[data-orientation]',
+        '[data-state]',
     ],
     tokens: ['--mr-radius-sm'],
     a11y: [

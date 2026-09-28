@@ -15,10 +15,6 @@
         box-shadow: var(--mr-elevation-surface);
     }
 
-    .mr-page-header--center {
-        align-items: center;
-    }
-
     .mr-page-header__main {
         display: grid;
         gap: var(--mr-space-2);

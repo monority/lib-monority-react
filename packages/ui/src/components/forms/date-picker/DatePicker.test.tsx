@@ -165,6 +165,7 @@ describe('DatePicker', () => {
         const view = render(<DatePicker label="Date" disabled />)
         const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
         expect(trigger?.disabled).toBe(true)
+        expect(trigger?.getAttribute('data-disabled')).toBe('true')
         act(() => trigger?.click())
         expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
     })
@@ -174,6 +175,7 @@ describe('DatePicker', () => {
         const view = render(<DatePicker label="Date" error="Invalid date" />)
         const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
         expect(trigger?.getAttribute('aria-invalid')).toBe('true')
+        expect(trigger?.getAttribute('data-invalid')).toBe('true')
         const wrapper = view.querySelector('.mr-datepicker')
         expect(wrapper?.getAttribute('data-invalid')).toBe('true')
     })

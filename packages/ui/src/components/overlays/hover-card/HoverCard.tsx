@@ -3,27 +3,8 @@ import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
-import { cva } from '@/lib/variants'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { HoverCardAlign, HoverCardProps, HoverCardSide } from './HoverCard.types'
-
-const hoverCardVariants = cva({
-    base: 'mr-hovercard',
-    variants: {
-        align: {
-            start: 'mr-hovercard--align-start',
-            center: 'mr-hovercard--align-center',
-            end: 'mr-hovercard--align-end',
-        },
-        side: {
-            top: 'mr-hovercard--side-top',
-            bottom: 'mr-hovercard--side-bottom',
-            left: 'mr-hovercard--side-left',
-            right: 'mr-hovercard--side-right',
-        },
-    },
-    defaultVariants: { align: 'center', side: 'bottom' },
-})
 
 interface FloatingPosition {
     top: number
@@ -208,7 +189,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(function Hov
     return (
         <div
             ref={ref}
-            className={cn(hoverCardVariants({ align, side }), className)}
+            className={cn('mr-hovercard', className)}
             data-open={isOpen ? true : undefined}
             data-align={align}
             data-side={side}
@@ -227,12 +208,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(function Hov
                       <div
                           ref={contentRef}
                           id={`${instanceId}-content`}
-                          className={cn(
-                              'mr-hovercard__content',
-                              `mr-hovercard__content--${position.side}`,
-                              `mr-hovercard__content--${align}`,
-                              contentClassName
-                          )}
+                          className={cn('mr-hovercard__content', contentClassName)}
                           role="dialog"
                           aria-modal="false"
                           data-side={position.side}
