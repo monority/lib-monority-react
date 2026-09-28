@@ -1,27 +1,13 @@
 import { forwardRef } from 'react'
-import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { SelectProps } from './Select.types'
 
-const selectVariants = cva({
-    base: 'mr-select',
-    variants: {
-        tone: {
-            neutral: 'mr-select--neutral',
-            accent: 'mr-select--accent',
-            danger: 'mr-select--danger',
-        },
-        size: {
-            sm: 'mr-select--sm',
-            md: 'mr-select--md',
-            lg: 'mr-select--lg',
-        },
-    },
-    defaultVariants: { tone: 'neutral', size: 'md' },
-})
+// Les variantes et tailles sont portées par les attributs `data-*`
+// (`data-tone`, `data-size`, `data-disabled`, `data-invalid`) émis par
+// `InputBase` depuis le contexte `FormControl` : aucune classe de modifier BEM.
+// Voir docs/conventions.md ("Un seul jeu de sélecteurs").
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
     {
@@ -62,16 +48,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                     data-disabled={disabled ? true : undefined}
                     data-invalid={isInvalid ? true : undefined}
                 >
-                    <InputBase
-                        as="select"
-                        ref={ref}
-                        className={cn(
-                            selectVariants({ tone: resolvedTone, size: resolvedSize }),
-                            disabled && 'mr-select--disabled',
-                            isInvalid && 'mr-select--invalid'
-                        )}
-                        {...props}
-                    >
+                    <InputBase as="select" ref={ref} className="mr-select" {...props}>
                         {children}
                     </InputBase>
                 </span>

@@ -64,28 +64,23 @@
         color: var(--mr-fg-muted);
     }
 
-    .mr-select--accent,
     .mr-select[data-tone='accent'] {
         border-color: color-mix(in srgb, var(--mr-accent) 44%, var(--mr-border-subtle));
     }
 
-    .mr-select--accent:focus-visible,
     .mr-select[data-tone='accent']:focus-visible {
         border-color: var(--mr-border-control-hover);
     }
 
-    .mr-select--danger,
     .mr-select[data-tone='danger'] {
         border-color: color-mix(in srgb, var(--mr-danger-text) 30%, var(--mr-border-subtle));
     }
 
-    .mr-select--danger:focus-visible,
     .mr-select[data-tone='danger']:focus-visible {
         border-color: var(--mr-danger-text);
         outline-color: var(--mr-danger-text);
     }
 
-    .mr-select.mr-select--sm,
     .mr-select.mr-select[data-size='sm'] {
         min-block-size: var(--mr-control-size-sm);
         --mr-input-padding-inline-end: calc(
@@ -97,13 +92,11 @@
         font-size: var(--mr-text-xs);
     }
 
-    .mr-select.mr-select--md,
     .mr-select.mr-select[data-size='md'] {
         min-block-size: var(--mr-control-size-md);
         padding-block: var(--mr-control-padding-block-md);
     }
 
-    .mr-select.mr-select--lg,
     .mr-select.mr-select[data-size='lg'] {
         min-block-size: var(--mr-control-size-lg);
         --mr-input-padding-inline-end: calc(

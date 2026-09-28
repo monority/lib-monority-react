@@ -84,12 +84,6 @@ const docData: DocPageData = {
     cssHooks: [
         '.mr-select-wrapper',
         '.mr-select',
-        '.mr-select--sm',
-        '.mr-select--md',
-        '.mr-select--lg',
-        '.mr-select--neutral',
-        '.mr-select--accent',
-        '.mr-select--danger',
         '[data-size]',
         '[data-disabled]',
         '[data-invalid]',

@@ -37,8 +37,8 @@ describe('Select', () => {
         const select = view.querySelector('select')
         expect(select?.getAttribute('data-tone')).toBe('neutral')
         expect(select?.getAttribute('data-size')).toBe('md')
-        expect(select?.className).toContain('mr-select--neutral')
-        expect(select?.className).toContain('mr-select--md')
+        expect(select?.className).toContain('mr-select')
+        expect(select?.className).not.toMatch(/mr-select--/)
         expect(select?.getAttribute('aria-invalid')).toBeNull()
         expect(select?.children.length).toBe(2)
         expect(view.querySelector('.mr-select-wrapper')?.getAttribute('data-size')).toBe('md')
@@ -51,8 +51,6 @@ describe('Select', () => {
             </Select>
         )
         const select = view.querySelector('select')
-        expect(select?.className).toContain('mr-select--disabled')
-        expect(select?.className).toContain('mr-select--invalid')
         expect(select?.getAttribute('data-disabled')).toBe('true')
         expect(select?.getAttribute('data-required')).toBe('true')
         expect(select?.getAttribute('data-invalid')).toBe('true')
@@ -101,7 +99,6 @@ describe('Select', () => {
         )
         const select = view.querySelector('select')
         expect(select?.getAttribute('data-tone')).toBe('accent')
-        expect(select?.className).toContain('mr-select--accent')
     })
 
     it('applies lg size when specified', () => {
@@ -112,6 +109,31 @@ describe('Select', () => {
         )
         const select = view.querySelector('select')
         expect(select?.getAttribute('data-size')).toBe('lg')
-        expect(select?.className).toContain('mr-select--lg')
+    })
+
+    // Régression du pilote data-* : aucun modifier BEM ne doit revenir.
+    it('n’émet aucun modifier BEM et garde les classes structurelles', () => {
+        const cases = [
+            <Select key="default">
+                <option value="">Select...</option>
+            </Select>,
+            <Select key="accent" tone="accent" size="sm">
+                <option value="">Select...</option>
+            </Select>,
+            <Select key="danger" tone="danger" size="lg" disabled>
+                <option value="">Select...</option>
+            </Select>,
+            <Select key="invalid" invalid>
+                <option value="">Select...</option>
+            </Select>,
+        ]
+
+        for (const element of cases) {
+            const view = render(element)
+            const classes = view.querySelector('select')?.className ?? ''
+            expect(classes, `classes émises : ${classes}`).not.toMatch(/mr-select--/)
+            expect(classes).toContain('mr-select')
+            expect(view.querySelector('.mr-select-wrapper')).toBeTruthy()
+        }
     })
 })
