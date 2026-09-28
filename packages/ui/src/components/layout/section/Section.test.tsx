@@ -20,23 +20,23 @@ describe('Section', () => {
 
     it('applies default spacing md', () => {
         const { container } = render(<Section />)
-        expect(container.querySelector('.mr-section--md')).toBeTruthy()
+        expect(container.querySelector('[data-spacing="md"]')).toBeTruthy()
     })
 
     it('applies spacing variants', () => {
         const spacings = ['sm', 'md', 'lg', 'xl'] as const
         for (const s of spacings) {
             const { container, unmount } = render(<Section spacing={s} />)
-            expect(container.querySelector(`.mr-section--${s}`)).toBeTruthy()
+            expect(container.querySelector(`[data-spacing="${s}"]`)).toBeTruthy()
             unmount()
         }
     })
 
-    it('applies variant classes', () => {
+    it('applies variant hooks', () => {
         const variants = ['bordered', 'muted', 'card'] as const
         for (const v of variants) {
             const { container, unmount } = render(<Section variant={v} />)
-            expect(container.querySelector(`.mr-section--${v}`)).toBeTruthy()
+            expect(container.querySelector(`[data-variant="${v}"]`)).toBeTruthy()
             unmount()
         }
     })

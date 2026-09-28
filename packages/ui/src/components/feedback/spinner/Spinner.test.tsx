@@ -37,8 +37,8 @@ describe('Spinner', () => {
     it('applies size and tone variants', () => {
         const view = render(<Spinner size="lg" tone="inverse" />)
         const el = view.querySelector('span')
-        expect(el?.className).toContain('mr-spinner--lg')
-        expect(el?.className).toContain('mr-spinner--inverse')
+        expect(el?.getAttribute('data-size')).toBe('lg')
+        expect(el?.getAttribute('data-tone')).toBe('inverse')
     })
 
     it('forwards ref', () => {

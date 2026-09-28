@@ -17,12 +17,7 @@ const docData: DocPageData = {
         { title: 'Custom Message', content: <AsyncStateNoticeCustomMessageExample /> },
         { title: 'Interactive', content: <AsyncStateNoticeToggleExample /> },
     ],
-    cssHooks: [
-        '.mr-async-state-notice',
-        '.mr-async-state-notice--loading',
-        '.mr-async-state-notice--error',
-        '[data-state]',
-    ],
+    cssHooks: ['.mr-async-state-notice', '[data-state]'],
     tokens: [
         '--mr-danger-text',
         '--mr-text-sm',

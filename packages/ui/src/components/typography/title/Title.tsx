@@ -1,20 +1,6 @@
 import { createElement, forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { TitleProps } from './Title.types'
-
-const titleVariants = cva({
-    base: 'mr-title',
-    variants: {
-        size: {
-            sm: 'mr-title--sm',
-            md: 'mr-title--md',
-            lg: 'mr-title--lg',
-            display: 'mr-title--display',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 export const Title = forwardRef<HTMLElement, TitleProps>(function Title(
     { as = 'h2', size = 'md', className, children, ...props },
@@ -24,7 +10,7 @@ export const Title = forwardRef<HTMLElement, TitleProps>(function Title(
         as,
         {
             ref,
-            className: cn(titleVariants({ size }), className),
+            className: cn('mr-title', className),
             'data-size': size,
             ...props,
         },

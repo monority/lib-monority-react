@@ -39,7 +39,6 @@ describe('Title', () => {
         const view = render(<Title size="display">Display</Title>)
         const el = view.querySelector('h2')
         expect(el?.getAttribute('data-size')).toBe('display')
-        expect(el?.className).toContain('mr-title--display')
     })
 
     it('forwards ref', () => {

@@ -29,11 +29,7 @@ export const AsyncStateNotice = forwardRef<HTMLDivElement, AsyncStateNoticeProps
                     aria-live="polite"
                     aria-atomic="true"
                     aria-busy="true"
-                    className={cn(
-                        'mr-async-state-notice',
-                        'mr-async-state-notice--loading',
-                        className
-                    )}
+                    className={cn('mr-async-state-notice', className)}
                     data-state={state}
                     {...props}
                 >
@@ -56,11 +52,7 @@ export const AsyncStateNotice = forwardRef<HTMLDivElement, AsyncStateNoticeProps
                     role="alert"
                     aria-live="assertive"
                     aria-atomic="true"
-                    className={cn(
-                        'mr-async-state-notice',
-                        'mr-async-state-notice--error',
-                        className
-                    )}
+                    className={cn('mr-async-state-notice', className)}
                     data-state={state}
                     {...props}
                 >

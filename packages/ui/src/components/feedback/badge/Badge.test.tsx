@@ -42,7 +42,6 @@ describe('Badge', () => {
         const view = render(<Badge variant="success">Live</Badge>)
         const badge = view.querySelector('span')
 
-        expect(badge?.className).toContain('mr-badge--success')
         expect(badge?.getAttribute('data-variant')).toBe('success')
     })
 

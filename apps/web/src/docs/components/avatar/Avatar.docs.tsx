@@ -53,14 +53,7 @@ const docData: DocPageData = {
             description: 'Explicit fallback content rendered instead of the derived initials.',
         },
     ],
-    cssHooks: [
-        '.mr-avatar',
-        '.mr-avatar--sm',
-        '.mr-avatar--md',
-        '.mr-avatar--lg',
-        '[data-size]',
-        '[data-status]',
-    ],
+    cssHooks: ['.mr-avatar', '[data-size]', '[data-status]'],
     tokens: [
         '--mr-radius-full',
         '--mr-bg-accent-soft',

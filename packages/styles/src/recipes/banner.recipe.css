@@ -80,22 +80,18 @@
         min-block-size: var(--mr-control-size-sm);
     }
 
-    .mr-banner--info,
     .mr-banner[data-tone='info'] {
         --mr-banner-tone: var(--mr-info);
     }
 
-    .mr-banner--success,
     .mr-banner[data-tone='success'] {
         --mr-banner-tone: var(--mr-success);
     }
 
-    .mr-banner--warning,
     .mr-banner[data-tone='warning'] {
         --mr-banner-tone: var(--mr-warning);
     }
 
-    .mr-banner--danger,
     .mr-banner[data-tone='danger'] {
         --mr-banner-tone: var(--mr-danger-solid);
     }

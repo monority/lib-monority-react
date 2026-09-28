@@ -1,21 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
 import type { InlineAlertProps, InlineAlertTone } from './InlineAlert.types'
-
-const inlineAlertVariants = cva({
-    base: 'mr-inline-alert',
-    variants: {
-        tone: {
-            info: 'mr-inline-alert--info',
-            success: 'mr-inline-alert--success',
-            warning: 'mr-inline-alert--warning',
-            danger: 'mr-inline-alert--danger',
-        },
-    },
-    defaultVariants: { tone: 'info' },
-})
 
 const roleByTone: Record<InlineAlertTone, string> = {
     info: 'status',
@@ -33,7 +19,7 @@ export const InlineAlert = forwardRef<HTMLDivElement, InlineAlertProps>(function
     return (
         <div
             ref={ref}
-            className={cn(inlineAlertVariants({ tone: resolvedTone }), className)}
+            className={cn('mr-inline-alert', className)}
             role={roleByTone[resolvedTone]}
             data-tone={resolvedTone}
             {...props}

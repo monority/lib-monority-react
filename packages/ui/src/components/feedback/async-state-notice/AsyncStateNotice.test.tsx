@@ -72,11 +72,9 @@ describe('AsyncStateNotice', () => {
     it('marks loading and error states for styling', () => {
         const loading = render(<AsyncStateNotice isLoading />)
         expect(loading.querySelector('[data-state="loading"]')).toBeTruthy()
-        expect(loading.querySelector('.mr-async-state-notice--loading')).toBeTruthy()
 
         const error = render(<AsyncStateNotice isError />)
         expect(error.querySelector('[data-state="error"]')).toBeTruthy()
-        expect(error.querySelector('.mr-async-state-notice--error')).toBeTruthy()
     })
 
     it('renders an aria-hidden spinner by default while loading', () => {

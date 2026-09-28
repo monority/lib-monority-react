@@ -46,16 +46,7 @@ const docData: DocPageData = {
             description: 'Fallback message when title and description are omitted.',
         },
     ],
-    cssHooks: [
-        '.mr-banner',
-        '.mr-banner__marker',
-        '.mr-banner__body',
-        '.mr-banner__actions',
-        '.mr-banner--info',
-        '.mr-banner--success',
-        '.mr-banner--warning',
-        '.mr-banner--danger',
-    ],
+    cssHooks: ['.mr-banner', '.mr-banner__marker', '.mr-banner__body', '.mr-banner__actions'],
     tokens: [
         '--mr-info',
         '--mr-success',

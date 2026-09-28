@@ -1,25 +1,11 @@
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { DrawerProps } from './Drawer.types'
-
-const drawerVariants = cva({
-    base: 'mr-drawer',
-    variants: {
-        side: {
-            left: 'mr-drawer--left',
-            right: 'mr-drawer--right',
-            top: 'mr-drawer--top',
-            bottom: 'mr-drawer--bottom',
-        },
-    },
-    defaultVariants: { side: 'right' },
-})
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     { open, title, children, side = 'right', onClose, className, ...props },
@@ -79,7 +65,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
             <div className="mr-drawer__backdrop-surface" aria-hidden="true" />
             <div
                 ref={setPanelNode}
-                className={cn(drawerVariants({ side }), 'mr-drawer__panel')}
+                className={cn('mr-drawer', 'mr-drawer__panel')}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={titleId}

@@ -44,16 +44,7 @@ const docData: DocPageData = {
         },
         { name: 'children', type: 'ReactNode', defaultValue: '-', description: 'Text content.' },
     ],
-    cssHooks: [
-        '.mr-text',
-        '.mr-text--sm',
-        '.mr-text--md',
-        '.mr-text--lg',
-        '.mr-text--muted',
-        '.mr-text--strong',
-        '[data-size]',
-        '[data-tone]',
-    ],
+    cssHooks: ['.mr-text', '[data-size]', '[data-tone]'],
     tokens: ['--mr-fg-base', '--mr-fg-muted', '--mr-fg-strong', '--mr-text-*'],
     a11y: [
         'Use concise text.',

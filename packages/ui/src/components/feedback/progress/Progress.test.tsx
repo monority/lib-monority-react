@@ -56,7 +56,6 @@ describe('Progress', () => {
         const view = render(<Progress tone="success" />)
         const el = view.querySelector('.mr-progress')
         expect(el?.getAttribute('data-tone')).toBe('success')
-        expect(el?.className).toContain('mr-progress--success')
     })
 
     it('forwards ref', () => {
@@ -90,6 +89,5 @@ describe('Progress', () => {
         const track = view.querySelector('[role="progressbar"]') as HTMLElement
 
         expect(track.onclick).toBeNull()
-        expect(view.querySelector('.mr-progress--slidable')).toBeNull()
     })
 })

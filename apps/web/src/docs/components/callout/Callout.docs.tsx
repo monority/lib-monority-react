@@ -53,11 +53,6 @@ const docData: DocPageData = {
         '.mr-callout__content',
         '.mr-callout__title',
         '.mr-callout__description',
-        '.mr-callout--neutral',
-        '.mr-callout--info',
-        '.mr-callout--success',
-        '.mr-callout--warning',
-        '.mr-callout--danger',
         '[data-tone]',
     ],
     tokens: [

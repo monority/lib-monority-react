@@ -1,19 +1,6 @@
 import { forwardRef, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { AvatarProps } from './Avatar.types'
-
-const avatarVariants = cva({
-    base: 'mr-avatar',
-    variants: {
-        size: {
-            sm: 'mr-avatar--sm',
-            md: 'mr-avatar--md',
-            lg: 'mr-avatar--lg',
-        },
-    },
-    defaultVariants: { size: 'md' },
-})
 
 function getInitials(name?: string): string {
     if (!name) return '?'
@@ -46,7 +33,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     return (
         <div
             ref={ref}
-            className={cn(avatarVariants({ size: resolvedSize }), className)}
+            className={cn('mr-avatar', className)}
             data-size={resolvedSize}
             role={accessibleName ? 'img' : undefined}
             aria-label={accessibleName || undefined}

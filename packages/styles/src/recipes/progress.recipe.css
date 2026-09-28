@@ -70,12 +70,10 @@
         animation: mr-progress-indeterminate var(--mr-dur-1200) var(--mr-ease-in-out) infinite;
     }
 
-    .mr-progress--neutral .mr-progress__bar,
     .mr-progress[data-tone='neutral'] .mr-progress__bar {
         background: var(--mr-accent);
     }
 
-    .mr-progress--success .mr-progress__bar,
     .mr-progress[data-tone='success'] .mr-progress__bar {
         background: linear-gradient(
             90deg,
@@ -84,7 +82,6 @@
         );
     }
 
-    .mr-progress--warning .mr-progress__bar,
     .mr-progress[data-tone='warning'] .mr-progress__bar {
         background: linear-gradient(
             90deg,
@@ -93,7 +90,6 @@
         );
     }
 
-    .mr-progress--danger .mr-progress__bar,
     .mr-progress[data-tone='danger'] .mr-progress__bar {
         background: linear-gradient(
             90deg,

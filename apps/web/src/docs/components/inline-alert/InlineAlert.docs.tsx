@@ -51,10 +51,6 @@ const docData: DocPageData = {
         '.mr-inline-alert__description',
         '.mr-inline-alert__content',
         '.mr-inline-alert__action',
-        '.mr-inline-alert--info',
-        '.mr-inline-alert--success',
-        '.mr-inline-alert--warning',
-        '.mr-inline-alert--danger',
         '[data-tone]',
     ],
     tokens: [

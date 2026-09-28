@@ -1,21 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { CalloutProps } from './Callout.types'
-
-const calloutVariants = cva({
-    base: 'mr-callout',
-    variants: {
-        tone: {
-            neutral: 'mr-callout--neutral',
-            info: 'mr-callout--info',
-            success: 'mr-callout--success',
-            warning: 'mr-callout--warning',
-            danger: 'mr-callout--danger',
-        },
-    },
-    defaultVariants: { tone: 'neutral' },
-})
 
 export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout(
     { tone = 'neutral', title, description, children, className, role = 'note', ...props },
@@ -24,7 +9,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout
     return (
         <div
             ref={ref}
-            className={cn(calloutVariants({ tone }), className)}
+            className={cn('mr-callout', className)}
             role={role}
             data-tone={tone}
             {...props}

@@ -45,8 +45,6 @@ describe('Text', () => {
         const el = view.querySelector('p')
         expect(el?.getAttribute('data-tone')).toBe('muted')
         expect(el?.getAttribute('data-size')).toBe('sm')
-        expect(el?.className).toContain('mr-text--muted')
-        expect(el?.className).toContain('mr-text--sm')
     })
 
     it('forwards ref', () => {

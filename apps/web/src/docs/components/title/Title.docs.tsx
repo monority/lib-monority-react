@@ -27,14 +27,7 @@ const docData: DocPageData = {
         },
         { name: 'children', type: 'ReactNode', defaultValue: '-', description: 'Heading content.' },
     ],
-    cssHooks: [
-        '.mr-title',
-        '.mr-title--sm',
-        '.mr-title--md',
-        '.mr-title--lg',
-        '.mr-title--display',
-        '[data-size]',
-    ],
+    cssHooks: ['.mr-title', '[data-size]'],
     tokens: ['--mr-fg-strong', '--mr-text-lg', '--mr-text-xl', '--mr-text-2xl', '--mr-text-3xl'],
     a11y: [
         'Choose `as` from document hierarchy, not visual size.',

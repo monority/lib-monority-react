@@ -69,7 +69,6 @@ describe('Drawer', () => {
         )
         const panel = document.body.querySelector('.mr-drawer__panel')
         expect(panel?.getAttribute('data-side')).toBe('left')
-        expect(panel?.className).toContain('mr-drawer--left')
     })
 
     it('applies right side by default', () => {

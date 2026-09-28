@@ -35,14 +35,7 @@ const docData: DocPageData = {
             description: 'Short label text.',
         },
     ],
-    cssHooks: [
-        '.mr-badge',
-        '.mr-badge--primary',
-        '.mr-badge--success',
-        '.mr-badge--warning',
-        '.mr-badge--danger',
-        '[data-variant]',
-    ],
+    cssHooks: ['.mr-badge', '[data-variant]'],
     tokens: [
         '--mr-radius-xs',
         '--mr-text-xs',

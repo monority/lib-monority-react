@@ -49,7 +49,6 @@ describe('Banner', () => {
     it('applies tone', () => {
         const view = render(<Banner tone="success" title="Done" />)
         const el = view.querySelector('section')
-        expect(el?.className).toContain('mr-banner--success')
         expect(el?.getAttribute('data-tone')).toBe('success')
     })
 

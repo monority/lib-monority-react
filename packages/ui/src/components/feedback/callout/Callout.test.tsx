@@ -53,7 +53,6 @@ describe('Callout', () => {
     it('applies tone', () => {
         const view = render(<Callout tone="warning" title="Caution" />)
         const el = view.querySelector('div')
-        expect(el?.className).toContain('mr-callout--warning')
         expect(el?.getAttribute('data-tone')).toBe('warning')
     })
 
@@ -84,7 +83,6 @@ describe('Callout', () => {
         expect(view.querySelector('.mr-callout__description')?.textContent).toBe(
             'Proceed with caution'
         )
-        expect(view.querySelector('div')?.className).toContain('mr-callout--warning')
     })
 
     it.each(['neutral', 'info', 'success', 'warning', 'danger'] as const)(

@@ -1,20 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { BannerProps } from './Banner.types'
-
-const bannerVariants = cva({
-    base: 'mr-banner',
-    variants: {
-        tone: {
-            info: 'mr-banner--info',
-            success: 'mr-banner--success',
-            warning: 'mr-banner--warning',
-            danger: 'mr-banner--danger',
-        },
-    },
-    defaultVariants: { tone: 'info' },
-})
 
 export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
     { tone, eyebrow, title, description, actions, className, children, ...props },
@@ -26,7 +12,7 @@ export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
     return (
         <section
             ref={ref}
-            className={cn(bannerVariants({ tone: resolvedTone }), className)}
+            className={cn('mr-banner', className)}
             data-tone={resolvedTone}
             {...props}
         >
