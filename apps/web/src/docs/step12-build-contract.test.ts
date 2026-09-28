@@ -84,6 +84,11 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
         expect(missing, 'tsup entries missing').toEqual([])
     })
 
+    // Entrées de construction sans export public : elles forcent esbuild à
+    // extraire les chunks clients hors du barrel racine (`index.js` doit rester
+    // serveur). Elles ne sont pas exposées dans `package.json#exports`.
+    const INTERNAL_ENTRIES = new Set(['components', 'hooks', 'providers', 'primitives'])
+
     it('every tsup entry has a package.json export', () => {
         // Match keys like: button:, 'radio-group':, commandPalette:, etc.
         const tsupKeys = [...tsupSrc.matchAll(/^\s+['"]?([a-zA-Z][\w-]*)['"]?\s*:/gm)].map(
@@ -106,7 +111,7 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
         ])
         const missing: string[] = []
         for (const key of tsupKeys) {
-            if (skipKeys.has(key) || key === 'index') continue
+            if (skipKeys.has(key) || key === 'index' || INTERNAL_ENTRIES.has(key)) continue
             // Check if this key corresponds to any export's dist file
             const distFileFromKey = `${key}.js`
             let found = false

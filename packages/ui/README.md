@@ -84,8 +84,8 @@ pnpm --filter @monority/ui typecheck
 `.` is the main barrel. Every component also has a subpath export for
 tree-shaking (74 total, mirroring `package.json` `exports`):
 
-Barrels et entrées de librairie : `./components`, `./hooks`, `./lib`,
-`./primitives`, `./providers`, `./get-theme-script` (server-safe).
+Entrées de librairie : `./lib` (helpers purs) et `./get-theme-script`
+(server-safe).
 
 | Path | Path |
 |---|---|
