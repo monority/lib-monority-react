@@ -21,22 +21,19 @@
         animation: mr-skeleton-shimmer var(--mr-duration-loop) var(--mr-ease-in-out) infinite;
     }
 
-    .mr-skeleton--sm,
     .mr-skeleton[data-size='sm'] {
         height: 1rem;
     }
 
-    .mr-skeleton--md,
     .mr-skeleton[data-size='md'] {
         height: 1.5rem;
     }
 
-    .mr-skeleton--lg,
     .mr-skeleton[data-size='lg'] {
         height: 2rem;
     }
 
-    .mr-skeleton--rounded {
+    .mr-skeleton[data-rounded='true'] {
         border-radius: var(--mr-radius-full);
     }
 

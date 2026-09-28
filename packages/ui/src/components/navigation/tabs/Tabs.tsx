@@ -1,25 +1,7 @@
 import { forwardRef, useCallback, useId, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { TabsProps } from './Tabs.types'
-
-const tabsVariants = cva({
-    base: 'mr-tabs',
-    variants: {
-        tone: {
-            neutral: 'mr-tabs--neutral',
-            accent: 'mr-tabs--accent',
-            danger: 'mr-tabs--danger',
-        },
-        size: {
-            sm: 'mr-tabs--sm',
-            md: 'mr-tabs--md',
-            lg: 'mr-tabs--lg',
-        },
-    },
-    defaultVariants: { tone: 'neutral', size: 'md' },
-})
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
     {
@@ -119,12 +101,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
     return (
         <div
             ref={ref}
-            className={cn(
-                tabsVariants({ tone: resolvedTone, size: resolvedSize }),
-                fullWidth && 'mr-tabs--full-width',
-                disabled && 'mr-tabs--disabled',
-                className
-            )}
+            className={cn('mr-tabs', className)}
             role="tablist"
             aria-label={ariaLabel}
             data-tone={resolvedTone}
@@ -143,7 +120,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
                         key={item.value}
                         id={tabId}
                         type="button"
-                        className={cn('mr-tabs__tab', isActive && 'mr-tabs__tab--active')}
+                        className={cn('mr-tabs__tab')}
                         role="tab"
                         aria-selected={isActive}
                         aria-disabled={isTabDisabled || undefined}

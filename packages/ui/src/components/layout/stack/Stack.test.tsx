@@ -39,7 +39,7 @@ describe('Stack', () => {
 
     it('applies gap variants', () => {
         const view = render(<Stack gap="xl" />)
-        expect(view.querySelector('div')?.className).toContain('mr-stack--xl')
+        expect(view.querySelector('div')?.getAttribute('data-gap')).toBe('xl')
     })
 
     it('applies direction, align, and justify data attributes', () => {

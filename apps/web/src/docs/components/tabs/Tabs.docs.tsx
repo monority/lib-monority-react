@@ -19,7 +19,7 @@ const [value, setValue] = useState('overview')
 <Tabs
     items={[
         { value: 'overview', label: 'Overview' },
-        { value: 'activity', label: 'Activity' },
+        { value: 'activity', label: 'Activity' }
     ]}
     value={value}
     onChange={setValue}
@@ -91,14 +91,6 @@ const [value, setValue] = useState('overview')
     cssHooks: [
         '.mr-tabs',
         '.mr-tabs__tab',
-        '.mr-tabs__tab--active',
-        '.mr-tabs--neutral',
-        '.mr-tabs--accent',
-        '.mr-tabs--danger',
-        '.mr-tabs--full-width',
-        '.mr-tabs--sm',
-        '.mr-tabs--md',
-        '.mr-tabs--lg',
         '[data-tone]',
         '[data-size]',
         '[data-disabled]',

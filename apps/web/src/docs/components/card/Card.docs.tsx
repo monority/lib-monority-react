@@ -31,9 +31,6 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-card',
-        '.mr-card--sm',
-        '.mr-card--md',
-        '.mr-card--lg',
         '[data-padding]',
         '[data-interactive]',
         '.mr-card__header',

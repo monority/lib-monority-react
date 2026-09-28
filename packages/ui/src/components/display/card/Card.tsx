@@ -9,12 +9,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     return (
         <div
             ref={ref}
-            className={cn(
-                'mr-card',
-                `mr-card--${padding}`,
-                interactive && 'mr-card--interactive',
-                className
-            )}
+            className={cn('mr-card', className)}
             {...props}
             data-padding={padding}
             data-interactive={interactive ? true : undefined}

@@ -29,6 +29,12 @@ import { DropdownMenu } from '@/components/overlays/dropdown-menu'
 import { Popover } from '@/components/overlays/popover'
 import { AlertDialog } from '@/components/overlays/alert-dialog'
 import { Toast } from '@/components/feedback/toast'
+import { Card } from '@/components/display/card'
+import { Container } from '@/components/layout/container'
+import { Grid } from '@/components/layout/grid'
+import { Stack } from '@/components/layout/stack'
+import { Skeleton } from '@/components/feedback/skeleton'
+import { Tabs } from '@/components/navigation/tabs'
 
 /**
  * Vague A1 de la migration BEM → `data-*` : ces composants portaient leurs
@@ -172,8 +178,40 @@ const C1_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
     { name: 'Popover', element: <Popover trigger="Ouvrir">Contenu</Popover>, hook: 'data-align' },
 ]
 
+/**
+ * Vague B2 (layout & structurels). Card expose `data-padding`/`data-interactive`,
+ * Grid `data-columns`, Stack `data-gap`/`data-direction`/`data-align`/
+ * `data-justify`, Skeleton `data-size`/`data-rounded`, Tabs `data-tone`/`data-size`
+ * et conserve intégralement ses rôles et attributs ARIA (§8 du brief).
+ */
+const B2_CASES: Array<{ name: string; element: ReactElement; hook: string }> = [
+    { name: 'Card', element: <Card>Contenu</Card>, hook: 'data-padding' },
+    {
+        name: 'Card interactive',
+        element: <Card interactive>Contenu</Card>,
+        hook: 'data-interactive',
+    },
+    { name: 'Container', element: <Container>Contenu</Container>, hook: 'data-size' },
+    { name: 'Grid', element: <Grid>Contenu</Grid>, hook: 'data-columns' },
+    { name: 'Stack', element: <Stack>Contenu</Stack>, hook: 'data-gap' },
+    { name: 'Skeleton', element: <Skeleton />, hook: 'data-size' },
+    { name: 'Skeleton arrondi', element: <Skeleton rounded />, hook: 'data-rounded' },
+    {
+        name: 'Tabs',
+        element: (
+            <Tabs
+                items={[
+                    { value: 'a', label: 'A' },
+                    { value: 'b', label: 'B' },
+                ]}
+            />
+        ),
+        hook: 'data-tone',
+    },
+]
+
 describe('modifiers BEM → data-* (vague A1)', () => {
-    for (const { name, element, hook } of [...CASES, ...B1_CASES, ...C1_CASES]) {
+    for (const { name, element, hook } of [...CASES, ...B1_CASES, ...C1_CASES, ...B2_CASES]) {
         it(`${name} n’émet aucun modifier BEM et expose ${hook}`, () => {
             const view = render(element)
             const scope = [view, document]

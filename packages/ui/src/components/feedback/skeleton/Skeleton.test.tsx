@@ -38,7 +38,7 @@ describe('Skeleton', () => {
         const view = render(<Skeleton />)
         const el = view.querySelector('div')
         expect(el?.getAttribute('data-size')).toBe('md')
-        expect(el?.className).toContain('mr-skeleton--md')
+        expect(el?.getAttribute('data-size')).toBe('md')
     })
 
     it('applies sm and lg sizes', () => {
@@ -57,7 +57,7 @@ describe('Skeleton', () => {
 
     it('applies rounded class when rounded is true', () => {
         const view = render(<Skeleton rounded />)
-        expect(view.querySelector('div')?.className).toContain('mr-skeleton--rounded')
+        expect(view.querySelector('div')?.getAttribute('data-rounded')).toBe('true')
     })
 
     it('forwards ref', () => {

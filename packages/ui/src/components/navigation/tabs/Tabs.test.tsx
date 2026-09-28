@@ -38,8 +38,8 @@ describe('Tabs', () => {
         const tablist = view.querySelector('[role="tablist"]')
         expect(tablist?.getAttribute('data-tone')).toBe('neutral')
         expect(tablist?.getAttribute('data-size')).toBe('md')
-        expect(tablist?.className).toContain('mr-tabs--neutral')
-        expect(tablist?.className).toContain('mr-tabs--md')
+        expect(tablist?.getAttribute('data-tone')).toBe('neutral')
+        expect(tablist?.getAttribute('data-size')).toBe('md')
         expect(tablist?.getAttribute('aria-label')).toBe('Tabs')
         expect(view.querySelectorAll('[role="tab"]').length).toBe(3)
     })
@@ -50,7 +50,7 @@ describe('Tabs', () => {
         expect(tabs[0].getAttribute('aria-selected')).toBe('false')
         expect(tabs[1].getAttribute('aria-selected')).toBe('true')
         expect(tabs[2].getAttribute('aria-selected')).toBe('false')
-        expect(tabs[1].className).toContain('mr-tabs__tab--active')
+        expect(tabs[1].getAttribute('data-active')).toBe('true')
         expect(tabs[1].getAttribute('data-active')).toBe('true')
         expect(tabs[1].getAttribute('tabindex')).toBe('0')
         expect(tabs[0].getAttribute('tabindex')).toBe('-1')
@@ -62,8 +62,8 @@ describe('Tabs', () => {
             <Tabs items={items} value="tab1" onChange={() => {}} disabled fullWidth />
         )
         const tablist = view.querySelector('[role="tablist"]')
-        expect(tablist?.className).toContain('mr-tabs--disabled')
-        expect(tablist?.className).toContain('mr-tabs--full-width')
+        expect(tablist?.getAttribute('data-disabled')).toBe('true')
+        expect(tablist?.getAttribute('data-full-width')).toBe('true')
         expect(tablist?.getAttribute('data-disabled')).toBe('true')
         expect(tablist?.getAttribute('data-full-width')).toBe('true')
         view.querySelectorAll('[role="tab"]').forEach((tab) => {
@@ -87,13 +87,13 @@ describe('Tabs', () => {
     it('applies accent tone when specified', () => {
         const view = render(<Tabs items={items} value="tab1" onChange={() => {}} tone="accent" />)
         expect(view.querySelector('[role="tablist"]')?.getAttribute('data-tone')).toBe('accent')
-        expect(view.querySelector('[role="tablist"]')?.className).toContain('mr-tabs--accent')
+        expect(view.querySelector('[role="tablist"]')?.getAttribute('data-tone')).toBe('accent')
     })
 
     it('applies lg size when specified', () => {
         const view = render(<Tabs items={items} value="tab1" onChange={() => {}} size="lg" />)
         expect(view.querySelector('[role="tablist"]')?.getAttribute('data-size')).toBe('lg')
-        expect(view.querySelector('[role="tablist"]')?.className).toContain('mr-tabs--lg')
+        expect(view.querySelector('[role="tablist"]')?.getAttribute('data-size')).toBe('lg')
     })
 
     it('forwards ref to the tablist div', () => {

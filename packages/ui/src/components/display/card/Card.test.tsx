@@ -35,7 +35,7 @@ describe('Card', () => {
 
         expect(card?.textContent).toBe('Content')
         expect(card?.className).toContain('mr-card')
-        expect(card?.className).toContain('mr-card--md')
+        expect(card?.getAttribute('data-padding')).toBe('md')
         expect(card?.getAttribute('data-padding')).toBe('md')
     })
 
@@ -47,8 +47,8 @@ describe('Card', () => {
         )
         const card = view.querySelector('div')
 
-        expect(card?.className).toContain('mr-card--lg')
-        expect(card?.className).toContain('mr-card--interactive')
+        expect(card?.getAttribute('data-padding')).toBe('lg')
+        expect(card?.getAttribute('data-interactive')).toBe('true')
         expect(card?.getAttribute('data-padding')).toBe('lg')
         expect(card?.getAttribute('data-interactive')).toBe('true')
     })
@@ -64,7 +64,7 @@ describe('Card', () => {
         const view = render(<Card padding="sm">Content</Card>)
         const card = view.querySelector('div')
         expect(card?.getAttribute('data-padding')).toBe('sm')
-        expect(card?.className).toContain('mr-card--sm')
+        expect(card?.getAttribute('data-padding')).toBe('sm')
     })
 
     it('passes className to the root', () => {

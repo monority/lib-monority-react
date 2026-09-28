@@ -55,19 +55,16 @@
         opacity: var(--mr-opacity-disabled);
     }
 
-    .mr-tabs__tab--active,
     .mr-tabs__tab[data-active='true'] {
         color: var(--mr-fg-strong);
         background: var(--mr-bg-surface-strong);
         border-color: var(--mr-border-subtle);
     }
 
-    .mr-tabs--neutral .mr-tabs__tab--active,
     .mr-tabs[data-tone='neutral'] .mr-tabs__tab[data-active='true'] {
         color: var(--mr-fg-strong);
     }
 
-    .mr-tabs--accent .mr-tabs__tab--active,
     .mr-tabs[data-tone='accent'] .mr-tabs__tab[data-active='true'] {
         color: color-mix(
             in srgb,
@@ -86,14 +83,12 @@
         );
     }
 
-    .mr-tabs--danger .mr-tabs__tab--active,
     .mr-tabs[data-tone='danger'] .mr-tabs__tab[data-active='true'] {
         color: color-mix(in srgb, var(--mr-danger-text) 74%, var(--mr-fg-strong));
         border-color: color-mix(in srgb, var(--mr-danger-solid) 34%, var(--mr-border-subtle));
         background: color-mix(in srgb, var(--mr-danger-solid) 9%, var(--mr-bg-surface-strong));
     }
 
-    .mr-tabs--full-width,
     .mr-tabs[data-full-width='true'] {
         display: grid;
         grid-auto-flow: column;
@@ -101,26 +96,22 @@
         width: 100%;
     }
 
-    .mr-tabs--full-width .mr-tabs__tab,
     .mr-tabs[data-full-width='true'] .mr-tabs__tab {
         width: 100%;
     }
 
-    .mr-tabs--sm .mr-tabs__tab,
     .mr-tabs[data-size='sm'] .mr-tabs__tab {
         min-height: var(--mr-control-size-sm);
         padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-tabs--md .mr-tabs__tab,
     .mr-tabs[data-size='md'] .mr-tabs__tab {
         min-height: var(--mr-control-size-md);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         font-size: var(--mr-text-sm);
     }
 
-    .mr-tabs--lg .mr-tabs__tab,
     .mr-tabs[data-size='lg'] .mr-tabs__tab {
         min-height: var(--mr-control-size-lg);
         padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);

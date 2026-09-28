@@ -18,7 +18,7 @@ const docData: DocPageData = {
         { title: 'List items', content: <SkeletonListExample /> },
         { title: 'Circle avatar', content: <SkeletonCircleExample /> },
     ],
-    cssHooks: ['.mr-skeleton', '.mr-skeleton--rounded', '[data-size]'],
+    cssHooks: ['.mr-skeleton', '[data-size]'],
     tokens: [
         '--mr-bg-surface-strong',
         '--mr-bg-control',

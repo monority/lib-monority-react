@@ -15,10 +15,6 @@
         background: var(--mr-bg-surface-strong);
     }
 
-    .mr-toolbar--start {
-        align-items: flex-start;
-    }
-
     .mr-toolbar__group,
     .mr-toolbar__center {
         display: flex;

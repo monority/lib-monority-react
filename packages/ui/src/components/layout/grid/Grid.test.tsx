@@ -39,7 +39,7 @@ describe('Grid', () => {
 
     it('applies custom columns', () => {
         const view = render(<Grid columns={3} />)
-        expect(view.querySelector('div')?.className).toContain('mr-grid--3')
+        expect(view.querySelector('div')?.getAttribute('data-columns')).toBe('3')
     })
 
     it('forwards ref', () => {

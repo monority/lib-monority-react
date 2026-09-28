@@ -39,7 +39,7 @@ describe('Container', () => {
 
     it('applies size variants', () => {
         const view = render(<Container size="xl" />)
-        expect(view.querySelector('div')?.className).toContain('mr-container--xl')
+        expect(view.querySelector('div')?.getAttribute('data-size')).toBe('xl')
     })
 
     it('forwards ref', () => {
