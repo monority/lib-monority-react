@@ -3,6 +3,12 @@ import path from 'node:path'
 import fs from 'node:fs'
 import { defineConfig, normalizePath } from 'vite'
 import react from '@vitejs/plugin-react'
+/* Exception documentée à la frontière inter-packages (gardée par
+ * src/package-boundary.test.ts) : ce fichier de configuration est évalué par
+ * Node AVANT tout build, et `turbo dev` ne déclare pas `dependsOn: ["^build"]`.
+ * `packages/ui/dist` étant ignoré par git, passer par le sous-chemin public
+ * `@monority/ui/get-theme-script` casserait `pnpm dev` sur un clone frais.
+ * Le sous-chemin reste testé par packages/ui/src/__tests__/exports.test.ts. */
 import { getThemeScript } from '../../packages/ui/src/providers/get-theme-script'
 
 const webDir = path.dirname(fileURLToPath(import.meta.url))
