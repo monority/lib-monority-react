@@ -78,6 +78,7 @@ export default defineConfig({
         pagination: 'src/components/navigation/pagination/index.ts',
         sidebarLayout: 'src/components/navigation/sidebar-layout/index.ts',
         topbar: 'src/components/navigation/topbar/index.ts',
+        reset: 'src/styles/reset.css',
     },
     format: ['esm'],
     banner: { js: '"use client";' },

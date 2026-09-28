@@ -65,6 +65,16 @@ describe('dist — étanchéité du paquet', () => {
         expect(css.length).toBeGreaterThan(10_000)
     })
 
+    it('le reset est hors du bundle principal et disponible en opt-in', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).not.toContain('text-rendering')
+        expect(css).not.toContain('font-smoothing')
+
+        const reset = readFileSync(resolve(distDir, 'reset.css'), 'utf8')
+        expect(reset).toContain('box-sizing: border-box')
+        expect(reset).toContain('text-rendering')
+    })
+
     it('tous les fichiers JS du dist portent la bannière "use client"', () => {
         const jsFiles = walk(distDir).filter((f) => f.endsWith('.js'))
         expect(jsFiles.length).toBeGreaterThan(0)

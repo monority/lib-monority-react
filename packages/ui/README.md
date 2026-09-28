@@ -19,6 +19,17 @@ function App() {
 }
 ```
 
+### Reset (opt-in)
+
+`@monority/ui/styles.css` ne contient plus de reset : le style global de
+l'hôte reste sous son contrôle. Importez explicitement le reset si vous en
+voulez un :
+
+```tsx
+import '@monority/ui/reset.css' // box-sizing, marges, normalize
+import '@monority/ui/styles.css'
+```
+
 ## Development
 
 In the monorepo, the package resolves from source automatically via `development` export conditions.
@@ -76,6 +87,7 @@ tree-shaking (74 total, mirroring `package.json` `exports`):
 | `./tooltip` | `./topbar` |
 | `./async-state-notice` | `./popover` |
 | `./styles.css` | `./index.css` |
+| `./reset.css` | |
 
 ```tsx
 import { Button } from '@monority/ui/button'
@@ -86,6 +98,7 @@ import '@monority/ui/styles.css'
 ## Styling Contract
 
 - Import one CSS file once in the app entry (`@monority/ui/styles.css`).
+- The reset is opt-in: import `@monority/ui/reset.css` explicitly (see above).
 - Component CSS ships with this package (built from `packages/styles` CSS recipes into `dist/index.css`).
 - Public CSS hooks use the `mr-` prefix.
 - Prefer stable `data-*` hooks for variants and states.

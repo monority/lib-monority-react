@@ -491,6 +491,11 @@
             "monority-source": "./src/styles/globals.css",
             "import": "./dist/index.css",
             "default": "./dist/index.css"
+        },
+        "./reset.css": {
+            "monority-source": "./src/styles/reset.css",
+            "import": "./dist/reset.css",
+            "default": "./dist/reset.css"
         }
     },
     "files": ["dist", "README.md"],

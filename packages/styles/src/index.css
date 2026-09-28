@@ -1,7 +1,5 @@
 @import './layers/index.css';
 
-@import './base/reset.css' layer(monority.reset);
-@import './base/normalize.css' layer(monority.reset);
 @import './tokens/generated/deprecated.css' layer(monority.tokens);
 @import './tokens/generated/tokens.css' layer(monority.tokens);
 @import './base/root.css' layer(monority.base);

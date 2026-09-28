@@ -1,3 +1,6 @@
+/* Reset opt-in : hors du bundle principal depuis l'étape 2 (D2). */
+@import '@monority/ui/reset.css';
+
 /* Import styles from @monority/ui package */
 @import '@monority/ui/index.css';
 
