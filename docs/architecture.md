@@ -82,8 +82,6 @@ Core rule: `ui` consumes `styles`; `web` consumes `ui`; docs never become source
 |   |   |   |-- recipes/
 |   |   |   |-- utilities/
 |   |   |   |-- themes/
-|   |   |   |-- debug/
-|   |   |   `-- vendors/
 |   |   `-- package.json
 |   |
 |   |-- tokens/
@@ -180,8 +178,6 @@ Responsibilities:
 - `recipes/`: component classes: button, input, card, modal.
 - `utilities/`: small opt-in classes only.
 - `themes/`: light, dark, dim, oled, high-contrast, density.
-- `debug/`: outlines, grids, spacing helpers.
-- `vendors/`: isolated external CSS.
 
 Rules:
 

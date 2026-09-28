@@ -9,7 +9,6 @@
     "scripts": {
         "generate:component": "node scripts/generate-component.js",
         "smoke": "node scripts/generate-component.js SmokeProbe --category feedback --dry-run",
-        "validate": "node scripts/validate.js",
         "sync:showcase": "node scripts/sync-showcase.js",
         "smoke:full": "node scripts/smoke-test.js"
     }

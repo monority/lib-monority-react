@@ -18,5 +18,3 @@
 @import './base/color-scheme.css' layer(base);
 @import './recipes/index.css' layer(recipes);
 @import './utilities/index.css' layer(utilities);
-@import './vendors/index.css' layer(overrides);
-@import './debug/index.css' layer(overrides);

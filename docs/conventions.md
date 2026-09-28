@@ -5,7 +5,7 @@
 ## Package Boundaries
 
 - `@monority/ui` owns React APIs, types, refs, and accessibility behavior.
-- `@monority/styles` owns CSS source: tokens, base, recipes, utilities, themes, vendors, and debug layers.
+- `@monority/styles` owns CSS source: tokens, base, recipes, utilities, and themes.
 - `@monority/web` owns documentation, examples, navigation, and registry-driven discovery.
 - New component CSS goes in `packages/styles/src/recipes/*.recipe.css`.
 - Component files must not import local CSS from `packages/ui/src/components`.

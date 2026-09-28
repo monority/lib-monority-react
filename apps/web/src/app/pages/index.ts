@@ -1,6 +1,0 @@
-export { DashboardPage } from './DashboardPage'
-export { AdminPage } from './AdminPage'
-export { PlaygroundPage } from './PlaygroundPage'
-export { ShowcasePage } from './ShowcasePage'
-export { NotFoundPage } from './NotFoundPage'
-export { MoodboardPage } from './MoodboardPage'
