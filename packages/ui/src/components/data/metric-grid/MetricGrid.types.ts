@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react'
-import type { StatCardProps } from '@/components/display/stat-card/StatCard.types'
+import type { StatCardProps } from '@/components/data/stat-card/StatCard.types'
 
 export interface MetricGridItem extends StatCardProps {
     key: string

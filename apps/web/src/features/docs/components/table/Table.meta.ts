@@ -3,7 +3,7 @@ export const tableMeta = {
     status: 'draft',
     package: '@monority/ui/table',
     import: "import { Table } from '@monority/ui'",
-    category: 'display',
+    category: 'data',
     anatomy: ['root'],
     accessibility: ['See component source'],
 }

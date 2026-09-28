@@ -302,31 +302,31 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     {
-        category: 'display',
+        category: 'data',
         label: 'MetricGrid',
         path: '/docs/metric-grid',
         slug: 'metric-grid',
         status: 'draft',
     },
     {
-        category: 'display',
+        category: 'data',
         label: 'StatCard',
         path: '/docs/stat-card',
         slug: 'stat-card',
         status: 'draft',
     },
-    { category: 'display', label: 'Table', path: '/docs/table', slug: 'table', status: 'draft' },
+    { category: 'data', label: 'Table', path: '/docs/table', slug: 'table', status: 'draft' },
 
     // Data Display
     {
-        category: 'data-display',
+        category: 'data',
         label: 'DataList',
         path: '/docs/data-list',
         slug: 'data-list',
         status: 'draft',
     },
     {
-        category: 'data-display',
+        category: 'data',
         label: 'DataTable',
         path: '/docs/data-table',
         slug: 'data-table',

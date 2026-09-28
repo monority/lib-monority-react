@@ -3,7 +3,7 @@ export const dataListMeta = {
     status: 'draft',
     package: '@monority/ui/data-list',
     import: "import { DataList } from '@monority/ui'",
-    category: 'data-display',
+    category: 'data',
     anatomy: ['root'],
     accessibility: ['See component source'],
 }

@@ -3,7 +3,7 @@ export const metricGridMeta = {
     status: 'draft',
     package: '@monority/ui/metric-grid',
     import: "import { MetricGrid } from '@monority/ui'",
-    category: 'display',
+    category: 'data',
     anatomy: ['root'],
     accessibility: ['See component source'],
 }

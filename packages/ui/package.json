@@ -202,13 +202,13 @@
         },
         "./data-list": {
             "types": "./dist/dataList.d.ts",
-            "monority-source": "./src/components/data-display/data-list/index.ts",
+            "monority-source": "./src/components/data/data-list/index.ts",
             "import": "./dist/dataList.js",
             "default": "./dist/dataList.js"
         },
         "./data-table": {
             "types": "./dist/dataTable.d.ts",
-            "monority-source": "./src/components/data-display/data-table/index.ts",
+            "monority-source": "./src/components/data/data-table/index.ts",
             "import": "./dist/dataTable.js",
             "default": "./dist/dataTable.js"
         },
@@ -346,19 +346,19 @@
         },
         "./metric-grid": {
             "types": "./dist/metricGrid.d.ts",
-            "monority-source": "./src/components/display/metric-grid/index.ts",
+            "monority-source": "./src/components/data/metric-grid/index.ts",
             "import": "./dist/metricGrid.js",
             "default": "./dist/metricGrid.js"
         },
         "./stat-card": {
             "types": "./dist/statCard.d.ts",
-            "monority-source": "./src/components/display/stat-card/index.ts",
+            "monority-source": "./src/components/data/stat-card/index.ts",
             "import": "./dist/statCard.js",
             "default": "./dist/statCard.js"
         },
         "./table": {
             "types": "./dist/table.d.ts",
-            "monority-source": "./src/components/display/table/index.ts",
+            "monority-source": "./src/components/data/table/index.ts",
             "import": "./dist/table.js",
             "default": "./dist/table.js"
         },

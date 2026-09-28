@@ -3,7 +3,7 @@ export const dataTableMeta = {
     status: 'draft',
     package: '@monority/ui/data-table',
     import: "import { DataTable } from '@monority/ui'",
-    category: 'data-display',
+    category: 'data',
     anatomy: ['root'],
     accessibility: ['See component source'],
 }
