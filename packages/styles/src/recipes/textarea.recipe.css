@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-textarea.mr-textarea {
         /* Double class: beats `.mr-input-base[data-size]` (0,2,0) which otherwise
         wins by specificity and collapses textarea min-height to input height. */

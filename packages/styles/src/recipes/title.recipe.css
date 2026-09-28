@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-title {
         margin: 0;
         color: var(--mr-fg-strong);

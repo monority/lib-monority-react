@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-tooltip {
         position: relative;
         display: inline-flex;

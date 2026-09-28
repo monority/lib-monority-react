@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-drawer {
         position: relative;
         display: flex;

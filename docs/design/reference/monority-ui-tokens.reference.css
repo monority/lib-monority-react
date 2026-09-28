@@ -8,7 +8,7 @@
  * - data-brand se pose sur le même élément que data-theme ou sur un ancêtre (les tokens dépendant de la marque sont redéclarés sous [data-brand] et réévalués localement).
  * - Sans data-theme, le thème par défaut est dark ; system reste disponible via prefers-color-scheme.
  *
- * Importé par packages/styles/src/index.css dans layer(tokens) : ne pas l'envelopper dans un @layer.
+ * Importé par packages/styles/src/index.css dans layer(monority.tokens) : ne pas l'envelopper dans un @layer.
  */
 
 :root {

@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-card {
         --mr-card-current-gap: var(--mr-card-gap, var(--mr-surface-gap-md));
         display: flex;

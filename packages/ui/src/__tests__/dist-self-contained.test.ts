@@ -43,8 +43,25 @@ describe('dist — étanchéité du paquet', () => {
     it('le CSS publié est autoportant (aucun @import résiduel)', () => {
         const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
         expect(css).not.toMatch(/@import/)
-        // Il contient bien le contenu résolu des layers.
-        expect(css).toContain('@layer tokens')
+        // Il contient bien le contenu résolu des layers, dans l'ordre de priorité.
+        const layerOrder = [
+            'monority.reset',
+            'monority.tokens',
+            'monority.base',
+            'monority.recipes',
+            'monority.components',
+            'monority.utilities',
+            'monority.overrides',
+        ]
+        let previousDeclaration = -1
+        for (const layer of layerOrder) {
+            const at = css.indexOf(`@layer ${layer};`)
+            expect(at, `déclaration @layer ${layer}; absente du dist`).toBeGreaterThan(-1)
+            expect(at, `@layer ${layer}; hors ordre de priorité`).toBeGreaterThan(
+                previousDeclaration
+            )
+            previousDeclaration = at
+        }
         expect(css.length).toBeGreaterThan(10_000)
     })
 

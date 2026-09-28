@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-select-wrapper {
         --mr-select-chevron-inset: var(--mr-control-padding-inline-md);
         --mr-select-chevron-size: calc(var(--mr-icon-size-sm) - var(--mr-border-width));

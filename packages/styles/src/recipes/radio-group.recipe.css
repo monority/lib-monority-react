@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-radio-group {
         --mr-radio-group-gap: var(--mr-space-2);
         --mr-radio-gap: var(--mr-space-2);

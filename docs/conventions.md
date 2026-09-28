@@ -17,7 +17,7 @@
 - Aucune valeur visuelle en dur dans les composants : couleur, espacement, rayon, taille de police, graisse, hauteur, largeur, durée, ombre et z-index passent par un token `--mr-*`. Exceptions : `0`, `1px` et `2px` (bordure, rail, focus) et les pourcentages de mise en page.
 - Use tokens before raw values.
 - `@keyframes` reste à l'intérieur de son `@layer`.
-- `@layer recipes` for component recipes.
+- `@layer monority.recipes` for component recipes.
 
 ## Component Contract
 

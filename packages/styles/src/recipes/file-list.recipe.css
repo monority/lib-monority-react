@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-file-list {
         display: flex;
         flex-direction: column;

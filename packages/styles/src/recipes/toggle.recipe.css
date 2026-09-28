@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-toggle {
         --mr-toggle-height: var(--mr-control-size-md);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-md);

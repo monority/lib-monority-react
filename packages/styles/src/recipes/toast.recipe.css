@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     @keyframes mr-toast-in {
         from {
             opacity: 0;

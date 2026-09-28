@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-drop-zone {
         --mr-drop-zone-min-height: 8rem;
         --mr-drop-zone-padding: var(--mr-space-5);

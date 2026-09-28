@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     /* ─── Calendar root ─────────────────────────────────────────── */
     .mr-calendar {
         display: inline-block;

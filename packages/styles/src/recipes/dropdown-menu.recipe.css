@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     @keyframes mr-dropdown-in {
         from {
             opacity: 0;

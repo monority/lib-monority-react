@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-switch__row {
         display: flex;
         align-items: center;

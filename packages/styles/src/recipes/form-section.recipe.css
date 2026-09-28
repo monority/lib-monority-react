@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-form-section[data-mr-form-section] {
         gap: var(--mr-space-5);
     }
