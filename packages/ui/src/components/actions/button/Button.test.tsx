@@ -37,8 +37,8 @@ describe('Button', () => {
         expect(button?.getAttribute('type')).toBe('button')
         expect(button?.getAttribute('data-variant')).toBe('primary')
         expect(button?.getAttribute('data-size')).toBe('md')
-        expect(button?.className).toContain('mr-btn--primary')
-        expect(button?.className).toContain('mr-btn--md')
+        expect(button?.className).toContain('mr-btn')
+        expect(button?.className).not.toMatch(/mr-btn--/)
     })
 
     it('maps variant, size, full width and loading state to stable hooks', () => {
@@ -49,10 +49,6 @@ describe('Button', () => {
         )
         const button = view.querySelector('button')
 
-        expect(button?.className).toContain('mr-btn--danger')
-        expect(button?.className).toContain('mr-btn--lg')
-        expect(button?.className).toContain('mr-btn--full-width')
-        expect(button?.className).toContain('mr-btn--loading')
         expect(button?.getAttribute('data-variant')).toBe('danger')
         expect(button?.getAttribute('data-size')).toBe('lg')
         expect(button?.getAttribute('data-full-width')).toBe('true')
@@ -60,6 +56,41 @@ describe('Button', () => {
         expect(button?.getAttribute('data-disabled')).toBe('true')
         expect(button?.hasAttribute('disabled')).toBe(true)
         expect(button?.getAttribute('aria-busy')).toBe('true')
+    })
+
+    // Régression du pilote data-* : aucun modifier BEM ne doit revenir.
+    it('n’émet aucun modifier BEM et garde les classes structurelles', () => {
+        const cases = [
+            <Button key="default">Save</Button>,
+            <Button key="danger" variant="danger" size="lg" fullWidth loading>
+                Delete
+            </Button>,
+            <Button key="ghost" variant="ghost" size="sm" iconLeading={<span>+</span>}>
+                Action
+            </Button>,
+            <Button key="icon-only" iconOnly aria-label="Ajouter">
+                +
+            </Button>,
+            <Button key="copy" copyValue="monority" />,
+        ]
+
+        for (const element of cases) {
+            const view = render(element)
+            const classes = view.querySelector('button')?.className ?? ''
+            expect(classes, `classes émises : ${classes}`).not.toMatch(/mr-btn--/)
+            expect(classes).toContain('mr-btn')
+        }
+
+        const withIcons = render(
+            <Button
+                iconLeading={<span aria-hidden="true">+</span>}
+                iconTrailing={<span aria-hidden="true">→</span>}
+            >
+                Action
+            </Button>
+        )
+        expect(withIcons.querySelector('.mr-btn__icon')).toBeTruthy()
+        expect(withIcons.querySelector('.mr-btn__label')).toBeTruthy()
     })
 
     it('forwards refs', () => {
@@ -74,28 +105,24 @@ describe('Button', () => {
         const view = render(<Button variant="primary">Primary</Button>)
         const button = view.querySelector('button')
         expect(button?.getAttribute('data-variant')).toBe('primary')
-        expect(button?.className).toContain('mr-btn--primary')
     })
 
     it('renders with variant="muted"', () => {
         const view = render(<Button variant="muted">Muted</Button>)
         const button = view.querySelector('button')
         expect(button?.getAttribute('data-variant')).toBe('muted')
-        expect(button?.className).toContain('mr-btn--muted')
     })
 
     it('renders with size="sm"', () => {
         const view = render(<Button size="sm">Small</Button>)
         const button = view.querySelector('button')
         expect(button?.getAttribute('data-size')).toBe('sm')
-        expect(button?.className).toContain('mr-btn--sm')
     })
 
     it('renders with size="lg"', () => {
         const view = render(<Button size="lg">Large</Button>)
         const button = view.querySelector('button')
         expect(button?.getAttribute('data-size')).toBe('lg')
-        expect(button?.className).toContain('mr-btn--lg')
     })
 
     it('renders with loading state alone', () => {

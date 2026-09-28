@@ -114,8 +114,8 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-btn',
-        '.mr-btn--icon-only',
-        '.mr-btn--copied',
+        '.mr-btn__icon',
+        '.mr-btn__label',
         '[data-variant]',
         '[data-size]',
         '[data-loading]',

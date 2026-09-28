@@ -31,110 +31,91 @@
         opacity: var(--mr-opacity-disabled, 0.5);
     }
 
-    .mr-btn--sm,
     .mr-btn[data-size='sm'] {
         min-block-size: var(--mr-btn-height-sm);
         padding: 0 var(--mr-control-padding-inline-sm);
         font-size: var(--mr-text-xs);
     }
 
-    .mr-btn--md,
     .mr-btn[data-size='md'] {
         min-block-size: var(--mr-btn-height-md);
         padding: 0 var(--mr-control-padding-inline-md);
     }
 
-    .mr-btn--lg,
     .mr-btn[data-size='lg'] {
         min-block-size: var(--mr-btn-height-lg);
         padding: 0 var(--mr-control-padding-inline-lg);
         font-size: var(--mr-text-md);
     }
 
-    .mr-btn--primary,
     .mr-btn[data-variant='primary'] {
         background-color: var(--mr-control-accent, var(--mr-accent));
         color: var(--mr-control-on-accent, var(--mr-on-accent));
     }
 
-    .mr-btn--primary:hover:not(:disabled),
     .mr-btn[data-variant='primary']:hover:not(:disabled) {
         background-color: var(--mr-control-accent-hover, var(--mr-accent-hover));
     }
 
-    .mr-btn--secondary,
     .mr-btn[data-variant='secondary'] {
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         background-color: var(--mr-bg-surface-strong);
         color: var(--mr-fg-strong);
     }
 
-    .mr-btn--secondary:hover:not(:disabled),
     .mr-btn[data-variant='secondary']:hover:not(:disabled) {
         background-color: var(--mr-bg-control);
     }
 
-    .mr-btn--muted,
     .mr-btn[data-variant='muted'] {
         background-color: var(--mr-bg-control);
         color: var(--mr-fg-base);
     }
 
-    .mr-btn--muted:hover:not(:disabled),
     .mr-btn[data-variant='muted']:hover:not(:disabled) {
         background-color: var(--mr-bg-surface-strong);
     }
 
-    .mr-btn--danger,
     .mr-btn[data-variant='danger'] {
         background-color: var(--mr-danger);
         color: var(--mr-danger-contrast);
     }
 
-    .mr-btn--danger:hover:not(:disabled),
     .mr-btn[data-variant='danger']:hover:not(:disabled) {
         background-color: color-mix(in srgb, var(--mr-danger) 80%, black);
     }
 
-    .mr-btn--warning,
     .mr-btn[data-variant='warning'] {
         background-color: var(--mr-warning);
         color: var(--mr-warning-contrast);
     }
 
-    .mr-btn--warning:hover:not(:disabled),
     .mr-btn[data-variant='warning']:hover:not(:disabled) {
         background-color: color-mix(in srgb, var(--mr-warning) 85%, black);
     }
 
-    .mr-btn--ghost,
     .mr-btn[data-variant='ghost'] {
         background-color: transparent;
         color: var(--mr-fg-strong);
     }
 
-    .mr-btn--ghost:hover:not(:disabled),
     .mr-btn[data-variant='ghost']:hover:not(:disabled) {
         background-color: var(--mr-bg-accent-soft);
     }
 
-    .mr-btn--subtle,
     .mr-btn[data-variant='subtle'] {
         background-color: var(--mr-bg-surface-elevated);
         color: var(--mr-fg-strong);
     }
 
-    .mr-btn--subtle:hover:not(:disabled),
     .mr-btn[data-variant='subtle']:hover:not(:disabled) {
         background-color: var(--mr-bg-control);
     }
 
-    .mr-btn--loading,
     .mr-btn[data-loading='true'] {
         pointer-events: none;
     }
 
-    .mr-btn--full-width,
     .mr-btn[data-full-width='true'] {
         width: 100%;
     }
@@ -160,20 +141,17 @@
     }
 
     /* Icon-only mode: square controls that reuse the exact button height ladder. */
-    .mr-btn--icon-only,
     .mr-btn[data-icon-only='true'] {
         inline-size: var(--mr-btn-height-md);
         block-size: var(--mr-btn-height-md);
         padding: 0;
     }
 
-    .mr-btn--icon-only.mr-btn--sm,
     .mr-btn[data-icon-only='true'][data-size='sm'] {
         inline-size: var(--mr-btn-height-sm);
         block-size: var(--mr-btn-height-sm);
     }
 
-    .mr-btn--icon-only.mr-btn--lg,
     .mr-btn[data-icon-only='true'][data-size='lg'] {
         inline-size: var(--mr-btn-height-lg);
         block-size: var(--mr-btn-height-lg);

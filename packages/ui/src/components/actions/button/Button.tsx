@@ -1,6 +1,5 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
 import type { ButtonProps } from './Button.types'
 
 /* -- Inline SVG icons (Lucide-style, no deps) -- */
@@ -44,22 +43,10 @@ function CheckIcon() {
 
 /* -- Variants -- */
 
-const buttonVariants = cva({
-    base: 'mr-btn',
-    variants: {
-        variant: {
-            primary: 'mr-btn--primary',
-            secondary: 'mr-btn--secondary',
-            muted: 'mr-btn--muted',
-            ghost: 'mr-btn--ghost',
-            subtle: 'mr-btn--subtle',
-            danger: 'mr-btn--danger',
-            warning: 'mr-btn--warning',
-        },
-        size: { sm: 'mr-btn--sm', md: 'mr-btn--md', lg: 'mr-btn--lg' },
-    },
-    defaultVariants: { variant: 'primary', size: 'md' },
-})
+// Les variantes, tailles et états sont portés par les attributs `data-*`
+// (`data-variant`, `data-size`, `data-loading`, `data-full-width`,
+// `data-icon-only`, `data-copied`) : plus aucun modifier BEM émis.
+// Voir docs/conventions.md ("Un seul jeu de sélecteurs").
 
 /* -- Component -- */
 
@@ -135,14 +122,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     return (
         <Component
             ref={ref}
-            className={cn(
-                buttonVariants({ variant: resolvedVariant, size: resolvedSize }),
-                fullWidth && 'mr-btn--full-width',
-                loading && 'mr-btn--loading',
-                (iconOnly || (showCopyIcon && !children)) && 'mr-btn--icon-only',
-                copied && 'mr-btn--copied',
-                className
-            )}
+            className={cn('mr-btn', className)}
             type={Component === 'button' ? type : undefined}
             disabled={Component === 'button' ? isDisabled : undefined}
             aria-disabled={Component !== 'button' && isDisabled ? true : undefined}
