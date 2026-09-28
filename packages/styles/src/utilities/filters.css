@@ -1,9 +1,0 @@
-.blur-sm {
-    backdrop-filter: blur(var(--mr-blur-sm));
-}
-.blur-md {
-    backdrop-filter: blur(var(--mr-blur-md));
-}
-.blur-lg {
-    backdrop-filter: blur(var(--mr-blur-lg));
-}

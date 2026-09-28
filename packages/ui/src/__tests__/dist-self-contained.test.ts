@@ -43,9 +43,60 @@ describe('dist — étanchéité du paquet', () => {
     it('le CSS publié est autoportant (aucun @import résiduel)', () => {
         const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
         expect(css).not.toMatch(/@import/)
-        // Il contient bien le contenu résolu des layers.
-        expect(css).toContain('@layer tokens')
+        // Il contient bien le contenu résolu des layers, dans l'ordre de priorité.
+        const layerOrder = [
+            'monority.reset',
+            'monority.tokens',
+            'monority.base',
+            'monority.recipes',
+            'monority.components',
+            'monority.utilities',
+            'monority.overrides',
+        ]
+        let previousDeclaration = -1
+        for (const layer of layerOrder) {
+            const at = css.indexOf(`@layer ${layer};`)
+            expect(at, `déclaration @layer ${layer}; absente du dist`).toBeGreaterThan(-1)
+            expect(at, `@layer ${layer}; hors ordre de priorité`).toBeGreaterThan(
+                previousDeclaration
+            )
+            previousDeclaration = at
+        }
         expect(css.length).toBeGreaterThan(10_000)
+    })
+
+    it('le reset est hors du bundle principal et disponible en opt-in', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).not.toContain('text-rendering')
+        expect(css).not.toContain('font-smoothing')
+
+        const reset = readFileSync(resolve(distDir, 'reset.css'), 'utf8')
+        expect(reset).toContain('text-rendering')
+        expect(reset).toContain('min-height: 100%')
+        // Le fichier opt-in ne contient plus de reset global d'éléments :
+        // l'autonomie des composants est assurée par la portée `mr-`.
+        expect(reset).not.toContain('box-sizing')
+        expect(reset).not.toMatch(/button,\s*input,/)
+    })
+
+    it('les composants sont autonomes sans reset.css (portée `mr-`)', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).toMatch(/\[class\^=("|')?mr-/)
+        expect(css).toContain('box-sizing: border-box')
+        expect(css).toMatch(/font:\s*inherit/)
+    })
+
+    it('les utilitaires génériques sont hors du bundle principal', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).not.toContain('.mr-surface')
+        expect(css).not.toContain('.mr-cluster')
+        expect(css).not.toContain('.container {')
+        expect(css).not.toContain('.stack-m')
+
+        const utilities = readFileSync(resolve(distDir, 'utilities.css'), 'utf8')
+        expect(utilities).toContain('.mr-surface')
+        expect(utilities).toContain('.mr-cluster')
+        expect(utilities).toContain('.mr-stack-m')
     })
 
     it('aucun fichier du dist ne référence un chemin hors du paquet', () => {

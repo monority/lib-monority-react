@@ -1,9 +1,0 @@
-.aspect-square {
-    aspect-ratio: var(--mr-aspect-square);
-}
-.aspect-video {
-    aspect-ratio: var(--mr-aspect-video);
-}
-.aspect-landscape {
-    aspect-ratio: var(--mr-aspect-landscape);
-}

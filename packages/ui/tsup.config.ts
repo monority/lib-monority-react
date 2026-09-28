@@ -78,18 +78,32 @@ export default defineConfig({
         pagination: 'src/components/navigation/pagination/index.ts',
         sidebarLayout: 'src/components/navigation/sidebar-layout/index.ts',
         topbar: 'src/components/navigation/topbar/index.ts',
+        reset: 'src/styles/reset.css',
+        utilities: 'src/styles/utilities.css',
+        components: 'src/components/index.ts',
+        hooks: 'src/hooks/index.ts',
+        providers: 'src/providers/index.ts',
+        primitives: 'src/primitives/index.ts',
+        lib: 'src/lib/index.ts',
+        'get-theme-script': 'src/providers/get-theme-script.ts',
     },
     format: ['esm'],
     dts: true,
     sourcemap: true,
     clean: true,
+    // La directive « use client » est posée par script, fichier par fichier :
+    // seuls ceux qui utilisent React en ont besoin (les barrels et les modules
+    // purs doivent rester importables depuis un Server Component).
+    onSuccess: 'node scripts/use-client.mjs',
     // true : le code partagé (FormControlContext, cn, cva, useFormControl...)
     // est extrait dans des chunks communs. Avec `false`, chaque entrée
     // embarquait sa propre copie de chaque createContext : 17 contextes
     // distincts dans le dist, donc un <Field> et un <Input> importés
     // d'entrées différentes ne partageaient plus la même instance.
     splitting: true,
-    treeshake: true,
+    // `treeshake: true` fait réécrire chaque fichier de sortie par rollup après
+    // esbuild, ce qui supprime la bannière `"use client"`. Le tree-shaking
+    // esbuild suffit (mesure : +1,8 % sur dist/*.js, aucun chunk dupliqué).
     minify: false,
     external: ['react', 'react-dom'],
     // Pas de `publicDir` : il copiait `src/styles/globals.css` tel quel dans

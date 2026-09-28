@@ -1,15 +1,11 @@
-const warned = new Set<string>()
+import { isDevelopment } from './env'
 
-function isProduction(): boolean {
-    const runtime = globalThis as typeof globalThis & {
-        process?: { env?: { NODE_ENV?: string } }
-    }
-    return runtime.process?.env?.NODE_ENV === 'production'
-}
+const warned = new Set<string>()
 
 /** Avertit une seule fois par identifiant en développement. */
 export function deprecate(id: string, message: string): void {
-    if (isProduction() || warned.has(id)) return
-    warned.add(id)
-    console.warn(`[Monority UI][deprecated:${id}] ${message}`)
+    if (isDevelopment && !warned.has(id)) {
+        warned.add(id)
+        console.warn(`[Monority UI][deprecated:${id}] ${message}`)
+    }
 }

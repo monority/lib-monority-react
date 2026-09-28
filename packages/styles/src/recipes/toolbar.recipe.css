@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-toolbar {
         --mr-toolbar-padding: var(--mr-space-2);
 

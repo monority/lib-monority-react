@@ -19,7 +19,8 @@
 
 ## Étapes
 - [x] 1. Nettoyage : fichiers morts (racine, styles/debug, vendors/prism, apps/web, tooling), BOM + .editorconfig, AGENTS.md, .npmrc + registry-url/NODE_AUTH_TOKEN dans release.yml, essai à blanc changesets, test NavigationMenu sur getByRole.
-- [ ] 2. Bugs de consommation : layers renommées monority.*, bannière "use client" (+ test dist), détection production via process.env.NODE_ENV littéral (helper unique, messages en anglais), types d'InputBase sans index signature any. Puis D1 et D2 si tranchées.
+- [x] 2. Bugs de consommation : layers renommées monority.*, bannière "use client" (+ test dist), détection production via process.env.NODE_ENV littéral (helper unique, messages en anglais), types d'InputBase sans index signature any. Puis D1 et D2 si tranchées.
+- [x] 2b. Correctifs de l'étape 2 : composants autonomes sans reset.css (box-sizing, font des contrôles), bannière "use client" limitée aux fichiers qui en ont besoin (exports serveur préservés), README d'intégration (ordre des layers), preuve visuelle avant/après.
 - [ ] 3. Migration BEM → data-* : les composants émettent des attributs data-* pour variantes et états ; suppression des sélecteurs BEM doublés dans les recettes. Par famille de composants, un commit par famille. Mesure le poids de dist/index.css avant/après.
 - [ ] 4. Doublons et rangement : fusion Divider/Separator (garder un nom, l'autre en alias déprécié), fusion display/data-display en catégories claires, renommage des 8 tests stepNN selon ce qu'ils vérifient, fusion des 3 tests d'exports.
 - [ ] 5. Migrations et doc : MIGRATIONS.md unique (space→spacing, deprecated.css, legacy-layout.css, radius, BEM) avec état et version de fin ; historique d'audit vers docs/archive/ ; application de D3 et D5 ; CHANGELOG.md racine supprimé ou redirigé vers celui du package.

@@ -168,7 +168,7 @@ Target `package.json` shape:
 Layer order:
 
 ```css
-@layer reset, tokens, base, components, recipes, utilities, overrides;
+@layer monority.reset, monority.tokens, monority.base, monority.recipes, monority.components, monority.utilities, monority.overrides;
 ```
 
 Responsibilities:

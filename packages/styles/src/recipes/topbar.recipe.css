@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-topbar {
         --mr-topbar-padding-inline: var(--mr-space-4);
 

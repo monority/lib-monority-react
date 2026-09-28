@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-file-upload__dropzone {
         position: relative;
         border-style: dashed;

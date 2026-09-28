@@ -1,6 +1,6 @@
-.surface {
+.mr-surface {
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-lg);
-    background: var(--mr-surface-default);
+    background: var(--mr-bg-surface);
     box-shadow: var(--mr-shadow-xs);
 }

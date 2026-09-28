@@ -1,9 +1,10 @@
+import { createElement, type ReactElement } from 'react'
 import { cn } from '@/lib/cn'
 import { useFormControl } from '@/primitives/form-control/useFormControl'
 import type { InputBaseProps } from './InputBase.types'
 
 export function InputBase({
-    as: Tag,
+    as,
     size,
     tone,
     invalid,
@@ -13,8 +14,8 @@ export function InputBase({
     children,
     id,
     ref,
-    ...props
-}: InputBaseProps) {
+    ...domProps
+}: InputBaseProps): ReactElement {
     const ctx = useFormControl()
 
     const resolvedSize = size ?? ctx.size
@@ -25,32 +26,29 @@ export function InputBase({
     const resolvedId = id || ctx.inputId
 
     // <input> is a void element: rendering children makes React throw.
-    const canHaveChildren = Tag !== 'input'
+    const canHaveChildren = as !== 'input'
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const describedBy = ctx.describedBy || (props as Record<string, any>)['aria-describedby']
+    const describedBy = ctx.describedBy || domProps['aria-describedby']
 
-    // Remove ref from props before spreading
-    const { ref: _ref, ...restProps } = props
-
-    return (
-        <Tag
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ref={ref as any}
-            id={resolvedId}
-            className={cn('mr-input-base', className)}
-            aria-invalid={isInvalid || undefined}
-            aria-describedby={describedBy}
-            disabled={isDisabled}
-            required={isRequired}
-            data-size={resolvedSize}
-            data-tone={resolvedTone}
-            data-invalid={isInvalid ? true : undefined}
-            data-disabled={isDisabled ? true : undefined}
-            data-required={isRequired ? true : undefined}
-            {...restProps}
-        >
-            {canHaveChildren ? children : null}
-        </Tag>
+    // `createElement` accepte le tag dynamique ; les props publiques sont typées
+    // par élément dans `InputBaseProps` (union discriminée sur `as`).
+    return createElement(
+        as,
+        {
+            id: resolvedId,
+            ref,
+            className: cn('mr-input-base', className),
+            'aria-invalid': isInvalid || undefined,
+            'aria-describedby': describedBy,
+            disabled: isDisabled,
+            required: isRequired,
+            'data-size': resolvedSize,
+            'data-tone': resolvedTone,
+            'data-invalid': isInvalid ? true : undefined,
+            'data-disabled': isDisabled ? true : undefined,
+            'data-required': isRequired ? true : undefined,
+            ...domProps,
+        },
+        canHaveChildren ? children : null
     )
 }

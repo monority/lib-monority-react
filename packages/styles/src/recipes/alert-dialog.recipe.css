@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     @keyframes mr-modal-backdrop-in {
         from {
             opacity: 0;

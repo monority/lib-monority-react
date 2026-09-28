@@ -1,7 +1,21 @@
+/* Reset opt-in : hors du bundle principal depuis l'étape 2 (D2). */
+@import '@monority/ui/reset.css';
+
+/* Utilitaires opt-in : hors du bundle principal depuis l'étape 2 (D1). */
+@import '@monority/ui/utilities.css';
+
 /* Import styles from @monority/ui package */
 @import '@monority/ui/index.css';
 
 @import './docs/index.css';
+
+/* Reset de page : le CSS de la librairie ne pose plus de `box-sizing` global
+ * (préoccupation de l'hôte), elle ne fournit que des règles de portée `mr-`. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
 /* Background global : canvas sombre + halo ambiant chaud */
 body {

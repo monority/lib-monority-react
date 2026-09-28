@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { checkRecipeSource } from './check-recipe.mjs'
 
-const compliant = `@layer recipes {
+const compliant = `@layer monority.recipes {
   .mr-control { color: var(--mr-text-primary); min-height: var(--mr-control-size-md); transition: color var(--mr-duration-fast) var(--mr-ease-standard); }
   @media (hover: hover) and (pointer: fine) { .mr-control:hover { color: var(--mr-accent-text); } }
   @media (forced-colors: active) { .mr-control { outline-color: Highlight; } }

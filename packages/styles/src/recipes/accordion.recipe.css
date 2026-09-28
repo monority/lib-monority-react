@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-accordion {
         display: flex;
         flex-direction: column;

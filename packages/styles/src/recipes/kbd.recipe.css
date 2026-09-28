@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-kbd {
         display: inline-flex;
         align-items: center;

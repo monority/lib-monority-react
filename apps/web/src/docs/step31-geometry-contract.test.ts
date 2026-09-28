@@ -109,9 +109,7 @@ describe('Step 31 geometry contracts', () => {
 
     it('uses the corrected aspect ratio token', () => {
         const tokens = source('tokens/generated/deprecated.css')
-        const utility = source('utilities/aspect-ratio.css')
         expect(tokens).toContain('--mr-aspect-landscape')
-        expect(utility).toContain('var(--mr-aspect-landscape)')
     })
 
     it('keeps Select, alignment, Card, and Carousel on shared Step 33 geometry', () => {

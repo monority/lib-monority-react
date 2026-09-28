@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-resizable {
         display: flex;
         width: 100%;

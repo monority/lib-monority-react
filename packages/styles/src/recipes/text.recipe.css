@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-text {
         line-height: var(--mr-leading-relaxed);
     }

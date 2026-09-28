@@ -60,6 +60,16 @@ describe('Step 12 · Dist health — every export produces dist files', () => {
 describe('Step 12 · tsup ↔ package.json alignment', () => {
     const tsupSrc = readFileSync(`${root}/packages/ui/tsup.config.ts`, 'utf8')
 
+    // Les entrées CSS (ex. `reset` -> `dist/reset.css`) n'ont pas d'export `.js`.
+    const cssDistFiles = new Set(
+        Object.entries(pkg.exports)
+            .map(([, value]) => (typeof value === 'object' ? value.import : undefined))
+            .filter((target): target is string =>
+                typeof target === 'string' ? target.endsWith('.css') : false
+            )
+            .map((target) => target.replace('./dist/', ''))
+    )
+
     it('every package.json subpath has a tsup entry', () => {
         const missing: string[] = []
         for (const subpath of exportDistPaths.keys()) {
@@ -83,6 +93,8 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
             'entry',
             'publicDir',
             'format',
+            'banner',
+            'onSuccess',
             'dts',
             'sourcemap',
             'clean',
@@ -109,6 +121,7 @@ describe('Step 12 · tsup ↔ package.json alignment', () => {
                     break
                 }
             }
+            if (!found && cssDistFiles.has(`${key}.css`)) found = true
             if (!found) missing.push(key)
         }
         expect(missing, 'tsup entries without package.json exports').toEqual([])

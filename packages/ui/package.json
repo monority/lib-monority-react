@@ -491,6 +491,52 @@
             "monority-source": "./src/styles/globals.css",
             "import": "./dist/index.css",
             "default": "./dist/index.css"
+        },
+        "./reset.css": {
+            "monority-source": "./src/styles/reset.css",
+            "import": "./dist/reset.css",
+            "default": "./dist/reset.css"
+        },
+        "./utilities.css": {
+            "monority-source": "./src/styles/utilities.css",
+            "import": "./dist/utilities.css",
+            "default": "./dist/utilities.css"
+        },
+        "./components": {
+            "types": "./dist/components.d.ts",
+            "monority-source": "./src/components/index.ts",
+            "import": "./dist/components.js",
+            "default": "./dist/components.js"
+        },
+        "./hooks": {
+            "types": "./dist/hooks.d.ts",
+            "monority-source": "./src/hooks/index.ts",
+            "import": "./dist/hooks.js",
+            "default": "./dist/hooks.js"
+        },
+        "./providers": {
+            "types": "./dist/providers.d.ts",
+            "monority-source": "./src/providers/index.ts",
+            "import": "./dist/providers.js",
+            "default": "./dist/providers.js"
+        },
+        "./primitives": {
+            "types": "./dist/primitives.d.ts",
+            "monority-source": "./src/primitives/index.ts",
+            "import": "./dist/primitives.js",
+            "default": "./dist/primitives.js"
+        },
+        "./lib": {
+            "types": "./dist/lib.d.ts",
+            "monority-source": "./src/lib/index.ts",
+            "import": "./dist/lib.js",
+            "default": "./dist/lib.js"
+        },
+        "./get-theme-script": {
+            "types": "./dist/get-theme-script.d.ts",
+            "monority-source": "./src/providers/get-theme-script.ts",
+            "import": "./dist/get-theme-script.js",
+            "default": "./dist/get-theme-script.js"
         }
     },
     "files": ["dist", "README.md"],

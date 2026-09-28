@@ -3,6 +3,7 @@ import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
 import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '../lib/constants'
 import { ThemeContext } from '../contexts/theme-context'
 import { deprecate } from '../internal/deprecate'
+import { isDevelopment } from '../internal/env'
 import type { ThemeContextValue } from '../contexts/theme-context'
 
 const THEME_CHANGE_EVENT = 'monority-theme-change'
@@ -115,14 +116,12 @@ function hydrateFromStorage() {
 }
 
 function warnAboutIsDark() {
-    const runtime = globalThis as typeof globalThis & {
-        process?: { env?: { NODE_ENV?: string } }
+    if (isDevelopment && !hasWarnedAboutIsDark) {
+        hasWarnedAboutIsDark = true
+        console.warn(
+            '[Monority UI] ThemeContext.isDark is deprecated. Use resolvedTheme with ThemeName.DARK or ThemeName.OLED.'
+        )
     }
-    if (runtime.process?.env?.NODE_ENV === 'production' || hasWarnedAboutIsDark) return
-    hasWarnedAboutIsDark = true
-    console.warn(
-        '[Monority UI] ThemeContext.isDark est déprécié. Utilisez resolvedTheme avec ThemeName.DARK ou ThemeName.OLED.'
-    )
 }
 
 export interface ThemeProviderProps {
@@ -196,10 +195,12 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     )
 
     const toggleTheme = useCallback(() => {
-        deprecate(
-            'theme.toggleTheme',
-            'toggleTheme est déprécié. Utilisez setTheme avec une valeur explicite.'
-        )
+        if (isDevelopment) {
+            deprecate(
+                'theme.toggleTheme',
+                'toggleTheme is deprecated. Use setTheme with an explicit value.'
+            )
+        }
         setTheme((currentTheme) => {
             const currentResolvedTheme =
                 currentTheme === ThemeName.SYSTEM ? getResolvedThemeSnapshot() : currentTheme

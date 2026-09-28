@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-banner {
         --mr-banner-tone: var(--mr-info);
         --mr-banner-soft: color-mix(

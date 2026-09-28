@@ -1,4 +1,4 @@
-@layer recipes {
+@layer monority.recipes {
     .mr-sidebar-layout {
         --mr-sidebar-width: 16rem;
         --mr-sidebar-layout-gap: var(--mr-space-5);
