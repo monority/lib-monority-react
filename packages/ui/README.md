@@ -141,6 +141,9 @@ import '@monority/ui/styles.css'
 - Declare the `monority` layer at its place in the app order (see Layers above);
   components never impose global element styles.
 - The reset is opt-in: import `@monority/ui/reset.css` explicitly (see above).
+- Global element resets belong to the host: `box-sizing`, base font and page
+  margins are the application's responsibility. The library only ships `mr-`
+  scoped rules, so components render identically with or without `reset.css`.
 - The utility classes are opt-in too: import `@monority/ui/utilities.css` and use the `mr-` prefixed classes (`mr-surface`, `mr-cluster`, `mr-between`, `mr-stack-xs|s|m|l|xl`). Nothing generic (`.container`, `.grid`, `.section`, `.stack`) ships in the main bundle.
 - Component CSS ships with this package (built from `packages/styles` CSS recipes into `dist/index.css`).
 - Public CSS hooks use the `mr-` prefix.

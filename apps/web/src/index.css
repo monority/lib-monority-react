@@ -9,6 +9,14 @@
 
 @import './docs/index.css';
 
+/* Reset de page : le CSS de la librairie ne pose plus de `box-sizing` global
+ * (préoccupation de l'hôte), elle ne fournit que des règles de portée `mr-`. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* Background global : canvas sombre + halo ambiant chaud */
 body {
     background: radial-gradient(

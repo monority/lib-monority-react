@@ -5,18 +5,18 @@
  * font: inherit }`). Elles sont limitées aux éléments de la librairie et à
  * leurs descendants : la page hôte n'est jamais touchée.
  *
+ * `border-box` est écrit explicitement (et non `inherit`) : Chromium n'applique
+ * pas `inherit` aux `<option>` internes d'un `<select>`.
+ *
  * `:where()` garde une spécificité nulle pour que le CSS de l'hôte puisse
  * toujours primer. */
-:where([class^='mr-'], [class*=' mr-']) {
-    box-sizing: border-box;
-}
-
+:where([class^='mr-'], [class*=' mr-']),
 :where([class^='mr-'], [class*=' mr-'])::before,
 :where([class^='mr-'], [class*=' mr-'])::after,
 :where([class^='mr-'], [class*=' mr-']) *,
 :where([class^='mr-'], [class*=' mr-']) *::before,
 :where([class^='mr-'], [class*=' mr-']) *::after {
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 :where(button, input, textarea, select):where([class^='mr-'], [class*=' mr-']),

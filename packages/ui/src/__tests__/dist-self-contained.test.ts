@@ -83,7 +83,6 @@ describe('dist — étanchéité du paquet', () => {
         const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
         expect(css).toMatch(/\[class\^=("|')?mr-/)
         expect(css).toContain('box-sizing: border-box')
-        expect(css).toContain('box-sizing: inherit')
         expect(css).toMatch(/font:\s*inherit/)
     })
 
