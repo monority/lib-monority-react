@@ -1,7 +1,7 @@
 @layer monority.recipes {
     .mr-callout {
         --mr-callout-accent: var(--mr-border-default);
-        --mr-callout-accent-bg: var(--mr-bg-surface-strong);
+        --mr-callout-accent-bg: var(--mr-bg-raised);
 
         position: relative;
         display: flex;
@@ -9,7 +9,7 @@
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
     }
 
@@ -38,7 +38,7 @@
     }
 
     .mr-callout__title {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
@@ -48,7 +48,7 @@
 
     .mr-callout__description {
         margin: 0;
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         line-height: var(--mr-leading-relaxed);
     }
@@ -59,54 +59,38 @@
 
     .mr-callout[data-tone='info'] {
         --mr-callout-accent: var(--mr-info);
-        --mr-callout-accent-bg: color-mix(
-            in srgb,
-            var(--mr-info) 14%,
-            var(--mr-bg-surface-elevated)
-        );
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-info) 14%, var(--mr-bg-raised));
 
         border-color: color-mix(in srgb, var(--mr-info) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-info) 5%, var(--mr-bg-surface-elevated));
+        background: color-mix(in srgb, var(--mr-info) 5%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='success'] {
         --mr-callout-accent: var(--mr-success);
-        --mr-callout-accent-bg: color-mix(
-            in srgb,
-            var(--mr-success) 14%,
-            var(--mr-bg-surface-elevated)
-        );
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-success) 14%, var(--mr-bg-raised));
 
         border-color: color-mix(in srgb, var(--mr-success) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-success) 5%, var(--mr-bg-surface-elevated));
+        background: color-mix(in srgb, var(--mr-success) 5%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='warning'] {
         --mr-callout-accent: var(--mr-warning);
-        --mr-callout-accent-bg: color-mix(
-            in srgb,
-            var(--mr-warning) 16%,
-            var(--mr-bg-surface-elevated)
-        );
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-warning) 16%, var(--mr-bg-raised));
 
         border-color: color-mix(in srgb, var(--mr-warning) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-warning) 6%, var(--mr-bg-surface-elevated));
+        background: color-mix(in srgb, var(--mr-warning) 6%, var(--mr-bg-raised));
     }
 
     .mr-callout[data-tone='neutral'] {
         border-color: var(--mr-border-subtle);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
     }
 
     .mr-callout[data-tone='danger'] {
         --mr-callout-accent: var(--mr-danger-solid);
-        --mr-callout-accent-bg: color-mix(
-            in srgb,
-            var(--mr-danger-solid) 14%,
-            var(--mr-bg-surface-elevated)
-        );
+        --mr-callout-accent-bg: color-mix(in srgb, var(--mr-danger-solid) 14%, var(--mr-bg-raised));
 
         border-color: color-mix(in srgb, var(--mr-danger-solid) 38%, var(--mr-border-subtle));
-        background: color-mix(in srgb, var(--mr-danger-solid) 5%, var(--mr-bg-surface-elevated));
+        background: color-mix(in srgb, var(--mr-danger-solid) 5%, var(--mr-bg-raised));
     }
 }

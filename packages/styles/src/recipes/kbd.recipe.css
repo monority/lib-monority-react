@@ -7,8 +7,8 @@
         font-family: var(--mr-font-mono, ui-monospace, monospace);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
-        color: var(--mr-fg-base);
-        background: var(--mr-bg-control);
+        color: var(--mr-text-primary);
+        background: var(--mr-bg-sunken);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-bottom-width: 2px;
         box-shadow: inset 0 var(--mr-border-width) 0
@@ -38,7 +38,7 @@
         border-radius: var(--mr-radius-sm);
     }
     .mr-kbd__separator {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         margin: 0 0.0625rem;
         font-size: 0.75em;
     }

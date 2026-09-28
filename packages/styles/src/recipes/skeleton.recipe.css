@@ -13,9 +13,9 @@
         border-radius: var(--mr-radius-sm);
         background: linear-gradient(
             90deg,
-            color-mix(in srgb, var(--mr-bg-surface-strong) 94%, white) 18%,
-            var(--mr-bg-control) 50%,
-            color-mix(in srgb, var(--mr-bg-surface-strong) 94%, white) 82%
+            color-mix(in srgb, var(--mr-bg-raised) 94%, white) 18%,
+            var(--mr-bg-sunken) 50%,
+            color-mix(in srgb, var(--mr-bg-raised) 94%, white) 82%
         );
         background-size: 200% 100%;
         animation: mr-skeleton-shimmer var(--mr-duration-loop) var(--mr-ease-in-out) infinite;
@@ -40,7 +40,7 @@
     @media (prefers-reduced-motion: reduce) {
         .mr-skeleton {
             animation: none;
-            background: var(--mr-bg-control);
+            background: var(--mr-bg-sunken);
         }
     }
 }

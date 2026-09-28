@@ -8,7 +8,7 @@
 
     .mr-field__label,
     .mr-field__legend {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);
@@ -41,11 +41,11 @@
     }
 
     .mr-field__hint {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-field:focus-within > .mr-field__hint {
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
     }
 
     .mr-field__error {
@@ -94,7 +94,7 @@
     }
 
     .mr-field__title {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-md);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);

@@ -1,13 +1,9 @@
 @layer monority.recipes {
     .mr-banner {
         --mr-banner-tone: var(--mr-info);
-        --mr-banner-soft: color-mix(
-            in srgb,
-            var(--mr-banner-tone) 6%,
-            var(--mr-bg-surface-elevated)
-        );
+        --mr-banner-soft: color-mix(in srgb, var(--mr-banner-tone) 6%, var(--mr-bg-raised));
         --mr-banner-border: color-mix(in srgb, var(--mr-banner-tone) 30%, var(--mr-border-subtle));
-        --mr-banner-marker: color-mix(in srgb, var(--mr-banner-tone) 92%, var(--mr-fg-strong));
+        --mr-banner-marker: color-mix(in srgb, var(--mr-banner-tone) 92%, var(--mr-text-primary));
 
         position: relative;
         display: flex;
@@ -19,7 +15,7 @@
         border: var(--mr-border-width) solid var(--mr-banner-border);
         border-radius: var(--mr-radius-md);
         background: var(--mr-banner-soft);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         box-shadow: var(--mr-elevation-surface);
     }
 
@@ -50,7 +46,7 @@
 
     .mr-banner__title {
         margin: 0;
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-md);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-snug);
@@ -60,7 +56,7 @@
     .mr-banner__description {
         max-width: 64ch;
         margin: 0;
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         line-height: var(--mr-leading-relaxed);
         text-wrap: pretty;

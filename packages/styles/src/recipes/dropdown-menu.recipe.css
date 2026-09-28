@@ -41,7 +41,7 @@
         padding: var(--mr-space-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-overlay);
         /* Opacity-only entrance: variant rules own `transform` for placement. */
         animation: mr-dropdown-in var(--mr-duration-fast) var(--mr-ease-standard);
@@ -85,7 +85,7 @@
         border: 0;
         border-radius: var(--mr-radius-sm);
         background: transparent;
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         font: inherit;
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
@@ -96,8 +96,8 @@
     }
 
     .mr-dropdown__item:hover {
-        background: color-mix(in srgb, var(--mr-bg-surface-strong) 84%, transparent);
-        color: var(--mr-fg-strong);
+        background: color-mix(in srgb, var(--mr-bg-raised) 84%, transparent);
+        color: var(--mr-text-primary);
         box-shadow: inset 0 0 0 var(--mr-border-width)
             color-mix(in srgb, var(--mr-border-subtle) 82%, transparent);
     }

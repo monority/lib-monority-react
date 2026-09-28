@@ -24,7 +24,7 @@
         z-index: calc(var(--mr-z-overlay) + 1);
         display: flex;
         flex-direction: column;
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-overlay);
     }
 

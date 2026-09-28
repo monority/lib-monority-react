@@ -8,7 +8,7 @@
         font-family: inherit;
         font-size: var(--mr-text-sm);
         line-height: var(--mr-leading-control);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         user-select: none;
     }
 
@@ -36,7 +36,7 @@
         height: var(--mr-checkbox-size);
         border: var(--mr-border-width) solid var(--mr-border-control);
         border-radius: var(--mr-radius-xs);
-        background: var(--mr-bg-control);
+        background: var(--mr-bg-sunken);
         transition: background-color var(--mr-dur-150) var(--mr-ease-in-out), border-color
             var(--mr-dur-150) var(--mr-ease-in-out), box-shadow var(--mr-dur-150)
             var(--mr-ease-in-out);
@@ -116,8 +116,8 @@
     }
 
     .mr-checkbox[data-checked='true'][data-tone='neutral'] .mr-checkbox__control {
-        background: var(--mr-fg-strong);
-        border-color: var(--mr-fg-strong);
+        background: var(--mr-text-primary);
+        border-color: var(--mr-text-primary);
     }
 
     /* === Tone: danger === */

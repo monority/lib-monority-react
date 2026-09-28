@@ -14,8 +14,8 @@
         padding-inline: var(--mr-badge-padding-x);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-badge-radius);
-        background: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
         font-size: var(--mr-badge-font-size);
         font-weight: var(--mr-badge-font-weight);
         line-height: 1;

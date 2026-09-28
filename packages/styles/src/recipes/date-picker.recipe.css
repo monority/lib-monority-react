@@ -19,7 +19,7 @@
     }
 
     .mr-datepicker__trigger::placeholder {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-datepicker__trigger:hover {
@@ -90,7 +90,7 @@
         justify-content: center;
         inline-size: var(--mr-icon-size-md);
         block-size: var(--mr-icon-size-md);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         opacity: 0.6;
         pointer-events: none;
     }
@@ -117,7 +117,7 @@
         padding: var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-overlay);
         /* Entrance settles the popup under the input; positioning is inline top/left. */
         animation: mr-datepicker-popover-in var(--mr-duration-fast) var(--mr-ease-standard);
@@ -145,7 +145,7 @@
     .mr-datepicker__month-label {
         font-weight: var(--mr-font-weight-semibold);
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
 
     .mr-datepicker__nav-btn {
@@ -158,13 +158,13 @@
         background: transparent;
         border-radius: var(--mr-radius-sm);
         cursor: pointer;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-datepicker__nav-btn:hover {
-        background: var(--mr-bg-subtle);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     .mr-datepicker__nav-btn:focus-visible {
@@ -183,7 +183,7 @@
         text-align: center;
         font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-medium);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         padding: var(--mr-space-1) 0;
     }
 
@@ -206,13 +206,13 @@
         border-radius: var(--mr-radius-sm);
         cursor: pointer;
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         font-family: inherit;
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-datepicker__day:hover {
-        background: var(--mr-bg-subtle);
+        background: var(--mr-bg-sunken);
     }
 
     .mr-datepicker__day:focus-visible {
@@ -246,7 +246,7 @@
 
     /* Out of month */
     .mr-datepicker__day:not([data-current-month]) {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         opacity: 0.5;
     }
 

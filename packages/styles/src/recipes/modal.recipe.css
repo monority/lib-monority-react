@@ -44,13 +44,13 @@
         padding: var(--mr-modal-padding);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-modal-radius);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-overlay);
         animation: mr-modal-panel-in var(--mr-duration-base) var(--mr-ease-out);
     }
 
     .mr-modal__title {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
     }

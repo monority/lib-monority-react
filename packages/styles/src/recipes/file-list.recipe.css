@@ -17,7 +17,7 @@
         padding: var(--mr-file-list-item-padding-block) var(--mr-file-list-item-padding-inline);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
             var(--mr-duration-fast) var(--mr-ease-standard);
@@ -25,7 +25,7 @@
 
     .mr-file-list__item:hover {
         border-color: var(--mr-border-control-hover);
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-file-list__icon {
@@ -44,7 +44,7 @@
 
     .mr-file-list__name {
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-leading-relaxed);
         overflow: hidden;
@@ -54,7 +54,7 @@
 
     .mr-file-list__size {
         font-size: var(--mr-text-xs);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         line-height: var(--mr-leading-snug);
     }
 
@@ -68,7 +68,7 @@
         border: none;
         border-radius: var(--mr-radius-sm);
         background: transparent;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         cursor: pointer;
         font-size: var(--mr-text-xs);
         line-height: 1;

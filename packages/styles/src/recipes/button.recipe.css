@@ -59,21 +59,21 @@
 
     .mr-btn[data-variant='secondary'] {
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        background-color: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-strong);
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
 
     .mr-btn[data-variant='secondary']:hover:not(:disabled) {
-        background-color: var(--mr-bg-control);
+        background-color: var(--mr-bg-sunken);
     }
 
     .mr-btn[data-variant='muted'] {
-        background-color: var(--mr-bg-control);
-        color: var(--mr-fg-base);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     .mr-btn[data-variant='muted']:hover:not(:disabled) {
-        background-color: var(--mr-bg-surface-strong);
+        background-color: var(--mr-bg-raised);
     }
 
     .mr-btn[data-variant='danger'] {
@@ -96,7 +96,7 @@
 
     .mr-btn[data-variant='ghost'] {
         background-color: transparent;
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
 
     .mr-btn[data-variant='ghost']:hover:not(:disabled) {
@@ -104,12 +104,12 @@
     }
 
     .mr-btn[data-variant='subtle'] {
-        background-color: var(--mr-bg-surface-elevated);
-        color: var(--mr-fg-strong);
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
 
     .mr-btn[data-variant='subtle']:hover:not(:disabled) {
-        background-color: var(--mr-bg-control);
+        background-color: var(--mr-bg-sunken);
     }
 
     .mr-btn[data-loading='true'] {

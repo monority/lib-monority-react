@@ -5,8 +5,8 @@
         margin: 0;
         overflow-x: auto;
         overscroll-behavior-inline: contain;
-        background: var(--mr-code-bg, var(--mr-bg-surface-strong));
-        color: var(--mr-code-fg, var(--mr-fg-base));
+        background: var(--mr-code-bg, var(--mr-bg-raised));
+        color: var(--mr-code-fg, var(--mr-text-primary));
         font-family: var(--mr-font-mono);
         scrollbar-color: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent))
             transparent;

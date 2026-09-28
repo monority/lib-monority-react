@@ -3,13 +3,13 @@
         line-height: var(--mr-leading-relaxed);
     }
     .mr-text[data-tone='muted'] {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
     .mr-text[data-tone='base'] {
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
     }
     .mr-text[data-tone='strong'] {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
     .mr-text[data-size='sm'] {
         font-size: var(--mr-text-xs);

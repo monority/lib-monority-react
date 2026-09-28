@@ -10,7 +10,7 @@
         resize: vertical;
         overflow-y: auto;
         scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent) transparent;
+        scrollbar-color: color-mix(in srgb, var(--mr-text-secondary) 34%, transparent) transparent;
         transition:
             min-height var(--mr-duration-fast) var(--mr-ease-standard),
             border-color var(--mr-duration-fast) var(--mr-ease-standard),
@@ -28,7 +28,7 @@
     }
 
     .mr-textarea::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent);
+        background: color-mix(in srgb, var(--mr-text-secondary) 34%, transparent);
         border: var(--mr-space-1) solid transparent;
         border-radius: var(--mr-radius-full);
         background-clip: padding-box;
@@ -36,11 +36,11 @@
 
     .mr-textarea:hover:not(:disabled) {
         border-color: color-mix(in srgb, var(--mr-accent) 24%, var(--mr-border-subtle));
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-textarea:focus-visible {
-        background: var(--mr-bg-control);
+        background: var(--mr-bg-sunken);
     }
 
     .mr-textarea[data-disabled='true'] {
@@ -102,7 +102,7 @@
         min-block-size: var(--mr-space-5);
         padding-inline: var(--mr-space-1);
         border-radius: var(--mr-radius-xs);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         line-height: 1;
         user-select: none;

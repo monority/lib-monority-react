@@ -22,8 +22,8 @@
         padding: var(--mr-space-2) var(--mr-space-3);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-sm);
-        background: color-mix(in srgb, var(--mr-bg-surface-strong) 96%, transparent);
-        color: var(--mr-fg-strong);
+        background: color-mix(in srgb, var(--mr-bg-raised) 96%, transparent);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-xs);
         line-height: var(--mr-leading-normal);
         text-align: center;

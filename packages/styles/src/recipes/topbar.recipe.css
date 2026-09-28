@@ -13,7 +13,7 @@
         border: var(--mr-border-width) solid
             color-mix(in srgb, var(--mr-border-subtle) 86%, transparent);
         border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-topbar__brand,
@@ -29,7 +29,7 @@
 
     .mr-topbar__brand {
         flex: 0 1 auto;
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         letter-spacing: 0;
@@ -47,7 +47,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding-inline: var(--mr-space-3);
         border-radius: var(--mr-radius-sm);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
         text-decoration: none;
@@ -57,17 +57,17 @@
 
     .mr-topbar__navigation a:hover,
     .mr-topbar__navigation a:focus-visible {
-        background: var(--mr-bg-surface-elevated);
-        color: var(--mr-fg-strong);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
 
     .mr-topbar__navigation [aria-current='page'] {
-        background: var(--mr-bg-surface-elevated);
-        color: var(--mr-fg-strong);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
 
     .mr-topbar__meta {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-sm);
     }
 

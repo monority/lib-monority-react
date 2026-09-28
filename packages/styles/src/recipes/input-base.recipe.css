@@ -10,8 +10,8 @@
         );
         border: var(--mr-border-width) solid var(--mr-border-control);
         border-radius: var(--mr-input-radius);
-        background: var(--mr-bg-control);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-regular);
@@ -22,7 +22,7 @@
     }
 
     .mr-input-base::placeholder {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-input-base:hover:not(:disabled):not([data-disabled='true']) {
