@@ -86,11 +86,26 @@ describe('dist — graphe « use client »', () => {
         expect(entryFiles.length).toBeGreaterThan(50)
     })
 
-    it('les hooks et les providers restent dans des fichiers clients', () => {
-        const hooks = closure([distFileOf('./hooks')]).filter(isClient)
-        const providers = closure([distFileOf('./providers')]).filter(isClient)
+    it('react-dom (createPortal) entraîne la bannière', () => {
+        const reactDomFiles = jsFiles.filter((file) => {
+            const body = bodyOf(file)
+            return (
+                /from\s*["']react-dom/.test(body) ||
+                /require\(\s*["']react-dom/.test(body) ||
+                body.includes('createPortal')
+            )
+        })
 
-        expect(hooks.length, 'hooks sans fichier client').toBeGreaterThan(0)
-        expect(providers.length, 'providers sans fichier client').toBeGreaterThan(0)
+        expect(reactDomFiles.length, 'aucun fichier react-dom dans le dist').toBeGreaterThan(0)
+        const missing = reactDomFiles.filter((file) => !hasBanner(file))
+        expect(missing, `react-dom/createPortal sans bannière : ${missing.join(', ')}`).toEqual([])
+    })
+
+    it('les entrées internes sont des barrels sans bannière, leurs chunks sont clients', () => {
+        for (const entry of ['components.js', 'hooks.js', 'providers.js', 'primitives.js']) {
+            expect(hasBanner(entry), `${entry} ne doit pas porter la bannière`).toBe(false)
+            const clientChunks = closure([entry]).filter(isClient)
+            expect(clientChunks.length, `${entry} sans chunk client`).toBeGreaterThan(0)
+        }
     })
 })
