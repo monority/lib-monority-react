@@ -3,6 +3,7 @@
 @import './tokens/generated/deprecated.css' layer(monority.tokens);
 @import './tokens/generated/tokens.css' layer(monority.tokens);
 @import './base/root.css' layer(monority.base);
+@import './base/library-scope.css' layer(monority.base);
 @import './base/typography.css' layer(monority.base);
 @import './base/accessibility.css' layer(monority.base);
 @import './base/interactions.css' layer(monority.base);

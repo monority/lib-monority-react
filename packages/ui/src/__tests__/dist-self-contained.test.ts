@@ -71,8 +71,20 @@ describe('dist — étanchéité du paquet', () => {
         expect(css).not.toContain('font-smoothing')
 
         const reset = readFileSync(resolve(distDir, 'reset.css'), 'utf8')
-        expect(reset).toContain('box-sizing: border-box')
         expect(reset).toContain('text-rendering')
+        expect(reset).toContain('min-height: 100%')
+        // Le fichier opt-in ne contient plus de reset global d'éléments :
+        // l'autonomie des composants est assurée par la portée `mr-`.
+        expect(reset).not.toContain('box-sizing')
+        expect(reset).not.toMatch(/button,\s*input,/)
+    })
+
+    it('les composants sont autonomes sans reset.css (portée `mr-`)', () => {
+        const css = readFileSync(resolve(distDir, 'index.css'), 'utf8')
+        expect(css).toMatch(/\[class\^=("|')?mr-/)
+        expect(css).toContain('box-sizing: border-box')
+        expect(css).toContain('box-sizing: inherit')
+        expect(css).toMatch(/font:\s*inherit/)
     })
 
     it('les utilitaires génériques sont hors du bundle principal', () => {

@@ -1,0 +1,30 @@
+/* Portée librairie : les composants ne dépendent pas de `reset.css` (opt-in).
+ *
+ * Ces règles remplacent les resets globaux d'éléments qui vivaient dans
+ * `base/reset.css` (`* { box-sizing }`, `button, input, textarea, select {
+ * font: inherit }`). Elles sont limitées aux éléments de la librairie et à
+ * leurs descendants : la page hôte n'est jamais touchée.
+ *
+ * `:where()` garde une spécificité nulle pour que le CSS de l'hôte puisse
+ * toujours primer. */
+:where([class^='mr-'], [class*=' mr-']) {
+    box-sizing: border-box;
+}
+
+:where([class^='mr-'], [class*=' mr-'])::before,
+:where([class^='mr-'], [class*=' mr-'])::after,
+:where([class^='mr-'], [class*=' mr-']) *,
+:where([class^='mr-'], [class*=' mr-']) *::before,
+:where([class^='mr-'], [class*=' mr-']) *::after {
+    box-sizing: inherit;
+}
+
+:where(button, input, textarea, select):where([class^='mr-'], [class*=' mr-']),
+:where([class^='mr-'], [class*=' mr-']) :where(button, input, textarea, select) {
+    font: inherit;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote):where([class^='mr-'], [class*=' mr-']),
+:where([class^='mr-'], [class*=' mr-']) :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote) {
+    margin: 0;
+}

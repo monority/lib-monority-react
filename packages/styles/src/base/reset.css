@@ -1,9 +1,8 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
+/* Reset opt-in (export `./reset.css`) : préoccupations de page uniquement.
+ *
+ * Les composants sont autonomes sans ce fichier : le `box-sizing` et la police
+ * des contrôles sont fournis par `base/library-scope.css`, limité aux éléments
+ * `mr-`. Ne pas y remettre de sélecteur `*`. */
 html,
 body,
 #root {
@@ -20,13 +19,6 @@ svg,
 video {
     display: block;
     max-width: 100%;
-}
-
-button,
-input,
-textarea,
-select {
-    font: inherit;
 }
 
 h1,
