@@ -57,4 +57,5 @@ playwright-report
 blob-report
 apps/web/e2e/audit-baseline.spec.ts-snapshots/
 docs/roadmap/
-memory-ai/
+/docs/architecture/
+/docs/cleaning/
