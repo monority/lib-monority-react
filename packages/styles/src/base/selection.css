@@ -1,4 +1,4 @@
 ::selection {
-    color: var(--mr-fg-inverse);
+    color: var(--mr-tooltip-text);
     background: var(--mr-accent);
 }

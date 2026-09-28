@@ -19,8 +19,8 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        border-start-end-radius: var(--mr-input-radius);
-        border-end-end-radius: var(--mr-input-radius);
+        border-start-end-radius: var(--mr-radius-control);
+        border-end-end-radius: var(--mr-radius-control);
     }
 
     .mr-number-input__btn {
@@ -32,7 +32,7 @@
         padding: 0;
         border: 0;
         background: transparent;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         cursor: pointer;
         font-size: var(--mr-text-xs);
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
@@ -40,8 +40,8 @@
     }
 
     .mr-number-input__btn:hover:not(:disabled) {
-        background: var(--mr-bg-subtle);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     .mr-number-input__btn:disabled {

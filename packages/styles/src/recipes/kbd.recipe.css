@@ -7,8 +7,8 @@
         font-family: var(--mr-font-mono, ui-monospace, monospace);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
-        color: var(--mr-fg-base);
-        background: var(--mr-bg-control);
+        color: var(--mr-text-primary);
+        background: var(--mr-bg-sunken);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-bottom-width: 2px;
         box-shadow: inset 0 var(--mr-border-width) 0
@@ -21,24 +21,24 @@
         min-height: 1.375rem;
         font-size: var(--mr-text-xs);
         padding: 0 0.3125rem;
-        border-radius: var(--mr-radius-xs);
+        border-radius: var(--mr-radius-scale);
     }
     .mr-kbd[data-size='md'],
     .mr-kbd--md {
         min-height: 1.625rem;
         font-size: var(--mr-text-sm);
         padding: 0 0.4375rem;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
     }
     .mr-kbd[data-size='lg'],
     .mr-kbd--lg {
         min-height: 1.875rem;
         font-size: var(--mr-text-md);
         padding: 0 0.5625rem;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
     }
     .mr-kbd__separator {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         margin: 0 0.0625rem;
         font-size: 0.75em;
     }

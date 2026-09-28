@@ -32,7 +32,7 @@
     .mr-calendar__month-label {
         font-weight: var(--mr-font-weight-semibold);
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
 
     /* ─── Navigation buttons ────────────────────────────────────── */
@@ -44,15 +44,15 @@
         block-size: var(--mr-control-size-sm);
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         cursor: pointer;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-calendar__nav-btn:hover {
-        background: var(--mr-bg-subtle);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     .mr-calendar__nav-btn:focus-visible {
@@ -71,7 +71,7 @@
         text-align: center;
         font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-medium);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         padding: var(--mr-space-1) 0;
     }
 
@@ -97,16 +97,16 @@
         aspect-ratio: 1;
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         cursor: pointer;
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         font-family: inherit;
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-calendar__day:hover {
-        background: var(--mr-bg-subtle);
+        background: var(--mr-bg-sunken);
     }
 
     .mr-calendar__day:focus-visible {
@@ -117,7 +117,7 @@
     /* Other month — class still emitted by Calendar; no data-* equivalent
        exists (data-current-month is inverted and absent when false) */
     .mr-calendar__day--other-month {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         opacity: 0.5;
     }
 
@@ -130,12 +130,12 @@
     /* Selected */
     .mr-calendar__day[data-selected='true'] {
         background: var(--mr-accent);
-        color: var(--mr-accent-contrast);
+        color: var(--mr-on-accent);
         font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-calendar__day[data-selected='true']:hover {
-        background: var(--mr-accent-strong);
+        background: var(--mr-accent-hover);
     }
 
     /* Disabled */

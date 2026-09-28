@@ -7,7 +7,7 @@
 /* Import styles from @monority/ui package */
 @import '@monority/ui/index.css';
 
-@import './docs/index.css';
+@import './features/docs/index.css';
 
 /* Reset de page : le CSS de la librairie ne pose plus de `box-sizing` global
  * (préoccupation de l'hôte), elle ne fournit que des règles de portée `mr-`. */

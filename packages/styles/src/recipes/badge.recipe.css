@@ -2,7 +2,7 @@
     .mr-badge {
         --mr-badge-height: 1.625rem;
         --mr-badge-padding-x: 0.625rem;
-        --mr-badge-radius: var(--mr-radius-xs);
+        --mr-badge-radius: var(--mr-radius-scale);
         --mr-badge-font-size: var(--mr-text-xs);
         --mr-badge-font-weight: var(--mr-font-weight-semibold);
 
@@ -14,8 +14,8 @@
         padding-inline: var(--mr-badge-padding-x);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-badge-radius);
-        background: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-base);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
         font-size: var(--mr-badge-font-size);
         font-weight: var(--mr-badge-font-weight);
         line-height: 1;
@@ -23,26 +23,26 @@
     }
 
     .mr-badge[data-variant='primary'] {
-        border-color: var(--mr-border-accent);
-        background: var(--mr-bg-accent-soft);
-        color: var(--mr-fg-accent);
+        border-color: var(--mr-accent-border);
+        background: var(--mr-accent-subtle);
+        color: var(--mr-accent-text);
     }
 
     .mr-badge[data-variant='success'] {
-        border-color: color-mix(in srgb, var(--mr-success) 28%, var(--mr-border-subtle));
-        background: var(--mr-success-soft);
-        color: var(--mr-success);
+        border-color: color-mix(in srgb, var(--mr-success-text) 28%, var(--mr-border-subtle));
+        background: var(--mr-success-subtle);
+        color: var(--mr-success-text);
     }
 
     .mr-badge[data-variant='danger'] {
         border-color: color-mix(in srgb, var(--mr-danger-solid) 28%, var(--mr-border-subtle));
-        background: var(--mr-danger-soft);
+        background: var(--mr-danger-subtle);
         color: var(--mr-danger-text);
     }
 
     .mr-badge[data-variant='warning'] {
-        border-color: color-mix(in srgb, var(--mr-warning) 28%, var(--mr-border-subtle));
-        background: var(--mr-warning-soft);
-        color: var(--mr-warning);
+        border-color: color-mix(in srgb, var(--mr-warning-text) 28%, var(--mr-border-subtle));
+        background: var(--mr-warning-subtle);
+        color: var(--mr-warning-text);
     }
 }

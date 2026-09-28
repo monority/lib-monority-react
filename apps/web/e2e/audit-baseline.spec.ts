@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { docsComponentRegistry } from '../src/docs/components/registry'
+import { docsComponentRegistry } from '../src/features/docs/components/registry'
 
 /**
  * Phase 0 bis (refonte) audit baselines.

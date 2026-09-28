@@ -16,7 +16,7 @@
         min-width: 0;
     }
     .mr-form-section__header-title {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
     .mr-form-section__header-description {
         max-inline-size: var(--mr-content-max-width);
@@ -33,8 +33,8 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-space-3);
         border-radius: var(--mr-radius-full);
-        background: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-muted);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-medium);
         white-space: nowrap;

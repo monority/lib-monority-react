@@ -44,9 +44,9 @@
         width: 100%;
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid transparent;
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         text-align: left;
         cursor: pointer;
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
@@ -57,8 +57,8 @@
     .mr-command__item:hover,
     .mr-command__item.is-active {
         border-color: var(--mr-border-control-hover);
-        background: var(--mr-bg-control);
-        color: var(--mr-fg-strong);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     .mr-command__item:focus-visible {
@@ -76,27 +76,27 @@
         font-weight: var(--mr-font-weight-semibold);
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-command__item-label {
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
 
     .mr-command__item-description {
         font-size: var(--mr-text-xs);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         line-height: var(--mr-leading-normal);
     }
 
     .mr-command__shortcut {
         padding: var(--mr-space-1) var(--mr-space-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-xs);
-        background: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-muted);
+        border-radius: var(--mr-radius-scale);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         font-family: var(--mr-font-mono);
     }
@@ -104,9 +104,9 @@
     .mr-command__empty {
         padding: var(--mr-space-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         text-align: center;
     }
 }

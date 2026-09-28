@@ -1,4 +1,22 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, it, expect } from 'vitest'
+
+// ──────────────────────────────────────────────
+// Package manifest contract
+//
+// Authority: packages/ui/package.json `exports` map.
+// No hardcoded list — any new public export declared in package.json is
+// covered automatically. Merged from the former exports.contract.test.ts.
+// ──────────────────────────────────────────────
+declare const process: { cwd(): string }
+const manifest = JSON.parse(
+    readFileSync(resolve(`${process.cwd()}/../..`, 'packages/ui/package.json'), 'utf8')
+) as { exports: Record<string, unknown> }
+const declaredSubpaths = Object.keys(manifest.exports)
+    .filter((key) => key !== '.' && !key.endsWith('.css'))
+    .map((key) => key.replace('./', ''))
+    .sort()
 
 // ──────────────────────────────────────────────
 // Root barrel import — verifies `@monority/ui` resolves correctly
@@ -503,5 +521,29 @@ describe('CSS imports', () => {
 describe('type re-exports', () => {
     it('re-exports types from root barrel', () => {
         expect(true).toBe(true)
+    })
+})
+
+// ──────────────────────────────────────────────
+// package.json ↔ dist alignment
+// ──────────────────────────────────────────────
+describe('package manifest contract', () => {
+    it('has no duplicate subpaths', () => {
+        expect([...new Set(declaredSubpaths)]).toEqual(declaredSubpaths)
+    })
+
+    it('resolves every declared subpath at runtime', async () => {
+        const failures: string[] = []
+        for (const subpath of declaredSubpaths) {
+            try {
+                const mod = await import(`@monority/ui/${subpath}`)
+                if (Object.keys(mod).length === 0) {
+                    failures.push(`${subpath}: module has no named exports`)
+                }
+            } catch (err) {
+                failures.push(`${subpath}: ${String(err)}`)
+            }
+        }
+        expect(failures, 'subpath resolution failures').toEqual([])
     })
 })

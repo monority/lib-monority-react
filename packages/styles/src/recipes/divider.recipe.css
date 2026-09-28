@@ -42,7 +42,7 @@
         position: relative;
         padding-inline: var(--mr-space-3);
         background: var(--mr-divider-label-bg);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;

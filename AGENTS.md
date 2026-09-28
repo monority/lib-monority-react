@@ -83,6 +83,7 @@ Un nouveau check doit être testé en négatif : prouver qu'il échoue quand la 
 
 ## 8. Git et travail en sessions
 
+- **Ne jamais pousser ni fusionner directement sur `main`. Tout travail passe par une branche et une PR revue, même une étape déjà validée dans `PLAN.md`.** Une étape cochée reste à relire par la revue ; le work n'est pas « déjà validé » parce qu'il est dans le plan.
 - Plusieurs sessions peuvent travailler dans le même worktree. Stager **par liste de chemins**, jamais `git add .` ni `git add -A`. Vérifier l'index (`git diff --cached --stat`) avant chaque commit.
 - Ne jamais modifier, formater ou commiter un fichier qu'on n'a pas soi-même modifié dans la tâche.
 - Interdits sans instruction explicite : `git reset --hard`, `git clean`, `git push --force`, réécriture d'historique.

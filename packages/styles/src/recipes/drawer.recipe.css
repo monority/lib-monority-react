@@ -24,14 +24,14 @@
         z-index: calc(var(--mr-z-overlay) + 1);
         display: flex;
         flex-direction: column;
-        background: var(--mr-bg-surface-elevated);
-        box-shadow: var(--mr-elevation-overlay);
+        background: var(--mr-bg-raised);
+        box-shadow: var(--mr-shadow-overlay);
     }
 
     .mr-drawer {
         position: absolute;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        box-shadow: var(--mr-elevation-overlay);
+        box-shadow: var(--mr-shadow-overlay);
         outline: none;
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);
@@ -47,13 +47,13 @@
     .mr-drawer__panel[data-side='right'] {
         right: 0;
         border-left: var(--mr-border-width) solid var(--mr-border-subtle);
-        animation: mr-drawer-in-right var(--mr-dur-200) var(--mr-ease-out) forwards;
+        animation: mr-drawer-in-right var(--mr-dur-200) var(--mr-ease-enter) forwards;
     }
 
     .mr-drawer__panel[data-side='left'] {
         left: 0;
         border-right: var(--mr-border-width) solid var(--mr-border-subtle);
-        animation: mr-drawer-in-left var(--mr-dur-200) var(--mr-ease-out) forwards;
+        animation: mr-drawer-in-left var(--mr-dur-200) var(--mr-ease-enter) forwards;
     }
 
     .mr-drawer__panel[data-side='top'],
@@ -65,32 +65,32 @@
     .mr-drawer__panel[data-side='top'] {
         top: 0;
         height: min(16rem, 100vh);
-        animation: mr-drawer-in-top var(--mr-dur-200) var(--mr-ease-out) forwards;
+        animation: mr-drawer-in-top var(--mr-dur-200) var(--mr-ease-enter) forwards;
     }
 
     .mr-drawer__panel[data-side='bottom'] {
         bottom: 0;
         min-height: 16rem;
         max-height: min(80vh, 42rem);
-        border-start-start-radius: var(--mr-radius-md);
-        border-start-end-radius: var(--mr-radius-md);
-        animation: mr-drawer-in-bottom var(--mr-dur-200) var(--mr-ease-out) forwards;
+        border-start-start-radius: var(--mr-radius-scale);
+        border-start-end-radius: var(--mr-radius-scale);
+        animation: mr-drawer-in-bottom var(--mr-dur-200) var(--mr-ease-enter) forwards;
     }
 
     .mr-drawer__panel[data-closing='true'][data-side='right'] {
-        animation: mr-drawer-out-right var(--mr-dur-200) var(--mr-ease-in) forwards;
+        animation: mr-drawer-out-right var(--mr-dur-200) var(--mr-ease-exit) forwards;
     }
 
     .mr-drawer__panel[data-closing='true'][data-side='left'] {
-        animation: mr-drawer-out-left var(--mr-dur-200) var(--mr-ease-in) forwards;
+        animation: mr-drawer-out-left var(--mr-dur-200) var(--mr-ease-exit) forwards;
     }
 
     .mr-drawer__panel[data-closing='true'][data-side='top'] {
-        animation: mr-drawer-out-top var(--mr-dur-200) var(--mr-ease-in) forwards;
+        animation: mr-drawer-out-top var(--mr-dur-200) var(--mr-ease-exit) forwards;
     }
 
     .mr-drawer__panel[data-closing='true'][data-side='bottom'] {
-        animation: mr-drawer-out-bottom var(--mr-dur-200) var(--mr-ease-in) forwards;
+        animation: mr-drawer-out-bottom var(--mr-dur-200) var(--mr-ease-exit) forwards;
     }
 
     .mr-drawer__header {

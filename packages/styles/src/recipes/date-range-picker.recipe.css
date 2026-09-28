@@ -15,7 +15,7 @@
         flex: 0 0 auto;
         padding-bottom: var(--mr-space-1);
         font-size: var(--mr-text-lg);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         line-height: var(--mr-control-size-md);
     }
 

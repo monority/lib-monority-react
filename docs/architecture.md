@@ -52,7 +52,7 @@ Core rule: `ui` consumes `styles`; `web` consumes `ui`; docs never become source
 |   |   |-- src/
 |   |   |   |-- components/
 |   |   |   |   |-- actions/
-|   |   |   |   |-- data-display/
+|   |   |   |   |-- data/
 |   |   |   |   |-- display/
 |   |   |   |   |-- feedback/
 |   |   |   |   |-- forms/

@@ -20,7 +20,7 @@
     }
 
     .mr-combobox__input::placeholder {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-combobox__input:hover {
@@ -41,7 +41,7 @@
     }
 
     .mr-combobox[data-tone='accent'] .mr-combobox__input {
-        border-color: var(--mr-accent-soft);
+        border-color: var(--mr-accent-subtle);
     }
 
     .mr-combobox[data-tone='accent'] .mr-combobox__input:focus-visible {
@@ -79,9 +79,9 @@
         overflow-y: auto;
         padding: var(--mr-space-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
-        box-shadow: var(--mr-elevation-overlay);
+        box-shadow: var(--mr-shadow-overlay);
         animation: mr-combobox-in var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
@@ -91,9 +91,9 @@
         width: 100%;
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid transparent;
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-scale);
         background: transparent;
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         text-align: left;
         cursor: pointer;
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), background-color
@@ -103,12 +103,12 @@
     .mr-combobox__item:hover,
     .mr-combobox__item[data-active='true'] {
         border-color: var(--mr-border-control-hover);
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-combobox__item[data-selected='true'] {
-        border-color: var(--mr-accent-soft);
-        background: var(--mr-bg-accent-soft);
+        border-color: var(--mr-accent-subtle);
+        background: var(--mr-accent-subtle);
     }
 
     .mr-combobox__item:focus-visible {
@@ -118,20 +118,20 @@
     }
 
     .mr-combobox__item-label {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
     }
 
     .mr-combobox__item-description {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         line-height: var(--mr-leading-control);
     }
 
     .mr-combobox__empty {
         padding: var(--mr-space-4);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         text-align: center;
         font-size: var(--mr-text-sm);
     }

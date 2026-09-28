@@ -11,8 +11,8 @@
         min-height: 2.75rem;
         padding: var(--mr-toolbar-padding);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-strong);
+        border-radius: var(--mr-radius-scale);
+        background: var(--mr-bg-raised);
     }
 
     @media (max-width: 900px) {

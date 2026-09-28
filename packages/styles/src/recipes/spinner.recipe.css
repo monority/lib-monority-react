@@ -63,10 +63,10 @@
     }
 
     .mr-spinner[data-tone='muted'] {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-spinner[data-tone='inverse'] {
-        color: var(--mr-accent-contrast);
+        color: var(--mr-on-accent);
     }
 }

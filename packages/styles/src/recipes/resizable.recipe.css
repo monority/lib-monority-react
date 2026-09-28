@@ -40,9 +40,9 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
         border: 0;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
             var(--mr-duration-fast) var(--mr-ease-standard);
         z-index: 1;
@@ -61,7 +61,7 @@
     .mr-resizable__handle:hover,
     .mr-resizable__handle[data-active='true'],
     .mr-resizable__handle--active {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
 
     .mr-resizable__handle:hover::before,

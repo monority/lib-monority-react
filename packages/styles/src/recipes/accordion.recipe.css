@@ -3,8 +3,8 @@
         display: flex;
         flex-direction: column;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        border-radius: var(--mr-radius-scale);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         overflow: hidden;
     }
@@ -30,7 +30,7 @@
         font-family: inherit;
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-semibold);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         cursor: pointer;
         text-align: left;
         transition: background-color var(--mr-duration-fast) var(--mr-ease-standard), color
@@ -38,7 +38,7 @@
     }
 
     .mr-accordion__trigger:hover {
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-accordion__trigger:focus-visible {
@@ -49,7 +49,7 @@
     /* Disabled item (button[disabled] + item hook for styling the label) */
     .mr-accordion__item[data-disabled='true'] .mr-accordion__trigger {
         cursor: not-allowed;
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         opacity: var(--mr-opacity-disabled);
     }
 
@@ -60,7 +60,7 @@
     .mr-accordion__panel {
         padding: 0 var(--mr-space-4) var(--mr-space-4);
         font-size: var(--mr-text-sm);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
     }
 
     .mr-accordion[data-size='sm'] .mr-accordion__trigger {
@@ -95,8 +95,8 @@
         height: 1.75rem;
         flex: 0 0 auto;
         border-radius: var(--mr-radius-full);
-        background: var(--mr-bg-control);
-        color: var(--mr-fg-strong);
+        background: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
         transition: transform var(--mr-duration-fast) var(--mr-ease-standard), background-color
             var(--mr-duration-fast) var(--mr-ease-standard);
     }
@@ -112,13 +112,13 @@
 
     .mr-accordion__item[data-open] .mr-accordion__icon {
         transform: rotate(180deg);
-        background: var(--mr-bg-accent-soft);
+        background: var(--mr-accent-subtle);
     }
 
     .mr-accordion__content {
         padding-top: var(--mr-space-3);
         border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
-        color: var(--mr-fg-base);
+        color: var(--mr-text-primary);
         line-height: var(--mr-leading-relaxed);
     }
 

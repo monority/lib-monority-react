@@ -4,13 +4,13 @@
         wins by specificity and collapses textarea min-height to input height. */
         display: block;
         box-sizing: border-box;
-        min-height: var(--mr-textarea-min-height, var(--mr-textarea-min-height-md));
+        min-height: var(--mr-textarea-min-height, var(--mr-textarea-min-height));
         vertical-align: top;
         line-height: var(--mr-leading-relaxed);
         resize: vertical;
         overflow-y: auto;
         scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent) transparent;
+        scrollbar-color: color-mix(in srgb, var(--mr-text-secondary) 34%, transparent) transparent;
         transition:
             min-height var(--mr-duration-fast) var(--mr-ease-standard),
             border-color var(--mr-duration-fast) var(--mr-ease-standard),
@@ -28,7 +28,7 @@
     }
 
     .mr-textarea::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--mr-fg-muted) 34%, transparent);
+        background: color-mix(in srgb, var(--mr-text-secondary) 34%, transparent);
         border: var(--mr-space-1) solid transparent;
         border-radius: var(--mr-radius-full);
         background-clip: padding-box;
@@ -36,11 +36,11 @@
 
     .mr-textarea:hover:not(:disabled) {
         border-color: color-mix(in srgb, var(--mr-accent) 24%, var(--mr-border-subtle));
-        background: var(--mr-bg-surface-strong);
+        background: var(--mr-bg-raised);
     }
 
     .mr-textarea:focus-visible {
-        background: var(--mr-bg-control);
+        background: var(--mr-bg-sunken);
     }
 
     .mr-textarea[data-disabled='true'] {
@@ -85,7 +85,7 @@
     }
 
     .mr-textarea[data-size='md'] {
-        --mr-textarea-min-height: var(--mr-textarea-min-height-md);
+        --mr-textarea-min-height: var(--mr-textarea-min-height);
         padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
     }
 
@@ -101,15 +101,15 @@
         align-items: center;
         min-block-size: var(--mr-space-5);
         padding-inline: var(--mr-space-1);
-        border-radius: var(--mr-radius-xs);
-        color: var(--mr-fg-muted);
+        border-radius: var(--mr-radius-scale);
+        color: var(--mr-text-secondary);
         font-size: var(--mr-text-xs);
         line-height: 1;
         user-select: none;
     }
 
     .mr-textarea__counter[data-near-limit='true'] {
-        color: var(--mr-warning);
-        background: color-mix(in srgb, var(--mr-warning) 8%, transparent);
+        color: var(--mr-warning-text);
+        background: color-mix(in srgb, var(--mr-warning-text) 8%, transparent);
     }
 }

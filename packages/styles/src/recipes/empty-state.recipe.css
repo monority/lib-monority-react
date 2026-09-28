@@ -9,7 +9,7 @@
         padding: var(--mr-space-8);
         border: var(--mr-border-width) dashed
             color-mix(in srgb, var(--mr-border-subtle) 88%, transparent);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
         text-align: center;
     }
@@ -20,8 +20,8 @@
         width: 3.5rem;
         height: 3.5rem;
         border-radius: var(--mr-radius-full);
-        background: var(--mr-bg-surface-strong);
-        color: var(--mr-fg-strong);
+        background: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
     .mr-empty-state__content {
         display: grid;
@@ -29,7 +29,7 @@
         max-width: 32rem;
     }
     .mr-empty-state__title {
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
     }
     .mr-empty-state__description {
         max-width: 56ch;

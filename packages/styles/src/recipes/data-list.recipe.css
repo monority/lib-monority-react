@@ -3,8 +3,8 @@
         display: grid;
         gap: 0;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        border-radius: var(--mr-radius-scale);
+        background: var(--mr-bg-raised);
         box-shadow: var(--mr-elevation-surface);
         overflow: hidden;
     }
@@ -22,14 +22,14 @@
     .mr-data-list__label {
         font-size: var(--mr-text-xs);
         font-weight: var(--mr-font-weight-semibold);
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
         line-height: var(--mr-leading-normal);
     }
     .mr-data-list__value {
         margin: 0;
         font-size: var(--mr-text-sm);
         font-weight: var(--mr-font-weight-medium);
-        color: var(--mr-fg-strong);
+        color: var(--mr-text-primary);
         line-height: var(--mr-leading-normal);
         min-width: 0;
     }

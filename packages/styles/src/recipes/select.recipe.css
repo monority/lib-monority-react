@@ -29,9 +29,9 @@
         inset-inline-end: var(--mr-select-chevron-inset);
         inline-size: var(--mr-select-chevron-size);
         block-size: var(--mr-select-chevron-size);
-        border-inline-end: var(--mr-border-width) solid var(--mr-fg-muted);
-        border-block-end: var(--mr-border-width) solid var(--mr-fg-muted);
-        color: var(--mr-fg-muted);
+        border-inline-end: var(--mr-border-width) solid var(--mr-text-secondary);
+        border-block-end: var(--mr-border-width) solid var(--mr-text-secondary);
+        color: var(--mr-text-secondary);
         pointer-events: none;
         transform: translateY(-50%) rotate(45deg);
     }
@@ -47,7 +47,7 @@
 
     .mr-select.mr-select {
         appearance: none;
-        min-block-size: var(--mr-input-height);
+        min-block-size: var(--mr-control-size-md);
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-md) +
             var(--mr-select-chevron-size) +
@@ -61,7 +61,7 @@
     }
 
     .mr-select:has(option[value='']:checked) {
-        color: var(--mr-fg-muted);
+        color: var(--mr-text-secondary);
     }
 
     .mr-select[data-tone='accent'] {
