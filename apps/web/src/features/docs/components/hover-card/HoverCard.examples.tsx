@@ -8,14 +8,16 @@ export function HoverCardBasicExample() {
                 <div style={{ display: 'grid', gap: '0.5rem' }}>
                     <div
                         style={{
-                            color: 'var(--mr-fg-strong)',
+                            color: 'var(--mr-text-primary)',
                             fontSize: 'var(--mr-text-sm)',
                             fontWeight: 600,
                         }}
                     >
                         Release note
                     </div>
-                    <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <div
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Hover cards are useful for compact supporting detail without interrupting
                         the main flow.
                     </div>
@@ -31,7 +33,7 @@ export function HoverCardCustomDelayExample() {
     return (
         <HoverCard
             content={
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
                     Slower reveal for dense data surfaces or crowded tables.
                 </div>
             }
@@ -48,7 +50,9 @@ export function HoverCardSidesExample() {
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <HoverCard
                 content={
-                    <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <div
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Top side
                     </div>
                 }
@@ -58,7 +62,9 @@ export function HoverCardSidesExample() {
             </HoverCard>
             <HoverCard
                 content={
-                    <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <div
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Bottom side
                     </div>
                 }
@@ -68,7 +74,9 @@ export function HoverCardSidesExample() {
             </HoverCard>
             <HoverCard
                 content={
-                    <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <div
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Left side
                     </div>
                 }
@@ -78,7 +86,9 @@ export function HoverCardSidesExample() {
             </HoverCard>
             <HoverCard
                 content={
-                    <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <div
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Right side
                     </div>
                 }
@@ -94,7 +104,7 @@ export function HoverCardControlledExample() {
     return (
         <HoverCard
             content={
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
                     Default open helps preview authored content in docs.
                 </div>
             }

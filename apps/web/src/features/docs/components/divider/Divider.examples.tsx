@@ -13,7 +13,7 @@ export function DividerWithLabelExample() {
         <div style={{ maxWidth: 360 }}>
             <p style={{ margin: 0 }}>Sign in with SSO</p>
             <Divider label="or" />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
                 Continue with email and password
             </p>
         </div>

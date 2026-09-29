@@ -3,10 +3,10 @@
         inline-size: var(--mr-input-width);
         min-block-size: var(--mr-control-size-md);
         padding-block: var(--mr-input-padding-block, var(--mr-spacing-1-5));
-        padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
+        padding-inline: var(--mr-control-padding-inline-md, var(--mr-control-padding-inline-md));
         padding-inline-end: var(
             --mr-input-padding-inline-end,
-            var(--mr-input-padding-inline, var(--mr-control-padding-inline-md))
+            var(--mr-control-padding-inline-md, var(--mr-control-padding-inline-md))
         );
         border: var(--mr-border-width) solid var(--mr-border-control);
         border-radius: var(--mr-radius-control);

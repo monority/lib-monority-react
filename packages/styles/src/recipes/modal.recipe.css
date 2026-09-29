@@ -87,7 +87,7 @@
         .mr-modal__panel {
             inline-size: 100%;
             max-block-size: min(80vh, 42rem);
-            padding: var(--mr-surface-padding-md);
+            padding: var(--mr-spacing-4);
             border-end-start-radius: 0;
             border-end-end-radius: 0;
         }

@@ -154,7 +154,7 @@ const componentRoles: Record<ComponentColorPreset, ComponentRole> = {
         label: 'var(--mr-text-primary)',
         hover: 'color-mix(in srgb, var(--mr-text-primary) 10%, var(--mr-bg-canvas))',
         active: 'color-mix(in srgb, var(--mr-text-primary) 18%, var(--mr-bg-canvas))',
-        border: 'var(--mr-border-strong)',
+        border: 'var(--mr-border-default)',
     },
 }
 

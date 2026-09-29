@@ -4,7 +4,7 @@ export function ContainerBasicExample() {
     return (
         <Container data-surface="true">
             <strong>Content rail</strong>
-            <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-text-secondary)' }}>
                 The container centers content, controls line length, and can opt into a framed
                 surface.
             </p>

@@ -63,7 +63,7 @@
         border-color: var(--mr-border-subtle);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
-        box-shadow: var(--mr-elevation-surface);
+        box-shadow: var(--mr-shadow-surface);
     }
 
     .mr-toggle-group .mr-toggle-group__item:focus-visible {

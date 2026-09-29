@@ -45,7 +45,7 @@ export function DatePickerControlledExample() {
                     style={{
                         marginTop: '0.5rem',
                         fontSize: '0.875rem',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                     }}
                 >
                     Selected: {date.toLocaleDateString()}

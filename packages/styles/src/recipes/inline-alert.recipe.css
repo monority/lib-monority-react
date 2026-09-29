@@ -9,7 +9,7 @@
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
-        box-shadow: var(--mr-elevation-surface);
+        box-shadow: var(--mr-shadow-surface);
     }
 
     .mr-inline-alert__marker {

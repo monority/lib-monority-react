@@ -8,22 +8,26 @@ export function SidebarLayoutBasicExample() {
                     <div
                         style={{
                             fontSize: '0.75rem',
-                            color: 'var(--mr-fg-muted)',
+                            color: 'var(--mr-text-secondary)',
                             marginBottom: '0.75rem',
                         }}
                     >
                         Workspace
                     </div>
                     <div style={{ fontWeight: 650 }}>Overview</div>
-                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-fg-muted)' }}>Releases</div>
-                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-fg-muted)' }}>Settings</div>
+                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-text-secondary)' }}>
+                        Releases
+                    </div>
+                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-text-secondary)' }}>
+                        Settings
+                    </div>
                 </nav>
             }
             header={<strong>Project shell</strong>}
         >
             <div>
                 <h3 style={{ margin: 0 }}>Main area</h3>
-                <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-fg-muted)' }}>
+                <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-text-secondary)' }}>
                     Sidebar stays contextual, content stays readable.
                 </p>
             </div>
@@ -37,10 +41,10 @@ export function SidebarLayoutWithContentExample() {
             sidebar={
                 <nav aria-label="Dashboard navigation">
                     <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Navigation</div>
-                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
+                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-text-secondary)' }}>
                         Dashboard
                     </div>
-                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
+                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-text-secondary)' }}>
                         Settings
                     </div>
                 </nav>
@@ -48,7 +52,9 @@ export function SidebarLayoutWithContentExample() {
             header={
                 <>
                     <strong>Analytics workspace</strong>
-                    <span style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                    <span
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                    >
                         Updated 5 min ago
                     </span>
                 </>
@@ -56,7 +62,7 @@ export function SidebarLayoutWithContentExample() {
         >
             <main>
                 <h2 style={{ margin: 0 }}>Main content</h2>
-                <p style={{ color: 'var(--mr-fg-muted)' }}>Page content goes here.</p>
+                <p style={{ color: 'var(--mr-text-secondary)' }}>Page content goes here.</p>
             </main>
         </SidebarLayout>
     )

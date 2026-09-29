@@ -5,7 +5,7 @@ export function ResizableHorizontalExample() {
         <div style={{ height: '200px', border: '1px solid var(--mr-border-subtle)' }}>
             <ResizablePanelGroup direction="horizontal">
                 <ResizablePanel defaultSize={30}>
-                    <div style={{ padding: '1rem', background: 'var(--mr-bg-control)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--mr-bg-sunken)' }}>
                         Left panel (30%)
                     </div>
                 </ResizablePanel>
@@ -23,7 +23,7 @@ export function ResizableVerticalExample() {
         <div style={{ height: '300px', border: '1px solid var(--mr-border-subtle)' }}>
             <ResizablePanelGroup direction="vertical">
                 <ResizablePanel defaultSize={40}>
-                    <div style={{ padding: '1rem', background: 'var(--mr-bg-control)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--mr-bg-sunken)' }}>
                         Top panel (40%)
                     </div>
                 </ResizablePanel>
@@ -41,7 +41,7 @@ export function ResizableWithHandleExample() {
         <div style={{ height: '200px', border: '1px solid var(--mr-border-subtle)' }}>
             <ResizablePanelGroup>
                 <ResizablePanel defaultSize={50}>
-                    <div style={{ padding: '1rem', background: 'var(--mr-bg-control)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--mr-bg-sunken)' }}>
                         Left panel
                     </div>
                 </ResizablePanel>
@@ -59,7 +59,7 @@ export function ResizableThreePanelsExample() {
         <div style={{ height: '200px', border: '1px solid var(--mr-border-subtle)' }}>
             <ResizablePanelGroup>
                 <ResizablePanel defaultSize={25} minSize={15}>
-                    <div style={{ padding: '1rem', background: 'var(--mr-bg-control)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--mr-bg-sunken)' }}>
                         Sidebar (25%)
                     </div>
                 </ResizablePanel>
@@ -69,7 +69,7 @@ export function ResizableThreePanelsExample() {
                 </ResizablePanel>
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={25} minSize={15}>
-                    <div style={{ padding: '1rem', background: 'var(--mr-bg-control)' }}>
+                    <div style={{ padding: '1rem', background: 'var(--mr-bg-sunken)' }}>
                         Details (25%)
                     </div>
                 </ResizablePanel>

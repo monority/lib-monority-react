@@ -10,7 +10,7 @@ export function GridBasicExample() {
                         border: '1px solid var(--mr-border-subtle)',
                         borderRadius: 'var(--mr-radius-sm)',
                         padding: '1rem',
-                        background: 'var(--mr-bg-surface-strong)',
+                        background: 'var(--mr-bg-raised)',
                     }}
                 >
                     {label}
@@ -28,7 +28,7 @@ export function GridColumnsExample() {
                     <div
                         key={i}
                         style={{
-                            background: 'var(--mr-bg-surface-strong)',
+                            background: 'var(--mr-bg-raised)',
                             border: '1px solid var(--mr-border-subtle)',
                             borderRadius: 'var(--mr-radius-sm)',
                             padding: '1rem',
@@ -44,7 +44,7 @@ export function GridColumnsExample() {
                     <div
                         key={i}
                         style={{
-                            background: 'var(--mr-bg-surface-strong)',
+                            background: 'var(--mr-bg-raised)',
                             border: '1px solid var(--mr-border-subtle)',
                             borderRadius: 'var(--mr-radius-sm)',
                             padding: '1rem',
@@ -60,7 +60,7 @@ export function GridColumnsExample() {
                     <div
                         key={i}
                         style={{
-                            background: 'var(--mr-bg-surface-strong)',
+                            background: 'var(--mr-bg-raised)',
                             border: '1px solid var(--mr-border-subtle)',
                             borderRadius: 'var(--mr-radius-sm)',
                             padding: '1rem',

@@ -29,7 +29,7 @@ export function ToggleGroupSinglePreview() {
                 value={value}
                 onValueChange={(next) => setValue(next as string)}
             />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
+            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
                 Status: {value || 'all'}
             </span>
         </div>
@@ -46,7 +46,7 @@ export function ToggleGroupMultipleExample() {
                 value={value}
                 onValueChange={(next) => setValue(next as string[])}
             />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
+            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
                 Formatting: {value.length > 0 ? value.join(', ') : 'none'}
             </span>
         </div>
@@ -62,7 +62,7 @@ export function ToggleGroupDisabledExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <ToggleGroup items={itemsWithDisabled} type="single" />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
+            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
                 List view is unavailable for this dataset
             </span>
         </div>
@@ -80,7 +80,7 @@ export function ToggleGroupVariantsExample() {
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         display: 'block',
                         marginBottom: 'var(--mr-spacing-1-5)',
                     }}
@@ -93,7 +93,7 @@ export function ToggleGroupVariantsExample() {
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         display: 'block',
                         marginBottom: 'var(--mr-spacing-1-5)',
                     }}
@@ -113,7 +113,7 @@ export function ToggleGroupSizesExample() {
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         display: 'block',
                         marginBottom: 'var(--mr-spacing-1-5)',
                     }}
@@ -126,7 +126,7 @@ export function ToggleGroupSizesExample() {
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         display: 'block',
                         marginBottom: 'var(--mr-spacing-1-5)',
                     }}
@@ -139,7 +139,7 @@ export function ToggleGroupSizesExample() {
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         display: 'block',
                         marginBottom: 'var(--mr-spacing-1-5)',
                     }}

@@ -37,7 +37,7 @@ export const sectionPlayground: PlaygroundDefinition = {
             spacing={props.spacing as 'md'}
             titleAs={props.titleAs as 'h2'}
         >
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
                 Sections group related content with a stable title and spacing rhythm.
             </p>
         </Section>

@@ -49,7 +49,7 @@
         z-index: calc(var(--mr-z-modal) + 1);
         display: grid;
         gap: var(--mr-spacing-4);
-        padding: var(--mr-surface-padding-lg);
+        padding: var(--mr-spacing-5);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -90,13 +90,13 @@
     }
 
     .mr-alert-dialog__confirm:hover {
-        box-shadow: var(--mr-elevation-raised);
+        box-shadow: var(--mr-shadow-raised);
     }
 
     @media (max-width: 640px) {
         .mr-alert-dialog__panel {
             inline-size: min(100%, var(--mr-overlay-width-alert));
-            padding: var(--mr-surface-padding-md);
+            padding: var(--mr-spacing-4);
         }
 
         .mr-alert-dialog__actions {

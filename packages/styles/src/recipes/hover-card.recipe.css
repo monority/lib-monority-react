@@ -25,7 +25,7 @@
             var(--mr-overlay-width-popover),
             calc(100vw - 2 * var(--mr-overlay-gutter))
         );
-        padding: var(--mr-surface-padding-md);
+        padding: var(--mr-spacing-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);

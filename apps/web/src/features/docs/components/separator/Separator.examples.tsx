@@ -5,7 +5,7 @@ export function SeparatorBasicExample() {
         <div style={{ maxWidth: 360 }}>
             <p style={{ margin: 0 }}>Account details</p>
             <Separator />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
                 Billing contact and invoice defaults
             </p>
         </div>
@@ -29,7 +29,7 @@ export function SeparatorDecorativeExample() {
         <div style={{ maxWidth: 360 }}>
             <p style={{ margin: 0 }}>Visual grouping only</p>
             <Separator decorative />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
                 Use decorative separators when nearby headings already describe the structure.
             </p>
         </div>

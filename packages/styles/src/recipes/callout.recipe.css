@@ -10,7 +10,7 @@
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
-        box-shadow: var(--mr-elevation-surface);
+        box-shadow: var(--mr-shadow-surface);
     }
 
     .mr-callout__indicator {

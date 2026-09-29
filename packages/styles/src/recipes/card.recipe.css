@@ -1,6 +1,6 @@
 @layer monority.recipes {
     .mr-card {
-        --mr-card-current-gap: var(--mr-card-gap, var(--mr-surface-gap-md));
+        --mr-card-current-gap: var(--mr-card-gap, var(--mr-spacing-2));
         display: flex;
         flex-direction: column;
         gap: var(--mr-card-current-gap);
@@ -8,31 +8,31 @@
         padding: var(--mr-card-padding, var(--mr-card-padding));
         overflow-wrap: anywhere;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-card-radius, var(--mr-radius-scale));
+        border-radius: var(--mr-radius-card, var(--mr-radius-scale));
         background: var(--mr-bg-surface);
         color: var(--mr-text-primary);
-        box-shadow: var(--mr-elevation-surface);
+        box-shadow: var(--mr-shadow-surface);
         transition: border-color var(--mr-duration-fast) var(--mr-ease-standard), box-shadow
             var(--mr-duration-fast) var(--mr-ease-standard), background-color
             var(--mr-duration-fast) var(--mr-ease-standard);
     }
 
     .mr-card[data-padding='sm'] {
-        --mr-card-current-gap: var(--mr-card-gap-sm, var(--mr-surface-gap-sm));
+        --mr-card-current-gap: var(--mr-spacing-1-5, var(--mr-spacing-1-5));
         gap: var(--mr-card-current-gap);
-        padding: var(--mr-card-padding-sm, var(--mr-surface-padding-sm));
+        padding: var(--mr-spacing-2, var(--mr-spacing-2));
     }
 
     .mr-card[data-padding='md'] {
-        --mr-card-current-gap: var(--mr-card-gap-md, var(--mr-surface-gap-md));
+        --mr-card-current-gap: var(--mr-card-gap, var(--mr-spacing-2));
         gap: var(--mr-card-current-gap);
-        padding: var(--mr-card-padding-md, var(--mr-surface-padding-md));
+        padding: var(--mr-card-padding, var(--mr-spacing-4));
     }
 
     .mr-card[data-padding='lg'] {
-        --mr-card-current-gap: var(--mr-card-gap-lg, var(--mr-surface-gap-lg));
+        --mr-card-current-gap: var(--mr-spacing-4, var(--mr-spacing-4));
         gap: var(--mr-card-current-gap);
-        padding: var(--mr-card-padding-lg, var(--mr-surface-padding-lg));
+        padding: var(--mr-spacing-5, var(--mr-spacing-5));
     }
 
     .mr-card__header {
@@ -80,7 +80,7 @@
     .mr-card[data-interactive='true']:hover {
         border-color: var(--mr-border-default);
         background: var(--mr-bg-raised);
-        box-shadow: var(--mr-elevation-raised);
+        box-shadow: var(--mr-shadow-raised);
     }
 
     .mr-card[data-interactive='true']:focus-visible {

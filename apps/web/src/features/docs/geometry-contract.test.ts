@@ -39,10 +39,10 @@ describe('Step 31 geometry contracts', () => {
         const statCard = source('recipes/stat-card.recipe.css')
         expect(card).not.toContain('min-height: var(--mr-card-min-height')
         expect(statCard).not.toContain('--mr-card-min-height')
-        expect(card).toContain('var(--mr-card-radius')
+        expect(card).toContain('var(--mr-radius-card')
         expect(card).toContain('var(--mr-card-current-gap')
-        expect(card).toContain('var(--mr-card-padding-md')
-        expect(card).toContain('var(--mr-elevation-surface)')
+        expect(card).toContain('var(--mr-card-padding')
+        expect(card).toContain('var(--mr-shadow-surface)')
     })
 
     it('keeps Spinner variant geometry in component tokens', () => {

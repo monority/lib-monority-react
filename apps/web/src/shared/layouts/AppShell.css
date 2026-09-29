@@ -16,8 +16,8 @@
     z-index: var(--mr-z-tooltip);
     padding: var(--mr-spacing-1) var(--mr-control-padding-inline-md);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface-elevated);
-    color: var(--mr-fg-strong);
+    background: var(--mr-bg-raised);
+    color: var(--mr-text-primary);
     border: var(--mr-border-width) solid var(--mr-border-subtle);
     text-decoration: none;
 }
@@ -41,7 +41,7 @@
 }
 
 .brand {
-    color: var(--mr-fg-strong);
+    color: var(--mr-text-primary);
     font-weight: var(--mr-font-weight-semibold);
     font-size: var(--mr-text-sm);
     letter-spacing: -0.01em;
@@ -50,7 +50,7 @@
 }
 
 .brand:hover {
-    color: var(--mr-fg-strong);
+    color: var(--mr-text-primary);
 }
 
 .app-header__controls {

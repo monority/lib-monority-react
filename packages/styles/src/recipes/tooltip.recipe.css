@@ -27,7 +27,7 @@
         font-size: var(--mr-fs-12);
         line-height: var(--mr-leading-normal);
         text-align: center;
-        box-shadow: var(--mr-elevation-raised);
+        box-shadow: var(--mr-shadow-raised);
         opacity: 0;
         pointer-events: none;
         transform: translateX(-50%) translateY(var(--mr-spacing-1));

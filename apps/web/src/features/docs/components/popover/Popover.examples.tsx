@@ -8,7 +8,7 @@ export function PopoverBasicExample() {
             <div style={{ display: 'grid', gap: '0.5rem' }}>
                 <div
                     style={{
-                        color: 'var(--mr-fg-strong)',
+                        color: 'var(--mr-text-primary)',
                         fontSize: 'var(--mr-text-sm)',
                         fontWeight: 600,
                     }}
@@ -17,7 +17,7 @@ export function PopoverBasicExample() {
                 </div>
                 <div
                     style={{
-                        color: 'var(--mr-fg-muted)',
+                        color: 'var(--mr-text-secondary)',
                         fontSize: 'var(--mr-text-sm)',
                         lineHeight: 1.5,
                     }}
@@ -37,14 +37,14 @@ export function PopoverWithFormExample() {
             >
                 <div
                     style={{
-                        color: 'var(--mr-fg-strong)',
+                        color: 'var(--mr-text-primary)',
                         fontSize: 'var(--mr-text-sm)',
                         fontWeight: 600,
                     }}
                 >
                     Rename view
                 </div>
-                <label style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
+                <label style={{ fontSize: '0.875rem', color: 'var(--mr-text-secondary)' }}>
                     Name
                     <Input style={{ marginTop: '0.375rem' }} placeholder="Quarterly health" />
                 </label>
@@ -58,17 +58,17 @@ export function PopoverAlignmentExample() {
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <Popover trigger={<Button>Start</Button>} align="start">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
                     Aligned to start edge.
                 </div>
             </Popover>
             <Popover trigger={<Button>Center</Button>} align="center">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
                     Centered for compact callouts.
                 </div>
             </Popover>
             <Popover trigger={<Button>End</Button>} align="end">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
                     Aligned to end edge.
                 </div>
             </Popover>

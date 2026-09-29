@@ -64,7 +64,7 @@ export function StatCardWithFooterExample() {
             value="46"
             description="Pull requests waiting for owner approval."
             footer={
-                <span style={{ fontSize: 'var(--mr-text-xs)', color: 'var(--mr-fg-muted)' }}>
+                <span style={{ fontSize: 'var(--mr-text-xs)', color: 'var(--mr-text-secondary)' }}>
                     Updated 5 minutes ago
                 </span>
             }

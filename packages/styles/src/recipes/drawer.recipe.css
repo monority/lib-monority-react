@@ -98,7 +98,7 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: var(--mr-spacing-2);
-        padding: var(--mr-surface-padding-md);
+        padding: var(--mr-spacing-4);
         border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     }
 
@@ -118,7 +118,7 @@
 
     .mr-drawer__body {
         flex: 1;
-        padding: var(--mr-surface-padding-md);
+        padding: var(--mr-spacing-4);
         overflow-y: auto;
     }
 

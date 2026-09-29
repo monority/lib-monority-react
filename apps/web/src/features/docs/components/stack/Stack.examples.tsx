@@ -4,7 +4,7 @@ export function StackBasicExample() {
     return (
         <Stack data-surface="true">
             <strong>Review checklist</strong>
-            <span style={{ color: 'var(--mr-fg-muted)' }}>
+            <span style={{ color: 'var(--mr-text-secondary)' }}>
                 Spacing, tone, contrast, interaction.
             </span>
         </Stack>
@@ -39,7 +39,7 @@ export function StackHorizontalExample() {
             <div
                 style={{
                     background: 'var(--mr-accent)',
-                    color: 'var(--mr-accent-contrast)',
+                    color: 'var(--mr-on-accent)',
                     padding: '0.5rem 1rem',
                 }}
             >
@@ -48,7 +48,7 @@ export function StackHorizontalExample() {
             <div
                 style={{
                     background: 'var(--mr-accent)',
-                    color: 'var(--mr-accent-contrast)',
+                    color: 'var(--mr-on-accent)',
                     padding: '0.5rem 1rem',
                 }}
             >
@@ -57,7 +57,7 @@ export function StackHorizontalExample() {
             <div
                 style={{
                     background: 'var(--mr-accent)',
-                    color: 'var(--mr-accent-contrast)',
+                    color: 'var(--mr-on-accent)',
                     padding: '0.5rem 1rem',
                 }}
             >

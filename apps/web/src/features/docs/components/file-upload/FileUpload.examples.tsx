@@ -54,7 +54,7 @@ export function FileTriggerCustomExample() {
             <span
                 style={{
                     padding: '0.5rem 1rem',
-                    background: 'var(--mr-bg-accent-soft)',
+                    background: 'var(--mr-accent-subtle)',
                     borderRadius: 'var(--mr-radius-sm)',
                     cursor: 'pointer',
                 }}

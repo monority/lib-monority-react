@@ -61,7 +61,7 @@
 
     @media (max-width: 768px) {
         .mr-form-section {
-            padding: var(--mr-surface-padding-md);
+            padding: var(--mr-spacing-4);
         }
         .mr-form-section__header {
             flex-direction: column;

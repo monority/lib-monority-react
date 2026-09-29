@@ -7,8 +7,8 @@ function TriggerSurface({ label }: { label: string }) {
                 padding: '1rem',
                 border: '1px solid var(--mr-border-subtle)',
                 borderRadius: 'var(--mr-radius-md)',
-                background: 'var(--mr-bg-surface-elevated)',
-                color: 'var(--mr-fg-muted)',
+                background: 'var(--mr-bg-raised)',
+                color: 'var(--mr-text-secondary)',
                 textAlign: 'center',
                 minWidth: '16rem',
             }}

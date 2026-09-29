@@ -3,7 +3,7 @@ import { Section } from '@monority/ui/section'
 export function SectionBasicExample() {
     return (
         <Section title="Account activity" variant="card">
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
                 Sections group related content with a stable title, spacing rhythm, and optional
                 surface treatment.
             </p>

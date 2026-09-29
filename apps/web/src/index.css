@@ -33,7 +33,7 @@ body {
     display: flex;
     flex-direction: column;
     color: #f4efe4;
-    font-family: var(--mr-font-body);
+    font-family: var(--mr-font-sans);
     /* Signature dark hero: identical in light and dark mode. */
     color-scheme: dark;
     background: radial-gradient(
@@ -113,8 +113,8 @@ body {
     font-size: var(--mr-text-sm);
     font-weight: var(--mr-font-weight-medium);
     text-decoration: none;
-    transition: background-color var(--mr-duration-enter) var(--mr-ease-standard), border-color
-        var(--mr-duration-enter) var(--mr-ease-standard), color var(--mr-duration-enter)
+    transition: background-color var(--mr-duration-base) var(--mr-ease-standard), border-color
+        var(--mr-duration-base) var(--mr-ease-standard), color var(--mr-duration-base)
         var(--mr-ease-standard);
 }
 

@@ -21,7 +21,7 @@ export function SpinnerTonesExample() {
             <Spinner tone="muted" />
             <div
                 style={{
-                    background: 'var(--mr-fg-base)',
+                    background: 'var(--mr-text-primary)',
                     padding: 'var(--mr-spacing-2)',
                     borderRadius: 'var(--mr-radius-md)',
                 }}
@@ -36,7 +36,7 @@ export function SpinnerWithTextExample() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-spacing-2)' }}>
             <Spinner size="sm" />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
+            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
                 Publishing updated component docs
             </span>
         </div>

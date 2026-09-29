@@ -32,7 +32,7 @@
 }
 
 .app-header__brand {
-    color: var(--mr-fg-strong);
+    color: var(--mr-text-primary);
     font-size: var(--mr-text-sm);
     font-weight: var(--mr-font-weight-semibold);
     letter-spacing: -0.01em;
@@ -59,7 +59,7 @@
     min-block-size: var(--mr-control-size-sm);
     padding: 0 var(--mr-control-padding-inline-sm);
     border-radius: var(--mr-radius-sm);
-    color: var(--mr-fg-muted);
+    color: var(--mr-text-secondary);
     font-size: var(--mr-text-sm);
     text-decoration: none;
     transition: color var(--mr-duration-fast) var(--mr-ease-standard), background-color
@@ -67,8 +67,8 @@
 }
 
 .app-header__nav a:hover {
-    color: var(--mr-fg-base);
-    background: var(--mr-bg-subtle);
+    color: var(--mr-text-primary);
+    background: var(--mr-bg-sunken);
 }
 
 .home-page .app-header__nav a {
