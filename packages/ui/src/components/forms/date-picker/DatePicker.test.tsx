@@ -270,4 +270,140 @@ describe('DatePicker', () => {
         expect(trigger?.value).toBe('')
         expect(trigger?.placeholder).toBe('Pick a date')
     })
+
+    // 21. Controlled mirror — the value prop is changed after mount
+    it('controlled: changing the value after mount updates display and selection', () => {
+        const view = render(<DatePicker label="Date" value={new Date(2025, 0, 15)} />)
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        const displayedBefore = trigger.value
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe(
+            '2025-01-15'
+        )
+
+        act(() => trigger?.click())
+        expect(
+            document.querySelector('.mr-datepicker__day[data-selected="true"]')?.textContent?.trim()
+        ).toBe('15')
+
+        act(() => root?.render(<DatePicker label="Date" value={new Date(2025, 5, 20)} />))
+
+        const triggerAfter = view.querySelector('input[type="text"]') as HTMLInputElement
+        expect(triggerAfter.value).not.toBe(displayedBefore)
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe(
+            '2025-06-20'
+        )
+
+        const selected = document.querySelectorAll('.mr-datepicker__day[data-selected="true"]')
+        expect(selected.length).toBe(1)
+        expect(selected[0].textContent?.trim()).toBe('20')
+        expect(selected[0].getAttribute('aria-selected')).toBe('true')
+    })
+
+    // 22. Controlled mirror — the value prop moves to another month
+    it('controlled: moving the value to another month moves the displayed month', () => {
+        const view = render(<DatePicker label="Date" value={new Date(2025, 0, 15)} />)
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        act(() => trigger?.click())
+        const labelBefore = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(labelBefore).toContain('January')
+
+        act(() => root?.render(<DatePicker label="Date" value={new Date(2025, 5, 20)} />))
+
+        const labelAfter = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(labelAfter).toContain('June')
+        expect(labelAfter).not.toBe(labelBefore)
+
+        // The grid now shows the month of the controlled value, with the selected
+        // day inside it. Asserted on the rendered days, not on the grid identity.
+        const firstOfMonth = document
+            .querySelector('.mr-datepicker__day[data-current-month="true"]')
+            ?.textContent?.trim()
+        expect(firstOfMonth).toBe('1')
+        const selected = document.querySelector('.mr-datepicker__day[data-selected="true"]')
+        expect(selected?.textContent?.trim()).toBe('20')
+        expect(selected?.getAttribute('data-current-month')).toBe('true')
+    })
+
+    // 23. Controlled mirror — the value prop becomes null
+    it('controlled: setting the value to null clears the display and keeps the month', () => {
+        const view = render(<DatePicker label="Date" value={new Date(2025, 5, 20)} />)
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        act(() => trigger?.click())
+        const labelBefore = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(labelBefore).toContain('June')
+
+        act(() => root?.render(<DatePicker label="Date" value={null} />))
+
+        const triggerAfter = view.querySelector('input[type="text"]') as HTMLInputElement
+        expect(triggerAfter.value).toBe('')
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe('')
+        expect(document.querySelector('.mr-datepicker__day[data-selected="true"]')).toBeNull()
+
+        // Current behaviour: the month is only re-synced when the parsed value is
+        // truthy, so clearing the value leaves the displayed month untouched.
+        const labelAfter = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(labelAfter).toBe(labelBefore)
+    })
+
+    // 24. Controlled mode — a user selection does not move the display on its own
+    it('controlled: selecting a day calls onChange without changing the display', () => {
+        const handleChange = vi.fn()
+        const view = render(
+            <DatePicker label="Date" value={new Date(2025, 5, 20)} onChange={handleChange} />
+        )
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        const displayedBefore = trigger.value
+        act(() => trigger?.click())
+
+        const days = document.querySelectorAll(
+            '.mr-datepicker__day[data-current-month="true"]:not([data-disabled])'
+        )
+        const day12 = Array.from(days).find((d) => d.textContent?.trim() === '12')
+        act(() => (day12 as HTMLButtonElement).click())
+
+        expect(handleChange).toHaveBeenCalledTimes(1)
+        expect(handleChange).toHaveBeenCalledWith(expect.any(Date))
+
+        // The parent did not send a new value back: display and selection stay put.
+        const triggerAfter = view.querySelector('input[type="text"]') as HTMLInputElement
+        expect(triggerAfter.value).toBe(displayedBefore)
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe(
+            '2025-06-20'
+        )
+        expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
+    })
+
+    // 25. Uncontrolled mode — a selection updates display and displayed month
+    it('uncontrolled: selecting a day in another month updates display and month', () => {
+        const view = render(<DatePicker label="Date" defaultValue={new Date(2025, 0, 15)} />)
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe(
+            '2025-01-15'
+        )
+
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        act(() => trigger?.click())
+        const nextBtn = document.querySelector(
+            '.mr-datepicker__nav-btn:last-child'
+        ) as HTMLButtonElement
+        act(() => nextBtn?.click())
+        const februaryLabel = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(februaryLabel).toContain('February')
+
+        const days = document.querySelectorAll(
+            '.mr-datepicker__day[data-current-month="true"]:not([data-disabled])'
+        )
+        const day10 = Array.from(days).find((d) => d.textContent?.trim() === '10')
+        act(() => (day10 as HTMLButtonElement).click())
+
+        expect((view.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe(
+            '2025-02-10'
+        )
+        expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
+
+        // The displayed month follows the uncontrolled selection.
+        const triggerAfter = view.querySelector('input[type="text"]') as HTMLInputElement
+        act(() => triggerAfter?.click())
+        const labelAfter = document.querySelector('.mr-datepicker__month-label')?.textContent
+        expect(labelAfter).toBe(februaryLabel)
+    })
 })
