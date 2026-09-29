@@ -4,8 +4,10 @@ Ce fichier fait le point sur les migrations du projet : ce qui est **terminé**,
 ce qui est **abandonné**, ce qui reste **à faire**. Il est écrit d'après l'état
 réel du dépôt, pas d'après un plan.
 
-Version courante de `@monority/ui` : **0.1.0** (aucun changeset en attente dans
-`.changeset/`, donc rien n'est préparé pour la prochaine publication).
+Version courante de `@monority/ui` : **0.1.0** (4 changesets en attente dans
+`.changeset/`, qui alimenteront la prochaine publication) :
+`bem-to-data-attributes`, `dead-css-and-categories`, `expose-position-overlay`
+et `packaging-and-layers`.
 
 ---
 

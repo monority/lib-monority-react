@@ -4,7 +4,7 @@
 [![CI](https://github.com/monority/lib-monority-react/actions/workflows/ci.yml/badge.svg)](https://github.com/monority/lib-monority-react/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-A premium React component library with design system, dark mode, and 74 component subpath exports (plus the main barrel and CSS).
+A premium React component library with design system, dark mode, and 76 component subpath exports (plus the main barrel and CSS).
 
 ## Installation
 
@@ -103,7 +103,7 @@ monority/
 - [Project structure](./docs/project-structure.md) — detailed map
 - [Release checklist](./docs/release-checklist.md) — pre-release process
 - [Migrations](./MIGRATIONS.md) — what has been migrated, abandoned or is pending
-- [Architecture audit](./docs/architecture/audit-10-10.md) — findings and severities
+- [Architecture](./docs/architecture.md) — layers, package exports, component contract, tokens
 
 ## Project status
 
@@ -113,7 +113,7 @@ monority/
 | --- | --- |
 | Styles | one system only — `mr-*` base classes plus `data-*` attributes; CSS layers namespaced `monority.*` |
 | Public CSS hooks | 24 documented BEM aliases deliberately kept for compatibility, all verified to still apply the same styles |
-| Tests | 1361 unit/integration (ui 1251, web 105, styles 5) + 14 Playwright E2E specs |
+| Tests | 1369 unit/integration (ui 1256, web 108, styles 5) + 14 Playwright E2E specs |
 | E2E | not run by CI; the visual snapshots of 4 specs are stale and need regenerating |
 | Pending | `space-*` → `spacing-*` token migration, DropZone, 9 data-* attributes planned but never emitted — see [MIGRATIONS](./MIGRATIONS.md) |
 
