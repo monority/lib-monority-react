@@ -107,6 +107,45 @@
   --mr-chart-3: var(--mr-success-text);
   --mr-chart-4: var(--mr-warning-text);
   --mr-chart-5: var(--mr-danger-text);
+  --mr-content-max-width: 72ch;
+  --mr-font-weight-bold: 700;
+  --mr-leading-base: 1.65;
+  --mr-leading-control: 1.4;
+  --mr-leading-heading: 1.2;
+  --mr-leading-normal: 1.4;
+  --mr-leading-relaxed: 1.6;
+  --mr-leading-snug: 1.2;
+  --mr-leading-tight: 1.08;
+  --mr-opacity-0: 0;
+  --mr-opacity-10: 0.1;
+  --mr-opacity-100: 1;
+  --mr-opacity-20: 0.2;
+  --mr-opacity-30: 0.3;
+  --mr-opacity-40: 0.4;
+  --mr-opacity-50: 0.5;
+  --mr-opacity-60: 0.6;
+  --mr-opacity-70: 0.7;
+  --mr-opacity-80: 0.8;
+  --mr-opacity-90: 0.9;
+  --mr-opacity-disabled: 0.5;
+  --mr-overlay-gutter: 0.875rem;
+  --mr-overlay-offset: 0.375rem;
+  --mr-overlay-width-alert: 32rem;
+  --mr-overlay-width-command: 42rem;
+  --mr-overlay-width-dialog: 42rem;
+  --mr-overlay-width-drawer: 24rem;
+  --mr-overlay-width-menu: 16rem;
+  --mr-overlay-width-popover: 22rem;
+  --mr-overlay-width-tooltip: 16rem;
+  --mr-shadow-focus: 0 0 0 4px rgba(15, 23, 42, 0.08);
+  --mr-shadow-md: 0 20px 48px rgba(15, 23, 42, 0.08);
+  --mr-shadow-raised: 0 10px 30px rgba(15, 23, 42, 0.05);
+  --mr-shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.05);
+  --mr-shadow-surface: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --mr-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --mr-z-base: 1;
+  --mr-z-elevated: 4;
+  --mr-z-overlay: 8;
   --mr-badge-height-sm: 20px;
   --mr-badge-height-md: 24px;
   --mr-badge-dot-size: 6px;
@@ -152,6 +191,8 @@
   --mr-metric-chart-height: 32px;
   --mr-skeleton-line-height: 12px;
   --mr-min-target: 24px;
+  --mr-input-width: min(22rem, 100%);
+  --mr-switch-track-height-md: 1.5rem;
 }
 
 :root,

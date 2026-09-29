@@ -48,6 +48,8 @@
         "table-empty-height": { "$value": "120px", "$type": "dimension" },
         "metric-chart-height": { "$value": "32px", "$type": "dimension" },
         "skeleton-line-height": { "$value": "12px", "$type": "dimension" },
-        "min-target": { "$value": "24px", "$type": "dimension" }
+        "min-target": { "$value": "24px", "$type": "dimension" },
+        "input-width": { "$value": "min(22rem, 100%)" },
+        "switch-track-height-md": { "$value": "1.5rem" }
     }
 }
