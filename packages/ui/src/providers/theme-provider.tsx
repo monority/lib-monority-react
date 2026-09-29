@@ -66,7 +66,6 @@ function readStoredTheme(): ThemeNameType {
     } catch {
         return ThemeName.DARK
     }
-    return ThemeName.DARK
 }
 
 function resolveSystemTheme(): ResolvedThemeName {

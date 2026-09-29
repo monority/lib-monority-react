@@ -25,11 +25,6 @@ function createToastId() {
     return `toast-${toastId}`
 }
 
-interface ToastContextValue {
-    pushToast: (toast: Partial<ToastItem> & { duration?: number }) => string
-    dismissToast: (id: string) => void
-}
-
 /**
  * Owns its own auto-dismiss timer so that adding or removing another toast
  * never resets an existing countdown.

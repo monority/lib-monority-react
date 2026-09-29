@@ -60,7 +60,7 @@ export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(function DropZ
             if (accept) files = files.filter((f) => isValidFile(f))
             onDrop?.(files)
         },
-        [disabled, multiple, onDrop, isValidFile]
+        [accept, disabled, multiple, onDrop, isValidFile]
     )
 
     return (

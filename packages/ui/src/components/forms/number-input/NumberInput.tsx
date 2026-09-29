@@ -70,24 +70,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
         }
     }, [controlledValue, isControlled])
 
-    const commitValue = useCallback(
-        (newVal: string) => {
-            if (!isControlled) setInternalValue(newVal)
-            const parsed = parseNumeric(newVal)
-            if (parsed !== null && onChange) {
-                const nativeEvent = new Event('change', { bubbles: true })
-                const syntheticEvent = {
-                    target: { value: parsed },
-                    currentTarget: { value: parsed },
-                    type: 'change',
-                } as unknown as React.ChangeEvent<HTMLInputElement>
-                Object.defineProperty(syntheticEvent, 'nativeEvent', { value: nativeEvent })
-                onChange(syntheticEvent)
-            }
-        },
-        [isControlled, onChange]
-    )
-
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             const raw = e.target.value

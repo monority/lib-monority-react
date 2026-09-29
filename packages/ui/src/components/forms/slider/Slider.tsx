@@ -1,6 +1,6 @@
 import { forwardRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { FormControl, useFormControl } from '@/primitives/form-control'
+import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { SliderProps } from './Slider.types'

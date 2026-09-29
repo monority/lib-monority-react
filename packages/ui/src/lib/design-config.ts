@@ -317,8 +317,9 @@ export function sanitizeDesignConfig(input: unknown): DesignConfig {
     for (const axis of Object.keys(axisValues) as (keyof DesignConfig)[]) {
         const value = source[axis]
         if (typeof value === 'string' && (axisValues[axis] as readonly string[]).includes(value)) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- checked against the axis allow-list above
-            ;(config as any)[axis] = value
+            // Validated against the axis allow-list above; `Object.assign` writes the
+            // dynamic key without widening the whole config to `any`.
+            Object.assign(config, { [axis]: value })
         }
     }
 

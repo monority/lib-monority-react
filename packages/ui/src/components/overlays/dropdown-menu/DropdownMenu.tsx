@@ -57,7 +57,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
         setPosition({ top, left })
         setPositioned(true)
     }, [align, side])
-    function focusItem(direction = 1, targetValue?: string) {
+    const focusItem = useCallback((direction = 1, targetValue?: string) => {
         const menuItems = contentRef.current?.querySelectorAll('[role="menuitem"]')
         if (!menuItems?.length) return
         if (targetValue) {
@@ -78,7 +78,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
                     : menuItems.length - 1
                 : (activeIndex + direction + menuItems.length) % menuItems.length
         ;(menuItems[nextIndex] as HTMLElement)?.focus()
-    }
+    }, [])
     useEffect(() => {
         if (!isOpen) {
             setPositioned(false)
@@ -119,7 +119,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
     }, [isOpen, setOpenState, updatePosition])
     useEffect(() => {
         if (isOpen) focusItem(1, actionableItems[0]?.value)
-    }, [actionableItems, isOpen])
+    }, [actionableItems, focusItem, isOpen])
     return (
         <div
             ref={ref}

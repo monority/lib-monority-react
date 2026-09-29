@@ -40,7 +40,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function
 
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
 
-    function focusItem(direction = 1, targetValue?: string) {
+    const focusItem = useCallback((direction = 1, targetValue?: string) => {
         const menuItems = contentRef.current?.querySelectorAll('[role="menuitem"]')
         if (!menuItems?.length) return
         if (targetValue) {
@@ -61,7 +61,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function
                     : menuItems.length - 1
                 : (activeIndex + direction + menuItems.length) % menuItems.length
         ;(menuItems[nextIndex] as HTMLElement)?.focus()
-    }
+    }, [])
 
     const handleContextMenu = useCallback(
         (e: React.MouseEvent) => {
@@ -111,7 +111,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function
         if (isOpen) {
             focusItem(1, actionableItems[0]?.value)
         }
-    }, [actionableItems, isOpen])
+    }, [actionableItems, focusItem, isOpen])
 
     useEffect(() => {
         if (isOpen) {
