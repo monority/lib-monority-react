@@ -1,25 +1,14 @@
 /* GENERE — ne pas modifier. Source : packages/tokens/src/*.json (DTCG). */
 
 :root, [data-theme], [data-brand], [data-density] {
-  --mr-input-padding-block: var(--mr-control-padding-block-md);
   --mr-textarea-min-height-lg: 7.5rem;
-  --mr-spinner-size-md: 1.5rem;
   --mr-spinner-ring-sm: 0.75rem;
-  --mr-spinner-ring-lg: 1.75rem;
   --mr-ease-linear: linear;
-  --mr-overlay-gutter: var(--mr-spacing-4);
   --mr-overlay-width-menu: 16rem;
-  --mr-overlay-width-dialog: 42rem;
   --mr-overlay-width-drawer: 24rem;
-  --mr-switch-scale-sm: 0.82;
   --mr-opacity-disabled: 0.5;
-  --mr-radius-sm: calc(0.625rem * var(--mr-radius-scale));
   --mr-shadow-raised: 0 10px 30px rgba(15, 23, 42, 0.05);
-  --mr-text-2xs: 0.625rem;
   --mr-text-2xl: clamp(1.5rem, 1.34rem + 0.7vw, 2.1rem);
-  --mr-text-display: clamp(3rem, 2.45rem + 2.6vw, 5.5rem);
   --mr-leading-snug: 1.2;
-  --mr-leading-relaxed: 1.6;
   --mr-leading-control: var(--mr-leading-normal);
-  --mr-z-elevated: 4;
 }

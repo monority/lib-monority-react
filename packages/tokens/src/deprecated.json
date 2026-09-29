@@ -1,13 +1,5 @@
 {
     "mr": {
-        "input-padding-block": {
-            "$value": "var(--mr-control-padding-block-md)",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\component\\input.css"
-                }
-            }
-        },
         "textarea-min-height-lg": {
             "$value": "7.5rem",
             "$extensions": {
@@ -16,24 +8,8 @@
                 }
             }
         },
-        "spinner-size-md": {
-            "$value": "1.5rem",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\component\\spinner.css"
-                }
-            }
-        },
         "spinner-ring-sm": {
             "$value": "0.75rem",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\component\\spinner.css"
-                }
-            }
-        },
-        "spinner-ring-lg": {
-            "$value": "1.75rem",
             "$extensions": {
                 "com.monority.deprecated": {
                     "origin": "packages\\styles\\src\\tokens\\component\\spinner.css"
@@ -48,24 +24,8 @@
                 }
             }
         },
-        "overlay-gutter": {
-            "$value": "var(--mr-spacing-4)",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\geometry.css"
-                }
-            }
-        },
         "overlay-width-menu": {
             "$value": "16rem",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\geometry.css"
-                }
-            }
-        },
-        "overlay-width-dialog": {
-            "$value": "42rem",
             "$extensions": {
                 "com.monority.deprecated": {
                     "origin": "packages\\styles\\src\\tokens\\core\\geometry.css"
@@ -80,27 +40,11 @@
                 }
             }
         },
-        "switch-scale-sm": {
-            "$value": "0.82",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\geometry.css"
-                }
-            }
-        },
         "opacity-disabled": {
             "$value": "0.5",
             "$extensions": {
                 "com.monority.deprecated": {
                     "origin": "packages\\styles\\src\\tokens\\core\\opacity.css"
-                }
-            }
-        },
-        "radius-sm": {
-            "$value": "calc(0.625rem * var(--mr-radius-scale))",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\radius.css"
                 }
             }
         },
@@ -112,24 +56,8 @@
                 }
             }
         },
-        "text-2xs": {
-            "$value": "0.625rem",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\typography.css"
-                }
-            }
-        },
         "text-2xl": {
             "$value": "clamp(1.5rem, 1.34rem + 0.7vw, 2.1rem)",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\typography.css"
-                }
-            }
-        },
-        "text-display": {
-            "$value": "clamp(3rem, 2.45rem + 2.6vw, 5.5rem)",
             "$extensions": {
                 "com.monority.deprecated": {
                     "origin": "packages\\styles\\src\\tokens\\core\\typography.css"
@@ -144,27 +72,11 @@
                 }
             }
         },
-        "leading-relaxed": {
-            "$value": "1.6",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\typography.css"
-                }
-            }
-        },
         "leading-control": {
             "$value": "var(--mr-leading-normal)",
             "$extensions": {
                 "com.monority.deprecated": {
                     "origin": "packages\\styles\\src\\tokens\\core\\typography.css"
-                }
-            }
-        },
-        "z-elevated": {
-            "$value": "4",
-            "$extensions": {
-                "com.monority.deprecated": {
-                    "origin": "packages\\styles\\src\\tokens\\core\\z-index.css"
                 }
             }
         }
