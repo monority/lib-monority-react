@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 import { DATEPICKER_MIN_WIDTH, OVERLAY_OFFSET } from '@/lib/constants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { DatePickerProps } from './DatePicker.types'
 
@@ -379,7 +379,13 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     const isControlled = value !== undefined
     const initialDate = parseDate(isControlled ? value : defaultValue)
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
+    const [internalSelectedDate, setInternalSelectedDate] = useState<Date | null>(initialDate)
+    // Controlled: the selection is derived from `value`, so it is already correct on the
+    // first render — no mirrored state, and nothing to re-synchronise. Uncontrolled: the
+    // selection lives in local state. `useMemo` keeps the derived date referentially
+    // stable when `value` is a string, the guarantee the mirrored state used to give.
+    const controlledSelectedDate = useMemo(() => parseDate(value), [value])
+    const selectedDate = isControlled ? controlledSelectedDate : internalSelectedDate
     const [viewDate, setViewDate] = useState<Date>(
         initialDate ? startOfMonth(initialDate) : startOfMonth(new Date())
     )
@@ -398,13 +404,13 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     const resolvedTone = tone ?? 'neutral'
     const isInvalid = Boolean(error)
 
-    // Sync controlled value
+    // `viewDate` is independent navigation state, so it still follows a new controlled
+    // value — but only a parsable one: a null or unparsable value must leave the
+    // displayed month untouched.
     useEffect(() => {
-        if (isControlled) {
-            const parsed = parseDate(value)
-            setSelectedDate(parsed)
-            if (parsed) setViewDate(startOfMonth(parsed))
-        }
+        if (!isControlled) return
+        const parsed = parseDate(value)
+        if (parsed) setViewDate(startOfMonth(parsed))
     }, [isControlled, value])
 
     // Update view when selected date changes (uncontrolled)
@@ -475,7 +481,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
 
     const handleSelect = useCallback(
         (date: Date) => {
-            if (!isControlled) setSelectedDate(date)
+            if (!isControlled) setInternalSelectedDate(date)
             onChange?.(date)
             setOpen(false)
         },
