@@ -47,7 +47,7 @@ Ordre : `tokens → styles → ui → web`. Il est déclaré par les dépendance
 ## 5. CSS et composants
 
 - Une classe de base préfixée par composant (`.mr-button`, `.mr-input`…). Variantes et états via attributs `data-*` (`[data-variant]`, `[data-size]`, `[data-state]`).
-- Les modificateurs BEM (`.mr-btn--primary`) sont **en cours de suppression** : ne pas en ajouter. Voir `PLAN.md`.
+- Les modificateurs BEM (`.mr-btn--primary`) sont **en cours de suppression** : ne pas en ajouter.
 - Une recette par composant dans `packages/styles/src/recipes/`, dans la layer des recettes.
 - Anatomie d'un composant : `Component.tsx`, `Component.types.ts`, `Component.test.tsx`, `index.ts`. Un nouveau composant public doit aussi être ajouté à `tsup.config.ts`, aux `exports` de `packages/ui/package.json` et aux tests d'exports.
 - État contrôlé / non contrôlé : utiliser `useControllableState` (`src/internal/`), pas une réimplémentation locale.
@@ -83,14 +83,14 @@ Un nouveau check doit être testé en négatif : prouver qu'il échoue quand la 
 
 ## 8. Git et travail en sessions
 
-- **Ne jamais pousser ni fusionner directement sur `main`. Tout travail passe par une branche et une PR revue, même une étape déjà validée dans `PLAN.md`.** Une étape cochée reste à relire par la revue ; le work n'est pas « déjà validé » parce qu'il est dans le plan.
+- **Ne jamais pousser ni fusionner directement sur `main`. Tout travail passe par une branche et une PR revue.** Une étape déjà traitée reste à relire par la revue : rien n'est « déjà validé » du seul fait d'être terminé.
 - Plusieurs sessions peuvent travailler dans le même worktree. Stager **par liste de chemins**, jamais `git add .` ni `git add -A`. Vérifier l'index (`git diff --cached --stat`) avant chaque commit.
 - Ne jamais modifier, formater ou commiter un fichier qu'on n'a pas soi-même modifié dans la tâche.
 - Interdits sans instruction explicite : `git reset --hard`, `git clean`, `git push --force`, réécriture d'historique.
 - Un commit par sujet, message court au format `type(portée): description` en français (`fix`, `feat`, `refactor`, `build`, `ci`, `test`, `docs`, `style`, `lint`). Un commit de formatage ne contient que du formatage.
 - Renommer un fichier en changeant seulement la casse (Windows) : `git mv A tmp && git mv tmp a`.
 - Fins de ligne LF (`.gitattributes`). Ne pas commiter de BOM.
-- Le chantier en cours est décrit dans `PLAN.md`. N'exécuter que l'étape demandée ; si une décision marquée `[DÉCISION]` n'est pas tranchée, s'arrêter et demander.
+- N'exécuter que l'étape demandée ; si une décision marquée `[DÉCISION]` n'est pas tranchée, s'arrêter et demander.
 - Contexte presque épuisé : s'arrêter sur un commit propre et écrire `HANDOFF.md` (non commité) : commits faits, travail restant, pièges rencontrés. En début de session, lire `HANDOFF.md` s'il existe.
 
 ## 9. Méthode
@@ -106,3 +106,5 @@ Un nouveau check doit être testé en négatif : prouver qu'il échoue quand la 
 ## 10. Rapport de fin de tâche
 
 Court et factuel : ce qui a été fait (hash des commits), preuves (commandes et résultats), ce qui n'a pas été fait et pourquoi, décisions en attente, améliorations repérées hors périmètre. Ne mentionner que les vérifications réellement effectuées.
+
+**Format des rapports : aucun tableau, en prose.** Les rapports d'audit, bilans et rapports de fin de tâche s'écrivent en texte suivi et puces. Les données chiffrées restent explicites et complètes, mais ne sont jamais présentées sous forme de tableau, même quand un plan ou un gabarit externe en impose un. Utiliser des listes à puces ou des paragraphes, une entrée par fait mesuré.

@@ -24,7 +24,6 @@ Le moodboard n'est pas l'objet de la refonte. Il est reconstruit en dernier, uni
 - Tu n'inventes aucune valeur. Si un cas n'est pas couvert, tu t'arrêtes et tu poses la question.
 - Tu ne changes pas la technologie de rendu (React 19, pas de migration vers les Web Components), mais l'API doit rester transposable (section 9).
 - Tu ne crées ni commit ni push. Tu proposes le message de commit dans le bilan.
-- `docs/roadmap/` n'est pas modifié.
 - Les fichiers de conventions (`docs/conventions.md`, `memory-ai/project-knowledge.md`, et tout fichier d'instructions d'agents) sont mis à jour en phase 1 et font foi ensuite. Une convention ancienne qui contredit ce document est une erreur à corriger, pas une règle à suivre.
 
 Arrêt immédiat, avec question dans le bilan, si :
@@ -819,7 +818,7 @@ Build, typecheck, tests unitaires et E2E serial passent.
 **Migration (G)**
 - G1. `MIGRATION.md` : chaque changement cassant et chaque changement de valeur, avec exemple avant / après.
 - G2. Alias dépréciés pendant une version majeure, avertissement en développement pour props, variantes et composants.
-- G3. `CHANGELOG.md` et changeset à jour.
+- G3. Changeset à jour.
 
 ### « 10/10 »
 

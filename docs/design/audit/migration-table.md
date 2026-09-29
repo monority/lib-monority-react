@@ -398,7 +398,7 @@ Alias dépréciés pendant une version majeure + avertissement en développement
 
 Tokens utilisés via `var()` mais jamais définis dans `packages/styles/src` : 8 (`--mr-combobox-list-min-width`, `--mr-hovercard-arrow-left`, `--mr-hovercard-arrow-top`, `--mr-code-bg`, `--mr-code-fg`, `--mr-code-scrollbar`, `--mr-code-shadow`, `--mr-code-padding`) — référence rompue préexistante, bruit connu.
 
-Mapping 5.16 appliqué depuis le prompt : 66 paires exact/approx. Fichier déprécié de référence : `docs/roadmap/refonte/monority-ui-tokens.deprecated.reference.css` (71 alias ; les valeurs core `--mr-space-*`, `--mr-radius-xs/sm/md/lg`, `--mr-text-*`, `--mr-dur-*`, `--mr-opacity-*`, `--mr-leading-*`, `--mr-color-neutral-*`, anciennes ombres y seront reportées en phase 2 avec leur valeur actuelle, conformément à 5.16).
+Mapping 5.16 appliqué depuis le prompt : 66 paires exact/approx. Fichier déprécié de référence (hors dépôt) : (71 alias ; les valeurs core `--mr-space-*`, `--mr-radius-xs/sm/md/lg`, `--mr-text-*`, `--mr-dur-*`, `--mr-opacity-*`, `--mr-leading-*`, `--mr-color-neutral-*`, anciennes ombres y seront reportées en phase 2 avec leur valeur actuelle, conformément à 5.16).
 
 ## 2.1 Migration `space-*` → `spacing-*` (en cours, sans date de retrait)
 

@@ -1,6 +1,6 @@
 # Audit — inventaire (phase 0 bis)
 
-Réf. : `docs/roadmap/refonte/prompt-refonte-monority-ui.md` v4 — phase 0 bis, aucune modification de code source.
+Phase 0 bis — aucune modification de code source. Référentiel v4 retiré du dépôt.
 HEAD : `31a97c9` — worktree propre avant exécution (`git status --porcelain` → 0 ligne).
 
 ## Méthodes et commandes
@@ -10,7 +10,7 @@ HEAD : `31a97c9` — worktree propre avant exécution (`git status --porcelain` 
 | Inventaire composants / exports / imports | parcours récursif des `index.ts` de `packages/ui/src/components/<catégorie>/<composant>/` + regex `import { … } from '@monority/ui…'` sur `apps/web/src/**/*.{ts,tsx}` |
 | Valeurs en dur (CSS) | décompte par fichier : hex, rgb()/hsla()/oklch(), px hors {0,1,2}px, ms, font-weight/z-index/letter-spacing hors `var()` sur `packages/styles/src/recipes/*.css` |
 | Valeurs en dur (TSX) | même décompte sur `packages/ui/src/components/**/*.tsx` hors tests |
-| Poids des points d'entrée | `pnpm build && node docs/design/audit/measure-size.mjs` (esbuild minify + gzip -9) |
+| Poids des points d'entrée | mesure manuelle via esbuild minify + gzip -9 (script de mesure retiré du dépôt) |
 | Captures de référence | `AUDIT_BASELINE=1 pnpm exec playwright test audit-baseline --project=desktop --update-snapshots` (dans `apps/web`) → `e2e/audit-baseline.spec.ts-snapshots/` |
 | Accès JS au thème | regex `data-theme|useTheme|ThemeProvider|ThemeRoot|localStorage|matchMedia|isDark|toggleTheme` sur `packages/ui/src` + `apps/web/src` |
 
@@ -183,7 +183,7 @@ Les fichiers de thèmes et de tokens portent des couleurs en dur par constructio
 
 ## 3. Poids des points d'entrée (min + gzip)
 
-Commande : `pnpm build && node docs/design/audit/measure-size.mjs` (75 entrées `packages/ui/dist/*.js`, esbuild minify es2020 + gzip niveau 9).
+Commande (script de mesure retiré du dépôt) : 75 entrées `packages/ui/dist/*.js`, esbuild minify es2020 + gzip niveau 9.
 
 | Entrée | min (B) | gzip (B) |
 |---|---|---|

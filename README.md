@@ -101,8 +101,6 @@ monority/
 - [Component docs](https://monority.dev) (local: `pnpm dev`)
 - [Conventions](./docs/conventions.md) — engineering standards
 - [Project structure](./docs/project-structure.md) — detailed map
-- [Release checklist](./docs/release-checklist.md) — pre-release process
-- [Migrations](./MIGRATIONS.md) — what has been migrated, abandoned or is pending
 - [Architecture](./docs/architecture.md) — layers, package exports, component contract, tokens
 
 ## Project status
@@ -115,7 +113,7 @@ monority/
 | Public CSS hooks | 24 documented BEM aliases deliberately kept for compatibility, all verified to still apply the same styles |
 | Tests | 1369 unit/integration (ui 1256, web 108, styles 5) + 14 Playwright E2E specs |
 | E2E | not run by CI; the visual snapshots of 4 specs are stale and need regenerating |
-| Pending | `space-*` → `spacing-*` token migration, DropZone, 9 data-* attributes planned but never emitted — see [MIGRATIONS](./MIGRATIONS.md) |
+| Pending | `space-*` → `spacing-*` token migration, DropZone, 9 data-* attributes planned but never emitted |
 
 ## Requirements
 
