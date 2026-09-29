@@ -2,10 +2,10 @@
     .mr-menubar {
         display: inline-flex;
         align-items: center;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         max-width: 100%;
         min-width: 0;
-        padding: var(--mr-space-1);
+        padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -64,7 +64,7 @@
 
     .mr-menubar__menu {
         position: absolute;
-        inset-block-start: calc(100% + var(--mr-space-1));
+        inset-block-start: calc(100% + var(--mr-spacing-1));
         inset-inline-start: 0;
         z-index: var(--mr-z-dropdown);
         min-inline-size: var(--mr-overlay-width-menu);
@@ -72,7 +72,7 @@
             var(--mr-overlay-width-popover),
             calc(100vw - 2 * var(--mr-overlay-gutter))
         );
-        padding: var(--mr-space-1);
+        padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -147,7 +147,7 @@
     }
 
     .mr-menubar__shortcut {
-        margin-inline-start: var(--mr-space-4);
+        margin-inline-start: var(--mr-spacing-4);
         color: var(--mr-text-secondary);
         font-family: var(--mr-font-mono, ui-monospace, monospace);
         font-size: var(--mr-fs-12);
@@ -158,7 +158,7 @@
 
     .mr-menubar__separator {
         height: 1px;
-        margin: var(--mr-space-1);
+        margin: var(--mr-spacing-1);
         background: var(--mr-border-subtle);
     }
 

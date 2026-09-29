@@ -39,9 +39,9 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         min-inline-size: 0;
-        padding-block-end: var(--mr-space-3);
+        padding-block-end: var(--mr-spacing-2);
         border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     }
 
@@ -60,13 +60,13 @@
 
     .mr-card__content {
         display: grid;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         min-inline-size: 0;
     }
 
     .mr-card__footer {
         margin-block-start: auto;
-        padding-block-start: var(--mr-space-3);
+        padding-block-start: var(--mr-spacing-2);
         border-block-start: var(--mr-border-width) solid var(--mr-border-subtle);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);

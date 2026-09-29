@@ -1,11 +1,11 @@
 .sc-layout {
     display: flex;
     flex-direction: column;
-    gap: var(--mr-space-6);
+    gap: var(--mr-spacing-6);
 }
 
 .sc-intro p {
-    margin: var(--mr-space-2) 0 0;
+    margin: var(--mr-spacing-1-5) 0 0;
     max-inline-size: var(--mr-content-max-width);
     color: var(--mr-fg-muted);
     line-height: var(--mr-leading-relaxed);
@@ -13,7 +13,7 @@
 
 .sc-section {
     display: grid;
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
 }
 
 .sc-section__heading {
@@ -31,13 +31,13 @@
 }
 
 .sc-title {
-    margin: var(--mr-space-1) 0 0;
+    margin: var(--mr-spacing-1) 0 0;
     font-size: var(--mr-text-xl);
     line-height: var(--mr-leading-heading);
 }
 
 .sc-description {
-    margin: var(--mr-space-2) 0 0;
+    margin: var(--mr-spacing-1-5) 0 0;
     color: var(--mr-fg-muted);
     line-height: var(--mr-leading-relaxed);
 }
@@ -45,8 +45,8 @@
 .sc-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--mr-space-3);
-    margin-block-start: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
+    margin-block-start: var(--mr-spacing-2);
     font-size: var(--mr-text-sm);
 }
 
@@ -67,28 +67,28 @@
 
 .sc-form {
     display: grid;
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
 }
 
 .sc-form__actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--mr-space-2);
-    margin-block-start: var(--mr-space-1);
+    gap: var(--mr-spacing-1-5);
+    margin-block-start: var(--mr-spacing-1);
 }
 
 .sc-pricing {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
 }
 
 .sc-pricing__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-space-2);
+    gap: var(--mr-spacing-1-5);
 }
 
 .sc-pricing__price {
@@ -100,7 +100,7 @@
 }
 
 .sc-pricing__detail {
-    margin: var(--mr-space-1) 0 var(--mr-space-4);
+    margin: var(--mr-spacing-1) 0 var(--mr-spacing-4);
     color: var(--mr-fg-muted);
     line-height: var(--mr-leading-normal);
 }
@@ -108,18 +108,18 @@
 .sc-activity,
 .sc-feedback {
     display: grid;
-    gap: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
 }
 
 .sc-activity__row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
 }
 
 .sc-muted {
-    margin: var(--mr-space-1) 0 0;
+    margin: var(--mr-spacing-1) 0 0;
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-sm);
     line-height: var(--mr-leading-normal);

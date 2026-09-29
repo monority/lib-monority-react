@@ -15,7 +15,7 @@ export function CardBasicExample() {
 
 export function CardPaddingExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-5)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-5)', flexWrap: 'wrap' }}>
             <Card padding="sm" style={{ flex: '1 1 10rem' }}>
                 Compact
             </Card>
@@ -31,7 +31,7 @@ export function CardPaddingExample() {
 
 export function CardInteractiveExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-5)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-5)', flexWrap: 'wrap' }}>
             <Card padding="md" interactive style={{ flex: '1 1 12rem' }}>
                 Deployment summary
             </Card>

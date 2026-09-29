@@ -1,11 +1,11 @@
 .pg-layout {
     display: flex;
     flex-direction: column;
-    gap: var(--mr-space-5);
+    gap: var(--mr-spacing-5);
 }
 
 .pg-header p {
-    margin: var(--mr-space-2) 0 0;
+    margin: var(--mr-spacing-1-5) 0 0;
     color: var(--mr-fg-muted);
     line-height: var(--mr-leading-relaxed);
 }
@@ -13,13 +13,13 @@
 .pg-selector {
     display: flex;
     flex-direction: column;
-    gap: var(--mr-space-1);
+    gap: var(--mr-spacing-1);
 }
 
 .pg-grid {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
     align-items: start;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .pg-preview__kicker {
-    margin: 0 0 var(--mr-space-3);
+    margin: 0 0 var(--mr-spacing-2);
     color: var(--mr-fg-muted);
     font-size: var(--mr-text-xs);
     font-weight: var(--mr-font-weight-semibold);
@@ -51,7 +51,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     min-block-size: 10rem;
-    padding: var(--mr-space-5);
+    padding: var(--mr-spacing-5);
     border-radius: var(--mr-radius-sm);
     background: var(--mr-bg-canvas);
 }
@@ -61,8 +61,8 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: var(--mr-space-3);
-    margin-block-end: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
+    margin-block-end: var(--mr-spacing-2);
 }
 
 .pg-code__header > p,
@@ -87,18 +87,18 @@
 
 .pg-controls__grid {
     display: grid;
-    gap: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
 }
 
 .pg-control {
     display: grid;
-    gap: var(--mr-space-1);
+    gap: var(--mr-spacing-1);
 }
 
 .pg-control--boolean {
     grid-template-columns: auto 1fr;
     align-items: center;
-    gap: var(--mr-space-2);
+    gap: var(--mr-spacing-1-5);
 }
 
 .pg-control__label {
@@ -111,7 +111,7 @@
 .pg-control__input,
 .pg-selector__select {
     min-block-size: var(--mr-control-size-md);
-    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+    padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-sm);
     background: var(--mr-bg-control);
@@ -121,7 +121,7 @@
 
 .pg-code__copy {
     min-block-size: var(--mr-control-size-sm);
-    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+    padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-sm);
     background: transparent;
@@ -147,7 +147,7 @@
 .pg-footer {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
     font-size: var(--mr-text-sm);
 }
 
@@ -157,7 +157,7 @@
     }
 
     .pg-preview__canvas {
-        padding: var(--mr-space-4);
+        padding: var(--mr-spacing-4);
     }
 }
 

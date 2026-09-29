@@ -133,7 +133,7 @@
     /* === Size: small === */
     .mr-checkbox[data-size='sm'] {
         --mr-checkbox-size: 0.875rem;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         font-size: var(--mr-fs-12);
     }
 
@@ -145,7 +145,7 @@
     /* === Size: large === */
     .mr-checkbox[data-size='lg'] {
         --mr-checkbox-size: 1.5rem;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         font-size: var(--mr-fs-16);
     }
 }

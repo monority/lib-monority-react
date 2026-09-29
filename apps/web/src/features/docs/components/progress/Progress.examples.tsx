@@ -7,7 +7,7 @@ export function ProgressBasicExample() {
 
 export function ProgressValuesExample() {
     return (
-        <div style={{ display: 'grid', gap: 'var(--mr-space-5)' }}>
+        <div style={{ display: 'grid', gap: 'var(--mr-spacing-5)' }}>
             <Progress value={0} label="Planning" />
             <Progress value={28} label="Shell alignment" />
             <Progress value={74} label="Docs rewrite" />
@@ -18,7 +18,7 @@ export function ProgressValuesExample() {
 
 export function ProgressTonesExample() {
     return (
-        <div style={{ display: 'grid', gap: 'var(--mr-space-5)' }}>
+        <div style={{ display: 'grid', gap: 'var(--mr-spacing-5)' }}>
             <Progress value={46} tone="neutral" label="Queued" />
             <Progress value={82} tone="success" label="Synced" />
             <Progress value={58} tone="warning" label="Needs review" />

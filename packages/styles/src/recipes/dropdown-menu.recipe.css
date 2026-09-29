@@ -31,7 +31,7 @@
         position: fixed;
         z-index: var(--mr-z-overlay);
         display: grid;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         min-inline-size: var(--mr-overlay-width-menu);
         inline-size: max-content;
         max-inline-size: min(
@@ -81,7 +81,7 @@
         align-items: center;
         width: 100%;
         min-block-size: var(--mr-control-size-sm);
-        padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+        padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
         border: 0;
         border-radius: var(--mr-radius-scale);
         background: transparent;
@@ -124,7 +124,7 @@
 
     .mr-dropdown__separator {
         height: 1px;
-        margin: var(--mr-space-1) 0;
+        margin: var(--mr-spacing-1) 0;
         background: var(--mr-border-subtle);
     }
 }

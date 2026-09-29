@@ -20,7 +20,7 @@
     }
 
     .mr-textarea::-webkit-scrollbar {
-        width: var(--mr-space-3);
+        width: var(--mr-spacing-2);
     }
 
     .mr-textarea::-webkit-scrollbar-track {
@@ -29,7 +29,7 @@
 
     .mr-textarea::-webkit-scrollbar-thumb {
         background: color-mix(in srgb, var(--mr-text-secondary) 34%, transparent);
-        border: var(--mr-space-1) solid transparent;
+        border: var(--mr-spacing-1) solid transparent;
         border-radius: var(--mr-radius-full);
         background-clip: padding-box;
     }
@@ -80,18 +80,18 @@
 
     .mr-textarea[data-size='sm'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height-sm);
-        padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+        padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-fs-12);
     }
 
     .mr-textarea[data-size='md'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height);
-        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        padding: var(--mr-spacing-1-5) var(--mr-control-padding-inline-md);
     }
 
     .mr-textarea[data-size='lg'] {
         --mr-textarea-min-height: var(--mr-textarea-min-height-lg);
-        padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
+        padding: var(--mr-spacing-2) var(--mr-control-padding-inline-lg);
         font-size: var(--mr-fs-16);
     }
 
@@ -100,7 +100,7 @@
         display: inline-flex;
         align-items: center;
         min-block-size: var(--mr-spacing-5);
-        padding-inline: var(--mr-space-1);
+        padding-inline: var(--mr-spacing-1);
         border-radius: var(--mr-radius-scale);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-12);

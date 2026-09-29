@@ -7,7 +7,7 @@ export function ToggleBasicPreview() {
 
 export function ToggleVariantsExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Toggle>Active only</Toggle>
             <Toggle variant="outline">Include drafts</Toggle>
         </div>
@@ -19,7 +19,7 @@ export function ToggleSizesExample() {
         <div
             style={{
                 display: 'flex',
-                gap: 'var(--mr-space-2)',
+                gap: 'var(--mr-spacing-1-5)',
                 alignItems: 'center',
                 flexWrap: 'wrap',
             }}
@@ -34,7 +34,7 @@ export function ToggleSizesExample() {
 export function ToggleControlledExample() {
     const [pressed, setPressed] = useState(false)
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', alignItems: 'center' }}>
             <Toggle pressed={pressed} onPressedChange={setPressed}>
                 Auto refresh
             </Toggle>
@@ -47,7 +47,7 @@ export function ToggleControlledExample() {
 
 export function ToggleDisabledExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Toggle disabled>Locked filter</Toggle>
             <Toggle disabled defaultPressed>
                 Required filter

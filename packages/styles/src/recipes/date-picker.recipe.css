@@ -13,7 +13,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-md) +
             var(--mr-icon-size-lg) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
         cursor: pointer;
     }
@@ -48,7 +48,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-sm) +
             var(--mr-icon-size-md) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
     }
 
@@ -57,7 +57,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-lg) +
             var(--mr-icon-size-lg) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
     }
 
@@ -114,7 +114,7 @@
     /* ─── Popover ─────────────────────────────────────────────── */
     .mr-datepicker__popover {
         z-index: var(--mr-z-overlay);
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -176,7 +176,7 @@
     .mr-datepicker__day-names {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        margin-bottom: var(--mr-space-1);
+        margin-bottom: var(--mr-spacing-1);
     }
 
     .mr-datepicker__day-name {
@@ -184,14 +184,14 @@
         font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-text-secondary);
-        padding: var(--mr-space-1) 0;
+        padding: var(--mr-spacing-1) 0;
     }
 
     /* ─── Day grid ────────────────────────────────────────────── */
     .mr-datepicker__grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
     }
 
     /* ─── Day cell ────────────────────────────────────────────── */

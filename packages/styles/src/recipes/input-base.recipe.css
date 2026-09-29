@@ -2,7 +2,7 @@
     .mr-input-base {
         inline-size: var(--mr-input-width);
         min-block-size: var(--mr-control-size-md);
-        padding-block: var(--mr-input-padding-block, var(--mr-control-padding-block-md));
+        padding-block: var(--mr-input-padding-block, var(--mr-spacing-1-5));
         padding-inline: var(--mr-input-padding-inline, var(--mr-control-padding-inline-md));
         padding-inline-end: var(
             --mr-input-padding-inline-end,
@@ -68,7 +68,7 @@
 
     .mr-input-base[data-size='sm'] {
         min-block-size: var(--mr-control-size-sm);
-        padding-block: var(--mr-control-padding-block-sm);
+        padding-block: var(--mr-spacing-1);
         padding-inline-start: var(--mr-control-padding-inline-sm);
         padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-sm));
         font-size: var(--mr-fs-12);
@@ -76,14 +76,14 @@
 
     .mr-input-base[data-size='md'] {
         min-block-size: var(--mr-control-size-md);
-        padding-block: var(--mr-control-padding-block-md);
+        padding-block: var(--mr-spacing-1-5);
         padding-inline-start: var(--mr-control-padding-inline-md);
         padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-md));
     }
 
     .mr-input-base[data-size='lg'] {
         min-block-size: var(--mr-control-size-lg);
-        padding-block: var(--mr-control-padding-block-lg);
+        padding-block: var(--mr-spacing-2);
         padding-inline-start: var(--mr-control-padding-inline-lg);
         padding-inline-end: var(--mr-input-padding-inline-end, var(--mr-control-padding-inline-lg));
         font-size: var(--mr-fs-16);

@@ -10,7 +10,7 @@
     --moodboard-rail: 17rem;
     /* Global app header height (AppHeader, sticky). Mirrors
        .app-header__inner min-block-size so the rail sticks below it. */
-    --moodboard-header-h: calc(var(--mr-control-size-lg) + var(--mr-space-2));
+    --moodboard-header-h: calc(var(--mr-control-size-lg) + var(--mr-spacing-1-5));
 
     display: grid;
     grid-template-columns: minmax(0, var(--moodboard-rail)) minmax(0, 1fr);

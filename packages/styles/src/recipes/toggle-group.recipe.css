@@ -4,9 +4,9 @@
 
         display: inline-flex;
         align-items: center;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         max-inline-size: 100%;
-        padding: var(--mr-space-1);
+        padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-toggle-group-radius);
         background: color-mix(in srgb, var(--mr-border-subtle) 48%, transparent);
@@ -43,7 +43,7 @@
         position: relative;
         flex: 0 0 auto;
         border-color: transparent;
-        border-radius: calc(var(--mr-toggle-group-radius) - var(--mr-space-1));
+        border-radius: calc(var(--mr-toggle-group-radius) - var(--mr-spacing-1));
         box-shadow: none;
     }
 

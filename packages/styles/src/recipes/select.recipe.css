@@ -51,7 +51,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-md) +
             var(--mr-select-chevron-size) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
         padding-inline-start: var(--mr-control-padding-inline-md);
         overflow: hidden;
@@ -86,7 +86,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-sm) +
             var(--mr-select-chevron-size) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
         padding-inline-start: var(--mr-control-padding-inline-sm);
         font-size: var(--mr-fs-12);
@@ -94,7 +94,7 @@
 
     .mr-select.mr-select[data-size='md'] {
         min-block-size: var(--mr-control-size-md);
-        padding-block: var(--mr-control-padding-block-md);
+        padding-block: var(--mr-spacing-1-5);
     }
 
     .mr-select.mr-select[data-size='lg'] {
@@ -102,7 +102,7 @@
         --mr-input-padding-inline-end: calc(
             var(--mr-control-padding-inline-lg) +
             var(--mr-select-chevron-size) +
-            var(--mr-space-1)
+            var(--mr-spacing-1)
         );
         padding-inline-start: var(--mr-control-padding-inline-lg);
         font-size: var(--mr-fs-16);

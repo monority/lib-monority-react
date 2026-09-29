@@ -11,7 +11,7 @@
     @keyframes mr-modal-panel-in {
         from {
             opacity: 0;
-            transform: translateY(var(--mr-space-3)) scale(0.985);
+            transform: translateY(var(--mr-spacing-2)) scale(0.985);
         }
         to {
             opacity: 1;
@@ -48,7 +48,7 @@
         position: relative;
         z-index: calc(var(--mr-z-modal) + 1);
         display: grid;
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
         padding: var(--mr-surface-padding-lg);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
@@ -61,7 +61,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
     }
 
     .mr-alert-dialog__heading {

@@ -19,7 +19,7 @@
         .mr-toolbar {
             flex-direction: column;
             align-items: stretch;
-            --mr-toolbar-padding: var(--mr-space-3);
+            --mr-toolbar-padding: var(--mr-spacing-2);
         }
     }
 }

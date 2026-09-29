@@ -1,9 +1,9 @@
 @layer monority.recipes {
     .mr-collapsible {
-        --mr-collapsible-trigger-padding-block: var(--mr-space-3);
-        --mr-collapsible-trigger-padding-inline: var(--mr-space-4);
-        --mr-collapsible-content-padding-block: var(--mr-space-3) var(--mr-space-4);
-        --mr-collapsible-content-padding-inline: var(--mr-space-4);
+        --mr-collapsible-trigger-padding-block: var(--mr-spacing-2);
+        --mr-collapsible-trigger-padding-inline: var(--mr-spacing-4);
+        --mr-collapsible-content-padding-block: var(--mr-spacing-2) var(--mr-spacing-4);
+        --mr-collapsible-content-padding-inline: var(--mr-spacing-4);
 
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
@@ -22,7 +22,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         width: 100%;
         min-block-size: var(--mr-control-size-lg);
         padding: var(--mr-collapsible-trigger-padding-block)
@@ -129,9 +129,9 @@
     /* Sizes */
     .mr-collapsible[data-size='sm'] {
         --mr-collapsible-trigger-padding-block: var(--mr-spacing-1-5);
-        --mr-collapsible-trigger-padding-inline: var(--mr-space-3);
-        --mr-collapsible-content-padding-block: var(--mr-spacing-1-5) var(--mr-space-3);
-        --mr-collapsible-content-padding-inline: var(--mr-space-3);
+        --mr-collapsible-trigger-padding-inline: var(--mr-spacing-2);
+        --mr-collapsible-content-padding-block: var(--mr-spacing-1-5) var(--mr-spacing-2);
+        --mr-collapsible-content-padding-inline: var(--mr-spacing-2);
     }
 
     .mr-collapsible[data-size='sm'] .mr-collapsible__trigger {
@@ -149,9 +149,9 @@
     }
 
     .mr-collapsible[data-size='lg'] {
-        --mr-collapsible-trigger-padding-block: var(--mr-space-4);
+        --mr-collapsible-trigger-padding-block: var(--mr-spacing-4);
         --mr-collapsible-trigger-padding-inline: var(--mr-spacing-5);
-        --mr-collapsible-content-padding-block: var(--mr-space-4) var(--mr-spacing-5);
+        --mr-collapsible-content-padding-block: var(--mr-spacing-4) var(--mr-spacing-5);
         --mr-collapsible-content-padding-inline: var(--mr-spacing-5);
     }
 

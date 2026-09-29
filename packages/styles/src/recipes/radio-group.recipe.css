@@ -13,15 +13,15 @@
     }
 
     .mr-radio-group[data-size='sm'] {
-        --mr-radio-group-gap: var(--mr-space-1);
-        --mr-radio-gap: var(--mr-space-1);
+        --mr-radio-group-gap: var(--mr-spacing-1);
+        --mr-radio-gap: var(--mr-spacing-1);
         --mr-radio-size: var(--mr-icon-size-sm);
         --mr-radio-label-size: var(--mr-fs-12);
     }
 
     .mr-radio-group[data-size='lg'] {
-        --mr-radio-group-gap: var(--mr-space-3);
-        --mr-radio-gap: var(--mr-space-3);
+        --mr-radio-group-gap: var(--mr-spacing-2);
+        --mr-radio-gap: var(--mr-spacing-2);
         --mr-radio-size: var(--mr-icon-size-lg);
         --mr-radio-label-size: var(--mr-fs-16);
         --mr-radio-description-size: var(--mr-fs-14);

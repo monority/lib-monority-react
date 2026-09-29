@@ -14,7 +14,7 @@
     top: -100vh;
     left: 1rem;
     z-index: var(--mr-z-tooltip);
-    padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-md);
+    padding: var(--mr-spacing-1) var(--mr-control-padding-inline-md);
     border-radius: var(--mr-radius-md);
     background: var(--mr-bg-surface-elevated);
     color: var(--mr-fg-strong);
@@ -54,6 +54,6 @@
 }
 
 .app-header__controls {
-    gap: var(--mr-space-2);
+    gap: var(--mr-spacing-1-5);
     margin-left: auto;
 }

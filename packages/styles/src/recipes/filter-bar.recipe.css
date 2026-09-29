@@ -3,10 +3,10 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
         width: 100%;
         min-width: 0;
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -20,13 +20,13 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         min-width: 0;
     }
 
     .mr-filter-bar__main {
         flex: 1 1 auto;
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
     }
 
     .mr-filter-bar__leading {

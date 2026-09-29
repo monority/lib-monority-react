@@ -22,8 +22,13 @@ function tokenFile(path: string) {
 
 describe('step23 design token contracts', () => {
     it('defines the shared space scale consumed by recipes', () => {
-        const deprecated = tokenFile('tokens/generated/deprecated.css')
-        expect(deprecated).toContain('--mr-space-2: 0.375rem')
+        // L'echelle space-* (progression 1.4x) a cede la place a la grille 4px
+        // spacing-*. Les recettes consomment desormais spacing-* et l'echelle
+        // space-* ne doit plus etre declaree.
+        const generated = tokenFile('tokens/generated/tokens.css')
+        expect(generated).toContain('--mr-spacing-1-5: 6px')
+        expect(generated).toContain('--mr-spacing-2: 8px')
+        expect(generated).not.toMatch(/--mr-space-\d/)
     })
 
     it('defines the shared duration scale consumed by recipes', () => {

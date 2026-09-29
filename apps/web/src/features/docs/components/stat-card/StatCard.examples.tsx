@@ -18,7 +18,7 @@ export function StatCardTonesExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: 'var(--mr-space-5)',
+                gap: 'var(--mr-spacing-5)',
             }}
         >
             <StatCard
@@ -78,7 +78,7 @@ export function StatCardLongTextExample() {
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: 'var(--mr-space-5)',
+                gap: 'var(--mr-spacing-5)',
             }}
         >
             <StatCard

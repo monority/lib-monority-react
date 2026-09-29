@@ -40,7 +40,7 @@
 
     .mr-divider__label {
         position: relative;
-        padding-inline: var(--mr-space-3);
+        padding-inline: var(--mr-spacing-2);
         background: var(--mr-divider-label-bg);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-12);

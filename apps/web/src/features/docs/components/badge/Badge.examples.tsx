@@ -22,7 +22,7 @@ export function BadgeWarningExample() {
 
 export function BadgeVariantsExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Badge>Draft</Badge>
             <Badge variant="primary">Active</Badge>
             <Badge variant="success">Synced</Badge>

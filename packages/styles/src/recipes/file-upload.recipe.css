@@ -43,7 +43,7 @@
         align-items: center;
         justify-content: center;
         min-block-size: var(--mr-control-size-md);
-        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        padding: var(--mr-spacing-1-5) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-sunken);
@@ -60,14 +60,14 @@
     .mr-file-upload__dropzone[data-size='sm'] .mr-file-upload__action,
     .mr-file-upload__dropzone[data-size='sm'] .mr-file-upload__default-action {
         min-block-size: var(--mr-control-size-sm);
-        padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+        padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-fs-12);
     }
 
     .mr-file-upload__dropzone[data-size='lg'] .mr-file-upload__action,
     .mr-file-upload__dropzone[data-size='lg'] .mr-file-upload__default-action {
         min-block-size: var(--mr-control-size-lg);
-        padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
+        padding: var(--mr-spacing-2) var(--mr-control-padding-inline-lg);
         font-size: var(--mr-fs-16);
     }
 

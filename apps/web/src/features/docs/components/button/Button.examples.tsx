@@ -6,7 +6,7 @@ export function ButtonBasicPreview() {
 
 export function ButtonVariantsExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Button>Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="muted">Muted</Button>
@@ -23,7 +23,7 @@ export function ButtonSizesExample() {
         <div
             style={{
                 display: 'flex',
-                gap: 'var(--mr-space-2)',
+                gap: 'var(--mr-spacing-1-5)',
                 alignItems: 'center',
                 flexWrap: 'wrap',
             }}
@@ -37,7 +37,7 @@ export function ButtonSizesExample() {
 
 export function ButtonLoadingExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Button loading>Loading</Button>
             <Button loading variant="danger">
                 Deleting
@@ -48,7 +48,7 @@ export function ButtonLoadingExample() {
 
 export function ButtonIconsExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Button iconLeading={<span>{'\u2713'}</span>}>Done</Button>
             <Button iconTrailing={<span>{'\u2192'}</span>}>Next</Button>
         </div>
@@ -60,7 +60,7 @@ export function ButtonCopyExample() {
         <div
             style={{
                 display: 'flex',
-                gap: 'var(--mr-space-2)',
+                gap: 'var(--mr-spacing-1-5)',
                 flexWrap: 'wrap',
                 alignItems: 'center',
             }}
@@ -75,7 +75,7 @@ export function ButtonCopyExample() {
 
 export function ButtonIconOnlyExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-1-5)', flexWrap: 'wrap' }}>
             <Button iconOnly aria-label="Close">
                 <span>{'\u2715'}</span>
             </Button>

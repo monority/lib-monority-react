@@ -56,7 +56,7 @@ export function SelectSizesExample() {
         <div
             style={{
                 display: 'flex',
-                gap: 'var(--mr-space-3)',
+                gap: 'var(--mr-spacing-2)',
                 alignItems: 'start',
                 flexWrap: 'wrap',
             }}

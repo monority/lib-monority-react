@@ -9,7 +9,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         min-height: var(--mr-badge-height);
         padding-inline: var(--mr-badge-padding-x);
         border: var(--mr-border-width) solid var(--mr-border-subtle);

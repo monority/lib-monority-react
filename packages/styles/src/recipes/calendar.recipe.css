@@ -2,14 +2,14 @@
     /* ─── Calendar root ─────────────────────────────────────────── */
     .mr-calendar {
         display: inline-block;
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         user-select: none;
     }
 
     /* ─── Multiple months container ─────────────────────────────── */
     .mr-calendar__months {
         display: flex;
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
     }
 
     .mr-calendar__months--multiple {
@@ -26,7 +26,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-bottom: var(--mr-space-3);
+        padding-bottom: var(--mr-spacing-2);
     }
 
     .mr-calendar__month-label {
@@ -64,7 +64,7 @@
     .mr-calendar__day-names {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        margin-bottom: var(--mr-space-1);
+        margin-bottom: var(--mr-spacing-1);
     }
 
     .mr-calendar__day-name {
@@ -72,20 +72,20 @@
         font-size: var(--mr-fs-12);
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-text-secondary);
-        padding: var(--mr-space-1) 0;
+        padding: var(--mr-spacing-1) 0;
     }
 
     /* ─── Day grid ──────────────────────────────────────────────── */
     .mr-calendar__grid {
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
     }
 
     .mr-calendar__week {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
     }
 
     /* ─── Day cell ──────────────────────────────────────────────── */

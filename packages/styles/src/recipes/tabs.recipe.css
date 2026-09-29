@@ -2,8 +2,8 @@
     .mr-tabs {
         display: inline-flex;
         align-items: center;
-        gap: var(--mr-space-1);
-        padding: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
+        padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -23,7 +23,7 @@
         align-items: center;
         justify-content: center;
         min-height: var(--mr-control-size-md);
-        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        padding: var(--mr-spacing-1-5) var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid transparent;
         border-radius: var(--mr-radius-scale);
         background: transparent;
@@ -102,19 +102,19 @@
 
     .mr-tabs[data-size='sm'] .mr-tabs__tab {
         min-height: var(--mr-control-size-sm);
-        padding: var(--mr-control-padding-block-sm) var(--mr-control-padding-inline-sm);
+        padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
         font-size: var(--mr-fs-12);
     }
 
     .mr-tabs[data-size='md'] .mr-tabs__tab {
         min-height: var(--mr-control-size-md);
-        padding: var(--mr-control-padding-block-md) var(--mr-control-padding-inline-md);
+        padding: var(--mr-spacing-1-5) var(--mr-control-padding-inline-md);
         font-size: var(--mr-fs-14);
     }
 
     .mr-tabs[data-size='lg'] .mr-tabs__tab {
         min-height: var(--mr-control-size-lg);
-        padding: var(--mr-control-padding-block-lg) var(--mr-control-padding-inline-lg);
+        padding: var(--mr-spacing-2) var(--mr-control-padding-inline-lg);
         font-size: var(--mr-fs-16);
     }
 }

@@ -8,7 +8,7 @@
 
     .mr-file-list__item {
         --mr-file-list-item-padding-block: var(--mr-spacing-1-5);
-        --mr-file-list-item-padding-inline: var(--mr-space-3);
+        --mr-file-list-item-padding-inline: var(--mr-spacing-2);
 
         display: flex;
         align-items: center;

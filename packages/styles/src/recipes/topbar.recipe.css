@@ -1,11 +1,11 @@
 @layer monority.recipes {
     .mr-topbar {
-        --mr-topbar-padding-inline: var(--mr-space-4);
+        --mr-topbar-padding-inline: var(--mr-spacing-4);
 
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         width: 100%;
         min-width: 0;
         min-block-size: var(--mr-control-size-lg);
@@ -23,7 +23,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         min-width: 0;
     }
 
@@ -38,14 +38,14 @@
 
     .mr-topbar__navigation {
         flex: 1 1 auto;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
     }
 
     .mr-topbar__navigation a {
         display: inline-flex;
         align-items: center;
         min-block-size: var(--mr-control-size-sm);
-        padding-inline: var(--mr-space-3);
+        padding-inline: var(--mr-spacing-2);
         border-radius: var(--mr-radius-scale);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);
@@ -80,7 +80,7 @@
             flex-direction: column;
             align-items: stretch;
             min-height: auto;
-            --mr-topbar-padding-inline: var(--mr-space-3);
+            --mr-topbar-padding-inline: var(--mr-spacing-2);
         }
 
         .mr-topbar__navigation,
@@ -92,7 +92,7 @@
         .mr-topbar__navigation {
             overflow-x: auto;
             flex-wrap: nowrap;
-            padding-bottom: var(--mr-space-1);
+            padding-bottom: var(--mr-spacing-1);
         }
 
         .mr-topbar__actions {

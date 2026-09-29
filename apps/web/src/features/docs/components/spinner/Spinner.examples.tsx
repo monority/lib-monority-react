@@ -6,7 +6,7 @@ export function SpinnerBasicExample() {
 
 export function SpinnerSizesExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-5)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-5)', alignItems: 'center' }}>
             <Spinner size="sm" />
             <Spinner size="md" />
             <Spinner size="lg" />
@@ -16,13 +16,13 @@ export function SpinnerSizesExample() {
 
 export function SpinnerTonesExample() {
     return (
-        <div style={{ display: 'flex', gap: 'var(--mr-space-5)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--mr-spacing-5)', alignItems: 'center' }}>
             <Spinner tone="base" />
             <Spinner tone="muted" />
             <div
                 style={{
                     background: 'var(--mr-fg-base)',
-                    padding: 'var(--mr-space-3)',
+                    padding: 'var(--mr-spacing-2)',
                     borderRadius: 'var(--mr-radius-md)',
                 }}
             >
@@ -34,7 +34,7 @@ export function SpinnerTonesExample() {
 
 export function SpinnerWithTextExample() {
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-3)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-spacing-2)' }}>
             <Spinner size="sm" />
             <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
                 Publishing updated component docs

@@ -3,13 +3,13 @@
         --mr-grid-min-column: 16rem;
 
         display: grid;
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
         min-width: 0;
     }
 
     .mr-grid[data-surface='true'],
     .mr-grid[data-surface='true'] {
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);

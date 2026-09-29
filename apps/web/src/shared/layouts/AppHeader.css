@@ -23,12 +23,12 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--mr-space-3) var(--mr-space-5);
-    min-block-size: calc(var(--mr-control-size-lg) + var(--mr-space-2));
+    gap: var(--mr-spacing-2) var(--mr-spacing-5);
+    min-block-size: calc(var(--mr-control-size-lg) + var(--mr-spacing-1-5));
     inline-size: 100%;
     max-inline-size: var(--mr-page-max-width);
     margin-inline: auto;
-    padding-inline: var(--mr-space-4);
+    padding-inline: var(--mr-spacing-4);
 }
 
 .app-header__brand {
@@ -49,7 +49,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--mr-space-1);
+    gap: var(--mr-spacing-1);
     min-inline-size: 0;
 }
 
@@ -85,7 +85,7 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: var(--mr-space-2);
+    gap: var(--mr-spacing-1-5);
     min-inline-size: 0;
 }
 
@@ -106,7 +106,7 @@
    control out of the bar. */
 @media (max-width: 640px) {
     .app-header__inner {
-        gap: var(--mr-space-2);
+        gap: var(--mr-spacing-1-5);
     }
 
     .app-header__nav {

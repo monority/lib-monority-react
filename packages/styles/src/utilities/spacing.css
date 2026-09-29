@@ -11,17 +11,17 @@
 }
 
 .mr-stack-s {
-    gap: var(--mr-space-3);
+    gap: var(--mr-spacing-2);
 }
 
 .mr-stack-m {
-    gap: var(--mr-space-4);
+    gap: var(--mr-spacing-4);
 }
 
 .mr-stack-l {
-    gap: var(--mr-space-6);
+    gap: var(--mr-spacing-6);
 }
 
 .mr-stack-xl {
-    gap: var(--mr-space-8);
+    gap: var(--mr-spacing-12);
 }

@@ -22,7 +22,7 @@ const viewItems = [
 export function ToggleGroupSinglePreview() {
     const [value, setValue] = useState<string>('')
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <ToggleGroup
                 items={alignItems}
                 type="single"
@@ -39,7 +39,7 @@ export function ToggleGroupSinglePreview() {
 export function ToggleGroupMultipleExample() {
     const [value, setValue] = useState<string[]>([])
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <ToggleGroup
                 items={formatItems}
                 type="multiple"
@@ -60,7 +60,7 @@ export function ToggleGroupDisabledExample() {
         { value: 'table', label: 'Table' },
     ]
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <ToggleGroup items={itemsWithDisabled} type="single" />
             <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
                 List view is unavailable for this dataset
@@ -75,14 +75,14 @@ export function ToggleGroupVerticalExample() {
 
 export function ToggleGroupVariantsExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-4)' }}>
             <div>
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
                         color: 'var(--mr-fg-muted)',
                         display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
+                        marginBottom: 'var(--mr-spacing-1-5)',
                     }}
                 >
                     Default
@@ -95,7 +95,7 @@ export function ToggleGroupVariantsExample() {
                         fontSize: 'var(--mr-text-sm)',
                         color: 'var(--mr-fg-muted)',
                         display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
+                        marginBottom: 'var(--mr-spacing-1-5)',
                     }}
                 >
                     Outline
@@ -108,14 +108,14 @@ export function ToggleGroupVariantsExample() {
 
 export function ToggleGroupSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-4)' }}>
             <div>
                 <span
                     style={{
                         fontSize: 'var(--mr-text-sm)',
                         color: 'var(--mr-fg-muted)',
                         display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
+                        marginBottom: 'var(--mr-spacing-1-5)',
                     }}
                 >
                     Small
@@ -128,7 +128,7 @@ export function ToggleGroupSizesExample() {
                         fontSize: 'var(--mr-text-sm)',
                         color: 'var(--mr-fg-muted)',
                         display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
+                        marginBottom: 'var(--mr-spacing-1-5)',
                     }}
                 >
                     Medium
@@ -141,7 +141,7 @@ export function ToggleGroupSizesExample() {
                         fontSize: 'var(--mr-text-sm)',
                         color: 'var(--mr-fg-muted)',
                         display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
+                        marginBottom: 'var(--mr-spacing-1-5)',
                     }}
                 >
                     Large

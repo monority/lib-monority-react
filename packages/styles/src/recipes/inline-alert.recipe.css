@@ -3,9 +3,9 @@
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: start;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         width: 100%;
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-surface);
@@ -24,7 +24,7 @@
 
     .mr-inline-alert__body {
         display: grid;
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
         min-width: 0;
     }
 

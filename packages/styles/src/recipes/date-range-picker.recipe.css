@@ -3,7 +3,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: flex-end;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         min-inline-size: 0;
     }
 
@@ -13,7 +13,7 @@
     }
     .mr-date-range-picker__separator {
         flex: 0 0 auto;
-        padding-bottom: var(--mr-space-1);
+        padding-bottom: var(--mr-spacing-1);
         font-size: var(--mr-fs-18);
         color: var(--mr-text-secondary);
         line-height: var(--mr-control-size-md);

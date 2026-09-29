@@ -15,7 +15,7 @@
     }
 
     .mr-stack[data-gap='xs'] {
-        gap: var(--mr-space-1);
+        gap: var(--mr-spacing-1);
     }
 
     .mr-stack[data-gap='sm'] {
@@ -23,15 +23,15 @@
     }
 
     .mr-stack[data-gap='md'] {
-        gap: var(--mr-space-4);
+        gap: var(--mr-spacing-4);
     }
 
     .mr-stack[data-gap='lg'] {
-        gap: var(--mr-space-6);
+        gap: var(--mr-spacing-6);
     }
 
     .mr-stack[data-gap='xl'] {
-        gap: var(--mr-space-8);
+        gap: var(--mr-spacing-12);
     }
 
     .mr-stack[data-align='stretch'] {
@@ -68,7 +68,7 @@
 
     .mr-stack[data-surface='true'],
     .mr-stack[data-surface='true'] {
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);

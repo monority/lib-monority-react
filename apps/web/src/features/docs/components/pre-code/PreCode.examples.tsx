@@ -6,7 +6,7 @@ export function PreCodeBasicExample() {
 
 export function PreCodeSizesExample() {
     return (
-        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
+        <div style={{ display: 'grid', gap: 'var(--mr-spacing-4)' }}>
             <PreCode size="sm">pnpm add @monority/ui</PreCode>
             <PreCode size="md">pnpm add @monority/ui</PreCode>
         </div>

@@ -6,7 +6,7 @@
         justify-content: center;
         gap: var(--mr-spacing-5);
         min-height: 15rem;
-        padding: var(--mr-space-8);
+        padding: var(--mr-spacing-12);
         border: var(--mr-border-width) dashed
             color-mix(in srgb, var(--mr-border-subtle) 88%, transparent);
         border-radius: var(--mr-radius-scale);
@@ -40,13 +40,13 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
     }
 
     @media (max-width: 640px) {
         .mr-empty-state {
             min-height: 13rem;
-            padding: var(--mr-space-6);
+            padding: var(--mr-spacing-6);
         }
         .mr-empty-state__actions {
             width: 100%;

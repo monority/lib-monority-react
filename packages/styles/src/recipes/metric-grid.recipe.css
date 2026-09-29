@@ -1,7 +1,7 @@
 @layer monority.recipes {
     .mr-metric-grid {
         --mr-metric-grid-min: 14rem;
-        --mr-metric-grid-gap: var(--mr-space-4);
+        --mr-metric-grid-gap: var(--mr-spacing-4);
 
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(var(--mr-metric-grid-min), 100%), 1fr));
@@ -9,7 +9,7 @@
         gap: var(--mr-metric-grid-gap);
         width: 100%;
         min-width: 0;
-        padding: var(--mr-space-3);
+        padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-scale);
         background: var(--mr-bg-raised);
@@ -36,7 +36,7 @@
 
     @media (max-width: 640px) {
         .mr-metric-grid {
-            --mr-metric-grid-gap: var(--mr-space-3);
+            --mr-metric-grid-gap: var(--mr-spacing-2);
 
             padding: var(--mr-spacing-1-5);
         }

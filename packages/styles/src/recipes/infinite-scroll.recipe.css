@@ -17,7 +17,7 @@
         align-items: center;
         justify-content: center;
         gap: var(--mr-surface-gap-sm);
-        padding: var(--mr-space-4);
+        padding: var(--mr-spacing-4);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);
     }
@@ -37,7 +37,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: var(--mr-space-4);
+        padding: var(--mr-spacing-4);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);
     }
@@ -47,7 +47,7 @@
         flex-direction: column;
         align-items: center;
         gap: var(--mr-spacing-1-5);
-        padding: var(--mr-space-4);
+        padding: var(--mr-spacing-4);
         color: var(--mr-danger-text);
         font-size: var(--mr-fs-14);
     }
@@ -56,13 +56,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: var(--mr-space-4);
+        padding: var(--mr-spacing-4);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);
     }
 
     .mr-infinite-scroll__retry {
-        padding: var(--mr-spacing-1-5) var(--mr-space-3);
+        padding: var(--mr-spacing-1-5) var(--mr-spacing-2);
         min-height: var(--mr-control-size-sm);
         border: var(--mr-border-width) solid currentColor;
         border-radius: var(--mr-radius-scale);

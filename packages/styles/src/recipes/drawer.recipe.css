@@ -97,7 +97,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-spacing-2);
         padding: var(--mr-surface-padding-md);
         border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     }
