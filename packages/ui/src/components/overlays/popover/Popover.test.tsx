@@ -122,4 +122,19 @@ describe('Popover', () => {
         const wrapper = container?.querySelector('.mr-popover')
         expect(wrapper?.getAttribute('data-open')).toBe('true')
     })
+
+    it('closes on Escape', () => {
+        const onOpenChange = vi.fn()
+        render(
+            <Popover trigger="Open" open onOpenChange={onOpenChange}>
+                Content
+            </Popover>
+        )
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+        })
+
+        expect(onOpenChange).toHaveBeenCalledWith(false)
+    })
 })

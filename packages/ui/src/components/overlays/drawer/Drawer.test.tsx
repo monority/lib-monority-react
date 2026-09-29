@@ -153,4 +153,23 @@ describe('Drawer', () => {
         const backdrop = document.body.querySelector('.mr-drawer__backdrop')
         expect(backdrop?.className).toContain('custom')
     })
+
+    it('closes on Escape', () => {
+        // Drawer a une animation de sortie : Escape déclenche l'état `closing`,
+        // et `onClose` n'est appelé qu'à la fin de l'animation (donc via un
+        // timer). On.characterise ici l'étape déclenchée par la touche.
+        render(
+            <Drawer open title="Panel" onClose={vi.fn()}>
+                Content
+            </Drawer>
+        )
+        const backdrop = document.body.querySelector('.mr-drawer__backdrop')
+        expect(backdrop?.getAttribute('data-closing')).toBeNull()
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+        })
+
+        expect(backdrop?.getAttribute('data-closing')).toBe('')
+    })
 })

@@ -133,4 +133,15 @@ describe('CommandPalette', () => {
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-modal')
     })
+
+    it('closes on Escape', () => {
+        const onClose = vi.fn()
+        render(<CommandPalette label="Commands" open onClose={onClose} items={sampleItems} />)
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+        })
+
+        expect(onClose).toHaveBeenCalled()
+    })
 })

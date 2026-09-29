@@ -109,4 +109,15 @@ describe('AlertDialog', () => {
         const backdrop = document.body.querySelector('.mr-alert-dialog__backdrop')
         expect(backdrop?.className).toContain('custom-class')
     })
+
+    it('cancels on Escape', () => {
+        const onCancel = vi.fn()
+        render(<AlertDialog open title="Confirm" onCancel={onCancel} />)
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+        })
+
+        expect(onCancel).toHaveBeenCalled()
+    })
 })

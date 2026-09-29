@@ -168,4 +168,19 @@ describe('Modal', () => {
         )
         expect(document.body.style.overflow).toBe('')
     })
+
+    it('closes on Escape', () => {
+        const onClose = vi.fn()
+        render(
+            <Modal open title="Settings" onClose={onClose}>
+                Content
+            </Modal>
+        )
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+        })
+
+        expect(onClose).toHaveBeenCalled()
+    })
 })
