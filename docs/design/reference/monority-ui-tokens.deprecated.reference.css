@@ -1,14 +1,1 @@
 /* GENERE — ne pas modifier. Source : packages/tokens/src/*.json (DTCG). */
-
-:root, [data-theme], [data-brand], [data-density] {
-  --mr-textarea-min-height-lg: 7.5rem;
-  --mr-spinner-ring-sm: 0.75rem;
-  --mr-ease-linear: linear;
-  --mr-overlay-width-menu: 16rem;
-  --mr-overlay-width-drawer: 24rem;
-  --mr-opacity-disabled: 0.5;
-  --mr-shadow-raised: 0 10px 30px rgba(15, 23, 42, 0.05);
-  --mr-text-2xl: clamp(1.5rem, 1.34rem + 0.7vw, 2.1rem);
-  --mr-leading-snug: 1.2;
-  --mr-leading-control: var(--mr-leading-normal);
-}
