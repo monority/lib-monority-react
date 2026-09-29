@@ -1,4 +1,5 @@
-import { type ReactNode, useId } from 'react'
+import type { ReactNode } from 'react'
+import { useFieldIds } from '@/internal/use-field-ids'
 import { FormControlContext, type FormControlContextValue } from './FormControlContext'
 
 export interface FormControlProps {
@@ -24,11 +25,7 @@ export function FormControl({
     required = false,
     children,
 }: FormControlProps) {
-    const generatedId = useId()
-    const inputId = id || generatedId
-    const hintId = hint ? `${inputId}-hint` : undefined
-    const errorId = error ? `${inputId}-error` : undefined
-    const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+    const { inputId, hintId, errorId, describedBy } = useFieldIds({ id, hint, error })
     const isInvalid = invalid ?? Boolean(error)
     const isDisabled = disabled
     const isRequired = required

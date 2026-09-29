@@ -6,8 +6,8 @@ export function useFieldIds({
     error,
 }: {
     id?: string
-    hint?: React.ReactNode
-    error?: React.ReactNode
+    hint?: boolean | React.ReactNode
+    error?: boolean | React.ReactNode
 }) {
     const generatedId = useId()
     const inputId = id || generatedId

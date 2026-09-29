@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
+import { useControllableState } from '@/internal/use-controllable-state'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { HoverCardAlign, HoverCardProps, HoverCardSide } from './HoverCard.types'
 
@@ -117,23 +118,17 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(function Hov
     const contentRef = useRef<HTMLDivElement>(null)
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
-    const isControlled = controlledOpen !== undefined
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
+    const [isOpen, setOpenState] = useControllableState({
+        value: controlledOpen,
+        defaultValue: defaultOpen,
+        onChange: onOpenChange,
+    })
     const [position, setPosition] = useState<FloatingPosition>({
         top: VIEWPORT_PADDING,
         left: VIEWPORT_PADDING,
         side,
     })
-    const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-
-    const setOpenState = useCallback(
-        (nextOpen: boolean) => {
-            if (!isControlled) setInternalOpen(nextOpen)
-            onOpenChange?.(nextOpen)
-        },
-        [isControlled, onOpenChange]
-    )
 
     const recalcPosition = useCallback(() => {
         const triggerEl = triggerRef.current

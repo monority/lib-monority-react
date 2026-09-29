@@ -1,6 +1,7 @@
-import { forwardRef, useId, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Field } from '@/components/forms/field/Field'
+import { useFieldIds } from '@/internal/use-field-ids'
 import { InputBase } from '@/primitives/input-base'
 import type { PasswordInputProps } from './PasswordInput.types'
 
@@ -53,11 +54,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         ref
     ) {
         const [showPassword, setShowPassword] = useState(false)
-        const generatedId = useId()
-        const inputId = id || generatedId
-        const hintId = hint ? `${inputId}-hint` : undefined
-        const errorId = error ? `${inputId}-error` : undefined
-        const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+        const { inputId, hintId, errorId, describedBy } = useFieldIds({ id, hint, error })
         const resolvedSize = size ?? 'md'
         const isInvalid = Boolean(error)
 

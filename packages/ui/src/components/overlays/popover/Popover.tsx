@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'rea
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
+import { useControllableState } from '@/internal/use-controllable-state'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { PopoverProps } from './Popover.types'
 
@@ -24,20 +25,15 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerElementRef = useRef<Element | null>(null)
     const contentRef = useRef<HTMLDivElement>(null)
-    const isControlled = controlledOpen !== undefined
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
+    const [isOpen, setOpenState] = useControllableState({
+        value: controlledOpen,
+        defaultValue: defaultOpen,
+        onChange: onOpenChange,
+    })
     const [position, setPosition] = useState({ top: 0, left: 0 })
-    const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
     // Never paint at the (0,0) initial position: hidden until measured.
     const [positioned, setPositioned] = useState(false)
-    const setOpenState = useCallback(
-        (nextOpen: boolean) => {
-            if (!isControlled) setInternalOpen(nextOpen)
-            onOpenChange?.(nextOpen)
-        },
-        [isControlled, onOpenChange]
-    )
     const updatePosition = useCallback(() => {
         const el =
             triggerElementRef.current ??

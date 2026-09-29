@@ -1,5 +1,6 @@
-import { forwardRef, useId, useState } from 'react'
+import { forwardRef, useId } from 'react'
 import { cn } from '@/lib/cn'
+import { useControllableState } from '@/internal/use-controllable-state'
 import type { CollapsibleProps } from './Collapsible.types'
 
 export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function Collapsible(
@@ -15,16 +16,17 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
     },
     ref
 ) {
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
-    const isControlled = controlledOpen !== undefined
-    const isOpen = isControlled ? controlledOpen : internalOpen
+    const [isOpen, setOpen] = useControllableState({
+        value: controlledOpen,
+        defaultValue: defaultOpen,
+        onChange: onOpenChange,
+    })
     const instanceId = useId()
     const state = isOpen ? 'open' : 'closed'
     const resolvedSize = size ?? 'md'
 
     function toggle() {
-        if (!isControlled) setInternalOpen(!isOpen)
-        onOpenChange?.(!isOpen)
+        setOpen(!isOpen)
     }
 
     return (

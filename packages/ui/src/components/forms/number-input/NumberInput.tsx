@@ -1,6 +1,7 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Field } from '@/components/forms/field/Field'
+import { useFieldIds } from '@/internal/use-field-ids'
 import { InputBase } from '@/primitives/input-base'
 import type { NumberInputProps } from './NumberInput.types'
 
@@ -44,11 +45,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
     },
     ref
 ) {
-    const generatedId = useId()
-    const inputId = id || generatedId
-    const hintId = hint ? `${inputId}-hint` : undefined
-    const errorId = error ? `${inputId}-error` : undefined
-    const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+    const { inputId, hintId, errorId, describedBy } = useFieldIds({ id, hint, error })
     const resolvedSize = size ?? 'md'
     const isInvalid = Boolean(error)
     const isControlled = controlledValue !== undefined

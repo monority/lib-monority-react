@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
+import { useControllableState } from '@/internal/use-controllable-state'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ContextMenuProps, ContextMenuItem } from './ContextMenu.types'
 
@@ -24,19 +25,13 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function
     const instanceId = useId()
     const rootRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
-    const isControlled = controlledOpen !== undefined
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
+    const [isOpen, setOpenState] = useControllableState({
+        value: controlledOpen,
+        defaultValue: defaultOpen,
+        onChange: onOpenChange,
+    })
     const [position, setPosition] = useState({ top: 0, left: 0 })
-    const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-
-    const setOpenState = useCallback(
-        (nextOpen: boolean) => {
-            if (!isControlled) setInternalOpen(nextOpen)
-            onOpenChange?.(nextOpen)
-        },
-        [isControlled, onOpenChange]
-    )
 
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
 
