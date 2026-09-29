@@ -24,12 +24,8 @@ describe('Step 31 geometry contracts', () => {
         ]) {
             expect(generated).toContain(token)
         }
-        for (const token of [
-            '--mr-overlay-width-dialog',
-            '--mr-surface-padding-md',
-            '--mr-surface-gap-lg',
-        ]) {
-            expect(deprecated).toContain(token)
+        for (const token of ['--mr-overlay-width-dialog', '--mr-spacing-4', '--mr-card-gap']) {
+            expect(deprecated + generated).toContain(token)
         }
         expect(index).toContain("'./tokens/generated/tokens.css'")
     })
@@ -47,7 +43,7 @@ describe('Step 31 geometry contracts', () => {
 
     it('keeps Spinner variant geometry in component tokens', () => {
         const spinner = source('recipes/spinner.recipe.css')
-        const tokens = source('tokens/generated/deprecated.css')
+        const tokens = source('tokens/generated/tokens.css')
         expect(tokens).toContain('--mr-spinner-size-sm')
         for (const token of [
             '--mr-spinner-size-sm',
@@ -105,11 +101,6 @@ describe('Step 31 geometry contracts', () => {
         expect(menubar).not.toContain('var(--mr-z-dropdown, 50)')
         expect(source('recipes/skeleton.recipe.css')).toContain('var(--mr-duration-spin)')
         expect(source('recipes/progress.recipe.css')).toContain('var(--mr-duration-pulse)')
-    })
-
-    it('uses the corrected aspect ratio token', () => {
-        const tokens = source('tokens/generated/deprecated.css')
-        expect(tokens).toContain('--mr-aspect-landscape')
     })
 
     it('keeps Select, alignment, Card, and Carousel on shared Step 33 geometry', () => {

@@ -53,7 +53,7 @@ export function SidebarLayoutWithContentExample() {
                 <>
                     <strong>Analytics workspace</strong>
                     <span
-                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}
+                        style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-fs-14)' }}
                     >
                         Updated 5 min ago
                     </span>

@@ -30,7 +30,7 @@
         border-radius: var(--mr-radius-full);
         border: var(--mr-border-width) solid currentColor;
         border-top-color: transparent;
-        animation: mr-infinite-spin var(--mr-dur-600) var(--mr-ease-linear) infinite;
+        animation: mr-infinite-spin var(--mr-duration-600) var(--mr-ease-linear) infinite;
     }
 
     .mr-infinite-scroll__end {
@@ -71,7 +71,7 @@
         font: inherit;
         font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);
-        transition: background-color var(--mr-dur-150) var(--mr-ease-standard);
+        transition: background-color var(--mr-duration-fast-alt) var(--mr-ease-standard);
     }
 
     .mr-infinite-scroll__retry:hover {

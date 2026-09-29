@@ -146,6 +146,20 @@
   --mr-z-base: 1;
   --mr-z-elevated: 4;
   --mr-z-overlay: 8;
+  --mr-duration-600: 600ms;
+  --mr-duration-fast-alt: 150ms;
+  --mr-duration-quick: 100ms;
+  --mr-duration-slow-alt: 200ms;
+  --mr-ease-linear: linear;
+  --mr-radius-md: calc(0.875rem * var(--mr-radius-scale));
+  --mr-radius-sm: calc(0.625rem * var(--mr-radius-scale));
+  --mr-radius-xs: calc(0.375rem * var(--mr-radius-scale));
+  --mr-text-2xl: clamp(1.5rem, 1.34rem + 0.7vw, 2.1rem);
+  --mr-text-2xs: 0.625rem;
+  --mr-text-3xl: clamp(1.9rem, 1.68rem + 1vw, 2.6rem);
+  --mr-text-3xs: 0.5625rem;
+  --mr-text-display: clamp(3rem, 2.45rem + 2.6vw, 5.5rem);
+  --mr-text-xl: clamp(1.25rem, 1.02rem + 0.95vw, 1.8rem);
   --mr-badge-height-sm: 20px;
   --mr-badge-height-md: 24px;
   --mr-badge-dot-size: 6px;
@@ -193,6 +207,17 @@
   --mr-min-target: 24px;
   --mr-input-width: min(22rem, 100%);
   --mr-switch-track-height-md: 1.5rem;
+  --mr-spinner-ring-lg: 1.75rem;
+  --mr-spinner-ring-md: 1.25rem;
+  --mr-spinner-ring-sm: 0.75rem;
+  --mr-spinner-size-lg: 2rem;
+  --mr-spinner-size-md: 1.5rem;
+  --mr-spinner-size-sm: 1rem;
+  --mr-switch-scale-lg: 1.25;
+  --mr-switch-scale-sm: 0.82;
+  --mr-switch-track-width-md: 2.75rem;
+  --mr-textarea-min-height-lg: 7.5rem;
+  --mr-textarea-min-height-sm: 4rem;
 }
 
 :root,

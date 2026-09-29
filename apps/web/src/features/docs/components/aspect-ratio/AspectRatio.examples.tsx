@@ -19,7 +19,7 @@ export function AspectRatioVideoExample() {
                     display: 'grid',
                     placeItems: 'center',
                     color: 'var(--mr-text-secondary)',
-                    fontSize: 'var(--mr-text-sm)',
+                    fontSize: 'var(--mr-fs-14)',
                 }}
             >
                 ▶ 16:9 video placeholder

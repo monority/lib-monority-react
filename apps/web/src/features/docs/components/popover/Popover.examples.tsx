@@ -9,7 +9,7 @@ export function PopoverBasicExample() {
                 <div
                     style={{
                         color: 'var(--mr-text-primary)',
-                        fontSize: 'var(--mr-text-sm)',
+                        fontSize: 'var(--mr-fs-14)',
                         fontWeight: 600,
                     }}
                 >
@@ -18,7 +18,7 @@ export function PopoverBasicExample() {
                 <div
                     style={{
                         color: 'var(--mr-text-secondary)',
-                        fontSize: 'var(--mr-text-sm)',
+                        fontSize: 'var(--mr-fs-14)',
                         lineHeight: 1.5,
                     }}
                 >
@@ -38,7 +38,7 @@ export function PopoverWithFormExample() {
                 <div
                     style={{
                         color: 'var(--mr-text-primary)',
-                        fontSize: 'var(--mr-text-sm)',
+                        fontSize: 'var(--mr-fs-14)',
                         fontWeight: 600,
                     }}
                 >
@@ -58,17 +58,17 @@ export function PopoverAlignmentExample() {
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <Popover trigger={<Button>Start</Button>} align="start">
-                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-fs-14)' }}>
                     Aligned to start edge.
                 </div>
             </Popover>
             <Popover trigger={<Button>Center</Button>} align="center">
-                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-fs-14)' }}>
                     Centered for compact callouts.
                 </div>
             </Popover>
             <Popover trigger={<Button>End</Button>} align="end">
-                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-text-sm)' }}>
+                <div style={{ color: 'var(--mr-text-secondary)', fontSize: 'var(--mr-fs-14)' }}>
                     Aligned to end edge.
                 </div>
             </Popover>

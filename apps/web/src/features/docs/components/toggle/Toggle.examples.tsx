@@ -38,7 +38,7 @@ export function ToggleControlledExample() {
             <Toggle pressed={pressed} onPressedChange={setPressed}>
                 Auto refresh
             </Toggle>
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 {pressed ? 'Updates every minute' : 'Manual refresh'}
             </span>
         </div>

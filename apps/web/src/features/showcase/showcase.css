@@ -23,7 +23,7 @@
 .sc-eyebrow {
     margin: 0;
     color: var(--mr-text-secondary);
-    font-size: var(--mr-text-xs);
+    font-size: var(--mr-fs-12);
     font-weight: var(--mr-font-weight-semibold);
     letter-spacing: 0.08em;
     line-height: var(--mr-leading-snug);
@@ -47,7 +47,7 @@
     flex-wrap: wrap;
     gap: var(--mr-spacing-2);
     margin-block-start: var(--mr-spacing-2);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
 }
 
 .sc-link {
@@ -121,7 +121,7 @@
 .sc-muted {
     margin: var(--mr-spacing-1) 0 0;
     color: var(--mr-text-secondary);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     line-height: var(--mr-leading-normal);
 }
 

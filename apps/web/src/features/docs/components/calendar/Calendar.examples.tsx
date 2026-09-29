@@ -6,7 +6,7 @@ export function CalendarBasicPreview() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <Calendar value={date} onChange={setDate} />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 Selected: {date ? date.toLocaleDateString() : 'none'}
             </span>
         </div>
@@ -22,7 +22,7 @@ export function CalendarMinMaxExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <Calendar value={date} onChange={setDate} minDate={minDate} maxDate={maxDate} />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 Only current month selectable
             </span>
         </div>
@@ -37,7 +37,7 @@ export function CalendarDisabledDatesExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <Calendar value={date} onChange={setDate} disabledDates={disabledWeekends} />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 Weekends are disabled
             </span>
         </div>
@@ -49,7 +49,7 @@ export function CalendarMultipleMonthsExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-spacing-2)' }}>
             <Calendar value={date} onChange={setDate} numberOfMonths={2} />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 Two months displayed side by side
             </span>
         </div>

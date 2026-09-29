@@ -36,7 +36,7 @@ export function SpinnerWithTextExample() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-spacing-2)' }}>
             <Spinner size="sm" />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-text-secondary)' }}>
+            <span style={{ fontSize: 'var(--mr-fs-14)', color: 'var(--mr-text-secondary)' }}>
                 Publishing updated component docs
             </span>
         </div>

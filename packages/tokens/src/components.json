@@ -50,6 +50,17 @@
         "skeleton-line-height": { "$value": "12px", "$type": "dimension" },
         "min-target": { "$value": "24px", "$type": "dimension" },
         "input-width": { "$value": "min(22rem, 100%)" },
-        "switch-track-height-md": { "$value": "1.5rem" }
+        "switch-track-height-md": { "$value": "1.5rem" },
+        "spinner-ring-lg": { "$value": "1.75rem", "$type": "dimension" },
+        "spinner-ring-md": { "$value": "1.25rem", "$type": "dimension" },
+        "spinner-ring-sm": { "$value": "0.75rem", "$type": "dimension" },
+        "spinner-size-lg": { "$value": "2rem", "$type": "dimension" },
+        "spinner-size-md": { "$value": "1.5rem", "$type": "dimension" },
+        "spinner-size-sm": { "$value": "1rem", "$type": "dimension" },
+        "switch-scale-lg": { "$value": "1.25" },
+        "switch-scale-sm": { "$value": "0.82" },
+        "switch-track-width-md": { "$value": "2.75rem", "$type": "dimension" },
+        "textarea-min-height-lg": { "$value": "7.5rem", "$type": "dimension" },
+        "textarea-min-height-sm": { "$value": "4rem", "$type": "dimension" }
     }
 }

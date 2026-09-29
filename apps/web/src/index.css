@@ -69,7 +69,7 @@ body {
 .home-kicker {
     margin: 0 0 1.25rem;
     color: rgba(219, 204, 176, 0.74);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     line-height: var(--mr-leading-normal);
 }
 
@@ -87,7 +87,7 @@ body {
     margin: 1.5rem 0 0;
     max-width: 30rem;
     color: rgba(238, 231, 216, 0.72);
-    font-size: var(--mr-text-md);
+    font-size: var(--mr-fs-16);
     line-height: var(--mr-leading-relaxed);
     text-wrap: pretty;
 }
@@ -110,7 +110,7 @@ body {
     border-radius: var(--mr-radius-sm);
     color: rgba(247, 241, 226, 0.84);
     background: rgba(255, 255, 255, 0.03);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     font-weight: var(--mr-font-weight-medium);
     text-decoration: none;
     transition: background-color var(--mr-duration-base) var(--mr-ease-standard), border-color
@@ -147,7 +147,7 @@ body {
 
     .home-nav {
         gap: var(--mr-spacing-2);
-        font-size: var(--mr-text-xs);
+        font-size: var(--mr-fs-12);
     }
 
     .home-nav a:nth-child(3) {
@@ -163,7 +163,7 @@ body {
     }
 
     .home-subtitle {
-        font-size: var(--mr-text-sm);
+        font-size: var(--mr-fs-14);
     }
 }
 

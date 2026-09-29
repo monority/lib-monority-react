@@ -32,15 +32,17 @@ describe('step23 design token contracts', () => {
     })
 
     it('defines the shared duration scale consumed by recipes', () => {
-        const deprecated = tokenFile('tokens/generated/deprecated.css')
-        expect(deprecated).toContain('--mr-dur-150: 150ms')
-        expect(deprecated).toContain('--mr-dur-200: 200ms')
+        // dur-150 / dur-200 sont promus en tokens modernes (duration-fast-alt /
+        // duration-slow-alt) : le contrat verifie desormais tokens.css.
+        const tokens = tokenFile('tokens/generated/tokens.css')
+        expect(tokens).toContain('--mr-duration-fast-alt: 150ms')
+        expect(tokens).toContain('--mr-duration-slow-alt: 200ms')
     })
 
     it('drives drawer motion through duration and easing tokens', () => {
         const drawer = recipe('drawer.recipe.css')
         expect(drawer).not.toMatch(/animation:[^;]*\b200ms\b/)
-        expect(drawer).toContain('var(--mr-dur-200)')
+        expect(drawer).toContain('var(--mr-duration-slow-alt)')
         expect(drawer).toContain('var(--mr-ease-enter)')
         expect(drawer).toContain('var(--mr-ease-exit)')
     })
@@ -59,6 +61,6 @@ describe('step23 design token contracts', () => {
 
     it('routes file-trigger motion through the duration scale', () => {
         expect(recipe('file-trigger.recipe.css')).not.toMatch(/0\.15s/)
-        expect(recipe('file-trigger.recipe.css')).toContain('var(--mr-dur-150)')
+        expect(recipe('file-trigger.recipe.css')).toContain('var(--mr-duration-fast-alt)')
     })
 })

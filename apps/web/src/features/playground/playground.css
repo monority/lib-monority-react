@@ -39,7 +39,7 @@
 .pg-preview__kicker {
     margin: 0 0 var(--mr-spacing-2);
     color: var(--mr-text-secondary);
-    font-size: var(--mr-text-xs);
+    font-size: var(--mr-fs-12);
     font-weight: var(--mr-font-weight-semibold);
     letter-spacing: 0.08em;
     line-height: var(--mr-leading-snug);
@@ -102,7 +102,7 @@
 }
 
 .pg-control__label {
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     font-weight: var(--mr-font-weight-medium);
     line-height: var(--mr-leading-control);
 }
@@ -127,7 +127,7 @@
     background: transparent;
     color: inherit;
     font: inherit;
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     cursor: pointer;
 }
 
@@ -148,7 +148,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--mr-spacing-2);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
 }
 
 @media (max-width: 768px) {

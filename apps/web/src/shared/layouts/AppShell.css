@@ -32,7 +32,7 @@
     z-index: var(--mr-z-elevated);
     border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
     background: color-mix(in srgb, var(--mr-bg-canvas) 88%, transparent);
-    backdrop-filter: blur(var(--mr-blur-md));
+    backdrop-filter: blur(var(--mr-spacing-2));
 }
 
 .app-header__inner {
@@ -43,7 +43,7 @@
 .brand {
     color: var(--mr-text-primary);
     font-weight: var(--mr-font-weight-semibold);
-    font-size: var(--mr-text-sm);
+    font-size: var(--mr-fs-14);
     letter-spacing: -0.01em;
     text-decoration: none;
     white-space: nowrap;

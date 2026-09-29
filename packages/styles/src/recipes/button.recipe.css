@@ -12,9 +12,10 @@
         line-height: var(--mr-leading-control);
         text-decoration: none;
         border-radius: var(--mr-radius-control);
-        transition: background-color var(--mr-dur-150) var(--mr-ease-standard), border-color
-            var(--mr-dur-150) var(--mr-ease-standard), color var(--mr-dur-150)
-            var(--mr-ease-standard), opacity var(--mr-dur-150) var(--mr-ease-standard);
+        transition: background-color var(--mr-duration-fast-alt) var(--mr-ease-standard),
+            border-color var(--mr-duration-fast-alt) var(--mr-ease-standard), color
+            var(--mr-duration-fast-alt) var(--mr-ease-standard), opacity var(--mr-duration-fast-alt)
+            var(--mr-ease-standard);
         outline: none;
         padding: 0 var(--mr-control-padding-inline-md);
     }
