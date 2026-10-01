@@ -4,16 +4,15 @@
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
 - Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Validation à posteriori, un rapport par phase.
 - `pnpm verify` : 21 étapes, code 0.
-- **Phase B commencée.** Famille `bg` : 5 tokens × 7 thèmes. Restent `text`, `border`, `accent`, `status`, `chart`.
-- `bg` : avant 2241 occurrences / 129 tokens distincts ; après **2088 / 125**. Attendu −153, mesuré −153, **écart 0**. 153 références sur 63 recettes.
-- X2 : **31 → 26 écarts**. Les 5 disparus sont les bg désormais présents.
-- ADR dans DECISIONS.md, ordre croissant, aucun trou : D2 D6 à D25.
-- **D25 écrite** : les 4 neutres passent par les primitives (rendu identique, chroma historique 0) ; `slate`, `ocean`, `night` gardent chroma et hue litteraux,Values reprises de `41aa61d~1`, autorisation T3 ligne 64. Redefinir `--mr-ref-neutral-hue` par theme est impossible : le generateur prefixe `--mr-theme-<nom>-`.
-- Schema d emission mesure : `slate` est le theme par defaut, ses jetons sortent dans `:root` avec le prefixe `--mr-theme-slate-` ; les 6 autres sortent dans leur bloc `[data-theme=...]` sous le nom court `--mr-bg-*`.
-- **T1 compare le CSS genere au fichier de reference**, pas aux sources JSON : regenerer `docs/design/reference/monority-ui-tokens.reference.css` apres chaque build de famille, sinon T1 echoue en `genere seul`.
+- **Phase B.** `bg` et `text` faites. Restent `border`, `accent`, `status`, `chart`.
+- Progression du cliquet : 2241 → `bg` 2088 → `text` **1898** occurrences. Tokens distincts 129 → 125 → **123**.
+- X2 : 31 → 26 (bg) → **22** (text).
+- `bg` : attendu −153, mesuré −153, écart 0, 63 recettes. `text` : attendu −190, mesuré −190, écart 0, 63 recettes.
+- ADR D2 à D25, ordre croissant, aucun trou.
+- **Leçon** : passer un message de commit par `git commit -F <fichier>`. Un message construit par `JSON.stringify` sérialise les retours à la ligne en `\n` litteraux, illisible dans `git log`.
+- Regenerer `docs/design/reference/monority-ui-tokens.reference.css` apres chaque build de famille, sinon T1 échoue en `genere seul`.
 - Cliquets : stylelint 2730, test-skips {4, 2}.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
-- À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 
 ## Règles communes (toutes les étapes)
 - Une étape par session. N'exécute que l'étape demandée.

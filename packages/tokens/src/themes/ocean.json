@@ -2,7 +2,7 @@
     "$meta": {
         "layer": "semantique",
         "theme": "ocean",
-        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3, D25)."
     },
     "mr": {
         "theme-ocean": {
@@ -57,6 +57,50 @@
                     "com.monority.oklch": {
                         "l": 0.205,
                         "c": 0.032,
+                        "h": 230
+                    }
+                }
+            },
+            "text-primary": {
+                "$value": "oklch(0.96 0.015 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.96,
+                        "c": 0.015,
+                        "h": 230
+                    }
+                }
+            },
+            "text-secondary": {
+                "$value": "oklch(0.8 0.025 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.8,
+                        "c": 0.025,
+                        "h": 230
+                    }
+                }
+            },
+            "text-tertiary": {
+                "$value": "oklch(0.7 0.035 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.7,
+                        "c": 0.035,
+                        "h": 230
+                    }
+                }
+            },
+            "text-disabled": {
+                "$value": "oklch(0.58 0.025 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.58,
+                        "c": 0.025,
                         "h": 230
                     }
                 }

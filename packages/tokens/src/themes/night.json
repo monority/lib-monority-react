@@ -2,7 +2,7 @@
     "$meta": {
         "layer": "semantique",
         "theme": "night",
-        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3, D25)."
     },
     "mr": {
         "theme-night": {
@@ -57,6 +57,50 @@
                     "com.monority.oklch": {
                         "l": 0.19,
                         "c": 0.035,
+                        "h": 275
+                    }
+                }
+            },
+            "text-primary": {
+                "$value": "oklch(0.96 0.02 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.96,
+                        "c": 0.02,
+                        "h": 275
+                    }
+                }
+            },
+            "text-secondary": {
+                "$value": "oklch(0.8 0.03 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.8,
+                        "c": 0.03,
+                        "h": 275
+                    }
+                }
+            },
+            "text-tertiary": {
+                "$value": "oklch(0.7 0.04 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.7,
+                        "c": 0.04,
+                        "h": 275
+                    }
+                }
+            },
+            "text-disabled": {
+                "$value": "oklch(0.58 0.03 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.58,
+                        "c": 0.03,
                         "h": 275
                     }
                 }

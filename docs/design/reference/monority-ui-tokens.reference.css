@@ -13,6 +13,10 @@
   --mr-theme-slate-bg-raised: oklch(0.26 0.014 215);
   --mr-theme-slate-bg-overlay: oklch(0.29 0.014 215);
   --mr-theme-slate-bg-sunken: oklch(0.205 0.012 215);
+  --mr-theme-slate-text-primary: oklch(0.96 0.005 215);
+  --mr-theme-slate-text-secondary: oklch(0.8 0.012 215);
+  --mr-theme-slate-text-tertiary: oklch(0.7 0.014 215);
+  --mr-theme-slate-text-disabled: oklch(0.58 0.012 215);
 }
 
 :root,
@@ -28,6 +32,10 @@
   --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-overlay: oklch(0.305 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-sunken: oklch(0.215 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-primary: oklch(0.96 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-secondary: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-tertiary: oklch(0.7 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="high-contrast"] {
@@ -36,6 +44,10 @@
   --mr-bg-raised: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-overlay: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-sunken: oklch(0.965 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-primary: oklch(0.1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-secondary: oklch(0.3 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-tertiary: oklch(0.36 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-disabled: oklch(0.5 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 :root,
@@ -45,6 +57,10 @@
   --mr-bg-raised: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-overlay: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-sunken: oklch(0.968 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-secondary: oklch(0.44 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-tertiary: oklch(0.51 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-disabled: oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="night"] {
@@ -53,6 +69,10 @@
   --mr-bg-raised: oklch(0.25 0.055 275);
   --mr-bg-overlay: oklch(0.28 0.06 275);
   --mr-bg-sunken: oklch(0.19 0.035 275);
+  --mr-text-primary: oklch(0.96 0.02 275);
+  --mr-text-secondary: oklch(0.8 0.03 275);
+  --mr-text-tertiary: oklch(0.7 0.04 275);
+  --mr-text-disabled: oklch(0.58 0.03 275);
 }
 
 [data-theme="ocean"] {
@@ -61,6 +81,10 @@
   --mr-bg-raised: oklch(0.265 0.045 230);
   --mr-bg-overlay: oklch(0.29 0.05 230);
   --mr-bg-sunken: oklch(0.205 0.032 230);
+  --mr-text-primary: oklch(0.96 0.015 230);
+  --mr-text-secondary: oklch(0.8 0.025 230);
+  --mr-text-tertiary: oklch(0.7 0.035 230);
+  --mr-text-disabled: oklch(0.58 0.025 230);
 }
 
 [data-theme="oled"] {
@@ -69,6 +93,10 @@
   --mr-bg-raised: oklch(0.19 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-overlay: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   --mr-bg-sunken: oklch(0.12 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-primary: oklch(0.96 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-secondary: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-tertiary: oklch(0.7 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="slate"] {
@@ -82,6 +110,10 @@
     --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
     --mr-bg-overlay: oklch(0.305 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
     --mr-bg-sunken: oklch(0.215 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-text-primary: oklch(0.96 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-text-secondary: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-text-tertiary: oklch(0.7 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   }
 }
 

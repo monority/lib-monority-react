@@ -2,7 +2,7 @@
     "$meta": {
         "layer": "semantique",
         "theme": "light",
-        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3, D25)."
     },
     "mr": {
         "theme-light": {
@@ -56,6 +56,50 @@
                 "$extensions": {
                     "com.monority.oklch": {
                         "l": 0.968,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "text-primary": {
+                "$value": "oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.22,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "text-secondary": {
+                "$value": "oklch(0.44 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.44,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "text-tertiary": {
+                "$value": "oklch(0.51 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.51,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "text-disabled": {
+                "$value": "oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.62,
                         "c": "neutral",
                         "h": "neutral"
                     }
