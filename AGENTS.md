@@ -15,6 +15,8 @@ Monority UI est une librairie de composants React 19 pilotée par des design tok
 | `tooling/generators/` | Générateur de composant, validation |
 | `docs/design/` | Langage visuel (`language.md`), specs par composant (`components/`), références |
 
+Chantier en cours : base CSS écrite à la main, organisée en couches, sur la branche `refactor/css-foundation`. L'ancien système (tokens en JSON, générateur Style Dictionary) est supprimé en Phase 1 du chantier, avant toute reconstruction. L'ancien état reste consultable par le tag `archive/tokens-json-d899d22`. Pendant le chantier, `PLAN.md` décrit l'état réel et prime sur les sections 2 à 7 pour tout ce qui est déjà supprimé.
+
 ## 2. Commandes
 
 | Besoin | Commande |
@@ -102,7 +104,10 @@ Un nouveau check doit être testé en négatif : prouver qu'il échoue quand la 
 - **Aucun changement de rendu non annoncé** : si une modification change l'apparence, montrer l'avant/après et attendre validation.
 - **Preuves plutôt qu'affirmations** : « compile » n'est pas « fonctionne ». Un changement visuel se vérifie dans le navigateur ; une affirmation de performance se mesure.
 - **Corriger à la source** : ne pas abaisser un seuil, désactiver une règle ou ajouter une exception pour faire passer un check sans le justifier dans le rapport.
+- Composants un par un : en Phase 3, chaque composant est reconstruit seul, vérifié visuellement, puis validé par un humain avant de passer au suivant. L'exception « un seul rapport par phase » ne s'applique pas à la Phase 3 : un rapport court est écrit par composant.
 
 ## 10. Rapport de fin de tâche
 
 Court et factuel : ce qui a été fait (hash des commits), preuves (commandes et résultats), ce qui n'a pas été fait et pourquoi, décisions en attente, améliorations repérées hors périmètre. Ne mentionner que les vérifications réellement effectuées.
+
+En Phase 3, un rapport court est écrit par composant : composant et commit, tokens lus et créés, preuve `pnpm verify`, écarts de rendu ou « aucun écart », ce qui n'a pas pu être vérifié, prochain composant proposé. Le composant suivant ne commence qu'après le message « validé » ou les corrections demandées.
