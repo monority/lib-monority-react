@@ -104,6 +104,18 @@ Le tableau du point 5 est fondé sur les mesures des 279 tokens de la table rase
 
 La question n'est donc plus « laquelle garder » mais « deux échelles parallèles, ou une échelle et deux rôles ? ». Recommandation : deux rôles `size` et `ring`, un seul jeu de pas `{sm, md, lg}`. L'alternative autoriserait un jour les deux séries à se désaligner, ce qui casserait la géométrie du composant. Décision design. Détail et valeurs dans `docs/design/tokens-scales.md` §4.3.
 
+**D17 — Durées de transition : rôles `etat` et `panneau` (amendement de D15)**
+**TRANCHÉE le 2026-10-01.** La voie B (`--mr-duration-entree` / `--mr-duration-sortie`) a été validée puis **amendée** : sa condition initiale — découper le drawer entrée/sortie — est mesurée fausse. Les 8 occurrences y sont toutes en `slow-alt`, 4 pour l'entrée et 4 pour la sortie.
+
+Le découpage réel est par **type de déclaration** : `fast-alt` (150 ms) n'apparaît que dans des `transition:` d'état (button, checkbox, file-trigger, infinite-scroll) ; `slow-alt` (200 ms) que dans des `animation:` de surface (drawer). Noms retenus : `--mr-duration-etat` et `--mr-duration-panneau`, **rôles et non composants** — `etat` décrit le déclencheur, `panneau` décrit ce qui bouge. `surface` a été écarté : collision avec `bg-surface`, qui est une couche de fond.
+
+Amendement appliqué dans `packages/tokens/categories.json` : `etat` et `panneau` sont des rôles de la famille `duration`. Le plafond de **pas** reste 3. La regex D14 acceptait déjà ces deux noms ; c'est l'échelle D15 qui refusait les rôles non déclarés, et la correction passe par la déclaration, jamais par un contournement.
+
+Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel ignore `fast-alt`, `slow-alt`, `quick` et `600`) et un test qui échoue si un `duration-*` est absent du bloc. Le correctif et le test dans le même commit.
+
+**D18 — `--mr-ref-radius-scale` traité en 11b2**
+**TRANCHÉE le 2026-10-01.** Ce primitif est lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer un token sémantique intermédiaire est un travail de la famille **dimensions**, pas de la famille **couleur**. Traitement renvoyé à 11b2 pour que 11b1 reste centrée sur la couleur ; sinon 52 recettes seraient migrées dans une phase qui ne porte pas sur les rayons.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)

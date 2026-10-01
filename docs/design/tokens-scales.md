@@ -81,7 +81,7 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 | Famille | Constat | Décision proposée |
 |---|---|---|
 | `control` | 17 tokens : pas nommés **et** rôles **et** états sous un même préfixe | scinder : `control-height-*`, `control-padding-inline-*`, `control-font-size-*` (nommés), et `control-gap`, `control-accent` (rôles) |
-| `duration` | **MIXTE** : `fast`/`slow` (nommés) + `spin`/`pulse` (rôles) + `600` (numérique) + `fast-alt`/`slow-alt`/`quick` (**ad hoc**) | voir §4.9 et §4.11 |
+| `duration` | plafond 3 : `fast`, `base`, `slow` + rôles `etat`, `panneau`, `spin`, `pulse` | **annoncé** | voir §4.9 et §4.11 |
 | `type` | 14 tokens : styles nommés (`display`, `h1`, `body`, `caption`) | aucune échelle : ce sont des styles, pas des pas |
 | `leading` | `normal`, `tight`, `snug`, `relaxed`, `base` + `control`, `heading` | aucun pas : valeurs d'interligne nommées |
 
@@ -150,14 +150,14 @@ Un z-index est une **position**, pas une taille : pas de pas nommé, plafond 6 (
 
 `regular`, `medium`, `semibold` forment une échelle ordinale de 3. `bold` arrive après `semibold` sans être un pas de la même série.
 
-**Recommandation** : **`bold` est supprimé**, `language.md` §5.9 dit « aucune graisse hors 400/500/600 ». Plafond 3.
+**Recommandation** : **`bold` est supprimé**, `language.md` §5.9 dit « aucune graisse hors 400/500/600 ». Arbitrage du 2026-10-01 : `banner` passe à **600** et non 500, pour rester aligné sur `title`, `progress` et `calendar`. Plafond 3. Application en 11b3.
 
 **Impact rendu : annoncé, à valider par toi (D10).** Valeurs résolues : `regular` 400, `medium` 500, `semibold` 600, `bold` 700. Les 4 usages visibles, avec la graisse cible :
 
 | Fichier | Usage | Actuel | Cible | Impact |
 |---|---|---|---|---|
 | `title.recipe.css:5` | titre, tous styles | `bold` 700 | `semibold` 600 | **−100**. `title.md` demande explicitement **600** pour display, h1, h2 et h3 : la recette est aujourd'hui en contradiction avec sa propre spec |
-| `banner.recipe.css:42` | `.mr-banner__eyebrow`, liseré | `bold` 700 | `medium` 500 | **−200**. L'œil n'est plus attiré par le liseré ; `letter-spacing: 0.02em` reste |
+| `banner.recipe.css:42` | `.mr-banner__eyebrow`, liseré | `bold` 700 | `semibold` 600 | **−100**. `letter-spacing: 0.02em` reste ; arbitrage : 600 et non 500 |
 | `progress.recipe.css:34` | `.mr-progress__value`, valeur chiffrée | `bold` 700 | `semibold` 600 | −100. La valeur reste lisible, `tabular-nums` inchangé |
 | `calendar.recipe.css:126` | `[data-today='true']`, jour courant | `bold` 700 | `semibold` 600 | −100. Le jour courant reste distingué par la couleur `--mr-accent` |
 
@@ -180,7 +180,7 @@ Le problème en trois temps :
 **Recommandation, en deux séries distinctes** :
 
 - **Série de transition** — plafond **3** : `--mr-duration-fast` (120 ms), `--mr-duration-base` (180 ms), `--mr-duration-slow` (240 ms). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-standard` / `ease-enter`.
-- **Séries de boucle** — rôles nommés, hors échelle : `--mr-duration-spin` (800 ms), `--mr-duration-pulse` (1200 ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature.
+- **Rôles hors échelle** : `--mr-duration-etat` (150 ms, remplace `fast-alt`), `--mr-duration-panneau` (200 ms, remplace `slow-alt`), `--mr-duration-spin` (800 ms), `--mr-duration-pulse` (1200 ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature. Détail du découpage `etat`/`panneau` en §4.11.
 
 Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`. **`-alt` fait l'objet de §4.11** : 25 occurrences réelles, valeurs distinctes des pas nommés, à trancher avant 11b4.
 
@@ -214,9 +214,22 @@ Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`. **`
 
 Dix des onze paliers sont donc **déjà morts** : la suppression de l'échelle ne retire aucun consommateur réel. Seul `opacity-disabled` est vivant, et il survit à la suppression. Le `50` restant n'est consommé que par une fixture de test.
 
-### 4.11 `--mr-duration-*-alt` — à trancher avant 11b4
+### 4.11 `--mr-duration-*-alt` — AMENDÉ le 2026-10-01, à appliquer en 11b4
 
-**NON TRANCHÉ.** Les deux suffixes ne sont pas supprimés sans remplacement : 25 occurrences réelles, et leurs valeurs ne coïncident avec aucun pas nommé.
+**Voie B validée, mais la condition initiale n'était pas remplie** : le drawer ne se découpe pas entrée/sortie. Les 8 occurrences sont `mr-drawer-in-right/left/top/bottom` (L50-77, `ease-enter`) et `mr-drawer-out-right/left/top/bottom` (L81-93, `ease-exit`), **toutes en `slow-alt`**. Un rôle `sortie` aurait aussi servi à l'entrée.
+
+Le découpage réel est par **type de déclaration**, mesuré :
+
+| Token | Valeur | Déclarations | Recettes | Rôle |
+|---|---|---|---|---|
+| `--mr-duration-fast-alt` | 150 ms | 10 × `transition:` d'état (`background-color`, `border-color`, `color`, `opacity`, `box-shadow`) | button, checkbox, file-trigger, infinite-scroll | `--mr-duration-etat` |
+| `--mr-duration-slow-alt` | 200 ms | 8 × `animation:` d'une surface qui entre ou sort | drawer | `--mr-duration-panneau` |
+
+Aucune exception : `fast-alt` n'apparaît **jamais** dans une `animation`, `slow-alt` **jamais** dans une `transition`.
+
+**Noms retenus, et pourquoi un rôle plutôt qu'un composant.** `etat` décrit le *déclencheur* (changement d'état), pas l'objet : durable pour tout composant ayant un survol, aucun nom de composant. `panneau` décrit *ce qui bouge*, pas le consommateur : durable sur drawer, modal, popover et dialog. `surface` a été écarté — il entre en collision avec `bg-surface`, qui est une couche de fond, pas un mouvement.
+
+Amendement D15 appliqué : `etat` et `panneau` sont déclarés comme rôles de la famille `duration` dans `packages/tokens/categories.json`. Le plafond de **pas** reste 3 : ces deux rôles n'en portent pas.
 
 Valeurs résolues au repos (commit `da57c3e`) :
 
@@ -241,7 +254,7 @@ Consommateurs (hors archives, `git grep`) :
 | `design-token-contract.test.ts` | 2 | 3 |
 | `test-skips.json` | — | 2 |
 
-**Défaut d'accessibilité à corriger au passage** : le bloc `prefers-reduced-motion` met `fast`, `base`, `slow`, `spin` et `pulse` à 0, mais **ne couvre ni `fast-alt`, ni `slow-alt`, ni `quick`, ni `600`**. Ces quatre tokens ignorent la préférence système.
+**Défaut d'accessibilité à corriger en 11b4** : le bloc `prefers-reduced-motion` met `fast`, `base`, `slow`, `spin` et `pulse` à 0, mais **ne couvre ni `fast-alt`, ni `slow-alt`, ni `quick`, ni `600`**. Ces quatre tokens ignorent la préférence système. Le correctif et le test de non-régression seront livrés dans le même commit en 11b4.
 
 Deux voies, à valider :
 

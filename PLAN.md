@@ -59,12 +59,12 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 - [x] **0.3** Regex de nommage dérivée du vocabulaire cible (`packages/tokens/categories.json`), fixtures cibles de 11b1, test de synchronisation à trois sources. Commit `aee4ded`.
 - [x] **0.4** Renommage D11 des 7 primitives sous `--mr-ref-*`. Commit `4d0b1a2`.
 - [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`. Idempotence de l'écriture prouvée par commit `6798adc`.
-- [x] **0.5b** `pnpm verify` : porte de preuve unique, 13 étapes en ordre fixe (du plus rapide au plus lent), arrêt au premier échec. Toutes les preuves de fin de commit proviennent de ce script.
-- [ ] **0.6b** Tableau des échelles (`docs/design/tokens-scales.md`) — **livré, en attente de validation**. Aucun token avant validation (D15 condition 5).
+- [x] **0.5b** `pnpm verify` : porte de preuve unique, 16 étapes en ordre fixe (du plus rapide au plus lent), arrêt au premier échec. Toutes les preuves de fin de commit proviennent de ce script.
+- [x] **0.6b** Tableau des échelles (`docs/design/tokens-scales.md`) — **validé le 2026-10-01**. D15, D16 et les deux arbitrages qui suivent (plafond `duration` à 3, rôle seul accepté) sont tranchés.
 - [x] **0.6** Décision D15 **tranchée** — option C, échelle déclarée par famille et fermée, sous 5 conditions (voir `DECISIONS.md`). Tableau famille → type de pas → pas autorisés à valider **avant 11b1**.
 - [ ] **0.7** Registre `local-tokens` : 226 entrées en statut `a-auditer`, comptées au cliquet, passage à `justifie` sur surface de personnalisation prouvée (D8).
 - [x] **0.8** Verrou des 4 tests web de contrat tokens. Registre `packages/tokens/test-skips.json` (raison + `blockedBy` ordonné), quatre gardes (`check-test-skips.mjs`), 12 tests de registre, compteur de skips au cliquet. Les skips sont **conditionnels** au verrou : `duringRebuild(it)` dans `apps/web/src/lib/rebuild-lock.ts`, un `it.skip` en dur est refusé.
-- [ ] **0.9** `audit:tokens` : définis / utilisés / pendants / orphelins / doublons de valeur / cycles / violations de niveau / pas D15. Fixtures ok/nok, dont cycles et D15.
+- [x] **0.9** `audit:tokens` : cycles, violations de niveau, pas hors échelle et plafonds. 12 + 18 tests. Commits `d765729`, `ccf1607`.
 - [ ] **0.10** `audit:contrast` : couleurs calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
 - [ ] **0.11** CI pilotée par `rebuild.json`, même cliquet qu'en local.
 - [x] **0.12** Items D11 : mapping des 7 renommages dans `MIGRATIONS.md`, changeset breaking, exclusions d'audit dans un fichier versionné.
@@ -74,10 +74,10 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `space-*/spacing-*` isolée : tout se fait ici, dans l'ordre de la convention.
   - [x] **11a** Convention + audit de références + table rase. Commits `cf26676`, `da34b7f`, `2396eaa`, `6de955d`, `41aa61d`, `f370ea4`. Reprise en 0.1–0.5 pour l'outillage.
   - [ ] 11b. **Familles de fondation**, dans cet ordre (ordre mesuré sur les 188 tokens consommés par 75 recettes) :
-    - [ ] 11b1. Sémantique couleur : `bg-*`, `text-*`, `border-*`, `accent-*`, `success/warning/danger/info-*`, `scrim`, `chart-muted`. Dépendance de 63 recettes (`--mr-border-subtle`).
-    - [ ] 11b2. Fondations dimensionnelles : `spacing-*`, `radius-*`, `border-width`, `focus-*`.
-    - [ ] 11b3. Typographie : `fs-*`/`type-*`, `leading-*`, `tracking-*`, `font-weight-*`.
-    - [ ] 11b4. Mouvement et empilement : `duration-*`, `ease-*`, `z-*`.
+    - [ ] 11b1. Sémantique couleur : `bg-*`, `text-*`, `border-*`, `accent-*`, `status-*`, `scrim`, `chart-muted`. La liste exacte des tokens est à valider avant le premier token créé.
+    - [ ] 11b2. Fondations dimensionnelles : `spacing-*`, `radius-*`, `border-width`, `focus-*`. **Porte aussi `--mr-ref-radius-scale`** (D18) : primitif lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer le token sémantique intermédiaire ici, pas en 11b1, pour que la phase couleur reste centrée sur la couleur.
+    - [ ] 11b3. Typographie : `font-size-*`, `type-*`, `line-height-*`, `letter-spacing-*`, `font-weight-*`. **Suppression de `--mr-font-weight-bold`** (D15 §4.8) : `title`, `banner`, `progress` et `calendar` passent de 700 à 600, impact D10 annoncé et validé.
+    - [ ] 11b4. Mouvement et empilement : `duration-*`, `easing-*`, `z-index-*`. **Suppression de `--mr-duration-{fast,slow}-alt`** au profit des rôles `--mr-duration-etat` (150 ms) et `--mr-duration-panneau` (200 ms) (D17). Corriger dans le même commit le bloc `prefers-reduced-motion`, qui ignore aujourd'hui `fast-alt`, `slow-alt`, `quick` et `600`, et ajouter le test qui échoue si un `duration-*` en est absent.
     - [ ] 11b5. Densité (`data-density`) et marque alternative (`data-brand="studio"`).
   - [ ] 11c+. **Composants**, un par session, même méthode que l'étape 3 (preuve par famille dès le premier commit). Pilote : Switch (7 tokens locaux, états + tailles). Le token local ne survit que s'il passe le test de la section 6 de la convention.
   - [ ] 11d. Réécriture de `docs/design/language.md` §5.x au fur et à mesure que les familles sont reconstruites — c'est ce document qui définit la palette, il ne peut pas rester en avance sur le code.
