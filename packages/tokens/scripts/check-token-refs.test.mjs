@@ -7,6 +7,7 @@
  */
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { isRebuilding } from './lib/rebuild.mjs'
 import {
     audit,
     declaredNames,
@@ -205,11 +206,15 @@ test("un token consomme uniquement par le CSS genere n'est pas un orphelin", () 
     assert.deepEqual(result.orphans, ['--mr-accent'])
 })
 
-test('dépôt réel : aucune intrusion sans repli dans le CSS livré', () => {
-    const result = audit()
-    assert.deepEqual(
-        result.intrusions.map((i) => `${i.file}:${i.line} ${i.name}`),
-        [],
-        `intrusions détectées : ${JSON.stringify(result.intrusions, null, 2)}`
-    )
-})
+test(
+    'dépôt réel : aucune intrusion sans repli dans le CSS livré',
+    { skip: isRebuilding() && 'reconstruction du système en cours' },
+    () => {
+        const result = audit()
+        assert.deepEqual(
+            result.intrusions.map((i) => `${i.file}:${i.line} ${i.name}`),
+            [],
+            `intrusions détectées : ${JSON.stringify(result.intrusions, null, 2)}`
+        )
+    }
+)

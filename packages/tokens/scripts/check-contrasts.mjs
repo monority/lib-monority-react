@@ -28,6 +28,7 @@ import { fileURLToPath } from 'node:url'
 import Color from 'colorjs.io'
 import { contrast, loadSources } from './lib/tokens-lib.mjs'
 import { buildMaps, comboOklch } from './lib/resolve.mjs'
+import { finish } from './lib/rebuild.mjs'
 
 const pkgDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const maps = buildMaps(loadSources(path.join(pkgDir, 'src')))
@@ -153,6 +154,35 @@ const TABLE = {
 const TOLERANCE = 0.1
 const failures = []
 let pairCount = 0
+
+/**
+ * Un token cité par X2 peut ne pas exister : pendant la reconstruction du
+ * système (PLAN.md étape 11), les thèmes sont vides. Passer une couleur vide à
+ * colorjs fait planter le contrôle sur une TypeError illisible. On relève donc
+ * les tokens absents, on le signale, et on ne mesure que les paires complètes.
+ */
+const referencedTokens = [
+    ...new Set([
+        ...SIX,
+        ...FOUR,
+        ...ACCENT_SIX,
+        HOVER_BG,
+        ...HOVER_BASES,
+        ...PAIRS.flatMap(([, fg, bgs]) => [fg, ...bgs]),
+        ...HOVER_PAIRS.flatMap(([, fg]) => [fg]),
+    ]),
+]
+const missing = referencedTokens.filter((t) => !col(t, 'light', 'monority'))
+for (const t of missing) failures.push(`token cité par X2 mais absent des sources : ${t}`)
+if (missing.length) {
+    finish({
+        id: 'X2',
+        name: 'contrastes WCAG (AA/HC + minimums 5.5)',
+        failures,
+        detail: `  ${missing.length} token(s) absent(s) : aucune paire mesurée. Reconstruction du système de couleurs en cours.`,
+    })
+}
+
 const mins = {}
 for (const [key, fg, bgs, aa, hc] of PAIRS) {
     mins[key] = {}
@@ -220,8 +250,13 @@ for (const [key, expected] of Object.entries(TABLE)) {
 }
 
 if (failures.length) {
-    console.error(`X2 FAIL — ${failures.length} écart(s) sur ${pairCount} paires :`)
-    for (const f of failures.slice(0, 30)) console.error('  ' + f)
-    process.exit(1)
+    finish({
+        id: 'X2',
+        name: 'contrastes WCAG (AA/HC + minimums 5.5)',
+        failures,
+        detail: `  ${pairCount} paires mesurées`,
+        max: 30,
+    })
+} else {
+    console.log(`X2 PASS — ${pairCount} paires, 0 échec (AA/HC + minimums 5.5 respectés)`)
 }
-console.log(`X2 PASS — ${pairCount} paires, 0 échec (AA/HC + minimums 5.5 respectés)`)

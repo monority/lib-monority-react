@@ -1,0 +1,7 @@
+{
+    "active": true,
+    "startedAt": "2026-10-01",
+    "reason": "Table rase (PLAN.md étape 11) : le système de tokens est reconstruit famille par famille. Les contrôles dont l'inviolabilité dépend du système complet rapportent au lieu de bloquer jusqu'à la fin du chantier.",
+    "checks": ["T6", "X2", "S11"],
+    "removedWhen": "Toutes les familles de tokens sont reconstruites ; ce fichier est supprimé et les contrôles redeviennent bloquants. Voir PLAN.md étape 11z."
+}

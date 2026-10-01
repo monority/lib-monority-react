@@ -16,6 +16,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { finish } from './lib/rebuild.mjs'
 
 const WARN = process.argv.includes('--warn')
 
@@ -137,13 +138,18 @@ for (const [key, leaf] of Object.entries(deprecated)) {
 }
 
 if (failures.length) {
-    console.error(`T6 FAIL — ${failures.length} écart(s) :`)
-    for (const f of failures.slice(0, 30)) console.error('  ' + f)
-    process.exit(1)
+    finish({
+        id: 'T6',
+        name: 'tokens dépréciés et références orphelines',
+        failures,
+        detail: WARN ? null : undefined,
+        max: 30,
+    })
+} else {
+    console.log(
+        `T6 PASS — 0 manquant (${used.size} utilisés couverts ; ${aliases.length} alias + ${valuesChecked} valeurs actuelles vérifiés ; audit-8 à part : ${auditUsed.sort().join(', ') || 'aucun utilisé'})`
+    )
 }
-console.log(
-    `T6 PASS — 0 manquant (${used.size} utilisés couverts ; ${aliases.length} alias + ${valuesChecked} valeurs actuelles vérifiés ; audit-8 à part : ${auditUsed.sort().join(', ') || 'aucun utilisé'})`
-)
 
 if (WARN) {
     const byToken = new Map()

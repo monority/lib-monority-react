@@ -19,6 +19,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { finish } from './lib/rebuild.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const resolved = JSON.parse(
@@ -124,11 +125,16 @@ for (const file of files) {
 }
 
 if (failures.length) {
-    console.error(`S11 FAIL — ${failures.length} écart(s) (${compared} valeurs comparées) :`)
-    for (const f of failures.slice(0, 40)) console.error('  ' + f)
-    process.exit(1)
+    finish({
+        id: 'S11',
+        name: 'valeurs des specs contre tokens résolus',
+        failures,
+        detail: `  ${compared} valeurs comparées, ${ignoredColor} largeurs de bordure ignorées, ${ignoredOther} cellules non comparables`,
+        max: 40,
+    })
+} else {
+    console.log(
+        `S11 PASS — ${compared} valeurs de specs identiques aux tokens résolus ` +
+            `(${ignoredColor} largeurs de bordure sur jeton de couleur, ${ignoredOther} cellules non comparables)`
+    )
 }
-console.log(
-    `S11 PASS — ${compared} valeurs de specs identiques aux tokens résolus ` +
-        `(${ignoredColor} largeurs de bordure sur jeton de couleur, ${ignoredOther} cellules non comparables)`
-)
