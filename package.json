@@ -30,7 +30,8 @@
         "test:test-skips": "node --test ./packages/tokens/scripts/test-skips.test.mjs",
         "test:token-pattern": "node --test ./tooling/tokens/token-pattern.test.mjs",
         "audit:tokens": "node ./packages/tokens/scripts/audit-tokens.mjs",
-        "test:audit-tokens": "node --test ./packages/tokens/scripts/audit-tokens.test.mjs"
+        "test:audit-tokens": "node --test ./packages/tokens/scripts/audit-tokens.test.mjs",
+        "test:scale-rules": "node --test ./packages/tokens/scripts/lib/scale-rules.test.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

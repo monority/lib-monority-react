@@ -13,6 +13,7 @@
  *   test:stylelint  règles maison          ~1 s
  *   test:test-skips registre de skips      ~1 s
  *   test:audit-tokens cycles et niveaux    ~1 s
+ *   test:scale-rules  pas et plafonds      ~1 s
  *   test            tokens, ui, web        ~30 s
  *   build           bundles                ~6 s
  *   check:test-skips garde des skips      ~1 s
@@ -38,6 +39,7 @@ const STEPS = [
     { name: 'test:audit-scope', cmd: 'test:audit-scope' },
     { name: 'test:test-skips', cmd: 'test:test-skips' },
     { name: 'test:audit-tokens', cmd: 'test:audit-tokens' },
+    { name: 'test:scale-rules', cmd: 'test:scale-rules' },
     { name: 'test:tokens', cmd: '--filter @monority/tokens test' },
     { name: 'test:ui', cmd: '--filter @monority/ui test' },
     { name: 'test:web', cmd: '--filter @monority/web test' },

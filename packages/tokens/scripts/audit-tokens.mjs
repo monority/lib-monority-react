@@ -28,6 +28,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadSources } from './lib/tokens-lib.mjs'
 import { isRebuilding } from './lib/rebuild.mjs'
+import { checkCap, checkScales, SCALE_BY_FAMILY } from './lib/scale-rules.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const pkgDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -195,6 +196,25 @@ export function findRecipesReadingPrimitives() {
  * tests n'exécute pas l'audit : sans cette garde, `process.exit` tuerait le
  * runner et les assertions ne tourneraient jamais.
  */
+/** Familles d'échelle déclarées, triées par longueur décroissante. */
+function scaleFamilies() {
+    return [...SCALE_BY_FAMILY.keys()].sort((a, b) => b.length - a.length)
+}
+
+/** Familles réellement présentes dans l'ensemble de tokens donné. */
+export function familiesPresent(names) {
+    const found = new Set()
+    for (const name of names) {
+        for (const family of scaleFamilies()) {
+            if (name === `--mr-${family}` || name.startsWith(`--mr-${family}-`)) {
+                found.add(family)
+                break
+            }
+        }
+    }
+    return [...found]
+}
+
 function runCli() {
     // --- Exécution ---
     const leaves = collectLeaves()
@@ -203,9 +223,18 @@ function runCli() {
     const levelViolations = findLevelViolations(graph, leaves)
     const primitiveReaders = findRecipesReadingPrimitives()
 
+    // Échelles de pas (D15) : un pas hors liste fermée ou un plafond dépassé
+    // est un écart. Les plafonds sont lus dans categories.json, jamais recopiés.
+    const scaleViolations = checkScales([...leaves.keys()])
+    const capViolations = familiesPresent([...leaves.keys()])
+        .map((f) => checkCap(f))
+        .filter(Boolean)
+
     const failures = [
         ...cycles.map((c) => `cycle : ${c.join(' → ')}`),
         ...levelViolations.map((v) => `${v.kind} : ${v.from} → ${v.to} (${v.reason})`),
+        ...scaleViolations.map((v) => `échelle : ${v.reason}`),
+        ...capViolations,
     ]
 
     console.log(`audit:tokens — ${leaves.size} tokens, ${graph.size} nœuds du graphe`)
@@ -214,6 +243,8 @@ function runCli() {
     console.log(
         `  recettes lisant --mr-ref- : ${primitiveReaders.length} (ROADMAP §4.1 l'interdit)`
     )
+    console.log(`  pas hors échelle         : ${scaleViolations.length}`)
+    console.log(`  plafonds dépassés        : ${capViolations.length}`)
 
     if (primitiveReaders.length) {
         const byFile = new Map()
@@ -235,10 +266,14 @@ function runCli() {
             nodes: graph.size,
             cycles: cycles.length,
             levelViolations: levelViolations.length,
+            scaleViolations: scaleViolations.length,
+            capViolations: capViolations.length,
             primitiveReaders: primitiveReaders.length,
         },
         cycles,
         levelViolations,
+        scaleViolations,
+        capViolations,
         primitiveReaders,
     }
     const jsonIndex = process.argv.indexOf('--json')

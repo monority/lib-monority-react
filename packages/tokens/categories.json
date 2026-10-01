@@ -4,57 +4,338 @@
         "scope": "Tokens sémantiques et de fondation uniquement. Les tokens de composant ne sont PAS ici : ils relèvent du registre local-tokens avec justification (D8).",
         "derivation": "stylelint.config.mjs dérive la regex custom-property-pattern de ce fichier. docs/design/tokens-convention.md §4 doit lister exactement ces catégories. Un test échoue si les trois divergent.",
         "roadmap": "ROADMAP.md §4.2 (familles) et §5.2 (nommage), amendés le 2026-10-01",
-        "rule": "Une catégorie peut se tenir seule (--mr-border-width, --mr-z-index) ou être suivie de segments de rôle (--mr-bg-canvas, --mr-font-weight-medium)."
+        "rule": "Une catégorie peut se tenir seule (--mr-border-width, --mr-z-index) ou être suivie de segments de rôle (--mr-bg-canvas, --mr-font-weight-medium).",
+        "scales": "Liste fermée des échelles de pas (D15, validée le 2026-10-01). Source unique : docs/design/tokens-scales.md. audit:tokens refuse un pas hors liste et un dépassement de plafond."
     },
     "categories": [
-        { "name": "bg", "family": "couleur", "role": "niveau de fond" },
-        { "name": "text", "family": "couleur", "role": "couleur et niveau de texte" },
-        { "name": "border", "family": "couleur", "role": "couleur de bordure" },
-        { "name": "accent", "family": "couleur", "role": "couleur d'accent et ses tons" },
-        { "name": "tonal", "family": "couleur", "role": "variante tonale d'un accent" },
-        { "name": "status", "family": "couleur", "role": "tons success / warning / danger / info" },
-        { "name": "scrim", "family": "couleur", "role": "voile de superposition" },
-        { "name": "chart", "family": "couleur", "role": "séries de graphique" },
-
-        { "name": "spacing", "family": "dimension", "role": "échelle d'espacement 4px" },
-        { "name": "radius", "family": "dimension", "role": "échelle de rayons" },
-        { "name": "border-width", "family": "dimension", "role": "épaisseur de bordure" },
-        { "name": "focus", "family": "dimension", "role": "anneau et décalage de focus" },
-        { "name": "control-height", "family": "dimension", "role": "hauteur de contrôle" },
-        { "name": "icon-size", "family": "dimension", "role": "taille d'icône" },
-
-        { "name": "font-family", "family": "typographie", "role": "police" },
-        { "name": "font-size", "family": "typographie", "role": "taille de texte" },
-        { "name": "line-height", "family": "typographie", "role": "interligne" },
-        { "name": "font-weight", "family": "typographie", "role": "graisse" },
-        { "name": "letter-spacing", "family": "typographie", "role": "interlettrage" },
-
-        { "name": "duration", "family": "mouvement", "role": "durée d'animation" },
-        { "name": "easing", "family": "mouvement", "role": "courbe de timing" },
-
-        { "name": "shadow", "family": "profondeur", "role": "élévation" },
-        { "name": "z-index", "family": "profondeur", "role": "ordre de superposition" },
-        { "name": "opacity", "family": "profondeur", "role": "opacité d'état" },
-
-        { "name": "container", "family": "layout", "role": "largeur de conteneur" },
-        { "name": "breakpoint", "family": "layout", "role": "point de rupture" },
-
-        { "name": "density", "family": "variation", "role": "jeton de densité" },
-        { "name": "brand", "family": "variation", "role": "jeton de marque" }
+        {
+            "name": "bg",
+            "family": "couleur",
+            "role": "niveau de fond"
+        },
+        {
+            "name": "text",
+            "family": "couleur",
+            "role": "couleur et niveau de texte"
+        },
+        {
+            "name": "border",
+            "family": "couleur",
+            "role": "couleur de bordure"
+        },
+        {
+            "name": "accent",
+            "family": "couleur",
+            "role": "couleur d'accent et ses tons"
+        },
+        {
+            "name": "tonal",
+            "family": "couleur",
+            "role": "variante tonale d'un accent"
+        },
+        {
+            "name": "status",
+            "family": "couleur",
+            "role": "tons success / warning / danger / info"
+        },
+        {
+            "name": "scrim",
+            "family": "couleur",
+            "role": "voile de superposition"
+        },
+        {
+            "name": "chart",
+            "family": "couleur",
+            "role": "séries de graphique"
+        },
+        {
+            "name": "spacing",
+            "family": "dimension",
+            "role": "échelle d'espacement 4px"
+        },
+        {
+            "name": "radius",
+            "family": "dimension",
+            "role": "échelle de rayons"
+        },
+        {
+            "name": "border-width",
+            "family": "dimension",
+            "role": "épaisseur de bordure"
+        },
+        {
+            "name": "focus",
+            "family": "dimension",
+            "role": "anneau et décalage de focus"
+        },
+        {
+            "name": "control-height",
+            "family": "dimension",
+            "role": "hauteur de contrôle"
+        },
+        {
+            "name": "icon-size",
+            "family": "dimension",
+            "role": "taille d'icône"
+        },
+        {
+            "name": "font-family",
+            "family": "typographie",
+            "role": "police"
+        },
+        {
+            "name": "font-size",
+            "family": "typographie",
+            "role": "taille de texte"
+        },
+        {
+            "name": "line-height",
+            "family": "typographie",
+            "role": "interligne"
+        },
+        {
+            "name": "font-weight",
+            "family": "typographie",
+            "role": "graisse"
+        },
+        {
+            "name": "letter-spacing",
+            "family": "typographie",
+            "role": "interlettrage"
+        },
+        {
+            "name": "duration",
+            "family": "mouvement",
+            "role": "durée d'animation"
+        },
+        {
+            "name": "easing",
+            "family": "mouvement",
+            "role": "courbe de timing"
+        },
+        {
+            "name": "shadow",
+            "family": "profondeur",
+            "role": "élévation"
+        },
+        {
+            "name": "z-index",
+            "family": "profondeur",
+            "role": "ordre de superposition"
+        },
+        {
+            "name": "opacity",
+            "family": "profondeur",
+            "role": "opacité d'état"
+        },
+        {
+            "name": "container",
+            "family": "layout",
+            "role": "largeur de conteneur"
+        },
+        {
+            "name": "breakpoint",
+            "family": "layout",
+            "role": "point de rupture"
+        },
+        {
+            "name": "density",
+            "family": "variation",
+            "role": "jeton de densité"
+        },
+        {
+            "name": "brand",
+            "family": "variation",
+            "role": "jeton de marque"
+        }
     ],
     "primitives": [
-        { "name": "brand-hue", "note": "teinte de la marque" },
-        { "name": "brand-chroma", "note": "chroma de la marque" },
-        { "name": "neutral-hue", "note": "teinte des neutres" },
-        { "name": "neutral-chroma", "note": "chroma des neutres" },
-        { "name": "font-sans", "note": "police sans empattement" },
-        { "name": "font-mono", "note": "police à chasse fixe" },
-        { "name": "radius-scale", "note": "facteur d'échelle des rayons" }
+        {
+            "name": "brand-hue",
+            "note": "teinte de la marque"
+        },
+        {
+            "name": "brand-chroma",
+            "note": "chroma de la marque"
+        },
+        {
+            "name": "neutral-hue",
+            "note": "teinte des neutres"
+        },
+        {
+            "name": "neutral-chroma",
+            "note": "chroma des neutres"
+        },
+        {
+            "name": "font-sans",
+            "note": "police sans empattement"
+        },
+        {
+            "name": "font-mono",
+            "note": "police à chasse fixe"
+        },
+        {
+            "name": "radius-scale",
+            "note": "facteur d'échelle des rayons"
+        }
     ],
     "forbidden": [
-        { "name": "fs-*", "reason": "abréviation héritée, remplacée par font-size (D8)" },
-        { "name": "lh-*", "reason": "abréviation héritée, remplacée par line-height (D8)" },
-        { "name": "dur-*", "reason": "abréviation héritée, remplacée par duration (D8)" },
-        { "name": "ease-*", "reason": "catégorie réelle : easing. ease-* est interdit (D8)" }
+        {
+            "name": "fs-*",
+            "reason": "abréviation héritée, remplacée par font-size (D8)"
+        },
+        {
+            "name": "lh-*",
+            "reason": "abréviation héritée, remplacée par line-height (D8)"
+        },
+        {
+            "name": "dur-*",
+            "reason": "abréviation héritée, remplacée par duration (D8)"
+        },
+        {
+            "name": "ease-*",
+            "reason": "catégorie réelle : easing. ease-* est interdit (D8)"
+        }
+    ],
+    "scales": [
+        {
+            "family": "spacing",
+            "scope": "global",
+            "stepType": "numerique",
+            "steps": [
+                "0",
+                "0-5",
+                "1",
+                "1-5",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "8",
+                "10",
+                "12",
+                "16",
+                "20",
+                "24"
+            ],
+            "cap": 15
+        },
+        {
+            "family": "font-size",
+            "scope": "global",
+            "stepType": "numerique",
+            "steps": ["11", "12", "13", "14", "16", "18", "24", "32"],
+            "cap": 8
+        },
+        {
+            "family": "line-height",
+            "scope": "global",
+            "stepType": "numerique",
+            "steps": ["11", "12", "13", "14", "16", "18", "24", "32"],
+            "cap": 8
+        },
+        {
+            "family": "chart",
+            "scope": "global",
+            "stepType": "numerique",
+            "steps": ["1", "2", "3", "4", "5"],
+            "cap": 5
+        },
+        {
+            "family": "radius",
+            "scope": "global",
+            "stepType": "nomme",
+            "steps": ["xs", "sm", "md", "lg", "full"],
+            "cap": 5,
+            "roles": ["inline", "control", "card", "overlay"]
+        },
+        {
+            "family": "shadow",
+            "scope": "global",
+            "stepType": "nomme",
+            "steps": ["xs", "sm", "md", "lg"],
+            "cap": 4,
+            "roles": ["raised", "surface", "focus", "overlay", "thumb"]
+        },
+        {
+            "family": "duration",
+            "scope": "global",
+            "stepType": "nomme",
+            "steps": ["fast", "base", "slow"],
+            "cap": 3,
+            "roles": ["spin", "pulse"],
+            "note": "Série de transition. Les boucles spin/pulse sont des rôles hors échelle (D16)."
+        },
+        {
+            "family": "font-weight",
+            "scope": "global",
+            "stepType": "nomme",
+            "steps": ["regular", "medium", "semibold"],
+            "cap": 3,
+            "note": "bold supprimé : language.md §5.9 interdit toute graisse hors 400/500/600."
+        },
+        {
+            "family": "icon-size",
+            "scope": "global",
+            "stepType": "nomme",
+            "steps": ["sm", "md", "lg"],
+            "cap": 3
+        },
+        {
+            "family": "avatar-size",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["sm", "md", "lg"],
+            "cap": 3
+        },
+        {
+            "family": "dialog-width",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["sm", "md", "lg"],
+            "cap": 3
+        },
+        {
+            "family": "badge",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["sm", "md"],
+            "cap": 2
+        },
+        {
+            "family": "checkbox",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["md", "lg"],
+            "cap": 2,
+            "roles": ["size", "glyph"]
+        },
+        {
+            "family": "textarea",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["sm", "md", "lg"],
+            "cap": 3,
+            "roles": ["min-height"]
+        },
+        {
+            "family": "spinner",
+            "scope": "composant",
+            "stepType": "nomme",
+            "steps": ["sm", "md", "lg"],
+            "cap": 3,
+            "roles": ["size", "ring"],
+            "note": "D16 : une échelle, deux rôles. size = mesure du conteneur, ring = épaisseur de l'anneau."
+        },
+        {
+            "family": "opacity",
+            "scope": "global",
+            "stepType": "role-seul",
+            "steps": [],
+            "cap": 0,
+            "roles": ["disabled"],
+            "note": "Échelle supprimée. Un rôle seul est valide : le registre local-tokens décrit des tokens, pas des échelles."
+        }
     ]
 }
