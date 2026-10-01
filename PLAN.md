@@ -60,6 +60,7 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 - [x] **0.4** Renommage D11 des 7 primitives sous `--mr-ref-*`. Commit `4d0b1a2`.
 - [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`. Idempotence de l'écriture prouvée par commit `6798adc`.
 - [x] **0.5b** `pnpm verify` : porte de preuve unique, 13 étapes en ordre fixe (du plus rapide au plus lent), arrêt au premier échec. Toutes les preuves de fin de commit proviennent de ce script.
+- [ ] **0.6b** Tableau des échelles (`docs/design/tokens-scales.md`) — **livré, en attente de validation**. Aucun token avant validation (D15 condition 5).
 - [x] **0.6** Décision D15 **tranchée** — option C, échelle déclarée par famille et fermée, sous 5 conditions (voir `DECISIONS.md`). Tableau famille → type de pas → pas autorisés à valider **avant 11b1**.
 - [ ] **0.7** Registre `local-tokens` : 226 entrées en statut `a-auditer`, comptées au cliquet, passage à `justifie` sur surface de personnalisation prouvée (D8).
 - [x] **0.8** Verrou des 4 tests web de contrat tokens. Registre `packages/tokens/test-skips.json` (raison + `blockedBy` ordonné), quatre gardes (`check-test-skips.mjs`), 12 tests de registre, compteur de skips au cliquet. Les skips sont **conditionnels** au verrou : `duringRebuild(it)` dans `apps/web/src/lib/rebuild-lock.ts`, un `it.skip` en dur est refusé.

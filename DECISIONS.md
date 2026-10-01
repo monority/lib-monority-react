@@ -87,6 +87,8 @@ Le mélange est la source du désordre, pas les noms eux-mêmes. Un même préfi
 - **C — échelle déclarée par famille, fermée.** Chaque famille déclare ses pas dans `packages/tokens/categories.json`, et `audit:tokens` refuse tout pas hors liste. Nommé pour ce qui est exposé en prop `size`, numérique pour les échelles continues sans sens public (`spacing`), jamais de mélange au sein d'une famille.
 - **D — statu quo.** each families garde sa convention. C'est l'état mesuré ci-dessus.
 
+**Tableau des échelles : `docs/design/tokens-scales.md`, à valider avant toute création de token.**
+
 **Option retenue : C**, sous cinq conditions opposables :
 
 1. Les échelles sont déclarées dans `packages/tokens/categories.json`, source unique. Le test de synchronisation couvre les pas, pas seulement les catégories.
