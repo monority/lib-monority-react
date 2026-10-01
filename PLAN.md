@@ -1,36 +1,58 @@
-# Plan de remise en ordre — Monority UI
+# Chantier base CSS saine — Monority UI
 
-## Règles communes (toutes les étapes)
-- Une étape par session. N'exécute que l'étape demandée.
-- Un commit par sujet. Après chaque commit : typecheck, tests (ui, web, tokens), build, format:check.
-- Stage uniquement par liste de chemins, jamais git add . ; vérifie l'index avant chaque commit.
-- Avant de supprimer un fichier ou un symbole : git grep pour prouver qu'il n'est pas utilisé.
-- Aucun changement de rendu non annoncé. Si une étape en provoque un, montre l'avant/après et attends validation.
-- Si une décision marquée [DÉCISION] n'est pas tranchée dans ce fichier, arrête-toi et pose la question.
-- Contexte presque épuisé : termine sur un commit propre, écris HANDOFF.md (non commité, dans .gitignore) avec les commits faits, ce qui reste et les pièges.
-- En fin d'étape : coche l'étape ci-dessous, commite PLAN.md, fais un rapport court avec les preuves.
+Ancien systeme JSON + Style Dictionary abandonne, archive par
+`archive/tokens-json-d899d22`. Fondation CSS ecrite a la main sous
+`packages/styles/src/`, couches `@layer mr.*`. Branche
+`refactor/css-foundation`, base `origin/main` a `b7b460a` (fusion PR #7,
+le `b9b98d8` attendu etait le parent). Recolte unique hors depot :
+`Temp/css-foundation-harvest/synthese.md` (499 lignes, 440 valeurs).
+Ne plus relire l'historique : toute valeur vient de cette synthese.
 
-## Décisions
-- D1 Utilitaires : RETENU — supprimer .stack/.grid/.container/.section (doublons des composants Stack/Grid/Container/Section). Autres familles : supprimer si 0 usage dans ui et web (git grep), sinon export optionnel ./utilities.css avec préfixe mr-. legacy-layout.css supprimé si 0 usage. Donne le tableau usage par famille avant d'agir.
-- D2 Reset global : RETENU — export opt-in "./reset.css", importé explicitement par apps/web, documenté dans le README du package.
-- D3 Scripts d'audit ponctuels : **VALIDÉE** — les 4 scripts `docs/design/audit/*.mjs` (check-s1, check-s3, check-specs, measure-size) sont archivés dans `docs/archive/audit/`. Réserve : `packages/tokens/scripts/probe-contrast.mjs` et `extract-deprecated.mjs` sont **restés en place** (non archivés). `extract-deprecated.mjs` est cité par le plan ; à arbitrer dans une étape dédiée.
-- D4 Pages de faux SaaS dans apps/web (auth simulée, Admin, Dashboard, services/, useAuth, AuthProvider) : [DÉCISION] démo volontaire à regrouper / à supprimer.
-- D5 Source de vérité de la doc composant : **VALIDÉE** — `docs/design/components/*.md` fait foi. Écart constaté, non corrigé (à traiter dans une étape dédiée) : `apps/web/src/features/docs/components/DocPage.tsx` ne lit pas ces fiches, il reçoit le contenu via props depuis les `.docs.tsx` / `.meta.ts` / `.examples.tsx` d'`apps/web` → le contenu est **dupliqué**, et les deux listes divergent déjà (3 composants présents seulement dans apps/web : `async-state-notice`, `inline-alert`, `separator` ; 5 présents seulement dans docs/design).
+## Phase 0 — arret propre (faite)
+Tag archive pose et pousse. Worktree propre
+`C:/Dev/Projects/lib-monority-react-css-foundation`. Mesures : 76 recettes
+dans `packages/styles/src/recipes/`, build `tsup` dans `packages/ui`,
+CSS publie via `dist/index.css` (`src/index.ts` importe
+`src/styles/globals.css`), exports `index.css`, `styles.css`,
+`reset.css`, `utilities.css`. Lectures par les recettes : `border-` 279,
+`text-` 195, `bg-` 153, `accent` 103, `danger` 82, `focus-` 64,
+`chart-` 0, `ref-` 0. Poids source `packages/styles/src` : 273010 octets.
 
-## Étapes
-- [x] 1. Nettoyage : fichiers morts (racine, styles/debug, vendors/prism, apps/web, tooling), BOM + .editorconfig, AGENTS.md, .npmrc + registry-url/NODE_AUTH_TOKEN dans release.yml, essai à blanc changesets, test NavigationMenu sur getByRole.
-- [x] 2. Bugs de consommation : layers renommées monority.*, bannière "use client" (+ test dist), détection production via process.env.NODE_ENV littéral (helper unique, messages en anglais), types d'InputBase sans index signature any. Puis D1 et D2 si tranchées.
-- [x] 2b. Correctifs de l'étape 2 : composants autonomes sans reset.css (box-sizing, font des contrôles), bannière "use client" limitée aux fichiers qui en ont besoin (exports serveur préservés), README d'intégration (ordre des layers), preuve visuelle avant/après.
-- [x] 2c. Ajustements de 2b : portée de library-scope.css sur le contenu de l'hôte, inventaire et réduction des exports publics ajoutés, couverture react-dom de la bannière, formulation du README sur les Server Components.
-- [ ] 3. Migration BEM → data-* : les composants émettent des attributs data-* pour variantes et états ; suppression des sélecteurs BEM doublés dans les recettes. Par famille de composants, un commit par famille. Mesure le poids de dist/index.css avant/après. → Travail fait et poussé sur `main` (7 commits). Revue tardive : [rapport consolidé](./rapport-etapes-3-6.md). **Preuve par famille absente** (mesure de poids et comparaison visuelle faites une seule fois, en fin de parcours, pas à chaque commit).
-- [x] 4. Doublons et rangement : fusion Divider/Separator (garder un nom, l'autre en alias déprécié), fusion display/data-display en catégories claires, renommage des 8 tests stepNN selon ce qu'ils vérifient, fusion des 3 tests d'exports. → **Divider/Separator : voir [la preuve qu'ils ne sont pas doublons](./rapport-etapes-3-6.md)** — la fusion n'a pas lieu d'être. Reste : 8 tests renommés, `data-display/` → `data/`, 3 tests d'exports fusionnés, regroupement vérifié au navigateur.
-- [x] 5. Migrations et doc : MIGRATIONS.md unique (space→spacing, deprecated.css, legacy-layout.css, radius, BEM) avec état et version de fin ; historique d'audit vers docs/archive/ ; application de D3 et D5 ; CHANGELOG.md racine supprimé ou redirigé vers celui du package. → `MIGRATIONS.md` créé, historique archivé, D3 et D5 validées, `CHANGELOG.md` racine redirigé vers `packages/ui/CHANGELOG.md`. Détails et écarts : [rapport consolidé](./rapport-etapes-3-6.md).
-- [x] 5a. Migration des alias de tokens dépréciés dans le CSS livré : **lots sûrs terminés**. Méthode : résoudre la chaîne d’alias de `deprecated.json` transitivement jusqu’à un token vivant, ne migrer que si la valeur résolue est identique. Réalisé : `b7f6bf5` (327 occ.), `f9b6cd8` (239 occ.), puis ce lot (486 occ. sur 66 recettes, 10 tokens : `--mr-text-sm/xs/md/lg`, `--mr-space-0/2/5/7/9`, `--mr-dur-1200`). Preuve d’équivalence : chaque `var()` résout à la même valeur physique avant/après (2394 de chaque côté, 0 recette différente) ; T1 et T6 du paquet tokens passent ; deux tests de contrat de docs mis à jour. Retiré de cette étape et reporté en 5b : le sous-groupe Δ≠0 et les `leading-*` / `dur-100-150-200-600`. Aucun token créé.
-- [ ] 5b. Normalisation de l’échelle d’espacement et de motion (`space-*` → `spacing-*`) : reprendre le sous-groupe Δ≠0 et les tokens sans équivalent direct, **par famille de composants et avec preuve visuelle par famille**, pas par décision de tableau. Ne pas fixer les valeurs cibles avant d’avoir la preuve. Cas identifiés : valeurs **fluides** (`--mr-text-2xl`, `--mr-text-3xl` sont des `clamp()`, remplacés par une valeur fixe : la migration ceased d’être neutre), écarts réels de 1 à 16 px (`--mr-space-1/3/4/6/8`, `--mr-elevation-surface/raised`) et 11 tokens `leading-*` / `dur-100-150-200-600` sans équivalent dans leur famille. Point de départ mesuré : 455 occurrences sur 57 tokens, concentrées sur `space` (214), `leading` (62), `overlay` (36), `control` (22), `dur` (21).
-- [x] 6. apps/web : application de D4, puis organisation par fonctionnalité (features/docs, features/playground, features/moodboard, features/showcase, shared/) ; page harness exclue du build de production. → D4 appliquée (option B), réorganisation par fonctionnalité faite, harness passé en `lazy()` et mesuré absent du chunk d'entrée. Détails : [rapport consolidé](./rapport-etapes-3-6.md).
+## Phase 1 — fondation (un commit vert par sous-etape)
+1. `layers.css`, `reset.css`, `base/`, demo qui prouve l'ordre et la specificite.
+2. `tokens/ref.css`, `tokens/semantic.css`, clair par defaut, valeurs reconstruites.
+3. `themes/` : 7 themes plus alias `dim`.
+4. Stylelint 3 regles et test de contraste, chacun prouve en negatif d'abord.
+5. Integration build et `pnpm verify` en 8 etapes au plus, l'app s'affiche.
+Sortie : app visible avec les semantiques de base sur les 7 themes et `dim`.
 
-- [ ] 6b. Source de vérité unique de la doc composant (D5) : faire lire à `DocPage.tsx` les fiches `docs/design/components/*.md` au lieu du contenu dupliqué dans `apps/web`. Point de départ mesuré : `DocPage.tsx` ne lit aucune fiche `.md`, il reçoit tout par props depuis les `.docs.tsx` / `.meta.ts` / `.examples.tsx` d'`apps/web` → 70 fiches dans `apps/web` contre 72 dans `docs/design`, et les deux listes divergent déjà (3 composants présents seulement côté web : `async-state-notice`, `inline-alert`, `separator` ; 5 présents seulement côté design). Attendu : une seule source à modifier, plus de dérive silencieuse, et un test qui échoue si les deux listes divergent.
-- [ ] 7. État contrôlé : useControllableState (updates fonctionnels, tests) adopté par les ~19 composants concernés ; useFieldIds adopté ou supprimé. Tests existants inchangés.
-- [ ] 8. forwardRef → ref comme prop (React 19) dans les 76 fichiers, par lots. Supprime le "ref as any" d'InputBase.
-- [ ] 9. Build et outillage : déclarations via tsc --emitDeclarationOnly (mesure avant/après), import de @monority/styles par nom de package, un seul export CSS, publint + arethetypeswrong + test:dist en CI, snapshots Playwright régénérés dans l'image Docker officielle (suppression des *-win32.png) + job e2e en CI, size-limit sur dist/index.css et dist/index.js.
-- [ ] 10. Lint : 144 erreurs et 28 warnings au 28/09 (dont ~75 a11y). Traiter les a11y une par une, ce sont de vrais problèmes pour une librairie de composants, dont les exemples sont copiés par les utilisateurs. Pour les règles de pur style dans les tests et exemples (noArrayIndexKey sur listes statiques, noExplicitAny dans les tests), proposer des overrides Biome ciblés plutôt que des corrections en masse. Puis lint bloquant en CI.
+## Phase 2 — migration des recettes par famille (un commit vert par lot)
+Ordre mesure : `border`, `text`, `bg`, `accent`, `status`, puis dimensions
+(`control`, `spacing`, `ease`, `fs`, `duration`, `radius`). Recettes en couche,
+lecture via semantiques ou tokens de composant, aucun token sans consommateur
+mesure. `chart-*` n'a aucun lecteur : a creer seulement sur besoin prouve.
+
+## Phase 3 — finitions
+Dimensions restantes, `reduced-motion` dans la base, baselines e2e regenerees
+en une passe, `docs/foundation/` a jour, changeset prepare sans publier,
+ancien systeme supprime en un ou quelques commits verts une fois mesure par
+`git grep` que plus rien ne le lit. Poids du CSS publie mesure avant et apres.
+
+## Regles
+Stager par liste de chemins, jamais `git add .`. Message par `git commit -F`.
+`pnpm verify` complet avant chaque commit. Push apres chaque commit vert,
+jamais sur `main`, aucune PR avant la Definition of Done (release par
+changesets). Un seul rapport en fin de phase, prose et puces, aucun tableau.
+
+## Reprise
+Etape 0 et mesures terminees, tag archive pousse, branche creee depuis
+`origin/main` a `b7b460a`. Worktree de travail :
+`C:/Dev/Projects/lib-monority-react-css-foundation`.
+`pnpm install` fait. node_modules absents avant, presents maintenant.
+Recolte : `Temp/css-foundation-harvest/` (`harvest.cjs`, `synthese.md`).
+Prochain : ecrire `layers.css`, `reset.css`, `base/` avec demo de preuve.
+`dist/index.css` n'existe pas encore : le poids avant sera le build initial.
+Etat vert : ce commit contient `PLAN.md` et `DECISIONS.md` seuls.
+`docs/foundation/` reste a creer en phase 1 ou 3, a trancher en phase 1.5.
+Conflit connu : couches actuelles `monority.*`, a renommer `mr.*` en 1.1.
+Travail restant : phases 1, 2, 3 dans l'ordre, sans arret entre les etapes.
