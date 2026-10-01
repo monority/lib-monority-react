@@ -28,6 +28,10 @@
 
 ## Étapes
 
+Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.1, 0.2, 11b1, 11z…). Ils ne changent plus, même si l'ordre d'exécution bouge. Les rapports citent ces identifiants, pas les intitulés. Le protocole d'exécution et les critères de sortie sont dans `ROADMAP.md` §8, qui prime sur cette liste.
+
+### Chantier antérieur à la feuille de route (terminé ou repris par 11)
+
 - [ ] 1. Nettoyage : fichiers morts, BOM + `.editorconfig`, `AGENTS.md`, `.npmrc` + `registry-url/NODE_AUTH_TOKEN`, essai à blanc changesets, test NavigationMenu sur `getByRole`.
 - [ ] 2. Bugs de consommation : layers `monority.*`, `"use client"`, détection production, types InputBase, D1, D2.
   - [ ] 2b. Correctifs : composants autonomes sans `reset.css`, bannière `"use client"` limitée, preuve visuelle.
@@ -48,8 +52,25 @@
 - [ ] 8. `forwardRef` → `ref` comme prop (React 19) dans les 76 fichiers, par lots. Supprime le `"ref as any"` d'InputBase si devenu inutile.
 - [ ] 9. Build et outillage : import de `@monority/styles` par nom de package (pas chemin relatif), un seul export CSS, `publint` + `arethetypeswrong` + `test:dist` en CI, snapshots Playwright régénérés dans l'image Docker officielle (suppression des `*-win32.png`) + job e2e en CI (y compris `library-scope.spec.ts` et `reset-independence.spec.ts` qui lisent `dist/`), `size-limit` sur `dist/index.css` et `dist/index.js`, fixture Next.js App Router pour prouver la garantie Server Components.
 - [ ] 10. Lint : état réel au 28/09 = 144 erreurs + 28 warnings (hors fichiers d'une autre session). Traiter les a11y une par une (vrais problèmes, exemples copiés par les utilisateurs). `noUnusedVariables` : lire ligne ET colonne avant de corriger (des diagnostics ont déjà été mal interprétés). `sync-showcase.js` garde 3 `noForEach` non corrigés. Pour les règles de pur style dans tests/exemples (`noArrayIndexKey` sur listes statiques, `noExplicitAny` dans les tests) : proposer des overrides Biome ciblés plutôt que des corrections en masse. Puis lint bloquant en CI.
-- [ ] 11. Refonte du système de tokens (convention D6-D10). Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `space-*/spacing-*` isolée : tout se fait ici, dans l'ordre de la convention.
-  - [ ] 11a. **FAIT** — `docs/design/tokens-convention.md` (pattern `--mr-<catégorie>-<rôle>[-<variante>]`, vocabulaire fermé, test du token local D8, critère de doublon D9, transition spec↔code D6). Check `check-token-refs.mjs` en mode rapport avec 14 tests négatifs. Table rase appliquée (D11) + verrou de reconstruction (D12). Commits `cf26676`, `da34b7f`, `2396eaa`, `6de955d`, `41aa61d`, `f370ea4`.
+### Phase 0 — Outillage d'audit (ROADMAP §10)
+
+- [x] **0.1** État des lieux chiffré + plan de la phase 0. Commits `ab0c838`, `9fe13c3`.
+- [x] **0.2** Amendements `ROADMAP.md` §4.3 / §4.4 / §4.6 / §5.2, D14 inscrite. Commit `41beb44`.
+- [x] **0.3** Regex de nommage dérivée du vocabulaire cible (`packages/tokens/categories.json`), fixtures cibles de 11b1, test de synchronisation à trois sources. Commit `aee4ded`.
+- [x] **0.4** Renommage D11 des 7 primitives sous `--mr-ref-*`. Commit `4d0b1a2`.
+- [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`.
+- [ ] **0.6** Décision D15 ouverte (échelle des variantes) — **arbitrage en attente**. Bloque `audit:tokens`.
+- [ ] **0.7** Registre `local-tokens` : 226 entrées en statut `a-auditer`, comptées au cliquet, passage à `justifie` sur surface de personnalisation prouvée (D8).
+- [ ] **0.8** Verrou des 4 tests web de contrat tokens : skip explicite, raison + phase de réactivation par test, garde « skip sans `rebuild.json` = échec », compteur de skips au cliquet.
+- [ ] **0.9** `audit:tokens` : définis / utilisés / pendants / orphelins / doublons de valeur / cycles / violations de niveau. Fixtures ok/nok, dont cycles et D15.
+- [ ] **0.10** `audit:contrast` : colours calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
+- [ ] **0.11** CI pilotée par `rebuild.json`, même cliquet qu'en local.
+- [ ] **0.12** `MIGRATIONS.md` : mapping des 7 renommages D11, changeset breaking, exclusions d'audit.
+
+### Phase 11 — Refonte du système de tokens
+
+Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `space-*/spacing-*` isolée : tout se fait ici, dans l'ordre de la convention.
+  - [x] **11a** Convention + audit de références + table rase. Commits `cf26676`, `da34b7f`, `2396eaa`, `6de955d`, `41aa61d`, `f370ea4`. Reprise en 0.1–0.5 pour l'outillage.
   - [ ] 11b. **Familles de fondation**, dans cet ordre (ordre mesuré sur les 188 tokens consommés par 75 recettes) :
     - [ ] 11b1. Sémantique couleur : `bg-*`, `text-*`, `border-*`, `accent-*`, `success/warning/danger/info-*`, `scrim`, `chart-muted`. Dépendance de 63 recettes (`--mr-border-subtle`).
     - [ ] 11b2. Fondations dimensionnelles : `spacing-*`, `radius-*`, `border-width`, `focus-*`.

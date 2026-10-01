@@ -67,6 +67,30 @@ Interdits explicites : les abréviations héritées `--mr-fs-*`, `--mr-lh-*`, `-
 
 Motivation, mesurée : la regex initiale du §5.2 rejetait **179 des 279** tokens existants, soit 64 %. Trois défauts distincts — catégories absentes de la liste (`ease` et non `easing`, et toutes les familles de composants), catégories composées traitées comme des préfixes alors qu'elles sont des noms complets, et noms à deux segments refusés alors que `--mr-accent` est un nom nécessaire.
 
+### D15 — Échelle des variantes
+**OUVERTE — en attente d'arbitrage. Ne pas trancher.**
+
+Rien n'interdit aujourd'hui le mélange. D8 autorise `[-<variante>]`, la regex §5.2 autorise n'importe quel segment `(-[a-z0-9]+)*`, et rien ne dit ce qu'une variante peut être.
+
+**Constat mesuré** sur les 279 tokens de la table rase, dernier segment du nom :
+- 66 libellés de rôle (`hue`, `stroke`, `medium`, `display`…) ;
+- 27 numériques (`spacing` 0 à 24, `fs` 11 à 32, `opacity` 0 à 100) ;
+- 22 mots de rôle (`full`, `fast`, `hover`, `active`, `subtle`…) ;
+- 7 tailles nommées (`sm`, `xs`, `md`, `lg`, `xl`, `2xl`, `3xl`).
+
+Le mélange est la source du désordre, pas les noms eux-mêmes. Un même préfixe accumulait jusqu'à trois conventions : `control` portait 17 tokens, dont `size-sm/md/lg` (nommé), `padding-inline-xs/sm/md/lg` (nommé) et `gap` (sans variante). `switch` en portait 11 avec deux conventions contradictoires : `track-w-sm`, `track-h-sm`, `scale-lg`, `scale-sm`, `track-width-md`, `thumb-off`.
+
+**Options :**
+
+- **A — tailles nommées partout.** Simple, lisible dans `data-size`. Mais `--mr-spacing-md` est absurde : un pas de grille n'est pas un « md ».
+- **B — numérique partout.** `--mr-control-height-2`. Compact, mais `data-size="2"` n'est pas auto-documenté pour un consommateur.
+- **C — échelle déclarée par famille, fermée.** Chaque famille déclare ses pas dans `packages/tokens/categories.json`, et `audit:tokens` refuse tout pas hors liste. Nommé pour ce qui est exposé en prop `size`, numérique pour les échelles continues sans sens public (`spacing`), jamais de mélange au sein d'une famille.
+- **D — statu quo.** each families garde sa convention. C'est l'état mesuré ci-dessus.
+
+**Recommandation : C.** Une règle globale ne peut pas être correcte : nommer `spacing` en `md` est faux, numéroter `control-height` en `2` est illisible dans l'API publique. Ce qui rend le désordre évitable, c'est la **déclaration** — une échelle par famille, fermée, vérifiée. Coût assumé : une déclaration par famille, et le risque de dérive du nombre de pas entre familles. Correctif : les familles qui exposent une prop `size` partagent le même vocabulaire de pas, vérifié par `audit:tokens`.
+
+Si C est retenue, la fixture `audit:tokens` vérifiera un pas autorisé (ok) et un pas hors liste (nok) par famille.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)
