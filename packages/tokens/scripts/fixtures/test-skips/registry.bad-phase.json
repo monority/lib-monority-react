@@ -1,0 +1,10 @@
+{
+    "skippedTests": [
+        {
+            "file": "a.test.ts",
+            "tests": ["d > t"],
+            "reason": "raison",
+            "blockedBy": ["12"]
+        }
+    ]
+}

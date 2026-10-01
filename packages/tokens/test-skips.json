@@ -1,0 +1,35 @@
+{
+    "$meta": {
+        "purpose": "Registre des tests volontairement neutralisés pendant la reconstruction du système de tokens (PLAN.md 0.8).",
+        "lockFile": "packages/tokens/rebuild.json",
+        "rule": "Un skip absent de ce registre fait échouer la CI. Aucun skip silencieux.",
+        "reactivation": "Un test est réactivé après la DERNIÈRE phase de `blockedBy`, jamais avant. La liste est ordonnée du plus tôt au plus tard.",
+        "phaseVocabulary": "PLAN.md §7 : 11b1 sémantique couleur, 11b2 dimensions, 11b3 typographie, 11b4 mouvement et profondeur, 11b5 densité et marque, 11c+ composants, 11z fin de chantier."
+    },
+    "skippedTests": [
+        {
+            "file": "apps/web/src/features/docs/design-token-contract.test.ts",
+            "tests": [
+                "step23 design token contracts > defines the shared space scale consumed by recipes",
+                "step23 design token contracts > defines the shared duration scale consumed by recipes"
+            ],
+            "reason": "Les deux assertions lisent `tokens/generated/tokens.css` et attendent des tokens supprimés par la table rase : `--mr-spacing-1-5`, `--mr-spacing-2` (11b2) et `--mr-duration-fast-alt`, `--mr-duration-slow-alt` (11b4). L'assertion `not.toMatch(/--mr-space-\\d/)` reste vraie, mais le fichier ne contient plus rien à vérifier.",
+            "blockedBy": ["11b2", "11b4"],
+            "note": "`--mr-duration-fast-alt` et `--mr-duration-slow-alt` sont des suffixes ad hoc : ils seront listés dans le tableau des échelles avant 11b1, pas recréés tels quels."
+        },
+        {
+            "file": "apps/web/src/features/docs/geometry-contract.test.ts",
+            "tests": [
+                "Step 31 geometry contracts > defines and imports shared geometry tokens",
+                "Step 31 geometry contracts > keeps Spinner variant geometry in component tokens"
+            ],
+            "reason": "Ces deux tests vérifient l'existence de tokens supprimés par la table rase : `--mr-border-width`, `--mr-focus-width`, `--mr-control-padding-inline-md`, `--mr-icon-size-md`, `--mr-spacing-4`, `--mr-card-gap` (11b2, dimensions) et `--mr-spinner-size-{sm,md,lg}`, `--mr-spinner-ring-{sm,md,lg}` (11c+, tokens de composant).",
+            "blockedBy": ["11b2", "11c"],
+            "note": "Le test `keeps Card on the shared surface geometry` échoue aussi via `--mr-card-min-height`, absent lui aussi ; il est réactivé avec le même registre."
+        }
+    ],
+    "summary": {
+        "totalTests": 4,
+        "byFile": 2
+    }
+}

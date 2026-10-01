@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { duringRebuild } from '../../lib/rebuild-lock'
 // @ts-ignore - node builtins unavailable in the web tsconfig types; vitest runs on node
 import { readFileSync } from 'node:fs'
 // @ts-ignore - process unavailable in the web tsconfig types
@@ -21,7 +22,13 @@ function tokenFile(path: string) {
 }
 
 describe('step23 design token contracts', () => {
-    it('defines the shared space scale consumed by recipes', () => {
+    // Neutralisé TANT QUE le verrou de reconstruction est actif (PLAN.md 0.8).
+    // Lever le verrou remet ces tests en service : ils doivent alors passer.
+    const itRebuild = duringRebuild(it)
+    // Bloqué par PLAN.md 0.8 : attend --mr-spacing-1-5 / --mr-spacing-2 (11b2),
+    // supprimés par la table rase.
+    // Registre : packages/tokens/test-skips.json
+    itRebuild('defines the shared space scale consumed by recipes', () => {
         // L'echelle space-* (progression 1.4x) a cede la place a la grille 4px
         // spacing-*. Les recettes consomment desormais spacing-* et l'echelle
         // space-* ne doit plus etre declaree.
@@ -31,7 +38,10 @@ describe('step23 design token contracts', () => {
         expect(generated).not.toMatch(/--mr-space-\d/)
     })
 
-    it('defines the shared duration scale consumed by recipes', () => {
+    // Bloqué par PLAN.md 0.8 : attend --mr-duration-fast-alt / --mr-duration-slow-alt
+    // (11b4). Suffixes ad hoc, à trancher dans le tableau des échelles avant 11b1.
+    // Registre : packages/tokens/test-skips.json
+    itRebuild('defines the shared duration scale consumed by recipes', () => {
         // dur-150 / dur-200 sont promus en tokens modernes (duration-fast-alt /
         // duration-slow-alt) : le contrat verifie desormais tokens.css.
         const tokens = tokenFile('tokens/generated/tokens.css')

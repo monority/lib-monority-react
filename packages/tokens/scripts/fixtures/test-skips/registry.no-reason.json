@@ -1,0 +1,9 @@
+{
+    "skippedTests": [
+        {
+            "file": "a.test.ts",
+            "tests": ["d > t"],
+            "blockedBy": ["11b2"]
+        }
+    ]
+}

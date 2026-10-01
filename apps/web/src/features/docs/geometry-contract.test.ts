@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { duringRebuild } from '../../lib/rebuild-lock'
 
 declare const process: { cwd(): string }
 
@@ -12,7 +13,11 @@ function source(path: string) {
 }
 
 describe('Step 31 geometry contracts', () => {
-    it('defines and imports shared geometry tokens', () => {
+    // Neutralisé TANT QUE le verrou de reconstruction est actif (PLAN.md 0.8).
+    const itRebuild = duringRebuild(it)
+    // Bloqué par PLAN.md 0.8 : attend des tokens supprimés par la table rase.
+    // Registre : packages/tokens/test-skips.json
+    itRebuild('defines and imports shared geometry tokens', () => {
         const generated = source('tokens/generated/tokens.css')
         const deprecated = source('tokens/generated/deprecated.css')
         const index = source('index.css')
@@ -41,7 +46,10 @@ describe('Step 31 geometry contracts', () => {
         expect(card).toContain('var(--mr-shadow-surface)')
     })
 
-    it('keeps Spinner variant geometry in component tokens', () => {
+    // Bloqué par PLAN.md 0.8 : attend --mr-spinner-size-* / --mr-spinner-ring-*,
+    // supprimés par la table rase, reconstruits en 11c+.
+    // Registre : packages/tokens/test-skips.json
+    itRebuild('keeps Spinner variant geometry in component tokens', () => {
         const spinner = source('recipes/spinner.recipe.css')
         const tokens = source('tokens/generated/tokens.css')
         expect(tokens).toContain('--mr-spinner-size-sm')

@@ -1,0 +1,10 @@
+{
+    "skippedTests": [
+        {
+            "file": "apps/web/src/features/docs/x.test.ts",
+            "tests": ["d > t"],
+            "reason": "token supprime par la table rase",
+            "blockedBy": ["11b2", "11b4"]
+        }
+    ]
+}

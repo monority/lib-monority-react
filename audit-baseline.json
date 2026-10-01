@@ -312,5 +312,9 @@
         },
         "files": 134,
         "invalidOptions": []
+    },
+    "test-skips": {
+        "count": 4,
+        "files": 2
     }
 }
