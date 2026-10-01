@@ -22,7 +22,7 @@
         );
         padding: var(--mr-spacing-1-5);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-shadow-overlay);
         animation: mr-context-menu-in var(--mr-duration-fast) var(--mr-ease-standard) forwards;
@@ -36,7 +36,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: var(--mr-spacing-1) var(--mr-control-padding-inline-sm);
         border: 0;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         color: var(--mr-text-primary);
         font: inherit;

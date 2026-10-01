@@ -2,7 +2,7 @@
     .mr-badge {
         --mr-badge-height: 1.625rem;
         --mr-badge-padding-x: 0.625rem;
-        --mr-badge-radius: var(--mr-radius-scale);
+        --mr-badge-radius: var(--mr-ref-radius-scale);
         --mr-badge-font-size: var(--mr-fs-12);
         --mr-badge-font-weight: var(--mr-font-weight-semibold);
 

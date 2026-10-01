@@ -206,7 +206,7 @@
     color: inherit;
     font-size: var(--mr-fs-14);
     line-height: var(--mr-leading-relaxed);
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
 }
 
 .docs-preview-card,
@@ -246,7 +246,7 @@
     color: var(--mr-text-secondary);
     font-size: var(--mr-text-2xs);
     font-weight: var(--mr-font-weight-semibold);
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
     overflow-wrap: anywhere;
 }
 
@@ -278,7 +278,7 @@
     border-block-end: var(--mr-border-width) solid var(--docs-code-border);
     color: var(--docs-code-muted);
     font-size: var(--mr-fs-12);
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
 }
 
 .docs-code-header > span {
@@ -331,7 +331,7 @@
     color: inherit;
     font-size: var(--mr-fs-14);
     line-height: var(--mr-leading-relaxed);
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
     white-space: pre;
 }
 
@@ -410,7 +410,7 @@
 .docs-prop-name {
     white-space: nowrap;
     color: var(--mr-text-primary);
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
     font-weight: var(--mr-font-weight-medium);
     font-size: var(--mr-fs-14);
 }
@@ -450,7 +450,7 @@
 }
 
 .docs-tag code {
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
     font-size: var(--mr-fs-12);
 }
 

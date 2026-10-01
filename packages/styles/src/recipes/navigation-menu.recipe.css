@@ -15,7 +15,7 @@
         margin: 0;
         padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         list-style: none;
     }
@@ -33,7 +33,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-control-padding-inline-md);
         border: 0;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
@@ -101,7 +101,7 @@
         max-inline-size: min(30rem, calc(100vw - 2 * var(--mr-overlay-gutter)));
         padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-shadow-overlay);
         animation: mr-nav-menu-enter var(--mr-duration-fast) var(--mr-ease-standard);
@@ -129,7 +129,7 @@
         gap: var(--mr-spacing-1-5);
         min-width: 0;
         padding: var(--mr-spacing-1-5) var(--mr-spacing-1-5);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         color: var(--mr-text-primary);
         cursor: pointer;
         font-size: var(--mr-fs-14);

@@ -35,7 +35,7 @@ Contraintes de forme, non négociables :
 
 Un token appartient à **une seule** couche. Le passage d'une couche à l'autre est un acte explicite, tracé dans la spécification du composant.
 
-**Primitives.** Sept tokens, tous désignés par `docs/design/language.md` §5.1. Ce sont les seules valeurs qu'une marque peut remplacer. Elles ne portent jamais de sémantique : `--mr-brand-hue`, pas `--mr-accent-hue`.
+**Primitives.** Sept tokens, tous désignés par `docs/design/language.md` §5.1. Ce sont les seules valeurs qu'une marque peut remplacer. Elles ne portent jamais de sémantique : `--mr-ref-brand-hue`, pas `--mr-accent-hue`.
 
 **Sémantique.** Les valeurs dont le sens vient du thème, résolues par `[data-theme]` : fonds, textes, bordures, tons, ombres de superposition. Un token sémantique ne se définit qu'en référençant une primitive ou une autre sémantique de rang supérieur — jamais une teinte écrite en dur (contrôle T3).
 

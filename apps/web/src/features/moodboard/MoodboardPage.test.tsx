@@ -94,7 +94,7 @@ describe('MoodboardPage', () => {
 
         /* Verify the resolved CSS variable changes on DesignProvider root */
         const root = screen.getByTestId('moodboard-page').parentElement!
-        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('295')
+        expect(root.style.getPropertyValue('--mr-ref-brand-hue')).toBe('295')
     })
 
     it('changing radius axis updates preview scope attribute', () => {

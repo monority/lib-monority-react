@@ -36,8 +36,8 @@ Monority UI est un instrument de précision : calme en surface, exact dans le d�
 
 | Voix | Police | Usage exclusif |
 |---|---|---|
-| Humaine | `--mr-font-sans` (Geist) | Titres, contenu, libellés d'action, texte d'aide, valeurs chiffrées |
-| Système | `--mr-font-mono` (Geist Mono) | Labels de section, identifiants, unités, horodatages, versions, codes, raccourcis clavier |
+| Humaine | `--mr-ref-font-sans` (Geist) | Titres, contenu, libellés d'action, texte d'aide, valeurs chiffrées |
+| Système | `--mr-ref-font-mono` (Geist Mono) | Labels de section, identifiants, unités, horodatages, versions, codes, raccourcis clavier |
 
 Un texte n'appartient qu'à une voix. Les chiffres de données sont en voix humaine avec `font-variant-numeric: tabular-nums`, jamais en mono (le point décimal d'une police à chasse fixe crée un trou).
 
@@ -62,12 +62,12 @@ Un texte n'appartient qu'à une voix. Les chiffres de données sont en voix huma
 
 | Token | Défaut | Rôle |
 |---|---|---|
-| `--mr-brand-hue` | `0` | Teinte oklch de l'accent. `0` + chroma `0` = accent gris par défaut |
-| `--mr-brand-chroma` | `0` | Chroma de référence de l'accent. `0` est ce qui rend l'accent neutre : hue `0` avec un chroma non nul donne un rouge saturé |
-| `--mr-neutral-hue` | `0` | Teinte des neutres. `0` = noir / blanc / gris pur ; les ambiances colorées (slate, ocean, night) figent leur teinte dans leur propre bloc |
-| `--mr-font-sans` | Geist + pile système | Voix humaine |
-| `--mr-font-mono` | Geist Mono + pile système | Voix système |
-| `--mr-radius-scale` | `1` | Multiplicateur de tous les rayons sauf `full` |
+| `--mr-ref-brand-hue` | `0` | Teinte oklch de l'accent. `0` + chroma `0` = accent gris par défaut |
+| `--mr-ref-brand-chroma` | `0` | Chroma de référence de l'accent. `0` est ce qui rend l'accent neutre : hue `0` avec un chroma non nul donne un rouge saturé |
+| `--mr-ref-neutral-hue` | `0` | Teinte des neutres. `0` = noir / blanc / gris pur ; les ambiances colorées (slate, ocean, night) figent leur teinte dans leur propre bloc |
+| `--mr-ref-font-sans` | Geist + pile système | Voix humaine |
+| `--mr-ref-font-mono` | Geist Mono + pile système | Voix système |
+| `--mr-ref-radius-scale` | `1` | Multiplicateur de tous les rayons sauf `full` |
 
 Les tokens sémantiques ne contiennent jamais de hex ni de teinte en dur pour l'accent et les neutres : ils combinent une luminosité fixée par thème avec les primitives. Seules les couleurs de statut et `danger-solid` ont des teintes fixes.
 
@@ -291,12 +291,12 @@ Calée sur l'identité du site Monority Studio : accent or champagne, neutres bl
 
 | Primitive | Valeur |
 |---|---|
-| `--mr-brand-hue` | `85` |
-| `--mr-brand-chroma` | `0.1` |
-| `--mr-neutral-hue` | `250` |
-| `--mr-font-sans` | Inter + pile système |
-| `--mr-font-mono` | JetBrains Mono + pile système |
-| `--mr-radius-scale` | `0.5` |
+| `--mr-ref-brand-hue` | `85` |
+| `--mr-ref-brand-chroma` | `0.1` |
+| `--mr-ref-neutral-hue` | `250` |
+| `--mr-ref-font-sans` | Inter + pile système |
+| `--mr-ref-font-mono` | JetBrains Mono + pile système |
+| `--mr-ref-radius-scale` | `0.5` |
 
 ### 5.13 Densité
 
@@ -386,8 +386,8 @@ Les tokens core sans équivalent (`--mr-space-*`, `--mr-radius-xs/sm/md/lg`, `--
 | `--mr-modal-radius` | `--mr-radius-overlay` | exact |
 | `--mr-modal-width` | `--mr-dialog-width-md` | exact |
 | `--mr-modal-padding` | `--mr-spacing-6` | exact |
-| `--mr-font-body` | `--mr-font-sans` | exact |
-| `--mr-font-display` | `--mr-font-sans` | exact |
+| `--mr-font-body` | `--mr-ref-font-sans` | exact |
+| `--mr-font-display` | `--mr-ref-font-sans` | exact |
 | `--mr-border-width-focus` | `--mr-focus-width` | exact |
 | `--mr-ease-in-out` | `--mr-ease-standard` | approx |
 | `--mr-ease-out` | `--mr-ease-enter` | approx |
@@ -400,7 +400,7 @@ Les tokens core sans équivalent (`--mr-space-*`, `--mr-radius-xs/sm/md/lg`, `--
 | `--mr-duration-exit` | `--mr-duration-fast` | approx |
 | `--mr-duration-loop` | `--mr-duration-spin` | approx |
 
-Tokens conservés sous le même nom et le même rôle : `--mr-bg-canvas`, `--mr-bg-surface`, `--mr-border-subtle`, `--mr-accent`, `--mr-danger-text`, `--mr-border-width`, `--mr-focus-width`, `--mr-focus-offset`, `--mr-font-mono`, `--mr-font-weight-regular/medium/semibold`, `--mr-control-size-*`, `--mr-control-padding-inline-*`, `--mr-icon-size-*`, `--mr-duration-fast/base/slow`, `--mr-ease-standard`, `--mr-radius-full`, `--mr-shadow-overlay`, `--mr-card-padding`, `--mr-card-gap`, `--mr-page-max-width`. Ceux dont la valeur change sont listés dans `MIGRATION.md`.
+Tokens conservés sous le même nom et le même rôle : `--mr-bg-canvas`, `--mr-bg-surface`, `--mr-border-subtle`, `--mr-accent`, `--mr-danger-text`, `--mr-border-width`, `--mr-focus-width`, `--mr-focus-offset`, `--mr-ref-font-mono`, `--mr-font-weight-regular/medium/semibold`, `--mr-control-size-*`, `--mr-control-padding-inline-*`, `--mr-icon-size-*`, `--mr-duration-fast/base/slow`, `--mr-ease-standard`, `--mr-radius-full`, `--mr-shadow-overlay`, `--mr-card-padding`, `--mr-card-gap`, `--mr-page-max-width`. Ceux dont la valeur change sont listés dans `MIGRATION.md`.
 
 ---
 

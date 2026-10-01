@@ -43,7 +43,7 @@ const docData: DocPageData = {
         '.mr-kbd__separator',
     ],
     tokens: [
-        '--mr-font-mono',
+        '--mr-ref-font-mono',
         '--mr-fg-base',
         '--mr-bg-control',
         '--mr-border-subtle',

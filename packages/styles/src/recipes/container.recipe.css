@@ -11,7 +11,7 @@
     .mr-container[data-surface='true'] {
         padding-block: var(--mr-spacing-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
     }
 

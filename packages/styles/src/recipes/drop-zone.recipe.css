@@ -10,7 +10,7 @@
         min-height: var(--mr-drop-zone-min-height);
         padding: var(--mr-drop-zone-padding);
         border: var(--mr-border-width) dashed var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         cursor: pointer;
         box-shadow: var(--mr-shadow-surface);

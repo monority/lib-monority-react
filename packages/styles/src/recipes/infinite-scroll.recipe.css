@@ -65,7 +65,7 @@
         padding: var(--mr-spacing-1-5) var(--mr-spacing-2);
         min-height: var(--mr-control-size-sm);
         border: var(--mr-border-width) solid currentColor;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         cursor: pointer;
         font: inherit;

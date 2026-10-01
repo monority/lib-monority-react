@@ -94,7 +94,7 @@ test.describe('phase 2a — thèmes sur sous-arbre', () => {
                         color: toRgb(style.color),
                         border: toRgb(style.borderColor),
                         controlSize: style.getPropertyValue('--mr-control-size-md').trim(),
-                        brandHue: style.getPropertyValue('--mr-brand-hue').trim(),
+                        brandHue: style.getPropertyValue('--mr-ref-brand-hue').trim(),
                         radiusControl: style.borderRadius,
                         fontFamily: style.fontFamily,
                         accent: style.getPropertyValue('--mr-accent').trim(),

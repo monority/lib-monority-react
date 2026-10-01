@@ -19,7 +19,7 @@
         min-width: 0;
         padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
     }
 
@@ -41,14 +41,14 @@
         gap: var(--mr-spacing-2);
         padding: var(--mr-spacing-2) var(--mr-spacing-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
     }
 
     .mr-sidebar-layout__content {
         padding: var(--mr-spacing-4);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
     }
 

@@ -1,6 +1,6 @@
 @layer monority.recipes {
     .mr-toggle-group {
-        --mr-toggle-group-radius: var(--mr-radius-scale);
+        --mr-toggle-group-radius: var(--mr-ref-radius-scale);
 
         display: inline-flex;
         align-items: center;
@@ -28,15 +28,15 @@
     }
 
     .mr-toggle-group[data-size='sm'] {
-        --mr-toggle-group-radius: var(--mr-radius-scale);
+        --mr-toggle-group-radius: var(--mr-ref-radius-scale);
     }
 
     .mr-toggle-group[data-size='md'] {
-        --mr-toggle-group-radius: var(--mr-radius-scale);
+        --mr-toggle-group-radius: var(--mr-ref-radius-scale);
     }
 
     .mr-toggle-group[data-size='lg'] {
-        --mr-toggle-group-radius: var(--mr-radius-scale);
+        --mr-toggle-group-radius: var(--mr-ref-radius-scale);
     }
 
     .mr-toggle-group .mr-toggle-group__item {

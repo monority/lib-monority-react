@@ -84,7 +84,7 @@ const docData: DocPageData = {
         '--mr-shadow-md',
         '--mr-z-dropdown',
         '--mr-accent',
-        '--mr-font-mono',
+        '--mr-ref-font-mono',
     ],
     a11y: [
         'Root uses role="menubar".',

@@ -184,12 +184,12 @@ test("une primitive n'est jamais un orphelin, meme sans var() dans les sources",
         readFile: reader({
             ...PRIMITIVES,
             'packages/styles/src/tokens/generated/tokens.css':
-                ':root {\n  --mr-brand-hue: 200;\n  --mr-token-mort: 1px;\n}\n' +
-                ':root { --mr-accent: oklch(0.52 0.1 var(--mr-brand-hue)); }\n',
+                ':root {\n  --mr-ref-brand-hue: 200;\n  --mr-token-mort: 1px;\n}\n' +
+                ':root { --mr-accent: oklch(0.52 0.1 var(--mr-ref-brand-hue)); }\n',
             'packages/styles/src/tokens/generated/deprecated.css': '',
         }),
     })
-    assert.equal(result.orphans.includes('--mr-brand-hue'), false, 'primitive = racine')
+    assert.equal(result.orphans.includes('--mr-ref-brand-hue'), false, 'primitive = racine')
     // `--mr-accent` consomme brand-hue mais n'est consommé par personne : orphelin.
     assert.deepEqual(result.orphans, ['--mr-accent', '--mr-token-mort'])
 })

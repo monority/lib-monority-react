@@ -100,7 +100,7 @@ test.describe('Phase 6 — canonical Design Studio', () => {
             const style = await root.evaluate((element) => {
                 const computed = getComputedStyle(element)
                 return {
-                    brandHue: computed.getPropertyValue('--mr-brand-hue').trim(),
+                    brandHue: computed.getPropertyValue('--mr-ref-brand-hue').trim(),
                     controlAccent: computed.getPropertyValue('--mr-control-accent').trim(),
                     chart2: computed.getPropertyValue('--mr-chart-2').trim(),
                     radius: computed.getPropertyValue('--mr-radius-control').trim(),
@@ -231,7 +231,7 @@ test.describe('Phase 6 — canonical Design Studio', () => {
                 const cs = getComputedStyle(document.documentElement)
                 return {
                     accent: document.documentElement.dataset.brandAccent ?? null,
-                    hue: cs.getPropertyValue('--mr-brand-hue').trim(),
+                    hue: cs.getPropertyValue('--mr-ref-brand-hue').trim(),
                     theme: document.documentElement.dataset.theme,
                 }
             })

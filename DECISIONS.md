@@ -39,9 +39,11 @@ Un changement de rendu est autorisé s'il est annoncé explicitement token par t
 ### D11 — Préfixe des primitifs
 VALIDÉE. Les primitives portent le préfixe `--mr-ref-*`. Cela sépare sans ambiguïté les trois niveaux du système (ROADMAP §4.1) et rend lisible une recette qui violerait la règle « jamais de primitif dans une recette ».
 
-Application : phase 0, pour les 4 écarts D8 constatés. `--mr-neutral-hue`, `--mr-neutral-chroma`, `--mr-font-sans` et `--mr-font-mono` ne passent pas la regex §5.2. Les 7 primitives deviennent `--mr-ref-brand-hue`, `--mr-ref-brand-chroma`, `--mr-ref-neutral-hue`, `--mr-ref-neutral-chroma`, `--mr-ref-font-sans`, `--mr-ref-font-mono`, `--mr-ref-radius-scale`.
+Application : phase 0, appliquée dans le commit `refactor(tokens): renommer les primitives sous le prefixe ref`. Le constat qui l'a motivée : 4 des 7 primitives échouaient à la regex du §5.2 — `neutral-hue` et `neutral-chroma` parce que `neutral` n'était pas dans la liste fermée, `font-sans` et `font-mono` parce que `font-[a-z]+` exigeait un troisième segment. Les 7 primitives sont désormais `--mr-ref-brand-hue`, `--mr-ref-brand-chroma`, `--mr-ref-neutral-hue`, `--mr-ref-neutral-chroma`, `--mr-ref-font-sans`, `--mr-ref-font-mono`, `--mr-ref-radius-scale`.
 
-Impact : `packages/ui/src/lib/design-config.ts` et les specs e2e `design-customizer`, `theme-subtree`, `theme-runtime` lisent ces noms via `getComputedStyle` et doivent suivre dans le même commit.
+Portée du renommage : **154 occurrences dans 78 fichiers**. Deux documents d'archives ont été volontairement laissés intacts, les renommer aurait falsifié un état historique : `docs/design/audit/migration-table.md` et `docs/design/reference/prompt-maitre-v4.md`.
+
+Impact : `packages/ui/src/lib/design-config.ts`, `packages/ui/src/providers/get-theme-script.ts` et les specs e2e `design-customizer`, `theme-subtree` lisent ces noms via `getComputedStyle` et suivent dans le même commit. Le rebranding par client repose sur ces noms.
 
 ### D12 — Scoping des composants
 VALIDÉE. `data-*`. Les variantes et états passent par `[data-variant]`, `[data-size]`, `[data-state]` ; une classe de base préfixée par composant reste en place.

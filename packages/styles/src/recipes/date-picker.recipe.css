@@ -116,7 +116,7 @@
         z-index: var(--mr-z-overlay);
         padding: var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         box-shadow: var(--mr-shadow-overlay);
         /* Entrance settles the popup under the input; positioning is inline top/left. */
@@ -156,7 +156,7 @@
         block-size: var(--mr-control-size-sm);
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         cursor: pointer;
         color: var(--mr-text-secondary);
         transition: background var(--mr-duration-fast) var(--mr-ease-standard);
@@ -203,7 +203,7 @@
         aspect-ratio: 1;
         border: none;
         background: transparent;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         cursor: pointer;
         font-size: var(--mr-fs-14);
         color: var(--mr-text-primary);

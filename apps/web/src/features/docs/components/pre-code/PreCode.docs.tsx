@@ -59,7 +59,7 @@ const docData: DocPageData = {
         '[data-wrap]',
     ],
     tokens: [
-        '--mr-font-mono',
+        '--mr-ref-font-mono',
         '--mr-text-xs',
         '--mr-text-sm',
         '--mr-space-3',

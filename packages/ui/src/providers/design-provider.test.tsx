@@ -21,7 +21,7 @@ describe('DesignProvider', () => {
         expect(root.getAttribute('data-design-accent')).toBe('violet')
         expect(root.getAttribute('data-design-radius')).toBe('sharp')
         expect(root.getAttribute('data-design-spacing')).toBe('airy')
-        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('295')
+        expect(root.style.getPropertyValue('--mr-ref-brand-hue')).toBe('295')
         expect(root.style.getPropertyValue('--mr-radius-control')).toBe('2px')
         expect(root.style.getPropertyValue('--mr-spacing-4')).toBe('20px')
     })

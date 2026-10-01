@@ -231,8 +231,8 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
         componentColor: role.fill,
         chartColors: charts,
         style: {
-            '--mr-brand-hue': String(accent.hue),
-            '--mr-brand-chroma': String(accent.chroma),
+            '--mr-ref-brand-hue': String(accent.hue),
+            '--mr-ref-brand-chroma': String(accent.chroma),
             '--mr-control-accent': role.fill,
             '--mr-control-accent-hover': role.hover,
             '--mr-control-accent-active': role.active,

@@ -1,13 +1,13 @@
 /* GENERE — ne pas modifier. Source : packages/tokens/src/*.json (DTCG). */
 
 :root {
-  --mr-brand-hue: 200;
-  --mr-brand-chroma: 0.12;
-  --mr-neutral-hue: 215;
-  --mr-neutral-chroma: 0;
-  --mr-font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mr-font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --mr-radius-scale: 1;
+  --mr-ref-brand-hue: 200;
+  --mr-ref-brand-chroma: 0.12;
+  --mr-ref-neutral-hue: 215;
+  --mr-ref-neutral-chroma: 0;
+  --mr-ref-font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mr-ref-font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --mr-ref-radius-scale: 1;
 }
 
 :root,

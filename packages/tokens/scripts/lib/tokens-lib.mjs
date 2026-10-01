@@ -27,13 +27,13 @@ export function oklchDecl(ext) {
         typeof ext.c === 'number'
             ? num(ext.c)
             : ext.c === 'neutral'
-              ? 'var(--mr-neutral-chroma)'
-              : `calc(var(--mr-brand-chroma) * ${num(ext.c.factor)})`
+              ? 'var(--mr-ref-neutral-chroma)'
+              : `calc(var(--mr-ref-brand-chroma) * ${num(ext.c.factor)})`
     const h =
         ext.h === 'brand'
-            ? 'var(--mr-brand-hue)'
+            ? 'var(--mr-ref-brand-hue)'
             : ext.h === 'neutral'
-              ? 'var(--mr-neutral-hue)'
+              ? 'var(--mr-ref-neutral-hue)'
               : num(ext.h)
     return `oklch(${l} ${c} ${h})`
 }

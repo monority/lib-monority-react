@@ -26,7 +26,7 @@
         align-items: center;
         min-block-size: var(--mr-control-size-sm);
         padding-inline: var(--mr-spacing-1-5);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-14);
@@ -53,7 +53,7 @@
         align-items: center;
         min-block-size: var(--mr-control-size-sm);
         padding-inline: var(--mr-spacing-1-5);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
         font-size: var(--mr-fs-14);

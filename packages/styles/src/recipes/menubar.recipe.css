@@ -7,7 +7,7 @@
         min-width: 0;
         padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
         overflow-x: auto;
@@ -30,7 +30,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-control-padding-inline-md);
         border: 0;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
@@ -74,7 +74,7 @@
         );
         padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
         color: var(--mr-text-primary);
         box-shadow: var(--mr-shadow-overlay);
@@ -101,7 +101,7 @@
         min-block-size: var(--mr-control-size-sm);
         padding: 0 var(--mr-spacing-1-5);
         border: 0;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: transparent;
         color: var(--mr-text-primary);
         cursor: pointer;
@@ -149,7 +149,7 @@
     .mr-menubar__shortcut {
         margin-inline-start: var(--mr-spacing-4);
         color: var(--mr-text-secondary);
-        font-family: var(--mr-font-mono, ui-monospace, monospace);
+        font-family: var(--mr-ref-font-mono, ui-monospace, monospace);
         font-size: var(--mr-fs-12);
         font-variant-numeric: tabular-nums;
         letter-spacing: 0;

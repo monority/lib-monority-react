@@ -101,7 +101,7 @@
         align-items: center;
         min-block-size: var(--mr-spacing-5);
         padding-inline: var(--mr-spacing-1);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         color: var(--mr-text-secondary);
         font-size: var(--mr-fs-12);
         line-height: 1;

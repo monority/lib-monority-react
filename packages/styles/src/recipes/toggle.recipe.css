@@ -2,7 +2,7 @@
     .mr-toggle {
         --mr-toggle-height: var(--mr-control-size-md);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-md);
-        --mr-toggle-radius: var(--mr-radius-scale);
+        --mr-toggle-radius: var(--mr-ref-radius-scale);
 
         display: inline-flex;
         align-items: center;
@@ -63,7 +63,7 @@
     .mr-toggle[data-size='sm'] {
         --mr-toggle-height: var(--mr-control-size-sm);
         --mr-toggle-padding-x: var(--mr-control-padding-inline-sm);
-        --mr-toggle-radius: var(--mr-radius-scale);
+        --mr-toggle-radius: var(--mr-ref-radius-scale);
         font-size: var(--mr-fs-12);
     }
 

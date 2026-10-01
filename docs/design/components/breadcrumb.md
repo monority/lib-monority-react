@@ -12,7 +12,7 @@ Fil d'Ariane textuel matérialisant l'arborescence et l'emplacement de la page c
 | Taille | Propriété | Token | Valeur comfortable | Valeur compact |
 |---|---|---|---|---|
 | toutes | police liens et page courante | `--mr-type-small` | 13px / 20px, 400, sans | 13px / 20px, 400, sans |
-| toutes | police séparateur « / » | `--mr-font-mono` | 13px / 20px, 400, mono | 13px / 20px, 400, mono |
+| toutes | police séparateur « / » | `--mr-ref-font-mono` | 13px / 20px, 400, mono | 13px / 20px, 400, mono |
 | toutes | écart lien ↔ séparateur | `--mr-spacing-2` | 8px | 8px |
 | toutes | hauteur minimale de rangée | `--mr-min-target` | 24px | 24px |
 
@@ -54,7 +54,7 @@ Callbacks : aucun callback propre (les liens déclenchent la navigation native).
 
 ## Critères de vérification
 1. police de texte : taille = 13px, interligne = 20px, graisse = 400 (`--mr-type-small`).
-2. séparateur « / » : police mono (`--mr-font-mono`), couleur = `--mr-text-tertiary` (`#5d686b` light), `aria-hidden="true"`.
+2. séparateur « / » : police mono (`--mr-ref-font-mono`), couleur = `--mr-text-tertiary` (`#5d686b` light), `aria-hidden="true"`.
 3. lien parent : couleur = `--mr-text-secondary` (`#4a5558` light) ; au survol couleur = `--mr-text-primary`.
 4. page courante : couleur = `--mr-text-primary` (`#131c1f` light), `aria-current="page"`, non cliquable.
 5. structure : balises `<nav>`, `<ol>`, `<li>` présentes.

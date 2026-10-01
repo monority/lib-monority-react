@@ -8,7 +8,7 @@
         padding: var(--mr-card-padding, var(--mr-card-padding));
         overflow-wrap: anywhere;
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-card, var(--mr-radius-scale));
+        border-radius: var(--mr-radius-card, var(--mr-ref-radius-scale));
         background: var(--mr-bg-surface);
         color: var(--mr-text-primary);
         box-shadow: var(--mr-shadow-surface);

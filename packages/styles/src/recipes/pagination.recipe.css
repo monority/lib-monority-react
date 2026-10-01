@@ -16,7 +16,7 @@
         flex-wrap: wrap;
         padding: var(--mr-spacing-1);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-raised);
     }
 
@@ -34,7 +34,7 @@
         min-height: var(--mr-control-size-md);
         padding-inline: var(--mr-control-padding-inline-md);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: var(--mr-bg-sunken);
         color: var(--mr-text-primary);
         font: inherit;

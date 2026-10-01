@@ -39,7 +39,7 @@ Ordre : `tokens → styles → ui → web`. Il est déclaré par les dépendance
 ## 4. Tokens et couleurs
 
 - Aucune valeur visuelle en dur dans les recettes et les composants : uniquement des tokens `--mr-*` (exceptions : `0`, `1px`, `2px`, pourcentages de mise en page). Vérifié par T3.
-- Couleurs en OKLCH. Les neutres passent par `--mr-neutral-chroma` et `--mr-neutral-hue`, la marque par `--mr-brand-*`. Ne jamais coder une chroma ou une hue en dur dans un thème neutre.
+- Couleurs en OKLCH. Les neutres passent par `--mr-ref-neutral-chroma` et `--mr-ref-neutral-hue`, la marque par `--mr-ref-brand-*`. Ne jamais coder une chroma ou une hue en dur dans un thème neutre.
 - Tout token dépendant de la marque doit rester réévalué sur `[data-brand]` (le générateur s'en charge : ne pas contourner).
 - Contrastes : chaque paire est vérifiée par X2. Une valeur ne descend jamais sous son seuil ; le thème high-contrast a des seuils propres qui interdisent toute régression. Viser une marge (≈ 3.3 pour un seuil de 3), pas le minimum.
 - Tokens dépréciés (`deprecated.json`, `--mr-space-*`, alias de `deprecated.css`) : ne jamais les utiliser dans du code nouveau. Ne jamais changer la cible d'un alias déprécié : il existe pour la rétrocompatibilité, donc on migre les usages, pas l'alias.

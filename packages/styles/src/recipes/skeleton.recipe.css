@@ -10,7 +10,7 @@
 
     .mr-skeleton {
         min-height: 1rem;
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: linear-gradient(
             90deg,
             color-mix(in srgb, var(--mr-bg-raised) 94%, white) 18%,

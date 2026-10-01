@@ -72,8 +72,8 @@
         bottom: 0;
         min-height: 16rem;
         max-height: min(80vh, 42rem);
-        border-start-start-radius: var(--mr-radius-scale);
-        border-start-end-radius: var(--mr-radius-scale);
+        border-start-start-radius: var(--mr-ref-radius-scale);
+        border-start-end-radius: var(--mr-ref-radius-scale);
         animation: mr-drawer-in-bottom var(--mr-duration-slow-alt) var(--mr-ease-enter) forwards;
     }
 

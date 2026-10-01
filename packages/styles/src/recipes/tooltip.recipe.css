@@ -21,7 +21,7 @@
         );
         padding: var(--mr-spacing-1-5) var(--mr-spacing-2);
         border: var(--mr-border-width) solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         background: color-mix(in srgb, var(--mr-bg-raised) 96%, transparent);
         color: var(--mr-text-primary);
         font-size: var(--mr-fs-12);

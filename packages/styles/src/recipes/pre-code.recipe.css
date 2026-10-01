@@ -7,7 +7,7 @@
         overscroll-behavior-inline: contain;
         background: var(--mr-code-bg, var(--mr-bg-raised));
         color: var(--mr-code-fg, var(--mr-text-primary));
-        font-family: var(--mr-font-mono);
+        font-family: var(--mr-ref-font-mono);
         scrollbar-color: var(--mr-code-scrollbar, color-mix(in srgb, currentColor 28%, transparent))
             transparent;
         box-shadow: var(--mr-code-shadow, none);
@@ -42,14 +42,14 @@
     .mr-pre-code[data-size='sm'],
     .mr-pre-code--sm {
         padding: var(--mr-spacing-2);
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         font-size: var(--mr-fs-12);
     }
 
     .mr-pre-code[data-size='md'],
     .mr-pre-code--md {
         padding: var(--mr-code-padding, var(--mr-spacing-4));
-        border-radius: var(--mr-radius-scale);
+        border-radius: var(--mr-ref-radius-scale);
         font-size: var(--mr-fs-14);
     }
 

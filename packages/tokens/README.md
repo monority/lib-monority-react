@@ -65,10 +65,10 @@ passe automatiquement dès que `build:downstream` a été lancé.
    `brand-studio` ou `themes/<theme>.json`).
 2. Les couleurs portent une extension `com.monority.oklch` ; le générateur émet
    la formule CSS à partir d'elle :
-   - `"h": "neutral"` → `var(--mr-neutral-hue)`
-   - `"c": "neutral"` → `var(--mr-neutral-chroma)` (0 par défaut)
-   - `"h": "brand"` → `var(--mr-brand-hue)` ; `"c": {"factor": f}` →
-     `calc(var(--mr-brand-chroma) * f)`
+   - `"h": "neutral"` → `var(--mr-ref-neutral-hue)`
+   - `"c": "neutral"` → `var(--mr-ref-neutral-chroma)` (0 par défaut)
+   - `"h": "brand"` → `var(--mr-ref-brand-hue)` ; `"c": {"factor": f}` →
+     `calc(var(--mr-ref-brand-chroma) * f)`
 3. Régénérer, puis **synchroniser la référence** :
    `docs/design/reference/monority-ui-tokens.reference.css` (T1 échoue sinon).
 4. Si le token consomme une variable de marque (`--mr-brand-*`,

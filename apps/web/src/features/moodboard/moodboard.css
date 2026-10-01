@@ -291,7 +291,7 @@
 }
 
 .moodboard-mono {
-    font-family: var(--mr-font-mono);
+    font-family: var(--mr-ref-font-mono);
 }
 
 /* === Card === */

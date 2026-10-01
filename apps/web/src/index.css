@@ -33,7 +33,7 @@ body {
     display: flex;
     flex-direction: column;
     color: #f4efe4;
-    font-family: var(--mr-font-sans);
+    font-family: var(--mr-ref-font-sans);
     /* Signature dark hero: identical in light and dark mode. */
     color-scheme: dark;
     background: radial-gradient(

@@ -2,7 +2,7 @@
 /**
  * Phase 2a — T3. Aucun hex ni teinte en dur pour l'accent et les neutres
  * dans le CSS généré : chaque couleur d'accent / neutre référence
- * `var(--mr-brand-hue)` ou `var(--mr-neutral-hue)`. Seules les couleurs de
+ * `var(--mr-ref-brand-hue)` ou `var(--mr-ref-neutral-hue)`. Seules les couleurs de
  * statut et `danger-solid` ont des teintes fixes (5.1).
  *
  *   node packages/tokens/scripts/check-no-hardcoded.mjs
@@ -50,7 +50,10 @@ for (const [name, values] of decls) {
         if (!value.includes('oklch(')) continue
         const short = name.replace(/^--mr-/, '')
         if (allowedFixed.has(short)) continue
-        if (!value.includes('var(--mr-brand-hue)') && !value.includes('var(--mr-neutral-hue)')) {
+        if (
+            !value.includes('var(--mr-ref-brand-hue)') &&
+            !value.includes('var(--mr-ref-neutral-hue)')
+        ) {
             // `none`, `color-mix` sans teinte, ombres noires pures : cas autorisés
             if (/oklch\(0 0 0/.test(value)) continue
             if (/\b(?:195|215|230|275)\)/.test(value)) continue // Slate / Ocean / Night semantic hues

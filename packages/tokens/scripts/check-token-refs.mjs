@@ -31,7 +31,7 @@ const SCANNED = [
 ]
 /**
  * Les sources DTCG ne suffisent pas : `oklchDecl()` fabrique la référence
- * `var(--mr-brand-hue)` à partir de l'extension `com.monority.oklch`, elle
+ * `var(--mr-ref-brand-hue)` à partir de l'extension `com.monority.oklch`, elle
  * n'est écrite nulle part dans le JSON. Le CSS généré est donc la vérité des
  * dépendances entre tokens — on le scanne comme un consommateur.
  */

@@ -151,7 +151,7 @@ describe('resolveDesignConfig resilience', () => {
         expect(() => resolveDesignConfig(broken)).not.toThrow()
         const resolved = resolveDesignConfig(broken)
         const defaults = resolveDesignConfig(DEFAULT_DESIGN_CONFIG)
-        expect(resolved.style['--mr-brand-hue']).toBe(defaults.style['--mr-brand-hue'])
+        expect(resolved.style['--mr-ref-brand-hue']).toBe(defaults.style['--mr-ref-brand-hue'])
         expect(resolved.style['--mr-chart-1']).toBe(defaults.style['--mr-chart-1'])
         expect(resolved.style['--mr-radius-control']).toBe(defaults.style['--mr-radius-control'])
         expect(resolved.style['--mr-spacing-4']).toBe(defaults.style['--mr-spacing-4'])
