@@ -1,6 +1,6 @@
 # Tableau des échelles de tokens
 
-Statut : **à valider** — aucun token ne sera créé avant cette validation (D15, condition 5).
+Statut : **validé le 2026-10-01**.
 Décision : D15, option C — échelle déclarée par famille et fermée.
 Source des mesures : `git show da57c3e:packages/styles/src/tokens/generated/tokens.css`, 279 tokens de la table rase.
 
@@ -81,7 +81,7 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 | Famille | Constat | Décision proposée |
 |---|---|---|
 | `control` | 17 tokens : pas nommés **et** rôles **et** états sous un même préfixe | scinder : `control-height-*`, `control-padding-inline-*`, `control-font-size-*` (nommés), et `control-gap`, `control-accent` (rôles) |
-| `duration` | **MIXTE** : `fast`/`slow` (nommés) + `spin`/`pulse` (rôles) + `600` (numérique) + `fast-alt`/`slow-alt`/`quick` (**ad hoc**) | voir §4.9, le cas le plusconflictuel |
+| `duration` | **MIXTE** : `fast`/`slow` (nommés) + `spin`/`pulse` (rôles) + `600` (numérique) + `fast-alt`/`slow-alt`/`quick` (**ad hoc**) | voir §4.9 et §4.11 |
 | `type` | 14 tokens : styles nommés (`display`, `h1`, `body`, `caption`) | aucune échelle : ce sont des styles, pas des pas |
 | `leading` | `normal`, `tight`, `snug`, `relaxed`, `base` + `control`, `heading` | aucun pas : valeurs d'interligne nommées |
 
@@ -118,7 +118,7 @@ Les deux séries sont **décalées d'un pas constant de 0.25rem** : `1 / 0.75`, 
 
 **Les deux séries sont donc justifiées et doivent être conservées.** Ce ne sont pas deux conventions mais deux rôles suffixés d'un même pas, exactement comme `checkbox` en §4.1 : le pas dit la taille, le rôle dit la mesure.
 
-**[DÉCISION D16]** : la question ouverte n'est plus « laquelle garder » mais « la famille porte-t-elle deux échelles parallèles, ou une échelle et deux rôles ? ». Recommandation : deux rôles (`size`, `ring`), un seul jeu de pas `{sm, md, lg}`, plafond 3 par série. L'alternative — deux échelles indépendantes — autoriserait un jour `size` et `ring` à ne plus être alignés, ce qui casserait la géométrie du composant. **Décision design, à poser par toi.**
+**[DÉCISION D16] — TRANCHÉE le 2026-10-01.** Spinner = **une échelle de pas + deux rôles** : un seul jeu de pas `{sm, md, lg}`, et deux rôles qui l'alimentent — `size` (mesure du conteneur) et `ring` (épaisseur de l'anneau). Ce ne sont pas deux échelles parallèles : deux échelles s'écarteraient un jour et casseraient la géométrie du composant. Plafond 3, commun aux deux rôles.
 
 ### 4.4 `shadow` — quatre nommés et cinq rôles
 
@@ -152,52 +152,44 @@ Un z-index est une **position**, pas une taille : pas de pas nommé, plafond 6 (
 
 **Recommandation** : **`bold` est supprimé**, `language.md` §5.9 dit « aucune graisse hors 400/500/600 ». Plafond 3.
 
-**Impact rendu : annoncé.** Consommateurs — `git grep` sur `packages apps` :
+**Impact rendu : annoncé, à valider par toi (D10).** Valeurs résolues : `regular` 400, `medium` 500, `semibold` 600, `bold` 700. Les 4 usages visibles, avec la graisse cible :
 
-```
-apps/web/src/features/docs/code-theme.css:1
-apps/web/src/features/docs/index.css:7
-packages/styles/src/recipes/banner.recipe.css:1
-packages/styles/src/recipes/calendar.recipe.css:1
-packages/styles/src/recipes/progress.recipe.css:1
-packages/styles/src/recipes/title.recipe.css:1
-```
+| Fichier | Usage | Actuel | Cible | Impact |
+|---|---|---|---|---|
+| `title.recipe.css:5` | titre, tous styles | `bold` 700 | `semibold` 600 | **−100**. `title.md` demande explicitement **600** pour display, h1, h2 et h3 : la recette est aujourd'hui en contradiction avec sa propre spec |
+| `banner.recipe.css:42` | `.mr-banner__eyebrow`, liseré | `bold` 700 | `medium` 500 | **−200**. L'œil n'est plus attiré par le liseré ; `letter-spacing: 0.02em` reste |
+| `progress.recipe.css:34` | `.mr-progress__value`, valeur chiffrée | `bold` 700 | `semibold` 600 | −100. La valeur reste lisible, `tabular-nums` inchangé |
+| `calendar.recipe.css:126` | `[data-today='true']`, jour courant | `bold` 700 | `semibold` 600 | −100. Le jour courant reste distingué par la couleur `--mr-accent` |
 
-14 occurrences dans 6 fichiers. Les 4 recettes sont des conséquences de rendu directes : le libellé de `banner`, le titre de `calendar`, la valeur de `progress` et le `title` changent de graisse. Les 2 fichiers CSS de `apps/web` relèvent du site de documentation, pas de la librairie.
+Aucun des 4 composants ne mentionne `bold` ou `700` dans sa spec. Pour `banner`, `calendar` et `progress` la spec est **muette** sur la graisse — le choix est donc libre, et je propose `medium` pour le liseré et `semibold` pour les trois autres. Pour `title`, la spec **demande** 600.
+
+Les 14 occurrences totales comprennent 8 dans `apps/web/src/features/docs/{code-theme,index}.css`, qui relèvent du site de documentation et non de la librairie.
 
 ### 4.9 `duration` — le cas conflictuel
 
 C'est le seul cas **MIXTE** de tout le système, et il porte le token que tu as signalé.
 
-Tokens historiques : `fast` (120ms), `base` (180ms), `slow` (240ms), `spin` (800ms), `pulse` (1200ms), `600` (600ms), `quick` (?), `fast-alt` (150ms), `slow-alt` (200ms).
+Tokens historiques, valeurs au repos : `fast` 120 ms, `base` 180 ms, `slow` 240 ms, `spin` 800 ms, `pulse` 1200 ms, `600` 600 ms, `quick` 100 ms, `fast-alt` 150 ms, `slow-alt` 200 ms.
 
 Le problème en trois temps :
 
-1. `fast`/`base`/`slow` sont des **nommés**, mais leur ordre sémantique est le_velocity, pas la taille — `fast` < `base` < `slow` est intuitif, mais `quick` et `fast-alt` le cassent.
+1. `fast`/`base`/`slow` sont des **nommés**, et leur ordre décrit la **vitesse**, pas la taille — ce qui est cohérent. Mais `quick` et `fast-alt` s'y intercalent sans appartenir à la série.
 2. `spin`/`pulse` sont des **rôles** : une boucle nommée, pas un point sur une échelle de transition.
-3. `fast-alt`/`slow-alt`/`quick` sont des **échelles parallèles** : ce sont des paliers hérités d'une échelle `dur-*` de la migration 5a, transportés sur `duration-*`. **`-alt` ne veut rien dire** : « alternative de quoi ? » `quick` est le pire, il n'appartient à aucune des deux séries.
+3. `fast-alt`/`slow-alt`/`quick`/`600` sont des **paliers hérités** de l'échelle `dur-*` de la migration 5a, transportés sur `duration-*`. **`-alt` ne veut rien dire** : « alternative de quoi ? » `quick` est le pire, il n'appartient à aucune des deux séries.
 
 **Recommandation, en deux séries distinctes** :
 
-- **Série de transition** — pas nommés, plafond 4 : `--mr-duration-fast` (120ms), `--mr-duration-base` (180ms), `--mr-duration-slow` (240ms). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-standard` / `ease-enter`.
-- **Séries de boucle** — rôles nommés, hors échelle : `--mr-duration-spin` (800ms), `--mr-duration-pulse` (1200ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature.
+- **Série de transition** — plafond **3** : `--mr-duration-fast` (120 ms), `--mr-duration-base` (180 ms), `--mr-duration-slow` (240 ms). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-standard` / `ease-enter`.
+- **Séries de boucle** — rôles nommés, hors échelle : `--mr-duration-spin` (800 ms), `--mr-duration-pulse` (1200 ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature.
 
-Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`, `--mr-duration-fast-alt`, `--mr-duration-slow-alt`. Si une valeur de 150 ms est réellement consommée par une recette, elle rejoint la série de transition sous le nom qui décrit sa vitesse — mais **`-alt` ne doit jamais revenir**.
+Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`. **`-alt` fait l'objet de §4.11** : 25 occurrences réelles, valeurs distinctes des pas nommés, à trancher avant 11b4.
 
 **Impact rendu : annoncé.** Consommateurs — `git grep` sur `packages apps` :
 
 ```
 --mr-duration-600       packages/styles/src/recipes/infinite-scroll.recipe.css:33   (1)
 --mr-duration-quick     packages/styles/src/recipes/checkbox.recipe.css:55           (1)
---mr-duration-fast-alt  17 occurrences : button.recipe.css:15, checkbox, command-palette,
-                         file-trigger, input-base, menubar, … + design-token-contract.test.ts
---mr-duration-slow-alt  15 occurrences : drawer.recipe.css:50, file-trigger, menubar, … 
-                         + design-token-contract.test.ts
 ```
-
-Le `-alt` est donc **réellement consommé** : 32 occurrences dans les recettes, dont `button` et `drawer`. La suppression n'est pas neutre, elle impose de nommer chaque valeur selon sa vitesse dans la série de transition.
-
-**Conséquence sur les tests** : `design-token-contract.test.ts` attend `--mr-duration-fast-alt` et `--mr-duration-slow-alt`, et vérifie que `drawer` consomme `var(--mr-duration-slow-alt)`. Ces assertions devront être réécrites vers les noms de la série de transition. Le skip enregistré `blockedBy: [11b2, 11b4]` reste valable : 11b4 est bien la phase qui reconstruit cette famille.
 
 ### 4.10 `opacity` — échelle inutile
 
@@ -222,6 +214,42 @@ Le `-alt` est donc **réellement consommé** : 32 occurrences dans les recettes,
 
 Dix des onze paliers sont donc **déjà morts** : la suppression de l'échelle ne retire aucun consommateur réel. Seul `opacity-disabled` est vivant, et il survit à la suppression. Le `50` restant n'est consommé que par une fixture de test.
 
+### 4.11 `--mr-duration-*-alt` — à trancher avant 11b4
+
+**NON TRANCHÉ.** Les deux suffixes ne sont pas supprimés sans remplacement : 25 occurrences réelles, et leurs valeurs ne coïncident avec aucun pas nommé.
+
+Valeurs résolues au repos (commit `da57c3e`) :
+
+| Token | Valeur | Pas nommé le plus proche | Écart |
+|---|---|---|---|
+| `--mr-duration-fast-alt` | 150 ms | `fast` = 120 ms | +30 ms |
+| `--mr-duration-slow-alt` | 200 ms | `base` = 180 ms | +20 ms |
+| `--mr-duration-quick` | 100 ms | `fast` = 120 ms | −20 ms |
+| `--mr-duration-600` | 600 ms | aucun | hors série |
+
+Aucun n'est « proche » d'un pas nommé au sens d'une migration sans impact : l'écart minimal est de 20 ms, soit 11 % de `base` et 17 % de `fast`. Ce sont des **valeurs distinctes**, pas des doublons.
+
+Consommateurs (hors archives, `git grep`) :
+
+| Fichier | `fast-alt` | `slow-alt` |
+|---|---|---|
+| `button.recipe.css` | 3 (L15-17) | — |
+| `checkbox.recipe.css` | 3 (L40-42) | — |
+| `file-trigger.recipe.css` | 3 (L26-28) | — |
+| `infinite-scroll.recipe.css` | 1 (L74) | — |
+| `drawer.recipe.css` | — | 8 (L50-93) |
+| `design-token-contract.test.ts` | 2 | 3 |
+| `test-skips.json` | — | 2 |
+
+**Défaut d'accessibilité à corriger au passage** : le bloc `prefers-reduced-motion` met `fast`, `base`, `slow`, `spin` et `pulse` à 0, mais **ne couvre ni `fast-alt`, ni `slow-alt`, ni `quick`, ni `600`**. Ces quatre tokens ignorent la préférence système.
+
+Deux voies, à valider :
+
+- **Voie A — migration vers le pas nommé.** `fast-alt` (150) → `base` (180), `slow-alt` (200) → `base` (180). Impact : 150 → 180 ms (+20 %) et 200 → 180 ms (−10 %) sur 25 transitions. Le gain est la couverture `reduced-motion`. Le coût est un changement de timing perceptible sur le drawer, qui est le composant le plus lent.
+- **Voie B — nom de rôle explicite.** Créer `--mr-duration-entree` (150 ms) et `--mr-duration-sortie` (200 ms), hors échelle, et les ajouter au bloc `reduced-motion`. Aucun impact de timing, l'accessibilité est corrigée, mais la série compte deux rôles de plus.
+
+Je ne tranche pas : le choix dépend de l'intention produit sur la fluidité du drawer.
+
 ## 5. Récapitulatif des plafonds
 
 | Plafond | Familles |
@@ -237,9 +265,9 @@ Dix des onze paliers sont donc **déjà morts** : la suppression de l'échelle n
 
 ## 6. Questions ouvertes pour la validation
 
-1. **Le quatrième pas de la série de transition `duration`.** Le plafond est fixé à 4, mais seuls trois pas sont utilisés : `fast`, `base`, `slow`. Le quatrième n'existe nulle part dans les 279 tokens. Faut-il réserver la place pour `--mr-duration-instant` (état de survol, environ 80 ms), ou ramener le plafond à 3 ? Je **recommande de fixer le plafond à 3** tant qu'aucun consommateur ne réclame le quatrième pas : un plafond vide est une promesse que rien ne tient.
+1. **Le quatrième pas de la série de transition `duration` — TRANCHÉ le 2026-10-01.** Plafond fixé à **3** (`fast`, `base`, `slow`). Un plafond vide est une promesse que rien ne tient.
 
-2. **Un token à rôle seul avec un plafond de 0.** `--mr-opacity-disabled` est un rôle, pas un pas, et son plafond est donc 0. La question est de savoir si le **registre `local-tokens`** accepte une entrée dont la famille ne porte aucun pas autorisé — c'est-à-dire si la notion de « famille » est obligatoire pour un token à rôle seul. Sans réponse, `opacity-disabled` n'a pas de place dans le registre, ce qui est absurde puisque 27 recettes le consomment. Je **recommande d'accepter un rôle seul** : une famille sans échelle est une famille valide, le registre décrit des tokens, pas des échelles.
+2. **Un token à rôle seul avec un plafond de 0 — TRANCHÉ le 2026-10-01.** Le registre `local-tokens` décrit des **tokens**, pas des échelles. Une famille sans échelle est une famille valide : `--mr-opacity-disabled` (plafond 0, 27 recettes) y entre sans réserve.
 
 ## 7. Ce que ce tableau ne décide pas
 

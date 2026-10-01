@@ -99,8 +99,8 @@ Le mélange est la source du désordre, pas les noms eux-mêmes. Un même préfi
 
 Le tableau du point 5 est fondé sur les mesures des 279 tokens de la table rase, pas sur une intention : il dit ce que le système utilise réellement, pas ce qu'il devrait utiliser.
 
-### D16 — Spinner : deux séries, deux mesures
-**OUVERTE.** `spinner-size-*` (conteneur) et `spinner-ring-*` (anneau intérieur) sont décalées d'un pas constant de 0.25 rem : 1/0.75, 1.5/1.25, 2/1.75. Ce n'est pas une redondance, c'est une mesure et son épaisseur — l'écart correspond à la bordure plus la marge intérieure. **Les deux séries sont justifiées et doivent être conservées.**
+### D16 — Spinner : une échelle, deux rôles
+**TRANCHÉE le 2026-10-01.** `spinner-size-*` (conteneur) et `spinner-ring-*` (anneau intérieur) sont décalées d'un pas constant de 0.25 rem : 1/0.75, 1.5/1.25, 2/1.75. Ce n'est pas une redondance, c'est une mesure et son épaisseur — l'écart correspond à la bordure plus la marge intérieure. **Les deux séries sont justifiées et doivent être conservées.**
 
 La question n'est donc plus « laquelle garder » mais « deux échelles parallèles, ou une échelle et deux rôles ? ». Recommandation : deux rôles `size` et `ring`, un seul jeu de pas `{sm, md, lg}`. L'alternative autoriserait un jour les deux séries à se désaligner, ce qui casserait la géométrie du composant. Décision design. Détail et valeurs dans `docs/design/tokens-scales.md` §4.3.
 
