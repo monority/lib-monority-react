@@ -18,6 +18,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isExcluded, validateExclusions } from './lib/audit-scope.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -80,10 +81,12 @@ export function collectSpecs(dir = SPECS, acc = []) {
     const abs = path.join(repoRoot, dir)
     if (!fs.existsSync(abs)) return acc
     for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
-        if (SKIP_DIRS.has(entry.name)) continue
         const rel = path.join(dir, entry.name)
-        if (entry.isDirectory()) collectSpecs(rel, acc)
-        else if (entry.name.endsWith('.md')) acc.push(rel)
+        if (isExcluded(rel)) continue
+        if (entry.isDirectory()) {
+            if (SKIP_DIRS.has(entry.name)) continue
+            collectSpecs(rel, acc)
+        } else if (entry.name.endsWith('.md')) acc.push(rel)
     }
     return acc
 }
@@ -95,6 +98,7 @@ export function collectFiles(dir, acc = [], extensions = EXTENSIONS) {
     for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
         if (SKIP_DIRS.has(entry.name)) continue
         const rel = path.join(dir, entry.name)
+        if (isExcluded(rel)) continue
         if (entry.isDirectory()) collectFiles(rel, acc, extensions)
         else if (extensions.test(entry.name)) acc.push(rel)
     }
@@ -281,6 +285,12 @@ function report(result, jsonPath) {
 }
 
 function runCli() {
+    const sansRaison = validateExclusions()
+    if (sansRaison.length) {
+        console.error('audit-exclusions.json : entrée sans raison, exclusion refusée')
+        for (const e of sansRaison) console.error(`  ${e.path}`)
+        process.exit(2)
+    }
     const argv = process.argv.slice(2)
     const strict = argv.includes('--strict')
     const jsonIndex = argv.indexOf('--json')

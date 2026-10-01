@@ -59,13 +59,13 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 - [x] **0.3** Regex de nommage dérivée du vocabulaire cible (`packages/tokens/categories.json`), fixtures cibles de 11b1, test de synchronisation à trois sources. Commit `aee4ded`.
 - [x] **0.4** Renommage D11 des 7 primitives sous `--mr-ref-*`. Commit `4d0b1a2`.
 - [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`.
-- [ ] **0.6** Décision D15 ouverte (échelle des variantes) — **arbitrage en attente**. Bloque `audit:tokens`.
+- [x] **0.6** Décision D15 **tranchée** — option C, échelle déclarée par famille et fermée, sous 5 conditions (voir `DECISIONS.md`). Tableau famille → type de pas → pas autorisés à valider **avant 11b1**.
 - [ ] **0.7** Registre `local-tokens` : 226 entrées en statut `a-auditer`, comptées au cliquet, passage à `justifie` sur surface de personnalisation prouvée (D8).
-- [ ] **0.8** Verrou des 4 tests web de contrat tokens : skip explicite, raison + phase de réactivation par test, garde « skip sans `rebuild.json` = échec », compteur de skips au cliquet.
-- [ ] **0.9** `audit:tokens` : définis / utilisés / pendants / orphelins / doublons de valeur / cycles / violations de niveau. Fixtures ok/nok, dont cycles et D15.
-- [ ] **0.10** `audit:contrast` : colours calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
+- [ ] **0.8** Verrou des 4 tests web de contrat tokens : liste explicite, raison + phase de réactivation par test, garde « skip sans `rebuild.json` = échec », compteur de skips au cliquet.
+- [ ] **0.9** `audit:tokens` : définis / utilisés / pendants / orphelins / doublons de valeur / cycles / violations de niveau / pas D15. Fixtures ok/nok, dont cycles et D15.
+- [ ] **0.10** `audit:contrast` : couleurs calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
 - [ ] **0.11** CI pilotée par `rebuild.json`, même cliquet qu'en local.
-- [ ] **0.12** `MIGRATIONS.md` : mapping des 7 renommages D11, changeset breaking, exclusions d'audit.
+- [x] **0.12** Items D11 : mapping des 7 renommages dans `MIGRATIONS.md`, changeset breaking, exclusions d'audit dans un fichier versionné.
 
 ### Phase 11 — Refonte du système de tokens
 

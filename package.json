@@ -22,7 +22,9 @@
         "release": "turbo run build && changeset publish",
         "generate:component": "pnpm --filter @monority/generators generate:component",
         "validate": "node tooling/scripts/validate.js",
-        "test:stylelint": "node --test ./tooling/stylelint/rules.test.mjs"
+        "test:stylelint": "node --test ./tooling/stylelint/rules.test.mjs",
+        "audit:scope": "node ./packages/tokens/scripts/check-audit-scope.mjs",
+        "test:audit-scope": "node --test ./packages/tokens/scripts/audit-scope.test.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

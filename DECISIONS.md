@@ -68,7 +68,7 @@ Interdits explicites : les abréviations héritées `--mr-fs-*`, `--mr-lh-*`, `-
 Motivation, mesurée : la regex initiale du §5.2 rejetait **179 des 279** tokens existants, soit 64 %. Trois défauts distincts — catégories absentes de la liste (`ease` et non `easing`, et toutes les familles de composants), catégories composées traitées comme des préfixes alors qu'elles sont des noms complets, et noms à deux segments refusés alors que `--mr-accent` est un nom nécessaire.
 
 ### D15 — Échelle des variantes
-**OUVERTE — en attente d'arbitrage. Ne pas trancher.**
+**TRANCHÉE le 2026-10-01 — option C, échelle déclarée par famille et fermée.**
 
 Rien n'interdit aujourd'hui le mélange. D8 autorise `[-<variante>]`, la regex §5.2 autorise n'importe quel segment `(-[a-z0-9]+)*`, et rien ne dit ce qu'une variante peut être.
 
@@ -87,9 +87,15 @@ Le mélange est la source du désordre, pas les noms eux-mêmes. Un même préfi
 - **C — échelle déclarée par famille, fermée.** Chaque famille déclare ses pas dans `packages/tokens/categories.json`, et `audit:tokens` refuse tout pas hors liste. Nommé pour ce qui est exposé en prop `size`, numérique pour les échelles continues sans sens public (`spacing`), jamais de mélange au sein d'une famille.
 - **D — statu quo.** each families garde sa convention. C'est l'état mesuré ci-dessus.
 
-**Recommandation : C.** Une règle globale ne peut pas être correcte : nommer `spacing` en `md` est faux, numéroter `control-height` en `2` est illisible dans l'API publique. Ce qui rend le désordre évitable, c'est la **déclaration** — une échelle par famille, fermée, vérifiée. Coût assumé : une déclaration par famille, et le risque de dérive du nombre de pas entre familles. Correctif : les familles qui exposent une prop `size` partagent le même vocabulaire de pas, vérifié par `audit:tokens`.
+**Option retenue : C**, sous cinq conditions opposables :
 
-Si C est retenue, la fixture `audit:tokens` vérifiera un pas autorisé (ok) et un pas hors liste (nok) par famille.
+1. Les échelles sont déclarées dans `packages/tokens/categories.json`, source unique. Le test de synchronisation couvre les pas, pas seulement les catégories.
+2. Un seul type de pas par famille. Nommer `spacing` en `md` et numéroter `control-height` en `2` dans la même famille est interdit.
+3. Un plafond de pas par famille est déclaré dans le même JSON — garde explicite contre la dérive du nombre de pas.
+4. `audit:tokens` échoue sur un pas non déclaré, avec une fixture ok et une fixture nok par famille.
+5. Avant 11b1, le tableau complet famille → type de pas → pas autorisés est présenté et validé. Aucun token ne sera créé avant cette validation.
+
+Le tableau du point 5 est fondé sur les mesures des 279 tokens de la table rase, pas sur une intention : il dit ce que le système utilise réellement, pas ce qu'il devrait utiliser.
 
 ## Amendements à la feuille de route
 

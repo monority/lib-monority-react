@@ -1,0 +1,35 @@
+{
+    "$meta": {
+        "purpose": "Chemins exclus des audits de tokens et des greps de renommage. Source unique, versionnée, lue par le code — jamais une convention orale.",
+        "readers": [
+            "packages/tokens/scripts/check-token-refs.mjs",
+            "packages/tokens/scripts/lib/audit-scope.mjs",
+            "tooling/tokens/*.mjs"
+        ],
+        "rule": "Une exclusion doit porter une raison. Une entrée sans raison fait échouer l'audit : une exclusion non motivée est une dette invisible."
+    },
+    "exclusions": [
+        {
+            "path": "docs/design/audit/migration-table.md",
+            "kind": "archive",
+            "reason": "Table de correspondance de la migration de 5a. Elle décrit l'état d'avant le raz et cite les anciens noms de primitives. La renommer falsifierait un document d'historique.",
+            "verify": "contient volontairement les 7 anciens noms"
+        },
+        {
+            "path": "docs/design/reference/prompt-maitre-v4.md",
+            "kind": "archive",
+            "reason": "Prompt maître d'origine, document d'entrée du projet. Il définit la palette v4 telle qu'elle était rédigée ; ce n'est pas un relevé de l'état courant.",
+            "verify": "contient volontairement les 7 anciens noms"
+        }
+    ],
+    "generatedNeverAudited": [
+        {
+            "path": "packages/styles/src/tokens/generated/",
+            "reason": "Reconstruit par le build à partir de packages/tokens/src. T1 le compare octet pour octet à docs/design/reference/."
+        },
+        {
+            "path": "docs/design/reference/",
+            "reason": "Copie de contrôle du CSS généré, imposée par T1. Reflète la sortie du build, n'est pas une source."
+        }
+    ]
+}
