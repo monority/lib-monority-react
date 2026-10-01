@@ -174,6 +174,33 @@ Le statut d'alias était implicite : il tenait dans une condition en dur de `lib
 
 **Conséquences.** Dix tests couvrent : registre exact, cible existante, alias ne masquant pas un fichier, sélecteur groupé, absence de bloc autonome, et correspondance avec l'enum UI. `system` reste dans `packages/ui` : le build ne doit pas dépendre d'un concept qu'il ne produit pas.
 
+### D22 — Parité des listes de thèmes : une source dérivée, un test pour les listes recopiées
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Les listes de thèmes vivent à deux endroits et n'étaient gardées par personne. Côté build, trois listes maintenues à la main ont déjà perdu `slate` en silence : le fichier existait, il était suivi par git, il matchait le glob, et le générateur l'ignorait. Côté application et tests, dix fichiers d'`apps/web/e2e` citent des noms de thèmes et **cinq** écrivent une liste ; aucun test ne les surveillait. `git log -S` a montré qu'aucune des quatre listes partielles n'a de raison délibérée : `geometry.spec.ts` a ses trois thèmes depuis sa création (`88f0b1a`) sans en avoir jamais eu davantage, et les deux autres sont antérieures à leurs thèmes manquants. **Ces listes périmées avaient la même cause que `slate` : une liste recopiée à la main, jamais mise à jour.**
+
+**Décision, en deux temps.**
+
+*Les listes modifiables sont dérivées.* `theme-scope.tsx` prend `ResolvedThemeName` ; `design-config.ts` construit sa liste depuis `ThemeName` et porte l'exclusion de `high-contrast` dans le type, pas dans une liste ; `get-theme-script.ts` dérive sa liste de stockage. Une liste en dur ne peut plus diverger de la constante. Mesure : `theme-scope.tsx` n'importe que des types, `constants.ts` n'importe rien — ni cycle, ni coût de bundle.
+
+*Les listes recopiées sont vérifiées par un test.* `detecterListesDeThemes` applique une **règle structurelle sur le type des éléments** : une liste de thèmes est un tableau dont les éléments sont des chaînes littérales égales à des noms de thèmes. Un tableau d'objets n'en est pas une, quelles que soient ses clés. Chaque liste détectée est soit exhaustive, soit annotée `mr-theme-subset:` avec une raison ; sinon le test échoue en nommant le thème manquant et le fichier fautif. Un alias n'est jamais compté comme thème manquant.
+
+**Pourquoi une règle sur le type, et non sur le contenu.** Un critère « au moins deux noms de thèmes dans un littéral » confond une liste de thèmes avec un objet de configuration qui porte un thème. Il remontait deux tables de fixtures de `design-customizer.spec.ts` et un accès calculé `opposite[theme]` de `theme-subtree.spec.ts`. La règle sur le type les écarte sans parser aucune clé et sans introduire de seconde marque. Mesure : 11 fixtures positives et négatives passent, et `apps/web/e2e` donne exactement 5 détections, les 5 vraies listes, **zéro faux positif**.
+
+**Alternatives écartées, avec leur coût.**
+- *Option 2, `themes.json` produit par le build et importé par l'UI.* Écartée : elle couple le runtime de la librairie à un artefact de build, donc à `packages/tokens/dist`, absent chez un consommateur npm qui n'a pas ce monorepo. Un package publié ne peut pas exiger un fichier que son build n'embarque pas.
+- *Ajouter un `exports` sur `@monority/tokens`.* Le package est `private: true`, sans `main` ni `exports`, et rien n'y est importable aujourd'hui. Ouvrir un point d'entrée sur du code de build obligerait les specs e2e à charger le générateur pour lire une liste de chaînes. Coût disproportionné, bénéfice nul : un test de parité rend le même service.
+- *Voie (ii), le test ne lit que les fichiers déjà annotés.* Écartée : elle déplace le défaut `slate` au niveau des tests. Une onzième spec écrite dans une forme non reconnue passe inapercue, puisque rien ne la cherche.
+- *La marque `mr-theme-not-a-list:`.* Écartée : inutile sous la règle structurelle. Elle ne serait revenue que pour classer un cas que la règle ne tranche pas, et aucun cas de ce genre n'a survécu aux fixtures.
+- *Une règle de clé `theme` dans le détecteur.* Écartée : elle ferait parser des clés au détecteur, qu'il ne fait nulle part ailleurs, pour un résultat que la règle sur le type obtient déjà.
+
+**Limites assumées.**
+- Un **objet indexé par noms de thèmes** n'est pas détecté : c'est hors du périmètre du test. Un tel objet est typé sur `ThemeName`, donc le compilateur en impose l'exhaustivité — le risque est couvert ailleurs. Mesure : `theme-provider.tsx:10` déclare `RESOLVED_THEMES: readonly ResolvedThemeName[]` en sept littéraux ; c'est la liste la mieux gardée du dépôt, et elle reste une liste à maintenir.
+- **L'extension hors `apps/web/e2e` est l'item 0.15b**, non implémenté ici. Mesure : la même règle trouve 3 détections de plus — `theme-provider.tsx:10` (7 thèmes, exhaustive), `HarnessPage.tsx:6` (6 thèmes, `slate` manquant, et son type `Theme` en dérive, donc le compilateur ne peut pas le rattraper) et une boucle de test dans `get-theme-script.test.ts:91`.
+
+**Conséquences.** Le coût du centième token ne change pas, mais le coût d'*ajouter un thème* baisse : l'ajout d'un fichier dans `src/themes/` fait désormais échouer la porte si une liste applicative n'est pas mise à jour. Une annotation dont la raison cite 11b1 devient fausse en fin de 11b1 : la relecture de ces annotations est inscrite à la Definition of Done.
+
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)

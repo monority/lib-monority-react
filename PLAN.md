@@ -2,18 +2,17 @@
 
 ## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 3 commits verts poussés cette session : `3480c7f`, `8383c15`, plus celui-ci.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 4 commits verts cette session : `3480c7f`, `8383c15`, `a042244`, plus celui-ci.
 - `pnpm verify` : 21 étapes, code 0.
-- Point 2 : commits 1 et 2 faits. **Commit 3 NON fait : le détecteur n'est pas correct, il n'a pas été commité.**
-- Commit 1 (3480c7f) : `theme-scope.tsx` dérive `ResolvedThemeName` ; `design-config.ts` dérive de `ThemeName`, exclusion `high-contrast` portée par le type ; `get-theme-script.ts` liste de stockage dérivée (exclut `dim`, inclut `system`). 4 tests ajoutés. `theme-scope.tsx` peut importer `constants.ts` : type seul, aucun cycle, aucun coût de bundle.
-- Commit 2 (8383c15) : 4 listes e2e annotées, item 0.15c ouvert avec 3 arbitrages.
-- **Reprise du commit 3** : `packages/tokens/scripts/lib/detecter-listes-themes.mjs` existe **non commité**. 9 fixtures sur 10 passent ; `describe.each` renvoie 1 liste et non 3 (l'attendu du test était faux, pas le code). Restent **3 détections non classifiées** sur le dépôt : `design-customizer.spec.ts:16` et `:49` (tables de fixtures : chaque objet porte une clé `theme`, ce n'est pas une liste de thèmes) et `theme-subtree.spec.ts:59` (à inspecter). Total détecté : 8 listes, dont 5 annotées.
-- Avant d'écrire le test : décider si une table de fixtures reçoit une seconde marque (`mr-theme-not-a-list:`) ou si le détecteur gagne une règle de clé `theme`.
-- Restent ensuite : ADR D22, test de parité étendu, contrôle d'octets de contrôle (section 4 de `prompt.md`).
+- **Point 2 terminé** (parité 0.15, ADR D22). Les 3 sources sont dérivées, le détecteur et ses 11 fixtures sont en place, le test de parité est étendu, D22 est écrite.
+- Détecteur : règle structurelle sur le type des éléments (tableau de chaînes = liste ; tableau d'objets = table de fixtures). 11 fixtures OK. `apps/web/e2e` : **5 détections, 5 vraies listes, 0 faux positif**. Garde prouvée en négatif : elle nomme `geometry.spec.ts:7` et les 4 thèmes manquants.
+- 0.15b **mesuré, non implémenté** : 3 détections hors e2e. `theme-provider.tsx:10` (7 thèmes, exhaustive, typée `ResolvedThemeName[]`), `HarnessPage.tsx:6` (6, `slate` manquant, type `Theme` en dérivant donc non rattrapé par le compilateur), `get-theme-script.test.ts:91` (boucle de test, 2 thèmes).
+- Reste à faire : contrôle des octets de contrôle (section 4 de `prompt.md`), point 3 (renommage state/panel), ADR D19, puis les 8 ajouts 11b1 en attente de validation.
+- Arbitrages 0.15c toujours ouverts, 3 questions à poser au propriétaire : `geometry.spec.ts`, `audit-baseline.spec.ts` (`dim` doublon de `dark`), `theme-runtime.spec.ts` (`oled`).
 - Table rase : 7 primitives `--mr-ref-*`, autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
-- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`).
-- Cliquets : stylelint 2730, test-skips {4, 2}.
-- Décisions en attente : D19, D22. En attente de validation : les 8 ajouts 11b1.
+- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
+- Décisions en attente : D19 seulement. En attente de validation : les 8 ajouts 11b1.
+- `DECISIONS.md` : les ADR D24, D23, D22 sont placées en ordre décroissant en fin de fichier. Aucun trou de numérotation parmi D19 à D24, D19 est réservée et non écrite. Ordre àCosmétique à corriger quand le contexte le permet.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
 - À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 

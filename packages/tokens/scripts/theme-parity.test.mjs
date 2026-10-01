@@ -15,6 +15,8 @@ import path from 'node:path'
 import { test } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import { THEMES } from './lib/tokens-lib.mjs'
+import { ALIASES } from './lib/themes.mjs'
+import { MARQUE, detecterListesDeThemes, raisonDeclaree } from './lib/detecter-listes-themes.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(here, '../../..')
@@ -96,4 +98,86 @@ test('PARITÉ : fichiers sur disque = thèmes enregistrés = thèmes émis', () 
 test('aucun thème n est déclaré deux fois', () => {
     const disk = themesOnDisk()
     assert.equal(new Set(disk).size, disk.length)
+})
+
+/**
+ * Étape 0.15 (D22) — parité des listes de thèmes écrites à la main.
+ *
+ * Le test ci-dessus compare trois listes maintenues par le build. Celui-ci
+ * compare les listes **écrites dans le code applicatif**, qu'aucun test ne
+ * surveillait. C'est la même cause que `slate` : une liste recopiée à la main,
+ * jamais mise à jour.
+ *
+ * Une liste détectée est soit exhaustive, soit annotée `mr-theme-subset:` avec
+ * une raison. Le message d'échec nomme le thème manquant et le fichier fautif.
+ * Un alias n'est jamais compté comme thème manquant : `dim` rend `dark`.
+ */
+test('toute liste de thèmes e2e est exhaustive ou annotee', () => {
+    const disque = themesOnDisk()
+    const alias = Object.keys(ALIASES)
+    const connus = [...disque, ...alias, 'system']
+    const repertoire = path.join(repoRoot, 'apps/web/e2e')
+
+    const ecarts = []
+    let detectees = 0
+
+    for (const fichier of fs.readdirSync(repertoire).filter((f) => f.endsWith('.ts'))) {
+        const source = fs.readFileSync(path.join(repertoire, fichier), 'utf8')
+        for (const liste of detecterListesDeThemes(source, connus)) {
+            detectees++
+            const themes = liste.themes.filter((t) => !alias.includes(t))
+            const manquants = disque.filter((t) => !themes.includes(t))
+            const raison = raisonDeclaree(source, liste.ligne)
+
+            if (manquants.length === 0) continue
+            if (raison) continue
+
+            ecarts.push(
+                `${fichier}:${liste.ligne} — thèmes manquants : ${manquants.join(', ')}` +
+                    ` (trouvés : ${themes.join(', ')}). Ajouter la marque « ${MARQUE} »` +
+                    ` avec la raison, ou compléter la liste.`
+            )
+        }
+    }
+
+    assert.deepEqual(ecarts, [], `listes de thèmes non couvertes :\n  ${ecarts.join('\n  ')}`)
+    // Garde-fou : si le détecteur cessait de trouver quoi que ce soit, le test
+    // passerait au vert sans rien vérifier. Ce seuil le prouve.
+    assert.ok(
+        detectees >= 5,
+        `le détecteur n'a trouvé que ${detectees} liste(s) : il a probablement cessé de fonctionner`
+    )
+})
+
+test('aucune liste e2e ne cite un thème absent du disque ni un alias non declare', () => {
+    const disque = themesOnDisk()
+    const connus = [...disque, ...Object.keys(ALIASES), 'system']
+    const repertoire = path.join(repoRoot, 'apps/web/e2e')
+
+    for (const fichier of fs.readdirSync(repertoire).filter((f) => f.endsWith('.ts'))) {
+        const source = fs.readFileSync(path.join(repertoire, fichier), 'utf8')
+        for (const liste of detecterListesDeThemes(source, connus)) {
+            for (const nom of liste.themes) {
+                assert.ok(
+                    connus.includes(nom),
+                    `${fichier}:${liste.ligne} — « ${nom} » n'est ni un thème du disque, ni un alias, ni system`
+                )
+            }
+        }
+    }
+})
+
+test('le détecteur distingue bien une liste de thèmes d une table de fixtures', () => {
+    const connus = [...themesOnDisk(), ...Object.keys(ALIASES), 'system']
+    const fixtures = `const presets = [
+        { theme: 'light', accent: 'violet' },
+        { theme: 'night', accent: 'blue' },
+    ]`
+    assert.deepEqual(
+        detecterListesDeThemes(fixtures, connus),
+        [],
+        'un tableau dont les éléments sont des objets n est pas une liste de thèmes'
+    )
+    const liste = `const themes = ['light', 'dark', 'slate']`
+    assert.equal(detecterListesDeThemes(liste, connus).length, 1)
 })

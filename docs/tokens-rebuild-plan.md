@@ -29,6 +29,10 @@ se compensent.
 - **Documentation à jour.** Glossaire, guide d'ajout, pièges connus, specs de
   composants et conventions reflètent l'état réel. Aucun écart ouvert non
   consigné.
+- **Annotations de listes e2e relues.** Toute annotation `mr-theme-subset:` dont la
+  raison cite 11b1 est devenue fausse en fin de 11b1 : la relecture de ces
+  annotations fait partie de la Definition of Done. Aucun mécanisme automatique
+  pour l'instant.
 - **CI verte.** Sur la branche de travail, la chaîne complète passe. Le chantier
   ne se déclare pas terminé sur une CI locale qui n'a pas été relue.
 
