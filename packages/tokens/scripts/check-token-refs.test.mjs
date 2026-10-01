@@ -30,7 +30,14 @@ const DEPRECATED_CSS = `
 `
 
 /** Fabrique un lecteur de fichiers sur mesure. */
-const reader = (files) => (rel) => files[rel.split('\\').join('/')] ?? ''
+const reader = (files) => (rel) => {
+    const key = rel.split('\\').join('/')
+    if (files[key] !== undefined) return files[key]
+    if (key.endsWith('primitives.json')) return '{"mr":{}}'
+    return ''
+}
+
+const PRIMITIVES = { 'packages/tokens/src/primitives.json': '{"mr":{"brand-hue":{}}}' }
 
 test('references : distingue var() avec repli et var() sans repli', () => {
     const source = `
@@ -168,6 +175,34 @@ test('un style inline réel reste compté comme consommation', () => {
         }),
     })
     assert.equal(result.intrusions.length, 1)
+})
+
+test("une primitive n'est jamais un orphelin, meme sans var() dans les sources", () => {
+    const result = audit({
+        files: [],
+        readFile: reader({
+            ...PRIMITIVES,
+            'packages/styles/src/tokens/generated/tokens.css':
+                ':root {\n  --mr-brand-hue: 200;\n  --mr-token-mort: 1px;\n}\n' +
+                ':root { --mr-accent: oklch(0.52 0.1 var(--mr-brand-hue)); }\n',
+            'packages/styles/src/tokens/generated/deprecated.css': '',
+        }),
+    })
+    assert.equal(result.orphans.includes('--mr-brand-hue'), false, 'primitive = racine')
+    // `--mr-accent` consomme brand-hue mais n'est consommé par personne : orphelin.
+    assert.deepEqual(result.orphans, ['--mr-accent', '--mr-token-mort'])
+})
+
+test("un token consomme uniquement par le CSS genere n'est pas un orphelin", () => {
+    const result = audit({
+        files: [],
+        readFile: reader({
+            'packages/styles/src/tokens/generated/tokens.css':
+                ':root {\n  --mr-bg-canvas: white;\n  --mr-accent: var(--mr-bg-canvas);\n}\n',
+            'packages/styles/src/tokens/generated/deprecated.css': '',
+        }),
+    })
+    assert.deepEqual(result.orphans, ['--mr-accent'])
 })
 
 test('dépôt réel : aucune intrusion sans repli dans le CSS livré', () => {

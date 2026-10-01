@@ -29,7 +29,22 @@ const SCANNED = [
     'packages/ui/src',
     'apps/web/src',
 ]
-const EXTENSIONS = /\.(css|tsx|ts)$/
+/**
+ * Les sources DTCG ne suffisent pas : `oklchDecl()` fabrique la référence
+ * `var(--mr-brand-hue)` à partir de l'extension `com.monority.oklch`, elle
+ * n'est écrite nulle part dans le JSON. Le CSS généré est donc la vérité des
+ * dépendances entre tokens — on le scanne comme un consommateur.
+ */
+const GENERATED_CSS = [`${GENERATED}/tokens.css`, `${GENERATED}/deprecated.css`]
+/**
+ * Les primitives sont des racines, pas des orphelins : par construction, une
+ * marque les remplace, et rien ne les consomme par `var()` côté source
+ * (`design-customizer.spec.ts` les lit via `getPropertyValue`).
+ */
+const PRIMITIVES = 'packages/tokens/src/primitives.json'
+/** Les specs citent des tokens pour les décrire, pas pour les consommer. */
+const SPECS = 'docs/design'
+const EXTENSIONS = /\.(css|tsx|ts|json)$/
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.next', 'coverage'])
 const TEST_FILE = /\.(test|spec)\.[cm]?[jt]sx?$/
 
@@ -53,7 +68,20 @@ export function declaredNames(css) {
     return new Set([...css.matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]))
 }
 
-/** Fichiers à auditer, extension CSS/TS/TSX. */
+/** Specs : fichiers .md de docs/design. */
+export function collectSpecs(dir = SPECS, acc = []) {
+    const abs = path.join(repoRoot, dir)
+    if (!fs.existsSync(abs)) return acc
+    for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
+        if (SKIP_DIRS.has(entry.name)) continue
+        const rel = path.join(dir, entry.name)
+        if (entry.isDirectory()) collectSpecs(rel, acc)
+        else if (entry.name.endsWith('.md')) acc.push(rel)
+    }
+    return acc
+}
+
+/** Fichiers à auditer, extension CSS/TS/TSX/JSON. */
 export function collectFiles(dir, acc = []) {
     const abs = path.join(repoRoot, dir)
     if (!fs.existsSync(abs)) return acc
@@ -98,6 +126,8 @@ const lineOf = (source, index) => source.slice(0, index).split('\n').length
 export function audit(options = {}) {
     const allFiles = options.files ?? SCANNED.flatMap((dir) => collectFiles(dir))
     const files = allFiles.filter((file) => !isTestFile(file))
+    const sources = collectFiles('packages/tokens/src')
+    const specFiles = collectSpecs()
     const readFile = options.readFile ?? read
     const globals = declaredNames(readFile(`${GENERATED}/tokens.css`))
     const deprecated = declaredNames(readFile(`${GENERATED}/deprecated.css`))
@@ -117,7 +147,18 @@ export function audit(options = {}) {
     })
 
     // Passe 2 : chaque référence, confrontée aux trois sources de vérité.
-    for (const { file, source, locals } of parsed) {
+    // Le CSS généré est un consommateur : il porte les dépendances entre tokens
+    // que le générateur fabrique (teintes de marque).
+    const consumers = [
+        ...parsed,
+        ...sources.map((f) => ({ file: f, source: readFile(f), locals: new Set() })),
+        ...GENERATED_CSS.map((f) => ({ file: f, source: readFile(f), locals: new Set() })),
+    ]
+    // primitives.json : chaque clé racine est une primitive (brand-hue, radius-scale…)
+    const primitives = new Set(
+        Object.keys(JSON.parse(readFile(PRIMITIVES)).mr ?? {}).map((key) => `--mr-${key}`)
+    )
+    for (const { file, source, locals } of consumers) {
         for (const ref of references(source)) {
             referenced.add(ref.name)
             const known = globals.has(ref.name) || deprecated.has(ref.name) || locals.has(ref.name)
@@ -130,21 +171,50 @@ export function audit(options = {}) {
         }
     }
 
-    const orphans = [...globals].filter((name) => !referenced.has(name)).sort()
+    const orphans = [...globals]
+        .filter((name) => !referenced.has(name) && !primitives.has(name))
+        .sort()
+    const citedInSpecs = new Map()
+    for (const spec of specFiles) {
+        for (const ref of references(readFile(spec))) {
+            if (!globals.has(ref.name) && !deprecated.has(ref.name)) continue
+            if (!citedInSpecs.has(ref.name)) citedInSpecs.set(ref.name, [])
+            citedInSpecs.get(ref.name).push(spec)
+        }
+    }
+    const orphanCitedInSpecs = orphans.filter((name) => citedInSpecs.has(name))
     const counts = {
         files: files.length,
         skippedTests: allFiles.length - files.length,
+        tokenSources: sources.length,
+        specs: specFiles.length,
         globals: globals.size,
         deprecated: deprecated.size,
         referenced: referenced.size,
     }
-    return { intrusions, overrides, deprecatedUses, orphans, counts }
+    return {
+        intrusions,
+        overrides,
+        deprecatedUses,
+        orphans,
+        citedInSpecs,
+        orphanCitedInSpecs,
+        counts,
+    }
 }
 
 const rel = (file) => file.split(path.sep).join('/')
 
 function report(result, jsonPath) {
-    const { intrusions, overrides, deprecatedUses, orphans, counts } = result
+    const {
+        intrusions,
+        overrides,
+        deprecatedUses,
+        orphans,
+        citedInSpecs,
+        orphanCitedInSpecs,
+        counts,
+    } = result
     const total = intrusions.length + overrides.length + deprecatedUses.length + orphans.length
 
     if (intrusions.length) {
@@ -165,9 +235,18 @@ function report(result, jsonPath) {
         console.log(`ORPHELINS — tokens globaux jamais référencés : ${orphans.length}`)
         for (const name of orphans) console.log(`  ${name}`)
     }
+    if (orphanCitedInSpecs.length) {
+        console.log(
+            `ORPHELINS CITÉS EN SPEC — à corriger dans la spec au moment de la suppression : ${orphanCitedInSpecs.length}`
+        )
+        for (const name of orphanCitedInSpecs) {
+            console.log(`  ${name}  [${[...new Set(citedInSpecs.get(name))].join(', ')}]`)
+        }
+    }
 
     console.log(
-        `AUDIT TOKENS — ${counts.files} fichiers audités (${counts.skippedTests} tests exclus), ` +
+        `AUDIT TOKENS — ${counts.files} fichiers audités (${counts.skippedTests} tests exclus, ` +
+            `${counts.tokenSources} sources de tokens, ${counts.specs} specs), ` +
             `${counts.globals} tokens globaux ` +
             `(${counts.deprecated} dépréciés), ${counts.referenced} référencés, ` +
             `${total} constat(s)`
