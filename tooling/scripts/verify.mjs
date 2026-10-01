@@ -21,6 +21,7 @@
  *   build           bundles                ~6 s
  *   check:test-skips garde des skips      ~1 s
  *   audit:tokens    graphe de tokens      ~2 s
+ *   audit:pending   references pendantes  ~1 s
  *   audit:scope     perimetre d'audit      ~1 s
  *
  * Chaque étape affiche son nom, son code de sortie et sa durée. En cas d'échec
@@ -53,6 +54,7 @@ const STEPS = [
     { name: 'build', cmd: 'build' },
     { name: 'check:test-skips', cmd: 'check:test-skips' },
     { name: 'audit:tokens', cmd: 'audit:tokens' },
+    { name: 'audit:pending', cmd: 'audit:pending' },
     { name: 'audit:scope', cmd: 'audit:scope' },
 ]
 

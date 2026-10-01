@@ -91,6 +91,8 @@ Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `sp
   - [ ] 11z. Fin de chantier : supprimer `packages/tokens/rebuild.json` (les contrôles redeviennent bloquants), supprimer l'appareil déprécié (`deprecated.json`, `deprecated.css`, `migration-table.md`) en un seul commit, passer le check `var(--mr-*)` en bloquant dans la CI, `language.md` aligné sur le système reconstruit.
 
 ## Notes
+
+- **Unité de référence du chantier** (D24) : occurrences de `var(--mr-x)` pendantes dans les recettes. Base : **2241** occurrences / 129 tokens distincts, mesurée au commit `2d3981b`. Script : `packages/tokens/scripts/measure-pending.mjs`, cliquet dans `pending-baseline.json`. « 3291 » appartient à une ancienne unité et est retiré des critères.
 - Réserve ouverte : run Release sur main échoue au push de `changeset-release/main` (403, permissions du dépôt GitHub, Settings > Actions > Workflow permissions). Pas de check requis dépendant, ne bloque rien. À corriger seulement quand la publication sera souhaitée.
 - `.gitignore` : une ligne `memory-ai/` reste non commitée dans certains worktrees (modification d'une autre session) — vérifier avant tout `git add` massif.
 - **Format des sources DTCG** : formatées à la main, objets sur une seule ligne (`"spacing-0": { "$value": "0" }`). Biome ne les reformatte pas. Ne jamais les réécrire avec `JSON.stringify(obj, null, 4)` : `core.json` passe de 251 à 463 lignes et la suppression se noie dans le diff de formatage.

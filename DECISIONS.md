@@ -144,6 +144,17 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 
 **Conséquences.** Sept tests de normalisation couvrent les cas limites : nom de thème composé (`high-contrast`), token dont le nom contient un thème sans être préfixé, préfixe partiel, thème qui est le préfixe d'un autre, tri par longueur décroissante, et non-régression de la distinction entre les quatre tons.
 
+### D24 — Unité de référence du chantier : les références pendantes de recette
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Le chantier comparait des nombres sans unité explicite. « 3291 » venait d'un scan large incluant `apps/web` et la base ; « 3170 constats » venait d'`audit:tokens` et comptait autre chose. Deux mesures d'unités différentes ne sont pas comparables.
+
+**Décision.** L'unité de référence du chantier est **l'occurrence de `var(--mr-x)` pendante dans `packages/styles/src/recipes/*.recipe.css`**, où `--mr-x` n'est définie ni globalement, ni localement dans le même fichier, ni dans le fichier déprécié. Script nommé : `packages/tokens/scripts/measure-pending.mjs`. Périmètre : recettes uniquement — la base, les utilitaires et `apps/web` sont des consommateurs, pas la cible.
+
+**Valeur de base : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76.** Mesurée au commit `2d3981b`. Fichier : `pending-baseline.json`. Cliquet : `--check` échoue si le nombre monte, signale une baisse.
+
+**Conséquences.** « 3291 » est **retiré des critères** : ancienne unité, plus comparable. Chaque famille de 11b1 rapporte avant, après, écart attendu et écart mesuré, dans cette unité. Le nombre de constats d'`audit:tokens` reste rapporté séparément, jamais mélangé.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)

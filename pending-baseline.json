@@ -1,0 +1,8 @@
+{
+    "unit": "occurrence de var(--mr-x) pendante dans packages/styles/src/recipes/*.recipe.css",
+    "scope": "recettes uniquement ; hors base, utilitaires et apps/web",
+    "occurrences": 2241,
+    "distinctTokens": 129,
+    "recipesTotal": 76,
+    "measuredAtCommit": "2d3981b1de6c31ad7079a552a7834223eeeaf25b"
+}

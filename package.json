@@ -34,7 +34,8 @@
         "test:scale-rules": "node --test ./packages/tokens/scripts/lib/scale-rules.test.mjs",
         "test:theme-parity": "node --test ./packages/tokens/scripts/theme-parity.test.mjs",
         "test:short-name": "node --test ./packages/tokens/scripts/lib/short-name.test.mjs",
-        "test:theme-coverage": "node --test ./packages/tokens/scripts/theme-coverage.test.mjs"
+        "test:theme-coverage": "node --test ./packages/tokens/scripts/theme-coverage.test.mjs",
+        "audit:pending": "node ./packages/tokens/scripts/measure-pending.mjs --check"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",
