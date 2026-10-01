@@ -104,6 +104,39 @@
                         "h": "neutral"
                     }
                 }
+            },
+            "border-subtle": {
+                "$value": "oklch(0.915 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.915,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "border-default": {
+                "$value": "oklch(0.865 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.865,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "border-control": {
+                "$value": "oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.62,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
             }
         }
     }

@@ -104,6 +104,39 @@
                         "h": 230
                     }
                 }
+            },
+            "border-subtle": {
+                "$value": "oklch(0.32 0.035 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.32,
+                        "c": 0.035,
+                        "h": 230
+                    }
+                }
+            },
+            "border-default": {
+                "$value": "oklch(0.39 0.045 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.39,
+                        "c": 0.045,
+                        "h": 230
+                    }
+                }
+            },
+            "border-control": {
+                "$value": "oklch(0.56 0.06 230)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.56,
+                        "c": 0.06,
+                        "h": 230
+                    }
+                }
             }
         }
     }

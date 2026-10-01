@@ -1,19 +1,19 @@
 # Plan de remise en ordre — Monority UI
 
-## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
 - Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Validation à posteriori, un rapport par phase.
 - `pnpm verify` : 21 étapes, code 0.
-- **Phase B.** `bg` et `text` faites. Restent `border`, `accent`, `status`, `chart`.
-- Progression du cliquet : 2241 → `bg` 2088 → `text` **1898** occurrences. Tokens distincts 129 → 125 → **123**.
-- X2 : 31 → 26 (bg) → **22** (text).
-- `bg` : attendu −153, mesuré −153, écart 0, 63 recettes. `text` : attendu −190, mesuré −190, écart 0, 63 recettes.
-- ADR D2 à D25, ordre croissant, aucun trou.
-- **Leçon** : passer un message de commit par `git commit -F <fichier>`. Un message construit par `JSON.stringify` sérialise les retours à la ligne en `\n` litteraux, illisible dans `git log`.
-- Regenerer `docs/design/reference/monority-ui-tokens.reference.css` apres chaque build de famille, sinon T1 échoue en `genere seul`.
+- **Phase B.** `bg`, `text`, `border` faites. Restent `accent`, `status`, `chart`.
+- Cliquet : 2241 → 2088 (bg) → 1898 (text) → **1751** (border). Tokens distincts 129 → 123 → **120**.
+- X2 : 31 → 26 → 22 → **21**.
+- Écart nul à chaque famille. Extraction de l'historique faite en **une seule passe** dans `h1.js` (hors dépôt) : border, accent, status et chart pour les 7 thèmes.
+- `status` : **aucune valeur dans les thèmes** à `41aa61d~1`. Les `allowedFixed` de T3 nomment `success-text`, `danger-solid`… donc ces jetons étaient émis par le build ; à localiser avant de les reconstruire.
+- `accent` : l'historique utilise `hue 200` (la primitive de marque) partout sauf ocean 195 et night 275. Chroma littéral de 0,025 à 0,12, donc `--mr-ref-brand-chroma` ne peut pas être utilisé tel quel.
+- `chart-muted` **existe historiquement** sur les 7 thèmes (0,865 light / 0,45 dark / 0,31 slate / 0,31 oled / 0,39 ocean / 0,37 night / 0,55 high-contrast). Reste à mesurer un consommateur dans le code.
+- **Leçon** : `git commit -F <fichier>`. Le message de `1dc6b87` contient des `\n` littéraux, irrattrapable.
+- Regenerer `docs/design/reference/monority-ui-tokens.reference.css` après chaque build, sinon T1 échoue en `generé seul`.
 - Cliquets : stylelint 2730, test-skips {4, 2}.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
-
 ## Règles communes (toutes les étapes)
 - Une étape par session. N'exécute que l'étape demandée.
 - Un commit par sujet. Après chaque commit : typecheck, tests (ui, web, tokens), build, format:check.
