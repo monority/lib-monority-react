@@ -9,8 +9,5 @@
         "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
         "test": "echo '@monority/styles: aucun test (controles a reconstruire en Phase 2)'",
         "typecheck": "echo 'no types'"
-    },
-    "devDependencies": {
-        "@monority/tokens": "workspace:*"
     }
 }
