@@ -24,7 +24,11 @@
         "validate": "node tooling/scripts/validate.js",
         "test:stylelint": "node --test ./tooling/stylelint/rules.test.mjs",
         "audit:scope": "node ./packages/tokens/scripts/check-audit-scope.mjs",
-        "test:audit-scope": "node --test ./packages/tokens/scripts/audit-scope.test.mjs"
+        "test:audit-scope": "node --test ./packages/tokens/scripts/audit-scope.test.mjs",
+        "verify": "node ./tooling/scripts/verify.mjs",
+        "check:test-skips": "node ./packages/tokens/scripts/check-test-skips.mjs",
+        "test:test-skips": "node --test ./packages/tokens/scripts/test-skips.test.mjs",
+        "test:token-pattern": "node --test ./tooling/tokens/token-pattern.test.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

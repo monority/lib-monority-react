@@ -58,10 +58,11 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 - [x] **0.2** Amendements `ROADMAP.md` §4.3 / §4.4 / §4.6 / §5.2, D14 inscrite. Commit `41beb44`.
 - [x] **0.3** Regex de nommage dérivée du vocabulaire cible (`packages/tokens/categories.json`), fixtures cibles de 11b1, test de synchronisation à trois sources. Commit `aee4ded`.
 - [x] **0.4** Renommage D11 des 7 primitives sous `--mr-ref-*`. Commit `4d0b1a2`.
-- [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`.
+- [x] **0.5** Cliquet : baisse seule verrouillée (2744 → 2730). Commit `d70822e`. Idempotence de l'écriture prouvée par commit `6798adc`.
+- [x] **0.5b** `pnpm verify` : porte de preuve unique, 13 étapes en ordre fixe (du plus rapide au plus lent), arrêt au premier échec. Toutes les preuves de fin de commit proviennent de ce script.
 - [x] **0.6** Décision D15 **tranchée** — option C, échelle déclarée par famille et fermée, sous 5 conditions (voir `DECISIONS.md`). Tableau famille → type de pas → pas autorisés à valider **avant 11b1**.
 - [ ] **0.7** Registre `local-tokens` : 226 entrées en statut `a-auditer`, comptées au cliquet, passage à `justifie` sur surface de personnalisation prouvée (D8).
-- [ ] **0.8** Verrou des 4 tests web de contrat tokens : liste explicite, raison + phase de réactivation par test, garde « skip sans `rebuild.json` = échec », compteur de skips au cliquet.
+- [x] **0.8** Verrou des 4 tests web de contrat tokens. Registre `packages/tokens/test-skips.json` (raison + `blockedBy` ordonné), quatre gardes (`check-test-skips.mjs`), 12 tests de registre, compteur de skips au cliquet. Les skips sont **conditionnels** au verrou : `duringRebuild(it)` dans `apps/web/src/lib/rebuild-lock.ts`, un `it.skip` en dur est refusé.
 - [ ] **0.9** `audit:tokens` : définis / utilisés / pendants / orphelins / doublons de valeur / cycles / violations de niveau / pas D15. Fixtures ok/nok, dont cycles et D15.
 - [ ] **0.10** `audit:contrast` : couleurs calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
 - [ ] **0.11** CI pilotée par `rebuild.json`, même cliquet qu'en local.
