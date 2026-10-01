@@ -45,6 +45,14 @@ const allowedFixed = new Set([
     'danger-solid',
     'danger-solid-hover',
     'on-danger-solid',
+    // Séries de graphique : teintes fixes elles aussi (D19). Elles reprennent
+    // les teintes de statut et la hue de marque, donc aucune ne peut dériver d'un
+    // primitif sans perdre la séparation de 40 degrés entre séries.
+    'chart-1',
+    'chart-2',
+    'chart-3',
+    'chart-4',
+    'chart-5',
 ])
 for (const [name, values] of decls) {
     for (const value of values) {

@@ -258,6 +258,61 @@
                         "h": 25
                     }
                 }
+            },
+            "chart-1": {
+                "$value": "oklch(0.82 0.1 var(--mr-ref-brand-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.82,
+                        "c": 0.1,
+                        "h": "brand"
+                    }
+                }
+            },
+            "chart-2": {
+                "$value": "oklch(0.8 0.1 255)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.8,
+                        "c": 0.1,
+                        "h": 255
+                    }
+                }
+            },
+            "chart-3": {
+                "$value": "oklch(0.78 0.1 155)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.78,
+                        "c": 0.1,
+                        "h": 155
+                    }
+                }
+            },
+            "chart-4": {
+                "$value": "oklch(0.8 0.1 80)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.8,
+                        "c": 0.1,
+                        "h": 80
+                    }
+                }
+            },
+            "chart-5": {
+                "$value": "oklch(0.73 0.1 25)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.73,
+                        "c": 0.1,
+                        "h": 25
+                    }
+                }
             }
         }
     }
