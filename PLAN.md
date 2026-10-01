@@ -5,7 +5,10 @@
 - Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`.
 - Dernier commit : `13259ee feat(tokens): registre d alias de rendu (D23)`.
 - `pnpm verify` : 21 étapes, code 0, arrêt au premier échec.
-- En cours : point 1 de la reprise 2026-10-01 — documents durables et cette section. Puis point 2, parité 0.15 et ADR D22.
+- En cours : point 2, parité 0.15 et ADR D22. **Scan des specs terminé, conception et code pas commencés.**
+- Mesuré au point 2 : 10 fichiers e2e citent un nom de thème, mais **5 seulement écrivent une liste** (≥ 2 noms dans un même littéral ou une même boucle) : `components.visual.spec.ts:4` (7 noms, égale le disque), `audit-baseline.spec.ts:16` (6, dont `dim`), `theme-subtree.spec.ts:17` (6), `geometry.spec.ts:3` (3), `theme-runtime.spec.ts:62` (3, dans un `for…of`). Les 5 autres (`action-regression`, `brand.visual`, `design-customizer`, `position`, `spec-criteria`) citent un thème isolé dans une URL ou une assertion.
+- Mesuré au point 2 : **aucun sous-ensemble n'a de raison délibérée établie.** `geometry.spec.ts` a ses 3 thèmes depuis sa création (`88f0b1a`) et n'en a jamais eu davantage — l'hypothèse « contrainte de coût de capture » est infirmée. `theme-subtree.spec.ts` et `audit-baseline.spec.ts` sont antérieurs à l'arrivée de leurs thèmes manquants (`3e6fee9`, `adf5bda`). Ce sont des listes périmées, pas des choix.
+- Décision à rendre au point 2 : réécrire ou non une liste périmée doit échouer, ou être signalée sans bloquer.
 - Table rase : 7 primitives `--mr-ref-*`, toutes les autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
 - Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base au commit `2d3981b`).
 - Cliquets : stylelint 2730 violations, test-skips {4, 2}. À la baisse seule.
