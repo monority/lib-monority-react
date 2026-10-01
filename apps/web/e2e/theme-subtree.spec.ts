@@ -14,6 +14,9 @@ const resolvedPath = fileURLToPath(
 )
 const resolved = JSON.parse(readFileSync(resolvedPath, 'utf8'))
 
+// mr-theme-subset: slate est un theme a contenu purge (D20). Son fichier est
+// vide jusqu'a 11b1 : l'ajouter ici produirait un cas rouge. `opposite` est un
+// Record type sur cette liste, donc le compilateur exige son entree.
 const themes = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast'] as const
 const opposite: Record<(typeof themes)[number], string> = {
     light: 'dark',

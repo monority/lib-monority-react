@@ -59,6 +59,10 @@ test.describe('Phase 2b — bootstrap du thème', () => {
         await expect(page.locator('html')).toHaveAttribute('data-theme-choice', 'system')
     })
 
+    // mr-theme-subset: couverture repartie dans ce meme fichier, pas une liste
+    // perimee. dark est couvert par defaut (L74) et par le test de stockage
+    // (L26), light et high-contrast par le test prefers-contrast (L52-L58).
+    // Cette boucle couvre les 3 restants ; il manque oled, a arbitrer.
     for (const theme of ['slate', 'ocean', 'night'] as const) {
         test(`${theme} est disponible avant hydratation`, async ({ page }) => {
             await page.addInitScript(

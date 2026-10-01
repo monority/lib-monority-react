@@ -13,6 +13,12 @@ import { docsComponentRegistry } from '../src/features/docs/components/registry'
  *   AUDIT_BASELINE=1 pnpm exec playwright test audit-baseline --project=desktop --update-snapshots
  */
 
+// mr-theme-subset: ocean et night ont des jetons, mais leurs baselines
+// visuelles n'existent pas et l'app ne s'affiche pas avant 11b1. `dim` n'est
+// PAS un test d'alias ici : le script pose data-theme='dim' et capture, ce qui
+// produit les memes pixels que `dark`. Le test d'alias reel est dans
+// theme-runtime.spec.ts (migration dim -> dark + reecriture du stockage).
+// A traiter en fin de reconstruction : ajouter ocean et night, retirer dim.
 const themes = ['light', 'dim', 'dark', 'slate', 'oled', 'high-contrast'] as const
 const enabled = process.env.AUDIT_BASELINE === '1'
 

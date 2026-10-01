@@ -48,6 +48,12 @@
 
 Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.1, 0.2, 11b1, 11z…). Ils ne changent plus, même si l'ordre d'exécution bouge. Les rapports citent ces identifiants, pas les intitulés. Le protocole d'exécution et les critères de sortie sont dans `ROADMAP.md` §8, qui prime sur cette liste.
 
+### 0.15c — listes e2e à arbitrer (ouvert 2026-10-01, point 2)
+Aucune complétion n'était faisable au moment où le test de parité a été écrit. Trois arbitrages restent ouverts, chacun mesuré.
+- `audit-baseline.spec.ts` : ajouter `ocean` et `night` exige des baselines visuelles neuves ; retirer `dim` orpheline ses baselines existantes. `dim` n'y est pas un test d'alias — le script pose `data-theme='dim'` et capture, ce qui produit les pixels de `dark`. Le vrai test d'alias est dans `theme-runtime.spec.ts`. **Decider si `dim` sort de cette spec.** Rien n'a été généré ni supprimé : l'app ne s'affiche pas avant 11b1.
+- `geometry.spec.ts` : raison non établie. `git log -S` montre que ses 3 thèmes sont ceux de la création (`88f0b1a`) et qu'elle n'a jamais été réduite — elle n'a jamais été mise à jour. Le test mesure de la géométrie, que le thème ne change pas. **Arbitrage : compléter aux 7, ou assumer la restriction et la documenter.**
+- `theme-runtime.spec.ts` : `oled` manque dans la boucle « disponible avant hydratation ». La couverture des 7 thèmes est répartie sur plusieurs tests du fichier, donc c'est une répartition, pas une liste périmée. **Arbitrage : ajouter `oled` à la boucle, ou l'écrire dans le test qui couvre `dark`.**
+
 ### Chantier antérieur à la feuille de route (terminé ou repris par 11)
 
 - [ ] 1. Nettoyage : fichiers morts, BOM + `.editorconfig`, `AGENTS.md`, `.npmrc` + `registry-url/NODE_AUTH_TOKEN`, essai à blanc changesets, test NavigationMenu sur `getByRole`.

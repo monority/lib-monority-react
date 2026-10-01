@@ -1,5 +1,9 @@
 import { type Page, expect, test } from '@playwright/test'
 
+// mr-theme-subset: raison non etablie. git log -S montre que cette liste
+// n'a jamais eu plus de 3 themes depuis sa creation (88f0b1a) : elle n'a pas
+// ete reduite, elle n'a jamais ete mise a jour. Le test mesure de la
+// geometrie, que le theme ne change pas. Item PLAN.md ouvert pour arbitrage.
 const themes = ['light', 'dark', 'oled'] as const
 
 type Rect = {
