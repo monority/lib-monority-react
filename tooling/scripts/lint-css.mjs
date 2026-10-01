@@ -37,8 +37,29 @@ const readBaseline = () => {
     }
 }
 
+/**
+ * Écrit la baseline de façon déterministe.
+ *
+ * Stylelint ne garantit pas l'ordre de `results`, ni celui des avertissements
+ * d'un fichier. Sans tri, deux exécutions sur le même dépôt produisent deux
+ * fichiers différents et le diff devient illisible : une clé peut « bouger »
+ * sans qu'aucune valeur n'ait changé. Le tri rend l'écriture idempotente.
+ */
+const sortRecord = (record) =>
+    Object.fromEntries(Object.entries(record).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
+
 const writeBaseline = (all) => {
-    fs.writeFileSync(BASELINE, JSON.stringify(all, null, 4) + '\n')
+    const sorted = Object.fromEntries(
+        Object.entries(all).map(([tool, report]) => [
+            tool,
+            {
+                ...report,
+                byRule: sortRecord(report.byRule ?? {}),
+                byFileRule: sortRecord(report.byFileRule ?? {}),
+            },
+        ])
+    )
+    fs.writeFileSync(BASELINE, JSON.stringify(sorted, null, 4) + '\n')
 }
 
 const { results } = await stylelint.lint({ files: GLOBS, cwd: repoRoot })
