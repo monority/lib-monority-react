@@ -14,8 +14,11 @@ import { fileURLToPath } from 'node:url'
 import {
     EXCLUSIONS,
     EXCLUDED_PATHS,
+    MIGRATION_DOCS,
     grepExclusions,
+    grepExclusionsWithMigrationDocs,
     isExcluded,
+    isMigrationDoc,
     validateExclusions,
 } from './lib/audit-scope.mjs'
 
@@ -115,10 +118,31 @@ test('le motif de grep exclut réellement : preuve par exécution', () => {
         )
     }
 
-    const filtre = grepOldNames(grepExclusions().join(' '))
+    // Hors documents de migration, le grep filtré ne doit plus rien trouver.
+    const filtre = grepOldNames(grepExclusionsWithMigrationDocs().join(' '))
     assert.deepEqual(
         filtre,
         [],
-        `le grep filtré ne doit rien trouver, trouvé : ${JSON.stringify(filtre)}`
+        `le grep filtré ne doit rien trouver hors documents de migration, trouvé : ${JSON.stringify(filtre)}`
     )
+})
+
+test('les documents de migration sont reconnus, y compris par préfixe de répertoire', () => {
+    assert.equal(isMigrationDoc('MIGRATIONS.md'), true)
+    assert.equal(isMigrationDoc('.changeset/rotten-lions-tap.md'), true, 'répertoire')
+    assert.equal(
+        isMigrationDoc('packages/tokens/scripts/check-audit-scope.mjs'),
+        true,
+        'répertoire'
+    )
+    assert.equal(isMigrationDoc('packages/styles/src/recipes/badge.recipe.css'), false)
+    assert.equal(isMigrationDoc('docs/design/components/badge.md'), false)
+})
+
+test('chaque document de migration porte une raison', () => {
+    for (const doc of MIGRATION_DOCS) {
+        assert.ok(doc.reason && doc.reason.trim(), `sans raison : ${doc.path}`)
+    }
+    const sansRaison = [{ path: 'x.md' }].filter((d) => !d.reason || !d.reason.trim())
+    assert.equal(sansRaison.length, 1, 'la forme fautive doit être refusée par le même filtre')
 })

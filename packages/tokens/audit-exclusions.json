@@ -22,6 +22,23 @@
             "verify": "contient volontairement les 7 anciens noms"
         }
     ],
+    "migrationDocs": [
+        {
+            "path": "MIGRATIONS.md",
+            "reason": "Guide de migration D11. Citer les anciens noms est son raison d'être : un guide qui ne dit plus d'où l'on vient n'aide personne à migrer.",
+            "verify": "contient le tableau des 7 renommages"
+        },
+        {
+            "path": ".changeset/",
+            "reason": "Notes de version. Le changeset breaking doit citer les anciens noms pour que le consommateur sache quoi remplacer.",
+            "verify": "contient l'instruction de migration"
+        },
+        {
+            "path": "packages/tokens/scripts/",
+            "reason": "L'audit et son test listent les anciens noms pour vérifier que l'exclusion des archives reste réelle. Le test qui contrôle le grep s'exclut lui-même, sinon il se détecterait.",
+            "verify": "contient la liste OLD_NAMES"
+        }
+    ],
     "generatedNeverAudited": [
         {
             "path": "packages/styles/src/tokens/generated/",

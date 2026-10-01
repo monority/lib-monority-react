@@ -17,6 +17,16 @@ export const EXCLUSIONS = require(path.resolve(here, '../../audit-exclusions.jso
 /** Chemins exacts exclus des audits de tokens. */
 export const EXCLUDED_PATHS = new Set(EXCLUSIONS.exclusions.map((e) => e.path))
 
+/**
+ * Documents de migration : ils CITERONT les anciens noms, c'est leur fonction.
+ * Un guide de migration qui ne dit plus d'où l'on vient n'aide personne.
+ * Distinct des archives : on ne les exclut pas de l'audit, on admet qu'elles
+ * citent des noms périmés à titre documentaire.
+ */
+export const MIGRATION_DOCS = EXCLUSIONS.migrationDocs ?? []
+
+export const MIGRATION_DOC_PATHS = new Set(MIGRATION_DOCS.map((d) => d.path))
+
 /** Préfixes de répertoires exclus (fichiers générés). */
 export const EXCLUDED_PREFIXES = EXCLUSIONS.generatedNeverAudited.map((e) => e.path)
 
@@ -28,6 +38,16 @@ export function isExcluded(rel) {
     const normalized = rel.split(path.sep).join('/')
     if (EXCLUDED_PATHS.has(normalized)) return true
     return EXCLUDED_PREFIXES.some((prefix) => normalized.startsWith(prefix))
+}
+
+/**
+ * Le chemin est-il un document de migration, où citer un ancien nom est
+ * légitime ? Certains chemins sont des répertoires et se comparent par préfixe.
+ */
+export function isMigrationDoc(rel) {
+    const normalized = rel.split(path.sep).join('/')
+    if (MIGRATION_DOC_PATHS.has(normalized)) return true
+    return [...MIGRATION_DOC_PATHS].some((p) => p.endsWith('/') && normalized.startsWith(p))
 }
 
 /**
@@ -45,4 +65,9 @@ export function validateExclusions() {
 /** Motif de grep qui exclut le périmètre, à passer après `-e`. */
 export function grepExclusions() {
     return EXCLUSIONS.exclusions.map((e) => `:(exclude)${e.path}`)
+}
+
+/** Motif de grep qui exclut en plus les documents de migration. */
+export function grepExclusionsWithMigrationDocs() {
+    return [...grepExclusions(), ...MIGRATION_DOCS.map((d) => `:(exclude)${d.path}`)]
 }

@@ -14,7 +14,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { EXCLUSIONS, grepExclusions, isExcluded, validateExclusions } from './lib/audit-scope.mjs'
+import {
+    EXCLUSIONS,
+    MIGRATION_DOCS,
+    grepExclusionsWithMigrationDocs,
+    isExcluded,
+    isMigrationDoc,
+    validateExclusions,
+} from './lib/audit-scope.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -69,6 +76,7 @@ const residue = []
 for (const file of tracked) {
     if (archivePaths.has(file)) continue
     if (isExcluded(file)) continue
+    if (isMigrationDoc(file)) continue
     if (!/\.(css|tsx|ts|json|mjs|md)$/.test(file)) continue
     let source
     try {
@@ -90,12 +98,20 @@ for (const { file, found } of residue.slice(0, 10))
     console.log(`      ${file} : ${found.join(', ')}`)
 
 // --- 3. Le motif d'exclusion du grep est bien construit ---
-const patterns = grepExclusions()
-console.log('\nMOTIF DE GREP — doit exclure exactement les archives :')
+const patterns = grepExclusionsWithMigrationDocs()
+console.log('\nMOTIF DE GREP — archives + documents de migration :')
 console.log(`  ${patterns.join(' ')}`)
-const expected = archivePaths.size
-if (patterns.length !== expected) {
-    failures.push(`grepExclusions() rend ${patterns.length} motif(s) pour ${expected} archive(s)`)
+const expectedCount = EXCLUSIONS.exclusions.length + MIGRATION_DOCS.length
+if (patterns.length !== expectedCount) {
+    failures.push(
+        `le motif de grep rend ${patterns.length} motif(s) pour ` +
+            `${expectedCount} entrée(s) déclarée(s)`
+    )
+}
+for (const entry of [...EXCLUSIONS.exclusions, ...MIGRATION_DOCS]) {
+    if (!patterns.includes(`:(exclude)${entry.path}`)) {
+        failures.push(`le motif de grep ne couvre pas : ${entry.path}`)
+    }
 }
 
 if (failures.length) {
