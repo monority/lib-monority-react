@@ -1,7 +1,34 @@
-/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+/* Fixture — jamais linté en CI, testé par rules.test.mjs et token-pattern.test.mjs.
+ * Tout ce qui suit doit être REFUSÉ.
+ * Motifs : abréviations héritées interdites par D8, catégorie hors liste fermée,
+ * tokens de composant (relèvent du registre local-tokens, pas de cette regex),
+ * casse et caractères non conformes. */
 
 :root {
+    /* Abréviations héritées — D8 les remplace */
+    --mr-fs-14: 0.875rem;
+    --mr-fs-32: 2rem;
+    --mr-lh-12: 1rem;
+    --mr-dur-150: 150ms;
+    --mr-dur-600: 600ms;
+    --mr-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --mr-space-2: 8px;
+
+    /* Tokens de composant : pas dans la liste fermée des globales */
+    --mr-switch-scale: 1;
+    --mr-badge-height-sm: 20px;
+    --mr-dialog-width-md: 32rem;
+    --mr-spinner-size-lg: 24px;
+
+    /* Catégorie hors liste fermée */
+    --mr-grid-gap: 16px;
+    --mr-stack-gap: 12px;
+    --mr-overlay-width-popover: 20rem;
+
+    /* Formes non conformes */
     --mr-Badge-Height: 20px;
-    --mr-nimporte: 1px;
+    --mr-accent--subtle: red;
     --mr-ref: 1;
+    --mr-ref-: 1;
+    --autre-token: 1;
 }

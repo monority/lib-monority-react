@@ -1,7 +1,57 @@
-/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+/* Fixture — jamais linté en CI, testé par rules.test.mjs et token-pattern.test.mjs.
+ * Tokens CIBLES de la phase 11b1 (sémantique couleur) + primitives D11.
+ * Chaque nom doit être accepté tel quel par la regex dérivée. */
 
 :root {
-    --mr-spacing-2: 8px;
+    /* Primitives (D11) */
     --mr-ref-brand-hue: 200;
-    --mr-ref-radius-scale: 0.5;
+    --mr-ref-brand-chroma: 0.12;
+    --mr-ref-neutral-hue: 215;
+    --mr-ref-neutral-chroma: 0.01;
+    --mr-ref-font-sans: 'Inter', system-ui, sans-serif;
+    --mr-ref-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --mr-ref-radius-scale: 1;
+
+    /* Catégorie seule : la catégorie EST le rôle entier */
+    --mr-accent: oklch(0.52 0.09 var(--mr-ref-brand-hue));
+    --mr-border: oklch(0.82 0.01 var(--mr-ref-neutral-hue));
+    --mr-scrim: oklch(0 0 0 / 0.4);
+    --mr-border-width: 1px;
+    --mr-z-index: 1000;
+    --mr-line-height: 1.5;
+    --mr-container: 1440px;
+    --mr-duration: 180ms;
+    --mr-easing: cubic-bezier(0.2, 0, 0, 1);
+    --mr-opacity: 0.5;
+    --mr-breakpoint: 640px;
+    --mr-density: comfortable;
+    --mr-brand: monority;
+
+    /* Catégorie + rôle */
+    --mr-bg-canvas: oklch(0.955 0 0);
+    --mr-bg-surface: oklch(0.985 0 0);
+    --mr-text-primary: oklch(0.2 0 0);
+    --mr-status-success-text: oklch(0.4 0.12 150);
+    --mr-status-danger-border: oklch(0.5 0.18 25);
+    --mr-accent-subtle: oklch(0.95 0.02 var(--mr-ref-brand-hue));
+    --mr-tonal-neutral-strong: oklch(0.9 0 0);
+    --mr-chart-muted: oklch(0.7 0 0);
+    --mr-spacing-2: 8px;
+    --mr-radius-control: 6px;
+    --mr-focus-width: 2px;
+    --mr-control-height-md: 40px;
+    --mr-icon-size-md: 16px;
+    --mr-font-weight-medium: 500;
+    --mr-font-size-body: 0.875rem;
+    --mr-font-family-sans: var(--mr-ref-font-sans);
+    --mr-letter-spacing-label: 0.04em;
+    --mr-duration-base: 180ms;
+    --mr-shadow-raised: 0 2px 8px oklch(0 0 0 / 0.1);
+    --mr-z-index-modal: 1200;
+}
+
+.mr-button {
+    color: var(--mr-text-primary);
+    background: var(--mr-accent);
+    border-width: var(--mr-border-width);
 }

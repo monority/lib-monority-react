@@ -45,15 +45,27 @@ Un token appartient à **une seule** couche. Le passage d'une couche à l'autre 
 
 ## 4. Vocabulaire fermé des catégories
 
-Une catégorie nouvelle ne s'ajoute que si aucune catégorie existante ne convient. Le tableau est la liste complète ; tout nom hors de ce tableau est un défaut à corriger, pas une innovation.
+Une catégorie nouvelle ne s'ajoute que si aucune catégorie existante ne convient. La liste complète est **machine-lisible** : `packages/tokens/categories.json`. Cette section en est la transcription ; `tooling/tokens/token-pattern.test.mjs` échoue si les deux divergent, et la regex `custom-property-pattern` de Stylelint est dérivée du JSON, jamais recopiée.
 
-Catégories de fondation : `spacing`, `radius`, `border`, `focus`, `z`, `duration`, `ease`, `icon`, `glyph`, `chart`, `opacity`.
+**28 catégories globales**, par famille (ROADMAP §4.2) :
 
-Catégories sémantiques : `bg`, `text`, `accent`, `success`, `warning`, `danger`, `info`, `on`, `scrim`, `tooltip`, `color-scheme`, `switch`.
+- Couleur : `bg`, `text`, `border`, `accent`, `tonal`, `status`, `scrim`, `chart`.
+- Dimension : `spacing`, `radius`, `border-width`, `focus`, `control-height`, `icon-size`.
+- Typographie : `font-family`, `font-size`, `line-height`, `font-weight`, `letter-spacing`.
+- Mouvement : `duration`, `easing`.
+- Profondeur : `shadow`, `z-index`, `opacity`.
+- Layout : `container`, `breakpoint`.
+- Variation : `density`, `brand`.
 
-Catégories de composant : `control`, `card`, `table`, `overlay`, `menu`, `listbox`, `dialog`, `drawer`, `sidebar`, `nav`, `tabs`, `badge`, `avatar`, `checkbox`, `radio`, `switch`, `slider`, `spinner`, `progress`, `kbd`, `skeleton`, `calendar`, `input`, `textarea`, `grid`, `stack`, `section`, `page`, `topbar`, `rail`, `content`, `min`.
+Trois usages de la catégorie :
 
-Règle de collisions : `--mr-switch-thumb-off` est sémantique (couleur), `--mr-switch-track-w-md` est composant (dimension). Le même mot dans deux rôles est accepté ; deux rôles dans un même mot ne l'est pas.
+1. **Catégorie seule**, quand la catégorie est déjà le rôle entier : `--mr-accent`, `--mr-border`, `--mr-scrim`, `--mr-border-width`, `--mr-z-index`, `--mr-line-height`.
+2. **Catégorie + rôle** : `--mr-bg-canvas`, `--mr-text-primary`, `--mr-status-danger-border`, `--mr-font-weight-medium`.
+3. **Primitif**, catégorie à part : `--mr-ref-<rôle>`, préfixe `--mr-ref-*` (D11). Les sept primitifs sont `brand-hue`, `brand-chroma`, `neutral-hue`, `neutral-chroma`, `font-sans`, `font-mono`, `radius-scale`.
+
+Les tokens de **composant** ne sont pas dans cette liste : `switch`, `badge`, `dialog`, `drawer`… relèvent du registre `local-tokens` avec justification (D8). La regex globale les refuse ; c'est `audit:tokens` qui vérifie qu'un token local est bien enregistré et utilisé.
+
+Abréviations héritées interdites, que D8 remplace : `fs-*` → `font-size`, `lh-*` → `line-height`, `dur-*` → `duration`, `ease-*` → `easing`, `space-*` → `spacing`.
 
 ## 5. Échelles et variantes
 
