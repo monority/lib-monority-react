@@ -1,0 +1,68 @@
+# Plan de remise en ordre — Monority UI
+
+## Règles communes (toutes les étapes)
+- Une étape par session. N'exécute que l'étape demandée.
+- Un commit par sujet. Après chaque commit : typecheck, tests (ui, web, tokens), build, format:check.
+- Stage uniquement par liste de chemins, jamais `git add .` ; vérifie l'index avant chaque commit.
+- Avant de supprimer un fichier ou un symbole : `git grep` pour prouver qu'il n'est pas utilisé.
+- Aucun changement de rendu non annoncé. Si une étape en provoque un, montre l'avant/après et attends validation.
+- Si une décision marquée [DÉCISION] n'est pas tranchée dans ce fichier, arrête-toi et pose la question.
+- Contexte presque épuisé : termine sur un commit propre, écris HANDOFF.md (non commité, dans `.gitignore`) avec les commits faits, ce qui reste et les pièges.
+- En fin d'étape : coche l'étape ci-dessous, commite PLAN.md, fais un rapport court avec les preuves.
+- Voir AGENTS.md pour les règles git (jamais push/merge direct sur main, tout passe par une PR revue).
+
+## Décisions
+
+- D1 Utilitaires : RETENU — supprimé `.stack/.grid/.container/.section` (doublons des composants). Familles sans usage réel supprimées (containers, grid, display, interaction, animation, aspect-ratio, filters, sizing, transforms, typography, accessibility, layout, legacy-layout, visibility). effects, flex, spacing sorties en export optionnel `./utilities.css` avec préfixe `mr-`.
+- D2 Reset global : RETENU — `reset.css` et `normalize.css` sortis du bundle principal, export opt-in `"./reset.css"`. Correctif 2c : portée des règles limitée aux éléments `mr-*` (le contenu fourni par l'hôte garde ses propres marges/styles).
+- D3 Scripts d'audit ponctuels : RETENU — archivés dans `docs/archive/audit/` (4 scripts de l'étape 5 + `probe-contrast.mjs` et `extract-deprecated.mjs`).
+- D4 Pages de faux SaaS dans apps/web : RETENU — option B (supprimées). 9 fichiers retirés, routes `/dashboard` et `/admin` retirées.
+- D5 Source de vérité de la doc composant : RETENU — `docs/design/components/*.md` fait foi. Écart constaté non corrigé : `DocPage.tsx` ne lit pas ces fiches, contenu dupliqué depuis apps/web (70 vs 72 composants, listes divergentes). Voir étape 6b.
+- D6 Autorité spec/recette (refonte tokens) : RETENU — la recette gouverne jusqu'à réécriture de la spec, composant par composant. Une spec réécrite et marquée "validée" redevient autorité.
+- D7 Rétrocompatibilité (refonte tokens) : RETENU — l'appareil déprécié (`deprecated.json`, `deprecated.css`, `migration-table.md`) est jeté en un seul commit à la toute fin du chantier (étape 11z), pas avant.
+- D8 Convention de nommage (refonte tokens) : RETENU — `--mr-<catégorie>-<rôle>-<variante>`. Tokens locaux `--mr-<component>-<role>` autorisés uniquement si (a) rôle propre au composant ET (b) vraie surface de personnalisation ; sinon globalisés.
+- D9 Doublons internes (refonte tokens) : RETENU — la valeur réellement utilisée par la recette l'emporte d'abord, puis le nom conforme à la convention est gardé.
+- D10 Rendu pendant le chantier tokens : RETENU — un changement de rendu est autorisé s'il est annoncé explicitement par token (avant/après). La règle stricte de non-changement reprend une fois l'étape 11 terminée.
+- D11 Table rase : RETENU — le système de tokens est reconstruit **depuis zéro**. Toutes les sources DTCG sont vidées (`core`, `components`, `density`, `brand-studio`, les 6 `themes`) et le système se reconstruit famille par famille, puis composant par composant. Seules les **7 primitives** sont conservées : ce sont les entrées du système, pas le système — `packages/ui/src/lib/design-config.ts` et `apps/web/e2e/design-customizer.spec.ts` les lisent pour la personnalisation runtime. Décision utilisateur du 01/10, après que l'inventaire eut montré 3 vocabulaires concurrents et 109 « orphelins » dont 70 définis par `language.md`.
+- D12 Verrou de reconstruction : RETENU — pendant l'étape 11, `packages/tokens/rebuild.json` existe et T6, X2, S11 **rapportent** au lieu de bloquer. On n'abaisse aucun seuil : l'état est déclaré dans un fichier unique, lisible, et **sa suppression est le jalon de fin de chantier** (étape 11z). Vérifié dans les deux sens : marqueur présent → code 0 ; marqueur absent → code 1 et le test « dépôt réel » échoue pour de vrai.
+
+## Étapes
+
+- [ ] 1. Nettoyage : fichiers morts, BOM + `.editorconfig`, `AGENTS.md`, `.npmrc` + `registry-url/NODE_AUTH_TOKEN`, essai à blanc changesets, test NavigationMenu sur `getByRole`.
+- [ ] 2. Bugs de consommation : layers `monority.*`, `"use client"`, détection production, types InputBase, D1, D2.
+  - [ ] 2b. Correctifs : composants autonomes sans `reset.css`, bannière `"use client"` limitée, preuve visuelle.
+  - [ ] 2c. Ajustements : portée de `library-scope.css` limitée au contenu `mr-*`, exports publics réduits, couverture react-dom de la bannière, README Server Components honnête.
+  - [ ] 2d. Correctif CI : retirer `version: 9` de `pnpm/action-setup` dans `ci.yml` et `release.yml` (conflit avec `packageManager: pnpm@9.0.0`, cause des échecs immédiats). À faire dès que possible, hors ordre si besoin.
+- [ ] 3. Migration BEM → data-* (toutes les familles migrées — Button pilote, Select, doublons, contrôles de form, overlays, layout, finalisation — mais laissée NON cochée : la preuve de non-régression par famille à chaque commit n'a jamais existé pendant l'exécution. Preuve rétroactive produite a posteriori (poids CSS par commit, 2 régressions de poids identifiées et expliquées comme des corrections ultérieures, pas des régressions de rendu). Garde-fou global `bem-modifiers.test.tsx` (46 cas) + matrice Playwright 72 combinaisons en place. État final : 258 069 o, 37 BEM résiduels documentés (alias publics + DropZone hors périmètre).
+- [ ] 4. Doublons et rangement : `display/` + `data-display/` fusionnés en `data/`, 8 tests `stepNN` renommés, 3 tests d'exports fusionnés en 2. Divider/Separator vérifié NON doublon (props, DOM, ARIA, CSS distincts) — les deux restent.
+- [ ] 5. Migrations et doc : `MIGRATIONS.md` créé (10 sections), historique d'audit archivé, D3 appliquée, `CHANGELOG.md` racine réduit à un pointeur vers `packages/ui/CHANGELOG.md`.
+  - [ ] 5a. Alias dépréciés, lots SAFE : lot 1 (327 occ., 72 recettes) + lot 2 (239 occ., 69 fichiers) migrés, preuve par résolution transitive des `var()` + comparaison navigateur.
+  - [ ] 5a (reste). 716 occurrences BLOCKED classées en 3 groupes :
+    - Groupe 1 (6 tokens, 149 occ., correspondance exacte même famille) : décidé, migration À FAIRE.
+    - Groupe 2 sous-groupe Δ=0 (`space-2/5/7/9`, `text-2xl/3xl`) : décidé, migration À FAIRE.
+    - Groupe 2 sous-groupe Δ≠0 (`space-1/3/4/6/8`, `text-xl/display`, `elevation-*`) + 11 tokens `leading-*/dur-100-150-200-600` : décision reportée — fusionné dans l'étape 11 (refonte complète), ne pas traiter isolément.
+    - Groupe 3 (39 tokens sans famille cible) : option (b) retenue — alias gardé, documenté dans `MIGRATIONS.md` avec date de revue à fixer. Pas de création de token hors étape 11.
+- [ ] 6. apps/web : D4 appliqué, réorganisation par fonctionnalité (`features/docs`, `playground`, `showcase`, `moodboard`, `harness` + `shared/`), imports mis à jour, frontière de package gardée par test, harness exclu du build de production (`lazy()`).
+  - [ ] 6b. `DocPage.tsx` ne lit pas `docs/design/components/*.md` (D5) : contenu dupliqué depuis apps/web, listes déjà divergentes (3 composants seulement côté web, 5 seulement côté design). Objectif : une seule source, plus de dérive silencieuse, un test qui échoue si les deux listes divergent.
+- [ ] 7. État contrôlé : `useControllableState` (updates fonctionnels, tests) adopté par les ~19 composants concernés ; `useFieldIds` adopté ou supprimé. Tests existants inchangés.
+- [ ] 8. `forwardRef` → `ref` comme prop (React 19) dans les 76 fichiers, par lots. Supprime le `"ref as any"` d'InputBase si devenu inutile.
+- [ ] 9. Build et outillage : import de `@monority/styles` par nom de package (pas chemin relatif), un seul export CSS, `publint` + `arethetypeswrong` + `test:dist` en CI, snapshots Playwright régénérés dans l'image Docker officielle (suppression des `*-win32.png`) + job e2e en CI (y compris `library-scope.spec.ts` et `reset-independence.spec.ts` qui lisent `dist/`), `size-limit` sur `dist/index.css` et `dist/index.js`, fixture Next.js App Router pour prouver la garantie Server Components.
+- [ ] 10. Lint : état réel au 28/09 = 144 erreurs + 28 warnings (hors fichiers d'une autre session). Traiter les a11y une par une (vrais problèmes, exemples copiés par les utilisateurs). `noUnusedVariables` : lire ligne ET colonne avant de corriger (des diagnostics ont déjà été mal interprétés). `sync-showcase.js` garde 3 `noForEach` non corrigés. Pour les règles de pur style dans tests/exemples (`noArrayIndexKey` sur listes statiques, `noExplicitAny` dans les tests) : proposer des overrides Biome ciblés plutôt que des corrections en masse. Puis lint bloquant en CI.
+- [ ] 11. Refonte du système de tokens (convention D6-D10). Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `space-*/spacing-*` isolée : tout se fait ici, dans l'ordre de la convention.
+  - [ ] 11a. **FAIT** — `docs/design/tokens-convention.md` (pattern `--mr-<catégorie>-<rôle>[-<variante>]`, vocabulaire fermé, test du token local D8, critère de doublon D9, transition spec↔code D6). Check `check-token-refs.mjs` en mode rapport avec 14 tests négatifs. Table rase appliquée (D11) + verrou de reconstruction (D12). Commits `cf26676`, `da34b7f`, `2396eaa`, `6de955d`, `41aa61d`, `f370ea4`.
+  - [ ] 11b. **Familles de fondation**, dans cet ordre (ordre mesuré sur les 188 tokens consommés par 75 recettes) :
+    - [ ] 11b1. Sémantique couleur : `bg-*`, `text-*`, `border-*`, `accent-*`, `success/warning/danger/info-*`, `scrim`, `chart-muted`. Dépendance de 63 recettes (`--mr-border-subtle`).
+    - [ ] 11b2. Fondations dimensionnelles : `spacing-*`, `radius-*`, `border-width`, `focus-*`.
+    - [ ] 11b3. Typographie : `fs-*`/`type-*`, `leading-*`, `tracking-*`, `font-weight-*`.
+    - [ ] 11b4. Mouvement et empilement : `duration-*`, `ease-*`, `z-*`.
+    - [ ] 11b5. Densité (`data-density`) et marque alternative (`data-brand="studio"`).
+  - [ ] 11c+. **Composants**, un par session, même méthode que l'étape 3 (preuve par famille dès le premier commit). Pilote : Switch (7 tokens locaux, états + tailles). Le token local ne survit que s'il passe le test de la section 6 de la convention.
+  - [ ] 11d. Réécriture de `docs/design/language.md` §5.x au fur et à mesure que les familles sont reconstruites — c'est ce document qui définit la palette, il ne peut pas rester en avance sur le code.
+  - [ ] 11z. Fin de chantier : supprimer `packages/tokens/rebuild.json` (les contrôles redeviennent bloquants), supprimer l'appareil déprécié (`deprecated.json`, `deprecated.css`, `migration-table.md`) en un seul commit, passer le check `var(--mr-*)` en bloquant dans la CI, `language.md` aligné sur le système reconstruit.
+
+## Notes
+- Réserve ouverte : run Release sur main échoue au push de `changeset-release/main` (403, permissions du dépôt GitHub, Settings > Actions > Workflow permissions). Pas de check requis dépendant, ne bloque rien. À corriger seulement quand la publication sera souhaitée.
+- `.gitignore` : une ligne `memory-ai/` reste non commitée dans certains worktrees (modification d'une autre session) — vérifier avant tout `git add` massif.
+- **Format des sources DTCG** : formatées à la main, objets sur une seule ligne (`"spacing-0": { "$value": "0" }`). Biome ne les reformatte pas. Ne jamais les réécrire avec `JSON.stringify(obj, null, 4)` : `core.json` passe de 251 à 463 lignes et la suppression se noie dans le diff de formatage.
+- `docs/design/reference/*.reference.css` sont des **copies octet-pour-octet** du CSS généré (T1 l'exige) : les recopier après chaque build de tokens.
+- L'audit des références ne voit pas un token consommé par **construction de nom** (`--mr-${tone}-border` dans X2). C'est la limite connue du scan : toute suppression massive doit être validée par l'exécution des checks, pas par l'audit seul.
