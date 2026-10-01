@@ -1,7 +1,66 @@
 {
     "$meta": {
         "layer": "semantique",
-        "note": "Table rase (etape 11) — theme high-contrast a reconstruire."
+        "theme": "high-contrast",
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
     },
-    "mr": {}
+    "mr": {
+        "theme-high-contrast": {
+            "bg-canvas": {
+                "$value": "oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 1,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "bg-surface": {
+                "$value": "oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 1,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "bg-raised": {
+                "$value": "oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 1,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "bg-overlay": {
+                "$value": "oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 1,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            },
+            "bg-sunken": {
+                "$value": "oklch(0.965 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.965,
+                        "c": "neutral",
+                        "h": "neutral"
+                    }
+                }
+            }
+        }
+    }
 }

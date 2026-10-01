@@ -2,15 +2,16 @@
 
 ## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Méthode : **validation à posteriori**, pas d'arrêt entre deux sous-étapes.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Validation à posteriori, un rapport par phase.
 - `pnpm verify` : 21 étapes, code 0.
-- **Phase A terminée.** Renommage `state` / `panel` fait, D17 et D18 écrites, D14 amendée, ADR réordonnées.
-- ADR dans DECISIONS.md, ordre croissant, **aucun trou** : D2 D6 à D24 (D3, D4, D5 sont dans PLAN.md). 18 ADR.
-- Scan du vocabulaire français, mesuré : **zéro identifiant restant**. Categories : 0 nom français sur 28, 0 rôle français sur les 4 rôles de `duration`, 0 clé de token en français sur les 6 sources, 0 variable CSS en français sur les recettes. Les 2 seules occurrences de `--mr-duration-etat` / `panneau` sont dans l'amendement D17 lui-même, qui cite les anciens noms. Les 10 `role` en français de `categories.json` sont des descriptions, pas des identifiants.
-- Renommage : 6 occurrences de `--mr-duration-etat` et `--mr-duration-panneau` sur 3 fichiers, plus `etatAlpha` → `stateAlpha` dans `check-contrasts.mjs`.
-- **Prochaine étape : phase B, 11b1**, famille par famille : bg, text, border, accent, status. Liste validée en entier, aucune validation préalable requise. Consigner dans chaque commit : références pendantes avant / après / attendu / mesuré, et X2 écarts avant / après.
-- Base de mesure : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
-- Arbitrages 0.15c : `geometry.spec.ts` reste annoté, `audit-baseline.spec.ts` sans changement jusqu'à la régénération des baselines, `oled` ajouté.
+- **Phase B commencée.** Famille `bg` : 5 tokens × 7 thèmes. Restent `text`, `border`, `accent`, `status`, `chart`.
+- `bg` : avant 2241 occurrences / 129 tokens distincts ; après **2088 / 125**. Attendu −153, mesuré −153, **écart 0**. 153 références sur 63 recettes.
+- X2 : **31 → 26 écarts**. Les 5 disparus sont les bg désormais présents.
+- ADR dans DECISIONS.md, ordre croissant, aucun trou : D2 D6 à D25.
+- **D25 écrite** : les 4 neutres passent par les primitives (rendu identique, chroma historique 0) ; `slate`, `ocean`, `night` gardent chroma et hue litteraux,Values reprises de `41aa61d~1`, autorisation T3 ligne 64. Redefinir `--mr-ref-neutral-hue` par theme est impossible : le generateur prefixe `--mr-theme-<nom>-`.
+- Schema d emission mesure : `slate` est le theme par defaut, ses jetons sortent dans `:root` avec le prefixe `--mr-theme-slate-` ; les 6 autres sortent dans leur bloc `[data-theme=...]` sous le nom court `--mr-bg-*`.
+- **T1 compare le CSS genere au fichier de reference**, pas aux sources JSON : regenerer `docs/design/reference/monority-ui-tokens.reference.css` apres chaque build de famille, sinon T1 echoue en `genere seul`.
+- Cliquets : stylelint 2730, test-skips {4, 2}.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
 - À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 

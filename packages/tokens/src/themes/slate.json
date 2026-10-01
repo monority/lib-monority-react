@@ -2,7 +2,65 @@
     "$meta": {
         "layer": "semantique",
         "theme": "slate",
-        "note": "Selecteur [data-theme=slate] : variante bleue du theme dark de base"
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
     },
-    "mr": {}
+    "mr": {
+        "theme-slate": {
+            "bg-canvas": {
+                "$value": "oklch(0.19 0.012 215)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.19,
+                        "c": 0.012,
+                        "h": 215
+                    }
+                }
+            },
+            "bg-surface": {
+                "$value": "oklch(0.225 0.013 215)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.225,
+                        "c": 0.013,
+                        "h": 215
+                    }
+                }
+            },
+            "bg-raised": {
+                "$value": "oklch(0.26 0.014 215)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.26,
+                        "c": 0.014,
+                        "h": 215
+                    }
+                }
+            },
+            "bg-overlay": {
+                "$value": "oklch(0.29 0.014 215)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.29,
+                        "c": 0.014,
+                        "h": 215
+                    }
+                }
+            },
+            "bg-sunken": {
+                "$value": "oklch(0.205 0.012 215)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.205,
+                        "c": 0.012,
+                        "h": 215
+                    }
+                }
+            }
+        }
+    }
 }

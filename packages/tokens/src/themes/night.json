@@ -1,7 +1,66 @@
 {
     "$meta": {
         "layer": "semantique",
-        "note": "Table rase (etape 11) — theme night a reconstruire."
+        "theme": "night",
+        "note": "Reconstruit en 11b1 a partir de 41aa61d~1 : memes luminances. Chroma et hue neutres par primitive, litteraux pour slate, ocean et night (teintes sanctionnees par T3)."
     },
-    "mr": {}
+    "mr": {
+        "theme-night": {
+            "bg-canvas": {
+                "$value": "oklch(0.16 0.035 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.16,
+                        "c": 0.035,
+                        "h": 275
+                    }
+                }
+            },
+            "bg-surface": {
+                "$value": "oklch(0.21 0.045 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.21,
+                        "c": 0.045,
+                        "h": 275
+                    }
+                }
+            },
+            "bg-raised": {
+                "$value": "oklch(0.25 0.055 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.25,
+                        "c": 0.055,
+                        "h": 275
+                    }
+                }
+            },
+            "bg-overlay": {
+                "$value": "oklch(0.28 0.06 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.28,
+                        "c": 0.06,
+                        "h": 275
+                    }
+                }
+            },
+            "bg-sunken": {
+                "$value": "oklch(0.19 0.035 275)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.19,
+                        "c": 0.035,
+                        "h": 275
+                    }
+                }
+            }
+        }
+    }
 }

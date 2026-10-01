@@ -8,6 +8,11 @@
   --mr-ref-font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --mr-ref-font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --mr-ref-radius-scale: 1;
+  --mr-theme-slate-bg-canvas: oklch(0.19 0.012 215);
+  --mr-theme-slate-bg-surface: oklch(0.225 0.013 215);
+  --mr-theme-slate-bg-raised: oklch(0.26 0.014 215);
+  --mr-theme-slate-bg-overlay: oklch(0.29 0.014 215);
+  --mr-theme-slate-bg-sunken: oklch(0.205 0.012 215);
 }
 
 :root,
@@ -18,28 +23,52 @@
 
 [data-theme="dark"],
 [data-theme="dim"] {
-
+  --mr-bg-canvas: oklch(0.2 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-surface: oklch(0.235 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-overlay: oklch(0.305 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-sunken: oklch(0.215 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="high-contrast"] {
-
+  --mr-bg-canvas: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-surface: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-raised: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-overlay: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-sunken: oklch(0.965 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 :root,
 [data-theme="light"] {
-
+  --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-surface: oklch(0.985 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-raised: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-overlay: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-sunken: oklch(0.968 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="night"] {
-
+  --mr-bg-canvas: oklch(0.16 0.035 275);
+  --mr-bg-surface: oklch(0.21 0.045 275);
+  --mr-bg-raised: oklch(0.25 0.055 275);
+  --mr-bg-overlay: oklch(0.28 0.06 275);
+  --mr-bg-sunken: oklch(0.19 0.035 275);
 }
 
 [data-theme="ocean"] {
-
+  --mr-bg-canvas: oklch(0.18 0.035 230);
+  --mr-bg-surface: oklch(0.225 0.04 230);
+  --mr-bg-raised: oklch(0.265 0.045 230);
+  --mr-bg-overlay: oklch(0.29 0.05 230);
+  --mr-bg-sunken: oklch(0.205 0.032 230);
 }
 
 [data-theme="oled"] {
-
+  --mr-bg-canvas: oklch(0 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-surface: oklch(0.155 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-raised: oklch(0.19 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-overlay: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+  --mr-bg-sunken: oklch(0.12 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 }
 
 [data-theme="slate"] {
@@ -48,7 +77,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="dark"]) {
-  
+    --mr-bg-canvas: oklch(0.2 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-bg-surface: oklch(0.235 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-bg-overlay: oklch(0.305 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+    --mr-bg-sunken: oklch(0.215 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
   }
 }
 

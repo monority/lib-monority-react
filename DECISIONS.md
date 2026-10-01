@@ -244,6 +244,24 @@ Le statut d'alias était implicite : il tenait dans une condition en dur de `lib
 **Conséquences.** « 3291 » est **retiré des critères** : ancienne unité, plus comparable. Chaque famille de 11b1 rapporte avant, après, écart attendu et écart mesuré, dans cette unité. Le nombre de constats d'`audit:tokens` reste rapporté séparément, jamais mélangé.
 
 
+
+### D25 — Les trois thèmes teintés gardent leur chroma et leur hue littéraux
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** La reconstruction de 11b1 impose que `bg`, `text` et `border` passent par `--mr-ref-neutral-hue` et `--mr-ref-neutral-chroma` (AGENTS.md §4). Ces deux primitives sont **globales** : hue 215, chroma 0. Or `slate`, `ocean` et `night` sont des thèmes teintés, avec des chroma de 0,012 à 0,06 et des hue de 215, 230 et 275.
+
+Deux voies s'offraient.
+
+**Voie écartée : tout passer par les primitives globales.** Elle respecte la règle à la lettre, mais elle aplatit `slate`, `ocean` et `night` en gris neutre : chroma 0 contre 0,012 à 0,06, et hue 215 pour `ocean` et `night` au lieu de 230 et 275. C'est une perte de langage visuel sur un tiers des thèmes, et D20 vient d'assumer `slate` comme thème à part entière. Un token reconstruit à l'identique ne peut pas troler sur ses valeurs.
+
+La seconde possibilité — redéfinir `--mr-ref-neutral-hue` par thème — est techniquement impossible : le générateur préfixe les jetons d'un thème par `--mr-theme-<nom>-`, donc une redéfinition produirait `--mr-theme-ocean-ref-neutral-hue`, une autre variable que celle que les jetons sémantiques référencent.
+
+**Décision.** Les quatre neutres purs — `light`, `dark`, `oled`, `high-contrast` — écrivent `oklch(<L> var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue))`. Comme leur chroma historique vaut 0, le rendu est **strictement identique** à celui d'avant la table rase. Les trois thèmes teintés écrivent leur chroma et leur hue littéraux, valeurs reprises telles quelles de `41aa61d~1`, ce qui préserve le rendu au token près.
+
+**Cohérence avec T3.** Ce choix ne contourne pas le contrôle : `check-no-hardcoded.mjs` ligne 64 autorise explicitement les teintes sémantiques 195, 215, 230 et 275, précisément pour `slate`, `ocean` et `night`. La règle « aucune chroma ou hue en dur dans un thème neutre » s'applique donc aux quatre neutres, où elle est respectée par construction.
+
+**Conséquences.** Trois exceptions au principe, nommées et bornées : seuls `slate`, `ocean` et `night`, seuls chroma et hue, seules valeurs de fond, de texte et de bordure. Un quatrième thème teinté demanderait de revoir cette décision, pas de la contourner.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)
