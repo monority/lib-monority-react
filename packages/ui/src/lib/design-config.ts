@@ -1,5 +1,11 @@
 import type { CSSProperties } from 'react'
-import type { ResolvedThemeName } from './constants'
+import { ThemeName, type ResolvedThemeName } from './constants'
+
+/**
+ * `high-contrast` is driven by `prefers-contrast`, not chosen as a look, so it is
+ * not offered in the picker. The exclusion lives in the type, not in a list.
+ */
+type SelectableTheme = Exclude<ResolvedThemeName, 'high-contrast'>
 
 export type AccentPreset =
     | 'neutral'
@@ -43,17 +49,32 @@ export const DEFAULT_DESIGN_CONFIG: DesignConfig = {
     density: 'default',
 }
 
+/**
+ * Étiquettes affichées dans le sélecteur de thème du Design Studio.
+ *
+ * Le type est `Record` sur l'ensemble des thèmes sélectionnables : ajouter un
+ * thème à `ThemeName` sans étiquette ne compile pas. C'est le garde-fou qui
+ * remplace la liste en dur.
+ */
+const SELECTABLE_THEME_LABEL: Record<SelectableTheme, string> = {
+    light: 'Light',
+    dark: 'Dark',
+    slate: 'Slate',
+    oled: 'OLED',
+    ocean: 'Ocean',
+    night: 'Night',
+}
+
+/** Dérivé de `ThemeName`, jamais écrit à la main. */
+const SELECTABLE_THEMES = Object.values(ThemeName).filter(
+    (name): name is SelectableTheme => name in SELECTABLE_THEME_LABEL
+)
+
 export const DESIGN_PRESETS = {
     /* `high-contrast` is absent on purpose: it is an accessibility requirement
-     driven by `prefers-contrast`, not a look the user picks. */
-    themes: [
-        { value: 'light', label: 'Light' },
-        { value: 'dark', label: 'Dark' },
-        { value: 'slate', label: 'Slate' },
-        { value: 'oled', label: 'OLED' },
-        { value: 'ocean', label: 'Ocean' },
-        { value: 'night', label: 'Night' },
-    ],
+     driven by `prefers-contrast`, not a look the user picks. The exclusion is
+     carried by `SelectableTheme`, not by a list that could drift. */
+    themes: SELECTABLE_THEMES.map((value) => ({ value, label: SELECTABLE_THEME_LABEL[value] })),
     accents: [
         { value: 'neutral', label: 'Neutral' },
         { value: 'cyan', label: 'Cyan' },

@@ -1,13 +1,11 @@
 import type { ComponentPropsWithoutRef } from 'react'
+import type { ResolvedThemeName } from '../lib/constants'
 
-export type ThemeScopeTheme =
-    | 'light'
-    | 'dark'
-    | 'slate'
-    | 'oled'
-    | 'ocean'
-    | 'night'
-    | 'high-contrast'
+/**
+ * Les 7 thèmes résolvables, dérivés de `ThemeName`. `system` est une préférence
+ * et `dim` un alias migré : ni l'un ni l'autre ne se rend dans un sous-arbre.
+ */
+export type ThemeScopeTheme = ResolvedThemeName
 export type ThemeScopeBrand = 'studio'
 export type ThemeScopeDensity = 'comfortable' | 'compact'
 

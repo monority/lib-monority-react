@@ -3,20 +3,20 @@
 ## Reprise
 État au 2026-10-01, mesuré. Cette section est la seule partie de PLAN.md qui se réécrit librement ; le reste est le plan.
 - Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`.
-- Dernier commit : `13259ee feat(tokens): registre d alias de rendu (D23)`.
 - `pnpm verify` : 21 étapes, code 0, arrêt au premier échec.
-- En cours : point 2, parité 0.15 et ADR D22. **Scan des specs terminé, conception et code pas commencés.**
-- Mesuré au point 2 : 10 fichiers e2e citent un nom de thème, mais **5 seulement écrivent une liste** (≥ 2 noms dans un même littéral ou une même boucle) : `components.visual.spec.ts:4` (7 noms, égale le disque), `audit-baseline.spec.ts:16` (6, dont `dim`), `theme-subtree.spec.ts:17` (6), `geometry.spec.ts:3` (3), `theme-runtime.spec.ts:62` (3, dans un `for…of`). Les 5 autres (`action-regression`, `brand.visual`, `design-customizer`, `position`, `spec-criteria`) citent un thème isolé dans une URL ou une assertion.
-- Mesuré au point 2 : **aucun sous-ensemble n'a de raison délibérée établie.** `geometry.spec.ts` a ses 3 thèmes depuis sa création (`88f0b1a`) et n'en a jamais eu davantage — l'hypothèse « contrainte de coût de capture » est infirmée. `theme-subtree.spec.ts` et `audit-baseline.spec.ts` sont antérieurs à l'arrivée de leurs thèmes manquants (`3e6fee9`, `adf5bda`). Ce sont des listes périmées, pas des choix.
-- Décision à rendre au point 2 : réécrire ou non une liste périmée doit échouer, ou être signalée sans bloquer.
+- En cours : point 2, parité 0.15 et ADR D22, en 3 commits. Commit 1 (dérivations) fait et poussé.
 - Table rase : 7 primitives `--mr-ref-*`, toutes les autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
 - Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base au commit `2d3981b`).
 - Cliquets : stylelint 2730 violations, test-skips {4, 2}. À la baisse seule.
 - Sélecteurs émis : 8 — les 7 thèmes plus l'alias `dim`, groupé avec `dark`.
+- Dérivations faites : `theme-scope.tsx` type `ResolvedThemeName`, `design-config.ts` liste dérivée de `ThemeName` avec exclusion `high-contrast` portée par le type, `get-theme-script.ts` liste de stockage dérivée (exclut `dim`, inclut `system`). 4 tests ajoutés sur le script généré.
+- Mesuré au point 2 : 10 fichiers e2e citent un nom de thème, **5 seulement écrivent une liste** : `components.visual.spec.ts:4` (7, exhaustive), `audit-baseline.spec.ts:16` (6, dont `dim`), `theme-subtree.spec.ts:17` (6), `geometry.spec.ts:3` (3), `theme-runtime.spec.ts:62` (3, dans un `for…of`). Les 5 autres n'ont rien à annoter.
+- Mesuré : **aucun sous-ensemble e2e n'a de raison délibérée établie**. `geometry.spec.ts` a ses 3 thèmes depuis sa création (`88f0b1a`) et n'en a jamais eu d'autres — hypothèse « coût de capture » infirmée. `theme-subtree.spec.ts` et `audit-baseline.spec.ts` sont antérieurs à leurs thèmes manquants (`3e6fee9`, `adf5bda`).
 - Décisions en attente : D19 (teintes de statut fixes) et D22 (parité) restent à écrire, dans leurs commits. Aucun trou de numérotation.
 - En attente de validation : les 8 ajouts 11b1. Aucun token créé avant validation.
 - Ne pas toucher sans accord : `.gitignore` (autre session), `docs/audit-hardening-prompt.md`, `prompt.md`.
 - Docs de référence : `docs/tokens-pitfalls.md`, `docs/tokens-glossary.md`, `docs/tokens-contributing.md`, `docs/tokens-rebuild-plan.md`.
+- À amender par lePropriétaire : `AGENTS.md` §8 demande encore d'écrire `HANDOFF.md`, ignoré par `.gitignore`. La règle 0.2 de `prompt.md` le remplace par cette section.
 
 ## Règles communes (toutes les étapes)
 - Une étape par session. N'exécute que l'étape demandée.

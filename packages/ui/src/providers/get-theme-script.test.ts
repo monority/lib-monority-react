@@ -1,6 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { THEME_STORAGE_KEY } from '../lib/constants'
+import fs from 'node:fs'
+import path from 'node:path'
+import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
 import { getThemeScript } from './get-theme-script'
+
+const REPO_ROOT = path.resolve(import.meta.dirname, '../../../..')
 
 function setMatchMedia({ contrast = false, dark = false }: { contrast?: boolean; dark?: boolean }) {
     vi.stubGlobal(
@@ -98,5 +102,56 @@ describe('getThemeScript', () => {
 
         expect(() => runScript(getThemeScript())).not.toThrow()
         expect(document.documentElement.dataset.theme).toBe('dark')
+    })
+})
+
+describe('getThemeScript — liste de thèmes', () => {
+    /**
+     * La liste est une chaîne à l'intérieur d'une chaîne de template : elle
+     * n'apparaît dans aucun AST importable. On la récupère donc par la forme,
+     * ce qui est précisément le piège que ce test documente.
+     */
+    function storedThemeList(): string[] {
+        const script = getThemeScript()
+        const found = /!(\[("[^"]+"(?:,"[^"]+")*)\])\.includes\(s\)/.exec(script)
+        if (!found) throw new Error('liste de thèmes introuvable dans le script généré')
+        return [...found[1].matchAll(/"([^"]+)"/g)].map((m) => m[1])
+    }
+
+    it('accepte tous les thèmes du disque', () => {
+        const themesOnDisk = fs
+            .readdirSync(path.join(REPO_ROOT, 'packages/tokens/src/themes'))
+            .filter((f) => f.endsWith('.json'))
+            .map((f) => f.replace(/\.json$/, ''))
+            .sort()
+        expect(themesOnDisk.length).toBeGreaterThan(0)
+        for (const theme of themesOnDisk) {
+            expect(storedThemeList(), `le thème « ${theme} » doit être stockable`).toContain(theme)
+        }
+    })
+
+    it('n contient aucun nom hors de la constante ThemeName', () => {
+        const autorises = new Set(Object.values(ThemeName))
+        for (const nom of storedThemeList()) {
+            expect(autorises.has(nom as ThemeName), `« ${nom} » n est pas un ThemeName`).toBe(true)
+        }
+    })
+
+    it('traite system comme une préférence, jamais comme un thème', () => {
+        // `system` est stockable...
+        expect(storedThemeList()).toContain(ThemeName.SYSTEM)
+        // ...mais il n'est pas un fichier de thème...
+        expect(fs.readdirSync(path.join(REPO_ROOT, 'packages/tokens/src/themes'))).not.toContain(
+            `${ThemeName.SYSTEM}.json`
+        )
+        // ...et il est résolu par la branche conditionnelle, jamais rendu tel quel.
+        expect(getThemeScript()).toContain('==="system"?')
+    })
+
+    it('exclut dim de la liste stockable, la migration precedant le controle', () => {
+        // `dim` est migré vers `dark` avant le test d'appartenance : le garder
+        // dans la liste rendrait la migration inobservable.
+        expect(storedThemeList()).not.toContain(ThemeName.DIM)
+        expect(getThemeScript()).toContain('if(s==="dim")s="dark"')
     })
 })
