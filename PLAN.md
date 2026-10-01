@@ -2,17 +2,17 @@
 
 ## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 5 commits verts cette session : `3480c7f`, `8383c15`, `a042244`, `9915992`, plus celui-ci.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Méthode changée : **validation à posteriori**, plus aucun arrêt entre deux sous-étapes.
 - `pnpm verify` : 21 étapes, code 0.
-- **Point 2 terminé** (parité 0.15, ADR D22) et **section 4 de `prompt.md` terminée** (contrôle des octets de contrôle, hébergé dans `design-token-contract.test.ts`).
-- Détecteur : règle structurelle sur le type des éléments. 11 fixtures. `apps/web/e2e` : **5 détections, 5 vraies listes, 0 faux positif**.
-- 0.15b **mesuré, non implémenté** : 3 détections hors e2e. `theme-provider.tsx:10` (7 thèmes, exhaustive, typée `ResolvedThemeName[]`), `HarnessPage.tsx:6` (6, `slate` manquant, type `Theme` en dérivant, non rattrapé par le compilateur), `get-theme-script.test.ts:91` (boucle de test, 2 thèmes).
-- Prochaine étape : point 3 de `prompt.md`, renommage `state` / `panel`, amendements D14 et D17, `categories.json`, puis scan du vocabulaire français.
-- Ensuite : ADR D19, puis les 8 ajouts 11b1 **en attente de validation du propriétaire**, puis 0.14, puis 11b1.
-- Arbitrages 0.15c toujours ouverts : `geometry.spec.ts` (raison non établie), `audit-baseline.spec.ts` (`dim` doublon de `dark`), `theme-runtime.spec.ts` (`oled`).
-- Table rase : 7 primitives `--mr-ref-*`, autres sources vides, 7 thèmes vides.
+- Phase A : commit 1 (oled, réordonnancement D22 à D24, ADR D19) fait et poussé. Commit 2 en cours : renommage `state` / `panel`.
+- **Trou comblé dans cette session** : D17 et D18 étaient **référencées sans jamais avoir été écrites**. D3, D4, D5 sont dans PLAN.md, c'est normal. D17 (durées par rôle) et D18 (interposer les lectures de `--mr-ref-radius-scale`) doivent être écrites dans le commit du renommage.
+- ADR présentes dans DECISIONS.md, ordre croissant : D2 D6 à D16 D19 D20 D21 D22 D23 D24. Plus de trou.
+- Portée du renommage, mesurée : **8 identifiants de token** seulement — `--mr-duration-etat` (4 occurrences) et `--mr-duration-panneau` (4). Fichiers : `packages/tokens/categories.json` (2 entrées de rôles + 1 note), `docs/design/tokens-scales.md` (5 lignes), `DECISIONS.md` (D17), `PLAN.md` (ligne 109).
+- **111 occurrences de « panneau » et 10 de « etat » sont de la prose française**, pas des identifiants : specs composants, `aria-label="Fermer le panneau"` (texte utilisateur, à ne pas toucher), commentaires. Elles ne sont pas des cibles du renommage.
+- Local restant : `etatAlpha` dans `check-contrasts.mjs` (lignes 230 et 237), variable locale française, hors identifiant de token mais incohérente avec la règle.
+- D19 écrite : teintes fixes 155 / 80 / 25 / 255, sans primitive, autorisées par `allowedFixed`. État mesuré : aucune des quatre valeurs n'est encore déclarée, les sources ne contiennent que les 7 primitives.
 - Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
-- Décision en attente : D19 seulement. Aucun trou de numérotation parmi D19 à D24 ; D24, D23, D22 sont placées en ordre décroissant en fin de `DECISIONS.md`, àcosmétiquement réordonner.
+- Ensuite : phase B, 11b1 famille par famille, liste validée en entier.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
 - À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 

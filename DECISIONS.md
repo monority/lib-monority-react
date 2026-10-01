@@ -116,6 +116,21 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 **D18 — `--mr-ref-radius-scale` traité en 11b2**
 **TRANCHÉE le 2026-10-01.** Ce primitif est lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer un token sémantique intermédiaire est un travail de la famille **dimensions**, pas de la famille **couleur**. Traitement renvoyé à 11b2 pour que 11b1 reste centrée sur la couleur ; sinon 52 recettes seraient migrées dans une phase qui ne porte pas sur les rayons.
 
+### D19 — Les teintes de statut sont fixes, sans primitive
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Toutes les couleurs du système sortent soit d'une primitive de marque, soit d'une primitive neutre. Un statut n'est ni l'un ni l'autre : un succès vert et un danger rouge doivent signifier la même chose quel que soit le client, et rester reconnaissables par quelqu'un qui ne distingue pas le rouge du vert. Les faire dériver de la teinte de marque rendrait le vert de « succès » mauve chez un client violet. Une teinte de statut ne peut donc pas être une primitive.
+
+**Décision.** Quatre teintes fixes, déclarées une seule fois : succès 155, avertissement 80, danger 25, information 255. Elles sont autorisées par T3 via `allowedFixed`, la liste de valeurs admises sans primitive. Aucune primitive de statut n'est créée.
+
+**Alternative écartée : une primitive par ton.** Elle porterait le système de 7 à 11 primitives. Coût mesuré, par ton ajouté : une entrée dans `primitives.json`, une ligne dans le motif Stylelint dérivé de `categories.json`, une ligne dans l'échelle D15, un contrat X2 à écrire, et une reconstruction de plus dans chacun des sept thèmes. Elle achèterait la rebrandisation des statuts, que le chantier n'a jamais demandée et qui est sémantiquement fausse : un statut qui change de couleur change de sens.
+
+**Déclencheur de révision.** Deux conditions, à vérifier à chaque changement de teinte de marque. Si la teinte de marque se rapproche d'une teinte de statut au point de les confondre — mesuré, pas estimé : moins de 15 degrés d'écart de hue OKLCH —, alors soit la teinte de statut bouge, soit elle gagne un suffixe de nom qui empêche la confusion. Et si un client demande des statuts personnalisables, c'est une autre décision, pas un amendement de celle-ci.
+
+**Vérification qu'une teinte n'est définie qu'en un seul endroit.** Les quatre valeurs n'apparaissent que dans la déclaration unique des statuts, jamais dans un thème, jamais dans une recette. Le contrôle existe déjà : T3 refuse toute valeur en dur absente de `allowedFixed`, et `allowedFixed` est l'unique liste qui l'autorise. Déclarer une teinte de statut ailleurs la ferait échouer. État mesuré au moment de la décision : aucune des quatre valeurs n'est encore déclarée, et les sources de tokens ne contiennent que les sept primitives `--mr-ref-*`. La déclaration arrive en 11b1 ; le même refus s'applique alors.
+
+**Conséquences.** Une marque ne peut pas recolorer un statut, et c'est voulu. Les statuts sont les seules couleurs du système qui ne suivent pas le rebranding, ce qui doit rester lisible dans la documentation de marque.
+
 ### D20 — Slate est un 7ᵉ thème assumé, à contenu purgé
 **TRANCHÉE le 2026-10-01.**
 
@@ -144,36 +159,6 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 
 **Conséquences.** Sept tests de normalisation couvrent les cas limites : nom de thème composé (`high-contrast`), token dont le nom contient un thème sans être préfixé, préfixe partiel, thème qui est le préfixe d'un autre, tri par longueur décroissante, et non-régression de la distinction entre les quatre tons.
 
-### D24 — Unité de référence du chantier : les références pendantes de recette
-**TRANCHÉE le 2026-10-01.**
-
-**Contexte.** Le chantier comparait des nombres sans unité explicite. « 3291 » venait d'un scan large incluant `apps/web` et la base ; « 3170 constats » venait d'`audit:tokens` et comptait autre chose. Deux mesures d'unités différentes ne sont pas comparables.
-
-**Décision.** L'unité de référence du chantier est **l'occurrence de `var(--mr-x)` pendante dans `packages/styles/src/recipes/*.recipe.css`**, où `--mr-x` n'est définie ni globalement, ni localement dans le même fichier, ni dans le fichier déprécié. Script nommé : `packages/tokens/scripts/measure-pending.mjs`. Périmètre : recettes uniquement — la base, les utilitaires et `apps/web` sont des consommateurs, pas la cible.
-
-**Valeur de base : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76.** Mesurée au commit `2d3981b`. Fichier : `pending-baseline.json`. Cliquet : `--check` échoue si le nombre monte, signale une baisse.
-
-**Conséquences.** « 3291 » est **retiré des critères** : ancienne unité, plus comparable. Chaque famille de 11b1 rapporte avant, après, écart attendu et écart mesuré, dans cette unité. Le nombre de constats d'`audit:tokens` reste rapporté séparément, jamais mélangé.
-
-### D23 — Un registre d'alias de rendu, distinct des thèmes et des préférences
-**TRANCHÉE le 2026-10-01.**
-
-**Contexte.** Trois concepts portaient le même mot. Un **thème** est un fichier de `src/themes/*.json`, dérivé du disque. Un **alias de rendu** est un nom de sélecteur qui rend un thème existant : `dim` rend `dark`. Une **préférence utilisateur** comme `system` est résolue à l'exécution, jamais à la compilation.
-
-Le statut d'alias était implicite : il tenait dans une condition en dur de `lib/themes.mjs` (`name === SYSTEM_FALLBACK_THEME`) et dans deux `Exclude<>` de `packages/ui/src/lib/constants.ts` — `ThemePreference = Exclude<ThemeNameType, 'dim'>` et `ResolvedThemeName = Exclude<ThemeNameType, 'system' | 'dim'>`. Un alias non documenté redevient un `slate` : invisible, jamais contrôlé.
-
-**Décision.** `packages/tokens/theme-aliases.json` déclare les alias de rendu (`{ "dim": "dark" }`, rien d'autre), lu par `lib/themes.mjs`. La condition en dur disparaît. `DEFAULT_THEME` et `SYSTEM_FALLBACK_THEME` restent dans `lib/themes.mjs` : ce sont deux rôles de génération, pas des alias. Mesure : ils ne sont consommés que dans `packages/tokens` (`lib/themes.mjs`, `sd-formats.mjs`), **aucun consommateur UI, aucune duplication** — ils ne deviennent donc pas une source du test de parité.
-
-**Sur la contradiction `dim` : elle n'existait pas.** `design-config.ts` lignes 50 à 55 propose six thèmes et ne contient aucune occurrence de `dim`. `dim` n'est donc **pas sélectionnable** par l'utilisateur. Les deux `Exclude<>` sont exacts : `dim` figure dans l'enum `ThemeName` mais est exclu de ce que l'utilisateur choisit et de ce qui est résolu. Ils restent, et le test les vérifie.
-
-**Sur le CSS : il n'y avait pas de défaut.** `dim` était déjà groupé avec sa cible — `[data-theme="dark"],\n[data-theme="dim"]`, mesuré sur le CSS généré. Un grep ligne à ligne avait fait croire à un bloc autonome vide. La règle est désormais écrite et testée plutôt que constatée.
-
-**Alternatives écartées.**
-- **`Exclude<>` implicites.** Rejetée : `dim` reste un alias sans statut déclaré. Un fichier `dim.json` passerait inaperçu, comme `slate`.
-- **Registre unique tokens + UI.** Rejetée : deux listes à synchroniser. `@monority/tokens` est `private: true`, sans `main` ni `exports` ; le lier obligerait à ouvrir un point d'entrée sur du code de build. L'enum `ThemeName` reste la source UI, et un test vérifie qu'elle coïncide avec le registre.
-
-**Conséquences.** Dix tests couvrent : registre exact, cible existante, alias ne masquant pas un fichier, sélecteur groupé, absence de bloc autonome, et correspondance avec l'enum UI. `system` reste dans `packages/ui` : le build ne doit pas dépendre d'un concept qu'il ne produit pas.
-
 ### D22 — Parité des listes de thèmes : une source dérivée, un test pour les listes recopiées
 **TRANCHÉE le 2026-10-01.**
 
@@ -199,6 +184,36 @@ Le statut d'alias était implicite : il tenait dans une condition en dur de `lib
 - **L'extension hors `apps/web/e2e` est l'item 0.15b**, non implémenté ici. Mesure : la même règle trouve 3 détections de plus — `theme-provider.tsx:10` (7 thèmes, exhaustive), `HarnessPage.tsx:6` (6 thèmes, `slate` manquant, et son type `Theme` en dérive, donc le compilateur ne peut pas le rattraper) et une boucle de test dans `get-theme-script.test.ts:91`.
 
 **Conséquences.** Le coût du centième token ne change pas, mais le coût d'*ajouter un thème* baisse : l'ajout d'un fichier dans `src/themes/` fait désormais échouer la porte si une liste applicative n'est pas mise à jour. Une annotation dont la raison cite 11b1 devient fausse en fin de 11b1 : la relecture de ces annotations est inscrite à la Definition of Done.
+
+### D23 — Un registre d'alias de rendu, distinct des thèmes et des préférences
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Trois concepts portaient le même mot. Un **thème** est un fichier de `src/themes/*.json`, dérivé du disque. Un **alias de rendu** est un nom de sélecteur qui rend un thème existant : `dim` rend `dark`. Une **préférence utilisateur** comme `system` est résolue à l'exécution, jamais à la compilation.
+
+Le statut d'alias était implicite : il tenait dans une condition en dur de `lib/themes.mjs` (`name === SYSTEM_FALLBACK_THEME`) et dans deux `Exclude<>` de `packages/ui/src/lib/constants.ts` — `ThemePreference = Exclude<ThemeNameType, 'dim'>` et `ResolvedThemeName = Exclude<ThemeNameType, 'system' | 'dim'>`. Un alias non documenté redevient un `slate` : invisible, jamais contrôlé.
+
+**Décision.** `packages/tokens/theme-aliases.json` déclare les alias de rendu (`{ "dim": "dark" }`, rien d'autre), lu par `lib/themes.mjs`. La condition en dur disparaît. `DEFAULT_THEME` et `SYSTEM_FALLBACK_THEME` restent dans `lib/themes.mjs` : ce sont deux rôles de génération, pas des alias. Mesure : ils ne sont consommés que dans `packages/tokens` (`lib/themes.mjs`, `sd-formats.mjs`), **aucun consommateur UI, aucune duplication** — ils ne deviennent donc pas une source du test de parité.
+
+**Sur la contradiction `dim` : elle n'existait pas.** `design-config.ts` lignes 50 à 55 propose six thèmes et ne contient aucune occurrence de `dim`. `dim` n'est donc **pas sélectionnable** par l'utilisateur. Les deux `Exclude<>` sont exacts : `dim` figure dans l'enum `ThemeName` mais est exclu de ce que l'utilisateur choisit et de ce qui est résolu. Ils restent, et le test les vérifie.
+
+**Sur le CSS : il n'y avait pas de défaut.** `dim` était déjà groupé avec sa cible — `[data-theme="dark"],\n[data-theme="dim"]`, mesuré sur le CSS généré. Un grep ligne à ligne avait fait croire à un bloc autonome vide. La règle est désormais écrite et testée plutôt que constatée.
+
+**Alternatives écartées.**
+- **`Exclude<>` implicites.** Rejetée : `dim` reste un alias sans statut déclaré. Un fichier `dim.json` passerait inaperçu, comme `slate`.
+- **Registre unique tokens + UI.** Rejetée : deux listes à synchroniser. `@monority/tokens` est `private: true`, sans `main` ni `exports` ; le lier obligerait à ouvrir un point d'entrée sur du code de build. L'enum `ThemeName` reste la source UI, et un test vérifie qu'elle coïncide avec le registre.
+
+**Conséquences.** Dix tests couvrent : registre exact, cible existante, alias ne masquant pas un fichier, sélecteur groupé, absence de bloc autonome, et correspondance avec l'enum UI. `system` reste dans `packages/ui` : le build ne doit pas dépendre d'un concept qu'il ne produit pas.
+
+### D24 — Unité de référence du chantier : les références pendantes de recette
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Le chantier comparait des nombres sans unité explicite. « 3291 » venait d'un scan large incluant `apps/web` et la base ; « 3170 constats » venait d'`audit:tokens` et comptait autre chose. Deux mesures d'unités différentes ne sont pas comparables.
+
+**Décision.** L'unité de référence du chantier est **l'occurrence de `var(--mr-x)` pendante dans `packages/styles/src/recipes/*.recipe.css`**, où `--mr-x` n'est définie ni globalement, ni localement dans le même fichier, ni dans le fichier déprécié. Script nommé : `packages/tokens/scripts/measure-pending.mjs`. Périmètre : recettes uniquement — la base, les utilitaires et `apps/web` sont des consommateurs, pas la cible.
+
+**Valeur de base : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76.** Mesurée au commit `2d3981b`. Fichier : `pending-baseline.json`. Cliquet : `--check` échoue si le nombre monte, signale une baisse.
+
+**Conséquences.** « 3291 » est **retiré des critères** : ancienne unité, plus comparable. Chaque famille de 11b1 rapporte avant, après, écart attendu et écart mesuré, dans cette unité. Le nombre de constats d'`audit:tokens` reste rapporté séparément, jamais mélangé.
 
 
 ## Amendements à la feuille de route
