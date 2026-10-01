@@ -30,9 +30,10 @@ AGENTS.md, qui prime en cas de conflit.
   pas d'APCA. Les bordures de controle au repos atteignent 3:1 et un controle
   a bordure a toujours un fond opaque.
 - Rendu : aucune valeur d'origine ne change sans etre annoncee dans le message
-  de commit (ancien D10). Apres la phase 1, la regle stricte reprend.
-- Suppression : l'ancien systeme disparait en phase 3, en un ou quelques
-  commits verts, une fois mesure par `git grep` que plus rien ne le lit.
-  Rien n'est supprime avant la phase 3.
+  de commit (ancien D10). Pendant la reconstruction, tout ecart est annonce
+  token par token ; la regle stricte de non-regression reprend en fin de Phase 3.
+- Suppression : l'ancien systeme a disparu en Phase 1, en commits verts
+  separes, une fois mesure que plus rien ne le lisait. Il reste consultable
+  par le tag d'archive, jamais reecrit.
 - Types : `tokens.d.ts` n'est genere depuis le CSS que si du code TypeScript
   consomme les noms de tokens, avec le consommateur cite. Sinon il n'existe pas.
