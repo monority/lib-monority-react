@@ -1,0 +1,8 @@
+/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+
+.mr-card {
+    margin-left: 8px;
+    padding-right: 16px;
+    left: 0;
+    border-top-left-radius: 10px;
+}

@@ -1,0 +1,17 @@
+/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+
+.mr-button {
+    color: #ff0000;
+}
+.mr-input {
+    min-height: 40px;
+}
+.mr-card {
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+.mr-tooltip {
+    transition-duration: 150ms;
+}
+.mr-modal {
+    z-index: 1200;
+}

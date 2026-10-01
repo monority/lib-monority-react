@@ -1,0 +1,35 @@
+/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+
+.mr-button {
+    color: var(--mr-accent);
+}
+.mr-input {
+    min-height: calc(var(--mr-control-size-md) + 2px);
+}
+.mr-card {
+    box-shadow: none;
+}
+.mr-tooltip {
+    transition-duration: var(--mr-duration-fast);
+}
+.mr-switch {
+    width: 0;
+    height: 0;
+}
+.mr-badge {
+    padding-inline: var(--mr-spacing-2);
+}
+.mr-stack {
+    flex: 1;
+    gap: 50%;
+}
+.mr-text {
+    line-height: inherit;
+}
+.mr-icon {
+    display: inline;
+}
+.mr-divider {
+    opacity: 1;
+    border-width: 0 1px 0 0;
+}

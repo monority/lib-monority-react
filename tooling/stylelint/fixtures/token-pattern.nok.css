@@ -1,0 +1,7 @@
+/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+
+:root {
+    --mr-Badge-Height: 20px;
+    --mr-nimporte: 1px;
+    --mr-ref: 1;
+}

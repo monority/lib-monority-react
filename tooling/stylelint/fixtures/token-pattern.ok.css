@@ -1,0 +1,7 @@
+/* Fixture — jamais linté en CI, testé par rules.test.mjs. */
+
+:root {
+    --mr-spacing-2: 8px;
+    --mr-ref-brand-hue: 200;
+    --mr-ref-radius-scale: 0.5;
+}
