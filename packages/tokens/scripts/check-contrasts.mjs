@@ -27,6 +27,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Color from 'colorjs.io'
 import { contrast, loadSources } from './lib/tokens-lib.mjs'
+import { discoverThemes } from './lib/themes.mjs'
 import { buildMaps, comboOklch } from './lib/resolve.mjs'
 import { finish } from './lib/rebuild.mjs'
 
@@ -50,8 +51,24 @@ const ACCENT_SIX = [
     '--mr-accent-subtle',
 ]
 const TONES = ['success', 'warning', 'danger', 'info']
-const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
+// Les thèmes viennent du disque (D20) : un thème ajouté au glob est
+// automatiquement contrasté. Avant 0.13 cette liste était en dur et un thème
+// vide passait sans contrôle.
+const THEMES = discoverThemes()
+// Le tableau 5.5 de language.md ne couvre qu'un sous-ensemble de thèmes,
+// c'est un artefact de spec et non une liste d'audit. Il est donc explicite,
+// mais validé contre le disque juste après : un thème retiré du disque
+// ferait échouer le build plutôt que de produire un `undefined`.
 const TABLE_THEMES = ['light', 'dark', 'oled', 'high-contrast']
+{
+    const missing = TABLE_THEMES.filter((t) => !THEMES.includes(t))
+    if (missing.length) {
+        throw new Error(
+            `X2 — thèmes du tableau 5.5 absents de src/themes/ : ${missing.join(', ')}. ` +
+                'Soit les restaurer, soit corriger la liste et le tableau de language.md.'
+        )
+    }
+}
 const BRANDS = ['monority', 'studio']
 
 // [clé tableau 5.5, fg, fonds, seuil AA, seuil high-contrast]
@@ -174,6 +191,10 @@ const referencedTokens = [
 ]
 const missing = referencedTokens.filter((t) => !col(t, 'light', 'monority'))
 for (const t of missing) failures.push(`token cité par X2 mais absent des sources : ${t}`)
+// Annoncé avant toute sortie : X2 s'arrête ici pendant la reconstruction du
+// systeme de couleurs, et le test de couverture doit encore savoir quels
+// thèmes il a parcourus.
+console.log(`  X2 thèmes parcourus (${THEMES.length}) : ${THEMES.join(', ')}`)
 if (missing.length) {
     finish({
         id: 'X2',
@@ -249,6 +270,11 @@ for (const [key, expected] of Object.entries(TABLE)) {
     }
 }
 
+// Annoncé AVANT tout branchement : X2 peut aussi s'arrêter sur un token
+// absent des sources, et ce chemin doit rester lisible pour que le test de
+// couverture sache quels thèmes ont été parcourus.
+// Annonce déjà faite plus haut, avant la sortie sur tokens manquants : on ne
+// la répète pas ici.
 if (failures.length) {
     finish({
         id: 'X2',
