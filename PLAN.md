@@ -1,22 +1,21 @@
 # Plan de remise en ordre — Monority UI
 
 ## Reprise
-État au 2026-10-01, mesuré. Cette section est la seule partie de PLAN.md qui se réécrit librement ; le reste est le plan.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`.
-- `pnpm verify` : 21 étapes, code 0, arrêt au premier échec.
-- En cours : point 2, parité 0.15 et ADR D22, en 3 commits. Commit 1 (dérivations) fait et poussé.
-- Table rase : 7 primitives `--mr-ref-*`, toutes les autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
-- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base au commit `2d3981b`).
-- Cliquets : stylelint 2730 violations, test-skips {4, 2}. À la baisse seule.
-- Sélecteurs émis : 8 — les 7 thèmes plus l'alias `dim`, groupé avec `dark`.
-- Dérivations faites : `theme-scope.tsx` type `ResolvedThemeName`, `design-config.ts` liste dérivée de `ThemeName` avec exclusion `high-contrast` portée par le type, `get-theme-script.ts` liste de stockage dérivée (exclut `dim`, inclut `system`). 4 tests ajoutés sur le script généré.
-- Mesuré au point 2 : 10 fichiers e2e citent un nom de thème, **5 seulement écrivent une liste** : `components.visual.spec.ts:4` (7, exhaustive), `audit-baseline.spec.ts:16` (6, dont `dim`), `theme-subtree.spec.ts:17` (6), `geometry.spec.ts:3` (3), `theme-runtime.spec.ts:62` (3, dans un `for…of`). Les 5 autres n'ont rien à annoter.
-- Mesuré : **aucun sous-ensemble e2e n'a de raison délibérée établie**. `geometry.spec.ts` a ses 3 thèmes depuis sa création (`88f0b1a`) et n'en a jamais eu d'autres — hypothèse « coût de capture » infirmée. `theme-subtree.spec.ts` et `audit-baseline.spec.ts` sont antérieurs à leurs thèmes manquants (`3e6fee9`, `adf5bda`).
-- Décisions en attente : D19 (teintes de statut fixes) et D22 (parité) restent à écrire, dans leurs commits. Aucun trou de numérotation.
-- En attente de validation : les 8 ajouts 11b1. Aucun token créé avant validation.
-- Ne pas toucher sans accord : `.gitignore` (autre session), `docs/audit-hardening-prompt.md`, `prompt.md`.
-- Docs de référence : `docs/tokens-pitfalls.md`, `docs/tokens-glossary.md`, `docs/tokens-contributing.md`, `docs/tokens-rebuild-plan.md`.
-- À amender par lePropriétaire : `AGENTS.md` §8 demande encore d'écrire `HANDOFF.md`, ignoré par `.gitignore`. La règle 0.2 de `prompt.md` le remplace par cette section.
+État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 3 commits verts poussés cette session : `3480c7f`, `8383c15`, plus celui-ci.
+- `pnpm verify` : 21 étapes, code 0.
+- Point 2 : commits 1 et 2 faits. **Commit 3 NON fait : le détecteur n'est pas correct, il n'a pas été commité.**
+- Commit 1 (3480c7f) : `theme-scope.tsx` dérive `ResolvedThemeName` ; `design-config.ts` dérive de `ThemeName`, exclusion `high-contrast` portée par le type ; `get-theme-script.ts` liste de stockage dérivée (exclut `dim`, inclut `system`). 4 tests ajoutés. `theme-scope.tsx` peut importer `constants.ts` : type seul, aucun cycle, aucun coût de bundle.
+- Commit 2 (8383c15) : 4 listes e2e annotées, item 0.15c ouvert avec 3 arbitrages.
+- **Reprise du commit 3** : `packages/tokens/scripts/lib/detecter-listes-themes.mjs` existe **non commité**. 9 fixtures sur 10 passent ; `describe.each` renvoie 1 liste et non 3 (l'attendu du test était faux, pas le code). Restent **3 détections non classifiées** sur le dépôt : `design-customizer.spec.ts:16` et `:49` (tables de fixtures : chaque objet porte une clé `theme`, ce n'est pas une liste de thèmes) et `theme-subtree.spec.ts:59` (à inspecter). Total détecté : 8 listes, dont 5 annotées.
+- Avant d'écrire le test : décider si une table de fixtures reçoit une seconde marque (`mr-theme-not-a-list:`) ou si le détecteur gagne une règle de clé `theme`.
+- Restent ensuite : ADR D22, test de parité étendu, contrôle d'octets de contrôle (section 4 de `prompt.md`).
+- Table rase : 7 primitives `--mr-ref-*`, autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
+- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`).
+- Cliquets : stylelint 2730, test-skips {4, 2}.
+- Décisions en attente : D19, D22. En attente de validation : les 8 ajouts 11b1.
+- Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
+- À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 
 ## Règles communes (toutes les étapes)
 - Une étape par session. N'exécute que l'étape demandée.
