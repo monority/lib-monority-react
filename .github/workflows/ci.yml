@@ -34,9 +34,6 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      # Les checks de tokens sont deja dans `pnpm test` (task @monority/tokens#test) :
-      # build + T1 equivalence, T3 no-hardcoded, T6 deprecated, X2 contrastes,
-      # S11 specs, T7 bundle CSS frais, T8 fonds opaques des controles.
       - name: Test
         run: pnpm test
 
