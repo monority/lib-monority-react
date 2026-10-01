@@ -36,28 +36,28 @@ Un pas nommé ne s'ajoute pas à une échelle numérique, et réciproquement. C'
 
 ### 3.1 Familles à pas **nommés**
 
-| Famille | Pas autorisés | Plafond | Tokens historiques | Note |
-|---|---|---|---|---|
-| `icon-size` | `sm`, `md`, `lg` | 3 | `icon-size-sm/md/lg` | 3 valeurs historiques (16/16/20px) |
-| `avatar-size` | `sm`, `md`, `lg` | 3 | `avatar-size-sm/md/lg` | aligné sur `icon-size` |
-| `dialog-width` | `sm`, `md`, `lg` | 3 | `dialog-width-sm/md/lg` | |
-| `checkbox` | `md`, `lg` | 2 | `checkbox-size-md/lg`, `checkbox-glyph-md/lg` | **deux sous-échelles dans une famille** — voir §4.1 |
-| `badge` | `sm`, `md` | 2 | `badge-height-sm/md` | |
-| `textarea` | `sm`, `md`, `lg` | 3 | `textarea-min-height-sm/(vide)/lg` | **3 variantes, 1 sans suffixe** — voir §4.2 |
-| `spinner` | `sm`, `md`, `lg` | 3 | `spinner-size-sm/md/lg` | doublon `spinner-ring-*` — voir §4.3 |
-| `shadow` | `xs`, `sm`, `md`, `lg` | 4 | `shadow-xs/sm/md` + `raised`, `surface`, `focus`, `overlay`, `thumb` | **7 suffixes, 4 nommés + 5 rôles** — voir §4.4 |
-| `radius` | `xs`, `sm`, `md`, `lg`, `full` | 5 | `radius-xs/sm/md/lg`, `radius-inline/control/card/overlay/full` | **deux conventions** — voir §4.5 |
-| `z-index` | `base`, `low`, `mid`, `high`, `top` | 5 | `z-base/elevated/overlay` + `z-sticky/dropdown/popover/modal/toast/tooltip` | **deux systèmes** — voir §4.6 |
+| Famille | Pas autorisés | Plafond | Tokens historiques | Impact rendu | Note |
+|---|---|---|---|---|---|
+| `icon-size` | `sm`, `md`, `lg` | 3 | `icon-size-sm/md/lg` | aucun | 3 valeurs historiques (16/16/20px) |
+| `avatar-size` | `sm`, `md`, `lg` | 3 | `avatar-size-sm/md/lg` | aucun | aligné sur `icon-size` |
+| `dialog-width` | `sm`, `md`, `lg` | 3 | `dialog-width-sm/md/lg` | aucun | |
+| `checkbox` | `md`, `lg` | 2 | `checkbox-size-md/lg`, `checkbox-glyph-md/lg` | aucun | **deux sous-échelles** — voir §4.1 |
+| `badge` | `sm`, `md` | 2 | `badge-height-sm/md` | aucun | |
+| `textarea` | `sm`, `md`, `lg` | 3 | `textarea-min-height-sm/(vide)/lg` | aucun | **3 variantes, 1 sans suffixe** — voir §4.2 |
+| `spinner` | `sm`, `md`, `lg` | 3 × 2 séries | `spinner-size-*`, `spinner-ring-*` | à arbitrer | **D16**, voir §4.3 |
+| `shadow` | `xs`, `sm`, `md`, `lg` | 4 | `shadow-xs/sm/md` + `raised`, `surface`, `focus`, `overlay`, `thumb` | aucun | voir §4.4 |
+| `radius` | `xs`, `sm`, `md`, `lg`, `full` | 5 | `radius-xs/sm/md/lg`, `radius-inline/control/card/overlay/full` | aucun | voir §4.5 |
+| `z-index` | aucun pas — voir §4.6 | 6 | `z-base/elevated/overlay` + `z-sticky/dropdown/popover/modal/toast/tooltip` | **annoncé** | voir §4.6 |
 
 ### 3.2 Familles à pas **numériques**
 
-| Famille | Pas autorisés | Plafond | Tokens historiques | Note |
-|---|---|---|---|---|
-| `spacing` | `0`, `0-5`, `1`, `1-5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, `12`, `16`, `20`, `24` | 15 | 15 tokens | grille 4px + demi-pas. **Aucun pas nommé** : `--mr-spacing-md` serait absurde |
-| `opacity` | `0`, `10`, `20`, `30`, `40`, `50`, `60`, `70`, `80`, `90`, `100` | 11 | 12 tokens | 11 paliers + `disabled`. Palier `5` absent historiquement : conservé interdit pour garder la granularité de 10 % |
-| `chart` | `1`, `2`, `3`, `4`, `5` | 5 | `chart-1..5` | séries numérotées, pas une échelle visuelle |
-| `font-size` | `11`, `12`, `13`, `14`, `16`, `18`, `24`, `32` | 8 | `fs-11..32` | valeurs en px. **Famille à renommer** : `fs` est une abréviation interdite (D8) |
-| `line-height` | `11`, `12`, `13`, `14`, `16`, `18`, `24`, `32` | 8 | `lh-11..32` | idem, `lh` interdit |
+| Famille | Pas autorisés | Plafond | Tokens historiques | Impact rendu | Note |
+|---|---|---|---|---|---|
+| `spacing` | `0`, `0-5`, `1`, `1-5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, `12`, `16`, `20`, `24` | 15 | 15 tokens | aucun | grille 4px + demi-pas. **Aucun pas nommé** : `--mr-spacing-md` serait absurde |
+| `opacity` | aucun — échelle supprimée | 0 | 11 paliers + `disabled` | **annoncé** | voir §4.10, `opacity-disabled` survit |
+| `chart` | `1`, `2`, `3`, `4`, `5` | 5 | `chart-1..5` | aucun | séries numérotées |
+| `font-size` | `11`, `12`, `13`, `14`, `16`, `18`, `24`, `32` | 8 | `fs-11..32` | aucun | **famille à renommer** : `fs` est une abréviation interdite (D8) |
+| `line-height` | `11`, `12`, `13`, `14`, `16`, `18`, `24`, `32` | 8 | `lh-11..32` | aucun | idem, `lh` interdit |
 
 ### 3.3 Familles de **rôles** — pas d'échelle
 
@@ -99,11 +99,26 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 
 **Recommandation** : nommer explicitement les trois `--mr-textarea-min-height-sm/md/lg` et supprimer la variante sans suffixe. `md` est la valeur par défaut, elle s'écrit. Plafond 3.
 
-### 4.3 `spinner` — deux conventions pour la même chose
+### 4.3 `spinner` — deux séries, deux mesures — [DÉCISION D16]
 
-`spinner-size-{sm,md,lg}` et `spinner-ring-{sm,md,lg}` coexistent, avec des valeurs qui divergent. Deux mesures, deux noms — mais rien ne dit laquelle fait autorité.
+**Je me suis trompé dans la première version de ce tableau** : j'y lisais deux conventions concurrentes et recommandais de supprimer `spinner-ring`. La recette montre l'inverse.
 
-**Recommandation** : ne garder qu'une mesure, `spinner-size`, et supprimer `spinner-ring`. Un anneau et une taille ne sont pas deux échelles du même objet. Plafond 3. **À trancher avec l'équipe design** : c'est une perte d'expression, pas un renommage.
+Valeurs résolues (commit `da57c3e`) et consommateurs (grep sur `packages/styles`) :
+
+| Token | Valeur | Usages | Emplacement |
+|---|---|---|---|
+| `--mr-spinner-size-sm` | `1rem` | 2 | `spinner.recipe.css:32-33` (`.mr-spinner[data-size='sm']`) |
+| `--mr-spinner-size-md` | `1.5rem` | 2 | `spinner.recipe.css:42-43` |
+| `--mr-spinner-size-lg` | `2rem` | 2 | `spinner.recipe.css:52-53` |
+| `--mr-spinner-ring-sm` | `0.75rem` | 2 | `spinner.recipe.css:37-38` (`.mr-spinner[data-size='sm'] .mr-spinner__ring`) |
+| `--mr-spinner-ring-md` | `1.25rem` | 4 | `spinner.recipe.css:20-21` (défaut) et `:47-48` |
+| `--mr-spinner-ring-lg` | `1.75rem` | 2 | `spinner.recipe.css:57-58` |
+
+Les deux séries sont **décalées d'un pas constant de 0.25rem** : `1 / 0.75`, `1.5 / 1.25`, `2 / 1.75`. Ce n'est pas une redondance, c'est une mesure et son épaisseur — la différence correspond à la bordure (`--mr-border-width`) plus la marge intérieure.
+
+**Les deux séries sont donc justifiées et doivent être conservées.** Ce ne sont pas deux conventions mais deux rôles suffixés d'un même pas, exactement comme `checkbox` en §4.1 : le pas dit la taille, le rôle dit la mesure.
+
+**[DÉCISION D16]** : la question ouverte n'est plus « laquelle garder » mais « la famille porte-t-elle deux échelles parallèles, ou une échelle et deux rôles ? ». Recommandation : deux rôles (`size`, `ring`), un seul jeu de pas `{sm, md, lg}`, plafond 3 par série. L'alternative — deux échelles indépendantes — autoriserait un jour `size` et `ring` à ne plus être alignés, ce qui casserait la géométrie du composant. **Décision design, à poser par toi.**
 
 ### 4.4 `shadow` — quatre nommés et cinq rôles
 
@@ -121,7 +136,9 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 
 `z-base`/`z-elevated`/`z-overlay` (3, générique) coexistent avec `z-sticky`/`z-dropdown`/`z-popover`/`z-modal`/`z-toast`/`z-tooltip` (6, sémantique). Aucune valeur ne se recoupe, donc aucun ordre n'est garanti entre les deux systèmes.
 
-**Recommandation** : **un seul système, sémantique**, parce que c'est lui qui est consommé par les composants et que ROADMAP §5.14 le documente. Supprimer `z-base`, `z-elevated`, `z-overlay`. Plafond 6, pas `base`/`low`/`mid`/`high`/`top` : un z-index est une **position**, pas une taille. Corriger §3.1 en conséquence.
+**Recommandation** : **un seul système, sémantique**, parce que c'est lui qui est consommé par les composants et que ROADMAP §5.14 le documente. Supprimer `z-base`, `z-elevated`, `z-overlay`. **Impact rendu : annoncé** — `z-base`, `z-elevated` et `z-overlay` ont 0 consommateur en recette (`git grep` sur `packages/styles`), donc la suppression est sans effet visuel, mais les valeurs de pile doivent être redéfinies pour garder l'ordre `sticky < dropdown < popover < modal < toast < tooltip`.
+
+Un z-index est une **position**, pas une taille : pas de pas nommé, plafond 6 (nombre de couches), pas d'échelle.
 
 ### 4.7 `text` — rôles et tailles dans une famille
 
@@ -133,7 +150,20 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 
 `regular`, `medium`, `semibold` forment une échelle ordinale de 3. `bold` arrive après `semibold` sans être un pas de la même série.
 
-**Recommandation** : `bold` est supprimé, ou promu en quatrième pas nommé si le langage visuel l'exige. `language.md` §5.9 dit « aucune graisse hors 400/500/600 », donc **`bold` est interdit**. Plafond 3.
+**Recommandation** : **`bold` est supprimé**, `language.md` §5.9 dit « aucune graisse hors 400/500/600 ». Plafond 3.
+
+**Impact rendu : annoncé.** Consommateurs — `git grep` sur `packages apps` :
+
+```
+apps/web/src/features/docs/code-theme.css:1
+apps/web/src/features/docs/index.css:7
+packages/styles/src/recipes/banner.recipe.css:1
+packages/styles/src/recipes/calendar.recipe.css:1
+packages/styles/src/recipes/progress.recipe.css:1
+packages/styles/src/recipes/title.recipe.css:1
+```
+
+14 occurrences dans 6 fichiers. Les 4 recettes sont des conséquences de rendu directes : le libellé de `banner`, le titre de `calendar`, la valeur de `progress` et le `title` changent de graisse. Les 2 fichiers CSS de `apps/web` relèvent du site de documentation, pas de la librairie.
 
 ### 4.9 `duration` — le cas conflictuel
 
@@ -149,12 +179,25 @@ Le problème en trois temps :
 
 **Recommandation, en deux séries distinctes** :
 
-- **Série de transition** — pas nommés, plafond 4 : `--mr-duration-fast` (120), `--mr-duration-base` (180), `--mr-duration-slow` (240). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-fast`.
-- **Séries de boucle** — rôles nommés, hors échelle : `--mr-duration-spin` (800), `--mr-duration-pulse` (1200). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature.
+- **Série de transition** — pas nommés, plafond 4 : `--mr-duration-fast` (120ms), `--mr-duration-base` (180ms), `--mr-duration-slow` (240ms). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-standard` / `ease-enter`.
+- **Séries de boucle** — rôles nommés, hors échelle : `--mr-duration-spin` (800ms), `--mr-duration-pulse` (1200ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature.
 
-Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`, `--mr-duration-fast-alt`, `--mr-duration-slow-alt`. Si une valeur de 150ms est réellement consommée par une recette, elle rejoint la série de transition sous le nom qui décrit sa vitesse — mais **`-alt` ne doit jamais revenir**.
+Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`, `--mr-duration-fast-alt`, `--mr-duration-slow-alt`. Si une valeur de 150 ms est réellement consommée par une recette, elle rejoint la série de transition sous le nom qui décrit sa vitesse — mais **`-alt` ne doit jamais revenir**.
 
-**Conséquence sur les tests** : `design-token-contract.test.ts` attend `--mr-duration-fast-alt` et `--mr-duration-slow-alt`. Ces deux assertions devront être réécrites vers les noms de la série de transition. Le skip enregistré `blockedBy: [11b2, 11b4]` reste valable : 11b4 est bien la phase qui reconstruit cette famille.
+**Impact rendu : annoncé.** Consommateurs — `git grep` sur `packages apps` :
+
+```
+--mr-duration-600       packages/styles/src/recipes/infinite-scroll.recipe.css:33   (1)
+--mr-duration-quick     packages/styles/src/recipes/checkbox.recipe.css:55           (1)
+--mr-duration-fast-alt  17 occurrences : button.recipe.css:15, checkbox, command-palette,
+                         file-trigger, input-base, menubar, … + design-token-contract.test.ts
+--mr-duration-slow-alt  15 occurrences : drawer.recipe.css:50, file-trigger, menubar, … 
+                         + design-token-contract.test.ts
+```
+
+Le `-alt` est donc **réellement consommé** : 32 occurrences dans les recettes, dont `button` et `drawer`. La suppression n'est pas neutre, elle impose de nommer chaque valeur selon sa vitesse dans la série de transition.
+
+**Conséquence sur les tests** : `design-token-contract.test.ts` attend `--mr-duration-fast-alt` et `--mr-duration-slow-alt`, et vérifie que `drawer` consomme `var(--mr-duration-slow-alt)`. Ces assertions devront être réécrites vers les noms de la série de transition. Le skip enregistré `blockedBy: [11b2, 11b4]` reste valable : 11b4 est bien la phase qui reconstruit cette famille.
 
 ### 4.10 `opacity` — échelle inutile
 
@@ -162,21 +205,43 @@ Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`, `--
 
 **Recommandation** : supprimer l'échelle, ne garder que `--mr-opacity-disabled` — un rôle, pas un pas. Plafond 0. C'est la seule famille où le plafond tombe à zéro.
 
+**Impact rendu : annoncé.** Consommateurs, `git grep` par suffixe sur `packages apps` :
+
+```
+--mr-opacity-0 … --mr-opacity-100   AUCUNE occurrence (10 paliers sur 11, hors 50)
+--mr-opacity-50                      3 occurrences, toutes dans
+                                     packages/tokens/scripts/check-token-refs.test.mjs
+                                     (fixture de test, pas un consommateur)
+--mr-opacity-disabled                27 occurrences dans 22 recettes :
+                                     accordion, button, carousel, checkbox, combobox,
+                                     context-menu, date-picker, drop-zone, dropdown-menu,
+                                     file-trigger, input-base, input, menubar,
+                                     navigation-menu, number-input, password-input,
+                                     radio-group, select, slider, switch, tabs, toggle
+```
+
+Dix des onze paliers sont donc **déjà morts** : la suppression de l'échelle ne retire aucun consommateur réel. Seul `opacity-disabled` est vivant, et il survit à la suppression. Le `50` restant n'est consommé que par une fixture de test.
+
 ## 5. Récapitulatif des plafonds
 
 | Plafond | Familles |
 |---|---|
 | 0 (suppression de l'échelle) | `opacity` |
 | 2 | `checkbox` |
-| 3 | `icon-size`, `avatar-size`, `dialog-width`, `badge`, `textarea`, `spinner`, `font-weight` |
-| 4 | `shadow` (ordinale), `radius` (ordonnée) |
-| 5 | `spacing`, `chart`, `z-index` |
-| 6 | `radius` (rôles + `full`) |
+| 3 | `icon-size`, `avatar-size`, `dialog-width`, `badge`, `textarea`, `font-weight`, `spinner` (par série) |
+| 4 | `shadow` (ordinale), `radius` (ordonnée), `duration` (transition) |
+| 5 | `spacing`, `chart`, `radius` (rôles + `full`) |
+| 6 | `z-index` (couches, pas une échelle) |
 | 8 | `font-size`, `line-height` |
-| 11 | `opacity` (échelle historique, à supprimer) |
 | 12 | `type` (proposé) |
 
-## 6. Ce que ce tableau ne décide pas
+## 6. Questions ouvertes pour la validation
+
+1. **Le quatrième pas de la série de transition `duration`.** Le plafond est fixé à 4, mais seuls trois pas sont utilisés : `fast`, `base`, `slow`. Le quatrième n'existe nulle part dans les 279 tokens. Faut-il réserver la place pour `--mr-duration-instant` (état de survol, environ 80 ms), ou ramener le plafond à 3 ? Je **recommande de fixer le plafond à 3** tant qu'aucun consommateur ne réclame le quatrième pas : un plafond vide est une promesse que rien ne tient.
+
+2. **Un token à rôle seul avec un plafond de 0.** `--mr-opacity-disabled` est un rôle, pas un pas, et son plafond est donc 0. La question est de savoir si le **registre `local-tokens`** accepte une entrée dont la famille ne porte aucun pas autorisé — c'est-à-dire si la notion de « famille » est obligatoire pour un token à rôle seul. Sans réponse, `opacity-disabled` n'a pas de place dans le registre, ce qui est absurde puisque 27 recettes le consomment. Je **recommande d'accepter un rôle seul** : une famille sans échelle est une famille valide, le registre décrit des tokens, pas des échelles.
+
+## 7. Ce que ce tableau ne décide pas
 
 - Les **valeurs** elles-mêmes. Ce tableau fixe les noms de pas autorisés et leur plafond, pas les px ou ms associés.
 - Les **familles de rôle**, qui n'ont pas d'échelle et n'en ont pas besoin.
