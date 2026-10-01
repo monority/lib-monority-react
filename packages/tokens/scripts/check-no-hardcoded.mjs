@@ -10,6 +10,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { shortNameFromDisk } from './lib/short-name.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const css = fs.readFileSync(
@@ -48,7 +49,11 @@ const allowedFixed = new Set([
 for (const [name, values] of decls) {
     for (const value of values) {
         if (!value.includes('oklch(')) continue
-        const short = name.replace(/^--mr-/, '')
+        // Les teintes fixes de statut sont autorisées par NOM COURT. Un thème
+        // nommé préfixe ce nom : on retire le préfixe exact `--mr-theme-<nom>-`
+        // (D21) plutôt que de comparer le dernier segment, qui confondrait
+        // success-text, danger-text, warning-text et info-text.
+        const short = shortNameFromDisk(name).replace(/^--mr-/, '')
         if (allowedFixed.has(short)) continue
         if (
             !value.includes('var(--mr-ref-brand-hue)') &&

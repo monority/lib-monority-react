@@ -16,25 +16,8 @@
 
 }
 
-:root,
-[data-theme="light"] {
-
-}
-
-[data-theme="dark"],
+[data-theme="dark"], 
 [data-theme="dim"] {
-
-}
-
-[data-theme="oled"] {
-
-}
-
-[data-theme="ocean"] {
-
-}
-
-[data-theme="night"] {
 
 }
 
@@ -42,8 +25,29 @@
 
 }
 
+:root,
+[data-theme="light"] {
+
+}
+
+[data-theme="night"] {
+
+}
+
+[data-theme="ocean"] {
+
+}
+
+[data-theme="oled"] {
+
+}
+
+[data-theme="slate"] {
+
+}
+
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
+  :root:not([data-theme="dark"]) {
   
   }
 }

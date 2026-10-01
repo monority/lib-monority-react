@@ -2,7 +2,14 @@
  * Phase 2a — formats personnalisés Style Dictionary v4 + build programmé.
  * Les émetteurs lisent les JSON DTCG de `src/` (ordre des fichiers conservé).
  */
-import { cssName, declOf, eachLeaf } from './lib/tokens-lib.mjs'
+import { cssName, declOf, eachLeaf, THEMES } from './lib/tokens-lib.mjs'
+import {
+    DEFAULT_THEME,
+    SYSTEM_FALLBACK_THEME,
+    selectorFor,
+    systemFallbackSelector,
+    themeFileMap,
+} from './lib/themes.mjs'
 
 const HEADER = '/* GENERE — ne pas modifier. Source : packages/tokens/src/*.json (DTCG). */'
 
@@ -13,14 +20,8 @@ function block(selector, entries) {
 function collect(sources) {
     const root = []
     const rootBrand = []
-    const themes = {
-        'theme-light': [],
-        'theme-dark': [],
-        'theme-oled': [],
-        'theme-ocean': [],
-        'theme-night': [],
-        'theme-high-contrast': [],
-    }
+    // Les thèmes viennent du disque (étape 0.13), pas d'une liste en dur.
+    const themes = new Map(THEMES.map((t) => [`theme-${t}`, []]))
     const compact = []
     const media640 = []
     const reduced = []
@@ -34,7 +35,12 @@ function collect(sources) {
                 : scope === 'root'
                   ? root
                   : scope.startsWith('theme-')
-                    ? themes[scope]
+                    ? (themes.get(scope) ??
+                      (() => {
+                          throw new Error(
+                              `Portée « ${scope} » sans fichier de thème correspondant dans src/themes/.`
+                          )
+                      })())
                     : scope === 'density-compact'
                       ? compact
                       : scope === 'media-max640'
@@ -47,14 +53,9 @@ function collect(sources) {
     for (const f of ['primitives.json', 'core.json', 'components.json']) {
         eachLeaf(sources[f], (segs, leaf) => push(f, segs, leaf))
     }
-    for (const f of [
-        'themes/light.json',
-        'themes/dark.json',
-        'themes/oled.json',
-        'themes/ocean.json',
-        'themes/night.json',
-        'themes/high-contrast.json',
-    ]) {
+    // Les fichiers de thèmes viennent du disque (étape 0.13), triés pour un
+    // ordre déterministe. Ajouter un thème = ajouter un fichier.
+    for (const f of themeFileMap().map(([path]) => path)) {
         eachLeaf(sources[f], (segs, leaf) => push(f, segs, leaf))
     }
     eachLeaf(sources['density.json'], (segs, leaf) => push('density.json', segs, leaf))
@@ -90,17 +91,25 @@ function withBrandScope(selector) {
 export function emitTokensCss(sources) {
     const { root, rootBrand, themes, compact, media640, reduced, studio } = collect(sources)
     const themeNames = new Set()
-    for (const list of Object.values(themes)) for (const [n] of list) themeNames.add(n)
+    for (const list of themes.values()) for (const [n] of list) themeNames.add(n)
     const brandDep = (list) => list.filter(([, v]) => isBrandDependent(v, themeNames))
     const rootDep = brandDep(root)
-    const themeSels = [
-        [':root,\n[data-theme="light"]', themes['theme-light']],
-        ['[data-theme="dark"],\n[data-theme="dim"]', themes['theme-dark']],
-        ['[data-theme="oled"]', themes['theme-oled']],
-        ['[data-theme="ocean"]', themes['theme-ocean']],
-        ['[data-theme="night"]', themes['theme-night']],
-        ['[data-theme="high-contrast"]', themes['theme-high-contrast']],
-    ]
+    // Sélecteurs dérivés du disque : `light` est le défaut (`:root`), `dark` est
+    // le repli système et garde l'alias historique `dim`.
+    if (!THEMES.includes(DEFAULT_THEME)) {
+        throw new Error(
+            `Thème par défaut « ${DEFAULT_THEME} » absent de src/themes/. Le CSS généré serait sans :root.`
+        )
+    }
+    if (!THEMES.includes(SYSTEM_FALLBACK_THEME)) {
+        throw new Error(
+            `Thème de repli système « ${SYSTEM_FALLBACK_THEME} » absent de src/themes/.`
+        )
+    }
+    const themeSels = THEMES.map((name) => [
+        selectorFor(name, { withRoot: true, withDimAlias: true }),
+        themes.get(`theme-${name}`),
+    ])
     const parts = [
         HEADER,
         '',
@@ -117,16 +126,26 @@ export function emitTokensCss(sources) {
     if (rootDep.length) parts.push(block('[data-brand]', stripFile(rootDep)), '')
     parts.push(
         '@media (prefers-color-scheme: dark) {',
-        indent(block(':root:not([data-theme])', stripFile(themes['theme-dark']))),
+        indent(
+            block(
+                systemFallbackSelector(SYSTEM_FALLBACK_THEME),
+                stripFile(themes.get(`theme-${SYSTEM_FALLBACK_THEME}`))
+            )
+        ),
         '}',
         ''
     )
     {
-        const dep = brandDep(themes['theme-dark'])
+        const dep = brandDep(themes.get(`theme-${SYSTEM_FALLBACK_THEME}`))
         if (dep.length)
             parts.push(
                 '@media (prefers-color-scheme: dark) {',
-                indent(block(withBrandScope(':root:not([data-theme])'), stripFile(dep))),
+                indent(
+                    block(
+                        withBrandScope(systemFallbackSelector(SYSTEM_FALLBACK_THEME)),
+                        stripFile(dep)
+                    )
+                ),
                 '}',
                 ''
             )
@@ -195,12 +214,7 @@ export function emitDts(sources) {
         'primitives.json',
         'core.json',
         'components.json',
-        'themes/light.json',
-        'themes/dark.json',
-        'themes/oled.json',
-        'themes/ocean.json',
-        'themes/night.json',
-        'themes/high-contrast.json',
+        ...themeFileMap().map(([path]) => path),
         'density.json',
         'brand-studio.json',
     ]) {

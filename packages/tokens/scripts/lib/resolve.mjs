@@ -16,6 +16,7 @@ import {
     oklchToHex,
     resolveOklch,
 } from './tokens-lib.mjs'
+import { themeFileMap } from './themes.mjs'
 
 export const comboKey = (theme, density, brand) => `${theme}.${density}.${brand}`
 
@@ -23,22 +24,9 @@ export function buildMaps(sources) {
     const rootRaw = new Map()
     const compactRaw = new Map()
     const studioPrim = new Map()
-    const themeRaw = {
-        light: new Map(),
-        dark: new Map(),
-        oled: new Map(),
-        ocean: new Map(),
-        night: new Map(),
-        'high-contrast': new Map(),
-    }
-    const themeFile = {
-        'themes/light.json': 'light',
-        'themes/dark.json': 'dark',
-        'themes/oled.json': 'oled',
-        'themes/ocean.json': 'ocean',
-        'themes/night.json': 'night',
-        'themes/high-contrast.json': 'high-contrast',
-    }
+    // Les thèmes viennent du disque (étape 0.13), pas d'une liste en dur.
+    const themeRaw = new Map(THEMES.map((t) => [t, new Map()]))
+    const themeFile = Object.fromEntries(themeFileMap())
     for (const f of ['primitives.json', 'core.json', 'components.json']) {
         eachLeaf(sources[f], (segs, leaf) => {
             const { name } = cssName(segs)
@@ -56,7 +44,7 @@ export function buildMaps(sources) {
     for (const [f, theme] of Object.entries(themeFile)) {
         eachLeaf(sources[f], (segs, leaf) => {
             const { name } = cssName(segs)
-            if (name.startsWith('--mr-')) themeRaw[theme].set(name, leaf)
+            if (name.startsWith('--mr-')) themeRaw.get(theme).set(name, leaf)
         })
     }
     return { rootRaw, compactRaw, studioPrim, themeRaw }
@@ -65,7 +53,7 @@ export function buildMaps(sources) {
 /** Feuille DTCG applicable : thème > densité compact > primitive de marque > racine. */
 function findLeaf(name, theme, density, brand, maps) {
     const { rootRaw, compactRaw, studioPrim, themeRaw } = maps
-    if (themeRaw[theme]?.has(name)) return themeRaw[theme].get(name)
+    if (themeRaw.get(theme)?.has(name)) return themeRaw.get(theme).get(name)
     if (density === 'compact' && compactRaw.has(name)) return compactRaw.get(name)
     if (brand === 'studio' && studioPrim.has(name)) return studioPrim.get(name)
     return rootRaw.get(name)
@@ -140,7 +128,7 @@ export function comboValue(name, theme, density, brand, maps, depth = 0) {
 
 export function allTokenNames(maps) {
     const names = new Set([...maps.rootRaw.keys()])
-    for (const t of THEMES) for (const n of maps.themeRaw[t].keys()) names.add(n)
+    for (const t of THEMES) for (const n of maps.themeRaw.get(t).keys()) names.add(n)
     return [...names].sort()
 }
 

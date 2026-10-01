@@ -131,6 +131,19 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 
 **Conséquences.** T3 doit comparer des noms courts et non des noms préfixés par le thème (voir D21). Le 7ᵉ thème est dans le périmètre de X2, qui vérifie contraste et seuils par thème.
 
+### D21 — T3 compare des noms courts, jamais le dernier segment
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** T3 autorise les teintes fixes de statut par nom court (`success-text`). Un thème nommé produit `theme-slate-success-text`, qui ne correspondait à rien : les tons d'un thème ajouté au glob étaient tous signalés à tort.
+
+**Décision.** Retirer le préfixe **exact** `--mr-theme-<nom de thème>-` avant comparaison avec `allowedFixed`. La liste des thèmes vient du disque (`lib/themes.mjs`), donc aucun nom de thème n'est codé en dur. `allowedFixed` reste une liste de noms courts, indépendante du nombre de thèmes.
+
+**Alternatives écartées.**
+- **Comparer le dernier segment.** Rejetée, et fragile : `success-text`, `danger-text`, `warning-text` et `info-text` se terminent tous par `text`. T3 deviendrait aveugle à la distinction entre tons.
+- **Étendre `allowedFixed` par thème.** Rejetée : une liste à maintenir par thème, contraire à D14.
+
+**Conséquences.** Sept tests de normalisation couvrent les cas limites : nom de thème composé (`high-contrast`), token dont le nom contient un thème sans être préfixé, préfixe partiel, thème qui est le préfixe d'un autre, tri par longueur décroissante, et non-régression de la distinction entre les quatre tons.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)

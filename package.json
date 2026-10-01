@@ -31,7 +31,9 @@
         "test:token-pattern": "node --test ./tooling/tokens/token-pattern.test.mjs",
         "audit:tokens": "node ./packages/tokens/scripts/audit-tokens.mjs",
         "test:audit-tokens": "node --test ./packages/tokens/scripts/audit-tokens.test.mjs",
-        "test:scale-rules": "node --test ./packages/tokens/scripts/lib/scale-rules.test.mjs"
+        "test:scale-rules": "node --test ./packages/tokens/scripts/lib/scale-rules.test.mjs",
+        "test:theme-parity": "node --test ./packages/tokens/scripts/theme-parity.test.mjs",
+        "test:short-name": "node --test ./packages/tokens/scripts/lib/short-name.test.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

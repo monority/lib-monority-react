@@ -66,6 +66,12 @@ Identifiants stables : chaque étape porte un identifiant `phase.sous-phase` (0.
 - [x] **0.8** Verrou des 4 tests web de contrat tokens. Registre `packages/tokens/test-skips.json` (raison + `blockedBy` ordonné), quatre gardes (`check-test-skips.mjs`), 12 tests de registre, compteur de skips au cliquet. Les skips sont **conditionnels** au verrou : `duringRebuild(it)` dans `apps/web/src/lib/rebuild-lock.ts`, un `it.skip` en dur est refusé.
 - [x] **0.9** `audit:tokens` : cycles, violations de niveau, pas hors échelle et plafonds. 12 + 18 tests. Commits `d765729`, `ccf1607`.
 - [ ] **0.10** `audit:contrast` : couleurs calculées Playwright, mesure colorjs.io, Chromium épinglé, ratio après gamut mapping. Fixtures 4,6:1 ok et 4,4:1 nok dont une via `color-mix`. Mode R.
+- [x] **0.13** Thèmes dérivés du glob `src/themes/*.json`. Test de parité (fichiers = enregistrés = émis), suppression des trois listes en dur (`tokens-lib.mjs`, `resolve.mjs`, `sd-formats.mjs`, `loadSources`), échec explicite sur un nom de thème non conforme. Corrige aussi T3, qui comparait des noms courts à des noms préfixés (D20, D21).
+- [ ] **0.14** Contrat public / interne. Livrables : un fichier de classification par token, une politique de dépréciation écrite (annonce, période, retrait, changeset semver), un test qui échoue si un token n'est pas classé. ADR d'abord, test ensuite.
+- [ ] **0.15** Parité thèmes tokens / UI. La liste des thèmes est codée en dur à 5 endroits dans le code UI et dans 3 specs e2e ; un 8ᵉ thème échouerait en silence côté UI même si les tokens l'émettent. Options à trancher : test de parité, ou dérivation de la liste UI d'une sortie du build tokens.
+- [ ] **Écart spec / recette : variante bordée du badge.** `badge.md`, `banner.md` et `callout.md` décrivent un état bordé qui n'existe dans aucune recette : les tokens `status-*-border` et `info-subtle` ont été écartés de 11b1 faute de consommateur. À traiter quand la recette l'implémente, pas par anticipation.
+
+### Phase 11 — Refonte du système de tokens
 - [ ] **0.11** CI pilotée par `rebuild.json`, même cliquet qu'en local.
 - [x] **0.12** Items D11 : mapping des 7 renommages dans `MIGRATIONS.md`, changeset breaking, exclusions d'audit dans un fichier versionné.
 

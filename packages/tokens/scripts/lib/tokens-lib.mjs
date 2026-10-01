@@ -6,12 +6,17 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import Color from 'colorjs.io'
+import { discoverThemes, themeFileMap } from './themes.mjs'
 
 export const BRANDS = {
     monority: { brandHue: 200, brandChroma: 0.12, neutralHue: 215 },
     studio: { brandHue: 85, brandChroma: 0.1, neutralHue: 250 },
 }
-export const THEMES = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast']
+/**
+ * Les thèmes viennent du disque, pas d'une liste (étape 0.13). Ajouter un
+ * thème = ajouter `src/themes/<nom>.json`. Voir `scripts/lib/themes.mjs`.
+ */
+export const THEMES = discoverThemes()
 export const DENSITIES = ['comfortable', 'compact']
 export const BRAND_NAMES = ['monority', 'studio']
 
@@ -59,18 +64,14 @@ export function contrast(a, b) {
 
 // --- lecture des sources DTCG ---
 export function loadSources(srcDir) {
+    // Les fichiers de thèmes viennent du disque (étape 0.13), triés.
     const files = [
         'primitives.json',
         'core.json',
         'components.json',
         'density.json',
         'brand-studio.json',
-        'themes/light.json',
-        'themes/dark.json',
-        'themes/oled.json',
-        'themes/ocean.json',
-        'themes/night.json',
-        'themes/high-contrast.json',
+        ...themeFileMap(path.join(srcDir, 'themes')).map(([p]) => p),
         'deprecated.json',
     ]
     const out = {}
