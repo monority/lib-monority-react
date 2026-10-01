@@ -13,4 +13,3 @@
 @import './base/print.css' layer(monority.base);
 @import './base/direction.css' layer(monority.base);
 @import './base/color-scheme.css' layer(monority.base);
-@import './recipes/index.css' layer(monority.recipes);
