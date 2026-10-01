@@ -116,6 +116,21 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 **D18 — `--mr-ref-radius-scale` traité en 11b2**
 **TRANCHÉE le 2026-10-01.** Ce primitif est lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer un token sémantique intermédiaire est un travail de la famille **dimensions**, pas de la famille **couleur**. Traitement renvoyé à 11b2 pour que 11b1 reste centrée sur la couleur ; sinon 52 recettes seraient migrées dans une phase qui ne porte pas sur les rayons.
 
+### D20 — Slate est un 7ᵉ thème assumé, à contenu purgé
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** `packages/tokens/src/themes/slate.json` a été introduit par `d42ebad` (« Patch for css », 2026-09-28). Le générateur portait alors une liste de thèmes en dur qui ne le mentionnait pas : le fichier était suivi par git, il matchait le glob `src/themes/*.json`, et il n'était ni résolu, ni émis, ni contrôlé. La table rase (`41aa61d`) a vidé les six thèmes de la liste en dur ; `slate.json` n'y figurait pas et a conservé ses 44 tokens. Slate est malgré tout du code applicatif vivant : `theme-provider.tsx`, `theme-scope.tsx`, `constants.ts`, `design-config.ts`, `get-theme-script.ts`, plus `audit-baseline.spec.ts`, `components.visual.spec.ts` et `theme-runtime.spec.ts`.
+
+**Décision.** Slate est le 7ᵉ thème du système. Son squelette reste ; ses 44 tokens sont purgés comme ceux des six autres, conformément à la table rase.
+
+**Règle fondatrice.** Tout fichier de `src/themes/*.json` est émis, validé et couvert par T3 et X2. Aucun thème ne peut être présent sans être contrôlé. Cette règle est appliquée par le test de parité de l'étape 0.13.
+
+**Alternatives écartées.**
+- **A — purge complète.** Mesurée : 6 fichiers de code applicatif et 3 specs e2e à réécrire pour supprimer une liste de thèmes. Rejetée : le coût est réel et le bénéfice nul, `slate` est un thème utilisé.
+- **C — conserver les 44 tokens.** Rejetée : rouvre 44 tokens hors table rase, sans décision ni contrôle.
+
+**Conséquences.** T3 doit comparer des noms courts et non des noms préfixés par le thème (voir D21). Le 7ᵉ thème est dans le périmètre de X2, qui vérifie contraste et seuils par thème.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)
