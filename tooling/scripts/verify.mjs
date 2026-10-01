@@ -12,9 +12,11 @@
  *   lint:css        cliquet CSS            ~3 s
  *   test:stylelint  règles maison          ~1 s
  *   test:test-skips registre de skips      ~1 s
+ *   test:audit-tokens cycles et niveaux    ~1 s
  *   test            tokens, ui, web        ~30 s
  *   build           bundles                ~6 s
  *   check:test-skips garde des skips      ~1 s
+ *   audit:tokens    graphe de tokens      ~2 s
  *   audit:scope     perimetre d'audit      ~1 s
  *
  * Chaque étape affiche son nom, son code de sortie et sa durée. En cas d'échec
@@ -35,12 +37,14 @@ const STEPS = [
     { name: 'test:stylelint', cmd: 'test:stylelint' },
     { name: 'test:audit-scope', cmd: 'test:audit-scope' },
     { name: 'test:test-skips', cmd: 'test:test-skips' },
+    { name: 'test:audit-tokens', cmd: 'test:audit-tokens' },
     { name: 'test:tokens', cmd: '--filter @monority/tokens test' },
     { name: 'test:ui', cmd: '--filter @monority/ui test' },
     { name: 'test:web', cmd: '--filter @monority/web test' },
     { name: 'test:token-pattern', cmd: 'test:token-pattern' },
     { name: 'build', cmd: 'build' },
     { name: 'check:test-skips', cmd: 'check:test-skips' },
+    { name: 'audit:tokens', cmd: 'audit:tokens' },
     { name: 'audit:scope', cmd: 'audit:scope' },
 ]
 
