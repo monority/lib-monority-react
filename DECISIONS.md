@@ -53,6 +53,18 @@ VALIDÉE. `color-mix(in oklch, …)`. Un token d'état n'est pas écrit : il se 
 
 **Condition de validation, à vérifier au commit 3** : `audit:contrast` doit savoir résoudre `color-mix()` pour mesurer une paire texte/fond. colorjs.io ne résout pas `color-mix()` ; si la mesure est impossible, le contraste sera relevé par couleurs calculées dans Playwright (`getComputedStyle` sur les nœuds réels) et c'est cette méthode qui fera foi.
 
+### D14 — Liste fermée des catégories globales
+VALIDÉE le 2026-10-01. La liste des catégories de tokens globaux est celle de `docs/design/tokens-convention.md` §4, et la regex du ROADMAP §5.2 en est **dérivée**, pas recopiée. Un test échoue si les deux divergent.
+
+Trois points :
+- Les catégories composées sont des noms complets et se tiennent seules : `--mr-border-width`, `--mr-z-index`, `--mr-line-height`, `--mr-control-height`, `--mr-icon-size`, `--mr-letter-spacing`.
+- Un nom à deux segments est valide quand la catégorie est déjà le rôle entier : `--mr-accent`, `--mr-border`, `--mr-scrim`.
+- La liste **exclut les composants** : `switch`, `badge`, `dialog`, `drawer`… relèvent du registre `local-tokens` avec justification (D8), pas de la regex globale.
+
+Interdits explicites : les abréviations héritées `--mr-fs-*`, `--mr-lh-*`, `--mr-dur-*`, `--mr-ease-*`. D8 les remplace par `font-size`, `line-height`, `duration`, `easing`.
+
+Motivation, mesurée : la regex initiale du §5.2 rejetait **179 des 279** tokens existants, soit 64 %. Trois défauts distincts — catégories absentes de la liste (`ease` et non `easing`, et toutes les familles de composants), catégories composées traitées comme des préfixes alors qu'elles sont des noms complets, et noms à deux segments refusés alors que `--mr-accent` est un nom nécessaire.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)
@@ -72,18 +84,23 @@ Les recettes restent en CSS. `packages/styles/src/recipes/<composant>.recipe.css
 
 Changement de conception à retenir : la recette est du CSS statique, donc « zero-runtime » et « compatible Server Components » ne sont pas des contraintes à satisfaire mais des propriétés acquises.
 
-## Décision ouverte
+### §4.6 — CSS de composant (amendé le 2026-10-01)
+La description d'origine — « un fichier par composant dans `packages/ui/components/<Nom>/<Nom>.css` » — décrit une architecture qui **n'existe pas** et ne sera pas créée. Décision : amender pour décrire la réalité, **aucune migration**.
 
-### [OUVERT] §4.6 — CSS de composant
-La section §4.6 décrit « un fichier par composant, nom en PascalCase, dans `packages/ui/components/<Nom>/<Nom>.css` ». Cette architecture **n'existe pas** dans le dépôt.
+État mesuré au 2026-10-01 :
+- **74 composants** dans `packages/ui/src/components/<catégorie>/<kebab-case>/`, 11 catégories, **315 fichiers** (`.ts` 161, `.tsx` 154), 19 795 lignes ;
+- anatomie constante : `X.tsx`, `X.types.ts`, `X.test.tsx`, `index.ts` ;
+- **0 fichier CSS** dans un dossier de composant ;
+- 3 fichiers CSS dans toute la librairie : `packages/ui/src/styles/{globals,reset,utilities}.css`, 2 lignes chacun, simples relais d'import ;
+- tout le style des composants vit dans les 77 recettes (7 313 lignes).
 
-État réel mesuré :
-- 87 composants, dans `packages/ui/src/components/<catégorie>/<kebab-case>/`, fichiers `X.tsx`, `X.types.ts`, `X.test.tsx`, `index.ts` ;
-- 0 fichier CSS dans un dossier de composant ;
-- 3 fichiers CSS dans tout `packages/ui` : `src/styles/globals.css`, `src/styles/reset.css`, `src/styles/utilities.css`, 2 lignes chacun, simples relais d'import ;
-- tout le style des composants vit dans les 77 recettes de `packages/styles/src/recipes/`.
+Le style est centralisé dans les recettes. La phase 14 audite les 315 fichiers sans en créer : propriétés logiques dans les styles inline, absence de valeur en dur, attributs `data-*` conformes, aucune classe modificatrice BEM. Les recettes sont auditées en phase 12, avant.
 
-Options : amender §4.6 pour décrire la réalité (le style est centralisé dans les recettes, ce qui est cohérent avec D12 et avec l'architecture zero-runtime) ; ou ouvrir une migration vers des CSS par composant, qui déplacerait 7 313 lignes et introduirait un périmètre non prévu par le tableau §7. **Décision requise avant la phase 14.**
+### §4.5 — Reset / base / scope
+Le reset et les styles de base sont scopés aux éléments `mr-*` (D2). `normalize.css` est à fusionner ou supprimer, la suppression prouvée par `git grep`.
+
+### Baseline visuelle (décision du 2026-10-01)
+Prise **à la fin de 11b5**, pas en phase 0 : le système de tokens a été razé, une baseline capturée maintenant gellerait un rendu vide. Les snapshots d'avant le raz sont conservés, taggués « cible visuelle », et servent à mesurer les diffs annoncés pendant 11b1–11b5.
 
 ## Glossaire
 
