@@ -1,5 +1,20 @@
 # Plan de remise en ordre — Monority UI
 
+## Reprise
+État au 2026-10-01, mesuré. Cette section est la seule partie de PLAN.md qui se réécrit librement ; le reste est le plan.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`.
+- Dernier commit : `13259ee feat(tokens): registre d alias de rendu (D23)`.
+- `pnpm verify` : 21 étapes, code 0, arrêt au premier échec.
+- En cours : point 1 de la reprise 2026-10-01 — documents durables et cette section. Puis point 2, parité 0.15 et ADR D22.
+- Table rase : 7 primitives `--mr-ref-*`, toutes les autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
+- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base au commit `2d3981b`).
+- Cliquets : stylelint 2730 violations, test-skips {4, 2}. À la baisse seule.
+- Sélecteurs émis : 8 — les 7 thèmes plus l'alias `dim`, groupé avec `dark`.
+- Décisions en attente : D19 (teintes de statut fixes) et D22 (parité) restent à écrire, dans leurs commits. Aucun trou de numérotation.
+- En attente de validation : les 8 ajouts 11b1. Aucun token créé avant validation.
+- Ne pas toucher sans accord : `.gitignore` (autre session), `docs/audit-hardening-prompt.md`, `prompt.md`.
+- Docs de référence : `docs/tokens-pitfalls.md`, `docs/tokens-glossary.md`, `docs/tokens-contributing.md`, `docs/tokens-rebuild-plan.md`.
+
 ## Règles communes (toutes les étapes)
 - Une étape par session. N'exécute que l'étape demandée.
 - Un commit par sujet. Après chaque commit : typecheck, tests (ui, web, tokens), build, format:check.
@@ -7,7 +22,7 @@
 - Avant de supprimer un fichier ou un symbole : `git grep` pour prouver qu'il n'est pas utilisé.
 - Aucun changement de rendu non annoncé. Si une étape en provoque un, montre l'avant/après et attends validation.
 - Si une décision marquée [DÉCISION] n'est pas tranchée dans ce fichier, arrête-toi et pose la question.
-- Contexte presque épuisé : termine sur un commit propre, écris HANDOFF.md (non commité, dans `.gitignore`) avec les commits faits, ce qui reste et les pièges.
+- Contexte presque épuisé : termine sur un commit propre, mets à jour cette section `Reprise` avec les commits faits, ce qui reste et les pièges, puis commite et pousse. L'état vit dans le dépôt, pas dans une session.
 - En fin d'étape : coche l'étape ci-dessous, commite PLAN.md, fais un rapport court avec les preuves.
 - Voir AGENTS.md pour les règles git (jamais push/merge direct sur main, tout passe par une PR revue).
 

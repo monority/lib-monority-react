@@ -169,7 +169,7 @@ Le statut d'alias était implicite : il tenait dans une condition en dur de `lib
 **Sur le CSS : il n'y avait pas de défaut.** `dim` était déjà groupé avec sa cible — `[data-theme="dark"],\n[data-theme="dim"]`, mesuré sur le CSS généré. Un grep ligne à ligne avait fait croire à un bloc autonome vide. La règle est désormais écrite et testée plutôt que constatée.
 
 **Alternatives écartées.**
-- ** Exclude<>` implicites.** Rejetée : `dim` reste un alias sans statut déclaré. Un fichier `dim.json` passerait inaperçu, comme `slate`.
+- **`Exclude<>` implicites.** Rejetée : `dim` reste un alias sans statut déclaré. Un fichier `dim.json` passerait inaperçu, comme `slate`.
 - **Registre unique tokens + UI.** Rejetée : deux listes à synchroniser. `@monority/tokens` est `private: true`, sans `main` ni `exports` ; le lier obligerait à ouvrir un point d'entrée sur du code de build. L'enum `ThemeName` reste la source UI, et un test vérifie qu'elle coïncide avec le registre.
 
 **Conséquences.** Dix tests couvrent : registre exact, cible existante, alias ne masquant pas un fichier, sélecteur groupé, absence de bloc autonome, et correspondance avec l'enum UI. `system` reste dans `packages/ui` : le build ne doit pas dépendre d'un concept qu'il ne produit pas.
