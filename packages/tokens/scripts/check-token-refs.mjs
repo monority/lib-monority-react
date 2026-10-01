@@ -43,6 +43,13 @@ const GENERATED_CSS = [`${GENERATED}/tokens.css`, `${GENERATED}/deprecated.css`]
  */
 const PRIMITIVES = 'packages/tokens/src/primitives.json'
 /** Les specs citent des tokens pour les décrire, pas pour les consommer. */
+/**
+ * Les contrôles consomment des tokens par chaîne nue : `col('--mr-bg-hover')`.
+ * Ce n'est pas un `var()`, un scan de code ne le voit pas. Sans cette source,
+ * `--mr-bg-hover` passerait pour orphelin alors que X2 le vérifie dans les
+ * 24 combinaisons.
+ */
+const CHECKS = 'packages/tokens/scripts'
 const SPECS = 'docs/design'
 const EXTENSIONS = /\.(css|tsx|ts|json)$/
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.next', 'coverage'])
@@ -82,14 +89,14 @@ export function collectSpecs(dir = SPECS, acc = []) {
 }
 
 /** Fichiers à auditer, extension CSS/TS/TSX/JSON. */
-export function collectFiles(dir, acc = []) {
+export function collectFiles(dir, acc = [], extensions = EXTENSIONS) {
     const abs = path.join(repoRoot, dir)
     if (!fs.existsSync(abs)) return acc
     for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
         if (SKIP_DIRS.has(entry.name)) continue
         const rel = path.join(dir, entry.name)
-        if (entry.isDirectory()) collectFiles(rel, acc)
-        else if (EXTENSIONS.test(entry.name)) acc.push(rel)
+        if (entry.isDirectory()) collectFiles(rel, acc, extensions)
+        else if (extensions.test(entry.name)) acc.push(rel)
     }
     return acc
 }
@@ -116,6 +123,11 @@ export function localDeclarations(source) {
     return new Set([...source.matchAll(/(--mr-[\w-]+)\s*:/g)].map((m) => m[1]))
 }
 
+/** Noms cités en chaîne nue, hors `var()` : usage des contrôles. */
+export function quotedNames(source) {
+    return [...source.matchAll(/['"`]--mr-[\w-]+['"`]/g)].map((m) => m[0].slice(1, -1))
+}
+
 /** Ligne du nthième caractère (1-indexée). */
 const lineOf = (source, index) => source.slice(0, index).split('\n').length
 
@@ -127,6 +139,7 @@ export function audit(options = {}) {
     const allFiles = options.files ?? SCANNED.flatMap((dir) => collectFiles(dir))
     const files = allFiles.filter((file) => !isTestFile(file))
     const sources = collectFiles('packages/tokens/src')
+    const checkFiles = collectFiles(CHECKS, [], /\.mjs$/).filter((file) => !isTestFile(file))
     const specFiles = collectSpecs()
     const readFile = options.readFile ?? read
     const globals = declaredNames(readFile(`${GENERATED}/tokens.css`))
@@ -154,6 +167,10 @@ export function audit(options = {}) {
         ...sources.map((f) => ({ file: f, source: readFile(f), locals: new Set() })),
         ...GENERATED_CSS.map((f) => ({ file: f, source: readFile(f), locals: new Set() })),
     ]
+    // Les contrôles citent des tokens en chaîne nue : c'est une consommation.
+    for (const check of checkFiles) {
+        for (const name of quotedNames(readFile(check))) referenced.add(name)
+    }
     // primitives.json : chaque clé racine est une primitive (brand-hue, radius-scale…)
     const primitives = new Set(
         Object.keys(JSON.parse(readFile(PRIMITIVES)).mr ?? {}).map((key) => `--mr-${key}`)
@@ -187,6 +204,7 @@ export function audit(options = {}) {
         files: files.length,
         skippedTests: allFiles.length - files.length,
         tokenSources: sources.length,
+        checks: checkFiles.length,
         specs: specFiles.length,
         globals: globals.size,
         deprecated: deprecated.size,
@@ -246,7 +264,8 @@ function report(result, jsonPath) {
 
     console.log(
         `AUDIT TOKENS — ${counts.files} fichiers audités (${counts.skippedTests} tests exclus, ` +
-            `${counts.tokenSources} sources de tokens, ${counts.specs} specs), ` +
+            `${counts.tokenSources} sources de tokens, ${counts.checks} contrôles, ` +
+            `${counts.specs} specs), ` +
             `${counts.globals} tokens globaux ` +
             `(${counts.deprecated} dépréciés), ${counts.referenced} référencés, ` +
             `${total} constat(s)`
