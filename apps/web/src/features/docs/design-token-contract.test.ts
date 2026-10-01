@@ -74,3 +74,47 @@ describe('step23 design token contracts', () => {
         expect(recipe('file-trigger.recipe.css')).toContain('var(--mr-duration-fast-alt)')
     })
 })
+
+/**
+ * Un octet de contrôle inséré par erreur rend un fichier de texte binaire pour
+ * `git grep` : plus aucun motif ne correspond, plus aucun diff n'est lisible, et
+ * `pnpm verify` passe quand même. C'est arrivé sur l'ADR D23 : un NUL écrit à la
+ * place d'un backtick.
+ */
+describe('intégrité des fichiers de décision', () => {
+    const CIBLES = ['PLAN.md', 'DECISIONS.md', 'ROADMAP.md']
+
+    function controlCaracteres(contenu: string): number[] {
+        const positions: number[] = []
+        ;[...contenu].forEach((caractere, index) => {
+            const code = caractere.codePointAt(0) as number
+            // Tabulation, saut de ligne et retour chariot sont les seuls blancs
+            // autorisés. Tout autre caractère de contrôle est un défaut.
+            if (code < 0x20 && code !== 9 && code !== 10 && code !== 13) positions.push(index)
+            if (code === 0x7f) positions.push(index)
+        })
+        return positions
+    }
+
+    function lireCible(nom: string): string {
+        const racine = join(process.cwd(), '..', '..')
+        return readFileSync(join(racine, nom), 'utf8')
+    }
+
+    it.each(CIBLES)('%s ne contient aucun octet de contrôle', (nom) => {
+        const positions = controlCaracteres(lireCible(nom))
+        expect(
+            positions,
+            `${nom} contient ${positions.length} caractère(s) de contrôle : le fichier devient binaire pour git grep`
+        ).toEqual([])
+    })
+
+    it('le contrôle détecte bien un octet de contrôle', () => {
+        expect(controlCaracteres('texte normal')).toEqual([])
+        expect(controlCaracteres('texte\nligne\ttabulée')).toEqual([])
+        expect(controlCaracteres('texte\rcr')).toEqual([])
+        expect(controlCaracteres('texte\u0000nul')).toEqual([5])
+        expect(controlCaracteres('texte\u0007bell')).toEqual([5])
+        expect(controlCaracteres('texte\u007fdel')).toEqual([5])
+    })
+})

@@ -2,17 +2,17 @@
 
 ## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 4 commits verts cette session : `3480c7f`, `8383c15`, `a042244`, plus celui-ci.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. 5 commits verts cette session : `3480c7f`, `8383c15`, `a042244`, `9915992`, plus celui-ci.
 - `pnpm verify` : 21 étapes, code 0.
-- **Point 2 terminé** (parité 0.15, ADR D22). Les 3 sources sont dérivées, le détecteur et ses 11 fixtures sont en place, le test de parité est étendu, D22 est écrite.
-- Détecteur : règle structurelle sur le type des éléments (tableau de chaînes = liste ; tableau d'objets = table de fixtures). 11 fixtures OK. `apps/web/e2e` : **5 détections, 5 vraies listes, 0 faux positif**. Garde prouvée en négatif : elle nomme `geometry.spec.ts:7` et les 4 thèmes manquants.
-- 0.15b **mesuré, non implémenté** : 3 détections hors e2e. `theme-provider.tsx:10` (7 thèmes, exhaustive, typée `ResolvedThemeName[]`), `HarnessPage.tsx:6` (6, `slate` manquant, type `Theme` en dérivant donc non rattrapé par le compilateur), `get-theme-script.test.ts:91` (boucle de test, 2 thèmes).
-- Reste à faire : contrôle des octets de contrôle (section 4 de `prompt.md`), point 3 (renommage state/panel), ADR D19, puis les 8 ajouts 11b1 en attente de validation.
-- Arbitrages 0.15c toujours ouverts, 3 questions à poser au propriétaire : `geometry.spec.ts`, `audit-baseline.spec.ts` (`dim` doublon de `dark`), `theme-runtime.spec.ts` (`oled`).
-- Table rase : 7 primitives `--mr-ref-*`, autres sources vides, 7 thèmes vides. L'app ne s'affiche pas, c'est voulu.
+- **Point 2 terminé** (parité 0.15, ADR D22) et **section 4 de `prompt.md` terminée** (contrôle des octets de contrôle, hébergé dans `design-token-contract.test.ts`).
+- Détecteur : règle structurelle sur le type des éléments. 11 fixtures. `apps/web/e2e` : **5 détections, 5 vraies listes, 0 faux positif**.
+- 0.15b **mesuré, non implémenté** : 3 détections hors e2e. `theme-provider.tsx:10` (7 thèmes, exhaustive, typée `ResolvedThemeName[]`), `HarnessPage.tsx:6` (6, `slate` manquant, type `Theme` en dérivant, non rattrapé par le compilateur), `get-theme-script.test.ts:91` (boucle de test, 2 thèmes).
+- Prochaine étape : point 3 de `prompt.md`, renommage `state` / `panel`, amendements D14 et D17, `categories.json`, puis scan du vocabulaire français.
+- Ensuite : ADR D19, puis les 8 ajouts 11b1 **en attente de validation du propriétaire**, puis 0.14, puis 11b1.
+- Arbitrages 0.15c toujours ouverts : `geometry.spec.ts` (raison non établie), `audit-baseline.spec.ts` (`dim` doublon de `dark`), `theme-runtime.spec.ts` (`oled`).
+- Table rase : 7 primitives `--mr-ref-*`, autres sources vides, 7 thèmes vides.
 - Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
-- Décisions en attente : D19 seulement. En attente de validation : les 8 ajouts 11b1.
-- `DECISIONS.md` : les ADR D24, D23, D22 sont placées en ordre décroissant en fin de fichier. Aucun trou de numérotation parmi D19 à D24, D19 est réservée et non écrite. Ordre àCosmétique à corriger quand le contexte le permet.
+- Décision en attente : D19 seulement. Aucun trou de numérotation parmi D19 à D24 ; D24, D23, D22 sont placées en ordre décroissant en fin de `DECISIONS.md`, àcosmétiquement réordonner.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
 - À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 
