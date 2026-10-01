@@ -137,6 +137,39 @@
                         "h": "neutral"
                     }
                 }
+            },
+            "accent-subtle": {
+                "$value": "oklch(0.3 0.045 var(--mr-ref-brand-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.3,
+                        "c": 0.045,
+                        "h": "brand"
+                    }
+                }
+            },
+            "accent-border": {
+                "$value": "oklch(0.52 0.08 var(--mr-ref-brand-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.52,
+                        "c": 0.08,
+                        "h": "brand"
+                    }
+                }
+            },
+            "accent-text": {
+                "$value": "oklch(0.82 0.12 var(--mr-ref-brand-hue))",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.82,
+                        "c": 0.12,
+                        "h": "brand"
+                    }
+                }
             }
         }
     }
