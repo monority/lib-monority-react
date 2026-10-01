@@ -264,8 +264,8 @@
             "stepType": "nomme",
             "steps": ["fast", "base", "slow"],
             "cap": 3,
-            "roles": ["etat", "panneau", "spin", "pulse"],
-            "note": "Série de transition, plafond 3. Rôles hors échelle : etat (transition d'état de survol, 150 ms, remplace fast-alt), panneau (animation d'une surface qui entre ou sort, 200 ms, remplace slow-alt), spin et pulse (boucles, D16)."
+            "roles": ["state", "panel", "spin", "pulse"],
+            "note": "Série de transition, plafond 3. Rôles hors échelle : state (transition d'état de survol, 150 ms, remplace fast-alt), panel (animation d'une surface qui entre ou sort, 200 ms, remplace slow-alt), spin et pulse (boucles, D16). Noms de rôles en anglais (D14 amendé, D17)."
         },
         {
             "family": "font-weight",

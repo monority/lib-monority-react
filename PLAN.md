@@ -2,17 +2,15 @@
 
 ## Reprise
 État au 2026-10-01, mesuré. Section la seule de PLAN.md librement réécritable.
-- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Méthode changée : **validation à posteriori**, plus aucun arrêt entre deux sous-étapes.
+- Branche `refactor/tokens-migration-5a-suite`. `origin/main` figé à `b9b98d8`. Méthode : **validation à posteriori**, pas d'arrêt entre deux sous-étapes.
 - `pnpm verify` : 21 étapes, code 0.
-- Phase A : commit 1 (oled, réordonnancement D22 à D24, ADR D19) fait et poussé. Commit 2 en cours : renommage `state` / `panel`.
-- **Trou comblé dans cette session** : D17 et D18 étaient **référencées sans jamais avoir été écrites**. D3, D4, D5 sont dans PLAN.md, c'est normal. D17 (durées par rôle) et D18 (interposer les lectures de `--mr-ref-radius-scale`) doivent être écrites dans le commit du renommage.
-- ADR présentes dans DECISIONS.md, ordre croissant : D2 D6 à D16 D19 D20 D21 D22 D23 D24. Plus de trou.
-- Portée du renommage, mesurée : **8 identifiants de token** seulement — `--mr-duration-etat` (4 occurrences) et `--mr-duration-panneau` (4). Fichiers : `packages/tokens/categories.json` (2 entrées de rôles + 1 note), `docs/design/tokens-scales.md` (5 lignes), `DECISIONS.md` (D17), `PLAN.md` (ligne 109).
-- **111 occurrences de « panneau » et 10 de « etat » sont de la prose française**, pas des identifiants : specs composants, `aria-label="Fermer le panneau"` (texte utilisateur, à ne pas toucher), commentaires. Elles ne sont pas des cibles du renommage.
-- Local restant : `etatAlpha` dans `check-contrasts.mjs` (lignes 230 et 237), variable locale française, hors identifiant de token mais incohérente avec la règle.
-- D19 écrite : teintes fixes 155 / 80 / 25 / 255, sans primitive, autorisées par `allowedFixed`. État mesuré : aucune des quatre valeurs n'est encore déclarée, les sources ne contiennent que les 7 primitives.
-- Références pendantes : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
-- Ensuite : phase B, 11b1 famille par famille, liste validée en entier.
+- **Phase A terminée.** Renommage `state` / `panel` fait, D17 et D18 écrites, D14 amendée, ADR réordonnées.
+- ADR dans DECISIONS.md, ordre croissant, **aucun trou** : D2 D6 à D24 (D3, D4, D5 sont dans PLAN.md). 18 ADR.
+- Scan du vocabulaire français, mesuré : **zéro identifiant restant**. Categories : 0 nom français sur 28, 0 rôle français sur les 4 rôles de `duration`, 0 clé de token en français sur les 6 sources, 0 variable CSS en français sur les recettes. Les 2 seules occurrences de `--mr-duration-etat` / `panneau` sont dans l'amendement D17 lui-même, qui cite les anciens noms. Les 10 `role` en français de `categories.json` sont des descriptions, pas des identifiants.
+- Renommage : 6 occurrences de `--mr-duration-etat` et `--mr-duration-panneau` sur 3 fichiers, plus `etatAlpha` → `stateAlpha` dans `check-contrasts.mjs`.
+- **Prochaine étape : phase B, 11b1**, famille par famille : bg, text, border, accent, status. Liste validée en entier, aucune validation préalable requise. Consigner dans chaque commit : références pendantes avant / après / attendu / mesuré, et X2 écarts avant / après.
+- Base de mesure : 2241 occurrences, 129 tokens distincts, 75 recettes sur 76 (unité D24, base `2d3981b`). Cliquets : stylelint 2730, test-skips {4, 2}.
+- Arbitrages 0.15c : `geometry.spec.ts` reste annoté, `audit-baseline.spec.ts` sans changement jusqu'à la régénération des baselines, `oled` ajouté.
 - Ne pas toucher sans accord : `.gitignore`, `docs/audit-hardening-prompt.md`, `prompt.md`.
 - À amender par le propriétaire : `AGENTS.md` §8 demande encore `HANDOFF.md`, que `prompt.md` 0.2 remplace par cette section.
 
@@ -106,7 +104,7 @@ Supersède le reste de 5a (groupe 2 Δ≠0, groupe 3) et toute normalisation `sp
     - [ ] 11b1. Sémantique couleur : `bg-*`, `text-*`, `border-*`, `accent-*`, `status-*`, `scrim`, `chart-muted`. La liste exacte des tokens est à valider avant le premier token créé.
     - [ ] 11b2. Fondations dimensionnelles : `spacing-*`, `radius-*`, `border-width`, `focus-*`. **Porte aussi `--mr-ref-radius-scale`** (D18) : primitif lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer le token sémantique intermédiaire ici, pas en 11b1, pour que la phase couleur reste centrée sur la couleur.
     - [ ] 11b3. Typographie : `font-size-*`, `type-*`, `line-height-*`, `letter-spacing-*`, `font-weight-*`. **Suppression de `--mr-font-weight-bold`** (D15 §4.8) : `title`, `banner`, `progress` et `calendar` passent de 700 à 600, impact D10 annoncé et validé.
-    - [ ] 11b4. Mouvement et empilement : `duration-*`, `easing-*`, `z-index-*`. **Suppression de `--mr-duration-{fast,slow}-alt`** au profit des rôles `--mr-duration-etat` (150 ms) et `--mr-duration-panneau` (200 ms) (D17). Corriger dans le même commit le bloc `prefers-reduced-motion`, qui ignore aujourd'hui `fast-alt`, `slow-alt`, `quick` et `600`, et ajouter le test qui échoue si un `duration-*` en est absent.
+    - [ ] 11b4. Mouvement et empilement : `duration-*`, `easing-*`, `z-index-*`. **Suppression de `--mr-duration-{fast,slow}-alt`** au profit des rôles `--mr-duration-state` (150 ms) et `--mr-duration-panel` (200 ms) (D17). Corriger dans le même commit le bloc `prefers-reduced-motion`, qui ignore aujourd'hui `fast-alt`, `slow-alt`, `quick` et `600`, et ajouter le test qui échoue si un `duration-*` en est absent.
     - [ ] 11b5. Densité (`data-density`) et marque alternative (`data-brand="studio"`).
   - [ ] 11c+. **Composants**, un par session, même méthode que l'étape 3 (preuve par famille dès le premier commit). Pilote : Switch (7 tokens locaux, états + tailles). Le token local ne survit que s'il passe le test de la section 6 de la convention.
   - [ ] 11d. Réécriture de `docs/design/language.md` §5.x au fur et à mesure que les familles sont reconstruites — c'est ce document qui définit la palette, il ne peut pas rester en avance sur le code.

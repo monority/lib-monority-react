@@ -81,7 +81,7 @@ Aucune échelle : les suffixes sont des rôles ou des états, et se combinent li
 | Famille | Constat | Décision proposée |
 |---|---|---|
 | `control` | 17 tokens : pas nommés **et** rôles **et** états sous un même préfixe | scinder : `control-height-*`, `control-padding-inline-*`, `control-font-size-*` (nommés), et `control-gap`, `control-accent` (rôles) |
-| `duration` | plafond 3 : `fast`, `base`, `slow` + rôles `etat`, `panneau`, `spin`, `pulse` | **annoncé** | voir §4.9 et §4.11 |
+| `duration` | plafond 3 : `fast`, `base`, `slow` + rôles `state`, `panel`, `spin`, `pulse` | **annoncé** | voir §4.9 et §4.11 |
 | `type` | 14 tokens : styles nommés (`display`, `h1`, `body`, `caption`) | aucune échelle : ce sont des styles, pas des pas |
 | `leading` | `normal`, `tight`, `snug`, `relaxed`, `base` + `control`, `heading` | aucun pas : valeurs d'interligne nommées |
 
@@ -180,7 +180,7 @@ Le problème en trois temps :
 **Recommandation, en deux séries distinctes** :
 
 - **Série de transition** — plafond **3** : `--mr-duration-fast` (120 ms), `--mr-duration-base` (180 ms), `--mr-duration-slow` (240 ms). Le nom décrit la **vitesse**, pas la durée : c'est cohérent avec `ease-standard` / `ease-enter`.
-- **Rôles hors échelle** : `--mr-duration-etat` (150 ms, remplace `fast-alt`), `--mr-duration-panneau` (200 ms, remplace `slow-alt`), `--mr-duration-spin` (800 ms), `--mr-duration-pulse` (1200 ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature. Détail du découpage `etat`/`panneau` en §4.11.
+- **Rôles hors échelle** : `--mr-duration-state` (150 ms, remplace `fast-alt`), `--mr-duration-panel` (200 ms, remplace `slow-alt`), `--mr-duration-spin` (800 ms), `--mr-duration-pulse` (1200 ms). Une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature. Détail du découpage `etat`/`panneau` en §4.11.
 
 Suppression, sans remplacement : `--mr-duration-600`, `--mr-duration-quick`. **`-alt` fait l'objet de §4.11** : 25 occurrences réelles, valeurs distinctes des pas nommés, à trancher avant 11b4.
 
@@ -222,14 +222,14 @@ Le découpage réel est par **type de déclaration**, mesuré :
 
 | Token | Valeur | Déclarations | Recettes | Rôle |
 |---|---|---|---|---|
-| `--mr-duration-fast-alt` | 150 ms | 10 × `transition:` d'état (`background-color`, `border-color`, `color`, `opacity`, `box-shadow`) | button, checkbox, file-trigger, infinite-scroll | `--mr-duration-etat` |
-| `--mr-duration-slow-alt` | 200 ms | 8 × `animation:` d'une surface qui entre ou sort | drawer | `--mr-duration-panneau` |
+| `--mr-duration-fast-alt` | 150 ms | 10 × `transition:` d'état (`background-color`, `border-color`, `color`, `opacity`, `box-shadow`) | button, checkbox, file-trigger, infinite-scroll | `--mr-duration-state` |
+| `--mr-duration-slow-alt` | 200 ms | 8 × `animation:` d'une surface qui entre ou sort | drawer | `--mr-duration-panel` |
 
 Aucune exception : `fast-alt` n'apparaît **jamais** dans une `animation`, `slow-alt` **jamais** dans une `transition`.
 
-**Noms retenus, et pourquoi un rôle plutôt qu'un composant.** `etat` décrit le *déclencheur* (changement d'état), pas l'objet : durable pour tout composant ayant un survol, aucun nom de composant. `panneau` décrit *ce qui bouge*, pas le consommateur : durable sur drawer, modal, popover et dialog. `surface` a été écarté — il entre en collision avec `bg-surface`, qui est une couche de fond, pas un mouvement.
+**Noms retenus, et pourquoi un rôle plutôt qu'un composant.** `state` décrit le *déclencheur* (changement d'état), pas l'objet : durable pour tout composant ayant un survol, aucun nom de composant. `panneau` décrit *ce qui bouge*, pas le consommateur : durable sur drawer, modal, popover et dialog. `surface` a été écarté — il entre en collision avec `bg-surface`, qui est une couche de fond, pas un mouvement.
 
-Amendement D15 appliqué : `etat` et `panneau` sont déclarés comme rôles de la famille `duration` dans `packages/tokens/categories.json`. Le plafond de **pas** reste 3 : ces deux rôles n'en portent pas.
+Amendement D15 appliqué : `state` et `panel` sont déclarés comme rôles de la famille `duration` dans `packages/tokens/categories.json`. Le plafond de **pas** reste 3 : ces deux rôles n'en portent pas.
 
 Valeurs résolues au repos (commit `da57c3e`) :
 

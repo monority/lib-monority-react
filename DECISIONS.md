@@ -65,7 +65,9 @@ Trois points :
 
 Interdits explicites : les abréviations héritées `--mr-fs-*`, `--mr-lh-*`, `--mr-dur-*`, `--mr-ease-*`. D8 les remplace par `font-size`, `line-height`, `duration`, `easing`.
 
-Motivation, mesurée : la regex initiale du §5.2 rejetait **179 des 279** tokens existants, soit 64 %. Trois défauts distincts — catégories absentes de la liste (`ease` et non `easing`, et toutes les familles de composants), catégories composées traitées comme des préfixes alors qu'elles sont des noms complets, et noms à deux segments refusés alors que `--mr-accent` est un nom nécessaire.
+Motivation, mesurée : la regex initiale du §5.2 rejetait **179 des 279** tokens existants, soit 64 %.
+
+**Amendement du 2026-10-01 — le vocabulaire des identifiants est anglais.** Tout identifiant de token, de catégorie ou de rôle est écrit en anglais : `--mr-duration-state`, `--mr-duration-panel`, pas `--mr-duration-etat`. Les mots français qui subsistent dans le dépôt appartiennent à la prose — specs en français, `aria-label` dont le texte est destiné à l'utilisateur — et ne sont pas des identifiants. Une exception serait un mot français déjà employé comme terme technique anglais dans l'écosystème CSS, auquel cas il s'écrit tel quel. Motif : un identifiant est lu par un contributeur anglophone autant que par un francophone, et un terme français dans un nom de token fait échouer la correspondance avec la documentation officielle des propriétés CSS. Trois défauts distincts — catégories absentes de la liste (`ease` et non `easing`, et toutes les familles de composants), catégories composées traitées comme des préfixes alors qu'elles sont des noms complets, et noms à deux segments refusés alors que `--mr-accent` est un nom nécessaire.
 
 ### D15 — Échelle des variantes
 **TRANCHÉE le 2026-10-01 — option C, échelle déclarée par famille et fermée.**
@@ -107,7 +109,7 @@ La question n'est donc plus « laquelle garder » mais « deux échelles parall�
 **D17 — Durées de transition : rôles `etat` et `panneau` (amendement de D15)**
 **TRANCHÉE le 2026-10-01.** La voie B (`--mr-duration-entree` / `--mr-duration-sortie`) a été validée puis **amendée** : sa condition initiale — découper le drawer entrée/sortie — est mesurée fausse. Les 8 occurrences y sont toutes en `slow-alt`, 4 pour l'entrée et 4 pour la sortie.
 
-Le découpage réel est par **type de déclaration** : `fast-alt` (150 ms) n'apparaît que dans des `transition:` d'état (button, checkbox, file-trigger, infinite-scroll) ; `slow-alt` (200 ms) que dans des `animation:` de surface (drawer). Noms retenus : `--mr-duration-etat` et `--mr-duration-panneau`, **rôles et non composants** — `etat` décrit le déclencheur, `panneau` décrit ce qui bouge. `surface` a été écarté : collision avec `bg-surface`, qui est une couche de fond.
+Le découpage réel est par **type de déclaration** : `fast-alt` (150 ms) n'apparaît que dans des `transition:` d'état (button, checkbox, file-trigger, infinite-scroll) ; `slow-alt` (200 ms) que dans des `animation:` de surface (drawer). Noms retenus : `--mr-duration-state` et `--mr-duration-panel`, **rôles et non composants** — `etat` décrit le déclencheur, `panneau` décrit ce qui bouge. `surface` a été écarté : collision avec `bg-surface`, qui est une couche de fond.
 
 Amendement appliqué dans `packages/tokens/categories.json` : `etat` et `panneau` sont des rôles de la famille `duration`. Le plafond de **pas** reste 3. La regex D14 acceptait déjà ces deux noms ; c'est l'échelle D15 qui refusait les rôles non déclarés, et la correction passe par la déclaration, jamais par un contournement.
 
@@ -115,6 +117,32 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 
 **D18 — `--mr-ref-radius-scale` traité en 11b2**
 **TRANCHÉE le 2026-10-01.** Ce primitif est lu par 98 occurrences dans 58 fichiers, dont 52 recettes. Créer un token sémantique intermédiaire est un travail de la famille **dimensions**, pas de la famille **couleur**. Traitement renvoyé à 11b2 pour que 11b1 reste centrée sur la couleur ; sinon 52 recettes seraient migrées dans une phase qui ne porte pas sur les rayons.
+
+### D17 — Les durées sont nommées par rôle, pas par composant
+**TRANCHÉE le 2026-10-01. Amendée le même jour : `etat` et `panneau` deviennent `state` et `panel`.**
+
+**Contexte.** L'échelle `duration` est plafonnée à trois valeurs par D15 : `fast`, `base`, `slow`. Les usages réels ne s'y plient pas : ils se répartissent par type de déclaration.
+
+**Décision.** Le découpage est par **type de déclaration**. `fast-alt` (150 ms) n'apparaît que dans des `transition:` d'état — button, checkbox, file-trigger, infinite-scroll. `slow-alt` (200 ms) que dans des `animation:` de surface — drawer. Ces deux valeurs deviennent des rôles : `--mr-duration-state` et `--mr-duration-panel`. Ce sont des **rôles, pas des composants** : `state` décrit le déclencheur, `panel` décrit ce qui bouge. Un composant qui ajoutera demain une animation de surface n'aura pas à attendre qu'un token soit nommé d'après lui.
+
+`surface` a été écarté : il entre en collision avec `bg-surface`, qui est une couche de fond. Deux tokens qui ne décrivent pas la même chose ne doivent pas porter le même nom.
+
+**Amendement du 2026-10-01.** Les rôles s'appellent `state` et `panel`. Un identifiant de token, de catégorie ou de rôle est en anglais ; les mots français qui subsistent dans le dépôt sont de la prose — specs en français, `aria-label="Fermer le panneau"` qui est du texte utilisateur — et ne sont pas des identifiants.
+
+**Portée mesurée au moment de l'amendement.** Huit identifiants concernés : `--mr-duration-etat` et `--mr-duration-panneau`, quatre occurrences chacun, réparties sur `packages/tokens/categories.json`, `docs/design/tokens-scales.md`, `DECISIONS.md` et `PLAN.md`. Les 111 occurrences de « panneau » et les 10 de « etat » ailleurs dans le dépôt sont de la prose française, hors périmètre.
+
+**Conséquences.** L'échelle reste plafonnée à trois ; les rôles sont hors échelle, ce qui est explicite dans la note de `categories.json`. `spin` et `pulse` restent des boucles : une boucle n'est pas « plus lente » qu'une transition, elle est d'une autre nature. Le bloc `prefers-reduced-motion` doit être complété en 11b4 avec un test qui échoue si un `duration-*` en est absent.
+
+### D18 — Les lectures directes du primitif de rayon seront interposées en 11b2
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Les recettes lisent directement `--mr-ref-radius-scale`. C'est une lecture de primitive depuis une recette, ce qu'interdit la règle de niveau : une recette consomme un token sémantique, jamais une primitive.
+
+**Décision.** Ces lectures sont interdites à terme, mais leur correction n'a pas sa place en 11b1. Mesure : **98 lectures réparties sur 52 recettes**. Les interposer en même temps que les couleurs doublerait le périmètre de chaque commit de famille et rendrait les commits non réversibles seuls. La correction se fait en **11b2**, avec la reconstruction de la géométrie — `--mr-ref-radius-scale` et `--mr-border-width` sont justement des fondations de 11b2.
+
+**Alternative écartée : assouplir la règle de niveau pour ce primitif.** Un primitif se lira depuis une recette, seulement pour le rayon. Le coût : la règle perd son exception, donc sa valeur de garde ; le prochain cas analogue n'aura plus de règle à invoquer.
+
+**Conséquences.** L'écart est mesuré, daté et assumé : tant que 11b2 n'est pas fait, 52 recettes violent la règle de niveau. `audit:tokens` ne les signale pas, parce qu'aucune porte ne mesure ce cas ; c'est un écart connu, pas un angle mort.
 
 ### D19 — Les teintes de statut sont fixes, sans primitive
 **TRANCHÉE le 2026-10-01.**

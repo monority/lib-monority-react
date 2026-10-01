@@ -227,14 +227,14 @@ for (const [key, fg, bgs, aa, hc] of PAIRS) {
     }
 }
 
-for (const [key, fg, aaOpaque, etatAlpha, hcOpaque] of HOVER_PAIRS) {
+for (const [key, fg, aaOpaque, stateAlpha, hcOpaque] of HOVER_PAIRS) {
     for (const theme of THEMES) {
         for (const brand of BRANDS) {
             for (const bg of hoverBgCases(theme, brand)) {
                 pairCount++
                 const ratio = contrast(col(fg, theme, brand), bg.css)
                 const threshold = bg.translucent
-                    ? etatAlpha
+                    ? stateAlpha
                     : theme === 'high-contrast'
                       ? hcOpaque
                       : aaOpaque
