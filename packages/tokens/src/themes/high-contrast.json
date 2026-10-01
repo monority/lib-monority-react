@@ -170,6 +170,94 @@
                         "h": "brand"
                     }
                 }
+            },
+            "success-text": {
+                "$value": "oklch(0.3 0.14 155)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.3,
+                        "c": 0.14,
+                        "h": 155
+                    }
+                }
+            },
+            "warning-text": {
+                "$value": "oklch(0.32 0.14 80)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.32,
+                        "c": 0.14,
+                        "h": 80
+                    }
+                }
+            },
+            "danger-text": {
+                "$value": "oklch(0.28 0.14 25)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.28,
+                        "c": 0.14,
+                        "h": 25
+                    }
+                }
+            },
+            "info-text": {
+                "$value": "oklch(0.3 0.14 255)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.3,
+                        "c": 0.14,
+                        "h": 255
+                    }
+                }
+            },
+            "success-subtle": {
+                "$value": "oklch(0.92 0.08 155)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.92,
+                        "c": 0.08,
+                        "h": 155
+                    }
+                }
+            },
+            "warning-subtle": {
+                "$value": "oklch(0.93 0.08 80)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.93,
+                        "c": 0.08,
+                        "h": 80
+                    }
+                }
+            },
+            "danger-subtle": {
+                "$value": "oklch(0.91 0.08 25)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.91,
+                        "c": 0.08,
+                        "h": 25
+                    }
+                }
+            },
+            "danger-solid": {
+                "$value": "oklch(0.42 0.19 25)",
+                "$type": "color",
+                "$extensions": {
+                    "com.monority.oklch": {
+                        "l": 0.42,
+                        "c": 0.19,
+                        "h": 25
+                    }
+                }
             }
         }
     }
