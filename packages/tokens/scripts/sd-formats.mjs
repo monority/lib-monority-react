@@ -107,7 +107,7 @@ export function emitTokensCss(sources) {
         )
     }
     const themeSels = THEMES.map((name) => [
-        selectorFor(name, { withRoot: true, withDimAlias: true }),
+        selectorFor(name, { withRoot: true }),
         themes.get(`theme-${name}`),
     ])
     const parts = [

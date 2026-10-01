@@ -155,6 +155,25 @@ Application en 11b4, avec le correctif `prefers-reduced-motion` (le bloc actuel 
 
 **Conséquences.** « 3291 » est **retiré des critères** : ancienne unité, plus comparable. Chaque famille de 11b1 rapporte avant, après, écart attendu et écart mesuré, dans cette unité. Le nombre de constats d'`audit:tokens` reste rapporté séparément, jamais mélangé.
 
+### D23 — Un registre d'alias de rendu, distinct des thèmes et des préférences
+**TRANCHÉE le 2026-10-01.**
+
+**Contexte.** Trois concepts portaient le même mot. Un **thème** est un fichier de `src/themes/*.json`, dérivé du disque. Un **alias de rendu** est un nom de sélecteur qui rend un thème existant : `dim` rend `dark`. Une **préférence utilisateur** comme `system` est résolue à l'exécution, jamais à la compilation.
+
+Le statut d'alias était implicite : il tenait dans une condition en dur de `lib/themes.mjs` (`name === SYSTEM_FALLBACK_THEME`) et dans deux `Exclude<>` de `packages/ui/src/lib/constants.ts` — `ThemePreference = Exclude<ThemeNameType, 'dim'>` et `ResolvedThemeName = Exclude<ThemeNameType, 'system' | 'dim'>`. Un alias non documenté redevient un `slate` : invisible, jamais contrôlé.
+
+**Décision.** `packages/tokens/theme-aliases.json` déclare les alias de rendu (`{ "dim": "dark" }`, rien d'autre), lu par `lib/themes.mjs`. La condition en dur disparaît. `DEFAULT_THEME` et `SYSTEM_FALLBACK_THEME` restent dans `lib/themes.mjs` : ce sont deux rôles de génération, pas des alias. Mesure : ils ne sont consommés que dans `packages/tokens` (`lib/themes.mjs`, `sd-formats.mjs`), **aucun consommateur UI, aucune duplication** — ils ne deviennent donc pas une source du test de parité.
+
+**Sur la contradiction `dim` : elle n'existait pas.** `design-config.ts` lignes 50 à 55 propose six thèmes et ne contient aucune occurrence de `dim`. `dim` n'est donc **pas sélectionnable** par l'utilisateur. Les deux `Exclude<>` sont exacts : `dim` figure dans l'enum `ThemeName` mais est exclu de ce que l'utilisateur choisit et de ce qui est résolu. Ils restent, et le test les vérifie.
+
+**Sur le CSS : il n'y avait pas de défaut.** `dim` était déjà groupé avec sa cible — `[data-theme="dark"],\n[data-theme="dim"]`, mesuré sur le CSS généré. Un grep ligne à ligne avait fait croire à un bloc autonome vide. La règle est désormais écrite et testée plutôt que constatée.
+
+**Alternatives écartées.**
+- ** Exclude<>` implicites.** Rejetée : `dim` reste un alias sans statut déclaré. Un fichier `dim.json` passerait inaperçu, comme `slate`.
+- **Registre unique tokens + UI.** Rejetée : deux listes à synchroniser. `@monority/tokens` est `private: true`, sans `main` ni `exports` ; le lier obligerait à ouvrir un point d'entrée sur du code de build. L'enum `ThemeName` reste la source UI, et un test vérifie qu'elle coïncide avec le registre.
+
+**Conséquences.** Dix tests couvrent : registre exact, cible existante, alias ne masquant pas un fichier, sélecteur groupé, absence de bloc autonome, et correspondance avec l'enum UI. `system` reste dans `packages/ui` : le build ne doit pas dépendre d'un concept qu'il ne produit pas.
+
 ## Amendements à la feuille de route
 
 ### §4.3 — Cascade (amendé)

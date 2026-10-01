@@ -1,0 +1,10 @@
+{
+    "$meta": {
+        "purpose": "Alias de rendu : un nom de sélecteur qui pointe vers un thème existant (D23).",
+        "distinction": "Un alias n'est PAS un thème et PAS une préférence. `dim` est un sélecteur CSS qui rend le thème `dark`. `system` est une préférence utilisateur résolue à l'exécution, et reste dans packages/ui : le build ne doit pas dépendre d'un concept qu'il ne produit pas.",
+        "rule": "Un alias doit produire un sélecteur GROUPÉ avec sa cible, jamais un bloc autonome. Un alias ne doit jamais être un nom de fichier de `src/themes/`."
+    },
+    "aliases": {
+        "dim": "dark"
+    }
+}

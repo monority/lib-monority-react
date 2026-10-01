@@ -16,6 +16,7 @@
  *   test:scale-rules  pas et plafonds      ~1 s
  *   test:theme-parity themes sur disque    ~1 s
  *   test:theme-coverage X2 parcourt themes ~1 s
+ *   test:theme-aliases registre alias     ~1 s
  *   test:short-name  normalisation T3     ~1 s
  *   test            tokens, ui, web        ~30 s
  *   build           bundles                ~6 s
@@ -46,6 +47,7 @@ const STEPS = [
     { name: 'test:scale-rules', cmd: 'test:scale-rules' },
     { name: 'test:theme-parity', cmd: 'test:theme-parity' },
     { name: 'test:theme-coverage', cmd: 'test:theme-coverage' },
+    { name: 'test:theme-aliases', cmd: 'test:theme-aliases' },
     { name: 'test:short-name', cmd: 'test:short-name' },
     { name: 'test:tokens', cmd: '--filter @monority/tokens test' },
     { name: 'test:ui', cmd: '--filter @monority/ui test' },

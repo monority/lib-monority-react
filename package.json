@@ -35,7 +35,8 @@
         "test:theme-parity": "node --test ./packages/tokens/scripts/theme-parity.test.mjs",
         "test:short-name": "node --test ./packages/tokens/scripts/lib/short-name.test.mjs",
         "test:theme-coverage": "node --test ./packages/tokens/scripts/theme-coverage.test.mjs",
-        "audit:pending": "node ./packages/tokens/scripts/measure-pending.mjs --check"
+        "audit:pending": "node ./packages/tokens/scripts/measure-pending.mjs --check",
+        "test:theme-aliases": "node --test ./packages/tokens/scripts/lib/theme-aliases.test.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

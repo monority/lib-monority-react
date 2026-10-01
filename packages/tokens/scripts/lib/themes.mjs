@@ -11,11 +11,22 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
+
+const require = createRequire(import.meta.url)
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const pkgDir = path.resolve(here, '../..')
 const THEMES_DIR = path.join(pkgDir, 'src/themes')
+
+/**
+ * Thème par défaut : appliqué à `:root` sans attribut de thème.
+ * Thème de repli système : appliqué sous `prefers-color-scheme`.
+ * Ce ne sont pas des alias — un alias est déclaré dans `theme-aliases.json`.
+ */
+export const DEFAULT_THEME = 'light'
+export const SYSTEM_FALLBACK_THEME = 'dark'
 
 /** Un nom de thème doit être utilisable dans un sélecteur CSS et un nom de fichier. */
 export const THEME_NAME_RE = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/
@@ -54,24 +65,41 @@ export function themeFileMap(dir = THEMES_DIR) {
 }
 
 /**
- * Sélecteur CSS d'un thème.
- *
- * Deux conventions portent une information sémantique, pas une liste :
- *  - `light` est le thème par défaut : il s'applique à `:root` sans attribut ;
- *  - `dark` est le repli système : il s'applique sous `prefers-color-scheme`.
- *
- * Les deux sont dérivées de noms de fichiers réservés, et le build échoue si
- * aucun des deux n'est présent — plutôt que d'émettre un CSS sans `:root`.
+ * Alias de rendu : `alias` → thème cible (D23). Déclaré dans
+ * `theme-aliases.json`, jamais dans le code.
  */
-export const DEFAULT_THEME = 'light'
-export const SYSTEM_FALLBACK_THEME = 'dark'
+export function aliasMap(dir = pkgDir) {
+    return require(path.resolve(dir, 'theme-aliases.json')).aliases ?? {}
+}
 
-export function selectorFor(name, { withRoot = false, withDimAlias = false } = {}) {
-    if (name === DEFAULT_THEME) {
-        return withRoot ? `:root,\n[data-theme="${name}"]` : `[data-theme="${name}"]`
-    }
-    const alias = withDimAlias && name === SYSTEM_FALLBACK_THEME ? ', \n[data-theme="dim"]' : ''
-    return `[data-theme="${name}"]${alias}`
+export const ALIASES = aliasMap()
+
+/** Alias dont la cible est `theme`. Ordre alphabétique, sortie déterministe. */
+export function aliasesOf(theme) {
+    return Object.keys(ALIASES)
+        .filter((alias) => ALIASES[alias] === theme)
+        .sort()
+}
+
+/**
+ * Sélecteur CSS d'un thème, ses alias regroupés sur la même règle.
+ *
+ * `light` est le thème par défaut : il s'applique à `:root` sans attribut.
+ * `dark` est le repli système : il s'applique sous `prefers-color-scheme`.
+ * Ce ne sont pas des alias, ce sont deux rôles distincts, gardés ici.
+ *
+ * Un alias produit un sélecteur **groupé** avec sa cible, jamais un bloc
+ * autonome : `[data-theme="dark"], [data-theme="dim"]`. Un bloc séparé
+ *_emettrait_ les mêmes déclarations deux fois et persuadedrait d'une égalité
+ * entre l'alias et sa cible qu'il n'y a pas.
+ */
+export function selectorFor(name, { withRoot = false } = {}) {
+    const base = name === DEFAULT_THEME ? (withRoot ? ':root' : null) : null
+    const selectors = []
+    if (base) selectors.push(base)
+    selectors.push(`[data-theme="${name}"]`)
+    for (const alias of aliasesOf(name)) selectors.push(`[data-theme="${alias}"]`)
+    return selectors.join(',\n')
 }
 
 /** Sélecteur pour le repli `prefers-color-scheme`, sans attribut de thème. */
