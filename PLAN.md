@@ -2,26 +2,23 @@
 
 Branche `refactor/css-foundation`, worktree `lib-monority-react-css-foundation`.
 Source du systeme : `docs/foundation/`. Archive : `archive/tokens-json-d899d22`.
-Inventaire Phase 3 et recoltes : `C:/Users/monority/AppData/Local/Temp/`.
+Inventaire et recoltes : `C:/Users/monority/AppData/Local/Temp/`.
 
-## Phase 1 — Nettoyage (terminee)
-Suppression de l'ancien systeme (tokens JSON, generateur Style Dictionary,
-recettes, controles obsoletes, CSS genere).
+## Etape 0 — Squelette minimal
+Reset (:where() scope mr-*), base minimale (canvas, typography, focus, color-scheme),
+vocabulaire unique, tokens/ref.css et semantic.css prets a recevoir,
+Stylelint avec regle no-raw-values prouvee en negatif, pnpm verify a 5 etapes,
+harness minimal dans apps/web.
 
-## Phase 2 — Fondation CSS (en cours)
-Couches `@layer mr.*` (`layers.css`), reset minimal en `:where()`, base/ par sujet,
-recolte des echelles depuis le tag d'archive, fichier de vocabulaire unique,
-tokens ref et semantic (theme clair par defaut), themes (7 themes et dim),
-Stylelint (3 regles) et test de contraste prouves en negatif,
-`pnpm verify` a 8 etapes au plus, harness de verification visuelle dans apps/web.
-
-## Phase 3 — Composant par composant
-Reconstruction unitaire : Button en premier (ou composant plus simple selon usage),
-recette dans `mr.components`, tokens avec consommateur reel, `pnpm verify` vert,
-harness visuel, commit atomique vert, rapport et arret pour validation humaine.
+## Tranches verticales — Composant par composant
+Croissance stricte avec le composant en cours : annonce en 3 lignes,
+recolte ciblee depuis l'archive, echelles entieres au premier usage,
+tokens semantiques au fil de l'eau, theme dark au composant 1,
+recette dans mr.components, pnpm verify vert, arret et validation humaine.
+Button en premier.
 
 ## Reprise
-Phase 2.4 en cours : theme dark ecrit et cable dans index.css.
-Dernier commit : feat(themes): theme dark.
-Prochaine etape : theme slate (packages/styles/src/themes/slate.css).
-Verify de transition : 4 etapes (typecheck, format:check, build, test) vert.
+Etape 0.1 terminee : base minimale et tokens/themes nettoyes pour tranches verticales.
+Dernier commit : refactor(styles): base minimale et vidage des tokens et themes.
+Prochaine etape : Etape 0.6 — Stylelint regle no-raw-values et fixture prouvee en negatif.
+Verify de transition : 5 etapes vert (typecheck, format:check, lint:css, build, test).

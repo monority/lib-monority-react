@@ -1,9 +1,0 @@
-@layer mr.base {
-    :where(button, input, select, textarea, [role='button']):where(
-            [class^='mr-'],
-            [class*=' mr-']
-        ) {
-        min-inline-size: var(--mr-touch-min, 24px);
-        min-block-size: var(--mr-touch-min, 24px);
-    }
-}

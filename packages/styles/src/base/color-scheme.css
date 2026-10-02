@@ -3,14 +3,4 @@
     [data-theme='light'] {
         color-scheme: light;
     }
-
-    [data-theme='dark'],
-    [data-theme='dim'],
-    [data-theme='slate'],
-    [data-theme='oled'],
-    [data-theme='ocean'],
-    [data-theme='night'],
-    [data-theme='high-contrast'] {
-        color-scheme: dark;
-    }
 }
