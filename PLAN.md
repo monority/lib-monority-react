@@ -17,11 +17,12 @@ tokens et recette dans mr.components, pnpm verify vert, arret.
 Button en premier (B1 a B6).
 
 ## Reprise
-B1 valide et portee des declarations corrigee (branche refactor/css-foundation) :
-- semantic.css scinde : neutres/echelles (:where(:root, [data-theme])), marque/focus (:where(:root, [data-theme], [data-brand]))
-- typography.css aligne sur :where(:root, [data-theme]), heritage police prouve
-- Test Playwright valide (canvas sombre preserve sous [data-brand], accent adapte)
-- 18 tokens declares au total (5 primitives dans ref.css, 13 semantiques dans semantic.css)
-- ADR-018, 019, 020 a jour, docs 03 et 04 alignes
+B2 valide et commite (etats survol, actif, desactive, transition et motion) :
+- button.css : selecteur unique :where(.mr-btn), @media (hover: hover), actif, desactive, transition
+- semantic.css : 5 nouveaux tokens (--mr-state-hover-mix: 12%, active: 24%, disabled: 84%, --mr-text-disabled, --mr-duration-state: 150ms)
+- prefers-reduced-motion: reduce gere dans mr.tokens a 0ms (prouve par test de couche)
+- check-contrast.js etendu avec Playwright mesurant les etats reels du bouton (repos 15.19:1, survol 11.62:1, actif 8.20:1)
+- 23 tokens declares au total (5 ref, 18 semantiques), vocabulary.json a jour
+- ADR-021 consigne dans 10-decisions.md, docs 03, 04, 06 alignes
 - pnpm verify vert a 6 etapes
-Prochaine action : push des 3 commits puis validation proposition B2 (survol, actif, desactive).
+Prochaine action : B3 (theme sombre).

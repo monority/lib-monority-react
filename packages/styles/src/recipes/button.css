@@ -1,6 +1,6 @@
 /* Recette du composant Button (couche mr.components) */
 @layer mr.components {
-    :where(.mr-button, .mr-btn) {
+    :where(.mr-btn) {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -14,26 +14,61 @@
         vertical-align: middle;
         cursor: pointer;
         user-select: none;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
     }
 
     /* Taille md (defaut) */
-    :where(.mr-button, .mr-btn)[data-size='md'],
-    :where(.mr-button, .mr-btn):not([data-size]) {
+    :where(.mr-btn)[data-size='md'],
+    :where(.mr-btn):not([data-size]) {
         min-block-size: var(--mr-size-control-md);
         padding-inline: var(--mr-space-4);
         gap: var(--mr-space-2);
         font-size: var(--mr-font-size-md);
     }
 
-    /* Variante primary (action principale neutre) */
-    :where(.mr-button, .mr-btn)[data-variant='primary'],
-    :where(.mr-button, .mr-btn):not([data-variant]) {
+    /* Variante primary (action principale neutre) : repos */
+    :where(.mr-btn)[data-variant='primary'],
+    :where(.mr-btn):not([data-variant]) {
         background-color: var(--mr-bg-inverse);
         color: var(--mr-text-on-inverse);
     }
 
+    /* Survol (uniquement avec pointeur survolant) */
+    @media (hover: hover) {
+        :where(.mr-btn)[data-variant='primary']:hover:not(:disabled, [aria-disabled='true']),
+        :where(.mr-btn):not([data-variant]):hover:not(:disabled, [aria-disabled='true']) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-inverse),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Actif (pression) */
+    :where(.mr-btn)[data-variant='primary']:active:not(:disabled, [aria-disabled='true']),
+    :where(.mr-btn):not([data-variant]):active:not(:disabled, [aria-disabled='true']) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-active-mix)
+        );
+    }
+
+    /* Desactive */
+    :where(.mr-btn):disabled,
+    :where(.mr-btn)[aria-disabled='true'] {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
     /* Focus visible */
-    :where(.mr-button, .mr-btn):focus-visible {
+    :where(.mr-btn):focus-visible {
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: 2px;
     }

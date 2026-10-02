@@ -14,6 +14,19 @@
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-on-inverse: var(--mr-bg-canvas);
+        --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Pourcentages de melange d'etat :
+         * L'etat s'obtient en rapprochant --mr-bg-inverse du canevas, plus fort a l'actif qu'au survol
+         * (formule identique en theme clair et en theme sombre par permutation des tokens).
+         * Grille arithmetique en multiples de 12% : 1x12 (survol), 2x12 (actif), 7x12 (desactive). */
+        --mr-state-hover-mix: 12%;
+        --mr-state-active-mix: 24%;
+        --mr-state-disabled-mix: 84%;
+
+        /* Mouvement : micro-interactions d'etat.
+         * Regle : multiples de 50ms (3 x 50ms pour les micro-interactions d'etat). */
+        --mr-duration-state: 150ms;
 
         /* Espacement : --mr-space-N vaut N fois 0.25rem (grille arithmetique de 4px) */
         --mr-space-2: 0.5rem;
@@ -31,6 +44,15 @@
             'Segoe UI', sans-serif;
         --mr-font-size-md: 0.875rem;
         --mr-font-weight-medium: 500;
+    }
+
+    /* Neutralisation du mouvement pour les utilisateurs qui le demandent.
+     * Doit vivre dans mr.tokens apres la declaration par defaut pour ne pas perdre
+     * face a la couche des tokens a specificite egale. */
+    @media (prefers-reduced-motion: reduce) {
+        :where(:root, [data-theme]) {
+            --mr-duration-state: 0ms;
+        }
     }
 
     /* Valeurs dependantes de la marque */

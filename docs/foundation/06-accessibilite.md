@@ -37,7 +37,7 @@ Taille minimale 24 par 24 pixels CSS (WCAG 2.2, critère 2.5.8). Objectif recomm
 
 ## Mouvement
 
-- `prefers-reduced-motion: reduce` est géré une seule fois dans la base, par les tokens de durée : les durées de transition et d'animation tombent à zéro ou à une valeur quasi nulle.
+- `prefers-reduced-motion: reduce` est géré dans la couche `mr.tokens` (et non `mr.base`), en respect de l'ordre des couches : une couche antérieure ne peut pas surcharger un token déclaré dans une couche postérieure. Les durées de transition et d'animation (`--mr-duration-*`) y tombent à zéro (`0ms`).
 - Le contenu ne dépend jamais d'une animation pour être compris.
 - Pas de clignotement supérieur à trois flashs par seconde.
 - Tout nouveau token de durée est couvert par la règle de mouvement réduit : aucun `duration-*` ne peut en être absent.

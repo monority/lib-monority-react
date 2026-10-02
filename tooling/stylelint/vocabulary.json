@@ -21,13 +21,16 @@
         "z",
         "duration",
         "ease",
-        "size"
+        "size",
+        "state"
     ],
     "roles": {
         "bg": ["canvas", "surface", "raised", "sunken", "overlay", "inverse"],
         "text": ["primary", "secondary", "tertiary", "disabled", "on-inverse"],
         "accent": ["solid", "subtle", "border", "text"],
         "focus": ["ring"],
-        "size": ["control-sm", "control-md", "control-lg"]
+        "size": ["control-sm", "control-md", "control-lg"],
+        "duration": ["state", "panel"],
+        "state": ["hover-mix", "active-mix", "disabled-mix"]
     }
 }

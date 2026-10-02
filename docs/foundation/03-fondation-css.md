@@ -51,7 +51,7 @@ Dans `mr.base`, un fichier par sujet :
 - typographie de base (famille, taille, interligne) ;
 - `:focus-visible` : un seul style de focus pour toute la bibliothèque, par token ;
 - `color-scheme` défini par thème ;
-- `prefers-reduced-motion`, `prefers-contrast: more` et `forced-colors` : traités une seule fois ici, par les tokens (durées, bordures), jamais par recette ;
+- `prefers-contrast: more` et `forced-colors` : traités une seule fois ici par les tokens, jamais par recette. Une couche ne peut pas redéfinir un token déclaré dans une couche plus tardive : la neutralisation de mouvement (`prefers-reduced-motion`) des tokens de durée vit donc dans `mr.tokens` après leur déclaration (ou dans `mr.themes`), jamais dans `mr.base` ;
 - taille minimale des cibles tactiles.
 
 ## Sélecteurs et nommage
@@ -70,7 +70,7 @@ Dans `mr.base`, un fichier par sujet :
 - Couleurs en `oklch()`. Les états dérivés par `color-mix(in oklch, ...)` (voir `04-tokens-et-themes.md`).
 - Unités relatives (`rem`, `em`) pour les tailles de texte et d'espacement. `px` seulement pour les bordures fines et les cibles fixes justifiées.
 - `@property` n'est déclaré que pour un token qui doit s'animer ou être typé. Sinon, on n'en ajoute pas.
-- Les requêtes de conteneur ne sont utilisées que si une recette en a un besoin avéré. Les requêtes de média ne servent qu'aux préférences utilisateur, centralisées dans la base.
+- Les requêtes de conteneur ne sont utilisées que si une recette en a un besoin avéré. Les requêtes de média restent réservées aux préférences utilisateur et aux capacités d'entrée (hover), jamais aux tailles d'écran.
 
 ## Ordre des déclarations dans une recette
 

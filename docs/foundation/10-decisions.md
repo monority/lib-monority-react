@@ -120,6 +120,15 @@ Décision :
 3. La hauteur de contrôle de base `--mr-size-control-md` passe à 2rem (32px), portée par `min-block-size` pour autoriser l'extension si le zoom texte ou le contenu le requiert. La cible tactile respecte WCAG 2.5.8 (seuil 24px).
 Alternatives écartées : conserver l'accent vif sur l'action par défaut (surcharge visuelle), hauteur fixe en px (empêche l'adaptation au zoom texte).
 
+### ADR-021 : ordre des couches pour prefers-reduced-motion, durées en multiples de 50ms et grille d'états en multiples de 12%
+Statut : Acceptée.
+Contexte : L'ordre des couches CSS (`mr.reset, mr.base, mr.tokens, mr.themes, mr.components`) empêche `mr.base` de surcharger une variable déclarée dans `mr.tokens` à spécificité égale. De plus, les états interactifs et les transitions du bouton nécessitent des règles d'échelle strictes sans valeurs brutes dans les recettes.
+Décision :
+1. Une couche CSS ne peut jamais surcharger un token déclaré dans une couche postérieure. L'override de durée pour `prefers-reduced-motion: reduce` vit donc dans `mr.tokens`, immédiatement après la déclaration du token.
+2. Les durées d'interaction suivent une échelle en multiples de 50ms (`--mr-duration-state: 150ms`).
+3. Les mélanges d'état interactifs (`state-hover-mix`, `state-active-mix`, `state-disabled-mix`) forment une grille arithmétique en multiples de 12% (12% pour le survol, 24% pour l'actif, 84% pour le désactivé) dérivant la couleur par rapprochement du canevas (`--mr-bg-canvas`).
+4. Aucune valeur brute de mélange ou d'état ne vit dans les recettes : tous les ratios sont déclarés sous forme de tokens `--mr-state-*-mix` dans le vocabulaire clos.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.

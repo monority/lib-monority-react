@@ -32,7 +32,8 @@ Catégories :
 - `focus` : anneau de focus.
 - `font-family`, `font-size`, `font-weight`, `line-height` : typographie.
 - `space` : espacements. `radius` : rayons. `size` : tailles de contrôle (`control-md`, etc.). `border-width` : épaisseurs. `shadow` : ombres. `z` : profondeurs.
-- `duration`, `ease` : mouvement. Les durées sont nommées par rôle (`state` pour les transitions d'état, `panel` pour le mouvement d'une surface, `spin`, `pulse`), jamais par composant.
+- `duration`, `ease` : mouvement. Les durées sont nommées par rôle (`state` pour les transitions d'état, `panel` pour le mouvement d'une surface, `spin`, `pulse`), jamais par composant. Règle de valeur : multiples de 50ms (`state` à 3 x 50ms = 150ms).
+- `state` : pourcentages de mélange d'état (`hover-mix`, `active-mix`, `disabled-mix`). Grille arithmétique en multiples de 12%.
 
 Règles :
 
@@ -59,15 +60,15 @@ Procédure : écrire le token dans le fichier de son niveau, ses valeurs dans ch
 
 ## États dérivés
 
-Les états `hover`, `active`, `focus` et `disabled` se dérivent, ils ne se déclarent pas comme tokens :
+Les états `hover`, `active` et `disabled` se dérivent en rapprochant le fond du canevas, ils ne se déclarent pas comme couleurs statiques :
 
 ```css
-.mr-button:hover {
-  background: color-mix(in oklch, var(--mr-button-bg), var(--mr-text-primary) 8%);
+.mr-btn:hover {
+  background: color-mix(in oklch, var(--mr-bg-inverse), var(--mr-bg-canvas) var(--mr-state-hover-mix));
 }
 ```
 
-Quand le support de `color-mix` n'est pas garanti, la valeur d'état de repli est le token de base, jamais une couleur brute. Les pourcentages de mélange sont des tokens partagés (`--mr-state-hover-mix`), pas des littéraux répétés.
+Les pourcentages de mélange sont des tokens partagés suivant une grille en multiples de 12% : `--mr-state-hover-mix: 12%` (1x12), `--mr-state-active-mix: 24%` (2x12), et `--mr-state-disabled-mix: 84%` (7x12), maintenant une séparation perceptible d'au moins 16% de pigment d'inverse par rapport au canevas.
 
 ## Thèmes
 
