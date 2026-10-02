@@ -1,5 +1,4 @@
 @import './layers.css';
 
-@import './utilities/effects.css' layer(mr.utilities);
-@import './utilities/flex.css' layer(mr.utilities);
-@import './utilities/spacing.css' layer(mr.utilities);
+@layer mr.utilities {
+}
