@@ -21,7 +21,7 @@ recette dans `mr.components`, tokens avec consommateur reel, `pnpm verify` vert,
 harness visuel, commit atomique vert, rapport et arret pour validation humaine.
 
 ## Reprise
-Phase 2.1 terminee : reset.css scope mr-* en :where(), base/ un fichier par sujet, layers/ retire.
-Dernier commit : feat(styles): reset en :where() et base modulaire dans mr.base.
-Prochaine etape : Phase 2.2 — vocabulaire unique, tokens/ref.css et tokens/semantic.css.
+Phase 2.1 terminee (reset et base). Fichier de vocabulaire cree dans packages/styles/src/tokens/vocabulary.json.
+Dernier commit : feat(tokens): fichier de vocabulaire unique pour Stylelint.
+Prochaine etape : Phase 2.3 — ecrire tokens/ref.css et tokens/semantic.css.
 Verify de transition : 4 etapes (typecheck, format:check, build, test) vert.
