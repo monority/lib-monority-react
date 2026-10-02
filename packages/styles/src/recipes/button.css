@@ -25,11 +25,11 @@
         font-size: var(--mr-font-size-md);
     }
 
-    /* Variante primary (action principale) */
+    /* Variante primary (action principale neutre) */
     :where(.mr-button, .mr-btn)[data-variant='primary'],
     :where(.mr-button, .mr-btn):not([data-variant]) {
-        background-color: var(--mr-accent-solid);
-        color: var(--mr-accent-on-solid);
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
     }
 
     /* Focus visible */

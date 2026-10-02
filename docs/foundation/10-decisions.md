@@ -104,12 +104,21 @@ Décision : prose et puces, jamais de tableau, même quand un gabarit externe en
 ### ADR-018 : échelles déclarées une seule fois dans semantic.css et valeurs brutes autorisées dans tokens/ et themes/
 Statut : Acceptée (amende ADR-003).
 Contexte : doubler chaque pas d'échelle par une primitive --mr-ref-space-* puis un sémantique --mr-space-* doublait le bruit sans gain sémantique. De plus, placer le thème clair par défaut dans semantic.css exige d'y autoriser les valeurs oklch brutes.
-Décision : les échelles de dimension et de typographie (space, radius, font-size, font-weight, font-family, size) sont des tokens publics déclarés une seule fois dans `tokens/semantic.css`. `tokens/ref.css` ne conserve que les leviers de marque, neutres et mise à l'échelle (--mr-ref-brand-*, --mr-ref-neutral-*, --mr-ref-radius-scale). Les valeurs brutes sont autorisées dans `tokens/` et `themes/`, et strictement interdites dans `recipes/`, `base/` et `reset.css`.
+Décision : les échelles de dimension et de typographie (space, radius, font-size, font-weight, font-family, size) sont des tokens publics déclarés une seule fois dans `tokens/semantic.css`. `tokens/ref.css` ne conserve que les leviers de marque, neutres et mise à l'échelle (--mr-ref-brand-*, --mr-ref-neutral-*, --mr-ref-radius-scale). Les valeurs brutes sont autorisées dans `tokens/` et `themes/`, et strictement interdites dans `recipes/`, `base/` et `reset.css`. Le sélecteur de `semantic.css` est `:where(:root, [data-theme], [data-brand])` pour assurer la réévaluation par cascade sous tout conteneur décalé avec une spécificité nulle.
 
 ### ADR-019 : catégorie size, rôle on-solid et emplacement du fichier de vocabulaire
-Statut : Acceptée.
+Statut : Acceptée (amendée par ADR-020 pour le rôle on-solid).
 Contexte : Button exige une hauteur de contrôle minimale, un texte sur fond d'accent et la fermeture du vocabulaire pour Stylelint.
-Décision : ajout de la catégorie `size` (`--mr-size-control-*`) et du rôle `on-solid` (`--mr-accent-on-solid`) au vocabulaire clos. Décision ouverte tranchée : le fichier de vocabulaire unique lu par Stylelint vit à l'emplacement `tooling/stylelint/vocabulary.json`.
+Décision : ajout de la catégorie `size` (`--mr-size-control-*`) et du rôle `on-solid` (`--mr-accent-on-solid`) au vocabulaire clos. Décision ouverte tranchée : le fichier de vocabulaire unique lu par Stylelint vit à l'emplacement `tooling/stylelint/vocabulary.json`. Note : le rôle `on-solid` est ensuite retiré par ADR-020 lors du passage au style neutre.
+
+### ADR-020 : style de base neutre (inverse/on-inverse), marque réservée aux variantes explicites et hauteur de contrôle 32px
+Statut : Acceptée.
+Contexte : Le bouton principal est l'action la plus fréquente de l'interface ; une couleur d'accent vive omniprésente fatigue l'œil. De plus, la hauteur md initiale de 40px (2.5rem) était surdimensionnée par rapport aux standards compacts de la bibliothèque.
+Décision :
+1. Le style par défaut du bouton principal adopte un contraste neutre noir et blanc via `--mr-bg-inverse: var(--mr-text-primary);` et `--mr-text-on-inverse: var(--mr-bg-canvas);`. Les rôles `inverse` (catégorie `bg`) et `on-inverse` (catégorie `text`) entrent dans le vocabulaire clos.
+2. La couleur de marque (`--mr-accent-solid`) est réservée aux variantes explicites et à l'anneau de focus (`--mr-focus-ring`). Le token `--mr-accent-on-solid` est supprimé conformément à ADR-014.
+3. La hauteur de contrôle de base `--mr-size-control-md` passe à 2rem (32px), portée par `min-block-size` pour autoriser l'extension si le zoom texte ou le contenu le requiert. La cible tactile respecte WCAG 2.5.8 (seuil 24px).
+Alternatives écartées : conserver l'accent vif sur l'action par défaut (surcharge visuelle), hauteur fixe en px (empêche l'adaptation au zoom texte).
 
 ## Décisions ouvertes
 

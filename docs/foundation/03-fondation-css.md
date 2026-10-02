@@ -11,8 +11,7 @@ L'ordre est déclaré une seule fois, dans `packages/styles/src/layers.css` :
 ```
 
 - `mr.reset` : remise à zéro minimale, spécificité nulle.
-- `mr.base` : styles de base hérités des tokens (fond, texte, typographie, focus, préférences utilisateur).
-- `mr.tokens` : primitives et sémantiques par défaut (thème clair), dans `:root`.
+- `mr.tokens` : primitives dans `:root` et sémantiques par défaut (thème clair) via `:where(:root, [data-theme], [data-brand])` pour assurer la réévaluation par cascade sous conteneur sans surcharger la spécificité.
 - `mr.themes` : surcharges par thème, par marque et par densité.
 - `mr.components` : recettes des composants.
 - `mr.utilities` : utilitaires, rares, chacun justifié par un usage mesuré.

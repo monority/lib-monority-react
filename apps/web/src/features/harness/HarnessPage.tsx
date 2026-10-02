@@ -34,20 +34,20 @@ function ButtonHarness() {
                 (['sm', 'md', 'lg'] as const).map((size) => (
                     <Sample key={`${variant}-${size}`} label={`${variant} ${size}`}>
                         <Button variant={variant} size={size}>
-                            Action
+                            Enregistrer
                         </Button>
                     </Sample>
                 ))
             )}
             <Sample label="disabled">
-                <Button disabled>Action</Button>
+                <Button disabled>Enregistrer</Button>
             </Sample>
             <Sample label="loading">
-                <Button loading>Action</Button>
+                <Button loading>Enregistrer</Button>
             </Sample>
             {previews.map((preview) => (
                 <Sample key={preview} label={`preview ${preview}`}>
-                    <Button data-mr-preview={preview}>Action</Button>
+                    <Button data-mr-preview={preview}>Enregistrer</Button>
                 </Sample>
             ))}
         </>
