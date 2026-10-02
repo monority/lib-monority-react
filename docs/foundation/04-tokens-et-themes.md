@@ -76,14 +76,14 @@ Quand le support de `color-mix` n'est pas garanti, la valeur d'état de repli es
 - `system` est une préférence utilisateur résolue à l'exécution dans `@monority/ui`, avant le premier rendu. Elle n'a aucune existence en CSS.
 - Un thème est un fichier `themes/<nom>.css` contenant `[data-theme="<nom>"]` et uniquement ce qui diffère du défaut. La liste des thèmes se lit du dossier par un glob, jamais d'une liste recopiée.
 - Chaque thème déclare `color-scheme`.
-- Le thème par défaut (`light`) vit dans `tokens/semantic.css`, sous le sélecteur `:where(:root, [data-theme], [data-brand])`.
-- Ce sélecteur garantit que les tokens sémantiques dérivés sont recalculés sur tout conteneur décalé (thème ou marque) avec une spécificité nulle.
+- Le thème par défaut (`light`) vit dans `tokens/semantic.css` : un token se déclare uniquement sur les portées qui peuvent changer sa valeur (`:where(:root, [data-theme])` pour les neutres, échelles et alias, et `:where(:root, [data-theme], [data-brand])` pour la marque et le focus).
+- Cette séparation garantit que la marque se réévalue par cascade sans écraser le thème actif sur un conteneur ancêtre.
 
 Ajouter un thème : créer un fichier dans `themes/`, vérifier le contraste, ne rien changer d'autre. Si ajouter un thème exige de toucher un autre fichier, la structure est en défaut et doit être corrigée avant de continuer.
 
 ## Marque
 
-`[data-brand]` redéfinit uniquement `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`. Tout ce qui dépend de la marque se réévalue par cascade grâce au sélecteur `:where(:root, [data-theme], [data-brand])` de `semantic.css`. Aucun contournement par composant.
+`[data-brand]` redéfinit uniquement `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`. Tout ce qui dépend de la marque se réévalue par cascade grâce au sélecteur `:where(:root, [data-theme], [data-brand])` de `semantic.css`, sans altérer les tokens neutres ou d'échelle. Aucun contournement par composant.
 
 ## Densité
 

@@ -51,13 +51,17 @@ function run() {
     const semanticCss = fs.readFileSync(semanticPath, 'utf8')
     const semanticVars = parseCssVariables(semanticCss)
 
-    // Verification de la regle de cascade pour conteneur decale
+    // Verification des regles de portee pour conteneur decale et theme
+    assert(
+        semanticCss.includes(':where(:root, [data-theme])'),
+        'semantic.css doit declarer les neutres et echelles sous :where(:root, [data-theme])'
+    )
     assert(
         semanticCss.includes(':where(:root, [data-theme], [data-brand])'),
-        'semantic.css doit utiliser le selecteur :where(:root, [data-theme], [data-brand]) pour garantir la reevaluation par cascade'
+        'semantic.css doit declarer la marque et le focus sous :where(:root, [data-theme], [data-brand])'
     )
     console.log(
-        'OK: Selecteur de cascade :where(:root, [data-theme], [data-brand]) present dans semantic.css.'
+        'OK: Selecteurs de portee :where(:root, [data-theme]) et :where(:root, [data-theme], [data-brand]) presents dans semantic.css.'
     )
 
     const context = { ...refVars, ...semanticVars }

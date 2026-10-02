@@ -1,9 +1,12 @@
 /* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens.
- * Le selecteur :where(:root, [data-theme], [data-brand]) assure la reevaluation
- * des tokens dependant de primitives sur tout sous-arbre redefinissant theme ou marque
- * sans surcharger la specificite (reste 0,0,0). */
+ * Un token se declare uniquement sur les portees qui peuvent changer sa valeur :
+ * - neutres, echelles et alias sous :where(:root, [data-theme]) pour ne pas
+ *   ecraser le theme actif lors d'un changement local de marque.
+ * - tokens dependants de la marque sous :where(:root, [data-theme], [data-brand])
+ *   car la marque et les themes teintes peuvent redefinir ses leviers. */
 @layer mr.tokens {
-    :where(:root, [data-theme], [data-brand]) {
+    /* Valeurs literales, dependantes des neutres, echelles et alias */
+    :where(:root, [data-theme]) {
         /* Fonds */
         --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-inverse: var(--mr-text-primary);
@@ -11,14 +14,6 @@
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-on-inverse: var(--mr-bg-canvas);
-
-        /* Marque / Accent :
-         * L=0.50 garantit le double contraste texte >= 4.5:1 et UI >= 3.0:1 sur canevas clair.
-         * Facteur 0.70 sur brand-chroma maintient la marge sRGB >= 0.04 sur tout le balayage de teintes (0-330 deg). */
-        --mr-accent-solid: oklch(0.5 calc(var(--mr-ref-brand-chroma) * 0.7) var(--mr-ref-brand-hue));
-
-        /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
-        --mr-focus-ring: var(--mr-accent-solid);
 
         /* Espacement : --mr-space-N vaut N fois 0.25rem (grille arithmetique de 4px) */
         --mr-space-2: 0.5rem;
@@ -36,5 +31,16 @@
             'Segoe UI', sans-serif;
         --mr-font-size-md: 0.875rem;
         --mr-font-weight-medium: 500;
+    }
+
+    /* Valeurs dependantes de la marque */
+    :where(:root, [data-theme], [data-brand]) {
+        /* Marque / Accent :
+         * L=0.50 garantit le double contraste texte >= 4.5:1 et UI >= 3.0:1 sur canevas clair.
+         * Facteur 0.70 sur brand-chroma maintient la marge sRGB >= 0.04 sur tout le balayage de teintes (0-330 deg). */
+        --mr-accent-solid: oklch(0.5 calc(var(--mr-ref-brand-chroma) * 0.7) var(--mr-ref-brand-hue));
+
+        /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
+        --mr-focus-ring: var(--mr-accent-solid);
     }
 }
