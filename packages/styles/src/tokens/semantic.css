@@ -21,6 +21,15 @@
          * (respect de WCAG 1.4.11 >= 3.0:1 avec marge de securite a 3.3). */
         --mr-border-control: oklch(0.61 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
+        /* Statut Danger :
+         * Regle unique : le texte a la couleur du canevas (--mr-danger-on-solid: var(--mr-bg-canvas)),
+         * et --mr-danger-solid verifie au moins 4.8:1 avec le canevas du theme (double contraste texte
+         * WCAG 1.4.3 >= 4.5:1 et UI WCAG 1.4.11 >= 3.0:1 avec marge).
+         * L=0.52 en clair donne 5.37:1 sur canevas clair.
+         * Chroma 0.20 : valeur maximale conservant une marge de gamut sRGB >= 0.04 dans les deux themes (teinte fixe 25). */
+        --mr-danger-solid: oklch(0.52 0.2 25);
+        --mr-danger-on-solid: var(--mr-bg-canvas);
+
         /* Pourcentages de melange d'etat :
          * L'etat s'obtient en rapprochant --mr-bg-inverse du canevas, plus fort a l'actif qu'au survol
          * (formule identique en theme clair et en theme sombre par permutation des tokens).

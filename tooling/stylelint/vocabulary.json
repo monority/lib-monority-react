@@ -29,6 +29,7 @@
         "text": ["primary", "secondary", "tertiary", "disabled", "on-inverse"],
         "border": ["control", "default", "subtle"],
         "accent": ["solid", "subtle", "border", "text"],
+        "danger": ["solid", "on-solid"],
         "focus": ["ring"],
         "size": ["control-sm", "control-md", "control-lg"],
         "duration": ["state", "panel"],

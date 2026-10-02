@@ -144,6 +144,40 @@ async function testNegativeProof(browser) {
         `OK: Fixture negative bordure reussie (bordure defaillante detectee insuffisante a ${badBorderRatio.toFixed(2)}:1 < 3.0:1).`
     )
     await pageBorder.close()
+
+    // Fixture negative specifique au danger : luminosite defaillante L=0.75 sur canevas clair L=0.955
+    const pageDangerBad = await browser.newPage()
+    await pageDangerBad.setContent(`
+        <style>
+            :root {
+                --mr-bg-canvas: oklch(0.955 0 215);
+                --mr-danger-solid-bad: oklch(0.75 0.20 25);
+                --mr-danger-on-solid-bad: var(--mr-bg-canvas);
+            }
+            .bad-danger-btn {
+                background-color: var(--mr-danger-solid-bad);
+                color: var(--mr-danger-on-solid-bad);
+            }
+        </style>
+        <button class="bad-danger-btn" id="bad-danger-btn">Danger Faible</button>
+    `)
+    const badDangerBg = await pageDangerBad.$eval(
+        '#bad-danger-btn',
+        (el) => window.getComputedStyle(el).backgroundColor
+    )
+    const badDangerText = await pageDangerBad.$eval(
+        '#bad-danger-btn',
+        (el) => window.getComputedStyle(el).color
+    )
+    const badDangerRatio = getContrastRatio(colorToRgb(badDangerText), colorToRgb(badDangerBg))
+    assert(
+        badDangerRatio < 4.5,
+        `Le danger avec luminosite defaillante doit echouer sous 4.5:1 (ratio obtenu: ${badDangerRatio.toFixed(2)}:1)`
+    )
+    console.log(
+        `OK: Fixture negative danger reussie (luminosite defaillante detectee insuffisante a ${badDangerRatio.toFixed(2)}:1 < 4.5:1).`
+    )
+    await pageDangerBad.close()
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -251,6 +285,12 @@ async function run() {
                     <button class="mr-btn" data-variant="secondary" id="btn-sec-disabled" disabled>Secondaire</button>
 
                     <button class="mr-btn" data-variant="ghost" id="btn-ghost-idle">Discret</button>
+
+                    <button class="mr-btn" data-variant="danger" id="btn-danger-idle">Supprimer</button>
+                    <button class="mr-btn" data-variant="danger" id="btn-danger-hover">Supprimer</button>
+                    <button class="mr-btn" data-variant="danger" id="btn-danger-active">Supprimer</button>
+                    <button class="mr-btn" data-variant="danger" id="btn-danger-disabled" disabled>Supprimer</button>
+                    ${t.name === 'light' ? '<div id="dark-surface-in-light" style="background-color: oklch(0.22 0 215); padding: 1rem; display: inline-block;"><button class="mr-btn" data-variant="danger" id="btn-danger-dark-surface">Supprimer</button></div>' : ''}
                 </body>
                 </html>
             `)
@@ -475,6 +515,124 @@ async function run() {
             await page.locator('#btn-ghost-idle').screenshot({
                 path: path.join(TEMP_DIR, `button-${t.name}-ghost-repos.png`),
             })
+
+            // Mesures de la variante danger
+            console.log(`Mesure de la variante Button danger en theme ${t.name.toUpperCase()} :`)
+            const dangerBgRaw = await page.$eval(
+                '#btn-danger-idle',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const dangerTextRaw = await page.$eval(
+                '#btn-danger-idle',
+                (el) => window.getComputedStyle(el).color
+            )
+            const dangerTextRatio = getContrastRatio(
+                colorToRgb(dangerTextRaw),
+                colorToRgb(dangerBgRaw)
+            )
+            const dangerUiRatio = getContrastRatio(colorToRgb(dangerBgRaw), colorToRgb(canvasBgRaw))
+            console.log(
+                `- Danger Repos       : text = ${dangerTextRaw}, bg = ${dangerBgRaw}, ratio = ${dangerTextRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            console.log(
+                `- Danger sur canevas : bg = ${dangerBgRaw}, canevas = ${canvasBgRaw}, ratio = ${dangerUiRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                dangerTextRatio >= 4.5,
+                `Theme ${t.name} - Danger texte au repos insuffisant: ${dangerTextRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            assert(
+                dangerUiRatio >= 3.0,
+                `Theme ${t.name} - Danger sur canevas insuffisant: ${dangerUiRatio.toFixed(2)}:1 < 3.0:1`
+            )
+            await page.locator('#btn-danger-idle').screenshot({
+                path: path.join(TEMP_DIR, `button-danger-${t.name}-repos.png`),
+            })
+
+            // Danger survol
+            await page.hover('#btn-danger-hover')
+            await page.waitForTimeout(200)
+            const dangerHoverBgRaw = await page.$eval(
+                '#btn-danger-hover',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const dangerHoverTextRaw = await page.$eval(
+                '#btn-danger-hover',
+                (el) => window.getComputedStyle(el).color
+            )
+            const dangerHoverRatio = getContrastRatio(
+                colorToRgb(dangerHoverTextRaw),
+                colorToRgb(dangerHoverBgRaw)
+            )
+            console.log(
+                `- Danger Survol      : text = ${dangerHoverTextRaw}, bg = ${dangerHoverBgRaw}, ratio = ${dangerHoverRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                dangerHoverRatio >= 4.5,
+                `Theme ${t.name} - Danger au survol insuffisant: ${dangerHoverRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            await page.locator('#btn-danger-hover').screenshot({
+                path: path.join(TEMP_DIR, `button-danger-${t.name}-survol.png`),
+            })
+
+            // Danger actif
+            const dangerActiveBox = await page.locator('#btn-danger-active').boundingBox()
+            await page.mouse.move(
+                dangerActiveBox.x + dangerActiveBox.width / 2,
+                dangerActiveBox.y + dangerActiveBox.height / 2
+            )
+            await page.mouse.down()
+            await page.waitForTimeout(200)
+            const dangerActiveBgRaw = await page.$eval(
+                '#btn-danger-active',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const dangerActiveTextRaw = await page.$eval(
+                '#btn-danger-active',
+                (el) => window.getComputedStyle(el).color
+            )
+            const dangerActiveRatio = getContrastRatio(
+                colorToRgb(dangerActiveTextRaw),
+                colorToRgb(dangerActiveBgRaw)
+            )
+            await page.locator('#btn-danger-active').screenshot({
+                path: path.join(TEMP_DIR, `button-danger-${t.name}-actif.png`),
+            })
+            await page.mouse.up()
+            console.log(
+                `- Danger Actif       : text = ${dangerActiveTextRaw}, bg = ${dangerActiveBgRaw}, ratio = ${dangerActiveRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                dangerActiveRatio >= 4.5,
+                `Theme ${t.name} - Danger actif insuffisant: ${dangerActiveRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // Danger desactive
+            const dangerDisBgRaw = await page.$eval(
+                '#btn-danger-disabled',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const dangerDisTextRaw = await page.$eval(
+                '#btn-danger-disabled',
+                (el) => window.getComputedStyle(el).color
+            )
+            const dangerDisRatio = getContrastRatio(
+                colorToRgb(dangerDisTextRaw),
+                colorToRgb(dangerDisBgRaw)
+            )
+            console.log(
+                `- Danger Desactive   : text = ${dangerDisTextRaw}, bg = ${dangerDisBgRaw}, ratio = ${dangerDisRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
+            )
+            await page.locator('#btn-danger-disabled').screenshot({
+                path: path.join(TEMP_DIR, `button-danger-${t.name}-desactive.png`),
+            })
+
+            // Capture specifique : danger sur surface sombre en theme clair
+            if (t.name === 'light') {
+                await page.locator('#dark-surface-in-light').screenshot({
+                    path: path.join(TEMP_DIR, 'button-danger-light-dark-surface.png'),
+                })
+            }
 
             await page.close()
         }

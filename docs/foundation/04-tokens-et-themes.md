@@ -27,7 +27,7 @@ Catégories :
 - `text` : couleurs de texte uniquement (`primary`, `secondary`, `tertiary`, `disabled`, `on-inverse`). Les tailles de texte ne portent jamais ce préfixe.
 - `border` : couleurs de bordure (`subtle`, `default`, `control`).
 - `accent` : couleurs de marque (`solid`, `subtle`, `border`, `text`).
-- `danger`, `warning`, `success`, `info` : statuts, avec les rôles `text`, `solid`, `subtle`.
+- `danger`, `warning`, `success`, `info` : statuts, avec les rôles `solid`, `on-solid` (pour danger), `text`, `subtle`.
 - `chart` : couleurs de séries (`1` à `5`, et `muted` seulement avec un consommateur avéré).
 - `focus` : anneau de focus.
 - `font-family`, `font-size`, `font-weight`, `line-height` : typographie.

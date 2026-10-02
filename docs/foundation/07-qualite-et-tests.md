@@ -57,7 +57,7 @@ Un dépassement notable (par exemple une hausse de poids sans nouveau composant)
 
 ## Intégration continue
 
-La CI exécute `pnpm verify`, le build, `test:dist` et les e2e. Aucun workflow de publication ne se déclenche depuis une branche de chantier : la publication passe par le processus de `08-publication-et-versions.md`.
+À ce stade du chantier, la CI exécute `build`, `typecheck`, `test`, `format:check` et `lint`. Le branchement de la porte unique `pnpm verify` en CI (avec installation de Chromium pour le test de contraste) interviendra avant l'ouverture de toute PR vers `main`. Aucun workflow de publication ne se déclenche depuis une branche de chantier : la publication passe par le processus de `08-publication-et-versions.md`.
 
 ## Preuve
 

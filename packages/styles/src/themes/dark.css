@@ -19,5 +19,9 @@
         /* Levier de luminosite de l'accent pour fond sombre :
          * 0.635 reproduit le contraste de ~5.0:1 de l'anneau de focus sur canevas */
         --mr-ref-accent-lightness: 0.635;
+
+        /* Danger sombre : L=0.65 calcule pour assurer un ratio >= 4.8:1 (4.87:1) sur canevas sombre (L=0.22).
+         * --mr-danger-on-solid herite de var(--mr-bg-canvas) (L=0.22), conservant la meme regle unique qu'en clair. */
+        --mr-danger-solid: oklch(0.65 0.2 25);
     }
 }

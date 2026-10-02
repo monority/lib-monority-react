@@ -136,7 +136,14 @@ Décision :
 1. Règle de symétrie : le thème sombre échange les deux rôles de base du clair (`--mr-bg-canvas` sombre prend la valeur de `--mr-text-primary` clair `0.22`, et `--mr-text-primary` sombre prend celle de `--mr-bg-canvas` clair `0.955`). Un seul paramètre pour tout le système, contraste conservé à l'identique (15.19:1).
 2. Texte désactivé sombre : luminosité calculée à `0.542` pour reproduire le ratio de 3.46:1 du clair sur son canevas.
 3. Levier d'accent : ajout de la primitive `--mr-ref-accent-lightness: 0.5` dans `ref.css` (portée `:where(:root, [data-theme])`), redéfinie à `0.635` dans `dark.css` (reproduisant le contraste de ~5.0:1 de l'anneau de focus sur canevas). `--mr-accent-solid` lit ce levier.
-4. Règle générale : un token qui dépend à la fois du thème et de la marque lit ses paramètres de thème dans des leviers déclarés sur la portée du thème, jamais en littéraux dans sa propre formule.
+
+### ADR-023 : dérivation des états de contrôle plein par mélange vers `--mr-text-primary`
+Statut : Acceptée.
+Contexte : Pour le bouton principal neutre, le fond s'obtient en rapprochant l'inverse du canevas (`--mr-bg-canvas`), car le texte (`--mr-text-on-inverse`) a déjà la couleur du canevas opposé. En revanche, pour un contrôle plein coloré dont le texte partage la couleur du canevas (`--mr-danger-on-solid: var(--mr-bg-canvas)`), mélanger le fond vers le canevas au survol et à l'actif rapproche la couleur de fond de la couleur du texte, faisant chuter le contraste sous le seuil WCAG AA de 4.5:1 (4.23:1 au survol et 3.37:1 à l'actif en clair).
+Décision :
+1. Dérivation d'état pour les contrôles pleins colorés : les états interactifs (survol et actif) mélangent le fond plein vers `--mr-text-primary` (pourcentages partagés `12%` et `24%`).
+2. Règle de contraste : en s'approchant de `--mr-text-primary`, le fond s'éloigne de la couleur du texte (`--mr-bg-canvas`), augmentant le contraste interactif au lieu de le dégrader (6.27:1 au survol et 7.27:1 à l'actif en clair ; 5.64:1 au survol et 6.55:1 à l'actif en sombre).
+3. L'état désactivé conserve le mélange à 84% vers `--mr-bg-canvas` avec le texte `--mr-text-disabled`.
 
 ## Décisions ouvertes
 

@@ -42,6 +42,11 @@ function ButtonHarness() {
             <Sample label="disabled">
                 <Button disabled>Enregistrer</Button>
             </Sample>
+            <Sample label="danger disabled">
+                <Button variant="danger" disabled>
+                    Supprimer
+                </Button>
+            </Sample>
             <Sample label="loading">
                 <Button loading>Enregistrer</Button>
             </Sample>

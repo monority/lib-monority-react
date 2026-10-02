@@ -5,6 +5,8 @@
  * - Secondaire : fond opaque --mr-bg-canvas, bordure --mr-border-control (WCAG 1.4.11 >= 3.0:1),
  *   texte --mr-text-primary. Etats derives par color-mix vers --mr-text-primary (survol 12%, actif 24%, desactive 84%).
  * - Discrete (ghost) : fond et bordure transparents au repos, texte --mr-text-primary, memes etats de survol et actif.
+ * - Danger : fond plein --mr-danger-solid, texte --mr-danger-on-solid (heritant de --mr-bg-canvas).
+ *   Etats interactifs derives par color-mix vers --mr-text-primary (survol 12%, actif 24%, ADR-023).
  *
  * Limite fond opaque : --mr-bg-canvas est utilise temporairement pour le fond opaque du controle a bordure.
  * Sur une surface plus haute (carte), cela creerait un trou de la couleur du canevas.
@@ -63,6 +65,12 @@
         color: var(--mr-text-primary);
     }
 
+    /* Variante danger (action destructive pleine) : repos */
+    :where(.mr-btn)[data-variant='danger'] {
+        background-color: var(--mr-danger-solid);
+        color: var(--mr-danger-on-solid);
+    }
+
     /* Survol (uniquement avec pointeur survolant) */
     @media (hover: hover) {
         :where(.mr-btn)[data-variant='primary']:hover:where(
@@ -90,6 +98,16 @@
                 var(--mr-text-primary) var(--mr-state-hover-mix)
             );
         }
+
+        :where(.mr-btn)[data-variant='danger']:hover:where(
+                :not(:disabled, [aria-disabled='true'])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-danger-solid),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
     }
 
     /* Actif (pression) */
@@ -109,6 +127,14 @@
         background-color: color-mix(
             in oklch,
             var(--mr-bg-canvas),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='danger']:active:where(:not(:disabled, [aria-disabled='true'])) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
             var(--mr-text-primary) var(--mr-state-active-mix)
         );
     }
@@ -149,6 +175,15 @@
     :where(.mr-btn)[data-variant='subtle'][aria-disabled='true'] {
         background-color: transparent;
         border-color: transparent;
+    }
+
+    :where(.mr-btn)[data-variant='danger']:disabled,
+    :where(.mr-btn)[data-variant='danger'][aria-disabled='true'] {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
     }
 
     /* Focus visible */
