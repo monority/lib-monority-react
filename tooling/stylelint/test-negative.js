@@ -83,6 +83,46 @@ async function run() {
     )
 
     console.log('OK: Exemption positive confirmee pour tokens/ et themes/ (ADR-018).')
+
+    // 4. Prouver en negatif que selector-max-specificity "0,2,0" echoue sur un selecteur 0,3,0
+    const invalidSpecFixture = path.resolve(__dirname, '__fixtures__/invalid-specificity.css')
+    const resultInvalidSpec = await stylelint.lint({
+        files: invalidSpecFixture,
+        configFile,
+    })
+    assert.strictEqual(
+        resultInvalidSpec.errored,
+        true,
+        'La fixture invalid-specificity DOIT etre en erreur'
+    )
+    const specWarnings = resultInvalidSpec.results[0]?.warnings ?? []
+    assert(
+        specWarnings.some((w) => w.rule === 'selector-max-specificity'),
+        'selector-max-specificity doit etre declenchee sur selecteur 0,3,0'
+    )
+    console.log(
+        'OK: Rejet negatif prouve pour selector-max-specificity (selecteur 0,3,0 detecte et rejete).'
+    )
+
+    // 5. Prouver en positif que les recettes (button.css) respectent selector-max-specificity "0,2,0"
+    const buttonCssPath = path.resolve(__dirname, '../../packages/styles/src/recipes/button.css')
+    const resultButtonSpec = await stylelint.lint({
+        files: buttonCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultButtonSpec.errored,
+        false,
+        'button.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultButtonSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur button.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur button.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

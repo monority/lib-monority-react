@@ -1,0 +1,7 @@
+/* Fixture invalide pour selector-max-specificity :
+ * Selecteur a 0,3,0 (classe 0,1,0 + attribut 0,1,0 + pseudo-classe 0,1,0) depassant le plafond 0,2,0 */
+@layer mr.components {
+    .mr-btn[data-variant='secondary']:hover {
+        color: var(--mr-text-primary);
+    }
+}

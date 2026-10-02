@@ -20,10 +20,9 @@ Button en premier (B1 a B6).
 B4 commite localement (variantes secondaire et discrete, border-control) :
 - border-control : L=0.61 clair (3.33:1), L=0.53 sombre (3.28:1), WCAG 1.4.11 respecte
 - secondaire : fond canevas opaque, bordure border-control, texte text-primary
-- discret (ghost) : fond et bordure transparents, texte text-primary
-- etats derives par color-mix avec les tokens state-*-mix (12% survol, 24% actif, 84% desactive)
-- resolution fond inverse prouvee visuellement : secondaire et discret restent delimitables
-- 25 tokens declares au total (6 ref, 19 semantiques), pnpm verify vert a 6 etapes
-- captures Temp : b4-light-harness.png, b4-dark-harness.png, b4-inverted-test.png
-- ADR-023 consigne dans 10-decisions.md
+- limite fond opaque : bg-canvas temporaire, jeton partage reporte a Input
+- discret (ghost) : fond/bordure transparents, texte text-primary (contraste garanti sur canevas)
+- specificite sous 0,2,0 via :where(), validee sur 30 etats sans ecart
+- selector-max-specificity integre a Stylelint avec fixtures negative (0,3,0) et positive
+- 25 tokens declares au total, pnpm verify vert a 6 etapes, ADR-001 a 022 sans trou
 Prochaine action : validation par l'utilisateur du rendu avant push, puis B5.

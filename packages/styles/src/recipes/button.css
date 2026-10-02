@@ -1,4 +1,18 @@
-/* Recette du composant Button (couche mr.components) */
+/* Recette du composant Button (couche mr.components)
+ *
+ * Role control et variantes secondaire / discrete :
+ * - Le role control de border est defini dans 04-tokens-et-themes.md (--mr-border-control).
+ * - Secondaire : fond opaque --mr-bg-canvas, bordure --mr-border-control (WCAG 1.4.11 >= 3.0:1),
+ *   texte --mr-text-primary. Etats derives par color-mix vers --mr-text-primary (survol 12%, actif 24%, desactive 84%).
+ * - Discrete (ghost) : fond et bordure transparents au repos, texte --mr-text-primary, memes etats de survol et actif.
+ *
+ * Limite fond opaque : --mr-bg-canvas est utilise temporairement pour le fond opaque du controle a bordure.
+ * Sur une surface plus haute (carte), cela creerait un trou de la couleur du canevas.
+ * Aucun token cree maintenant : la decision d'un jeton de fond de controle partage se prendra avec Input, deuxieme lecteur.
+ *
+ * Limite variante discrete : le contraste du texte du bouton ghost (>= 4.5:1) est garanti seulement
+ * sur les fonds canevas ; sur un autre fond, c'est a la surface hote de le garantir.
+ */
 @layer mr.components {
     :where(.mr-btn) {
         display: inline-flex;
@@ -51,8 +65,10 @@
 
     /* Survol (uniquement avec pointeur survolant) */
     @media (hover: hover) {
-        :where(.mr-btn)[data-variant='primary']:hover:not(:disabled, [aria-disabled='true']),
-        :where(.mr-btn):not([data-variant]):hover:not(:disabled, [aria-disabled='true']) {
+        :where(.mr-btn)[data-variant='primary']:hover:where(
+                :not(:disabled, [aria-disabled='true'])
+            ),
+        :where(.mr-btn):not([data-variant]):hover:where(:not(:disabled, [aria-disabled='true'])) {
             background-color: color-mix(
                 in oklch,
                 var(--mr-bg-inverse),
@@ -60,10 +76,14 @@
             );
         }
 
-        :where(.mr-btn)[data-variant='secondary']:hover:not(:disabled, [aria-disabled='true']),
-        :where(.mr-btn)[data-variant='muted']:hover:not(:disabled, [aria-disabled='true']),
-        :where(.mr-btn)[data-variant='ghost']:hover:not(:disabled, [aria-disabled='true']),
-        :where(.mr-btn)[data-variant='subtle']:hover:not(:disabled, [aria-disabled='true']) {
+        :where(.mr-btn)[data-variant='secondary']:hover:where(
+                :not(:disabled, [aria-disabled='true'])
+            ),
+        :where(.mr-btn)[data-variant='muted']:hover:where(:not(:disabled, [aria-disabled='true'])),
+        :where(.mr-btn)[data-variant='ghost']:hover:where(:not(:disabled, [aria-disabled='true'])),
+        :where(.mr-btn)[data-variant='subtle']:hover:where(
+                :not(:disabled, [aria-disabled='true'])
+            ) {
             background-color: color-mix(
                 in oklch,
                 var(--mr-bg-canvas),
@@ -73,8 +93,8 @@
     }
 
     /* Actif (pression) */
-    :where(.mr-btn)[data-variant='primary']:active:not(:disabled, [aria-disabled='true']),
-    :where(.mr-btn):not([data-variant]):active:not(:disabled, [aria-disabled='true']) {
+    :where(.mr-btn)[data-variant='primary']:active:where(:not(:disabled, [aria-disabled='true'])),
+    :where(.mr-btn):not([data-variant]):active:where(:not(:disabled, [aria-disabled='true'])) {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-inverse),
@@ -82,10 +102,10 @@
         );
     }
 
-    :where(.mr-btn)[data-variant='secondary']:active:not(:disabled, [aria-disabled='true']),
-    :where(.mr-btn)[data-variant='muted']:active:not(:disabled, [aria-disabled='true']),
-    :where(.mr-btn)[data-variant='ghost']:active:not(:disabled, [aria-disabled='true']),
-    :where(.mr-btn)[data-variant='subtle']:active:not(:disabled, [aria-disabled='true']) {
+    :where(.mr-btn)[data-variant='secondary']:active:where(:not(:disabled, [aria-disabled='true'])),
+    :where(.mr-btn)[data-variant='muted']:active:where(:not(:disabled, [aria-disabled='true'])),
+    :where(.mr-btn)[data-variant='ghost']:active:where(:not(:disabled, [aria-disabled='true'])),
+    :where(.mr-btn)[data-variant='subtle']:active:where(:not(:disabled, [aria-disabled='true'])) {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-canvas),
