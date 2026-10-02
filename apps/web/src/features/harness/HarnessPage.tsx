@@ -132,6 +132,7 @@ function PositionHarness() {
     return (
         <div data-testid="position-harness" style={{ height: 480, position: 'relative' }}>
             <button
+                type="button"
                 ref={anchorRef}
                 data-testid="position-anchor"
                 style={{ position: 'absolute', left: 180, top: 120 }}
@@ -156,7 +157,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
 
 export function HarnessPage() {
     const { component = 'button' } = useParams()
-    const [searchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const theme = isAllowed(themes, searchParams.get('theme'))
         ? (searchParams.get('theme') as Theme)
         : 'light'
@@ -174,6 +175,44 @@ export function HarnessPage() {
             data-testid="harness-page"
             data-harness-component={component}
         >
+            <nav
+                data-testid="harness-controls"
+                style={{
+                    display: 'flex',
+                    gap: '0.75rem',
+                    alignItems: 'center',
+                    marginBottom: '1rem',
+                    padding: '0.5rem 1rem',
+                    background: 'var(--mr-bg-surface, #f8fafc)',
+                    border: '1px solid var(--mr-border-default, #e2e8f0)',
+                    borderRadius: '6px',
+                }}
+            >
+                <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Thème:</span>
+                {themes.map((t) => (
+                    <button
+                        key={t}
+                        type="button"
+                        onClick={() => {
+                            const next = new URLSearchParams(searchParams)
+                            next.set('theme', t)
+                            setSearchParams(next)
+                        }}
+                        style={{
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            border: '1px solid var(--mr-border-control, #cbd5e1)',
+                            background:
+                                theme === t ? 'var(--mr-bg-raised, #e2e8f0)' : 'transparent',
+                            cursor: 'pointer',
+                            fontSize: '0.75rem',
+                            fontWeight: theme === t ? 'bold' : 'normal',
+                        }}
+                    >
+                        {t}
+                    </button>
+                ))}
+            </nav>
             <ThemeScope theme={theme} density={density} {...(brand === 'studio' ? { brand } : {})}>
                 <Harness />
             </ThemeScope>
