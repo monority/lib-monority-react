@@ -16,6 +16,11 @@
         --mr-text-on-inverse: var(--mr-bg-canvas);
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
+        /* Bordures :
+         * border-control : luminosite 0.61 calculee pour assurer un ratio de 3.33:1 sur le canevas clair
+         * (respect de WCAG 1.4.11 >= 3.0:1 avec marge de securite a 3.3). */
+        --mr-border-control: oklch(0.61 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
         /* Pourcentages de melange d'etat :
          * L'etat s'obtient en rapprochant --mr-bg-inverse du canevas, plus fort a l'actif qu'au survol
          * (formule identique en theme clair et en theme sombre par permutation des tokens).

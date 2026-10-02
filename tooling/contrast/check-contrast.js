@@ -112,6 +112,38 @@ async function testNegativeProof(browser) {
         `OK: Fixture negative sombre reussie (texte defaillant detecte insuffisant a ${badDarkRatio.toFixed(2)}:1 < 4.5:1).`
     )
     await pageDark.close()
+
+    // Fixture negative specifique a la bordure de controle : bordure defaillante L=0.85 sur canevas clair L=0.955
+    const pageBorder = await browser.newPage()
+    await pageBorder.setContent(`
+        <style>
+            body {
+                background-color: oklch(0.955 0 215);
+            }
+            .bad-border-btn {
+                background-color: oklch(0.955 0 215);
+                border: 1px solid oklch(0.85 0 215);
+            }
+        </style>
+        <button class="bad-border-btn" id="bad-border-btn">Bordure Faible</button>
+    `)
+    const badBorderColor = await pageBorder.$eval(
+        '#bad-border-btn',
+        (el) => window.getComputedStyle(el).borderColor
+    )
+    const badCanvasBg = await pageBorder.$eval(
+        'body',
+        (el) => window.getComputedStyle(el).backgroundColor
+    )
+    const badBorderRatio = getContrastRatio(colorToRgb(badBorderColor), colorToRgb(badCanvasBg))
+    assert(
+        badBorderRatio < 3.0,
+        `La bordure defaillante doit echouer sous 3.0:1 (ratio obtenu: ${badBorderRatio.toFixed(2)}:1)`
+    )
+    console.log(
+        `OK: Fixture negative bordure reussie (bordure defaillante detectee insuffisante a ${badBorderRatio.toFixed(2)}:1 < 3.0:1).`
+    )
+    await pageBorder.close()
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -212,6 +244,13 @@ async function run() {
                     <button class="mr-btn" id="btn-hover">Enregistrer</button>
                     <button class="mr-btn" id="btn-active">Enregistrer</button>
                     <button class="mr-btn" id="btn-disabled" disabled>Enregistrer</button>
+
+                    <button class="mr-btn" data-variant="secondary" id="btn-sec-idle">Secondaire</button>
+                    <button class="mr-btn" data-variant="secondary" id="btn-sec-hover">Secondaire</button>
+                    <button class="mr-btn" data-variant="secondary" id="btn-sec-active">Secondaire</button>
+                    <button class="mr-btn" data-variant="secondary" id="btn-sec-disabled" disabled>Secondaire</button>
+
+                    <button class="mr-btn" data-variant="ghost" id="btn-ghost-idle">Discret</button>
                 </body>
                 </html>
             `)
@@ -324,6 +363,118 @@ async function run() {
                 inverseOnCanvasRatio >= 3.0,
                 `Theme ${t.name} - bg-inverse sur canevas insuffisant: ${inverseOnCanvasRatio.toFixed(2)}:1 < 3.0:1`
             )
+
+            // Mesures de la variante secondaire
+            console.log(
+                `Mesure de la variante Button secondaire en theme ${t.name.toUpperCase()} :`
+            )
+            const secBorderColorRaw = await page.$eval(
+                '#btn-sec-idle',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const secBgRaw = await page.$eval(
+                '#btn-sec-idle',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const secTextRaw = await page.$eval(
+                '#btn-sec-idle',
+                (el) => window.getComputedStyle(el).color
+            )
+            const secBorderRatio = getContrastRatio(
+                colorToRgb(secBorderColorRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Bordure sur canevas : border = ${secBorderColorRaw}, canevas = ${canvasBgRaw}, ratio = ${secBorderRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                secBorderRatio >= 3.0,
+                `Theme ${t.name} - Bordure de controle insuffisante: ${secBorderRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            const secIdleRatio = getContrastRatio(colorToRgb(secTextRaw), colorToRgb(secBgRaw))
+            console.log(
+                `- Secondaire Repos    : text = ${secTextRaw}, bg = ${secBgRaw}, ratio = ${secIdleRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                secIdleRatio >= 4.5,
+                `Theme ${t.name} - Secondaire au repos insuffisant: ${secIdleRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            await page.locator('#btn-sec-idle').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-secondary-repos.png`),
+            })
+
+            // Secondaire survol
+            await page.hover('#btn-sec-hover')
+            await page.waitForTimeout(200)
+            const secHoverBgRaw = await page.$eval(
+                '#btn-sec-hover',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const secHoverRatio = getContrastRatio(
+                colorToRgb(secTextRaw),
+                colorToRgb(secHoverBgRaw)
+            )
+            console.log(
+                `- Secondaire Survol   : text = ${secTextRaw}, bg = ${secHoverBgRaw}, ratio = ${secHoverRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                secHoverRatio >= 4.5,
+                `Theme ${t.name} - Secondaire au survol insuffisant: ${secHoverRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // Secondaire actif
+            const secActiveBox = await page.locator('#btn-sec-active').boundingBox()
+            await page.mouse.move(
+                secActiveBox.x + secActiveBox.width / 2,
+                secActiveBox.y + secActiveBox.height / 2
+            )
+            await page.mouse.down()
+            await page.waitForTimeout(200)
+            const secActiveBgRaw = await page.$eval(
+                '#btn-sec-active',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const secActiveRatio = getContrastRatio(
+                colorToRgb(secTextRaw),
+                colorToRgb(secActiveBgRaw)
+            )
+            await page.mouse.up()
+            console.log(
+                `- Secondaire Actif    : text = ${secTextRaw}, bg = ${secActiveBgRaw}, ratio = ${secActiveRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                secActiveRatio >= 4.5,
+                `Theme ${t.name} - Secondaire actif insuffisant: ${secActiveRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // Secondaire desactive
+            const secDisText = await page.$eval(
+                '#btn-sec-disabled',
+                (el) => window.getComputedStyle(el).color
+            )
+            const secDisRatio = getContrastRatio(colorToRgb(secDisText), colorToRgb(secBgRaw))
+            console.log(
+                `- Secondaire Desactive: text = ${secDisText}, bg = ${secBgRaw}, ratio = ${secDisRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
+            )
+
+            // Mesure de la variante discrete (ghost)
+            console.log(`Mesure de la variante Button ghost en theme ${t.name.toUpperCase()} :`)
+            const ghostTextRaw = await page.$eval(
+                '#btn-ghost-idle',
+                (el) => window.getComputedStyle(el).color
+            )
+            const ghostRatio = getContrastRatio(colorToRgb(ghostTextRaw), colorToRgb(canvasBgRaw))
+            console.log(
+                `- Ghost Repos         : text = ${ghostTextRaw}, canevas = ${canvasBgRaw}, ratio = ${ghostRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                ghostRatio >= 4.5,
+                `Theme ${t.name} - Ghost au repos insuffisant: ${ghostRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            await page.locator('#btn-ghost-idle').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-ghost-repos.png`),
+            })
 
             await page.close()
         }

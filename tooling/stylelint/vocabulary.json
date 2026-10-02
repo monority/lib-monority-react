@@ -27,6 +27,7 @@
     "roles": {
         "bg": ["canvas", "surface", "raised", "sunken", "overlay", "inverse"],
         "text": ["primary", "secondary", "tertiary", "disabled", "on-inverse"],
+        "border": ["control", "default", "subtle"],
         "accent": ["solid", "subtle", "border", "text"],
         "focus": ["ring"],
         "size": ["control-sm", "control-md", "control-lg"],

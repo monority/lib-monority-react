@@ -14,7 +14,8 @@
         vertical-align: middle;
         cursor: pointer;
         user-select: none;
-        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
     }
 
     /* Taille md (defaut) */
@@ -33,6 +34,21 @@
         color: var(--mr-text-on-inverse);
     }
 
+    /* Variante secondary (action avec bordure de controle) : repos */
+    :where(.mr-btn)[data-variant='secondary'],
+    :where(.mr-btn)[data-variant='muted'] {
+        background-color: var(--mr-bg-canvas);
+        border-color: var(--mr-border-control);
+        color: var(--mr-text-primary);
+    }
+
+    /* Variante ghost (action discrete sans bordure) : repos */
+    :where(.mr-btn)[data-variant='ghost'],
+    :where(.mr-btn)[data-variant='subtle'] {
+        background-color: transparent;
+        color: var(--mr-text-primary);
+    }
+
     /* Survol (uniquement avec pointeur survolant) */
     @media (hover: hover) {
         :where(.mr-btn)[data-variant='primary']:hover:not(:disabled, [aria-disabled='true']),
@@ -41,6 +57,17 @@
                 in oklch,
                 var(--mr-bg-inverse),
                 var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+        }
+
+        :where(.mr-btn)[data-variant='secondary']:hover:not(:disabled, [aria-disabled='true']),
+        :where(.mr-btn)[data-variant='muted']:hover:not(:disabled, [aria-disabled='true']),
+        :where(.mr-btn)[data-variant='ghost']:hover:not(:disabled, [aria-disabled='true']),
+        :where(.mr-btn)[data-variant='subtle']:hover:not(:disabled, [aria-disabled='true']) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-canvas),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
             );
         }
     }
@@ -55,16 +82,53 @@
         );
     }
 
+    :where(.mr-btn)[data-variant='secondary']:active:not(:disabled, [aria-disabled='true']),
+    :where(.mr-btn)[data-variant='muted']:active:not(:disabled, [aria-disabled='true']),
+    :where(.mr-btn)[data-variant='ghost']:active:not(:disabled, [aria-disabled='true']),
+    :where(.mr-btn)[data-variant='subtle']:active:not(:disabled, [aria-disabled='true']) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-canvas),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
     /* Desactive */
     :where(.mr-btn):disabled,
     :where(.mr-btn)[aria-disabled='true'] {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-btn)[data-variant='primary']:disabled,
+    :where(.mr-btn)[data-variant='primary'][aria-disabled='true'],
+    :where(.mr-btn):not([data-variant]):disabled,
+    :where(.mr-btn):not([data-variant])[aria-disabled='true'] {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-inverse),
             var(--mr-bg-canvas) var(--mr-state-disabled-mix)
         );
-        color: var(--mr-text-disabled);
-        cursor: not-allowed;
+    }
+
+    :where(.mr-btn)[data-variant='secondary']:disabled,
+    :where(.mr-btn)[data-variant='secondary'][aria-disabled='true'],
+    :where(.mr-btn)[data-variant='muted']:disabled,
+    :where(.mr-btn)[data-variant='muted'][aria-disabled='true'] {
+        background-color: var(--mr-bg-canvas);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='ghost']:disabled,
+    :where(.mr-btn)[data-variant='ghost'][aria-disabled='true'],
+    :where(.mr-btn)[data-variant='subtle']:disabled,
+    :where(.mr-btn)[data-variant='subtle'][aria-disabled='true'] {
+        background-color: transparent;
+        border-color: transparent;
     }
 
     /* Focus visible */

@@ -138,6 +138,15 @@ Décision :
 3. Levier d'accent : ajout de la primitive `--mr-ref-accent-lightness: 0.5` dans `ref.css` (portée `:where(:root, [data-theme])`), redéfinie à `0.635` dans `dark.css` (reproduisant le contraste de ~5.0:1 de l'anneau de focus sur canevas). `--mr-accent-solid` lit ce levier.
 4. Règle générale : un token qui dépend à la fois du thème et de la marque lit ses paramètres de thème dans des leviers déclarés sur la portée du thème, jamais en littéraux dans sa propre formule.
 
+### ADR-023 : variantes de bouton secondaire et discrete (border-control, fond canevas et derivation d'etat)
+Statut : Acceptée.
+Contexte : Le bouton principal neutre sur fond inverse souffre d'un manque de delimitation (fond noir sur surface sombre). De plus, les actions secondaires et tertiaires exigent des variantes a moindre poids visuel : un bouton borde (secondaire) et un bouton transparent (discret / ghost).
+Décision :
+1. Role `control` pour la categorie `border` : ajout du token public `--mr-border-control` dans `semantic.css` (L=0.61 en clair, ratio 3.33:1 sur canevas) et `dark.css` (L=0.53 en sombre, ratio 3.28:1 sur canevas), garantissant la conformite WCAG 1.4.11 (seuil UI >= 3.0:1) avec une marge de securite.
+2. Variante secondaire (`data-variant='secondary'` et alias `muted`) : fond opaque `--mr-bg-canvas`, bordure `--mr-border-control`, texte `--mr-text-primary`. Survol et actif derives par `color-mix(in oklch, var(--mr-bg-canvas), var(--mr-text-primary) var(--mr-state-*-mix))` (12% et 24%). Desactive avec bordure a 84% de melange vers le canevas et texte `--mr-text-disabled`.
+3. Variante discrete (`data-variant='ghost'` et alias `subtle`) : fond et bordure transparents au repos, texte `--mr-text-primary`, memes etats de survol et actif que la variante secondaire.
+4. Resolution de la limite sur fond inverse : la variante secondaire reste delimitee par sa bordure (ratio > 4.5:1 sur fond inverse) et son fond de canevas opaque, tandis que la variante discrete n'affiche que son texte accessible.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.
