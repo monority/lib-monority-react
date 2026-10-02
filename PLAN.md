@@ -21,7 +21,7 @@ recette dans `mr.components`, tokens avec consommateur reel, `pnpm verify` vert,
 harness visuel, commit atomique vert, rapport et arret pour validation humaine.
 
 ## Reprise
-Phase 2.1 terminee (reset et base). Fichier de vocabulaire cree dans packages/styles/src/tokens/vocabulary.json.
-Dernier commit : feat(tokens): fichier de vocabulaire unique pour Stylelint.
-Prochaine etape : Phase 2.3 — ecrire tokens/ref.css et tokens/semantic.css.
+Phase 2.2 terminee : tokens/ref.css et tokens/semantic.css ecrits et cables dans index.css.
+Dernier commit : feat(tokens): primitives ref et semantiques clairs par defaut.
+Prochaine etape : Phase 2.4 — un commit par theme (7 themes puis alias dim).
 Verify de transition : 4 etapes (typecheck, format:check, build, test) vert.
