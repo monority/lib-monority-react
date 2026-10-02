@@ -21,7 +21,7 @@ recette dans `mr.components`, tokens avec consommateur reel, `pnpm verify` vert,
 harness visuel, commit atomique vert, rapport et arret pour validation humaine.
 
 ## Reprise
-Phase 2.4 en cours : theme light ecrit et cable dans index.css.
-Dernier commit : feat(themes): theme light.
-Prochaine etape : theme dark (packages/styles/src/themes/dark.css).
+Phase 2.4 en cours : theme dark ecrit et cable dans index.css.
+Dernier commit : feat(themes): theme dark.
+Prochaine etape : theme slate (packages/styles/src/themes/slate.css).
 Verify de transition : 4 etapes (typecheck, format:check, build, test) vert.
