@@ -18,7 +18,7 @@ recette dans mr.components, pnpm verify vert, arret et validation humaine.
 Button en premier.
 
 ## Reprise
-Etape 0.1 terminee : base minimale et tokens/themes nettoyes pour tranches verticales.
-Dernier commit : refactor(styles): base minimale et vidage des tokens et themes.
-Prochaine etape : Etape 0.6 — Stylelint regle no-raw-values et fixture prouvee en negatif.
-Verify de transition : 5 etapes vert (typecheck, format:check, lint:css, build, test).
+Etape 0.6 terminee : regle Stylelint no-raw-values avec fixture prouvee en negatif et branchee.
+Dernier commit : feat(tooling): regle Stylelint interdisant les valeurs brutes et test negatif.
+Prochaine etape : Etape 0.8 — harness minimal dans apps/web.
+Verify a 5 etapes (typecheck, format:check, lint:css, build, test) vert.

@@ -20,12 +20,13 @@
         "version": "changeset version",
         "release": "turbo run build && changeset publish",
         "generate:component": "pnpm --filter @monority/generators generate:component",
-        "validate": "node tooling/scripts/validate.js",
-        "verify": "pnpm typecheck && pnpm format:check && pnpm build && pnpm test"
+        "lint:css": "stylelint \"packages/styles/src/**/*.css\"",
+        "verify": "pnpm typecheck && pnpm format:check && pnpm lint:css && pnpm build && pnpm test"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",
         "@changesets/cli": "^2.27.0",
+        "stylelint": "^17.16.0",
         "turbo": "^2.3.0",
         "typescript": "^5.7.0"
     },
