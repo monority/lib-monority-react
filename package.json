@@ -20,7 +20,8 @@
         "version": "changeset version",
         "release": "turbo run build && changeset publish",
         "generate:component": "pnpm --filter @monority/generators generate:component",
-        "validate": "node tooling/scripts/validate.js"
+        "validate": "node tooling/scripts/validate.js",
+        "verify": "pnpm typecheck && pnpm format:check && pnpm build && pnpm test"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

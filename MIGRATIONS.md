@@ -146,7 +146,7 @@ sera inscrite ici au moment de l’arbitrage, pas avant.
 
 | Quoi | Où |
 | --- | --- |
-| Tokens dépréciés et règles de retrait | `packages/tokens/src/deprecated.json`, `pnpm --filter @monority/tokens test` |
+| Tokens dépréciés et règles de retrait | Archive `archive/tokens-json-d899d22` (supprimés en Phase 1) |
 | Contrat d'API publique | `packages/ui/src/__tests__/exports.test.ts` (134 tests) |
 | Composition et invariants BEM/data | `packages/ui/src/__tests__/bem-modifiers.test.tsx` |
 | Contrat docs ↔ API | `apps/web/src/features/docs/*-contract.test.ts` |

@@ -19,7 +19,6 @@ node_modules/** -text
 dist/** -text
 .turbo/** -text
 coverage/** -text
-packages/styles/src/tokens/generated/** -text
 packages/ui/dist/** -text
 apps/web/dist/** -text
 

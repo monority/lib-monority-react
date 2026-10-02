@@ -7,5 +7,5 @@
     "access": "public",
     "baseBranch": "main",
     "updateInternalDependencies": "patch",
-    "ignore": ["@monority/tokens", "@monority/styles", "@monority/web", "@monority/generators"]
+    "ignore": ["@monority/styles", "@monority/web", "@monority/generators"]
 }

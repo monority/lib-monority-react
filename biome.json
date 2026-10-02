@@ -41,7 +41,6 @@
             "dist",
             ".turbo",
             "coverage",
-            "packages/styles/src/tokens/generated",
             "docs/design/reference",
             "apps/web/test-results"
         ]
