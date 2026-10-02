@@ -1,9 +1,9 @@
 /* Primitives de la bibliotheque dans la couche mr.tokens.
- * Uniquement les primitives requises par la base minimale et semantic.css.
+ * Uniquement les 6 primitives requises par la base minimale et semantic.css.
  * Aucune recette ne lit directement une primitive. */
 @layer mr.tokens {
     :root {
-        /* Marque (interface publique) */
+        /* Interface publique de la marque : redefinie sur [data-brand] */
         --mr-ref-brand-hue: 200;
         --mr-ref-brand-chroma: 0.12;
 
@@ -15,9 +15,5 @@
         --mr-ref-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui,
             -apple-system, 'Segoe UI', sans-serif;
         --mr-ref-font-size-md: 0.875rem;
-        --mr-ref-line-height-base: 1.65;
-
-        /* Focus de base */
-        --mr-ref-border-width-focus: 2px;
     }
 }

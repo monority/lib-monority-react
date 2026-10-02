@@ -2,6 +2,5 @@
     :where([class^='mr-'], [class*=' mr-']) {
         font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-md);
-        line-height: var(--mr-line-height-base);
     }
 }

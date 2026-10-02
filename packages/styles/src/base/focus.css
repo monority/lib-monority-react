@@ -1,7 +1,7 @@
 @layer mr.base {
     :where([class^='mr-'], [class*=' mr-']):focus-visible,
     :where([class^='mr-'], [class*=' mr-']) :focus-visible {
-        outline: var(--mr-focus-width, 2px) solid var(--mr-focus-ring);
-        outline-offset: var(--mr-focus-offset, 2px);
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
     }
 }

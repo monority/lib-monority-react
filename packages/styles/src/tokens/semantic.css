@@ -1,5 +1,5 @@
 /* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens.
- * Uniquement les tokens consommes par les regles de base minimale. */
+ * Uniquement les 5 tokens consommes par les regles de base minimale. */
 @layer mr.tokens {
     :root {
         /* Fonds */
@@ -12,12 +12,9 @@
         --mr-focus-ring: oklch(
             0.52 calc(var(--mr-ref-brand-chroma) * 0.725) var(--mr-ref-brand-hue)
         );
-        --mr-focus-width: var(--mr-ref-border-width-focus);
-        --mr-focus-offset: 2px;
 
-        /* Typographie */
+        /* Typographie de base */
         --mr-font-family-sans: var(--mr-ref-font-family-sans);
         --mr-font-size-md: var(--mr-ref-font-size-md);
-        --mr-line-height-base: var(--mr-ref-line-height-base);
     }
 }
