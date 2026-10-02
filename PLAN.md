@@ -21,9 +21,7 @@ recette dans `mr.components`, tokens avec consommateur reel, `pnpm verify` vert,
 harness visuel, commit atomique vert, rapport et arret pour validation humaine.
 
 ## Reprise
-Phase 1 terminee, sortie soldee et verifiee.
-Documentation de reference installee dans `docs/foundation/` (11 documents).
-`AGENTS.md` mis a jour (aucun tableau, aucun emoji, 8 etapes max de verify).
-Dernier commit : 259c1a1 docs(agents): mettre a jour AGENTS.md.
-Prochaine etape : Phase 2.1 — reset.css scope mr-* en :where() et base/.
+Phase 2.1 terminee : reset.css scope mr-* en :where(), base/ un fichier par sujet, layers/ retire.
+Dernier commit : feat(styles): reset en :where() et base modulaire dans mr.base.
+Prochaine etape : Phase 2.2 — vocabulaire unique, tokens/ref.css et tokens/semantic.css.
 Verify de transition : 4 etapes (typecheck, format:check, build, test) vert.

@@ -1,9 +1,5 @@
-/* Utilitaires opt-in : hors du bundle principal, exposés par
- * `@monority/ui/utilities.css`. Seules les familles effectivement utilisées
- * sont conservées, et leurs classes sont préfixées `mr-` pour ne pas entrer en
- * collision avec l'application hôte. Voir PLAN.md (D1). */
-@import './layers/index.css';
+@import './layers.css';
 
-@import './utilities/effects.css' layer(monority.utilities);
-@import './utilities/flex.css' layer(monority.utilities);
-@import './utilities/spacing.css' layer(monority.utilities);
+@import './utilities/effects.css' layer(mr.utilities);
+@import './utilities/flex.css' layer(mr.utilities);
+@import './utilities/spacing.css' layer(mr.utilities);

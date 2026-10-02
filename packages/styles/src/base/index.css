@@ -1,14 +1,6 @@
-@import './reset.css';
-@import './normalize.css';
-@import './root.css';
+@import './canvas.css';
 @import './typography.css';
-@import './accessibility.css';
-@import './interactions.css';
 @import './focus.css';
-@import './selection.css';
-@import './scrollbar.css';
-@import './viewport.css';
-@import './reduced-motion.css';
-@import './print.css';
-@import './direction.css';
 @import './color-scheme.css';
+@import './preferences.css';
+@import './touch.css';

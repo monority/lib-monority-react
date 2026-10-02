@@ -1,15 +1,3 @@
-@import './layers/index.css';
-
-@import './base/root.css' layer(monority.base);
-@import './base/library-scope.css' layer(monority.base);
-@import './base/typography.css' layer(monority.base);
-@import './base/accessibility.css' layer(monority.base);
-@import './base/interactions.css' layer(monority.base);
-@import './base/focus.css' layer(monority.base);
-@import './base/selection.css' layer(monority.base);
-@import './base/scrollbar.css' layer(monority.base);
-@import './base/viewport.css' layer(monority.base);
-@import './base/reduced-motion.css' layer(monority.base);
-@import './base/print.css' layer(monority.base);
-@import './base/direction.css' layer(monority.base);
-@import './base/color-scheme.css' layer(monority.base);
+@import './layers.css';
+@import './reset.css';
+@import './base/index.css';
