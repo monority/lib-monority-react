@@ -21,7 +21,8 @@
         "release": "turbo run build && changeset publish",
         "generate:component": "pnpm --filter @monority/generators generate:component",
         "lint:css": "stylelint \"packages/styles/src/**/*.css\"",
-        "verify": "pnpm typecheck && pnpm format:check && pnpm lint:css && pnpm build && pnpm test"
+        "test:contrast": "node tooling/contrast/check-contrast.js",
+        "verify": "pnpm typecheck && pnpm format:check && pnpm lint:css && pnpm test:contrast && pnpm build && pnpm test"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

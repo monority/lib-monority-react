@@ -10,6 +10,7 @@ function isExemptFile(filePath) {
     if (!filePath) return false
     const normalized = filePath.replace(/\\/g, '/')
     if (normalized.endsWith('tokens/ref.css')) return true
+    if (normalized.endsWith('tokens/semantic.css')) return true
     if (normalized.includes('/themes/')) return true
     return false
 }

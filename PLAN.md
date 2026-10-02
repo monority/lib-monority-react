@@ -18,7 +18,7 @@ recette dans mr.components, pnpm verify vert, arret et validation humaine.
 Button en premier.
 
 ## Reprise
-Etape 0 terminee : squelette minimal pret, Stylelint prouve en negatif, verify a 5 etapes vert, harness minimal fonctionnel avec selecteur de theme.
-Dernier commit : feat(web): harness minimal avec selecteur de theme.
-Prochaine etape : Composant 1 (Button) — annonce en trois lignes, recolte et recette.
-Verify a 5 etapes (typecheck, format:check, lint:css, build, test) vert.
+Composant 1 (Button) termine : recette button.css dans mr.components, echelles entieres (space, radius, typo, mouvement), tokens semantiques Button (light + dark), test de contraste WCAG AA prouve en negatif, pnpm verify a 6 etapes vert.
+Dernier commit : feat(button): recette Button, echelles, tokens semantiques et test de contraste.
+Prochaine etape : validation utilisateur avant d'ouvrir le composant suivant.
+Verify : 6 etapes (typecheck, format:check, lint:css, test:contrast, build, test) vert.
