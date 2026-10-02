@@ -1,5 +1,5 @@
 /* Primitives de la bibliotheque dans la couche mr.tokens.
- * Echelles completes introduites des le premier usage, depuis le tag archive.
+ * Uniquement les primitives requises par la base minimale et semantic.css.
  * Aucune recette ne lit directement une primitive. */
 @layer mr.tokens {
     :root {
@@ -11,77 +11,13 @@
         --mr-ref-neutral-hue: 215;
         --mr-ref-neutral-chroma: 0;
 
-        /* Echelle d'espacement (entiere depuis archive) */
-        --mr-ref-space-1: 4px;
-        --mr-ref-space-2: 8px;
-        --mr-ref-space-3: 12px;
-        --mr-ref-space-4: 16px;
-        --mr-ref-space-5: 20px;
-        --mr-ref-space-6: 24px;
-        --mr-ref-space-8: 32px;
-        --mr-ref-space-10: 40px;
-        --mr-ref-space-12: 48px;
-        --mr-ref-space-16: 64px;
-        --mr-ref-space-20: 80px;
-        --mr-ref-space-24: 96px;
-
-        /* Echelle de rayons (entiere depuis archive) */
-        --mr-ref-radius-scale: 1;
-        --mr-ref-radius-xs: calc(0.375rem * var(--mr-ref-radius-scale));
-        --mr-ref-radius-sm: calc(0.625rem * var(--mr-ref-radius-scale));
-        --mr-ref-radius-md: calc(0.875rem * var(--mr-ref-radius-scale));
-        --mr-ref-radius-lg: calc(1rem * var(--mr-ref-radius-scale));
-        --mr-ref-radius-xl: calc(1.25rem * var(--mr-ref-radius-scale));
-        --mr-ref-radius-full: 9999px;
-        --mr-ref-radius-control: calc(6px * var(--mr-ref-radius-scale));
-        --mr-ref-radius-card: calc(10px * var(--mr-ref-radius-scale));
-        --mr-ref-radius-overlay: calc(12px * var(--mr-ref-radius-scale));
-
-        /* Echelle de typographie (entiere depuis archive) */
+        /* Typographie de base */
         --mr-ref-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui,
             -apple-system, 'Segoe UI', sans-serif;
-        --mr-ref-font-family-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace,
-            'SFMono-Regular', Menlo, Consolas, monospace;
-
-        --mr-ref-font-size-xs: 0.75rem;
-        --mr-ref-font-size-sm: 0.8125rem;
         --mr-ref-font-size-md: 0.875rem;
-        --mr-ref-font-size-lg: 1rem;
-        --mr-ref-font-size-xl: 1.125rem;
-        --mr-ref-font-size-2xl: 1.5rem;
-        --mr-ref-font-size-3xl: 2rem;
-        --mr-ref-font-size-display: clamp(2.5rem, 2rem + 2vw, 4rem);
-
-        --mr-ref-font-weight-regular: 400;
-        --mr-ref-font-weight-medium: 500;
-        --mr-ref-font-weight-semibold: 600;
-        --mr-ref-font-weight-bold: 700;
-
-        --mr-ref-line-height-tight: 1.08;
-        --mr-ref-line-height-snug: 1.2;
-        --mr-ref-line-height-normal: 1.4;
-        --mr-ref-line-height-relaxed: 1.6;
         --mr-ref-line-height-base: 1.65;
 
-        /* Epaisseurs de bordure */
-        --mr-ref-border-width-default: 1px;
-        --mr-ref-border-width-control: 1px;
+        /* Focus de base */
         --mr-ref-border-width-focus: 2px;
-
-        /* Echelle de mouvement (entiere depuis archive) */
-        --mr-ref-duration-state: 120ms;
-        --mr-ref-duration-panel: 200ms;
-        --mr-ref-duration-fast: 120ms;
-        --mr-ref-duration-base: 180ms;
-        --mr-ref-duration-slow: 240ms;
-
-        --mr-ref-ease-standard: cubic-bezier(0.2, 0, 0, 1);
-        --mr-ref-ease-enter: cubic-bezier(0, 0, 0, 1);
-        --mr-ref-ease-exit: cubic-bezier(0.4, 0, 1, 1);
-        --mr-ref-ease-linear: linear;
-
-        /* Etats derives */
-        --mr-ref-state-hover-mix: 8%;
-        --mr-ref-state-active-mix: 14%;
     }
 }
