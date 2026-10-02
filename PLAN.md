@@ -18,7 +18,11 @@ recette dans mr.components, pnpm verify vert, arret et validation humaine.
 Button en premier.
 
 ## Reprise
-Composant 1 (Button) termine : recette button.css dans mr.components, echelles entieres (space, radius, typo, mouvement), tokens semantiques Button (light + dark), test de contraste WCAG AA prouve en negatif, pnpm verify a 6 etapes vert.
-Dernier commit : feat(button): recette Button, echelles, tokens semantiques et test de contraste.
-Prochaine etape : validation utilisateur avant d'ouvrir le composant suivant.
-Verify : 6 etapes (typecheck, format:check, lint:css, test:contrast, build, test) vert.
+Elagage strict de la fondation CSS termine (ADR-014, tranches verticales).
+Fondation ramenee au squelette minimal consomme par la base :
+- 11 fichiers CSS (153 lignes au total contre 563 avant)
+- 16 tokens declares : 8 primitives dans ref.css, 8 semantiques dans semantic.css
+- Theme clair par defaut dans :root, aucun theme additionnel (dark reviendra avec Button)
+- Couche mr.utilities vide dans utilities.css
+- Verify ramene a 5 etapes (typecheck, format:check, lint:css, build, test) vert
+Prochaine action : validation utilisateur avant de demarrer Button par tranche verticale.
