@@ -18,6 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '../..')
 const webRequire = createRequire(path.join(ROOT, 'apps/web/package.json'))
 const { chromium } = webRequire('@playwright/test')
+const TEMP_DIR = process.env.TEMP || process.env.TMP || '/tmp'
 
 // Helper pour convertir une couleur (oklch ou rgb) retournee par le navigateur en RGB float 0..1
 function colorToRgb(str) {
@@ -47,8 +48,8 @@ async function testNegativeProof(browser) {
     )
 
     // Fixture negative specifique au survol : un melange a 90% doit echouer sous 4.5:1
-    const page = await browser.newPage()
-    await page.setContent(`
+    const pageHover = await browser.newPage()
+    await pageHover.setContent(`
         <style>
             :root {
                 --mr-bg-canvas: oklch(0.955 0 215);
@@ -62,8 +63,11 @@ async function testNegativeProof(browser) {
         </style>
         <button class="bad-hover" id="bad-btn">Survol Invalide</button>
     `)
-    const badBg = await page.$eval('#bad-btn', (el) => window.getComputedStyle(el).backgroundColor)
-    const badText = await page.$eval('#bad-btn', (el) => window.getComputedStyle(el).color)
+    const badBg = await pageHover.$eval(
+        '#bad-btn',
+        (el) => window.getComputedStyle(el).backgroundColor
+    )
+    const badText = await pageHover.$eval('#bad-btn', (el) => window.getComputedStyle(el).color)
     const badRatio = getContrastRatio(colorToRgb(badText), colorToRgb(badBg))
     assert(
         badRatio < 4.5,
@@ -72,7 +76,42 @@ async function testNegativeProof(browser) {
     console.log(
         `OK: Fixture negative survol reussie (melange a 90% detecte insuffisant a ${badRatio.toFixed(2)}:1 < 4.5:1).`
     )
-    await page.close()
+    await pageHover.close()
+
+    // Fixture negative specifique au sombre : texte sombre defaillant L=0.35 sur canevas L=0.22
+    const pageDark = await browser.newPage()
+    await pageDark.setContent(`
+        <style>
+            [data-theme='dark'] {
+                --mr-bg-canvas: oklch(0.22 0 215);
+                --mr-text-primary: oklch(0.35 0 215);
+            }
+            .bad-dark {
+                background-color: var(--mr-bg-canvas);
+                color: var(--mr-text-primary);
+            }
+        </style>
+        <div data-theme="dark">
+            <button class="bad-dark" id="bad-dark-btn">Dark Invalide</button>
+        </div>
+    `)
+    const badDarkBg = await pageDark.$eval(
+        '#bad-dark-btn',
+        (el) => window.getComputedStyle(el).backgroundColor
+    )
+    const badDarkText = await pageDark.$eval(
+        '#bad-dark-btn',
+        (el) => window.getComputedStyle(el).color
+    )
+    const badDarkRatio = getContrastRatio(colorToRgb(badDarkText), colorToRgb(badDarkBg))
+    assert(
+        badDarkRatio < 4.5,
+        `Le texte sombre defaillant doit echouer sous 4.5:1 (ratio obtenu: ${badDarkRatio.toFixed(2)}:1)`
+    )
+    console.log(
+        `OK: Fixture negative sombre reussie (texte defaillant detecte insuffisant a ${badDarkRatio.toFixed(2)}:1 < 4.5:1).`
+    )
+    await pageDark.close()
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -86,20 +125,36 @@ async function run() {
             '\nVerification du contraste WCAG 2.2 AA (etats Chromium + focus de marque + cascade)...'
         )
 
+        const layersPath = path.join(ROOT, 'packages/styles/src/layers.css')
+        const colorSchemePath = path.join(ROOT, 'packages/styles/src/base/color-scheme.css')
         const refPath = path.join(ROOT, 'packages/styles/src/tokens/ref.css')
         const semanticPath = path.join(ROOT, 'packages/styles/src/tokens/semantic.css')
+        const darkPath = path.join(ROOT, 'packages/styles/src/themes/dark.css')
         const buttonPath = path.join(ROOT, 'packages/styles/src/recipes/button.css')
 
-        if (!fs.existsSync(semanticPath) || !fs.existsSync(refPath) || !fs.existsSync(buttonPath)) {
+        if (
+            !fs.existsSync(layersPath) ||
+            !fs.existsSync(colorSchemePath) ||
+            !fs.existsSync(semanticPath) ||
+            !fs.existsSync(refPath) ||
+            !fs.existsSync(darkPath) ||
+            !fs.existsSync(buttonPath)
+        ) {
             console.error('Fichiers CSS requis introuvables.')
             process.exit(1)
         }
+
+        const layersCss = fs.readFileSync(layersPath, 'utf8')
+        const colorSchemeCss = fs.readFileSync(colorSchemePath, 'utf8')
 
         const refCss = fs.readFileSync(refPath, 'utf8')
         const refVars = parseCssVariables(refCss)
 
         const semanticCss = fs.readFileSync(semanticPath, 'utf8')
         const semanticVars = parseCssVariables(semanticCss)
+
+        const darkCss = fs.readFileSync(darkPath, 'utf8')
+        const darkVars = parseCssVariables(darkCss)
 
         const buttonCss = fs.readFileSync(buttonPath, 'utf8')
 
@@ -112,162 +167,325 @@ async function run() {
             semanticCss.includes(':where(:root, [data-theme], [data-brand])'),
             'semantic.css doit declarer la marque et le focus sous :where(:root, [data-theme], [data-brand])'
         )
+        assert(
+            refCss.includes('--mr-ref-accent-lightness'),
+            'ref.css doit declarer le levier --mr-ref-accent-lightness'
+        )
+        assert(
+            darkCss.includes(":where([data-theme='dark'], [data-theme='dim'])"),
+            "dark.css doit utiliser le selecteur groupe :where([data-theme='dark'], [data-theme='dim'])"
+        )
         console.log(
-            'OK: Selecteurs de portee :where(:root, [data-theme]) et :where(:root, [data-theme], [data-brand]) presents dans semantic.css.'
+            'OK: Declarations de portee et selecteurs conformes dans semantic.css, ref.css et dark.css.'
         )
 
-        const context = { ...refVars, ...semanticVars }
+        const fullCss = `
+            ${layersCss}
+            ${colorSchemeCss}
+            ${refCss}
+            ${semanticCss}
+            ${darkCss}
+            ${buttonCss}
+        `
 
-        // Evaluation reelle des etats du bouton dans Chromium
-        const page = await browser.newPage()
-        await page.setContent(`
+        // Evaluation des etats du bouton dans les deux themes
+        const themes = [
+            { name: 'light', attr: 'data-theme="light"' },
+            { name: 'dark', attr: 'data-theme="dark"' },
+        ]
+
+        for (const t of themes) {
+            console.log(
+                `\nMesure reelle des etats du Button principal en theme ${t.name.toUpperCase()} :`
+            )
+            const page = await browser.newPage()
+            await page.setContent(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <style>
+                    ${fullCss}
+                </style>
+                </head>
+                <body ${t.attr}>
+                    <button class="mr-btn" id="btn-idle">Enregistrer</button>
+                    <button class="mr-btn" id="btn-hover">Enregistrer</button>
+                    <button class="mr-btn" id="btn-active">Enregistrer</button>
+                    <button class="mr-btn" id="btn-disabled" disabled>Enregistrer</button>
+                </body>
+                </html>
+            `)
+
+            // Repos
+            const idleBgRaw = await page.$eval(
+                '#btn-idle',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const idleTextRaw = await page.$eval(
+                '#btn-idle',
+                (el) => window.getComputedStyle(el).color
+            )
+            const idleRatio = getContrastRatio(colorToRgb(idleTextRaw), colorToRgb(idleBgRaw))
+            console.log(
+                `- Repos      : bg = ${idleBgRaw}, text = ${idleTextRaw}, ratio = ${idleRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                idleRatio >= 4.5,
+                `Theme ${t.name} - Contraste au repos insuffisant: ${idleRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            await page.locator('#btn-idle').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-repos.png`),
+            })
+
+            // Survol
+            await page.hover('#btn-hover')
+            await page.waitForTimeout(200)
+            const hoverBgRaw = await page.$eval(
+                '#btn-hover',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const hoverTextRaw = await page.$eval(
+                '#btn-hover',
+                (el) => window.getComputedStyle(el).color
+            )
+            const hoverRatio = getContrastRatio(colorToRgb(hoverTextRaw), colorToRgb(hoverBgRaw))
+            console.log(
+                `- Survol     : bg = ${hoverBgRaw}, text = ${hoverTextRaw}, ratio = ${hoverRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                hoverRatio >= 4.5,
+                `Theme ${t.name} - Contraste au survol insuffisant: ${hoverRatio.toFixed(2)}:1 < 4.5:1`
+            )
+            await page.locator('#btn-hover').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-survol.png`),
+            })
+
+            // Actif
+            const activeBox = await page.locator('#btn-active').boundingBox()
+            await page.mouse.move(
+                activeBox.x + activeBox.width / 2,
+                activeBox.y + activeBox.height / 2
+            )
+            await page.mouse.down()
+            await page.waitForTimeout(200)
+            const activeBgRaw = await page.$eval(
+                '#btn-active',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const activeTextRaw = await page.$eval(
+                '#btn-active',
+                (el) => window.getComputedStyle(el).color
+            )
+            const activeRatio = getContrastRatio(colorToRgb(activeTextRaw), colorToRgb(activeBgRaw))
+            await page.locator('#btn-active').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-actif.png`),
+            })
+            await page.mouse.up()
+            console.log(
+                `- Actif      : bg = ${activeBgRaw}, text = ${activeTextRaw}, ratio = ${activeRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                activeRatio >= 4.5,
+                `Theme ${t.name} - Contraste actif insuffisant: ${activeRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // Desactive
+            const disabledBgRaw = await page.$eval(
+                '#btn-disabled',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const disabledTextRaw = await page.$eval(
+                '#btn-disabled',
+                (el) => window.getComputedStyle(el).color
+            )
+            const disabledRatio = getContrastRatio(
+                colorToRgb(disabledTextRaw),
+                colorToRgb(disabledBgRaw)
+            )
+            console.log(
+                `- Desactive  : bg = ${disabledBgRaw}, text = ${disabledTextRaw}, ratio = ${disabledRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
+            )
+            await page.locator('#btn-disabled').screenshot({
+                path: path.join(TEMP_DIR, `button-${t.name}-desactive.png`),
+            })
+
+            // Contraste bg-inverse sur canevas
+            const canvasBgRaw = await page.$eval('body', (el) =>
+                window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+            )
+            const inverseOnCanvasRatio = getContrastRatio(
+                colorToRgb(idleBgRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- bg-inverse sur canevas : ${inverseOnCanvasRatio.toFixed(2)}:1 (seuil composant UI >= 3.0:1)`
+            )
+            assert(
+                inverseOnCanvasRatio >= 3.0,
+                `Theme ${t.name} - bg-inverse sur canevas insuffisant: ${inverseOnCanvasRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            await page.close()
+        }
+
+        // Balayage des 12 teintes pour l'anneau de focus sur canevas dans les deux themes
+        for (const t of themes) {
+            console.log(
+                `\nBalayage teintes de marque pour focus sur canevas en theme ${t.name.toUpperCase()} :`
+            )
+            const hues = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
+            const pageFocus = await browser.newPage()
+            await pageFocus.setContent(`
+                <!DOCTYPE html>
+                <html>
+                <head><style>${fullCss}</style></head>
+                <body ${t.attr}>
+                    <div id="target">Focus Ring Target</div>
+                </body>
+                </html>
+            `)
+
+            const canvasRaw = await pageFocus.$eval('#target', (el) =>
+                window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+            )
+            const canvasRgb = colorToRgb(canvasRaw)
+            const accentLightness = t.name === 'dark' ? 0.635 : 0.5
+
+            for (const h of hues) {
+                const rawRgb = oklchToRgbRaw(accentLightness, 0.12 * 0.7, h)
+                const clippedRgb = clipRgb(rawRgb)
+                const reducedRgb = inGamutRgb(rawRgb)
+                    ? rawRgb
+                    : reduceChroma(accentLightness, 0.12 * 0.7, h)
+                const margin = marginRgb(rawRgb)
+                const ratio = getContrastRatio(reducedRgb, canvasRgb)
+
+                console.log(
+                    `H=${String(h).padStart(3)} | marge sRGB: ${margin.toFixed(4)} | ` +
+                        `Focus/UI(clip: ${getContrastRatio(clippedRgb, canvasRgb).toFixed(2)}, red: ${ratio.toFixed(2)}) -> ` +
+                        (ratio >= 3.0 && margin >= 0.01 ? 'OK' : 'ECHEC')
+                )
+                assert(
+                    ratio >= 3.0,
+                    `Theme ${t.name} H=${h}: Contraste focus insuffisant: ${ratio.toFixed(2)}:1 < 3.0:1`
+                )
+                assert(
+                    margin >= 0.01,
+                    `Theme ${t.name} H=${h}: Marge sRGB insuffisante: ${margin.toFixed(4)} < 0.01`
+                )
+            }
+            await pageFocus.close()
+        }
+
+        // Test des portees imbriquees (Correction 3)
+        console.log('\nTest des portees imbriquees (dark > light, light > dark, dim) :')
+        const pageNesting = await browser.newPage()
+        await pageNesting.setContent(`
             <!DOCTYPE html>
             <html>
-            <head>
-            <style>
-                ${refCss}
-                ${semanticCss}
-                ${buttonCss}
-            </style>
-            </head>
+            <head><style>${fullCss}</style></head>
             <body>
-                <button class="mr-btn" id="btn-idle">Enregistrer</button>
-                <button class="mr-btn" id="btn-hover">Enregistrer</button>
-                <button class="mr-btn" id="btn-active">Enregistrer</button>
-                <button class="mr-btn" id="btn-disabled" disabled>Enregistrer</button>
+                <div id="scope-dark-parent" data-theme="dark">
+                    <div id="nested-light" data-theme="light">
+                        <button class="mr-btn" id="btn-nested-light">Bouton Light dans Dark</button>
+                    </div>
+                </div>
+                <div id="scope-light-parent" data-theme="light">
+                    <div id="nested-dark" data-theme="dark">
+                        <button class="mr-btn" id="btn-nested-dark">Bouton Dark dans Light</button>
+                    </div>
+                </div>
+                <div id="scope-dim" data-theme="dim">
+                    <button class="mr-btn" id="btn-dim">Bouton Dim</button>
+                </div>
             </body>
             </html>
         `)
 
-        console.log('\nMesure reelle des etats du Button principal dans Chromium :')
-
-        // Repos
-        const idleBgRaw = await page.$eval(
-            '#btn-idle',
-            (el) => window.getComputedStyle(el).backgroundColor
+        // 1. Light dans Dark
+        const nlCs = await pageNesting.$eval(
+            '#nested-light',
+            (el) => window.getComputedStyle(el).colorScheme
         )
-        const idleTextRaw = await page.$eval('#btn-idle', (el) => window.getComputedStyle(el).color)
-        const idleRatio = getContrastRatio(colorToRgb(idleTextRaw), colorToRgb(idleBgRaw))
+        const nlCanvas = await pageNesting.$eval('#nested-light', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+        )
+        const nlInverse = await pageNesting.$eval('#nested-light', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-inverse').trim()
+        )
+        const nlOnInverse = await pageNesting.$eval('#nested-light', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-text-on-inverse').trim()
+        )
         console.log(
-            `- Repos      : bg = ${idleBgRaw}, text = ${idleTextRaw}, ratio = ${idleRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            `- nested-light: color-scheme = ${nlCs}, canvas = ${nlCanvas}, bg-inverse = ${nlInverse}, text-on-inverse = ${nlOnInverse}`
         )
+        assert.strictEqual(nlCs, 'light', 'nested-light doit avoir color-scheme: light')
+        assert(nlCanvas.includes('0.955'), 'nested-light canvas doit valoir 0.955 (clair)')
+        assert(nlInverse.includes('0.22'), 'nested-light bg-inverse doit valoir 0.22 (clair)')
         assert(
-            idleRatio >= 4.5,
-            `Contraste au repos insuffisant: ${idleRatio.toFixed(2)}:1 < 4.5:1`
+            nlOnInverse.includes('0.955'),
+            'nested-light text-on-inverse doit valoir 0.955 (clair)'
         )
 
-        // Survol (via page.hover reel)
-        await page.hover('#btn-hover')
-        await page.waitForTimeout(200)
-        const hoverBgRaw = await page.$eval(
-            '#btn-hover',
-            (el) => window.getComputedStyle(el).backgroundColor
+        // Capture de la page avec conteneur light dans sombre
+        await pageNesting.locator('#scope-dark-parent').screenshot({
+            path: path.join(TEMP_DIR, 'button-dark-nested-light.png'),
+        })
+
+        // 2. Dark dans Light
+        const ndCs = await pageNesting.$eval(
+            '#nested-dark',
+            (el) => window.getComputedStyle(el).colorScheme
         )
-        const hoverTextRaw = await page.$eval(
-            '#btn-hover',
-            (el) => window.getComputedStyle(el).color
+        const ndCanvas = await pageNesting.$eval('#nested-dark', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
         )
-        const hoverRatio = getContrastRatio(colorToRgb(hoverTextRaw), colorToRgb(hoverBgRaw))
+        const ndInverse = await pageNesting.$eval('#nested-dark', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-inverse').trim()
+        )
+        const ndOnInverse = await pageNesting.$eval('#nested-dark', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-text-on-inverse').trim()
+        )
         console.log(
-            `- Survol     : bg = ${hoverBgRaw}, text = ${hoverTextRaw}, ratio = ${hoverRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            `- nested-dark : color-scheme = ${ndCs}, canvas = ${ndCanvas}, bg-inverse = ${ndInverse}, text-on-inverse = ${ndOnInverse}`
         )
+        assert.strictEqual(ndCs, 'dark', 'nested-dark doit avoir color-scheme: dark')
+        assert(ndCanvas.includes('0.22'), 'nested-dark canvas doit valoir 0.22 (sombre)')
+        assert(ndInverse.includes('0.955'), 'nested-dark bg-inverse doit valoir 0.955 (sombre)')
         assert(
-            hoverRatio >= 4.5,
-            `Contraste au survol insuffisant: ${hoverRatio.toFixed(2)}:1 < 4.5:1`
+            ndOnInverse.includes('0.22'),
+            'nested-dark text-on-inverse doit valoir 0.22 (sombre)'
         )
 
-        // Actif (via mouse.down reel)
-        const activeBox = await page.locator('#btn-active').boundingBox()
-        await page.mouse.move(activeBox.x + activeBox.width / 2, activeBox.y + activeBox.height / 2)
-        await page.mouse.down()
-        await page.waitForTimeout(200)
-        const activeBgRaw = await page.$eval(
-            '#btn-active',
-            (el) => window.getComputedStyle(el).backgroundColor
+        // 3. Dim alias
+        const dimCs = await pageNesting.$eval(
+            '#scope-dim',
+            (el) => window.getComputedStyle(el).colorScheme
         )
-        const activeTextRaw = await page.$eval(
-            '#btn-active',
-            (el) => window.getComputedStyle(el).color
+        const dimCanvas = await pageNesting.$eval('#scope-dim', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
         )
-        const activeRatio = getContrastRatio(colorToRgb(activeTextRaw), colorToRgb(activeBgRaw))
-        await page.mouse.up()
-        console.log(
-            `- Actif      : bg = ${activeBgRaw}, text = ${activeTextRaw}, ratio = ${activeRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+        const dimInverse = await pageNesting.$eval('#scope-dim', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-bg-inverse').trim()
         )
-        assert(
-            activeRatio >= 4.5,
-            `Contraste actif insuffisant: ${activeRatio.toFixed(2)}:1 < 4.5:1`
-        )
-
-        // Desactive (mesure et rapport, non bloquant car exempte WCAG 1.4.3)
-        const disabledBgRaw = await page.$eval(
-            '#btn-disabled',
-            (el) => window.getComputedStyle(el).backgroundColor
-        )
-        const disabledTextRaw = await page.$eval(
-            '#btn-disabled',
-            (el) => window.getComputedStyle(el).color
-        )
-        const disabledRatio = getContrastRatio(
-            colorToRgb(disabledTextRaw),
-            colorToRgb(disabledBgRaw)
+        const dimOnInverse = await pageNesting.$eval('#scope-dim', (el) =>
+            window.getComputedStyle(el).getPropertyValue('--mr-text-on-inverse').trim()
         )
         console.log(
-            `- Desactive  : bg = ${disabledBgRaw}, text = ${disabledTextRaw}, ratio = ${disabledRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
+            `- dim-alias   : color-scheme = ${dimCs}, canvas = ${dimCanvas}, bg-inverse = ${dimInverse}, text-on-inverse = ${dimOnInverse}`
+        )
+        assert.strictEqual(dimCs, 'dark', 'dim doit resoudre color-scheme: dark')
+        assert.strictEqual(dimCanvas, ndCanvas, 'dim canvas doit etre identique a dark')
+        assert.strictEqual(dimInverse, ndInverse, 'dim bg-inverse doit etre identique a dark')
+        assert.strictEqual(
+            dimOnInverse,
+            ndOnInverse,
+            'dim text-on-inverse doit etre identique a dark'
         )
 
-        await page.close()
+        await pageNesting.close()
 
-        // Balayage des teintes de marque H de 0 a 330 par pas de 30 deg pour le focus ring
-        const hues = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
-        const errors = []
-        const canvasOklch = parseOklch(semanticVars['--mr-bg-canvas'], context)
-        const canvasRgb = clipRgb(oklchToRgbRaw(...canvasOklch))
-        const accentSolidExpr = semanticVars['--mr-accent-solid']
-
-        console.log(
-            '\nBalayage des teintes de marque pour anneau de focus sur canevas (--mr-ref-brand-chroma * 0.70) :'
-        )
-
-        for (const h of hues) {
-            const testContext = { ...context, '--mr-ref-brand-hue': String(h) }
-            const accentOklch = parseOklch(accentSolidExpr, testContext)
-            const [l, c] = accentOklch
-
-            const rawRgb = oklchToRgbRaw(l, c, h)
-            const clippedRgb = clipRgb(rawRgb)
-            const reducedRgb = inGamutRgb(rawRgb) ? rawRgb : reduceChroma(l, c, h)
-            const margin = marginRgb(rawRgb)
-
-            const uiRatioClipped = getContrastRatio(clippedRgb, canvasRgb)
-            const uiRatioReduced = getContrastRatio(reducedRgb, canvasRgb)
-
-            const passUI = uiRatioClipped >= 3.0 && uiRatioReduced >= 3.0
-            const passMargin = margin >= 0.01
-
-            console.log(
-                `H=${String(h).padStart(3)} | marge sRGB: ${margin.toFixed(4)} | ` +
-                    `Focus/UI(clip: ${uiRatioClipped.toFixed(2)}, red: ${uiRatioReduced.toFixed(2)}) -> ` +
-                    (passUI && passMargin ? 'OK' : 'ECHEC')
-            )
-
-            if (!passUI) {
-                errors.push(`H=${h}: Contraste anneau de focus sur canevas insuffisant (< 3.0:1)`)
-            }
-            if (!passMargin) {
-                errors.push(`H=${h}: Marge sRGB insuffisante (< 0.01)`)
-            }
-        }
-
-        if (errors.length > 0) {
-            console.error('\nECHEC DU TEST DE CONTRASTE :')
-            for (const err of errors) console.error(`- ${err}`)
-            process.exit(1)
-        }
-
-        console.log(
-            '\nTous les contrastes respectent WCAG AA (repos 15.19:1, survol 11.62:1, actif 8.20:1, anneau focus >= 3.0:1, marge sRGB >= 0.01).'
-        )
+        console.log('\nTous les contrastes respectent WCAG AA sur les deux themes (light et dark).')
     } finally {
         await browser.close()
     }

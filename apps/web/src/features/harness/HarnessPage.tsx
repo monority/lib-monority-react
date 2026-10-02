@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { Button, CopyButton, IconButton, positionOverlay, Spinner, ThemeScope } from '@monority/ui'
 import './harness.css'
 
-const themes = ['light', 'dark', 'oled', 'ocean', 'night', 'high-contrast'] as const
+const themes = ['light', 'dark', 'dim', 'oled', 'ocean', 'night', 'high-contrast'] as const
 const densities = ['comfortable', 'compact'] as const
 const brands = ['monority', 'studio'] as const
 type Theme = (typeof themes)[number]

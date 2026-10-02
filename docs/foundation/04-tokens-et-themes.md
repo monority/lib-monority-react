@@ -72,19 +72,20 @@ Les pourcentages de mélange sont des tokens partagés suivant une grille en mul
 
 ## Thèmes
 
-- Thèmes : `light`, `dark`, `slate`, `oled`, `ocean`, `night`, `high-contrast`.
+- Thèmes réellement présents à ce stade : `light` (par défaut dans `tokens/semantic.css`) et `dark` (dans `themes/dark.css`). Les thèmes `slate`, `oled`, `ocean`, `night`, `high-contrast` seront construits par étapes.
 - `dim` est un alias de `dark`, déclaré par un sélecteur groupé (`[data-theme="dark"], [data-theme="dim"]`). Il ne produit pas de bloc propre et n'est jamais compté comme thème.
 - `system` est une préférence utilisateur résolue à l'exécution dans `@monority/ui`, avant le premier rendu. Elle n'a aucune existence en CSS.
 - Un thème est un fichier `themes/<nom>.css` contenant `[data-theme="<nom>"]` et uniquement ce qui diffère du défaut. La liste des thèmes se lit du dossier par un glob, jamais d'une liste recopiée.
 - Chaque thème déclare `color-scheme`.
-- Le thème par défaut (`light`) vit dans `tokens/semantic.css` : un token se déclare uniquement sur les portées qui peuvent changer sa valeur (`:where(:root, [data-theme])` pour les neutres, échelles et alias, et `:where(:root, [data-theme], [data-brand])` pour la marque et le focus).
+- Le thème sombre applique une règle de symétrie stricte par permutation des rôles neutres du clair : `--mr-bg-canvas` sombre prend la valeur de `--mr-text-primary` clair (`0.22`), et `--mr-text-primary` sombre prend celle de `--mr-bg-canvas` clair (`0.955`), conservant à l'identique le contraste texte principal sur canevas (15.19:1) avec un seul paramètre pour tout le système. Le texte désactivé (`0.542`) est calculé pour reproduire le ratio de 3.46:1 du clair sur son canevas.
+- Le thème par défaut (`light`) vit dans `tokens/semantic.css` : un token se déclare uniquement sur les portées qui peuvent changer sa valeur (`:where(:root, [data-theme])` pour les neutres, échelles, leviers et alias, et `:where(:root, [data-theme], [data-brand])` pour la marque et le focus).
 - Cette séparation garantit que la marque se réévalue par cascade sans écraser le thème actif sur un conteneur ancêtre.
 
 Ajouter un thème : créer un fichier dans `themes/`, vérifier le contraste, ne rien changer d'autre. Si ajouter un thème exige de toucher un autre fichier, la structure est en défaut et doit être corrigée avant de continuer.
 
 ## Marque
 
-`[data-brand]` redéfinit uniquement `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`. Tout ce qui dépend de la marque se réévalue par cascade grâce au sélecteur `:where(:root, [data-theme], [data-brand])` de `semantic.css`, sans altérer les tokens neutres ou d'échelle. Aucun contournement par composant.
+`[data-brand]` redéfinit uniquement `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`. Un token qui dépend à la fois du thème et de la marque lit ses paramètres de thème dans des leviers déclarés sur la portée du thème, jamais en littéraux dans sa propre formule. Ainsi, `--mr-ref-accent-lightness` (déclaré sur `:where(:root, [data-theme])` à `0.5` en clair et redéfini à `0.635` dans `dark.css`) est lu par `--mr-accent-solid` sur `:where(:root, [data-theme], [data-brand])` : un conteneur `[data-brand]` imbriqué sous un thème sombre conserve la luminosité sombre tout en appliquant la teinte de marque locale. Tout ce qui dépend de la marque se réévalue par cascade sans altérer les tokens neutres ou d'échelle. Aucun contournement par composant.
 
 ## Densité
 

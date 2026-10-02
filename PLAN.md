@@ -17,12 +17,13 @@ tokens et recette dans mr.components, pnpm verify vert, arret.
 Button en premier (B1 a B6).
 
 ## Reprise
-B2 valide et commite (etats survol, actif, desactive, transition et motion) :
-- button.css : selecteur unique :where(.mr-btn), @media (hover: hover), actif, desactive, transition
-- semantic.css : 5 nouveaux tokens (--mr-state-hover-mix: 12%, active: 24%, disabled: 84%, --mr-text-disabled, --mr-duration-state: 150ms)
-- prefers-reduced-motion: reduce gere dans mr.tokens a 0ms (prouve par test de couche)
-- check-contrast.js etendu avec Playwright mesurant les etats reels du bouton (repos 15.19:1, survol 11.62:1, actif 8.20:1)
-- 23 tokens declares au total (5 ref, 18 semantiques), vocabulary.json a jour
-- ADR-021 consigne dans 10-decisions.md, docs 03, 04, 06 alignes
-- pnpm verify vert a 6 etapes
-Prochaine action : B3 (theme sombre).
+B3 valide et commite localement (theme sombre, symetrie neutre, levier d'accent) :
+- dark.css : selecteur groupe :where([data-theme='dark'], [data-theme='dim']), color-scheme: dark
+- symetrie neutre : bg-canvas sombre (0.22) = text-primary clair, text-primary sombre (0.955) = bg-canvas clair
+- texte desactive : 0.542 calcule pour reproduire le ratio clair de 3.46:1
+- levier d'accent : --mr-ref-accent-lightness (0.50 en clair, 0.635 en sombre) lu par --mr-accent-solid
+- 24 tokens declares au total (6 ref, 18 semantiques), pnpm verify vert a 6 etapes
+- portees imbriquees testees (dark > light, light > dark, dim) et prouvees
+- 9 captures Playwright realisees dans Temp (4 light, 4 dark, 1 imbriquee)
+- ADR-022 consigne dans 10-decisions.md, docs/foundation/04 aligne
+Prochaine action : validation par l'utilisateur du rendu B3 avant push, puis B4 (variantes secondaire et discrete).

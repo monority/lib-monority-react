@@ -1,0 +1,20 @@
+/* Theme sombre dans la couche mr.themes.
+ * dim est un alias de dark declare par selecteur groupe (jamais de bloc propre). */
+@layer mr.themes {
+    :where([data-theme='dark'], [data-theme='dim']) {
+        color-scheme: dark;
+
+        /* Fonds : permutation symetrique avec le texte principal clair */
+        --mr-bg-canvas: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Textes : permutation symetrique avec le canevas clair */
+        --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Texte desactive : luminosite 0.542 calculee pour reproduire le ratio de 3.46:1 du clair sur son canevas */
+        --mr-text-disabled: oklch(0.542 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Levier de luminosite de l'accent pour fond sombre :
+         * 0.635 reproduit le contraste de ~5.0:1 de l'anneau de focus sur canevas */
+        --mr-ref-accent-lightness: 0.635;
+    }
+}

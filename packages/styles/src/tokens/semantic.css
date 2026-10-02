@@ -58,9 +58,13 @@
     /* Valeurs dependantes de la marque */
     :where(:root, [data-theme], [data-brand]) {
         /* Marque / Accent :
-         * L=0.50 garantit le double contraste texte >= 4.5:1 et UI >= 3.0:1 sur canevas clair.
+         * Lit le levier de luminosite du theme (--mr-ref-accent-lightness) pour survivre
+         * sous un conteneur [data-brand] sans rebasculer en luminosite claire.
          * Facteur 0.70 sur brand-chroma maintient la marge sRGB >= 0.04 sur tout le balayage de teintes (0-330 deg). */
-        --mr-accent-solid: oklch(0.5 calc(var(--mr-ref-brand-chroma) * 0.7) var(--mr-ref-brand-hue));
+        --mr-accent-solid: oklch(
+            var(--mr-ref-accent-lightness) calc(var(--mr-ref-brand-chroma) * 0.7)
+                var(--mr-ref-brand-hue)
+        );
 
         /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
         --mr-focus-ring: var(--mr-accent-solid);

@@ -14,4 +14,9 @@
         /* Levier de mise a l'echelle des rayons */
         --mr-ref-radius-scale: 1;
     }
+
+    /* Levier de luminosite d'accent par defaut (theme clair), redefini par theme */
+    :where(:root, [data-theme]) {
+        --mr-ref-accent-lightness: 0.5;
+    }
 }

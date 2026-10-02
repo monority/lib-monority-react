@@ -129,6 +129,15 @@ Décision :
 3. Les mélanges d'état interactifs (`state-hover-mix`, `state-active-mix`, `state-disabled-mix`) forment une grille arithmétique en multiples de 12% (12% pour le survol, 24% pour l'actif, 84% pour le désactivé) dérivant la couleur par rapprochement du canevas (`--mr-bg-canvas`).
 4. Aucune valeur brute de mélange ou d'état ne vit dans les recettes : tous les ratios sont déclarés sous forme de tokens `--mr-state-*-mix` dans le vocabulaire clos.
 
+### ADR-022 : symétrie du thème sombre par permutation des rôles neutres et levier de luminosité d'accent pour conteneur de marque
+Statut : Acceptée.
+Contexte : Le thème sombre doit garantir les mêmes contrastes de texte et d'anneau de focus que le thème clair sans valeurs arbitraires ni rupture perceptuelle. De plus, un token dépendant à la fois du thème et de la marque (`--mr-accent-solid`) voit sa formule redéclarée sous `[data-brand]` ; avec une luminosité littérale en dur, un conteneur de marque sous thème sombre réinitialiserait la luminosité en clair.
+Décision :
+1. Règle de symétrie : le thème sombre échange les deux rôles de base du clair (`--mr-bg-canvas` sombre prend la valeur de `--mr-text-primary` clair `0.22`, et `--mr-text-primary` sombre prend celle de `--mr-bg-canvas` clair `0.955`). Un seul paramètre pour tout le système, contraste conservé à l'identique (15.19:1).
+2. Texte désactivé sombre : luminosité calculée à `0.542` pour reproduire le ratio de 3.46:1 du clair sur son canevas.
+3. Levier d'accent : ajout de la primitive `--mr-ref-accent-lightness: 0.5` dans `ref.css` (portée `:where(:root, [data-theme])`), redéfinie à `0.635` dans `dark.css` (reproduisant le contraste de ~5.0:1 de l'anneau de focus sur canevas). `--mr-accent-solid` lit ce levier.
+4. Règle générale : un token qui dépend à la fois du thème et de la marque lit ses paramètres de thème dans des leviers déclarés sur la portée du thème, jamais en littéraux dans sa propre formule.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.
