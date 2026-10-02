@@ -1,11 +1,6 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+// Conversions colorimetriques OKLCH -> sRGB et calculs de contraste WCAG 2.2 AA
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT = path.resolve(__dirname, '../..')
-
-export function oklchToRgb(l, c, h) {
+export function oklchToRgbRaw(l, c, h) {
     const hRad = (h * Math.PI) / 180
     const a = c * Math.cos(hRad)
     const b = c * Math.sin(hRad)
@@ -22,12 +17,46 @@ export function oklchToRgb(l, c, h) {
     const g = -1.2684380046 * L + 2.6097574011 * M - 0.3413193965 * S
     const bl = -0.0041960863 * L - 0.7034186147 * M + 1.707614701 * S
 
-    const toSrgb = (x) => {
-        const clamped = Math.max(0, Math.min(1, x))
-        return clamped <= 0.0031308 ? 12.92 * clamped : 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055
+    const toLinearSrgb = (x) => {
+        return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(Math.max(0, x), 1 / 2.4) - 0.055
     }
 
-    return [toSrgb(r), toSrgb(g), toSrgb(bl)]
+    return [toLinearSrgb(r), toLinearSrgb(g), toLinearSrgb(bl)]
+}
+
+export function inGamutRgb(rgb) {
+    return rgb.every((v) => v >= 0 && v <= 1)
+}
+
+export function marginRgb(rgb) {
+    return Math.min(...rgb.map((v) => Math.min(v, 1 - v)))
+}
+
+export function clipRgb(rgb) {
+    return rgb.map((v) => Math.max(0, Math.min(1, v)))
+}
+
+// Reduction de chroma CSS Color 4 (bisection sur C a L et H constants)
+export function reduceChroma(l, c, h) {
+    let low = 0
+    let high = c
+    let best = oklchToRgbRaw(l, 0, h)
+    for (let i = 0; i < 24; i++) {
+        const mid = (low + high) / 2
+        const rgb = oklchToRgbRaw(l, mid, h)
+        if (inGamutRgb(rgb)) {
+            best = rgb
+            low = mid
+        } else {
+            high = mid
+        }
+    }
+    return clipRgb(best)
+}
+
+export function oklchToRgb(l, c, h) {
+    const raw = oklchToRgbRaw(l, c, h)
+    return inGamutRgb(raw) ? raw : clipRgb(raw)
 }
 
 export function getLuminance([r, g, b]) {
@@ -79,33 +108,4 @@ export function parseOklch(str, contextVars = {}) {
     const match = resolved.match(/oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)/i)
     if (!match) return null
     return [parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3])]
-}
-
-export function checkThemePairs(themeName, pairs) {
-    const errors = []
-    const results = []
-
-    for (const pair of pairs) {
-        const rgb1 = oklchToRgb(...pair.color1)
-        const rgb2 = oklchToRgb(...pair.color2)
-        const ratio = getContrastRatio(rgb1, rgb2)
-        const minThreshold = pair.threshold ?? 4.5
-        const passed = ratio >= minThreshold
-
-        results.push({
-            name: pair.name,
-            theme: themeName,
-            ratio: ratio.toFixed(2),
-            threshold: minThreshold,
-            passed,
-        })
-
-        if (!passed) {
-            errors.push(
-                `Theme ${themeName}: ${pair.name} - Ratio ${ratio.toFixed(2)} < seuil ${minThreshold}`
-            )
-        }
-    }
-
-    return { errors, results }
 }

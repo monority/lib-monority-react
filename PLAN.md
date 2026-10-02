@@ -17,11 +17,11 @@ tokens et recette dans mr.components, pnpm verify vert, arret.
 Button en premier (B1 a B6).
 
 ## Reprise
-Finition de l'elagage terminee :
-- 11 fichiers CSS (145 lignes au total)
-- 11 tokens declares : 6 primitives dans ref.css, 5 semantiques dans semantic.css
-- 0 orphelin strict, 6 primitives lues par semantic.css (dont marque commente interface publique)
-- 5 semantiques lus par la base minimale (canvas fond/texte, focus ring, typo famille/taille)
-- Base minimale : 4 regles strictes, line-height supprimee, focus 2px (exception admise)
-- pnpm lint existe (biome lint .) mais echoue sur 132 diagnostics hors perimetre ; verify reste a 5 etapes vertes
-Prochaine action : attente de validation sur la proposition Button B1.
+Micro-etape B1 terminee (Button principal md, repos et focus-visible) :
+- Recette button.css dans couche mr.components (min-block-size responsive, centrage flex)
+- 17 tokens declares au total : 5 primitives leviers dans ref.css, 12 semantiques dans semantic.css
+- ADR-018 (echelles sans jumeaux, valeurs brutes dans tokens/themes) et ADR-019 (size, on-solid, vocabulary.json)
+- Stylelint prouve en negatif (recette) et positif (tokens/themes)
+- Test de contraste integre dans verify (6 etapes) : 12 teintes balayees (0-330 deg), WCAG AA respecte
+- Harness verifie sans interface sur /harness/button?theme=light sans erreur
+Prochaine action : attente de validation sur le rendu B1 avant push et ouverture de B2.

@@ -1,5 +1,4 @@
-/* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens.
- * Uniquement les 5 tokens consommes par les regles de base minimale. */
+/* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens. */
 @layer mr.tokens {
     :root {
         /* Fonds */
@@ -8,13 +7,30 @@
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Focus */
-        --mr-focus-ring: oklch(
-            0.52 calc(var(--mr-ref-brand-chroma) * 0.725) var(--mr-ref-brand-hue)
-        );
+        /* Marque / Accent :
+         * L=0.50 garantit le double contraste texte >= 4.5:1 et UI >= 3.0:1 sur canevas clair.
+         * Facteur 0.70 sur brand-chroma maintient la marge sRGB >= 0.04 sur tout le balayage de teintes (0-330 deg). */
+        --mr-accent-solid: oklch(0.5 calc(var(--mr-ref-brand-chroma) * 0.7) var(--mr-ref-brand-hue));
+        --mr-accent-on-solid: oklch(1 0 0);
 
-        /* Typographie de base */
-        --mr-font-family-sans: var(--mr-ref-font-family-sans);
-        --mr-font-size-md: var(--mr-ref-font-size-md);
+        /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
+        --mr-focus-ring: var(--mr-accent-solid);
+
+        /* Espacement : --mr-space-N vaut N fois 0.25rem (grille arithmetique de 4px) */
+        --mr-space-2: 0.5rem;
+        --mr-space-4: 1rem;
+
+        /* Tailles de controle : N fois 0.25rem */
+        --mr-size-control-md: 2.5rem;
+
+        /* Rayons : base de 2px multipliee par la suite (0, 2, 3, 5, 8).
+         * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque. */
+        --mr-radius-md: calc(0.375rem * var(--mr-ref-radius-scale));
+
+        /* Typographie : echelle numerique CSS 400, 500, 600, 700 ; medium vaut 500 */
+        --mr-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system,
+            'Segoe UI', sans-serif;
+        --mr-font-size-md: 0.875rem;
+        --mr-font-weight-medium: 500;
     }
 }

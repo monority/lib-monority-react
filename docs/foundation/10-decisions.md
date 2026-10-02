@@ -30,7 +30,7 @@ Alternatives écartées : spécificité maîtrisée sans couches (fragile, impos
 Conséquences : le CSS non layerisé du consommateur gagne toujours, c'est un engagement public. Les Web Components devront adopter leurs propres couches par shadow root.
 
 ### ADR-003 : trois niveaux de tokens
-Statut : Acceptée.
+Statut : Amendée par ADR-018.
 Décision : primitives (`--mr-ref-*`), sémantiques, tokens de composant. Une recette ne lit jamais une primitive. Une valeur brute n'existe que dans les primitives et les thèmes.
 Conséquences : ajouter un thème ou une marque ne touche aucune recette.
 
@@ -101,6 +101,16 @@ Décision : la section `## Reprise` de `PLAN.md` (30 lignes au plus). Pas de `HA
 Statut : Acceptée.
 Décision : prose et puces, jamais de tableau, même quand un gabarit externe en impose un.
 
+### ADR-018 : échelles déclarées une seule fois dans semantic.css et valeurs brutes autorisées dans tokens/ et themes/
+Statut : Acceptée (amende ADR-003).
+Contexte : doubler chaque pas d'échelle par une primitive --mr-ref-space-* puis un sémantique --mr-space-* doublait le bruit sans gain sémantique. De plus, placer le thème clair par défaut dans semantic.css exige d'y autoriser les valeurs oklch brutes.
+Décision : les échelles de dimension et de typographie (space, radius, font-size, font-weight, font-family, size) sont des tokens publics déclarés une seule fois dans `tokens/semantic.css`. `tokens/ref.css` ne conserve que les leviers de marque, neutres et mise à l'échelle (--mr-ref-brand-*, --mr-ref-neutral-*, --mr-ref-radius-scale). Les valeurs brutes sont autorisées dans `tokens/` et `themes/`, et strictement interdites dans `recipes/`, `base/` et `reset.css`.
+
+### ADR-019 : catégorie size, rôle on-solid et emplacement du fichier de vocabulaire
+Statut : Acceptée.
+Contexte : Button exige une hauteur de contrôle minimale, un texte sur fond d'accent et la fermeture du vocabulaire pour Stylelint.
+Décision : ajout de la catégorie `size` (`--mr-size-control-*`) et du rôle `on-solid` (`--mr-accent-on-solid`) au vocabulaire clos. Décision ouverte tranchée : le fichier de vocabulaire unique lu par Stylelint vit à l'emplacement `tooling/stylelint/vocabulary.json`.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.
@@ -110,7 +120,6 @@ Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchée
 - `[DÉCISION]` **Plancher de navigateurs** : versions minimales exactes, à fixer par mesure de l'audience avant la première publication.
 - `[DÉCISION]` **Valeurs et noms des densités** : confirmer `compact`, `default`, `comfortable` à partir des échelles historiques.
 - `[DÉCISION]` **Échelles initiales** (espacement, rayons, tailles de texte, ombres, profondeurs) : pas et valeurs, issues de l'archive de l'ancien système, à figer lors du premier composant qui les lit.
-- `[DÉCISION]` **Fichier de vocabulaire** : emplacement et format exacts, lu par Stylelint.
 - `[DÉCISION]` **Régénération des captures visuelles** : moment exact de la passe unique, après quel lot de composants.
 
 ## Ajouter un ADR

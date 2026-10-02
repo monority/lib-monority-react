@@ -87,7 +87,7 @@ Cet ordre n'est pas contrôlé par un outil : il facilite la relecture.
 ## Interdits
 
 - Règle hors couche, sélecteur global hors reset et base, `!important`, sélecteur d'identifiant.
-- Valeur brute de couleur ou de dimension hors `tokens/ref.css` et `themes/`.
+- Valeur brute de couleur ou de dimension hors `tokens/` et `themes/` (ADR-018).
 - Lecture directe d'une primitive (`--mr-ref-*`) dans une recette.
 - Nom de classe ou de token générique (`.button`, `--color-primary`) susceptible d'entrer en collision avec l'hôte.
 - Style global imposé à l'application hôte (`html`, `body`, `*`) hors portée `mr-*`.

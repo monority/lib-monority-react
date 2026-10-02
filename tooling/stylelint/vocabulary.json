@@ -1,0 +1,31 @@
+{
+    "categories": [
+        "bg",
+        "text",
+        "border",
+        "accent",
+        "danger",
+        "warning",
+        "success",
+        "info",
+        "chart",
+        "focus",
+        "font-family",
+        "font-size",
+        "font-weight",
+        "line-height",
+        "space",
+        "radius",
+        "border-width",
+        "shadow",
+        "z",
+        "duration",
+        "ease",
+        "size"
+    ],
+    "roles": {
+        "accent": ["solid", "on-solid", "subtle", "border", "text"],
+        "focus": ["ring"],
+        "size": ["control-sm", "control-md", "control-lg"]
+    }
+}

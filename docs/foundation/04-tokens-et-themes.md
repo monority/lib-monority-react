@@ -4,14 +4,14 @@ Ce document fixe les niveaux de tokens, leur nommage, la gestion des thèmes, de
 
 ## Trois niveaux
 
-1. **Primitives** (`--mr-ref-*`) : valeurs brutes. Teintes, chroma, échelles d'espacement, rayons, tailles, durées, ombres, indices de profondeur. Internes, sauf `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`, qui sont l'interface publique de la marque.
-2. **Sémantiques** (`--mr-bg-*`, `--mr-text-*`, ...) : rôles d'usage, qui référencent des primitives ou portent une valeur de thème. Publics.
+1. **Primitives** (`--mr-ref-*`) : leviers modifiables par la marque, les thèmes et la mise à l'échelle (`--mr-ref-brand-*`, `--mr-ref-neutral-*`, `--mr-ref-radius-scale`). Internes, sauf `--mr-ref-brand-hue` et `--mr-ref-brand-chroma`, qui sont l'interface publique de la marque.
+2. **Sémantiques** (`--mr-bg-*`, `--mr-text-*`, `--mr-space-*`, `--mr-radius-*`, `--mr-size-*`, `--mr-font-*`) : rôles d'usage et échelles de dimension/typographie déclarés une seule fois sous leur nom public dans `semantic.css` (ADR-018). Publics.
 3. **Tokens de composant** (`--mr-<composant>-*`) : points de personnalisation d'un composant, qui référencent des sémantiques. Publics s'ils sont documentés.
 
 Règles de niveau :
 
 - Une recette ne lit que des sémantiques ou ses propres tokens de composant. Jamais une primitive.
-- Une valeur brute n'existe que dans `tokens/ref.css` et dans `themes/`.
+- Une valeur brute n'existe que dans `tokens/` et dans `themes/` (ADR-018).
 - Un sémantique ne référence pas un token de composant. Un token de composant ne référence pas un autre composant.
 - Aucun cycle de références.
 
@@ -19,19 +19,19 @@ Règles de niveau :
 
 Grammaire : `--mr-<catégorie>-<rôle>[-<variante>]` pour les sémantiques, `--mr-ref-<catégorie>-<nom>` pour les primitives, `--mr-<composant>-<propriété>[-<variante>]` pour les tokens de composant.
 
-Le vocabulaire des catégories et des rôles est **fermé** : il vit dans un seul fichier de vocabulaire, lu par Stylelint, qui ne contient que des noms et aucune valeur. Ajouter un mot au vocabulaire est une décision (ADR si la catégorie est nouvelle).
+Le vocabulaire des catégories et des rôles est **fermé** : il vit dans un seul fichier de vocabulaire (`tooling/stylelint/vocabulary.json`), lu par Stylelint, qui ne contient que des noms et aucune valeur. Ajouter un mot au vocabulaire est une décision (ADR si la catégorie est nouvelle).
 
 Catégories :
 
 - `bg` : fonds (`canvas`, `surface`, `raised`, `sunken`, `overlay`).
 - `text` : couleurs de texte uniquement (`primary`, `secondary`, `tertiary`, `disabled`). Les tailles de texte ne portent jamais ce préfixe.
 - `border` : couleurs de bordure (`subtle`, `default`, `control`).
-- `accent` : couleurs de marque (`solid`, `subtle`, `border`, `text`).
+- `accent` : couleurs de marque (`solid`, `on-solid`, `subtle`, `border`, `text`).
 - `danger`, `warning`, `success`, `info` : statuts, avec les rôles `text`, `solid`, `subtle`.
 - `chart` : couleurs de séries (`1` à `5`, et `muted` seulement avec un consommateur avéré).
 - `focus` : anneau de focus.
 - `font-family`, `font-size`, `font-weight`, `line-height` : typographie.
-- `space` : espacements. `radius` : rayons. `border-width` : épaisseurs. `shadow` : ombres. `z` : profondeurs.
+- `space` : espacements. `radius` : rayons. `size` : tailles de contrôle (`control-md`, etc.). `border-width` : épaisseurs. `shadow` : ombres. `z` : profondeurs.
 - `duration`, `ease` : mouvement. Les durées sont nommées par rôle (`state` pour les transitions d'état, `panel` pour le mouvement d'une surface, `spin`, `pulse`), jamais par composant.
 
 Règles :

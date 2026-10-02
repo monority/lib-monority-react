@@ -1,0 +1,40 @@
+/* Recette du composant Button (couche mr.components) */
+@layer mr.components {
+    :where(.mr-button, .mr-btn) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        font-family: inherit;
+        font-weight: var(--mr-font-weight-medium);
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /* Taille md (defaut) */
+    :where(.mr-button, .mr-btn)[data-size='md'],
+    :where(.mr-button, .mr-btn):not([data-size]) {
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        gap: var(--mr-space-2);
+        font-size: var(--mr-font-size-md);
+    }
+
+    /* Variante primary (action principale) */
+    :where(.mr-button, .mr-btn)[data-variant='primary'],
+    :where(.mr-button, .mr-btn):not([data-variant]) {
+        background-color: var(--mr-accent-solid);
+        color: var(--mr-accent-on-solid);
+    }
+
+    /* Focus visible */
+    :where(.mr-button, .mr-btn):focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+}

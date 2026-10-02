@@ -3,3 +3,4 @@
 @import './base/index.css';
 @import './tokens/ref.css';
 @import './tokens/semantic.css';
+@import './recipes/button.css';

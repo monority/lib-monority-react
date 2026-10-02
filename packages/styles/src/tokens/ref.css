@@ -1,5 +1,5 @@
 /* Primitives de la bibliotheque dans la couche mr.tokens.
- * Uniquement les 6 primitives requises par la base minimale et semantic.css.
+ * Uniquement les leviers modifiables par la marque, les themes et la mise a l'echelle.
  * Aucune recette ne lit directement une primitive. */
 @layer mr.tokens {
     :root {
@@ -7,13 +7,11 @@
         --mr-ref-brand-hue: 200;
         --mr-ref-brand-chroma: 0.12;
 
-        /* Neutres */
+        /* Neutres : redefinis localement par les themes teintes */
         --mr-ref-neutral-hue: 215;
         --mr-ref-neutral-chroma: 0;
 
-        /* Typographie de base */
-        --mr-ref-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui,
-            -apple-system, 'Segoe UI', sans-serif;
-        --mr-ref-font-size-md: 0.875rem;
+        /* Levier de mise a l'echelle des rayons */
+        --mr-ref-radius-scale: 1;
     }
 }
