@@ -1,61 +1,23 @@
 /* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens.
- * Introduits un par un selon les besoins des composants existants (Button). */
+ * Uniquement les tokens consommes par les regles de base minimale. */
 @layer mr.tokens {
     :root {
         /* Fonds */
         --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-raised: oklch(1 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-text-secondary: oklch(0.44 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-text-disabled: oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-
-        /* Bordures */
-        --mr-border-subtle: oklch(0.9 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-border-default: oklch(0.82 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-border-control: oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-border-width-default: var(--mr-ref-border-width-default);
-
-        /* Marque / Accent */
-        --mr-accent-solid: oklch(
-            0.52 calc(var(--mr-ref-brand-chroma) * 0.725) var(--mr-ref-brand-hue)
-        );
-        --mr-accent-on-solid: oklch(1 0 0);
-
-        /* Statut danger */
-        --mr-danger-solid: oklch(0.54 0.19 25);
-        --mr-danger-on-solid: oklch(1 0 0);
 
         /* Focus */
-        --mr-focus-ring: var(--mr-accent-solid);
+        --mr-focus-ring: oklch(
+            0.52 calc(var(--mr-ref-brand-chroma) * 0.725) var(--mr-ref-brand-hue)
+        );
         --mr-focus-width: var(--mr-ref-border-width-focus);
         --mr-focus-offset: 2px;
 
         /* Typographie */
         --mr-font-family-sans: var(--mr-ref-font-family-sans);
-        --mr-font-size-sm: var(--mr-ref-font-size-sm);
         --mr-font-size-md: var(--mr-ref-font-size-md);
-        --mr-font-size-lg: var(--mr-ref-font-size-lg);
-        --mr-font-weight-medium: var(--mr-ref-font-weight-medium);
-        --mr-line-height-normal: var(--mr-ref-line-height-normal);
-
-        /* Rayon */
-        --mr-radius-control: var(--mr-ref-radius-control);
-
-        /* Espacements */
-        --mr-space-1: var(--mr-ref-space-1);
-        --mr-space-2: var(--mr-ref-space-2);
-        --mr-space-3: var(--mr-ref-space-3);
-        --mr-space-4: var(--mr-ref-space-4);
-        --mr-space-5: var(--mr-ref-space-5);
-
-        /* Mouvement */
-        --mr-duration-state: var(--mr-ref-duration-state);
-        --mr-ease-standard: var(--mr-ref-ease-standard);
-
-        /* Etats derives */
-        --mr-state-hover-mix: var(--mr-ref-state-hover-mix);
-        --mr-state-active-mix: var(--mr-ref-state-active-mix);
+        --mr-line-height-base: var(--mr-ref-line-height-base);
     }
 }
