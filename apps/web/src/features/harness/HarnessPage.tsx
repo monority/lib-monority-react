@@ -174,39 +174,20 @@ export function HarnessPage() {
             className="harness-page"
             data-testid="harness-page"
             data-harness-component={component}
+            data-theme={theme}
         >
-            <nav
-                data-testid="harness-controls"
-                style={{
-                    display: 'flex',
-                    gap: '0.75rem',
-                    alignItems: 'center',
-                    marginBottom: '1rem',
-                    padding: '0.5rem 1rem',
-                    background: 'var(--mr-bg-surface, #f8fafc)',
-                    border: '1px solid var(--mr-border-default, #e2e8f0)',
-                    borderRadius: '6px',
-                }}
-            >
+            <nav className="harness-controls" data-testid="harness-controls">
                 <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Thème:</span>
                 {themes.map((t) => (
                     <button
                         key={t}
                         type="button"
+                        className="harness-controls-btn"
+                        data-active={theme === t}
                         onClick={() => {
                             const next = new URLSearchParams(searchParams)
                             next.set('theme', t)
                             setSearchParams(next)
-                        }}
-                        style={{
-                            padding: '4px 8px',
-                            borderRadius: '4px',
-                            border: '1px solid var(--mr-border-control, #cbd5e1)',
-                            background:
-                                theme === t ? 'var(--mr-bg-raised, #e2e8f0)' : 'transparent',
-                            cursor: 'pointer',
-                            fontSize: '0.75rem',
-                            fontWeight: theme === t ? 'bold' : 'normal',
                         }}
                     >
                         {t}
