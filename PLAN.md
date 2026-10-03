@@ -15,7 +15,7 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B6 (6aab0a2), B7 (938a9d6) et extension fullWidth icone (4f7da09) commites localement :
+B6 (6aab0a2), B7 (938a9d6) et restauration exclusion icone seule commites localement :
 - ligne de base poids : sources CSS 19 189 o (B6) / 21 364 o (B7) ; dist/index.css 10 305 o brut / 1 869 o gzip a B6
 - detail dist B6 : button.css 5 760 o, semantic.css 1 613 o, reset.css 1 097 o, dark.css 581 o, ref 298 o, base 750 o, layers 109 o, globals 97 o
 - nettoyage : suppression de l'orphelin styles/src/tokens/vocabulary.json (source unique : tooling/stylelint/vocabulary.json)
