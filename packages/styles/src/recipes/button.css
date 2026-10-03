@@ -25,7 +25,9 @@
         border: 1px solid transparent;
         border-radius: var(--mr-radius-md);
         font-family: inherit;
+        font-size: var(--mr-font-size-md);
         font-weight: var(--mr-font-weight-medium);
+        gap: var(--mr-space-2);
         text-decoration: none;
         vertical-align: middle;
         cursor: pointer;
@@ -34,13 +36,42 @@
             border-color var(--mr-duration-state);
     }
 
-    /* Taille md (defaut) */
+    /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
+    :where(.mr-btn)[data-size='sm'] {
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+    }
+
+    /* Taille md (defaut) : 32px */
     :where(.mr-btn)[data-size='md'],
     :where(.mr-btn):not([data-size]) {
         min-block-size: var(--mr-size-control-md);
         padding-inline: var(--mr-space-4);
         gap: var(--mr-space-2);
         font-size: var(--mr-font-size-md);
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-btn)[data-size='lg'] {
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Carre icone seule (iconOnly) : largeur egale a la hauteur, padding annule */
+    :where(.mr-btn)[data-icon-only] {
+        padding-inline: 0;
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='sm']) {
+        min-inline-size: var(--mr-size-control-sm);
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='md'], :not([data-size])) {
+        min-inline-size: var(--mr-size-control-md);
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='lg']) {
+        min-inline-size: var(--mr-size-control-lg);
     }
 
     /* Variante primary (action principale neutre) : repos */

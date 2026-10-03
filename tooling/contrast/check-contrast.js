@@ -18,7 +18,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '../..')
 const webRequire = createRequire(path.join(ROOT, 'apps/web/package.json'))
 const { chromium } = webRequire('@playwright/test')
-const TEMP_DIR = process.env.TEMP || process.env.TMP || '/tmp'
 
 // Helper pour convertir une couleur (oklch ou rgb) retournee par le navigateur en RGB float 0..1
 function colorToRgb(str) {
@@ -33,9 +32,32 @@ function colorToRgb(str) {
     return [0, 0, 0]
 }
 
-// 1. Preuves en negatif
+// 1. Preuves en negatif et assertions de reference
 async function testNegativeProof(browser) {
-    console.log('Preuve en negatif du test de contraste...')
+    console.log('Assertions de reference et preuve en negatif du test de contraste...')
+
+    // Assertions de reference sur valeurs connues
+    const refBlack = [0, 0, 0]
+    const refWhite = [1, 1, 1]
+    const refBwRatio = getContrastRatio(refBlack, refWhite)
+    assert.strictEqual(
+        refBwRatio.toFixed(2),
+        '21.00',
+        `Reference noir sur blanc attendue a 21.00:1, obtenu: ${refBwRatio.toFixed(2)}:1`
+    )
+
+    const refGrayText = colorToRgb('oklch(0.6 0 215)')
+    const refGrayBg = colorToRgb('oklch(0.8374 0 215)')
+    const refGrayRatio = getContrastRatio(refGrayText, refGrayBg)
+    assert.strictEqual(
+        refGrayRatio.toFixed(2),
+        '2.40',
+        `Reference gris desactive attendue a 2.40:1, obtenu: ${refGrayRatio.toFixed(2)}:1`
+    )
+    console.log(
+        `OK: Assertions de reference reussies (noir sur blanc = ${refBwRatio.toFixed(2)}:1, gris sur gris = ${refGrayRatio.toFixed(2)}:1).`
+    )
+
     const invalidTextColor = [0.8, 0.8, 0.8] // gris clair
     const invalidBgColor = [1, 1, 1] // blanc
     const ratio = getContrastRatio(invalidTextColor, invalidBgColor)
@@ -312,9 +334,6 @@ async function run() {
                 idleRatio >= 4.5,
                 `Theme ${t.name} - Contraste au repos insuffisant: ${idleRatio.toFixed(2)}:1 < 4.5:1`
             )
-            await page.locator('#btn-idle').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-repos.png`),
-            })
 
             // Survol
             await page.hover('#btn-hover')
@@ -335,9 +354,6 @@ async function run() {
                 hoverRatio >= 4.5,
                 `Theme ${t.name} - Contraste au survol insuffisant: ${hoverRatio.toFixed(2)}:1 < 4.5:1`
             )
-            await page.locator('#btn-hover').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-survol.png`),
-            })
 
             // Actif
             const activeBox = await page.locator('#btn-active').boundingBox()
@@ -356,9 +372,6 @@ async function run() {
                 (el) => window.getComputedStyle(el).color
             )
             const activeRatio = getContrastRatio(colorToRgb(activeTextRaw), colorToRgb(activeBgRaw))
-            await page.locator('#btn-active').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-actif.png`),
-            })
             await page.mouse.up()
             console.log(
                 `- Actif      : bg = ${activeBgRaw}, text = ${activeTextRaw}, ratio = ${activeRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
@@ -384,9 +397,6 @@ async function run() {
             console.log(
                 `- Desactive  : bg = ${disabledBgRaw}, text = ${disabledTextRaw}, ratio = ${disabledRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
             )
-            await page.locator('#btn-disabled').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-desactive.png`),
-            })
 
             // Contraste bg-inverse sur canevas
             const canvasBgRaw = await page.$eval('body', (el) =>
@@ -440,9 +450,6 @@ async function run() {
                 secIdleRatio >= 4.5,
                 `Theme ${t.name} - Secondaire au repos insuffisant: ${secIdleRatio.toFixed(2)}:1 < 4.5:1`
             )
-            await page.locator('#btn-sec-idle').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-secondary-repos.png`),
-            })
 
             // Secondaire survol
             await page.hover('#btn-sec-hover')
@@ -512,9 +519,6 @@ async function run() {
                 ghostRatio >= 4.5,
                 `Theme ${t.name} - Ghost au repos insuffisant: ${ghostRatio.toFixed(2)}:1 < 4.5:1`
             )
-            await page.locator('#btn-ghost-idle').screenshot({
-                path: path.join(TEMP_DIR, `button-${t.name}-ghost-repos.png`),
-            })
 
             // Mesures de la variante danger
             console.log(`Mesure de la variante Button danger en theme ${t.name.toUpperCase()} :`)
@@ -545,9 +549,6 @@ async function run() {
                 dangerUiRatio >= 3.0,
                 `Theme ${t.name} - Danger sur canevas insuffisant: ${dangerUiRatio.toFixed(2)}:1 < 3.0:1`
             )
-            await page.locator('#btn-danger-idle').screenshot({
-                path: path.join(TEMP_DIR, `button-danger-${t.name}-repos.png`),
-            })
 
             // Danger survol
             await page.hover('#btn-danger-hover')
@@ -571,9 +572,6 @@ async function run() {
                 dangerHoverRatio >= 4.5,
                 `Theme ${t.name} - Danger au survol insuffisant: ${dangerHoverRatio.toFixed(2)}:1 < 4.5:1`
             )
-            await page.locator('#btn-danger-hover').screenshot({
-                path: path.join(TEMP_DIR, `button-danger-${t.name}-survol.png`),
-            })
 
             // Danger actif
             const dangerActiveBox = await page.locator('#btn-danger-active').boundingBox()
@@ -595,9 +593,6 @@ async function run() {
                 colorToRgb(dangerActiveTextRaw),
                 colorToRgb(dangerActiveBgRaw)
             )
-            await page.locator('#btn-danger-active').screenshot({
-                path: path.join(TEMP_DIR, `button-danger-${t.name}-actif.png`),
-            })
             await page.mouse.up()
             console.log(
                 `- Danger Actif       : text = ${dangerActiveTextRaw}, bg = ${dangerActiveBgRaw}, ratio = ${dangerActiveRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
@@ -623,16 +618,6 @@ async function run() {
             console.log(
                 `- Danger Desactive   : text = ${dangerDisTextRaw}, bg = ${dangerDisBgRaw}, ratio = ${dangerDisRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
             )
-            await page.locator('#btn-danger-disabled').screenshot({
-                path: path.join(TEMP_DIR, `button-danger-${t.name}-desactive.png`),
-            })
-
-            // Capture specifique : danger sur surface sombre en theme clair
-            if (t.name === 'light') {
-                await page.locator('#dark-surface-in-light').screenshot({
-                    path: path.join(TEMP_DIR, 'button-danger-light-dark-surface.png'),
-                })
-            }
 
             await page.close()
         }
@@ -735,11 +720,6 @@ async function run() {
             nlOnInverse.includes('0.955'),
             'nested-light text-on-inverse doit valoir 0.955 (clair)'
         )
-
-        // Capture de la page avec conteneur light dans sombre
-        await pageNesting.locator('#scope-dark-parent').screenshot({
-            path: path.join(TEMP_DIR, 'button-dark-nested-light.png'),
-        })
 
         // 2. Dark dans Light
         const ndCs = await pageNesting.$eval(

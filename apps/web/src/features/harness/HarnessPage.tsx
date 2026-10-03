@@ -39,6 +39,13 @@ function ButtonHarness() {
                     </Sample>
                 ))
             )}
+            {(['sm', 'md', 'lg'] as const).map((size) => (
+                <Sample key={`icon-only-${size}`} label={`icon-only ${size}`}>
+                    <Button iconOnly size={size} aria-label="Action">
+                        ★
+                    </Button>
+                </Sample>
+            ))}
             <Sample label="disabled">
                 <Button disabled>Enregistrer</Button>
             </Sample>

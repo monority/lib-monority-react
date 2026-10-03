@@ -15,10 +15,11 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B5 commite localement (variante danger pleine, tokens danger-solid et on-solid) :
-- danger-solid : L=0.52 clair (5.37:1), L=0.65 sombre (4.87:1), C=0.20 (sRGB marge >= 0.05)
-- danger-on-solid : var(--mr-bg-canvas), regle unique conservant le double contraste texte/UI
-- etats derives par color-mix vers text-primary (ADR-023 : survol 12%, actif 24%, desactive 84%)
-- 27 tokens declares au total, ADR-001 a ADR-023 sans trou, pnpm verify vert a 6 etapes
-- action avant PR : brancher pnpm verify en CI, avec installation de Chromium, avant toute PR
-- prochaine action : validation par l'utilisateur du rendu avant push, puis cadrage B6.
+B6 commite localement (tailles sm et lg, padding-inline et mode icone seule) :
+- tailles de controle : --mr-size-control-sm (1.75rem / 28px, WCAG 2.5.8 >= 24px) et --mr-size-control-lg (2.5rem / 40px)
+- regle de proportion padding-inline : space-3 (sm), space-4 (md), space-5 (lg)
+- typographie constante : font-size et gap identiques pour sm, md, lg (zero token supplementaire)
+- mode carre icone seule [data-icon-only] : min-inline-size egal a min-block-size, padding-inline a 0
+- 31 tokens declares au total, moteur de contraste auto-teste (21:1 et 2.40:1), pnpm verify vert a 6 etapes (11.44 s)
+- composant suivant propose : Input (deuxieme lecteur de --mr-size-control-md et du fond de controle)
+- prochaine action : validation par l'utilisateur du rendu B6 avant push, puis cadrage Input.

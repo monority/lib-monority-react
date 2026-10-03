@@ -26,7 +26,7 @@ Sa recette vit dans `packages/styles/src/recipes/<composant>.css`. Un nouveau co
 
 ## Règles de recette CSS
 
-- Une classe de base `.mr-<composant>`, les parties en `.mr-<composant>__<partie>` ou en éléments internes sélectionnés par attribut, mais jamais en modificateurs BEM de variante.
+- Une classe de base `.mr-<composant>`, les parties en `.mr-<composant>__<partie>` ou en éléments internes sélectionnés par attribut, mais jamais en modificateurs BEM de variante. Le nom de classe de base suit la spec du composant (par exemple `.mr-btn` pour Button).
 - Variantes et états par attributs `data-*` ; états natifs d'abord.
 - Tokens de composant en tête de la classe de base, qui référencent des sémantiques.
 - États hover, active et disabled dérivés par `color-mix`.

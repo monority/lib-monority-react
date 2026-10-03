@@ -25,7 +25,7 @@ Le CSS d'un consommateur qui n'est pas dans une couche l'emporte sur toutes les 
 
 ```css
 /* Chez le consommateur : suffit, sans !important ni sélecteur renforcé */
-.mr-button {
+.mr-btn {
   border-radius: 999px;
 }
 ```
@@ -56,7 +56,7 @@ Dans `mr.base`, un fichier par sujet :
 
 ## Sélecteurs et nommage
 
-- Classe de base préfixée par composant : `.mr-button`, `.mr-input`. Aucun sélecteur sur un élément nu en dehors du reset et de la base.
+- Classe de base préfixée par composant : `.mr-btn`, `.mr-input`. Aucun sélecteur sur un élément nu en dehors du reset et de la base.
 - Variantes et états par attributs de données : `[data-variant]`, `[data-size]`, `[data-state]`, `[data-density]`. Pas de modificateurs BEM (`.mr-btn--primary` est interdit dans tout nouveau code).
 - États natifs avant états portés : `:disabled`, `:checked`, `:invalid`, `:focus-visible` ; les états portés par `data-state` ou `aria-*` ne servent que lorsqu'aucun état natif n'existe.
 - Aucun sélecteur d'identifiant. Aucun `!important`.
