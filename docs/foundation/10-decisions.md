@@ -153,6 +153,7 @@ Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchée
 - `[DÉCISION]` **Polymorphisme des composants** : mécanisme (`as`, `asChild` ou équivalent) et règles de typage. À trancher avant le premier composant polymorphe.
 - `[DÉCISION]` **Plancher de navigateurs** : versions minimales exactes, à fixer par mesure de l'audience avant la première publication.
 - `[DÉCISION]` **Valeurs et noms des densités** : confirmer `compact`, `default`, `comfortable` à partir des échelles historiques.
+- `[DÉCISION]` **Échelles initiales restantes** : pas et valeurs pour les autres rayons, autres tailles de texte, interlignes, ombres, profondeurs (z-index), épaisseurs de bordure et densités, à figer lors du premier composant qui les lit. Les règles déjà posées pour Button (grille d'espacement de 0,25rem, base de rayon de 2px, échelle des graisses) font foi pour l'ensemble du système.
 - `[DÉCISION]` **Régénération des captures visuelles** : moment exact de la passe unique, après quel lot de composants.
 
 ## Ajouter un ADR

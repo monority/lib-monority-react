@@ -16,10 +16,9 @@ Button en premier (B1 a B6).
 
 ## Reprise
 B6 commite localement (tailles sm et lg, padding-inline et mode icone seule) :
-- tailles de controle : --mr-size-control-sm (1.75rem / 28px, WCAG 2.5.8 >= 24px) et --mr-size-control-lg (2.5rem / 40px)
-- regle de proportion padding-inline : space-3 (sm), space-4 (md), space-5 (lg)
-- typographie constante : font-size et gap identiques pour sm, md, lg (zero token supplementaire)
-- mode carre icone seule [data-icon-only] : min-inline-size egal a min-block-size, padding-inline a 0
-- 31 tokens declares au total, moteur de contraste auto-teste (21:1 et 2.40:1), pnpm verify vert a 6 etapes (11.44 s)
-- composant suivant propose : Input (deuxieme lecteur de --mr-size-control-md et du fond de controle)
-- prochaine action : validation par l'utilisateur du rendu B6 avant push, puis cadrage Input.
+- ligne de base poids : dist/index.css pese 10 305 o brut (10,06 Ko) / 1 869 o gzip (1,83 Ko)
+- detail dist : button.css 5 760 o, semantic.css 1 613 o, reset.css 1 097 o, dark.css 581 o, ref 298 o, base 750 o, layers 109 o
+- sources styles/src : 13 fichiers CSS (18 325 o cumules), 1 orphelin identifie (tokens/vocabulary.json 2 171 o)
+- verify a froid : 134.74 s (turbo --force) vs en cache : 11.85 s (6 etapes reelles vertes)
+- decision retablie : echelles initiales restantes maintenue dans 10-decisions.md
+- prochaine etape : micro-etape B7 (couverture API : fullWidth, warning, loading sans spinner)
