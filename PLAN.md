@@ -16,7 +16,7 @@ Button en premier (B1 a B6).
 
 ## Reprise
 B7 commite localement (couverture API de Button : fullWidth, warning, loading) :
-- fullWidth (inline-size 100%, carre iconOnly prioritaire), warning (alias secondary depricie), loading (cursor progress, etats de repos figes)
+- fullWidth (inline-size 100% sur toutes les combinaisons, y compris icone seule), warning (alias secondary depricie), loading (cursor progress, etats de repos figes)
 - budget tokens : 0 token cree, 31 tokens distincts conserves (mesure identique avant/apres)
 - regression : 0 ecart sur les 72 combinaisons existantes (4 variantes x 3 tailles x 2 themes x 3 etats)
 - captures harness : Temp/button-harness-light.png et Temp/button-harness-dark.png

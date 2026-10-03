@@ -75,9 +75,8 @@
     }
 
     /* Pleine largeur (fullWidth) : 100% de la largeur du conteneur.
-     * Cas icone seule exclu : un bouton iconOnly a pour contrat d'etre un carre
-     * (largeur = hauteur) ; le format carre prevaut pour eviter une deformation rectangulaire. */
-    :where(.mr-btn)[data-full-width]:where(:not([data-icon-only])) {
+     * S'applique a toutes les combinaisons de bouton, y compris avec icone seule ou IconButton. */
+    :where(.mr-btn)[data-full-width] {
         inline-size: 100%;
     }
 
