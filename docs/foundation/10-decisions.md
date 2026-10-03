@@ -145,6 +145,13 @@ Décision :
 2. Règle de contraste : en s'approchant de `--mr-text-primary`, le fond s'éloigne de la couleur du texte (`--mr-bg-canvas`), augmentant le contraste interactif au lieu de le dégrader (6.27:1 au survol et 7.27:1 à l'actif en clair ; 5.64:1 au survol et 6.55:1 à l'actif en sombre).
 3. L'état désactivé conserve le mélange à 84% vers `--mr-bg-canvas` avec le texte `--mr-text-disabled`.
 
+### ADR-024 : bande de luminosité des surfaces portant un contrôle bordé
+Statut : Acceptée.
+Contexte : Les contrôles bordés utilisent un fond opaque (`--mr-bg-canvas`) et une bordure `--mr-border-control` (L=0,61 en clair, L=0,53 en sombre). Sur le canevas par défaut (L=0,955 en clair, L=0,22 en sombre), les contrastes atteignent respectivement 3,33:1 et 3,28:1. Posé sur une surface dont la luminosité s'écarte de plus de 0,034 du canevas, le ratio de la bordure tombe sous le seuil WCAG 1.4.11 (3,0:1).
+Décision : L'Option B est retenue : contraindre la surface plutôt que multiplier les tokens de bordure. Un contrôle bordé ne peut être posé que sur une surface respectant la bande de luminosité admissible calculée par le moteur de contraste : L >= 0,921 en thème clair (intervalle [0,921, 1,000]) et L <= 0,254 en thème sombre (intervalle [0,000, 0,254]).
+Alternatives écartées : Option A (adapter la bordure selon la surface ou introduire un token par niveau de surface, écartée pour éviter l'explosion du vocabulaire).
+Conséquences : Toute surface portant un contrôle de saisie ou un bouton secondaire doit calibrer sa luminosité dans ces bornes. Si un conteneur exige une surface hors bande, un conteneur explicite ou un token contextuel devra faire l'objet d'un arbitrage par ADR.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.

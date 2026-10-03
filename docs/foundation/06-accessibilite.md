@@ -10,7 +10,7 @@ WCAG 2.2 niveau AA, comme plancher. Pas d'APCA : un second seuil à maintenir sa
 
 - Texte normal : 4,5:1 minimum. Grand texte : 3:1.
 - Composants d'interface et objets graphiques (bordure d'un contrôle, icône porteuse de sens, anneau de focus) : 3:1 minimum (WCAG 1.4.11).
-- Les bordures de contrôle au repos atteignent 3:1 sur leur fond. Un contrôle à bordure a toujours un fond opaque.
+- Les bordures de contrôle au repos atteignent 3:1 sur leur fond. Un contrôle à bordure a toujours un fond opaque. Un contrôle bordé ne peut être posé que sur une surface respectant la bande de luminosité admissible (L >= 0,921 en thème clair pour une bordure à L=0,61 ; L <= 0,254 en thème sombre pour une bordure à L=0,53) afin de garantir un ratio de contraste supérieur ou égal à 3,0:1 (WCAG 1.4.11).
 - Le thème `high-contrast` a des seuils propres, plus élevés, qu'aucune modification ne peut abaisser.
 - Viser une marge : environ 3,3 pour un seuil de 3, 4,8 pour un seuil de 4,5. Le minimum exact casse au premier ajustement de teinte.
 - Les paires vérifiées par le test de contraste, pour chaque thème : texte principal et secondaire sur chaque fond ; texte désactivé selon la règle du thème ; bordure de contrôle sur fond de surface ; texte de statut sur surface et sur canevas ; texte sur fond solide de danger ; texte et bordure d'accent ; anneau de focus sur chaque fond. Tout composant qui introduit une nouvelle paire l'ajoute au test dans le même commit.
