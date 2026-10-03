@@ -336,6 +336,38 @@ async function testNegativeProof(browser) {
         `OK: Fixture negative survol bordure Input reussie (melange vers canevas detecte insuffisant a ${badInputHoverRatio.toFixed(2)}:1 < 3.0:1).`
     )
     await pageBorderHoverBad.close()
+
+    // Fixture negative : inversion d'ordre entre regles invalide et desactive
+    const pageInverted = await browser.newPage()
+    await pageInverted.setContent(`
+        <style>
+            :root {
+                --mr-border-control: oklch(0.61 0 215);
+                --mr-bg-canvas: oklch(0.955 0 215);
+                --mr-danger-solid: oklch(0.52 0.2 25);
+            }
+            .bad-order:disabled {
+                border-color: oklch(0.8998 0 215);
+            }
+            .bad-order[aria-invalid='true'] {
+                border-color: var(--mr-danger-solid);
+            }
+        </style>
+        <input class="bad-order" id="bad-order-input" disabled aria-invalid="true" />
+    `)
+    const badOrderBorder = await pageInverted.$eval(
+        '#bad-order-input',
+        (el) => window.getComputedStyle(el).borderColor
+    )
+    await pageInverted.close()
+    assert.notStrictEqual(
+        badOrderBorder,
+        'oklch(0.8998 0 215)',
+        'Preuve negative : lordre inverse doit produire la bordure invalide au lieu de la bordure desactivee'
+    )
+    console.log(
+        'OK: Preuve en negatif reussie (inversion de priorite desactive/invalide detectee avec succes).'
+    )
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -462,6 +494,13 @@ async function run() {
                         <input class="mr-input" id="input-invalid-focus" aria-invalid="true" value="Focus invalide" />
                         <input class="mr-input" id="input-disabled" disabled value="Texte desactive" placeholder="Placeholder desactive" />
                         <input class="mr-input" id="input-readonly" readonly value="Lecture seule" />
+                        <input class="mr-input" id="input-comb-dis-inv" disabled aria-invalid="true" value="Desactive et Invalide" />
+                        <input class="mr-input" id="input-comb-ro-inv" readonly aria-invalid="true" value="Lecture seule et Invalide" />
+                        <input class="mr-input" id="input-comb-inv-hover" aria-invalid="true" value="Invalide survole" />
+                        <input class="mr-input" id="input-comb-ro-hover" readonly value="Lecture seule survolee" />
+                        <input class="mr-input" id="input-comb-dis-hover" disabled value="Desactive survole" />
+                        <input class="mr-input" id="input-comb-inv-focus" aria-invalid="true" value="Invalide focus" />
+                        <input class="mr-input" id="input-comb-ro-focus" readonly value="Lecture seule focus" />
                     </div>
                 </body>
                 </html>
@@ -971,6 +1010,227 @@ async function run() {
             )
             console.log(
                 `- [Rapporte] Bordure desactivee sur canevas : fg = ${inputDisabledBorderRaw}, bg = ${canvasBgRaw}, ratio = ${inputDisabledBorderRatio.toFixed(2)}:1`
+            )
+
+            // 11. Verification des 7 combinaisons d'etats et ordre de priorite
+            console.log(
+                `\nVerification des etats combines Input en theme ${t.name.toUpperCase()} :`
+            )
+
+            // 1. desactive et invalide : desactive l'emporte (curseur, bordure, texte)
+            const c1Border = await page.$eval(
+                '#input-comb-dis-inv',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c1Cursor = await page.$eval(
+                '#input-comb-dis-inv',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            const c1Text = await page.$eval(
+                '#input-comb-dis-inv',
+                (el) => window.getComputedStyle(el).color
+            )
+            assert.strictEqual(
+                c1Border,
+                inputDisabledBorderRaw,
+                `Theme ${t.name} - comb 1: bordure attendue ${inputDisabledBorderRaw}, obtenu: ${c1Border}`
+            )
+            assert.strictEqual(
+                c1Cursor,
+                'not-allowed',
+                `Theme ${t.name} - comb 1: curseur not-allowed attendu, obtenu: ${c1Cursor}`
+            )
+            assert.strictEqual(
+                c1Text,
+                inputDisabledTextRaw,
+                `Theme ${t.name} - comb 1: texte attendu ${inputDisabledTextRaw}, obtenu: ${c1Text}`
+            )
+            console.log(
+                `- 1. Desactive et Invalide       : bordure = ${c1Border}, curseur = ${c1Cursor}, texte = ${c1Text}`
+            )
+
+            // 2. lecture seule et invalide : curseur default, bordure invalide
+            const c2Border = await page.$eval(
+                '#input-comb-ro-inv',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c2Cursor = await page.$eval(
+                '#input-comb-ro-inv',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            const c2Text = await page.$eval(
+                '#input-comb-ro-inv',
+                (el) => window.getComputedStyle(el).color
+            )
+            assert.strictEqual(
+                c2Border,
+                inputBorderInvalidRaw,
+                `Theme ${t.name} - comb 2: bordure attendue ${inputBorderInvalidRaw}, obtenu: ${c2Border}`
+            )
+            assert.strictEqual(
+                c2Cursor,
+                'default',
+                `Theme ${t.name} - comb 2: curseur default attendu, obtenu: ${c2Cursor}`
+            )
+            assert.strictEqual(
+                c2Text,
+                inputTextRaw,
+                `Theme ${t.name} - comb 2: texte attendu ${inputTextRaw}, obtenu: ${c2Text}`
+            )
+            console.log(
+                `- 2. Lecture seule et Invalide   : bordure = ${c2Border}, curseur = ${c2Cursor}, texte = ${c2Text}`
+            )
+
+            // 3. invalide survole : la bordure invalide ne change pas au survol
+            await page.hover('#input-comb-inv-hover')
+            await waitForAnimations(page)
+            const c3Border = await page.$eval(
+                '#input-comb-inv-hover',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c3Cursor = await page.$eval(
+                '#input-comb-inv-hover',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            assert.strictEqual(
+                c3Border,
+                inputBorderInvalidRaw,
+                `Theme ${t.name} - comb 3: bordure invalide inchangee attendue, obtenu: ${c3Border}`
+            )
+            assert.strictEqual(
+                c3Cursor,
+                'text',
+                `Theme ${t.name} - comb 3: curseur text attendu, obtenu: ${c3Cursor}`
+            )
+            console.log(
+                `- 3. Invalide survole            : bordure = ${c3Border}, curseur = ${c3Cursor}`
+            )
+
+            // 4. lecture seule survolee : aucun survol, bordure de repos
+            await page.hover('#input-comb-ro-hover')
+            await waitForAnimations(page)
+            const c4Border = await page.$eval(
+                '#input-comb-ro-hover',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c4Cursor = await page.$eval(
+                '#input-comb-ro-hover',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            assert.strictEqual(
+                c4Border,
+                inputBorderRaw,
+                `Theme ${t.name} - comb 4: bordure repos inchangee attendue, obtenu: ${c4Border}`
+            )
+            assert.strictEqual(
+                c4Cursor,
+                'default',
+                `Theme ${t.name} - comb 4: curseur default attendu, obtenu: ${c4Cursor}`
+            )
+            console.log(
+                `- 4. Lecture seule survolee      : bordure = ${c4Border}, curseur = ${c4Cursor}`
+            )
+
+            // 5. desactive survole : aucun survol, bordure et curseur desactives
+            await page.hover('#input-comb-dis-hover', { force: true })
+            await waitForAnimations(page)
+            const c5Border = await page.$eval(
+                '#input-comb-dis-hover',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c5Cursor = await page.$eval(
+                '#input-comb-dis-hover',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            assert.strictEqual(
+                c5Border,
+                inputDisabledBorderRaw,
+                `Theme ${t.name} - comb 5: bordure desactivee inchangee attendue, obtenu: ${c5Border}`
+            )
+            assert.strictEqual(
+                c5Cursor,
+                'not-allowed',
+                `Theme ${t.name} - comb 5: curseur not-allowed attendu, obtenu: ${c5Cursor}`
+            )
+            console.log(
+                `- 5. Desactive survole           : bordure = ${c5Border}, curseur = ${c5Cursor}`
+            )
+
+            // 6. invalide avec focus clavier : bordure et anneau danger
+            await page.focus('#input-comb-inv-focus')
+            await waitForAnimations(page)
+            const c6Border = await page.$eval(
+                '#input-comb-inv-focus',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c6Outline = await page.$eval(
+                '#input-comb-inv-focus',
+                (el) => window.getComputedStyle(el).outlineColor
+            )
+            const c6OutlineWidth = await page.$eval(
+                '#input-comb-inv-focus',
+                (el) => window.getComputedStyle(el).outlineWidth
+            )
+            assert.strictEqual(
+                c6Border,
+                inputBorderInvalidRaw,
+                `Theme ${t.name} - comb 6: bordure attendue ${inputBorderInvalidRaw}, obtenu: ${c6Border}`
+            )
+            assert.strictEqual(
+                c6Outline,
+                invalidFocusOutlineRaw,
+                `Theme ${t.name} - comb 6: anneau attendu ${invalidFocusOutlineRaw}, obtenu: ${c6Outline}`
+            )
+            assert.strictEqual(
+                c6OutlineWidth,
+                '2px',
+                `Theme ${t.name} - comb 6: epaisseur anneau 2px attendue, obtenu: ${c6OutlineWidth}`
+            )
+            console.log(
+                `- 6. Invalide avec focus clavier : bordure = ${c6Border}, anneau = ${c6Outline}, largeur = ${c6OutlineWidth}`
+            )
+
+            // 7. lecture seule avec focus clavier : bordure et anneau focus normal, curseur default
+            await page.focus('#input-comb-ro-focus')
+            await waitForAnimations(page)
+            const c7Border = await page.$eval(
+                '#input-comb-ro-focus',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const c7Outline = await page.$eval(
+                '#input-comb-ro-focus',
+                (el) => window.getComputedStyle(el).outlineColor
+            )
+            const c7OutlineWidth = await page.$eval(
+                '#input-comb-ro-focus',
+                (el) => window.getComputedStyle(el).outlineWidth
+            )
+            const c7Cursor = await page.$eval(
+                '#input-comb-ro-focus',
+                (el) => window.getComputedStyle(el).cursor
+            )
+            assert.strictEqual(
+                c7Border,
+                focusOutlineColorRaw,
+                `Theme ${t.name} - comb 7: bordure attendue ${focusOutlineColorRaw}, obtenu: ${c7Border}`
+            )
+            assert.strictEqual(
+                c7Outline,
+                focusOutlineColorRaw,
+                `Theme ${t.name} - comb 7: anneau attendu ${focusOutlineColorRaw}, obtenu: ${c7Outline}`
+            )
+            assert.strictEqual(
+                c7OutlineWidth,
+                '2px',
+                `Theme ${t.name} - comb 7: epaisseur anneau 2px attendue, obtenu: ${c7OutlineWidth}`
+            )
+            assert.strictEqual(
+                c7Cursor,
+                'default',
+                `Theme ${t.name} - comb 7: curseur default attendu, obtenu: ${c7Cursor}`
+            )
+            console.log(
+                `- 7. Lecture seule avec focus    : bordure = ${c7Border}, anneau = ${c7Outline}, curseur = ${c7Cursor}`
             )
 
             await page.close()
