@@ -1,6 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { Button, CopyButton, IconButton, positionOverlay, Spinner, ThemeScope } from '@monority/ui'
+import {
+    Button,
+    CopyButton,
+    IconButton,
+    Input,
+    positionOverlay,
+    Spinner,
+    ThemeScope,
+} from '@monority/ui'
 import './harness.css'
 
 const themes = ['light', 'dark', 'dim', 'oled', 'ocean', 'night', 'high-contrast'] as const
@@ -183,8 +191,30 @@ function PositionHarness() {
     )
 }
 
+function InputHarness() {
+    return (
+        <>
+            <Sample label="champ vide avec placeholder">
+                <Input placeholder="Entrez une valeur..." />
+            </Sample>
+            <Sample label="champ avec valeur">
+                <Input defaultValue="Texte saisi" placeholder="Entrez une valeur..." />
+            </Sample>
+            <Sample label="focus clavier">
+                <Input
+                    id="input-harness-focus"
+                    data-mr-preview="focus"
+                    defaultValue="Champ actif avec focus"
+                    placeholder="Entrez une valeur..."
+                />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
+    input: InputHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
     'button-link': ButtonLinkHarness,

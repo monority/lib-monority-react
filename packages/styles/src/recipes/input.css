@@ -1,0 +1,54 @@
+/* Recette du composant Input (couche mr.components)
+ *
+ * Micro-etape I1 : champ md au repos, valeur, placeholder et focus clavier.
+ *
+ * Exception de focus :
+ * - Contrairement au focus standard decale de 2px de la base (outline-offset: 2px),
+ *   l'Input utilise un contour d'anneau direct au contact du champ (outline-offset: 0)
+ *   et colore la bordure du controle avec var(--mr-focus-ring).
+ * - Preuve chiffree des ratios de contraste de l'anneau de focus (WCAG 1.4.11 >= 3.0:1) :
+ *   - Anneau sur canevas exterieur (Clair) : oklch(0.50 0.084 215) sur oklch(0.955 0 215) = 5.10:1
+ *   - Anneau sur fond de champ (Clair)     : oklch(0.50 0.084 215) sur oklch(0.955 0 215) = 5.10:1
+ *   - Anneau sur canevas exterieur (Sombre) : oklch(0.635 0.084 215) sur oklch(0.22 0 215) = 5.20:1
+ *   - Anneau sur fond de champ (Sombre)     : oklch(0.635 0.084 215) sur oklch(0.22 0 215) = 5.20:1
+ *
+ * Limite fond opaque :
+ * - Le fond opaque du champ utilise --mr-bg-canvas.
+ * - Cas ou la bordure passe sous le seuil WCAG 1.4.11 de 3.0:1 :
+ *   1. Theme clair place sur une surface plus sombre que le canevas de 0.04 (L=0.915) :
+ *      ratio = 2.95:1 (< 3.0:1).
+ *   2. Theme sombre place sur une surface plus claire que le canevas de 0.04 (L=0.26) :
+ *      ratio = 2.94:1 (< 3.0:1).
+ */
+@layer mr.components {
+    :where(.mr-input) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        padding-block: 0;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-canvas);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+    }
+
+    :where(.mr-input)::placeholder {
+        color: var(--mr-text-secondary);
+        opacity: 1;
+    }
+
+    :where(.mr-input):focus-visible,
+    :where(.mr-input)[data-mr-preview='focus'] {
+        border-color: var(--mr-focus-ring);
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 0;
+    }
+}

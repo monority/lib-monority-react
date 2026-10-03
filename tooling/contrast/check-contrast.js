@@ -200,6 +200,34 @@ async function testNegativeProof(browser) {
         `OK: Fixture negative danger reussie (luminosite defaillante detectee insuffisante a ${badDangerRatio.toFixed(2)}:1 < 4.5:1).`
     )
     await pageDangerBad.close()
+
+    // Fixture negative specifique au placeholder : luminosite defaillante L=0.60 en clair sur canevas clair L=0.955
+    const pagePlaceholderBad = await browser.newPage()
+    await pagePlaceholderBad.setContent(`
+        <style>
+            :root {
+                --mr-bg-canvas: oklch(0.955 0 215);
+                --mr-text-secondary-bad: oklch(0.60 0 215);
+            }
+            .bad-input::placeholder {
+                color: var(--mr-text-secondary-bad);
+            }
+        </style>
+        <input class="bad-input" id="bad-input" placeholder="Placeholder Faible" />
+    `)
+    const badPhColor = await pagePlaceholderBad.$eval(
+        '#bad-input',
+        (el) => window.getComputedStyle(el, '::placeholder').color
+    )
+    const badPhRatio = getContrastRatio(colorToRgb(badPhColor), colorToRgb('oklch(0.955 0 215)'))
+    assert(
+        badPhRatio < 4.5,
+        `Le placeholder defaillant doit echouer sous 4.5:1 (ratio obtenu: ${badPhRatio.toFixed(2)}:1)`
+    )
+    console.log(
+        `OK: Fixture negative placeholder reussie (L=0.60 detecte insuffisant a ${badPhRatio.toFixed(2)}:1 < 4.5:1).`
+    )
+    await pagePlaceholderBad.close()
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -219,6 +247,7 @@ async function run() {
         const semanticPath = path.join(ROOT, 'packages/styles/src/tokens/semantic.css')
         const darkPath = path.join(ROOT, 'packages/styles/src/themes/dark.css')
         const buttonPath = path.join(ROOT, 'packages/styles/src/recipes/button.css')
+        const inputPath = path.join(ROOT, 'packages/styles/src/recipes/input.css')
 
         if (
             !fs.existsSync(layersPath) ||
@@ -226,7 +255,8 @@ async function run() {
             !fs.existsSync(semanticPath) ||
             !fs.existsSync(refPath) ||
             !fs.existsSync(darkPath) ||
-            !fs.existsSync(buttonPath)
+            !fs.existsSync(buttonPath) ||
+            !fs.existsSync(inputPath)
         ) {
             console.error('Fichiers CSS requis introuvables.')
             process.exit(1)
@@ -245,6 +275,7 @@ async function run() {
         const darkVars = parseCssVariables(darkCss)
 
         const buttonCss = fs.readFileSync(buttonPath, 'utf8')
+        const inputCss = fs.readFileSync(inputPath, 'utf8')
 
         // Verification des regles de portee pour conteneur decale et theme
         assert(
@@ -274,6 +305,7 @@ async function run() {
             ${semanticCss}
             ${darkCss}
             ${buttonCss}
+            ${inputCss}
         `
 
         // Evaluation des etats du bouton dans les deux themes
@@ -313,6 +345,11 @@ async function run() {
                     <button class="mr-btn" data-variant="danger" id="btn-danger-active">Supprimer</button>
                     <button class="mr-btn" data-variant="danger" id="btn-danger-disabled" disabled>Supprimer</button>
                     ${t.name === 'light' ? '<div id="dark-surface-in-light" style="background-color: oklch(0.22 0 215); padding: 1rem; display: inline-block;"><button class="mr-btn" data-variant="danger" id="btn-danger-dark-surface">Supprimer</button></div>' : ''}
+                    <div style="margin-top: 1rem; width: 300px;">
+                        <input class="mr-input" id="input-idle" value="Texte saisi" placeholder="Placeholder exemple" />
+                        <input class="mr-input" id="input-placeholder" placeholder="Placeholder exemple" />
+                        <input class="mr-input" id="input-focus" data-mr-preview="focus" value="Focus" />
+                    </div>
                 </body>
                 </html>
             `)
@@ -617,6 +654,82 @@ async function run() {
             )
             console.log(
                 `- Danger Desactive   : text = ${dangerDisTextRaw}, bg = ${dangerDisBgRaw}, ratio = ${dangerDisRatio.toFixed(2)}:1 (exempte WCAG 1.4.3)`
+            )
+
+            // Mesures du composant Input (micro-etape I1)
+            console.log(`\nMesure du composant Input (I1) en theme ${t.name.toUpperCase()} :`)
+
+            // 1. Texte saisi sur fond du champ
+            const inputBgRaw = await page.$eval(
+                '#input-idle',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const inputTextRaw = await page.$eval(
+                '#input-idle',
+                (el) => window.getComputedStyle(el).color
+            )
+            const inputTextRatio = getContrastRatio(
+                colorToRgb(inputTextRaw),
+                colorToRgb(inputBgRaw)
+            )
+            console.log(
+                `- Texte saisi sur fond champ : fg = ${inputTextRaw}, bg = ${inputBgRaw}, ratio = ${inputTextRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                inputTextRatio >= 4.5,
+                `Theme ${t.name} - Contraste texte saisi Input insuffisant: ${inputTextRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // 2. Placeholder sur fond du champ
+            const phColorRaw = await page.$eval(
+                '#input-placeholder',
+                (el) => window.getComputedStyle(el, '::placeholder').color
+            )
+            const phBgRaw = await page.$eval(
+                '#input-placeholder',
+                (el) => window.getComputedStyle(el).backgroundColor
+            )
+            const phRatio = getContrastRatio(colorToRgb(phColorRaw), colorToRgb(phBgRaw))
+            console.log(
+                `- Placeholder sur fond champ : fg = ${phColorRaw}, bg = ${phBgRaw}, ratio = ${phRatio.toFixed(2)}:1 (seuil >= 4.5:1, vise 4.8:1)`
+            )
+            assert(
+                phRatio >= 4.5,
+                `Theme ${t.name} - Contraste placeholder Input insuffisant: ${phRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // 3. Bordure de controle sur canevas
+            const inputBorderRaw = await page.$eval(
+                '#input-idle',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const inputBorderRatio = getContrastRatio(
+                colorToRgb(inputBorderRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Bordure controle sur canevas : fg = ${inputBorderRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                inputBorderRatio >= 3.0,
+                `Theme ${t.name} - Bordure Input sur canevas insuffisante: ${inputBorderRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            // 4. Anneau de focus sur canevas
+            const focusOutlineColorRaw = await page.$eval(
+                '#input-focus',
+                (el) => window.getComputedStyle(el).outlineColor
+            )
+            const focusRingRatio = getContrastRatio(
+                colorToRgb(focusOutlineColorRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Anneau focus sur canevas : fg = ${focusOutlineColorRaw}, bg = ${canvasBgRaw}, ratio = ${focusRingRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                focusRingRatio >= 3.0,
+                `Theme ${t.name} - Anneau focus Input sur canevas insuffisant: ${focusRingRatio.toFixed(2)}:1 < 3.0:1`
             )
 
             await page.close()

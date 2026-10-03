@@ -13,6 +13,7 @@
 
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-on-inverse: var(--mr-bg-canvas);
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 

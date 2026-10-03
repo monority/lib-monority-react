@@ -9,6 +9,7 @@
 
         /* Textes : permutation symetrique avec le canevas clair */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.623 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Texte desactive : luminosite 0.542 calculee pour reproduire le ratio de 3.46:1 du clair sur son canevas */
         --mr-text-disabled: oklch(0.542 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
