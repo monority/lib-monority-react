@@ -114,7 +114,9 @@
     }
 
     /* Etat chargement (loading) : l'element conserve l'apparence de repos de sa variante,
-     * les etats survol et actif ne s'appliquent pas, curseur de progression.
+     * les etats survol et actif sont exclus par :where(:not([data-loading])), curseur de progression.
+     * Pas de pointer-events: none : le curseur progress reste visible et elementFromPoint atteint le bouton,
+     * les interactions et soumissions sont bloquees par la garde JavaScript du composant.
      * Le spinner superpose sera integre avec le composant dedie Spinner (phase suivante). */
     :where(.mr-btn)[data-loading] {
         cursor: progress;
