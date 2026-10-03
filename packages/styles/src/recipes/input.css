@@ -45,8 +45,7 @@
         opacity: 1;
     }
 
-    :where(.mr-input):focus-visible,
-    :where(.mr-input)[data-mr-preview='focus'] {
+    :where(.mr-input):focus-visible {
         border-color: var(--mr-focus-ring);
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: 0;

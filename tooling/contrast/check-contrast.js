@@ -348,7 +348,7 @@ async function run() {
                     <div style="margin-top: 1rem; width: 300px;">
                         <input class="mr-input" id="input-idle" value="Texte saisi" placeholder="Placeholder exemple" />
                         <input class="mr-input" id="input-placeholder" placeholder="Placeholder exemple" />
-                        <input class="mr-input" id="input-focus" data-mr-preview="focus" value="Focus" />
+                        <input class="mr-input" id="input-focus" value="Focus" />
                     </div>
                 </body>
                 </html>
@@ -716,6 +716,8 @@ async function run() {
             )
 
             // 4. Anneau de focus sur canevas
+            await page.focus('#input-focus')
+            await page.waitForTimeout(100)
             const focusOutlineColorRaw = await page.$eval(
                 '#input-focus',
                 (el) => window.getComputedStyle(el).outlineColor

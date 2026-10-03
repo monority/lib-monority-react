@@ -35,7 +35,6 @@ function Sample({ label, children }: { label: string; children: React.ReactNode 
 
 function ButtonHarness() {
     const variants = ['primary', 'secondary', 'ghost', 'danger'] as const
-    const previews = ['hover', 'active', 'focus'] as const
     return (
         <>
             {variants.flatMap((variant) =>
@@ -90,11 +89,6 @@ function ButtonHarness() {
                     </Button>
                 </div>
             </Sample>
-            {previews.map((preview) => (
-                <Sample key={preview} label={`preview ${preview}`}>
-                    <Button data-mr-preview={preview}>Enregistrer</Button>
-                </Sample>
-            ))}
         </>
     )
 }
@@ -203,7 +197,6 @@ function InputHarness() {
             <Sample label="focus clavier">
                 <Input
                     id="input-harness-focus"
-                    data-mr-preview="focus"
                     defaultValue="Champ actif avec focus"
                     placeholder="Entrez une valeur..."
                 />
