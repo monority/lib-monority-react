@@ -15,12 +15,11 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B7 commite localement (couverture API de Button : fullWidth, warning, loading) :
-- fullWidth (inline-size 100% sur toutes les combinaisons, y compris icone seule), warning (alias secondary depricie), loading (cursor progress, etats de repos figes)
-- budget tokens : 0 token cree, 31 tokens distincts conserves (mesure identique avant/apres)
-- regression : 0 ecart sur les 72 combinaisons existantes (4 variantes x 3 tailles x 2 themes x 3 etats)
-- captures harness : Temp/button-harness-light.png et Temp/button-harness-dark.png
-- compatibilite navigateurs : Chromium 1243 valide ; Firefox et WebKit absents du cache Playwright local
-- non couvert dans button.md : densite compacte (attente global), spinner superpose (attente composant), pointer fine, offset focus liste
-- action CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
-- prochaine etape : validation rendu B6/B7, puis lancement de la tranche Input (phase B)
+B6 (6aab0a2), B7 (938a9d6) et extension fullWidth icone (4f7da09) commites localement :
+- ligne de base poids : sources CSS 19 189 o (B6) / 21 364 o (B7) ; dist/index.css 10 305 o brut / 1 869 o gzip a B6
+- detail dist B6 : button.css 5 760 o, semantic.css 1 613 o, reset.css 1 097 o, dark.css 581 o, ref 298 o, base 750 o, layers 109 o, globals 97 o
+- nettoyage : suppression de l'orphelin styles/src/tokens/vocabulary.json (source unique : tooling/stylelint/vocabulary.json)
+- defauts de composant a traiter (Button.tsx) : clic non bloque en as="div" (loading/disabled) ; perte de focus clavier sous loading (disabled natif a remplacer par aria-disabled)
+- navigateurs : test Firefox et WebKit (installation de Playwright dans le cache utilisateur, aucun fichier du depot) au prochain point de controle, avant le choix du plancher de navigateurs
+- CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
+- prochaine etape : validation rendu B6/B7 par l'utilisateur et arbitrage de la proposition I1 (Input md repos/placeholder/focus)
