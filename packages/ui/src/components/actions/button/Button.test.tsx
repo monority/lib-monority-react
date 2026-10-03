@@ -154,6 +154,31 @@ describe('Button', () => {
         expect(link?.getAttribute('data-variant')).toBe('primary')
     })
 
+    it('blocks click and keyboard events when disabled or loading for non-native elements', () => {
+        const onClick = vi.fn()
+        const viewDisabled = render(
+            <Button as="div" disabled onClick={onClick}>
+                Disabled Div
+            </Button>
+        )
+        const divDisabled = viewDisabled.querySelector('div.mr-btn')
+        act(() => {
+            divDisabled?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+        })
+        expect(onClick).not.toHaveBeenCalled()
+
+        const viewLoading = render(
+            <Button as="div" loading onClick={onClick}>
+                Loading Div
+            </Button>
+        )
+        const divLoading = viewLoading.querySelector('div.mr-btn')
+        act(() => {
+            divLoading?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+        })
+        expect(onClick).not.toHaveBeenCalled()
+    })
+
     describe('copy mode', () => {
         it('copies text to clipboard on click', () => {
             Object.assign(navigator, { clipboard: { writeText: vi.fn() } })

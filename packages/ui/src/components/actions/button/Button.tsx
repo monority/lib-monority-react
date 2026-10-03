@@ -86,6 +86,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 
     const handleClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
+            if (isDisabled) {
+                event.preventDefault()
+                return
+            }
             if (copyValue && !copied) {
                 navigator.clipboard.writeText(copyValue)
                 setCopied(true)
@@ -93,7 +97,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             }
             onClick?.(event)
         },
-        [copyValue, duration, copied, onClick]
+        [isDisabled, copyValue, duration, copied, onClick]
+    )
+
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLButtonElement>) => {
+            if (isDisabled && (event.key === 'Enter' || event.key === ' ')) {
+                event.preventDefault()
+                return
+            }
+            props.onKeyDown?.(event)
+        },
+        [isDisabled, props.onKeyDown]
     )
 
     // -- Copy mode icon --
@@ -136,6 +151,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             data-icon-only={iconOnly || (showCopyIcon && !children) ? true : undefined}
             data-copied={copied ? true : undefined}
             onClick={handleClick}
+            onKeyDown={handleKeyDown}
             {...props}
         >
             {iconOnly || (showCopyIcon && !children) ? (
