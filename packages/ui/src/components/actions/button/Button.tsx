@@ -139,8 +139,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             ref={ref}
             className={cn('mr-btn', className)}
             type={Component === 'button' ? type : undefined}
-            disabled={Component === 'button' ? isDisabled : undefined}
-            aria-disabled={Component !== 'button' && isDisabled ? true : undefined}
+            disabled={Component === 'button' ? disabled : undefined}
+            aria-disabled={isDisabled ? true : undefined}
             aria-busy={loading || undefined}
             aria-label={resolvedAriaLabel}
             data-variant={resolvedVariant}

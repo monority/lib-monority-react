@@ -54,7 +54,8 @@ describe('Button', () => {
         expect(button?.getAttribute('data-full-width')).toBe('true')
         expect(button?.getAttribute('data-loading')).toBe('true')
         expect(button?.getAttribute('data-disabled')).toBe('true')
-        expect(button?.hasAttribute('disabled')).toBe(true)
+        expect(button?.hasAttribute('disabled')).toBe(false)
+        expect(button?.getAttribute('aria-disabled')).toBe('true')
         expect(button?.getAttribute('aria-busy')).toBe('true')
     })
 
@@ -130,6 +131,22 @@ describe('Button', () => {
         const button = view.querySelector('button')
         expect(button?.getAttribute('aria-busy')).toBe('true')
         expect(button?.getAttribute('data-loading')).toBe('true')
+    })
+
+    it('preserves focus and stays in tab order during loading using aria-disabled', () => {
+        const view = render(<Button>Submit</Button>)
+        const button = view.querySelector('button')!
+        button.focus()
+        expect(document.activeElement).toBe(button)
+
+        act(() => {
+            root?.render(<Button loading>Submit</Button>)
+        })
+
+        expect(document.activeElement).toBe(button)
+        expect(button.hasAttribute('disabled')).toBe(false)
+        expect(button.getAttribute('aria-disabled')).toBe('true')
+        expect(button.getAttribute('aria-busy')).toBe('true')
     })
 
     it('calls onClick when clicked', () => {
