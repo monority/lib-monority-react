@@ -196,6 +196,68 @@ describe('Button', () => {
         expect(onClick).not.toHaveBeenCalled()
     })
 
+    it('prevents form submission when loading on click and enter key', () => {
+        const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault())
+        const view = render(
+            <form onSubmit={onSubmit}>
+                <Button type="submit" loading>
+                    Submit
+                </Button>
+            </form>
+        )
+        const button = view.querySelector('button')!
+
+        act(() => {
+            button.click()
+        })
+        expect(onSubmit).not.toHaveBeenCalled()
+
+        act(() => {
+            button.focus()
+            button.dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })
+            )
+        })
+        expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    it('prevents navigation when as="a" is loading or disabled while keeping focus', () => {
+        const onClick = vi.fn()
+        const viewLoading = render(
+            <Button as="a" href="https://example.com" loading onClick={onClick}>
+                Link Loading
+            </Button>
+        )
+        const linkLoading = viewLoading.querySelector('a')!
+        linkLoading.focus()
+        expect(document.activeElement).toBe(linkLoading)
+
+        let clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true })
+        act(() => {
+            linkLoading.dispatchEvent(clickEvent)
+        })
+        expect(clickEvent.defaultPrevented).toBe(true)
+        expect(onClick).not.toHaveBeenCalled()
+        expect(document.activeElement).toBe(linkLoading)
+
+        const viewDisabled = render(
+            <Button as="a" href="https://example.com" disabled onClick={onClick}>
+                Link Disabled
+            </Button>
+        )
+        const linkDisabled = viewDisabled.querySelector('a')!
+        linkDisabled.focus()
+        expect(document.activeElement).toBe(linkDisabled)
+
+        clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true })
+        act(() => {
+            linkDisabled.dispatchEvent(clickEvent)
+        })
+        expect(clickEvent.defaultPrevented).toBe(true)
+        expect(onClick).not.toHaveBeenCalled()
+        expect(document.activeElement).toBe(linkDisabled)
+    })
+
     describe('copy mode', () => {
         it('copies text to clipboard on click', () => {
             Object.assign(navigator, { clipboard: { writeText: vi.fn() } })
