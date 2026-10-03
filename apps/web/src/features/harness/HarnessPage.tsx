@@ -199,12 +199,39 @@ function InputHarness() {
             <Sample label="champ avec valeur">
                 <Input defaultValue="Texte saisi" placeholder="Entrez une valeur..." />
             </Sample>
+            <Sample label="survol réel">
+                <Input
+                    id="input-harness-hover"
+                    defaultValue="Survol réel"
+                    placeholder="Survol..."
+                />
+            </Sample>
             <Sample label="focus clavier">
                 <Input
                     id="input-harness-focus"
                     defaultValue="Champ actif avec focus"
                     placeholder="Entrez une valeur..."
                 />
+            </Sample>
+            <Sample label="invalide">
+                <Input invalid defaultValue="Valeur erronée" placeholder="Entrez une valeur..." />
+            </Sample>
+            <Sample label="invalide avec focus">
+                <Input
+                    id="input-harness-invalid-focus"
+                    invalid
+                    defaultValue="Erreur avec focus"
+                    placeholder="Entrez une valeur..."
+                />
+            </Sample>
+            <Sample label="désactivé">
+                <Input disabled defaultValue="Champ désactivé" />
+            </Sample>
+            <Sample label="lecture seule">
+                <Input readOnly defaultValue="Valeur en lecture seule" />
+            </Sample>
+            <Sample label="placeholder désactivé">
+                <Input disabled placeholder="Placeholder désactivé..." />
             </Sample>
         </>
     )

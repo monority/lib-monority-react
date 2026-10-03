@@ -8,6 +8,7 @@ import {
     getContrastRatio,
     inGamutRgb,
     marginRgb,
+    oklabToRgbRaw,
     oklchToRgbRaw,
     parseCssVariables,
     parseOklch,
@@ -19,11 +20,21 @@ const ROOT = path.resolve(__dirname, '../..')
 const webRequire = createRequire(path.join(ROOT, 'apps/web/package.json'))
 const { chromium } = webRequire('@playwright/test')
 
-// Helper pour convertir une couleur (oklch ou rgb) retournee par le navigateur en RGB float 0..1
+// Helper pour convertir une couleur (oklch, oklab ou rgb) retournee par le navigateur en RGB float 0..1
 function colorToRgb(str) {
     const oklch = parseOklch(str)
     if (oklch) {
         return clipRgb(oklchToRgbRaw(oklch[0], oklch[1], oklch[2]))
+    }
+    const oklabMatch = str.match(/oklab\(\s*([\d.]+)\s+([-\d.]+)\s+([-\d.]+)/)
+    if (oklabMatch) {
+        return clipRgb(
+            oklabToRgbRaw(
+                parseFloat(oklabMatch[1]),
+                parseFloat(oklabMatch[2]),
+                parseFloat(oklabMatch[3])
+            )
+        )
     }
     const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
     if (m) {
@@ -227,7 +238,37 @@ async function testNegativeProof(browser) {
     console.log(
         `OK: Fixture negative placeholder reussie (L=0.60 detecte insuffisant a ${badPhRatio.toFixed(2)}:1 < 4.5:1).`
     )
-    await pagePlaceholderBad.close()
+    // Fixture negative survol bordure Input : melange vers le canevas (au lieu du texte)
+    const pageBorderHoverBad = await browser.newPage()
+    await pageBorderHoverBad.setContent(`
+        <style>
+            :root {
+                --mr-bg-canvas: oklch(0.955 0 215);
+                --mr-border-control: oklch(0.61 0 215);
+                --mr-state-hover-mix: 12%;
+            }
+            .bad-border-hover {
+                border: 1px solid color-mix(in oklch, var(--mr-border-control), var(--mr-bg-canvas) var(--mr-state-hover-mix));
+            }
+        </style>
+        <input class="bad-border-hover" id="bad-input-hover" />
+    `)
+    const badInputBorder = await pageBorderHoverBad.$eval(
+        '#bad-input-hover',
+        (el) => window.getComputedStyle(el).borderColor
+    )
+    const badInputHoverRatio = getContrastRatio(
+        colorToRgb(badInputBorder),
+        colorToRgb('oklch(0.955 0 215)')
+    )
+    assert(
+        badInputHoverRatio < 3.0,
+        `Le survol de bordure vers le canevas doit echouer sous 3.0:1 (ratio obtenu: ${badInputHoverRatio.toFixed(2)}:1)`
+    )
+    console.log(
+        `OK: Fixture negative survol bordure Input reussie (melange vers canevas detecte insuffisant a ${badInputHoverRatio.toFixed(2)}:1 < 3.0:1).`
+    )
+    await pageBorderHoverBad.close()
 }
 
 // 2. Verification des contrastes reels depuis les fichiers CSS et dans Chromium
@@ -348,7 +389,12 @@ async function run() {
                     <div style="margin-top: 1rem; width: 300px;">
                         <input class="mr-input" id="input-idle" value="Texte saisi" placeholder="Placeholder exemple" />
                         <input class="mr-input" id="input-placeholder" placeholder="Placeholder exemple" />
+                        <input class="mr-input" id="input-hover" value="Survol" />
                         <input class="mr-input" id="input-focus" value="Focus" />
+                        <input class="mr-input" id="input-invalid" aria-invalid="true" value="Texte invalide" placeholder="Placeholder invalide" />
+                        <input class="mr-input" id="input-invalid-focus" aria-invalid="true" value="Focus invalide" />
+                        <input class="mr-input" id="input-disabled" disabled value="Texte desactive" placeholder="Placeholder desactive" />
+                        <input class="mr-input" id="input-readonly" readonly value="Lecture seule" />
                     </div>
                 </body>
                 </html>
@@ -715,7 +761,26 @@ async function run() {
                 `Theme ${t.name} - Bordure Input sur canevas insuffisante: ${inputBorderRatio.toFixed(2)}:1 < 3.0:1`
             )
 
-            // 4. Anneau de focus sur canevas
+            // 4. Bordure survolee sur canevas (bloquante >= 3.0:1, marge visee 3.3)
+            await page.hover('#input-hover')
+            await page.waitForTimeout(50)
+            const inputBorderHoverRaw = await page.$eval(
+                '#input-hover',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const inputBorderHoverRatio = getContrastRatio(
+                colorToRgb(inputBorderHoverRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Bordure survolee sur canevas : fg = ${inputBorderHoverRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderHoverRatio.toFixed(2)}:1 (seuil UI >= 3.0:1, vise 3.3)`
+            )
+            assert(
+                inputBorderHoverRatio >= 3.0,
+                `Theme ${t.name} - Bordure survolee Input sur canevas insuffisante: ${inputBorderHoverRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            // 5. Anneau de focus sur canevas
             await page.focus('#input-focus')
             await page.waitForTimeout(100)
             const focusOutlineColorRaw = await page.$eval(
@@ -732,6 +797,113 @@ async function run() {
             assert(
                 focusRingRatio >= 3.0,
                 `Theme ${t.name} - Anneau focus Input sur canevas insuffisant: ${focusRingRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            // 6. Bordure invalide sur canevas (bloquante >= 3.0:1)
+            const inputBorderInvalidRaw = await page.$eval(
+                '#input-invalid',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const inputBorderInvalidRatio = getContrastRatio(
+                colorToRgb(inputBorderInvalidRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Bordure invalide sur canevas : fg = ${inputBorderInvalidRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderInvalidRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                inputBorderInvalidRatio >= 3.0,
+                `Theme ${t.name} - Bordure invalide Input sur canevas insuffisante: ${inputBorderInvalidRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            // 7. Anneau de focus invalide sur canevas (bloquante >= 3.0:1)
+            await page.focus('#input-invalid-focus')
+            await page.waitForTimeout(100)
+            const invalidFocusOutlineRaw = await page.$eval(
+                '#input-invalid-focus',
+                (el) => window.getComputedStyle(el).outlineColor
+            )
+            const invalidFocusOutlineRatio = getContrastRatio(
+                colorToRgb(invalidFocusOutlineRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- Anneau focus invalide sur canevas : fg = ${invalidFocusOutlineRaw}, bg = ${canvasBgRaw}, ratio = ${invalidFocusOutlineRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            )
+            assert(
+                invalidFocusOutlineRatio >= 3.0,
+                `Theme ${t.name} - Anneau focus invalide Input sur canevas insuffisant: ${invalidFocusOutlineRatio.toFixed(2)}:1 < 3.0:1`
+            )
+
+            // 8. Texte saisi en etat invalide sur fond champ (bloquante >= 4.5:1)
+            const invalidTextRaw = await page.$eval(
+                '#input-invalid',
+                (el) => window.getComputedStyle(el).color
+            )
+            const invalidTextRatio = getContrastRatio(
+                colorToRgb(invalidTextRaw),
+                colorToRgb(inputBgRaw)
+            )
+            console.log(
+                `- Texte saisi invalide sur fond champ : fg = ${invalidTextRaw}, bg = ${inputBgRaw}, ratio = ${invalidTextRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                invalidTextRatio >= 4.5,
+                `Theme ${t.name} - Contraste texte saisi invalide Input insuffisant: ${invalidTextRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // 9. Placeholder en etat invalide sur fond champ (bloquante >= 4.5:1)
+            const invalidPhRaw = await page.$eval(
+                '#input-invalid',
+                (el) => window.getComputedStyle(el, '::placeholder').color
+            )
+            const invalidPhRatio = getContrastRatio(
+                colorToRgb(invalidPhRaw),
+                colorToRgb(inputBgRaw)
+            )
+            console.log(
+                `- Placeholder invalide sur fond champ : fg = ${invalidPhRaw}, bg = ${inputBgRaw}, ratio = ${invalidPhRatio.toFixed(2)}:1 (seuil >= 4.5:1)`
+            )
+            assert(
+                invalidPhRatio >= 4.5,
+                `Theme ${t.name} - Contraste placeholder invalide Input insuffisant: ${invalidPhRatio.toFixed(2)}:1 < 4.5:1`
+            )
+
+            // 10. Rapportes, non bloquants : desactive (texte, placeholder, bordure)
+            const inputDisabledTextRaw = await page.$eval(
+                '#input-disabled',
+                (el) => window.getComputedStyle(el).color
+            )
+            const inputDisabledTextRatio = getContrastRatio(
+                colorToRgb(inputDisabledTextRaw),
+                colorToRgb(inputBgRaw)
+            )
+            console.log(
+                `- [Rapporte] Texte desactive sur fond champ : fg = ${inputDisabledTextRaw}, bg = ${inputBgRaw}, ratio = ${inputDisabledTextRatio.toFixed(2)}:1`
+            )
+
+            const inputDisabledPhRaw = await page.$eval(
+                '#input-disabled',
+                (el) => window.getComputedStyle(el, '::placeholder').color
+            )
+            const inputDisabledPhRatio = getContrastRatio(
+                colorToRgb(inputDisabledPhRaw),
+                colorToRgb(inputBgRaw)
+            )
+            console.log(
+                `- [Rapporte] Placeholder desactive sur fond champ : fg = ${inputDisabledPhRaw}, bg = ${inputBgRaw}, ratio = ${inputDisabledPhRatio.toFixed(2)}:1`
+            )
+
+            const inputDisabledBorderRaw = await page.$eval(
+                '#input-disabled',
+                (el) => window.getComputedStyle(el).borderColor
+            )
+            const inputDisabledBorderRatio = getContrastRatio(
+                colorToRgb(inputDisabledBorderRaw),
+                colorToRgb(canvasBgRaw)
+            )
+            console.log(
+                `- [Rapporte] Bordure desactivee sur canevas : fg = ${inputDisabledBorderRaw}, bg = ${canvasBgRaw}, ratio = ${inputDisabledBorderRatio.toFixed(2)}:1`
             )
 
             await page.close()
