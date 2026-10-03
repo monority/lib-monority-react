@@ -15,10 +15,12 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B6 commite localement (tailles sm et lg, padding-inline et mode icone seule) :
-- ligne de base poids : dist/index.css pese 10 305 o brut (10,06 Ko) / 1 869 o gzip (1,83 Ko)
-- detail dist : button.css 5 760 o, semantic.css 1 613 o, reset.css 1 097 o, dark.css 581 o, ref 298 o, base 750 o, layers 109 o
-- sources styles/src : 13 fichiers CSS (18 325 o cumules), 1 orphelin identifie (tokens/vocabulary.json 2 171 o)
-- verify a froid : 134.74 s (turbo --force) vs en cache : 11.85 s (6 etapes reelles vertes)
-- decision retablie : echelles initiales restantes maintenue dans 10-decisions.md
-- prochaine etape : micro-etape B7 (couverture API : fullWidth, warning, loading sans spinner)
+B7 commite localement (couverture API de Button : fullWidth, warning, loading) :
+- fullWidth (inline-size 100%, carre iconOnly prioritaire), warning (alias secondary depricie), loading (cursor progress, etats de repos figes)
+- budget tokens : 0 token cree, 31 tokens distincts conserves (mesure identique avant/apres)
+- regression : 0 ecart sur les 72 combinaisons existantes (4 variantes x 3 tailles x 2 themes x 3 etats)
+- captures harness : Temp/button-harness-light.png et Temp/button-harness-dark.png
+- compatibilite navigateurs : Chromium 1243 valide ; Firefox et WebKit absents du cache Playwright local
+- non couvert dans button.md : densite compacte (attente global), spinner superpose (attente composant), pointer fine, offset focus liste
+- action CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
+- prochaine etape : validation rendu B6/B7, puis lancement de la tranche Input (phase B)

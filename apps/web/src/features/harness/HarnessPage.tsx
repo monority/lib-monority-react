@@ -54,8 +54,33 @@ function ButtonHarness() {
                     Supprimer
                 </Button>
             </Sample>
-            <Sample label="loading">
+            <Sample label="warning (alias)">
+                <Button variant="warning">Avertissement</Button>
+            </Sample>
+            <Sample label="loading primary">
                 <Button loading>Enregistrer</Button>
+            </Sample>
+            <Sample label="loading secondary">
+                <Button variant="secondary" loading>
+                    Enregistrer
+                </Button>
+            </Sample>
+            <Sample label="loading danger">
+                <Button variant="danger" loading>
+                    Supprimer
+                </Button>
+            </Sample>
+            <Sample label="full width">
+                <div style={{ width: '100%' }}>
+                    <Button fullWidth>Pleine largeur</Button>
+                </div>
+            </Sample>
+            <Sample label="full width iconOnly">
+                <div style={{ width: '100%' }}>
+                    <Button fullWidth iconOnly aria-label="Action">
+                        ★
+                    </Button>
+                </div>
             </Sample>
             {previews.map((preview) => (
                 <Sample key={preview} label={`preview ${preview}`}>

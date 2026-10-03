@@ -74,6 +74,13 @@
         min-inline-size: var(--mr-size-control-lg);
     }
 
+    /* Pleine largeur (fullWidth) : 100% de la largeur du conteneur.
+     * Cas icone seule exclu : un bouton iconOnly a pour contrat d'etre un carre
+     * (largeur = hauteur) ; le format carre prevaut pour eviter une deformation rectangulaire. */
+    :where(.mr-btn)[data-full-width]:where(:not([data-icon-only])) {
+        inline-size: 100%;
+    }
+
     /* Variante primary (action principale neutre) : repos */
     :where(.mr-btn)[data-variant='primary'],
     :where(.mr-btn):not([data-variant]) {
@@ -81,9 +88,13 @@
         color: var(--mr-text-on-inverse);
     }
 
-    /* Variante secondary (action avec bordure de controle) : repos */
+    /* Variante secondary (action avec bordure de controle) : repos
+     * Alias de compatibilite :
+     * - muted : alias direct vers secondary
+     * - warning : alias deprecie vers secondary conformement a button.md ligne 97 */
     :where(.mr-btn)[data-variant='secondary'],
-    :where(.mr-btn)[data-variant='muted'] {
+    :where(.mr-btn)[data-variant='muted'],
+    :where(.mr-btn)[data-variant='warning'] {
         background-color: var(--mr-bg-canvas);
         border-color: var(--mr-border-control);
         color: var(--mr-text-primary);
@@ -102,12 +113,21 @@
         color: var(--mr-danger-on-solid);
     }
 
+    /* Etat chargement (loading) : l'element conserve l'apparence de repos de sa variante,
+     * les etats survol et actif ne s'appliquent pas, curseur de progression.
+     * Le spinner superpose sera integre avec le composant dedie Spinner (phase suivante). */
+    :where(.mr-btn)[data-loading] {
+        cursor: progress;
+    }
+
     /* Survol (uniquement avec pointeur survolant) */
     @media (hover: hover) {
         :where(.mr-btn)[data-variant='primary']:hover:where(
-                :not(:disabled, [aria-disabled='true'])
+                :not(:disabled, [aria-disabled='true'], [data-loading])
             ),
-        :where(.mr-btn):not([data-variant]):hover:where(:not(:disabled, [aria-disabled='true'])) {
+        :where(.mr-btn):not([data-variant]):hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ) {
             background-color: color-mix(
                 in oklch,
                 var(--mr-bg-inverse),
@@ -116,12 +136,19 @@
         }
 
         :where(.mr-btn)[data-variant='secondary']:hover:where(
-                :not(:disabled, [aria-disabled='true'])
+                :not(:disabled, [aria-disabled='true'], [data-loading])
             ),
-        :where(.mr-btn)[data-variant='muted']:hover:where(:not(:disabled, [aria-disabled='true'])),
-        :where(.mr-btn)[data-variant='ghost']:hover:where(:not(:disabled, [aria-disabled='true'])),
+        :where(.mr-btn)[data-variant='muted']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn)[data-variant='warning']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn)[data-variant='ghost']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
         :where(.mr-btn)[data-variant='subtle']:hover:where(
-                :not(:disabled, [aria-disabled='true'])
+                :not(:disabled, [aria-disabled='true'], [data-loading])
             ) {
             background-color: color-mix(
                 in oklch,
@@ -131,7 +158,7 @@
         }
 
         :where(.mr-btn)[data-variant='danger']:hover:where(
-                :not(:disabled, [aria-disabled='true'])
+                :not(:disabled, [aria-disabled='true'], [data-loading])
             ) {
             background-color: color-mix(
                 in oklch,
@@ -142,8 +169,12 @@
     }
 
     /* Actif (pression) */
-    :where(.mr-btn)[data-variant='primary']:active:where(:not(:disabled, [aria-disabled='true'])),
-    :where(.mr-btn):not([data-variant]):active:where(:not(:disabled, [aria-disabled='true'])) {
+    :where(.mr-btn)[data-variant='primary']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn):not([data-variant]):active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-inverse),
@@ -151,10 +182,21 @@
         );
     }
 
-    :where(.mr-btn)[data-variant='secondary']:active:where(:not(:disabled, [aria-disabled='true'])),
-    :where(.mr-btn)[data-variant='muted']:active:where(:not(:disabled, [aria-disabled='true'])),
-    :where(.mr-btn)[data-variant='ghost']:active:where(:not(:disabled, [aria-disabled='true'])),
-    :where(.mr-btn)[data-variant='subtle']:active:where(:not(:disabled, [aria-disabled='true'])) {
+    :where(.mr-btn)[data-variant='secondary']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='muted']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='warning']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='ghost']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='subtle']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-canvas),
@@ -162,7 +204,9 @@
         );
     }
 
-    :where(.mr-btn)[data-variant='danger']:active:where(:not(:disabled, [aria-disabled='true'])) {
+    :where(.mr-btn)[data-variant='danger']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
         background-color: color-mix(
             in oklch,
             var(--mr-danger-solid),
@@ -170,17 +214,17 @@
         );
     }
 
-    /* Desactive */
-    :where(.mr-btn):disabled,
-    :where(.mr-btn)[aria-disabled='true'] {
+    /* Desactive (hors chargement) */
+    :where(.mr-btn):disabled:where(:not([data-loading])),
+    :where(.mr-btn)[aria-disabled='true']:where(:not([data-loading])) {
         color: var(--mr-text-disabled);
         cursor: not-allowed;
     }
 
-    :where(.mr-btn)[data-variant='primary']:disabled,
-    :where(.mr-btn)[data-variant='primary'][aria-disabled='true'],
-    :where(.mr-btn):not([data-variant]):disabled,
-    :where(.mr-btn):not([data-variant])[aria-disabled='true'] {
+    :where(.mr-btn)[data-variant='primary']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='primary'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn):not([data-variant]):disabled:where(:not([data-loading])),
+    :where(.mr-btn):not([data-variant])[aria-disabled='true']:where(:not([data-loading])) {
         background-color: color-mix(
             in oklch,
             var(--mr-bg-inverse),
@@ -188,10 +232,12 @@
         );
     }
 
-    :where(.mr-btn)[data-variant='secondary']:disabled,
-    :where(.mr-btn)[data-variant='secondary'][aria-disabled='true'],
-    :where(.mr-btn)[data-variant='muted']:disabled,
-    :where(.mr-btn)[data-variant='muted'][aria-disabled='true'] {
+    :where(.mr-btn)[data-variant='secondary']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='secondary'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='muted']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='muted'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='warning']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='warning'][aria-disabled='true']:where(:not([data-loading])) {
         background-color: var(--mr-bg-canvas);
         border-color: color-mix(
             in oklch,
@@ -200,16 +246,16 @@
         );
     }
 
-    :where(.mr-btn)[data-variant='ghost']:disabled,
-    :where(.mr-btn)[data-variant='ghost'][aria-disabled='true'],
-    :where(.mr-btn)[data-variant='subtle']:disabled,
-    :where(.mr-btn)[data-variant='subtle'][aria-disabled='true'] {
+    :where(.mr-btn)[data-variant='ghost']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='ghost'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='subtle']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='subtle'][aria-disabled='true']:where(:not([data-loading])) {
         background-color: transparent;
         border-color: transparent;
     }
 
-    :where(.mr-btn)[data-variant='danger']:disabled,
-    :where(.mr-btn)[data-variant='danger'][aria-disabled='true'] {
+    :where(.mr-btn)[data-variant='danger']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='danger'][aria-disabled='true']:where(:not([data-loading])) {
         background-color: color-mix(
             in oklch,
             var(--mr-danger-solid),
