@@ -82,6 +82,11 @@ export function colorToRgb(str) {
     throw new Error(`Format de couleur non reconnu : ${str}`)
 }
 
+// Helper pour attendre la fin complete de toutes les animations et transitions CSS en cours
+async function waitForAnimations(page) {
+    await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)))
+}
+
 // 1. Preuves en negatif et assertions de reference
 async function testNegativeProof(browser) {
     console.log('Assertions de reference et preuve en negatif du test de contraste...')
@@ -482,7 +487,7 @@ async function run() {
 
             // Survol
             await page.hover('#btn-hover')
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const hoverBgRaw = await page.$eval(
                 '#btn-hover',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -507,7 +512,7 @@ async function run() {
                 activeBox.y + activeBox.height / 2
             )
             await page.mouse.down()
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const activeBgRaw = await page.$eval(
                 '#btn-active',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -598,7 +603,7 @@ async function run() {
 
             // Secondaire survol
             await page.hover('#btn-sec-hover')
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const secHoverBgRaw = await page.$eval(
                 '#btn-sec-hover',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -622,7 +627,7 @@ async function run() {
                 secActiveBox.y + secActiveBox.height / 2
             )
             await page.mouse.down()
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const secActiveBgRaw = await page.$eval(
                 '#btn-sec-active',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -697,7 +702,7 @@ async function run() {
 
             // Danger survol
             await page.hover('#btn-danger-hover')
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const dangerHoverBgRaw = await page.$eval(
                 '#btn-danger-hover',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -725,7 +730,7 @@ async function run() {
                 dangerActiveBox.y + dangerActiveBox.height / 2
             )
             await page.mouse.down()
-            await page.waitForTimeout(200)
+            await waitForAnimations(page)
             const dangerActiveBgRaw = await page.$eval(
                 '#btn-danger-active',
                 (el) => window.getComputedStyle(el).backgroundColor
@@ -825,7 +830,7 @@ async function run() {
 
             // 4. Bordure survolee sur canevas (bloquante >= 3.0:1, marge visee 3.3)
             await page.hover('#input-hover')
-            await page.waitForTimeout(50)
+            await waitForAnimations(page)
             const inputBorderHoverRaw = await page.$eval(
                 '#input-hover',
                 (el) => window.getComputedStyle(el).borderColor
@@ -844,7 +849,7 @@ async function run() {
 
             // 5. Anneau de focus sur canevas
             await page.focus('#input-focus')
-            await page.waitForTimeout(100)
+            await waitForAnimations(page)
             const focusOutlineColorRaw = await page.$eval(
                 '#input-focus',
                 (el) => window.getComputedStyle(el).outlineColor
@@ -880,7 +885,7 @@ async function run() {
 
             // 7. Anneau de focus invalide sur canevas (bloquante >= 3.0:1)
             await page.focus('#input-invalid-focus')
-            await page.waitForTimeout(100)
+            await waitForAnimations(page)
             const invalidFocusOutlineRaw = await page.$eval(
                 '#input-invalid-focus',
                 (el) => window.getComputedStyle(el).outlineColor
