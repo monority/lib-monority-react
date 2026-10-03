@@ -20,13 +20,22 @@ const ROOT = path.resolve(__dirname, '../..')
 const webRequire = createRequire(path.join(ROOT, 'apps/web/package.json'))
 const { chromium } = webRequire('@playwright/test')
 
-// Helper pour convertir une couleur (oklch, oklab ou rgb) retournee par le navigateur en RGB float 0..1
-function colorToRgb(str) {
-    const oklch = parseOklch(str)
+// Helper pour convertir une couleur (oklch, oklab, rgb, srgb, color(), transparent) retournee par le navigateur en RGB float 0..1
+export function colorToRgb(str) {
+    if (!str || typeof str !== 'string') {
+        throw new Error(`Format de couleur non reconnu : ${str}`)
+    }
+    const s = str.trim()
+    if (s.toLowerCase() === 'transparent') {
+        return [0, 0, 0]
+    }
+    const oklch = parseOklch(s)
     if (oklch) {
         return clipRgb(oklchToRgbRaw(oklch[0], oklch[1], oklch[2]))
     }
-    const oklabMatch = str.match(/oklab\(\s*([\d.]+)\s+([-\d.]+)\s+([-\d.]+)/)
+    const oklabMatch = s.match(
+        /oklab\(\s*([\d.]+)\s+([-\d.]+)\s+([-\d.]+)(?:\s*\/\s*[\d.]+%?)?\s*\)/i
+    )
     if (oklabMatch) {
         return clipRgb(
             oklabToRgbRaw(
@@ -36,16 +45,69 @@ function colorToRgb(str) {
             )
         )
     }
-    const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
-    if (m) {
-        return [parseInt(m[1]) / 255, parseInt(m[2]) / 255, parseInt(m[3]) / 255]
+    const colorSrgbMatch = s.match(
+        /color\(\s*srgb\s+([-\d.%]+)\s+([-\d.%]+)\s+([-\d.%]+)(?:\s*\/\s*[-\d.%]+)?\s*\)/i
+    )
+    if (colorSrgbMatch) {
+        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v))
+        return clipRgb([
+            parseChannel(colorSrgbMatch[1]),
+            parseChannel(colorSrgbMatch[2]),
+            parseChannel(colorSrgbMatch[3]),
+        ])
     }
-    return [0, 0, 0]
+    const rgbCommaMatch = s.match(
+        /rgba?\(\s*([\d.%]+)\s*,\s*([\d.%]+)\s*,\s*([\d.%]+)(?:\s*,\s*[\d.%]+)?\s*\)/i
+    )
+    if (rgbCommaMatch) {
+        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v) / 255)
+        return clipRgb([
+            parseChannel(rgbCommaMatch[1]),
+            parseChannel(rgbCommaMatch[2]),
+            parseChannel(rgbCommaMatch[3]),
+        ])
+    }
+    const rgbSpaceMatch = s.match(
+        /rgba?\(\s*([\d.%]+)\s+([\d.%]+)\s+([\d.%]+)(?:\s*\/\s*[\d.%]+)?\s*\)/i
+    )
+    if (rgbSpaceMatch) {
+        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v) / 255)
+        return clipRgb([
+            parseChannel(rgbSpaceMatch[1]),
+            parseChannel(rgbSpaceMatch[2]),
+            parseChannel(rgbSpaceMatch[3]),
+        ])
+    }
+
+    throw new Error(`Format de couleur non reconnu : ${str}`)
 }
 
 // 1. Preuves en negatif et assertions de reference
 async function testNegativeProof(browser) {
     console.log('Assertions de reference et preuve en negatif du test de contraste...')
+
+    // Assertions de reference pour le parseur
+    const rgbOklab = colorToRgb('oklab(0.5 0 0)').map((v) => Math.round(v * 255))
+    assert(
+        Math.abs(rgbOklab[0] - 99) <= 1 &&
+            Math.abs(rgbOklab[1] - 99) <= 1 &&
+            Math.abs(rgbOklab[2] - 99) <= 1,
+        `Parseur oklab(0.5 0 0) attendu a rgb(99, 99, 99) +/- 1, obtenu: rgb(${rgbOklab.join(', ')})`
+    )
+
+    const rgbOklch = colorToRgb('oklch(1 0 0)').map((v) => Math.round(v * 255))
+    assert.deepStrictEqual(
+        rgbOklch,
+        [255, 255, 255],
+        `Parseur oklch(1 0 0) attendu a rgb(255, 255, 255), obtenu: rgb(${rgbOklch.join(', ')})`
+    )
+
+    // Preuve en negatif : chaine non reconnue fait echouer
+    assert.throws(
+        () => colorToRgb('formatInconnu(1, 2, 3)'),
+        /Format de couleur non reconnu/,
+        'Une chaine non reconnue doit lever une erreur explicite'
+    )
 
     // Assertions de reference sur valeurs connues
     const refBlack = [0, 0, 0]
