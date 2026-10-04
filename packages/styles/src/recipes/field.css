@@ -42,4 +42,17 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-secondary);
     }
+
+    :where(.mr-field__error) {
+        display: block;
+        box-sizing: border-box;
+        margin: 0;
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-field__required) {
+        color: var(--mr-danger-solid);
+    }
 }

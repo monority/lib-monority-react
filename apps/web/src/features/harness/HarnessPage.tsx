@@ -354,6 +354,26 @@ function FieldHarness() {
                     </Field>
                 </div>
             </Sample>
+            <Sample label="Field avec label requis et Input md">
+                <Field label="Nom obligatoire" required>
+                    <Input size="md" defaultValue="Jean Dupont" />
+                </Field>
+            </Sample>
+            <Sample label="Field avec message d'erreur et Input invalide">
+                <Field label="Code postal" error="Le code postal doit comporter 5 chiffres">
+                    <Input size="md" invalid defaultValue="750" />
+                </Field>
+            </Sample>
+            <Sample label="Field complet : requis, aide et erreur">
+                <Field
+                    label="Identifiant"
+                    required
+                    hint="Lettres minuscules et chiffres uniquement"
+                    error="Cet identifiant est déjà utilisé"
+                >
+                    <Input size="md" invalid defaultValue="admin" />
+                </Field>
+            </Sample>
         </>
     )
 }
