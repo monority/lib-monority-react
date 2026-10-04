@@ -15,17 +15,16 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B6, B7, corrections Button, I1 a I3, fix(base) et F1 a F3 (en attente de validation rendu) :
-- sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-- changelog a preparer avant publication : tone deprecier ; loading Button sous aria-disabled/busy ; garde evenements non natifs ; correction portee base ADR-025 ; echelle typo font-size-sm
-- defaut Field : Input rend lui-meme un Field, d'ou un double wrapper dans un Field
-- limite Field : pas de prop disabled sur wrapper Field, etiquette desactivee non stylisable
-- portee opt-in (ADR-025) : base sans style global, echelle racine native 16px preservee
-- limites surface (ADR-024) : clair L >= 0.921 (marge 0.034) ; sombre L <= 0.254 (marge 0.034)
-- focus : unifier le focus des champs au moment de Textarea (regle commune ou exception)
-- navigateurs : test Firefox et WebKit au prochain point de controle, avant choix plancher
-- CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
-- ligne de base poids sources : 29 194 o (15 fichiers) a F3
-- ligne de base poids dist : index.css 14 903 o brut / 2 291 o gzip a F3
-- composant suivant : Textarea (4e composant, point de controle ensuite)
+Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
+Point de contrôle (après Textarea, 4e composant) :
+1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
+2. décision sur le patron de recette (section 2) et sur le nom partagé des champs
+3. ajout des thèmes slate, oled, ocean, night, high-contrast, un commit par thème, contraste de toutes les paires existantes dans chacun, et re-vérification de la bande de surfaces (ADR-024)
+4. test Firefox et WebKit avec Playwright installé dans le cache utilisateur (aucun fichier du dépôt) et décision du plancher de navigateurs
+5. branchement de pnpm verify en CI avec installation de Chromium, sans toucher à release.yml
+6. bilan de poids et durée de verify à froid
+7. revue de docs/foundation/ contre le code
+8. décisions ouvertes à trancher
+9. préparation du changelog
+10. nettoyage de l'historique à décider avec moi (fusion en squash ou conservation des commits)
 
