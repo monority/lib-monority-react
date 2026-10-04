@@ -15,15 +15,16 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B6, B7, corrections Button, I1 a I3 et fix(base) (en attente de validation rendu) :
+B6, B7, corrections Button, I1 a I3, fix(base) et F1 (en attente de validation rendu) :
 - sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
+- changelog a preparer avant publication : tone deprecier ; loading Button sous aria-disabled/busy ; garde evenements non natifs ; correction portee base ADR-025
 - defaut Field : Input rend lui-meme un Field, d'ou un double wrapper dans un Field
 - portee opt-in (ADR-025) : base sans style global, echelle racine native 16px preservee
 - limites surface (ADR-024) : clair L >= 0.921 (marge 0.034) ; sombre L <= 0.254 (marge 0.034)
 - focus : unifier le focus des champs au moment de Textarea (regle commune ou exception)
 - navigateurs : test Firefox et WebKit au prochain point de controle, avant choix plancher
 - CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
-- ligne de base poids sources : 26 712 o (14 fichiers) apres fix(base)
-- ligne de base poids dist : index.css 13 860 o brut / 2 173 o gzip
-- composant suivant : Field (etiquette, texte d'aide, erreur), premier pas echelle typographique
+- ligne de base poids sources : 28 201 o (15 fichiers) a F1
+- ligne de base poids dist : index.css 14 332 o brut / 2 235 o gzip a F1
+- suite Field : F2 (aide, font-size-sm 0.75rem), F3 (erreur danger-solid, desactive/requis)
 
