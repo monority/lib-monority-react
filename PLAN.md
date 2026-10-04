@@ -15,15 +15,15 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-B6, B7, corrections Button, I1 a I3 finalises (en attente de validation rendu) :
+B6, B7, corrections Button, I1 a I3 et fix(base) (en attente de validation rendu) :
 - sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-- moteur contraste : parseur strict rejetant tout format inconnu et attente fin des animations
-- limites fond opaque (ADR-024) : surface clair L >= 0.921 (marge 0.034) ; sombre L <= 0.254 (marge 0.034)
-- focus : unifier le focus des champs au moment de Textarea (regle commune a la base ou exception partagee)
-- spinner : indicateur visuel Button differe a l'integration du composant Spinner
-- navigateurs : test Firefox et WebKit (cache utilisateur) au prochain point de controle, avant choix plancher
+- defaut Field : Input rend lui-meme un Field, d'ou un double wrapper dans un Field
+- portee opt-in (ADR-025) : base sans style global, echelle racine native 16px preservee
+- limites surface (ADR-024) : clair L >= 0.921 (marge 0.034) ; sombre L <= 0.254 (marge 0.034)
+- focus : unifier le focus des champs au moment de Textarea (regle commune ou exception)
+- navigateurs : test Firefox et WebKit au prochain point de controle, avant choix plancher
 - CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
-- ligne de base poids sources : 26 772 o (14 fichiers) a I3
-- ligne de base poids dist : index.css 13 914 o brut / 2 188 o gzip a I3
+- ligne de base poids sources : 26 712 o (14 fichiers) apres fix(base)
+- ligne de base poids dist : index.css 13 860 o brut / 2 173 o gzip
 - composant suivant : Field (etiquette, texte d'aide, erreur), premier pas echelle typographique
 
