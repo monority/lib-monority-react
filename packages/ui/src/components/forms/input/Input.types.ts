@@ -12,6 +12,7 @@ export interface InputProps
     error?: ReactNode
     className?: string
     inputClassName?: string
+    /** @deprecated utiliser invalid */
     tone?: InputTone
     size?: InputSize
     invalid?: boolean
