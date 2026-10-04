@@ -313,9 +313,40 @@ function InputHarness() {
     )
 }
 
+function FieldHarness() {
+    return (
+        <>
+            <Sample label="Field avec label et Input sm">
+                <Field label="Étiquette champ sm">
+                    <Input size="sm" defaultValue="Valeur sm" placeholder="Entrez une valeur..." />
+                </Field>
+            </Sample>
+            <Sample label="Field avec label et Input md">
+                <Field label="Étiquette champ md">
+                    <Input size="md" defaultValue="Valeur md" placeholder="Entrez une valeur..." />
+                </Field>
+            </Sample>
+            <Sample label="Field avec label et Input lg">
+                <Field label="Étiquette champ lg">
+                    <Input size="lg" defaultValue="Valeur lg" placeholder="Entrez une valeur..." />
+                </Field>
+            </Sample>
+            <Sample label="Input seul md (sans Field extérieur ni label)">
+                <Input size="md" defaultValue="Champ autonome" />
+            </Sample>
+            <Sample label="Field sans label avec Input md">
+                <Field>
+                    <Input size="md" defaultValue="Sans étiquette" />
+                </Field>
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
+    field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
     'button-link': ButtonLinkHarness,
