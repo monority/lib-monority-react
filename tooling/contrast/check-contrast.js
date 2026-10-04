@@ -1482,7 +1482,12 @@ async function run() {
             for (const p in csBare) {
                 if (csBare[p] !== csLib[p]) {
                     hostDiffCount++
-                    hostDiffDetails.push({ element: sel, property: p, bare: csBare[p], lib: csLib[p] })
+                    hostDiffDetails.push({
+                        element: sel,
+                        property: p,
+                        bare: csBare[p],
+                        lib: csLib[p],
+                    })
                 }
             }
         }
@@ -1491,11 +1496,22 @@ async function run() {
         for (const id of ['#a', '#button', '#input']) {
             await pageBare.focus(id)
             await pageWithLib.focus(id)
-            const bareOutline = await pageBare.$eval(id, (el) => window.getComputedStyle(el).outline)
-            const libOutline = await pageWithLib.$eval(id, (el) => window.getComputedStyle(el).outline)
+            const bareOutline = await pageBare.$eval(
+                id,
+                (el) => window.getComputedStyle(el).outline
+            )
+            const libOutline = await pageWithLib.$eval(
+                id,
+                (el) => window.getComputedStyle(el).outline
+            )
             if (bareOutline !== libOutline) {
                 hostDiffCount++
-                hostDiffDetails.push({ element: id, property: 'outline-on-focus', bare: bareOutline, lib: libOutline })
+                hostDiffDetails.push({
+                    element: id,
+                    property: 'outline-on-focus',
+                    bare: bareOutline,
+                    lib: libOutline,
+                })
             }
         }
 
