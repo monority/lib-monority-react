@@ -13,7 +13,7 @@ Huit étapes au plus, dans un ordre fixe, arrêt au premier échec :
 1. typecheck
 2. lint JS/TS
 3. Stylelint : pas de valeur brute hors `tokens/ref.css` et `themes/` ; nommage `--mr-*` dérivé du fichier de vocabulaire ; aucune règle hors couche, aucun sélecteur global hors reset et base
-4. test de contraste : lit les thèmes CSS, calcule les paires de `06-accessibilite.md` pour chaque thème, échoue sous les seuils
+4. tests de rendu (`test:rendered`) : lit les thèmes CSS, calcule les paires de contraste WCAG AA, valide la non-imposition à l'hôte et vérifie les dimensions des contrôles sur racine native 16px
 5. build du CSS
 6. tests unitaires
 7. tests du build : le CSS publié contient les sept thèmes et l'alias `dim`, aucune variable référencée sans définition
