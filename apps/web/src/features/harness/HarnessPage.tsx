@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import {
     Button,
     CopyButton,
+    Field,
     IconButton,
     Input,
     positionOverlay,
@@ -193,6 +194,81 @@ function PositionHarness() {
 function InputHarness() {
     return (
         <>
+            <Sample label="exploration input seul">
+                <Input id="input-standalone" defaultValue="Input seul" />
+            </Sample>
+            <Sample label="exploration input dans field">
+                <Field>
+                    <Input id="input-in-field" defaultValue="Input dans Field" />
+                </Field>
+            </Sample>
+            <Sample label="exploration input sm">
+                <Input id="input-exploration-sm" size="sm" defaultValue="Input sm" />
+            </Sample>
+            <Sample label="taille sm">
+                <Input
+                    size="sm"
+                    id="input-size-sm"
+                    defaultValue="Taille sm (28px)"
+                    placeholder="sm..."
+                />
+            </Sample>
+            <Sample label="taille md">
+                <Input
+                    size="md"
+                    id="input-size-md"
+                    defaultValue="Taille md (32px)"
+                    placeholder="md..."
+                />
+            </Sample>
+            <Sample label="taille md par defaut">
+                <Input
+                    id="input-size-default"
+                    defaultValue="Taille md defaut"
+                    placeholder="defaut..."
+                />
+            </Sample>
+            <Sample label="taille lg">
+                <Input
+                    size="lg"
+                    id="input-size-lg"
+                    defaultValue="Taille lg (40px)"
+                    placeholder="lg..."
+                />
+            </Sample>
+            <Sample label="alignement bouton et input sm">
+                <div
+                    id="align-container-sm"
+                    style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}
+                >
+                    <Button size="sm" id="btn-align-sm">
+                        Bouton sm
+                    </Button>
+                    <Input size="sm" defaultValue="Input sm" id="input-align-sm" />
+                </div>
+            </Sample>
+            <Sample label="alignement bouton et input md">
+                <div
+                    id="align-container-md"
+                    style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}
+                >
+                    <Button size="md" id="btn-align-md">
+                        Bouton md
+                    </Button>
+                    <Input size="md" defaultValue="Input md" id="input-align-md" />
+                </div>
+            </Sample>
+            <Sample label="alignement bouton et input lg">
+                <div
+                    id="align-container-lg"
+                    style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}
+                >
+                    <Button size="lg" id="btn-align-lg">
+                        Bouton lg
+                    </Button>
+                    <Input size="lg" defaultValue="Input lg" id="input-align-lg" />
+                </div>
+            </Sample>
             <Sample label="champ vide avec placeholder">
                 <Input placeholder="Entrez une valeur..." />
             </Sample>

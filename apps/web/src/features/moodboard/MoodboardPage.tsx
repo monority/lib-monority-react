@@ -456,12 +456,7 @@ function LivePreview({
                         <div className="moodboard-button-row">
                             {(['primary', 'secondary', 'ghost', 'danger'] as const).map(
                                 (variant) => (
-                                    <Button
-                                        key={variant}
-                                        variant={variant}
-                                        size="sm"
-                                        data-mr-preview="hover"
-                                    >
+                                    <Button key={variant} variant={variant} size="sm">
                                         {variant}
                                     </Button>
                                 )

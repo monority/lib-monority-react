@@ -1,6 +1,12 @@
 /* Recette du composant Input (couche mr.components)
  *
- * Micro-etape I2 : etats interactifs (survol, invalide, desactive, lecture seule).
+ * Micro-etape I3 : tailles (sm, md, lg), hauteur et alignement avec Button.
+ *
+ * Tailles :
+ * - sm : 28px (min-block-size: --mr-size-control-sm, padding-inline: --mr-space-3)
+ * - md (defaut) : 32px (min-block-size: --mr-size-control-md, padding-inline: --mr-space-4)
+ * - lg : 40px (min-block-size: --mr-size-control-lg, padding-inline: --mr-space-5)
+ * Typographie constante : font-size (--mr-font-size-md), font-weight et radius identiques sur les 3 tailles.
  *
  * Ordre de priorite des etats :
  * desactive > lecture seule (aucun effet de survol) > invalide > survol.
@@ -46,6 +52,25 @@
         margin: 0;
         outline: none;
         transition: border-color var(--mr-duration-state);
+    }
+
+    /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
+    :where(.mr-input)[data-size='sm'] {
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+    }
+
+    /* Taille md (defaut) : 32px */
+    :where(.mr-input)[data-size='md'],
+    :where(.mr-input):not([data-size]) {
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-input)[data-size='lg'] {
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
     }
 
     :where(.mr-input)::placeholder {
