@@ -13,6 +13,34 @@ Chaque décision a un numéro stable (jamais réutilisé), un statut, et quatre 
 
 Statuts : `Acceptée`, `Remplacée par ADR-xxx`, `Abandonnée`. Une décision remplacée reste dans le journal. Un ADR s'écrit au plus tard dans le commit qui applique la décision. Les numéros se suivent sans trou.
 
+## Sommaire des décisions
+
+- ADR-001 : le CSS écrit à la main est la source de vérité
+- ADR-002 : cascade en couches préfixées
+- ADR-003 : trois niveaux de tokens
+- ADR-004 : états dérivés, jamais déclarés
+- ADR-005 : vocabulaire fermé, en anglais, nommé par rôle
+- ADR-006 : thèmes, alias et préférence
+- ADR-007 : thèmes teintés redéfinissent leurs primitives de teinte
+- ADR-008 : teintes de statut fixes
+- ADR-009 : contraste WCAG 2.2 AA, sans APCA
+- ADR-010 : variantes et états par attributs de données
+- ADR-011 : React 19 et TypeScript strict
+- ADR-012 : porte pnpm verify à huit étapes au plus
+- ADR-013 : un composant à la fois, validé avant le suivant
+- ADR-014 : un token n'existe qu'avec un consommateur
+- ADR-015 : API publique minimale
+- ADR-016 : état de session dans un seul fichier
+- ADR-017 : documents et rapports sans tableau
+- ADR-018 : échelles déclarées une seule fois dans semantic.css et valeurs brutes autorisées dans tokens/ et themes/
+- ADR-019 : catégorie size, rôle on-solid et emplacement du fichier de vocabulaire
+- ADR-020 : style de base neutre (inverse/on-inverse), marque réservée aux variantes explicites et hauteur de contrôle 32px
+- ADR-021 : ordre des couches pour prefers-reduced-motion, durées en multiples de 50ms et grille d'états en multiples de 12%
+- ADR-022 : symétrie du thème sombre par permutation des rôles neutres et levier de luminosité d'accent pour conteneur de marque
+- ADR-023 : dérivation des états de contrôle plein par mélange vers `--mr-text-primary`
+- ADR-024 : bande de luminosité des surfaces portant un contrôle bordé
+- ADR-025 : les styles de portée sont opt-in par data-theme ; la base ne modifie jamais la taille racine
+
 ## Décisions acceptées
 
 ### ADR-001 : le CSS écrit à la main est la source de vérité
