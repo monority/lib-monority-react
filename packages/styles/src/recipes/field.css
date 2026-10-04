@@ -13,12 +13,15 @@
  * Neutralite pour les composants internes :
  * - L'espacement ne s'applique que s'il y a au moins deux enfants (flex gap natif).
  * - Un controle seul enveloppe dans .mr-field sans label (comme Input seul) ne subit aucun ecart.
- * - Aucune regle de disposition horizontale n'est appliquee ici pour ne pas perturber Checkbox ou RadioGroup.
+ * - Alignement flex-start : evite l'etirement transversal par defaut qui etendrait la zone cliquable
+ *   de controles en ligne comme Checkbox (.mr-checkbox). Les controles pleine largeur (Input)
+ *   portent leur propre inline-size: 100%. L'aide et l'erreur occupent 100% pour assurer leur retour a la ligne.
  */
 @layer mr.components {
     :where(.mr-field) {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         gap: var(--mr-space-2);
         box-sizing: border-box;
         inline-size: 100%;
@@ -37,6 +40,7 @@
     :where(.mr-field__hint) {
         display: block;
         box-sizing: border-box;
+        inline-size: 100%;
         margin: 0;
         font-family: inherit;
         font-size: var(--mr-font-size-sm);
@@ -46,6 +50,7 @@
     :where(.mr-field__error) {
         display: block;
         box-sizing: border-box;
+        inline-size: 100%;
         margin: 0;
         font-family: inherit;
         font-size: var(--mr-font-size-sm);
