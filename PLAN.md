@@ -25,7 +25,7 @@ B6, B7, corrections Button, I1 a I3, fix(base) et F1 a F3 (en attente de validat
 - focus : unifier le focus des champs au moment de Textarea (regle commune ou exception)
 - navigateurs : test Firefox et WebKit au prochain point de controle, avant choix plancher
 - CI en attente : brancher pnpm verify en CI avec installation de Chromium avant toute PR
-- ligne de base poids sources : 28 899 o (15 fichiers) a F3
-- ligne de base poids dist : index.css 14 828 o brut / 2 284 o gzip a F3
+- ligne de base poids sources : 29 194 o (15 fichiers) a F3
+- ligne de base poids dist : index.css 14 903 o brut / 2 291 o gzip a F3
 - composant suivant : Textarea (4e composant, point de controle ensuite)
 
