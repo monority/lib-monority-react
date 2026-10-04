@@ -47,10 +47,10 @@ Conséquences pour les contributeurs :
 
 Dans `mr.base`, un fichier par sujet :
 
-- fond et couleur de texte hérités des tokens sémantiques ;
-- typographie de base (famille, taille, interligne) ;
+- fond et couleur de texte opt-in par `[data-theme]` hérités des tokens sémantiques (ADR-025) ;
+- typographie de base opt-in par `[data-theme]` (famille de police uniquement, aucune taille ni interligne imposés à la racine, ADR-025) ;
 - `:focus-visible` : un seul style de focus pour toute la bibliothèque, par token ;
-- `color-scheme` défini par thème ;
+- `color-scheme` défini par portée de thème (`[data-theme]`, ADR-025) ;
 - `prefers-contrast: more` et `forced-colors` : traités une seule fois ici par les tokens, jamais par recette. Une couche ne peut pas redéfinir un token déclaré dans une couche plus tardive : la neutralisation de mouvement (`prefers-reduced-motion`) des tokens de durée vit donc dans `mr.tokens` après leur déclaration (ou dans `mr.themes`), jamais dans `mr.base` ;
 - taille minimale des cibles tactiles.
 

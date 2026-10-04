@@ -1,5 +1,5 @@
 @layer mr.base {
-    :where(:root, [data-theme]) {
+    :where([data-theme]) {
         background-color: var(--mr-bg-canvas);
         color: var(--mr-text-primary);
     }

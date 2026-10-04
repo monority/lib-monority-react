@@ -1,6 +1,5 @@
 @layer mr.base {
-    :where(:root, [data-theme]) {
+    :where([data-theme]) {
         font-family: var(--mr-font-family-sans);
-        font-size: var(--mr-font-size-md);
     }
 }

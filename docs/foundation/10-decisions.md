@@ -152,6 +152,17 @@ Décision : L'Option B est retenue : contraindre la surface plutôt que multipli
 Alternatives écartées : Option A (adapter la bordure selon la surface ou introduire un token par niveau de surface, écartée pour éviter l'explosion du vocabulaire).
 Conséquences : Toute surface portant un contrôle de saisie ou un bouton secondaire doit calibrer sa luminosité dans ces bornes. Si un conteneur exige une surface hors bande, un conteneur explicite ou un token contextuel devra faire l'objet d'un arbitrage par ADR.
 
+### ADR-025 : les styles de portée sont opt-in par data-theme ; la base ne modifie jamais la taille racine
+Statut : Acceptée.
+Contexte : La base posait `font-size: var(--mr-font-size-md)` (0,875rem = 14px) sur `:where(:root, [data-theme])` ainsi que `background-color`, `color` et `color-scheme` sur `:root`. Cette imposition globale modifiait la taille racine de l'hôte, réduisant chaque valeur en rem de 12,5 % (les hauteurs des contrôles sm, md, lg tombaient à 24,5, 28 et 35 px au lieu de 28, 32 et 40 px) et violait la règle d'isolation en altérant 33 propriétés d'éléments nus d'une page hôte sans data-theme.
+Décision :
+1. Les styles de portée (fond, couleur de texte, famille de police, color-scheme) sont strictement opt-in et ne s'appliquent qu'aux conteneurs portant `[data-theme]`, jamais à `:root` seul.
+2. La couche `mr.base` ne pose jamais de `font-size` ni de `line-height` sur une portée : la racine de l'hôte conserve sa taille native (16px par défaut du navigateur).
+3. Chaque composant déclare sa propre taille de police (ex. `--mr-font-size-md` sur `.mr-btn` et `.mr-input`).
+4. Les tokens par défaut (thème clair) restent déclarés sur `:root` dans `tokens/semantic.css` comme propriétés personnalisées inertes.
+Alternatives écartées : fixer `font-size: 16px` sur `:root` (écrase le réglage d'accessibilité du navigateur de l'utilisateur) ; conserver `font-size: 0.875rem` sur `:root` (fausse toutes les mesures en rem de l'application hôte).
+Conséquences : Les contrôles atteignent leurs dimensions nominales à la racine native (28, 32 et 40 px). Une page hôte sans data-theme ne subit aucune altération de style (0 différence). Les tests automatisés de non-imposition et de racine à 16px sont intégrés dans `check-contrast.js`.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.

@@ -1388,6 +1388,246 @@ async function run() {
 
         await pageNesting.close()
 
+        // ─── Tests permanents : non-imposition a l'hote et echelle racine (ADR-025) ───
+        console.log(
+            "\nVerification de la non-imposition a l'hote et de l'echelle racine (ADR-025)..."
+        )
+
+        const distCssPath = path.join(ROOT, 'packages/ui/dist/index.css')
+        assert(
+            fs.existsSync(distCssPath),
+            "dist/index.css doit exister pour les tests d'imposition a l'hote"
+        )
+        const distCss = fs.readFileSync(distCssPath, 'utf8')
+
+        // 1. Fixture negative : verification qu'une regle fautive sur :root est bien detectee
+        const pageNeg = await browser.newPage()
+        await pageNeg.setContent(`
+            <!DOCTYPE html><html><body><p id="p">Texte</p></body></html>
+        `)
+        await pageNeg.addStyleTag({
+            content: ':root { font-size: 14px; color: oklch(0.22 0 215); }',
+        })
+        const negFs = await pageNeg.$eval('html', (el) => window.getComputedStyle(el).fontSize)
+        const negColor = await pageNeg.$eval('#p', (el) => window.getComputedStyle(el).color)
+        assert(
+            negFs === '14px' && negColor !== 'rgb(0, 0, 0)',
+            "La fixture negative doit detecter l'imposition fautive sur :root"
+        )
+        await pageNeg.close()
+        console.log("OK: Fixture negative d'imposition reussie (regle fautive sur :root detectee).")
+
+        // 2. Page sans data-theme : aucune difference entre page nue et page avec le CSS publie
+        const pageBare = await browser.newPage()
+        const pageWithLib = await browser.newPage()
+        const bareHtml = `
+            <!DOCTYPE html>
+            <html>
+              <head></head>
+              <body>
+                <p id="p">Paragraph</p>
+                <h1 id="h1">Heading</h1>
+                <ul id="ul"><li>List</li></ul>
+                <a id="a" href="#">Link</a>
+                <button id="button">Button</button>
+                <input id="input" />
+                <table id="table"><tr><td>Cell</td></tr></table>
+              </body>
+            </html>
+        `
+        await pageBare.setContent(bareHtml)
+        await pageWithLib.setContent(bareHtml)
+        await pageWithLib.addStyleTag({ content: distCss })
+
+        const probeElements = [
+            'html',
+            'body',
+            '#p',
+            '#h1',
+            '#ul',
+            '#a',
+            '#button',
+            '#input',
+            '#table',
+        ]
+        const probeProps = [
+            'color',
+            'backgroundColor',
+            'fontFamily',
+            'fontSize',
+            'lineHeight',
+            'margin',
+            'padding',
+            'boxSizing',
+            'colorScheme',
+        ]
+
+        let hostDiffCount = 0
+        for (const sel of probeElements) {
+            const csBare = await pageBare.$eval(
+                sel === 'html' ? 'html' : sel === 'body' ? 'body' : sel,
+                (el, props) => {
+                    const cs = window.getComputedStyle(el)
+                    const res = {}
+                    props.forEach((p) => (res[p] = cs[p]))
+                    return res
+                },
+                probeProps
+            )
+
+            const csLib = await pageWithLib.$eval(
+                sel === 'html' ? 'html' : sel === 'body' ? 'body' : sel,
+                (el, props) => {
+                    const cs = window.getComputedStyle(el)
+                    const res = {}
+                    props.forEach((p) => (res[p] = cs[p]))
+                    return res
+                },
+                probeProps
+            )
+
+            probeProps.forEach((p) => {
+                if (csBare[p] !== csLib[p]) {
+                    hostDiffCount++
+                }
+            })
+        }
+        await pageBare.close()
+        await pageWithLib.close()
+        assert.strictEqual(
+            hostDiffCount,
+            0,
+            `Le CSS publie ne doit imposer aucun style sur une page sans data-theme (trouve ${hostDiffCount} differences)`
+        )
+        console.log(
+            "OK: Non-imposition a l'hote confirmee (0 difference sur elements nus sans data-theme)."
+        )
+
+        // 3. Fixture negative racine 14px vs test reel data-theme="light"
+        const pageNegThemed = await browser.newPage()
+        await pageNegThemed.setContent(`
+            <!DOCTYPE html>
+            <html data-theme="light">
+              <head><style>:root { font-size: 14px; }</style></head>
+              <body></body>
+            </html>
+        `)
+        const badThemedFs = await pageNegThemed.$eval(
+            'html',
+            (el) => window.getComputedStyle(el).fontSize
+        )
+        assert.strictEqual(
+            badThemedFs,
+            '14px',
+            'La fixture negative doit detecter la racine abaissee a 14px'
+        )
+        await pageNegThemed.close()
+        console.log('OK: Fixture negative echelle racine reussie (racine fautive a 14px detectee).')
+
+        // Page avec data-theme="light" sur html : documentElement a 16px, jamais 14px
+        const pageThemed = await browser.newPage()
+        await pageThemed.setContent(`
+            <!DOCTYPE html>
+            <html data-theme="light">
+              <head><style>${distCss}</style></head>
+              <body>
+                <button class="mr-btn" data-size="sm" id="btn-sm">sm</button>
+                <button class="mr-btn" data-size="md" id="btn-md">md</button>
+                <button class="mr-btn" data-size="lg" id="btn-lg">lg</button>
+                <input class="mr-input" data-size="sm" id="input-sm" value="sm" />
+                <input class="mr-input" data-size="md" id="input-md" value="md" />
+                <input class="mr-input" data-size="lg" id="input-lg" value="lg" />
+              </body>
+            </html>
+        `)
+        const themedRootFs = await pageThemed.$eval(
+            'html',
+            (el) => window.getComputedStyle(el).fontSize
+        )
+        assert.strictEqual(
+            themedRootFs,
+            '16px',
+            `La taille racine sous data-theme="light" doit etre 16px, obtenu: ${themedRootFs}`
+        )
+        assert.notStrictEqual(
+            themedRootFs,
+            '14px',
+            'La taille racine ne doit jamais etre abaissee a 14px'
+        )
+
+        // 4. Fixture negative hauteurs de controles vs test reel 28/32/40 px
+        const pageNegHeights = await browser.newPage()
+        await pageNegHeights.setContent(`
+            <!DOCTYPE html>
+            <html style="font-size: 14px;">
+              <head><style>${distCss}</style></head>
+              <body>
+                <button class="mr-btn" data-size="sm" id="btn-bad">sm</button>
+              </body>
+            </html>
+        `)
+        const badBtnH = await pageNegHeights.$eval(
+            '#btn-bad',
+            (el) => el.getBoundingClientRect().height
+        )
+        assert.strictEqual(
+            badBtnH,
+            24.5,
+            'La fixture negative doit detecter le bouton sm reduit a 24.5px sous racine 14px'
+        )
+        await pageNegHeights.close()
+        console.log(
+            'OK: Fixture negative hauteurs reussie (hauteur reduite a 24.5px detectee sous racine 14px).'
+        )
+
+        // Hauteurs de controles a la racine par defaut (16px), sans surcharge : Button et Input sm=28, md=32, lg=40
+        const cHeights = await pageThemed.evaluate(() => {
+            const getH = (id) => document.getElementById(id).getBoundingClientRect().height
+            return {
+                btnSm: getH('btn-sm'),
+                btnMd: getH('btn-md'),
+                btnLg: getH('btn-lg'),
+                inputSm: getH('input-sm'),
+                inputMd: getH('input-md'),
+                inputLg: getH('input-lg'),
+            }
+        })
+        await pageThemed.close()
+
+        assert.strictEqual(
+            cHeights.btnSm,
+            28,
+            `Button sm attendu a 28px, obtenu: ${cHeights.btnSm}px`
+        )
+        assert.strictEqual(
+            cHeights.btnMd,
+            32,
+            `Button md attendu a 32px, obtenu: ${cHeights.btnMd}px`
+        )
+        assert.strictEqual(
+            cHeights.btnLg,
+            40,
+            `Button lg attendu a 40px, obtenu: ${cHeights.btnLg}px`
+        )
+        assert.strictEqual(
+            cHeights.inputSm,
+            28,
+            `Input sm attendu a 28px, obtenu: ${cHeights.inputSm}px`
+        )
+        assert.strictEqual(
+            cHeights.inputMd,
+            32,
+            `Input md attendu a 32px, obtenu: ${cHeights.inputMd}px`
+        )
+        assert.strictEqual(
+            cHeights.inputLg,
+            40,
+            `Input lg attendu a 40px, obtenu: ${cHeights.inputLg}px`
+        )
+        console.log(
+            `OK: Hauteurs de controles conformes sans surcharge (Button: 28/32/40px, Input: 28/32/40px, racine: 16px).`
+        )
+
         console.log('\nTous les contrastes respectent WCAG AA sur les deux themes (light et dark).')
     } finally {
         await browser.close()
