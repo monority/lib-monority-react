@@ -70,6 +70,9 @@
         /* Typographie : echelle numerique CSS 400, 500, 600, 700 ; medium vaut 500 */
         --mr-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system,
             'Segoe UI', sans-serif;
+        /* Echelle typographique (multiples de 0.125rem) :
+         * sm = 6 pas (0.75rem = 12px), md = 7 pas (0.875rem = 14px) */
+        --mr-font-size-sm: 0.75rem;
         --mr-font-size-md: 0.875rem;
         --mr-font-weight-medium: 500;
     }

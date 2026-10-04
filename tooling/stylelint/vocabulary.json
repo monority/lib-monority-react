@@ -32,6 +32,7 @@
         "danger": ["solid", "on-solid"],
         "focus": ["ring"],
         "size": ["control-sm", "control-md", "control-lg"],
+        "font-size": ["sm", "md"],
         "duration": ["state", "panel"],
         "state": ["hover-mix", "active-mix", "disabled-mix"]
     }

@@ -339,6 +339,21 @@ function FieldHarness() {
                     <Input size="md" defaultValue="Sans étiquette" />
                 </Field>
             </Sample>
+            <Sample label="Field avec label, Input md et texte d'aide">
+                <Field label="Adresse email" hint="Format attendu : nom@exemple.com">
+                    <Input size="md" defaultValue="contact@monority.dev" />
+                </Field>
+            </Sample>
+            <Sample label="Field avec aide sur deux lignes (conteneur étroit)">
+                <div style={{ maxWidth: 220 }}>
+                    <Field
+                        label="Mot de passe"
+                        hint="Doit contenir au moins 12 caractères et inclure un chiffre."
+                    >
+                        <Input size="md" type="password" defaultValue="secret123456" />
+                    </Field>
+                </div>
+            </Sample>
         </>
     )
 }

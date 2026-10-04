@@ -30,7 +30,7 @@ Catégories :
 - `danger`, `warning`, `success`, `info` : statuts, avec les rôles `solid`, `on-solid` (pour danger), `text`, `subtle`.
 - `chart` : couleurs de séries (`1` à `5`, et `muted` seulement avec un consommateur avéré).
 - `focus` : anneau de focus.
-- `font-family`, `font-size`, `font-weight`, `line-height` : typographie.
+- `font-family`, `font-size` (`sm`, `md`), `font-weight`, `line-height` : typographie.
 - `space` : espacements. `radius` : rayons. `size` : tailles de contrôle (`control-md`, etc.). `border-width` : épaisseurs. `shadow` : ombres. `z` : profondeurs.
 - `duration`, `ease` : mouvement. Les durées sont nommées par rôle (`state` pour les transitions d'état, `panel` pour le mouvement d'une surface, `spin`, `pulse`), jamais par composant. Règle de valeur : multiples de 50ms (`state` à 3 x 50ms = 150ms).
 - `state` : pourcentages de mélange d'état (`hover-mix`, `active-mix`, `disabled-mix`). Grille arithmétique en multiples de 12%.
