@@ -1432,6 +1432,9 @@ async function run() {
                 <button id="button">Button</button>
                 <input id="input" />
                 <table id="table"><tr><td>Cell</td></tr></table>
+                <label id="label" for="input">Label</label>
+                <textarea id="textarea"></textarea>
+                <select id="select"><option>Option</option></select>
               </body>
             </html>
         `
@@ -1449,58 +1452,62 @@ async function run() {
             '#button',
             '#input',
             '#table',
-        ]
-        const probeProps = [
-            'color',
-            'backgroundColor',
-            'fontFamily',
-            'fontSize',
-            'lineHeight',
-            'margin',
-            'padding',
-            'boxSizing',
-            'colorScheme',
+            '#label',
+            '#textarea',
+            '#select',
         ]
 
         let hostDiffCount = 0
+        const hostDiffDetails = []
         for (const sel of probeElements) {
-            const csBare = await pageBare.$eval(
-                sel === 'html' ? 'html' : sel === 'body' ? 'body' : sel,
-                (el, props) => {
-                    const cs = window.getComputedStyle(el)
-                    const res = {}
-                    props.forEach((p) => (res[p] = cs[p]))
-                    return res
-                },
-                probeProps
-            )
+            const getComputedAllProps = (selector) => {
+                const el =
+                    selector === 'html'
+                        ? document.documentElement
+                        : selector === 'body'
+                          ? document.body
+                          : document.querySelector(selector)
+                const cs = window.getComputedStyle(el)
+                const res = {}
+                for (let i = 0; i < cs.length; i++) {
+                    const prop = cs[i]
+                    res[prop] = cs.getPropertyValue(prop)
+                }
+                return res
+            }
 
-            const csLib = await pageWithLib.$eval(
-                sel === 'html' ? 'html' : sel === 'body' ? 'body' : sel,
-                (el, props) => {
-                    const cs = window.getComputedStyle(el)
-                    const res = {}
-                    props.forEach((p) => (res[p] = cs[p]))
-                    return res
-                },
-                probeProps
-            )
+            const csBare = await pageBare.evaluate(getComputedAllProps, sel)
+            const csLib = await pageWithLib.evaluate(getComputedAllProps, sel)
 
-            probeProps.forEach((p) => {
+            for (const p in csBare) {
                 if (csBare[p] !== csLib[p]) {
                     hostDiffCount++
+                    hostDiffDetails.push({ element: sel, property: p, bare: csBare[p], lib: csLib[p] })
                 }
-            })
+            }
         }
+
+        // Verification du focus nu : outline calcule d'un lien, d'un bouton et d'un champ nu apres focus
+        for (const id of ['#a', '#button', '#input']) {
+            await pageBare.focus(id)
+            await pageWithLib.focus(id)
+            const bareOutline = await pageBare.$eval(id, (el) => window.getComputedStyle(el).outline)
+            const libOutline = await pageWithLib.$eval(id, (el) => window.getComputedStyle(el).outline)
+            if (bareOutline !== libOutline) {
+                hostDiffCount++
+                hostDiffDetails.push({ element: id, property: 'outline-on-focus', bare: bareOutline, lib: libOutline })
+            }
+        }
+
         await pageBare.close()
         await pageWithLib.close()
         assert.strictEqual(
             hostDiffCount,
             0,
-            `Le CSS publie ne doit imposer aucun style sur une page sans data-theme (trouve ${hostDiffCount} differences)`
+            `Le CSS publie ne doit imposer aucun style sur une page sans data-theme (trouve ${hostDiffCount} differences: ${JSON.stringify(hostDiffDetails)})`
         )
         console.log(
-            "OK: Non-imposition a l'hote confirmee (0 difference sur elements nus sans data-theme)."
+            "OK: Non-imposition a l'hote confirmee (0 difference sur toutes les proprietes calculees de 12 elements nus et focus)."
         )
 
         // 3. Fixture negative racine 14px vs test reel data-theme="light"
