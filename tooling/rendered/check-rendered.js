@@ -12,7 +12,7 @@ async function run() {
         await testControlDimensions(browser)
 
         console.log(
-            '\nTous les contrastes respectent WCAG AA sur tous les themes actifs (light, dark, oled).'
+            '\nTous les contrastes respectent WCAG AA sur tous les themes actifs (light, dark, oled, slate).'
         )
     } finally {
         await browser.close()

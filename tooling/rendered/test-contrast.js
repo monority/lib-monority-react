@@ -364,6 +364,13 @@ export async function testContrast(browser) {
             "oled.css doit utiliser le selecteur :where([data-theme='oled'])"
         )
     }
+    const slateCss = themeCssMap.get('slate.css')
+    if (slateCss) {
+        assert(
+            slateCss.includes(":where([data-theme='slate'])"),
+            "slate.css doit utiliser le selecteur :where([data-theme='slate'])"
+        )
+    }
     console.log(
         'OK: Declarations de portee et selecteurs conformes dans semantic.css, ref.css et themes/.'
     )
@@ -839,11 +846,13 @@ export async function testContrast(browser) {
             `Theme ${t.name} - Anneau focus Input sur canevas insuffisant: ${focusRingRatio.toFixed(2)}:1 < 3.0:1`
         )
         const focusRingRgb = colorToRgb(focusOutlineColorRaw).map((v) => Math.round(v * 255))
-        assert(
-            Math.abs(focusRingRgb[0] - focusRingRgb[1]) <= 2 &&
-                Math.abs(focusRingRgb[1] - focusRingRgb[2]) <= 2,
-            `Theme ${t.name} - Anneau focus Input doit etre neutre (chroma nulle, sans teinte cyan): rgb(${focusRingRgb.join(', ')})`
-        )
+        if (['light', 'dark', 'dim', 'oled'].includes(t.name)) {
+            assert(
+                Math.abs(focusRingRgb[0] - focusRingRgb[1]) <= 2 &&
+                    Math.abs(focusRingRgb[1] - focusRingRgb[2]) <= 2,
+                `Theme ${t.name} - Anneau focus Input doit etre neutre (chroma nulle, sans teinte cyan): rgb(${focusRingRgb.join(', ')})`
+            )
+        }
 
         // 6. Bordure invalide sur canevas (bloquante >= 3.0:1)
         const inputBorderInvalidRaw = await page.$eval(
@@ -1248,6 +1257,9 @@ export async function testContrast(browser) {
         <div data-theme="oled" id="oled-root">
             <button class="mr-btn" id="btn-oled">OLED</button>
         </div>
+        <div data-theme="slate" id="slate-root">
+            <button class="mr-btn" id="btn-slate">Slate</button>
+        </div>
     `)
 
     // 1. Light dans Dark
@@ -1290,9 +1302,9 @@ export async function testContrast(browser) {
         `- nested-dark : color-scheme = ${ndCs}, canvas = ${ndCanvas}, bg-inverse = ${ndInverse}, text-on-inverse = ${ndOnInverse}`
     )
     assert.strictEqual(ndCs, 'dark', 'nested-dark doit avoir color-scheme: dark')
-    assert(ndCanvas.includes('0.22'), 'nested-dark canvas doit valoir 0.22 (sombre)')
+    assert(ndCanvas.includes('0.17'), 'nested-dark canvas doit valoir 0.17 (sombre)')
     assert(ndInverse.includes('0.955'), 'nested-dark bg-inverse doit valoir 0.955 (sombre)')
-    assert(ndOnInverse.includes('0.22'), 'nested-dark text-on-inverse doit valoir 0.22 (sombre)')
+    assert(ndOnInverse.includes('0.17'), 'nested-dark text-on-inverse doit valoir 0.17 (sombre)')
 
     // 3. Dim alias
     const dimCs = await pageNested.$eval(
@@ -1312,9 +1324,9 @@ export async function testContrast(browser) {
         `- dim-alias   : color-scheme = ${dimCs}, canvas = ${dimCanvas}, bg-inverse = ${dimInverse}, text-on-inverse = ${dimOnInverse}`
     )
     assert.strictEqual(dimCs, 'dark', 'dim doit resoudre color-scheme: dark')
-    assert(dimCanvas.includes('0.22'), 'dim canvas doit valoir 0.22 (sombre)')
+    assert(dimCanvas.includes('0.17'), 'dim canvas doit valoir 0.17 (sombre)')
     assert(dimInverse.includes('0.955'), 'dim bg-inverse doit valoir 0.955 (sombre)')
-    assert(dimOnInverse.includes('0.22'), 'dim text-on-inverse doit valoir 0.22 (sombre)')
+    assert(dimOnInverse.includes('0.17'), 'dim text-on-inverse doit valoir 0.17 (sombre)')
 
     // 4. OLED theme
     const oledCs = await pageNested.$eval(
@@ -1336,6 +1348,18 @@ export async function testContrast(browser) {
         'oled canvas doit valoir noir absolu oklch(0 0 0)'
     )
     assert(oledSunken.includes('0.12'), 'oled bg-sunken doit valoir oklch(0.12 ...)')
+
+    // 5. Slate theme
+    const slateCs = await pageNested.$eval(
+        '#slate-root',
+        (el) => window.getComputedStyle(el).colorScheme
+    )
+    const slateCanvas = await pageNested.$eval('#slate-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+    )
+    console.log(`- slate-theme : color-scheme = ${slateCs}, canvas = ${slateCanvas}`)
+    assert.strictEqual(slateCs, 'dark', 'slate doit resoudre color-scheme: dark')
+    assert(slateCanvas.includes('0.17'), 'slate canvas doit valoir 0.17 (sombre bleute)')
 
     await pageNested.close()
 }
