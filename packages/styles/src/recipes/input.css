@@ -78,9 +78,10 @@
         opacity: 1;
     }
 
-    :where(.mr-input):focus-visible {
-        border-color: var(--mr-focus-ring);
-        outline: 2px solid var(--mr-focus-ring);
+    :where(.mr-input):focus-visible,
+    :where(.mr-input):focus {
+        border-color: var(--mr-text-primary);
+        outline: 2px solid var(--mr-text-primary);
         outline-offset: 0;
     }
 
@@ -100,7 +101,8 @@
         border-color: var(--mr-danger-solid);
     }
 
-    :where(.mr-input)[aria-invalid='true']:focus-visible {
+    :where(.mr-input)[aria-invalid='true']:focus-visible,
+    :where(.mr-input)[aria-invalid='true']:focus {
         border-color: var(--mr-danger-solid);
         outline: 2px solid var(--mr-danger-solid);
         outline-offset: 0;
