@@ -18,7 +18,7 @@ Button en premier (B1 a B6).
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
 - Theme sombre approfondi (themes/dark.css) : canevas ajuste a L=0.17 pour un rendu profond et net
-- Theme Slate integre (themes/slate.css) : atmosphere bleutee (hue 220, chroma 0.02), canevas L=0.17
+- Theme Slate recalibre (themes/slate.css) : ardoise acier sobre (hue 255, chroma 0.022, canevas L=0.18)
 - Decouverte dynamique des themes du dossier themes/ (4 themes actifs : light, dark, oled, slate)
 - Verifications de contraste et d'etats Button/Input/Field conformes sur les 4 themes
 - Navigation harness prete pour light, dark, oled, slate et dim
