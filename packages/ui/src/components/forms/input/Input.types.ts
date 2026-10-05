@@ -16,4 +16,7 @@ export interface InputProps
     tone?: InputTone
     size?: InputSize
     invalid?: boolean
+    iconLeading?: ReactNode
+    iconTrailing?: ReactNode
+    showPasswordToggle?: boolean
 }
