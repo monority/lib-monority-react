@@ -1359,7 +1359,7 @@ export async function testContrast(browser) {
     )
     console.log(`- slate-theme : color-scheme = ${slateCs}, canvas = ${slateCanvas}`)
     assert.strictEqual(slateCs, 'dark', 'slate doit resoudre color-scheme: dark')
-    assert(slateCanvas.includes('0.17'), 'slate canvas doit valoir 0.17 (sombre bleute)')
+    assert(slateCanvas.includes('0.18'), 'slate canvas doit valoir 0.18 (ardoise acier)')
 
     await pageNested.close()
 }
