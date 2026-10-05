@@ -40,6 +40,7 @@ Statuts : `Acceptée`, `Remplacée par ADR-xxx`, `Abandonnée`. Une décision re
 - ADR-023 : dérivation des états de contrôle plein par mélange vers `--mr-text-primary`
 - ADR-024 : bande de luminosité des surfaces portant un contrôle bordé
 - ADR-025 : les styles de portée sont opt-in par data-theme ; la base ne modifie jamais la taille racine
+- ADR-026 : bordure de contrôle discrète au repos et accessibilité garantie par le focus et le thème contrasté
 
 ## Décisions acceptées
 
@@ -190,6 +191,17 @@ Décision :
 4. Les tokens par défaut (thème clair) restent déclarés sur `:root` dans `tokens/semantic.css` comme propriétés personnalisées inertes.
 Alternatives écartées : fixer `font-size: 16px` sur `:root` (écrase le réglage d'accessibilité du navigateur de l'utilisateur) ; conserver `font-size: 0.875rem` sur `:root` (fausse toutes les mesures en rem de l'application hôte).
 Conséquences : Les contrôles atteignent leurs dimensions nominales à la racine native (28, 32 et 40 px). Une page hôte sans data-theme ne subit aucune altération de style (0 différence). Les tests automatisés de non-imposition et de racine à 16px sont intégrés dans `check-contrast.js`.
+
+### ADR-026 : bordure de contrôle discrète au repos et accessibilité garantie par le focus et le thème contrasté
+Statut : Acceptée.
+Contexte : À un ratio de contraste de 3,01:1 au repos (L=0,635 en clair, L=0,51 en sombre), les bordures de contrôle (Input et Button secondaire) sont perçues visuellement comme trop marquées (« trop blanches » en sombre et trop lourdes en clair) par rapport aux standards de design modernes.
+Décision :
+1. Les bordures de contrôle au repos (`--mr-border-control`) adoptent un ratio discret calibré entre 1,8:1 et 2,0:1 (L=0,75 en clair donnant 1,95:1 ; L=0,40 en sombre donnant 1,88:1 sur les canevas respectifs).
+2. L'accessibilité visuelle est assurée par l'anneau de focus neutre (outline 1px à 4,8:1 sur canevas), par le survol (ratio >= 2,4:1) et par le futur thème contrasté (`high-contrast`) qui rétablira un ratio de bordure au repos >= 3,0:1.
+Alternatives écartées :
+- Conserver le seuil 3,0:1 au repos (rendu visuel jugé trop lourd et inadapté au produit).
+- Différencier le fond de l'input par rapport au canevas (exigerait l'introduction prématurée d'un nouveau token de surface).
+Conséquences : Les bordures de saisie et de bouton secondaire s'intègrent de manière subtile et épurée. Le seuil de test automatisé dans `test-contrast.js` est ajusté à 1,8:1 pour les bordures de contrôle au repos et 2,0:1 au survol.
 
 ## Décisions ouvertes
 
