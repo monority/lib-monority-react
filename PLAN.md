@@ -17,8 +17,11 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Correctifs Button/Input finalises : alignement rigoureux (delta 0px), fullWidth iconOnly (100% flex), loading (spinner centre, masquage complet), focus neutre
-- Tests rendered automatises et contrastes verts (pnpm verify 6 etapes vert)
+- Input avec icones (leading, trailing, doubles) et mot de passe masquable (PasswordInput) ajoutes et valides
+- Recette CSS unifiee (:where(.mr-input, .mr-password-input)), conteneur .mr-input__wrapper, bouton toggle
+- Paddings calibres conformes aux specs (sm: 36px, md: 40px, lg: 48px)
+- Echantillons ajoutes dans InputHarness (/harness/input)
+- Tests rendered automatises et pnpm verify 6 etapes vert (1251 tests unitaires)
 - Textarea non commence, en attente de validation utilisateur
 Point de contrôle (apres Textarea, 4e composant) :
 1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
@@ -31,4 +34,5 @@ Point de contrôle (apres Textarea, 4e composant) :
 8. decisions ouvertes a trancher
 9. preparation du changelog
 10. nettoyage de l'historique a decider avec l'utilisateur
+
 
