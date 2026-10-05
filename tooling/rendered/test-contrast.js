@@ -819,6 +819,12 @@ export async function testContrast(browser) {
             focusRingRatio >= 3.0,
             `Theme ${t.name} - Anneau focus Input sur canevas insuffisant: ${focusRingRatio.toFixed(2)}:1 < 3.0:1`
         )
+        const focusRingRgb = colorToRgb(focusOutlineColorRaw).map((v) => Math.round(v * 255))
+        assert(
+            Math.abs(focusRingRgb[0] - focusRingRgb[1]) <= 2 &&
+                Math.abs(focusRingRgb[1] - focusRingRgb[2]) <= 2,
+            `Theme ${t.name} - Anneau focus Input doit etre neutre (chroma nulle, sans teinte cyan): rgb(${focusRingRgb.join(', ')})`
+        )
 
         // 6. Bordure invalide sur canevas (bloquante >= 3.0:1)
         const inputBorderInvalidRaw = await page.$eval(

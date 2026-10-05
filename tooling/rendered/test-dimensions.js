@@ -122,4 +122,227 @@ export async function testControlDimensions(browser) {
     console.log(
         `OK: Hauteurs de controles conformes sans surcharge (Button: 28/32/40px, Input: 28/32/40px, racine: 16px).`
     )
+
+    // 3. Alignement vertical rigoureux Button et Input (inline et flex)
+    const pageAlign = await browser.newPage()
+    await pageAlign.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="font-family: sans-serif; padding: 20px;">
+            <div id="inline-sm">
+              <input class="mr-input" data-size="sm" value="Input sm" style="display: inline-block; width: 120px;" />
+              <button class="mr-btn" data-size="sm">Btn sm</button>
+            </div>
+            <div id="inline-md">
+              <input class="mr-input" data-size="md" value="Input md" style="display: inline-block; width: 120px;" />
+              <button class="mr-btn" data-size="md">Btn md</button>
+            </div>
+            <div id="inline-lg">
+              <input class="mr-input" data-size="lg" value="Input lg" style="display: inline-block; width: 120px;" />
+              <button class="mr-btn" data-size="lg">Btn lg</button>
+            </div>
+            <div id="flex-sm" style="display: flex; gap: 8px; align-items: stretch;">
+              <input class="mr-input" data-size="sm" value="Input sm" style="width: 120px;" />
+              <button class="mr-btn" data-size="sm">Btn sm</button>
+            </div>
+            <div id="flex-md" style="display: flex; gap: 8px; align-items: stretch;">
+              <input class="mr-input" data-size="md" value="Input md" style="width: 120px;" />
+              <button class="mr-btn" data-size="md">Btn md</button>
+            </div>
+            <div id="flex-lg" style="display: flex; gap: 8px; align-items: stretch;">
+              <input class="mr-input" data-size="lg" value="Input lg" style="width: 120px;" />
+              <button class="mr-btn" data-size="lg">Btn lg</button>
+            </div>
+          </body>
+        </html>
+    `)
+    const alignMetrics = await pageAlign.evaluate(() => {
+        const check = (id) => {
+            const container = document.getElementById(id)
+            const inp = container.querySelector('input')
+            const btn = container.querySelector('button')
+            const rInp = inp.getBoundingClientRect()
+            const rBtn = btn.getBoundingClientRect()
+            return {
+                diffTop: Math.abs(rInp.top - rBtn.top),
+                diffH: Math.abs(rInp.height - rBtn.height),
+                inpH: rInp.height,
+                btnH: rBtn.height,
+            }
+        }
+        return {
+            inlineSm: check('inline-sm'),
+            inlineMd: check('inline-md'),
+            inlineLg: check('inline-lg'),
+            flexSm: check('flex-sm'),
+            flexMd: check('flex-md'),
+            flexLg: check('flex-lg'),
+        }
+    })
+    await pageAlign.close()
+
+    assert.strictEqual(
+        alignMetrics.inlineSm.diffTop,
+        0,
+        `Alignement inline sm en echec (delta top: ${alignMetrics.inlineSm.diffTop})`
+    )
+    assert.strictEqual(
+        alignMetrics.inlineMd.diffTop,
+        0,
+        `Alignement inline md en echec (delta top: ${alignMetrics.inlineMd.diffTop})`
+    )
+    assert.strictEqual(
+        alignMetrics.inlineLg.diffTop,
+        0,
+        `Alignement inline lg en echec (delta top: ${alignMetrics.inlineLg.diffTop})`
+    )
+    assert.strictEqual(
+        alignMetrics.flexSm.diffTop,
+        0,
+        `Alignement flex sm en echec (delta top: ${alignMetrics.flexSm.diffTop})`
+    )
+    assert.strictEqual(
+        alignMetrics.flexMd.diffTop,
+        0,
+        `Alignement flex md en echec (delta top: ${alignMetrics.flexMd.diffTop})`
+    )
+    assert.strictEqual(
+        alignMetrics.flexLg.diffTop,
+        0,
+        `Alignement flex lg en echec (delta top: ${alignMetrics.flexLg.diffTop})`
+    )
+    console.log(
+        'OK: Alignement vertical Button/Input confirme (delta top 0px en inline et flex sur sm, md, lg).'
+    )
+
+    // 4. Verification Button fullWidth + iconOnly et carres iconOnly
+    const pageIconAndFw = await browser.newPage()
+    await pageIconAndFw.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="padding: 20px;">
+            <div style="width: 360px;" id="fw-container">
+              <button class="mr-btn" data-full-width data-icon-only id="btn-fw-icon"><span class="mr-btn__icon">★</span></button>
+            </div>
+            <button class="mr-btn" data-icon-only data-size="sm" id="btn-icon-sm"><span class="mr-btn__icon">★</span></button>
+            <button class="mr-btn" data-icon-only data-size="md" id="btn-icon-md"><span class="mr-btn__icon">★</span></button>
+            <button class="mr-btn" data-icon-only data-size="lg" id="btn-icon-lg"><span class="mr-btn__icon">★</span></button>
+          </body>
+        </html>
+    `)
+    const iconMetrics = await pageIconAndFw.evaluate(() => {
+        const getBox = (id) => {
+            const el = document.getElementById(id)
+            const r = el.getBoundingClientRect()
+            const s = window.getComputedStyle(el)
+            return { w: r.width, h: r.height, display: s.display }
+        }
+        return {
+            fwIcon: getBox('btn-fw-icon'),
+            iconSm: getBox('btn-icon-sm'),
+            iconMd: getBox('btn-icon-md'),
+            iconLg: getBox('btn-icon-lg'),
+        }
+    })
+    await pageIconAndFw.close()
+
+    assert.strictEqual(
+        iconMetrics.fwIcon.w,
+        360,
+        `Button fullWidth iconOnly attendu a 360px, obtenu: ${iconMetrics.fwIcon.w}px`
+    )
+    assert.strictEqual(
+        iconMetrics.fwIcon.display,
+        'flex',
+        `Button fullWidth doit avoir display: flex, obtenu: ${iconMetrics.fwIcon.display}`
+    )
+    assert.strictEqual(
+        iconMetrics.iconSm.w,
+        28,
+        `Button iconOnly sm largeur attendue a 28px, obtenu: ${iconMetrics.iconSm.w}px`
+    )
+    assert.strictEqual(
+        iconMetrics.iconSm.h,
+        28,
+        `Button iconOnly sm hauteur attendue a 28px, obtenu: ${iconMetrics.iconSm.h}px`
+    )
+    assert.strictEqual(
+        iconMetrics.iconMd.w,
+        32,
+        `Button iconOnly md largeur attendue a 32px, obtenu: ${iconMetrics.iconMd.w}px`
+    )
+    assert.strictEqual(
+        iconMetrics.iconMd.h,
+        32,
+        `Button iconOnly md hauteur attendue a 32px, obtenu: ${iconMetrics.iconMd.h}px`
+    )
+    assert.strictEqual(
+        iconMetrics.iconLg.w,
+        40,
+        `Button iconOnly lg largeur attendue a 40px, obtenu: ${iconMetrics.iconLg.w}px`
+    )
+    assert.strictEqual(
+        iconMetrics.iconLg.h,
+        40,
+        `Button iconOnly lg hauteur attendue a 40px, obtenu: ${iconMetrics.iconLg.h}px`
+    )
+    console.log(
+        'OK: Dimensions Button fullWidth + iconOnly (100%) et iconOnly (carres 28/32/40px) conformes.'
+    )
+
+    // 5. Verification etat loading de Button (centrage du spinner et masquage du contenu)
+    const pageLoading = await browser.newPage()
+    await pageLoading.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="padding: 20px;">
+            <button class="mr-btn" data-loading id="btn-loading"><span class="mr-btn__label">Texte</span></button>
+            <button class="mr-btn" data-loading data-icon-only id="btn-loading-icon"><span class="mr-btn__icon">★</span></button>
+          </body>
+        </html>
+    `)
+    const loadMetrics = await pageLoading.evaluate(() => {
+        const checkLoading = (id) => {
+            const el = document.getElementById(id)
+            const s = window.getComputedStyle(el)
+            const after = window.getComputedStyle(el, '::after')
+            const child = el.firstElementChild
+            const childStyle = child ? window.getComputedStyle(child) : null
+            return {
+                cursor: s.cursor,
+                childOpacity: childStyle ? childStyle.opacity : null,
+                afterContent: after.content,
+                afterAnimation: after.animationName,
+                afterW: after.width,
+                afterH: after.height,
+                afterPosition: after.position,
+            }
+        }
+        return {
+            textBtn: checkLoading('btn-loading'),
+            iconBtn: checkLoading('btn-loading-icon'),
+        }
+    })
+    await pageLoading.close()
+
+    assert.strictEqual(loadMetrics.textBtn.cursor, 'progress', 'Curseur attendu en progress')
+    assert.strictEqual(loadMetrics.textBtn.childOpacity, '0', 'Contenu texte attendu en opacity: 0')
+    assert.strictEqual(loadMetrics.iconBtn.childOpacity, '0', 'Contenu icone attendu en opacity: 0')
+    assert.strictEqual(loadMetrics.textBtn.afterContent, '""', 'Spinner ::after attendu')
+    assert.strictEqual(
+        loadMetrics.textBtn.afterAnimation,
+        'mr-spin',
+        'Animation de spinner mr-spin attendue'
+    )
+    assert.strictEqual(
+        loadMetrics.textBtn.afterPosition,
+        'absolute',
+        'Positionnement absolu attendu pour le spinner'
+    )
+    console.log(
+        'OK: Etat loading de Button conforme (spinner centre, animation active, contenu masque).'
+    )
 }
