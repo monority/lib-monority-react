@@ -6,11 +6,47 @@ import {
     Field,
     IconButton,
     Input,
+    PasswordInput,
     positionOverlay,
     Spinner,
     ThemeScope,
 } from '@monority/ui'
 import './harness.css'
+
+const SearchIcon = () => (
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM13 13l4 4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+)
+
+const CheckIcon = () => (
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+            d="M4.5 10.5l3.5 3.5 7.5-7.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+)
+
+const ClearIcon = () => (
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+            d="M6 6l8 8M14 6l-8 8"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+        />
+    </svg>
+)
 
 const themes = ['light', 'dark', 'dim', 'oled', 'ocean', 'night', 'high-contrast'] as const
 const densities = ['comfortable', 'compact'] as const
@@ -308,6 +344,85 @@ function InputHarness() {
             </Sample>
             <Sample label="placeholder désactivé">
                 <Input disabled placeholder="Placeholder désactivé..." />
+            </Sample>
+            <Sample label="input with icon leading sm">
+                <Input
+                    size="sm"
+                    id="input-icon-leading-sm"
+                    iconLeading={<SearchIcon />}
+                    placeholder="Rechercher (sm)..."
+                />
+            </Sample>
+            <Sample label="input with icon leading md">
+                <Input
+                    size="md"
+                    id="input-icon-leading-md"
+                    iconLeading={<SearchIcon />}
+                    placeholder="Rechercher (md)..."
+                />
+            </Sample>
+            <Sample label="input with icon leading lg">
+                <Input
+                    size="lg"
+                    id="input-icon-leading-lg"
+                    iconLeading={<SearchIcon />}
+                    placeholder="Rechercher (lg)..."
+                />
+            </Sample>
+            <Sample label="input with icon trailing">
+                <Input
+                    id="input-icon-trailing"
+                    iconTrailing={<CheckIcon />}
+                    defaultValue="Champ validé"
+                />
+            </Sample>
+            <Sample label="input with both icons">
+                <Input
+                    id="input-icons-both"
+                    iconLeading={<SearchIcon />}
+                    iconTrailing={<ClearIcon />}
+                    defaultValue="Texte avec deux icônes"
+                />
+            </Sample>
+            <Sample label="input with password sm">
+                <PasswordInput
+                    size="sm"
+                    id="input-password-sm"
+                    placeholder="Mot de passe sm..."
+                    defaultValue="secret123"
+                />
+            </Sample>
+            <Sample label="input with password md">
+                <PasswordInput
+                    size="md"
+                    id="input-password-md"
+                    placeholder="Mot de passe md..."
+                    defaultValue="secret123"
+                />
+            </Sample>
+            <Sample label="input with password lg">
+                <PasswordInput
+                    size="lg"
+                    id="input-password-lg"
+                    placeholder="Mot de passe lg..."
+                    defaultValue="secret123"
+                />
+            </Sample>
+            <Sample label="input with password direct">
+                <Input
+                    type="password"
+                    showPasswordToggle
+                    id="input-password-direct"
+                    placeholder="Input direct avec toggle..."
+                    defaultValue="direct-secret"
+                />
+            </Sample>
+            <Sample label="input with password disabled">
+                <PasswordInput
+                    disabled
+                    id="input-password-disabled"
+                    defaultValue="secret-disabled"
+                />
             </Sample>
         </>
     )
