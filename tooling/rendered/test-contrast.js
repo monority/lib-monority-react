@@ -126,11 +126,11 @@ async function testNegativeProof(browser) {
         colorToRgb('oklch(0.955 0 215)')
     )
     assert(
-        badBorderRatio < 3.0,
-        `La bordure defaillante doit echouer sous 3.0:1 (ratio obtenu: ${badBorderRatio.toFixed(2)}:1)`
+        badBorderRatio < 1.8,
+        `La bordure defaillante doit echouer sous 1.8:1 (ratio obtenu: ${badBorderRatio.toFixed(2)}:1)`
     )
     console.log(
-        `OK: Fixture negative bordure reussie (bordure defaillante detectee insuffisante a ${badBorderRatio.toFixed(2)}:1 < 3.0:1).`
+        `OK: Fixture negative bordure reussie (bordure defaillante detectee insuffisante a ${badBorderRatio.toFixed(2)}:1 < 1.8:1).`
     )
     await pageBorder.close()
 
@@ -233,7 +233,7 @@ async function testNegativeProof(browser) {
         <style>
             :root {
                 --mr-bg-canvas: oklch(0.955 0 215);
-                --mr-border-control: oklch(0.61 0 215);
+                --mr-border-control: oklch(0.75 0 215);
                 --mr-state-hover-mix: 12%;
             }
             .bad-border-hover {
@@ -251,11 +251,11 @@ async function testNegativeProof(browser) {
         colorToRgb('oklch(0.955 0 215)')
     )
     assert(
-        badInputHoverRatio < 3.0,
-        `Le survol de bordure vers le canevas doit echouer sous 3.0:1 (ratio obtenu: ${badInputHoverRatio.toFixed(2)}:1)`
+        badInputHoverRatio < 1.8,
+        `Le survol de bordure vers le canevas doit echouer sous 1.8:1 (ratio obtenu: ${badInputHoverRatio.toFixed(2)}:1)`
     )
     console.log(
-        `OK: Fixture negative survol bordure Input reussie (melange vers canevas detecte insuffisant a ${badInputHoverRatio.toFixed(2)}:1 < 3.0:1).`
+        `OK: Fixture negative survol bordure Input reussie (melange vers canevas detecte insuffisant a ${badInputHoverRatio.toFixed(2)}:1 < 1.8:1).`
     )
     await pageBorderHoverBad.close()
 
@@ -525,11 +525,11 @@ export async function testContrast(browser) {
         )
         const secBorderRatio = getContrastRatio(colorToRgb(secBorderRaw), colorToRgb(canvasBgRaw))
         console.log(
-            `- Bordure sur canevas : border = ${secBorderRaw}, canevas = ${canvasBgRaw}, ratio = ${secBorderRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            `- Bordure sur canevas : border = ${secBorderRaw}, canevas = ${canvasBgRaw}, ratio = ${secBorderRatio.toFixed(2)}:1 (seuil UI au repos >= 1.8:1, ADR-026)`
         )
         assert(
-            secBorderRatio >= 3.0,
-            `Theme ${t.name} - Bordure bouton secondaire insuffisante: ${secBorderRatio.toFixed(2)}:1 < 3.0:1`
+            secBorderRatio >= 1.8,
+            `Theme ${t.name} - Bordure bouton secondaire insuffisante: ${secBorderRatio.toFixed(2)}:1 < 1.8:1`
         )
 
         const secIdleBgRaw = await page.$eval(
@@ -775,14 +775,14 @@ export async function testContrast(browser) {
             colorToRgb(canvasBgRaw)
         )
         console.log(
-            `- Bordure controle sur canevas : fg = ${inputBorderRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderRatio.toFixed(2)}:1 (seuil UI >= 3.0:1)`
+            `- Bordure controle sur canevas : fg = ${inputBorderRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderRatio.toFixed(2)}:1 (seuil UI au repos >= 1.8:1, ADR-026)`
         )
         assert(
-            inputBorderRatio >= 3.0,
-            `Theme ${t.name} - Bordure Input sur canevas insuffisante: ${inputBorderRatio.toFixed(2)}:1 < 3.0:1`
+            inputBorderRatio >= 1.8,
+            `Theme ${t.name} - Bordure Input sur canevas insuffisante: ${inputBorderRatio.toFixed(2)}:1 < 1.8:1`
         )
 
-        // 4. Bordure survolee sur canevas (bloquante >= 3.0:1, marge visee 3.3)
+        // 4. Bordure survolee sur canevas (bloquante >= 2.0:1)
         await page.hover('#input-hover')
         await waitForAnimations(page)
         const inputBorderHoverRaw = await page.$eval(
@@ -794,11 +794,11 @@ export async function testContrast(browser) {
             colorToRgb(canvasBgRaw)
         )
         console.log(
-            `- Bordure survolee sur canevas : fg = ${inputBorderHoverRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderHoverRatio.toFixed(2)}:1 (seuil UI >= 3.0:1, vise 3.3)`
+            `- Bordure survolee sur canevas : fg = ${inputBorderHoverRaw}, bg = ${canvasBgRaw}, ratio = ${inputBorderHoverRatio.toFixed(2)}:1 (seuil UI >= 2.0:1)`
         )
         assert(
-            inputBorderHoverRatio >= 3.0,
-            `Theme ${t.name} - Bordure survolee Input sur canevas insuffisante: ${inputBorderHoverRatio.toFixed(2)}:1 < 3.0:1`
+            inputBorderHoverRatio >= 2.0,
+            `Theme ${t.name} - Bordure survolee Input sur canevas insuffisante: ${inputBorderHoverRatio.toFixed(2)}:1 < 2.0:1`
         )
 
         // 5. Anneau de focus sur canevas
