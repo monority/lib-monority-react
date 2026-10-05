@@ -1260,6 +1260,9 @@ export async function testContrast(browser) {
         <div data-theme="slate" id="slate-root">
             <button class="mr-btn" id="btn-slate">Slate</button>
         </div>
+        <div data-theme="ocean" id="ocean-root">
+            <button class="mr-btn" id="btn-ocean">Ocean</button>
+        </div>
     `)
 
     // 1. Light dans Dark
@@ -1360,6 +1363,18 @@ export async function testContrast(browser) {
     console.log(`- slate-theme : color-scheme = ${slateCs}, canvas = ${slateCanvas}`)
     assert.strictEqual(slateCs, 'dark', 'slate doit resoudre color-scheme: dark')
     assert(slateCanvas.includes('0.18'), 'slate canvas doit valoir 0.18 (ardoise acier)')
+
+    // 6. Ocean theme
+    const oceanCs = await pageNested.$eval(
+        '#ocean-root',
+        (el) => window.getComputedStyle(el).colorScheme
+    )
+    const oceanCanvas = await pageNested.$eval('#ocean-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+    )
+    console.log(`- ocean-theme : color-scheme = ${oceanCs}, canvas = ${oceanCanvas}`)
+    assert.strictEqual(oceanCs, 'dark', 'ocean doit resoudre color-scheme: dark')
+    assert(oceanCanvas.includes('0.18'), 'ocean canvas doit valoir 0.18 (bleu marine profond)')
 
     await pageNested.close()
 }

@@ -6,6 +6,7 @@
 @import './themes/dark.css';
 @import './themes/oled.css';
 @import './themes/slate.css';
+@import './themes/ocean.css';
 @import './recipes/button.css';
 @import './recipes/input.css';
 @import './recipes/field.css';

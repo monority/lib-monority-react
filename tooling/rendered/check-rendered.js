@@ -11,8 +11,19 @@ async function run() {
         await testHostIsolation(browser)
         await testControlDimensions(browser)
 
+        const fs = await import('node:fs')
+        const path = await import('node:path')
+        const { fileURLToPath } = await import('node:url')
+        const themesDir = path.join(
+            path.dirname(fileURLToPath(import.meta.url)),
+            '../../packages/styles/src/themes'
+        )
+        const activeThemes = fs
+            .readdirSync(themesDir)
+            .filter((f) => f.endsWith('.css'))
+            .map((f) => f.replace('.css', ''))
         console.log(
-            '\nTous les contrastes respectent WCAG AA sur tous les themes actifs (light, dark, oled, slate).'
+            `\nTous les contrastes respectent WCAG AA sur tous les themes actifs (light, ${activeThemes.join(', ')}).`
         )
     } finally {
         await browser.close()
