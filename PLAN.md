@@ -19,7 +19,7 @@ Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
 - Theme sombre approfondi (themes/dark.css) : canevas ajuste a L=0.17 pour un rendu profond et net
 - Theme Slate recalibre (themes/slate.css) : ardoise acier sobre (hue 255, chroma 0.022, canevas L=0.18)
-- Theme Ocean integre (themes/ocean.css) : bleu marine profond (hue 230, chroma 0.03, canevas L=0.18)
+- Theme Ocean recalibre (themes/ocean.css) : bleu marine nuit riche / Midnight Navy (hue 260, chroma 0.05, canevas L=0.18)
 - Decouverte dynamique des themes du dossier themes/ (5 themes actifs : light, dark, oled, slate, ocean)
 - Verifications de contraste et d'etats Button/Input/Field conformes sur les 5 themes
 - Navigation harness prete pour light, dark, oled, slate et dim
