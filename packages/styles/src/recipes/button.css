@@ -22,6 +22,7 @@
         justify-content: center;
         box-sizing: border-box;
         margin: 0;
+        padding-block: 0;
         border: 1px solid transparent;
         border-radius: var(--mr-radius-md);
         font-family: inherit;
@@ -40,6 +41,7 @@
 
     /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
     :where(.mr-btn)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
         min-block-size: var(--mr-size-control-sm);
         padding-inline: var(--mr-space-3);
     }
@@ -47,6 +49,7 @@
     /* Taille md (defaut) : 32px */
     :where(.mr-btn)[data-size='md'],
     :where(.mr-btn):not([data-size]) {
+        block-size: var(--mr-size-control-md);
         min-block-size: var(--mr-size-control-md);
         padding-inline: var(--mr-space-4);
         gap: var(--mr-space-2);
@@ -55,6 +58,7 @@
 
     /* Taille lg : 40px */
     :where(.mr-btn)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
         min-block-size: var(--mr-size-control-lg);
         padding-inline: var(--mr-space-5);
     }
@@ -64,21 +68,27 @@
         padding-inline: 0;
     }
 
-    :where(.mr-btn)[data-icon-only]:where([data-size='sm']) {
+    :where(.mr-btn)[data-icon-only]:where([data-size='sm']):not([data-full-width]) {
+        inline-size: var(--mr-size-control-sm);
         min-inline-size: var(--mr-size-control-sm);
     }
 
-    :where(.mr-btn)[data-icon-only]:where([data-size='md'], :not([data-size])) {
+    :where(.mr-btn)[data-icon-only]:where([data-size='md'], :not([data-size])):not(
+            [data-full-width]
+        ) {
+        inline-size: var(--mr-size-control-md);
         min-inline-size: var(--mr-size-control-md);
     }
 
-    :where(.mr-btn)[data-icon-only]:where([data-size='lg']) {
+    :where(.mr-btn)[data-icon-only]:where([data-size='lg']):not([data-full-width]) {
+        inline-size: var(--mr-size-control-lg);
         min-inline-size: var(--mr-size-control-lg);
     }
 
     /* Pleine largeur (fullWidth) : 100% de la largeur du conteneur.
      * S'applique a toutes les variantes, y compris iconOnly avec icone centree. */
     :where(.mr-btn)[data-full-width] {
+        display: flex;
         inline-size: 100%;
     }
 
@@ -131,6 +141,8 @@
     :where(.mr-btn)[data-loading]::after {
         content: '';
         position: absolute;
+        inset: 0;
+        margin: auto;
         inline-size: var(--mr-space-4);
         block-size: var(--mr-space-4);
         box-sizing: border-box;
@@ -141,6 +153,9 @@
     }
 
     @keyframes mr-spin {
+        from {
+            transform: rotate(0deg);
+        }
         to {
             transform: rotate(360deg);
         }

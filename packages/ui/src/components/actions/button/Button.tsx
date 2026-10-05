@@ -157,7 +157,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             {iconOnly || (showCopyIcon && !children) ? (
                 <>
                     {copyIconEl}
-                    {children}
+                    {children != null && (
+                        <span className="mr-btn__icon" key="icon">
+                            {children}
+                        </span>
+                    )}
                 </>
             ) : (
                 <>
