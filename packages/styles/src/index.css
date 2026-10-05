@@ -7,6 +7,7 @@
 @import './themes/oled.css';
 @import './themes/slate.css';
 @import './themes/ocean.css';
+@import './themes/night.css';
 @import './recipes/button.css';
 @import './recipes/input.css';
 @import './recipes/field.css';

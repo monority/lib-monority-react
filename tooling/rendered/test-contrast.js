@@ -1263,6 +1263,9 @@ export async function testContrast(browser) {
         <div data-theme="ocean" id="ocean-root">
             <button class="mr-btn" id="btn-ocean">Ocean</button>
         </div>
+        <div data-theme="night" id="night-root">
+            <button class="mr-btn" id="btn-night">Night</button>
+        </div>
     `)
 
     // 1. Light dans Dark
@@ -1375,6 +1378,18 @@ export async function testContrast(browser) {
     console.log(`- ocean-theme : color-scheme = ${oceanCs}, canvas = ${oceanCanvas}`)
     assert.strictEqual(oceanCs, 'dark', 'ocean doit resoudre color-scheme: dark')
     assert(oceanCanvas.includes('0.18'), 'ocean canvas doit valoir 0.18 (bleu marine profond)')
+
+    // 7. Night theme (Tokyo Night)
+    const nightCs = await pageNested.$eval(
+        '#night-root',
+        (el) => window.getComputedStyle(el).colorScheme
+    )
+    const nightCanvas = await pageNested.$eval('#night-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+    )
+    console.log(`- night-theme : color-scheme = ${nightCs}, canvas = ${nightCanvas}`)
+    assert.strictEqual(nightCs, 'dark', 'night doit resoudre color-scheme: dark')
+    assert(nightCanvas.includes('0.18'), 'night canvas doit valoir 0.18 (Tokyo Night indigo)')
 
     await pageNested.close()
 }
