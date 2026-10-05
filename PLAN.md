@@ -16,15 +16,19 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Point de contrôle (après Textarea, 4e composant) :
+Etat :
+- Correctifs Button/Input finalises : alignement rigoureux (delta 0px), fullWidth iconOnly (100% flex), loading (spinner centre, masquage complet), focus neutre
+- Tests rendered automatises et contrastes verts (pnpm verify 6 etapes vert)
+- Textarea non commence, en attente de validation utilisateur
+Point de contrôle (apres Textarea, 4e composant) :
 1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
-2. décision sur le patron de recette (section 2) et sur le nom partagé des champs
-3. ajout des thèmes slate, oled, ocean, night, high-contrast, un commit par thème, contraste de toutes les paires existantes dans chacun, et re-vérification de la bande de surfaces (ADR-024)
-4. test Firefox et WebKit avec Playwright installé dans le cache utilisateur (aucun fichier du dépôt) et décision du plancher de navigateurs
-5. branchement de pnpm verify en CI avec installation de Chromium, sans toucher à release.yml
-6. bilan de poids et durée de verify à froid
+2. decision sur le patron de recette et sur le nom partage des champs
+3. ajout des themes slate, oled, ocean, night, high-contrast
+4. test Firefox et WebKit avec Playwright dans le cache utilisateur
+5. branchement de pnpm verify en CI avec installation de Chromium
+6. bilan de poids et duree de verify a froid
 7. revue de docs/foundation/ contre le code
-8. décisions ouvertes à trancher
-9. préparation du changelog
-10. nettoyage de l'historique à décider avec moi (fusion en squash ou conservation des commits)
+8. decisions ouvertes a trancher
+9. preparation du changelog
+10. nettoyage de l'historique a decider avec l'utilisateur
 
