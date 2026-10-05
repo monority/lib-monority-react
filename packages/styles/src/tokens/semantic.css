@@ -9,6 +9,7 @@
     :where(:root, [data-theme]) {
         /* Fonds */
         --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-sunken: var(--mr-bg-canvas);
         --mr-bg-inverse: var(--mr-text-primary);
 
         /* Textes */

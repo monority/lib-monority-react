@@ -30,7 +30,7 @@
  *   - Anneau invalide sur canevas exterieur (Sombre) : 4.87:1
  *
  * Limite fond opaque (ADR-024) :
- * - Le fond opaque du champ utilise --mr-bg-canvas.
+ * - Le fond opaque du champ utilise --mr-bg-sunken (heritant de --mr-bg-canvas en clair et sombre, rehausse en OLED).
  * - Bande admissible pour ratio >= 3.0:1 : L >= 0.921 en clair ; L <= 0.254 en sombre.
  */
 @layer mr.components {
@@ -44,7 +44,7 @@
         padding-block: 0;
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-md);
-        background-color: var(--mr-bg-canvas);
+        background-color: var(--mr-bg-sunken);
         color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-font-size-md);
