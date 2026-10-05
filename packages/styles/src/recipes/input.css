@@ -22,10 +22,10 @@
  *
  * Exception de focus :
  * - Contour d'anneau direct au contact du champ (outline-offset: 0)
- *   et bordure coloree avec var(--mr-focus-ring) ou var(--mr-danger-solid).
+ *   et bordure coloree avec var(--mr-text-secondary) ou var(--mr-danger-solid).
  * - Preuve chiffree des ratios de contraste de l'anneau de focus (WCAG 1.4.11 >= 3.0:1) :
- *   - Anneau normal sur canevas exterieur (Clair) : 5.10:1
- *   - Anneau normal sur canevas exterieur (Sombre) : 5.20:1
+ *   - Anneau normal sur canevas exterieur (Clair) : 4.83:1
+ *   - Anneau normal sur canevas exterieur (Sombre) : 4.81:1
  *   - Anneau invalide sur canevas exterieur (Clair) : 5.37:1
  *   - Anneau invalide sur canevas exterieur (Sombre) : 4.87:1
  *
@@ -80,8 +80,8 @@
 
     :where(.mr-input):focus-visible,
     :where(.mr-input):focus {
-        border-color: var(--mr-text-primary);
-        outline: 2px solid var(--mr-text-primary);
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
         outline-offset: 0;
     }
 
