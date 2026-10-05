@@ -1,0 +1,29 @@
+/* Theme OLED dans la couche mr.themes.
+ * Fond noir absolu (oklch 0 0 0), fond des champs legerement rehausse (oklch 0.12),
+ * et bordure de controle discrete calibree a 1.95:1 sur fond de champ (ADR-026). */
+@layer mr.themes {
+    :where([data-theme='oled']) {
+        color-scheme: dark;
+
+        /* Fonds : noir absolu pour le canevas, fond de champ legerement rehausse */
+        --mr-bg-canvas: oklch(0 0 0);
+        --mr-bg-sunken: oklch(0.12 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Textes */
+        --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.58 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Texte desactive : luminosite 0.498 reproduit le ratio de 3.46:1 sur le canevas */
+        --mr-text-disabled: oklch(0.498 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Bordure de controle : luminosite 0.37 calibree pour un ratio discret de 1.95:1 sur fond sunken et 2.01:1 sur canevas */
+        --mr-border-control: oklch(0.37 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Levier de luminosite de l'accent pour fond OLED :
+         * 0.60 assure un contraste >= 5.0:1 de l'anneau de focus sur canevas */
+        --mr-ref-accent-lightness: 0.6;
+
+        /* Danger OLED : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.91:1) sur canevas */
+        --mr-danger-solid: oklch(0.65 0.2 25);
+    }
+}

@@ -303,7 +303,7 @@ export async function testContrast(browser) {
     const colorSchemePath = path.join(ROOT, 'packages/styles/src/base/color-scheme.css')
     const refPath = path.join(ROOT, 'packages/styles/src/tokens/ref.css')
     const semanticPath = path.join(ROOT, 'packages/styles/src/tokens/semantic.css')
-    const darkPath = path.join(ROOT, 'packages/styles/src/themes/dark.css')
+    const themesDir = path.join(ROOT, 'packages/styles/src/themes')
     const buttonPath = path.join(ROOT, 'packages/styles/src/recipes/button.css')
     const inputPath = path.join(ROOT, 'packages/styles/src/recipes/input.css')
     const fieldPath = path.join(ROOT, 'packages/styles/src/recipes/field.css')
@@ -313,7 +313,7 @@ export async function testContrast(browser) {
         !fs.existsSync(colorSchemePath) ||
         !fs.existsSync(semanticPath) ||
         !fs.existsSync(refPath) ||
-        !fs.existsSync(darkPath) ||
+        !fs.existsSync(themesDir) ||
         !fs.existsSync(buttonPath) ||
         !fs.existsSync(inputPath) ||
         !fs.existsSync(fieldPath)
@@ -327,7 +327,14 @@ export async function testContrast(browser) {
 
     const refCss = fs.readFileSync(refPath, 'utf8')
     const semanticCss = fs.readFileSync(semanticPath, 'utf8')
-    const darkCss = fs.readFileSync(darkPath, 'utf8')
+    const themeFiles = fs
+        .readdirSync(themesDir)
+        .filter((f) => f.endsWith('.css'))
+        .sort()
+    const themeCssMap = new Map()
+    for (const f of themeFiles) {
+        themeCssMap.set(f, fs.readFileSync(path.join(themesDir, f), 'utf8'))
+    }
     const buttonCss = fs.readFileSync(buttonPath, 'utf8')
     const inputCss = fs.readFileSync(inputPath, 'utf8')
     const fieldCss = fs.readFileSync(fieldPath, 'utf8')
@@ -345,29 +352,41 @@ export async function testContrast(browser) {
         refCss.includes('--mr-ref-accent-lightness'),
         'ref.css doit declarer le levier --mr-ref-accent-lightness'
     )
+    const darkCss = themeCssMap.get('dark.css') ?? ''
     assert(
         darkCss.includes(":where([data-theme='dark'], [data-theme='dim'])"),
         "dark.css doit utiliser le selecteur groupe :where([data-theme='dark'], [data-theme='dim'])"
     )
+    const oledCss = themeCssMap.get('oled.css')
+    if (oledCss) {
+        assert(
+            oledCss.includes(":where([data-theme='oled'])"),
+            "oled.css doit utiliser le selecteur :where([data-theme='oled'])"
+        )
+    }
     console.log(
-        'OK: Declarations de portee et selecteurs conformes dans semantic.css, ref.css et dark.css.'
+        'OK: Declarations de portee et selecteurs conformes dans semantic.css, ref.css et themes/.'
     )
 
+    const themesCss = Array.from(themeCssMap.values()).join('\n')
     const fullCss = `
         ${layersCss}
         ${colorSchemeCss}
         ${refCss}
         ${semanticCss}
-        ${darkCss}
+        ${themesCss}
         ${buttonCss}
         ${inputCss}
         ${fieldCss}
     `
 
-    // Evaluation des etats des composants dans les deux themes
+    // Decouverte dynamique des themes du dossier themes/ (AGENTS.md section 3.3)
     const themes = [
         { name: 'light', attr: 'data-theme="light"' },
-        { name: 'dark', attr: 'data-theme="dark"' },
+        ...themeFiles.map((f) => {
+            const name = f.replace('.css', '')
+            return { name, attr: `data-theme="${name}"` }
+        }),
     ]
 
     for (const t of themes) {
@@ -1226,6 +1245,9 @@ export async function testContrast(browser) {
         <div data-theme="dim" id="dim-root">
             <button class="mr-btn" id="btn-dim">Dim</button>
         </div>
+        <div data-theme="oled" id="oled-root">
+            <button class="mr-btn" id="btn-oled">OLED</button>
+        </div>
     `)
 
     // 1. Light dans Dark
@@ -1293,6 +1315,27 @@ export async function testContrast(browser) {
     assert(dimCanvas.includes('0.22'), 'dim canvas doit valoir 0.22 (sombre)')
     assert(dimInverse.includes('0.955'), 'dim bg-inverse doit valoir 0.955 (sombre)')
     assert(dimOnInverse.includes('0.22'), 'dim text-on-inverse doit valoir 0.22 (sombre)')
+
+    // 4. OLED theme
+    const oledCs = await pageNested.$eval(
+        '#oled-root',
+        (el) => window.getComputedStyle(el).colorScheme
+    )
+    const oledCanvas = await pageNested.$eval('#oled-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+    )
+    const oledSunken = await pageNested.$eval('#oled-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-sunken').trim()
+    )
+    console.log(
+        `- oled-theme  : color-scheme = ${oledCs}, canvas = ${oledCanvas}, bg-sunken = ${oledSunken}`
+    )
+    assert.strictEqual(oledCs, 'dark', 'oled doit resoudre color-scheme: dark')
+    assert(
+        oledCanvas.includes('0 0 0') || oledCanvas === 'oklch(0 0 0)',
+        'oled canvas doit valoir noir absolu oklch(0 0 0)'
+    )
+    assert(oledSunken.includes('0.12'), 'oled bg-sunken doit valoir oklch(0.12 ...)')
 
     await pageNested.close()
 }
