@@ -7,10 +7,11 @@
 
 .harness-controls {
     display: flex;
-    gap: var(--mr-space-2);
+    flex-wrap: wrap;
+    gap: var(--mr-space-3);
     align-items: center;
     margin-bottom: var(--mr-space-4);
-    padding: var(--mr-space-2) var(--mr-space-4);
+    padding: var(--mr-space-3) var(--mr-space-4);
     background: var(--mr-bg-surface, var(--mr-bg-canvas));
     border: 1px solid
         var(
@@ -20,7 +21,24 @@
     border-radius: var(--mr-radius-md);
 }
 
+.harness-controls-group {
+    display: flex;
+    gap: var(--mr-space-1);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.harness-controls-label {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    margin-inline-end: var(--mr-space-1);
+    color: var(--mr-text-secondary);
+}
+
 .harness-controls-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
     padding: 4px 8px;
     border-radius: var(--mr-radius-md);
     border: 1px solid
@@ -32,11 +50,22 @@
     color: var(--mr-text-primary);
     cursor: pointer;
     font-size: 0.75rem;
+    line-height: 1.2;
+    transition: background-color var(--mr-duration-state, 150ms);
+}
+
+.harness-controls-btn:hover {
+    background: color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) 92%);
 }
 
 .harness-controls-btn[data-active='true'] {
     font-weight: bold;
     background: color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) 85%);
+    border-color: var(--mr-text-secondary);
+}
+
+.harness-controls-btn--secondary {
+    opacity: 0.85;
 }
 
 .harness-page > [data-theme] {

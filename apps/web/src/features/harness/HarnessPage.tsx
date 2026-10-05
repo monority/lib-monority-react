@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
     Button,
     CopyButton,
@@ -504,6 +504,19 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     __position: PositionHarness,
 }
 
+const establishedComponents = [
+    { slug: 'button', label: 'Button' },
+    { slug: 'input', label: 'Input' },
+    { slug: 'field', label: 'Field' },
+] as const
+
+const otherComponents = [
+    { slug: 'icon-button', label: 'IconButton' },
+    { slug: 'copy-button', label: 'CopyButton' },
+    { slug: 'button-link', label: 'ButtonLink' },
+    { slug: 'spinner', label: 'Spinner' },
+] as const
+
 export function HarnessPage() {
     const { component = 'button' } = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -518,6 +531,8 @@ export function HarnessPage() {
         : 'monority'
     const Harness = harnesses[component] ?? harnesses.button!
 
+    const currentQuery = searchParams.toString() ? `?${searchParams.toString()}` : ''
+
     return (
         <main
             className="harness-page"
@@ -526,22 +541,83 @@ export function HarnessPage() {
             data-theme={theme}
         >
             <nav className="harness-controls" data-testid="harness-controls">
-                <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Thème:</span>
-                {themes.map((t) => (
-                    <button
-                        key={t}
-                        type="button"
-                        className="harness-controls-btn"
-                        data-active={theme === t}
-                        onClick={() => {
-                            const next = new URLSearchParams(searchParams)
-                            next.set('theme', t)
-                            setSearchParams(next)
-                        }}
-                    >
-                        {t}
-                    </button>
-                ))}
+                <div className="harness-controls-group" data-testid="harness-components-nav">
+                    <span className="harness-controls-label">Composants :</span>
+                    {establishedComponents.map((c) => (
+                        <Link
+                            key={c.slug}
+                            to={`/harness/${c.slug}${currentQuery}`}
+                            className="harness-controls-btn"
+                            data-active={component === c.slug}
+                        >
+                            {c.label}
+                        </Link>
+                    ))}
+                    {otherComponents.map((c) => (
+                        <Link
+                            key={c.slug}
+                            to={`/harness/${c.slug}${currentQuery}`}
+                            className="harness-controls-btn harness-controls-btn--secondary"
+                            data-active={component === c.slug}
+                        >
+                            {c.label}
+                        </Link>
+                    ))}
+                </div>
+                <div className="harness-controls-group">
+                    <span className="harness-controls-label">Thème :</span>
+                    {themes.map((t) => (
+                        <button
+                            key={t}
+                            type="button"
+                            className="harness-controls-btn"
+                            data-active={theme === t}
+                            onClick={() => {
+                                const next = new URLSearchParams(searchParams)
+                                next.set('theme', t)
+                                setSearchParams(next)
+                            }}
+                        >
+                            {t}
+                        </button>
+                    ))}
+                </div>
+                <div className="harness-controls-group">
+                    <span className="harness-controls-label">Densité :</span>
+                    {densities.map((d) => (
+                        <button
+                            key={d}
+                            type="button"
+                            className="harness-controls-btn"
+                            data-active={density === d}
+                            onClick={() => {
+                                const next = new URLSearchParams(searchParams)
+                                next.set('density', d)
+                                setSearchParams(next)
+                            }}
+                        >
+                            {d}
+                        </button>
+                    ))}
+                </div>
+                <div className="harness-controls-group">
+                    <span className="harness-controls-label">Marque :</span>
+                    {brands.map((b) => (
+                        <button
+                            key={b}
+                            type="button"
+                            className="harness-controls-btn"
+                            data-active={brand === b}
+                            onClick={() => {
+                                const next = new URLSearchParams(searchParams)
+                                next.set('brand', b)
+                                setSearchParams(next)
+                            }}
+                        >
+                            {b}
+                        </button>
+                    ))}
+                </div>
             </nav>
             <ThemeScope theme={theme} density={density} {...(brand === 'studio' ? { brand } : {})}>
                 <Harness />
