@@ -18,9 +18,9 @@
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Bordures :
-         * border-control : luminosite 0.61 calculee pour assurer un ratio de 3.33:1 sur le canevas clair
-         * (respect de WCAG 1.4.11 >= 3.0:1 avec marge de securite a 3.3). */
-        --mr-border-control: oklch(0.61 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+         * border-control : luminosite 0.635 calculee pour assurer un ratio de 3.01:1 sur le canevas clair
+         * (respect de WCAG 1.4.11 >= 3.0:1 avec rendu plus doux). */
+        --mr-border-control: oklch(0.635 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Statut Danger :
          * Regle unique : le texte a la couleur du canevas (--mr-danger-on-solid: var(--mr-bg-canvas)),
