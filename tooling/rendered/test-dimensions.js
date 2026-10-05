@@ -394,8 +394,8 @@ export async function testControlDimensions(browser) {
             return {
                 h: r.height,
                 w: r.width,
-                paddingLeft: parseFloat(s.paddingLeft),
-                paddingRight: parseFloat(s.paddingRight),
+                paddingLeft: Number.parseFloat(s.paddingLeft),
+                paddingRight: Number.parseFloat(s.paddingRight),
                 cursor: s.cursor,
                 position: s.position,
             }
