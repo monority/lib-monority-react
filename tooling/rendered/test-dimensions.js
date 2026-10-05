@@ -345,4 +345,142 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Etat loading de Button conforme (spinner centre, animation active, contenu masque).'
     )
+
+    // 6. Verification Input with icon et Input with password
+    const pageInputIcons = await browser.newPage()
+    await pageInputIcons.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="padding: 20px;">
+            <div class="mr-input__wrapper" data-size="sm" id="wrap-lead-sm">
+              <span class="mr-input__icon mr-input__icon--leading" id="icon-lead-sm"><svg viewBox="0 0 20 20"></svg></span>
+              <input class="mr-input" data-size="sm" data-has-leading-icon id="input-lead-sm" value="sm" />
+            </div>
+            <div class="mr-input__wrapper" data-size="md" id="wrap-lead-md">
+              <span class="mr-input__icon mr-input__icon--leading" id="icon-lead-md"><svg viewBox="0 0 20 20"></svg></span>
+              <input class="mr-input" data-size="md" data-has-leading-icon id="input-lead-md" value="md" />
+            </div>
+            <div class="mr-input__wrapper" data-size="lg" id="wrap-lead-lg">
+              <span class="mr-input__icon mr-input__icon--leading" id="icon-lead-lg"><svg viewBox="0 0 20 20"></svg></span>
+              <input class="mr-input" data-size="lg" data-has-leading-icon id="input-lead-lg" value="lg" />
+            </div>
+            <div class="mr-input__wrapper" data-size="md" id="wrap-both-md">
+              <span class="mr-input__icon mr-input__icon--leading"><svg viewBox="0 0 20 20"></svg></span>
+              <input class="mr-input" data-size="md" data-has-leading-icon data-has-trailing-icon id="input-both-md" value="both" />
+              <span class="mr-input__icon mr-input__icon--trailing"><svg viewBox="0 0 20 20"></svg></span>
+            </div>
+            <div class="mr-password-input__wrapper" data-size="sm" id="wrap-pwd-sm">
+              <input class="mr-password-input" data-size="sm" data-has-trailing-icon id="input-pwd-sm" type="password" value="secret" />
+              <button type="button" class="mr-password-input__toggle" id="toggle-pwd-sm"><svg viewBox="0 0 20 20"></svg></button>
+            </div>
+            <div class="mr-password-input__wrapper" data-size="md" id="wrap-pwd-md">
+              <input class="mr-password-input" data-size="md" data-has-trailing-icon id="input-pwd-md" type="password" value="secret" />
+              <button type="button" class="mr-password-input__toggle" id="toggle-pwd-md"><svg viewBox="0 0 20 20"></svg></button>
+            </div>
+            <div class="mr-password-input__wrapper" data-size="lg" id="wrap-pwd-lg">
+              <input class="mr-password-input" data-size="lg" data-has-trailing-icon id="input-pwd-lg" type="password" value="secret" />
+              <button type="button" class="mr-password-input__toggle" id="toggle-pwd-lg"><svg viewBox="0 0 20 20"></svg></button>
+            </div>
+          </body>
+        </html>
+    `)
+
+    const iconAndPwdMetrics = await pageInputIcons.evaluate(() => {
+        const getMetrics = (id) => {
+            const el = document.getElementById(id)
+            const r = el.getBoundingClientRect()
+            const s = window.getComputedStyle(el)
+            return {
+                h: r.height,
+                w: r.width,
+                paddingLeft: parseFloat(s.paddingLeft),
+                paddingRight: parseFloat(s.paddingRight),
+                cursor: s.cursor,
+                position: s.position,
+            }
+        }
+        return {
+            leadSm: getMetrics('input-lead-sm'),
+            leadMd: getMetrics('input-lead-md'),
+            leadLg: getMetrics('input-lead-lg'),
+            bothMd: getMetrics('input-both-md'),
+            pwdSm: getMetrics('input-pwd-sm'),
+            pwdMd: getMetrics('input-pwd-md'),
+            pwdLg: getMetrics('input-pwd-lg'),
+            toggleMd: getMetrics('toggle-pwd-md'),
+        }
+    })
+    await pageInputIcons.close()
+
+    assert.strictEqual(
+        iconAndPwdMetrics.leadSm.paddingLeft,
+        36,
+        `Input avec icone sm padding-left attendu a 36px, obtenu: ${iconAndPwdMetrics.leadSm.paddingLeft}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.leadMd.paddingLeft,
+        40,
+        `Input avec icone md padding-left attendu a 40px, obtenu: ${iconAndPwdMetrics.leadMd.paddingLeft}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.leadLg.paddingLeft,
+        48,
+        `Input avec icone lg padding-left attendu a 48px, obtenu: ${iconAndPwdMetrics.leadLg.paddingLeft}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.bothMd.paddingLeft,
+        40,
+        `Input avec deux icones padding-left attendu a 40px, obtenu: ${iconAndPwdMetrics.bothMd.paddingLeft}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.bothMd.paddingRight,
+        40,
+        `Input avec deux icones padding-right attendu a 40px, obtenu: ${iconAndPwdMetrics.bothMd.paddingRight}px`
+    )
+
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdSm.h,
+        28,
+        `PasswordInput sm hauteur attendue a 28px, obtenu: ${iconAndPwdMetrics.pwdSm.h}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdSm.paddingRight,
+        36,
+        `PasswordInput sm padding-right attendu a 36px, obtenu: ${iconAndPwdMetrics.pwdSm.paddingRight}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdMd.h,
+        32,
+        `PasswordInput md hauteur attendue a 32px, obtenu: ${iconAndPwdMetrics.pwdMd.h}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdMd.paddingRight,
+        40,
+        `PasswordInput md padding-right attendu a 40px, obtenu: ${iconAndPwdMetrics.pwdMd.paddingRight}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdLg.h,
+        40,
+        `PasswordInput lg hauteur attendue a 40px, obtenu: ${iconAndPwdMetrics.pwdLg.h}px`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.pwdLg.paddingRight,
+        48,
+        `PasswordInput lg padding-right attendu a 48px, obtenu: ${iconAndPwdMetrics.pwdLg.paddingRight}px`
+    )
+
+    assert.strictEqual(
+        iconAndPwdMetrics.toggleMd.cursor,
+        'pointer',
+        `Toggle mot de passe curseur attendu en pointer, obtenu: ${iconAndPwdMetrics.toggleMd.cursor}`
+    )
+    assert.strictEqual(
+        iconAndPwdMetrics.toggleMd.position,
+        'absolute',
+        `Toggle mot de passe position attendue en absolute, obtenu: ${iconAndPwdMetrics.toggleMd.position}`
+    )
+    console.log(
+        'OK: Input with icon et Input with password conformes (paddings 36/40/48px, hauteurs 28/32/40px, toggle interactif).'
+    )
 }
