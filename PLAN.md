@@ -17,16 +17,17 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Theme OLED integre (themes/oled.css) : canevas noir absolu (oklch 0 0 0), fond des champs legerement rehausse (--mr-bg-sunken: oklch 0.12), bordure discrete (L=0.37, ratio 1.95:1 / 2.01:1)
-- Decouverte dynamique des themes implementee dans tooling/rendered/test-contrast.js par glob
-- Verifications de contraste et d'etats Button/Input/Field conformes sur les 3 themes (light, dark, oled)
-- Navigation harness prete pour oled, light, dark et dim
+- Theme sombre approfondi (themes/dark.css) : canevas ajuste a L=0.17 pour un rendu profond et net
+- Theme Slate integre (themes/slate.css) : atmosphere bleutee (hue 220, chroma 0.02), canevas L=0.17
+- Decouverte dynamique des themes du dossier themes/ (4 themes actifs : light, dark, oled, slate)
+- Verifications de contraste et d'etats Button/Input/Field conformes sur les 4 themes
+- Navigation harness prete pour light, dark, oled, slate et dim
 - Tests rendered automatises et pnpm verify 6 etapes vert (1251 tests unitaires)
 - Textarea non commence, en attente de validation utilisateur
 Point de contrôle (apres Textarea, 4e composant) :
 1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
 2. decision sur le patron de recette et sur le nom partage des champs
-3. ajout des themes suivants : slate, ocean, night, high-contrast
+3. ajout des themes suivants : ocean, night, high-contrast
 4. test Firefox et WebKit avec Playwright dans le cache utilisateur
 5. branchement de pnpm verify en CI avec installation de Chromium
 6. bilan de poids et duree de verify a froid

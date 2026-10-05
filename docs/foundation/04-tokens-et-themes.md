@@ -72,12 +72,12 @@ Les pourcentages de mélange sont des tokens partagés suivant une grille en mul
 
 ## Thèmes
 
-- Thèmes réellement présents à ce stade : `light` (par défaut dans `tokens/semantic.css`), `dark` (dans `themes/dark.css`) et `oled` (dans `themes/oled.css`). Les thèmes `slate`, `ocean`, `night`, `high-contrast` seront construits par étapes.
+- Thèmes réellement présents à ce stade : `light` (par défaut dans `tokens/semantic.css`), `dark` (dans `themes/dark.css`), `oled` (dans `themes/oled.css`) et `slate` (dans `themes/slate.css`). Les thèmes `ocean`, `night`, `high-contrast` seront construits par étapes.
 - `dim` est un alias de `dark`, déclaré par un sélecteur groupé (`[data-theme="dark"], [data-theme="dim"]`). Il ne produit pas de bloc propre et n'est jamais compté comme thème.
 - `system` est une préférence utilisateur résolue à l'exécution dans `@monority/ui`, avant le premier rendu. Elle n'a aucune existence en CSS.
 - Un thème est un fichier `themes/<nom>.css` contenant `[data-theme="<nom>"]` et uniquement ce qui diffère du défaut. La liste des thèmes se lit du dossier par un glob, jamais d'une liste recopiée.
 - Chaque thème déclare `color-scheme`.
-- Le thème sombre applique une règle de symétrie stricte par permutation des rôles neutres du clair : `--mr-bg-canvas` sombre prend la valeur de `--mr-text-primary` clair (`0.22`), et `--mr-text-primary` sombre prend celle de `--mr-bg-canvas` clair (`0.955`), conservant à l'identique le contraste texte principal sur canevas (15.19:1) avec un seul paramètre pour tout le système. Le texte désactivé (`0.542`) est calculé pour reproduire le ratio de 3.46:1 du clair sur son canevas.
+- Le thème sombre utilise un canevas approfondi (`0.17`) pour un rendu contrasté et net, avec `--mr-text-primary` clair (`0.955`), conservant un contraste élevé (16.77:1). Le texte désactivé (`0.52`) est calculé pour reproduire le ratio de 3.47:1 du clair sur son canevas. Le thème `slate` reprend cette base avec des primitives neutres teintées bleutées (`hue: 220, chroma: 0.02`).
 - Le thème par défaut (`light`) vit dans `tokens/semantic.css` : un token se déclare uniquement sur les portées qui peuvent changer sa valeur (`:where(:root, [data-theme])` pour les neutres, échelles, leviers et alias, et `:where(:root, [data-theme], [data-brand])` pour la marque et le focus).
 - Cette séparation garantit que la marque se réévalue par cascade sans écraser le thème actif sur un conteneur ancêtre.
 
