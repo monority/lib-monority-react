@@ -72,7 +72,7 @@ Les pourcentages de mélange sont des tokens partagés suivant une grille en mul
 
 ## Thèmes
 
-- Thèmes réellement présents à ce stade : `light` (par défaut dans `tokens/semantic.css`) et `dark` (dans `themes/dark.css`). Les thèmes `slate`, `oled`, `ocean`, `night`, `high-contrast` seront construits par étapes.
+- Thèmes réellement présents à ce stade : `light` (par défaut dans `tokens/semantic.css`), `dark` (dans `themes/dark.css`) et `oled` (dans `themes/oled.css`). Les thèmes `slate`, `ocean`, `night`, `high-contrast` seront construits par étapes.
 - `dim` est un alias de `dark`, déclaré par un sélecteur groupé (`[data-theme="dark"], [data-theme="dim"]`). Il ne produit pas de bloc propre et n'est jamais compté comme thème.
 - `system` est une préférence utilisateur résolue à l'exécution dans `@monority/ui`, avant le premier rendu. Elle n'a aucune existence en CSS.
 - Un thème est un fichier `themes/<nom>.css` contenant `[data-theme="<nom>"]` et uniquement ce qui diffère du défaut. La liste des thèmes se lit du dossier par un glob, jamais d'une liste recopiée.

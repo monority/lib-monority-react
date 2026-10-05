@@ -17,16 +17,16 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Menu de navigation des composants etablis (Button, Input, Field) et secondaires integre dans le harness (/harness)
-- Input avec icones (leading, trailing, doubles) et mot de passe masquable (PasswordInput) ajoutes et valides
-- Recette CSS unifiee (:where(.mr-input, .mr-password-input)), conteneur .mr-input__wrapper, bouton toggle
-- Paddings calibres conformes aux specs (sm: 36px, md: 40px, lg: 48px)
+- Theme OLED integre (themes/oled.css) : canevas noir absolu (oklch 0 0 0), fond des champs legerement rehausse (--mr-bg-sunken: oklch 0.12), bordure discrete (L=0.37, ratio 1.95:1 / 2.01:1)
+- Decouverte dynamique des themes implementee dans tooling/rendered/test-contrast.js par glob
+- Verifications de contraste et d'etats Button/Input/Field conformes sur les 3 themes (light, dark, oled)
+- Navigation harness prete pour oled, light, dark et dim
 - Tests rendered automatises et pnpm verify 6 etapes vert (1251 tests unitaires)
 - Textarea non commence, en attente de validation utilisateur
 Point de contrôle (apres Textarea, 4e composant) :
 1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
 2. decision sur le patron de recette et sur le nom partage des champs
-3. ajout des themes slate, oled, ocean, night, high-contrast
+3. ajout des themes suivants : slate, ocean, night, high-contrast
 4. test Firefox et WebKit avec Playwright dans le cache utilisateur
 5. branchement de pnpm verify en CI avec installation de Chromium
 6. bilan de poids et duree de verify a froid
