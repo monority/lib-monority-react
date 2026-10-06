@@ -721,4 +721,127 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Select conforme (hauteurs 28/32/40px, paddings 12/16/20px et 32/40/48px, appearance: none, radius: 6px).'
     )
+
+    // Verification du composant Checkbox (boite 16px sm/md, 20px lg, radius 4px, min-target 24px)
+    const pageCheckbox = await browser.newPage()
+    await pageCheckbox.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <label class="mr-checkbox" data-size="sm" id="cb-sm">
+              <input type="checkbox" class="mr-checkbox__input" id="cb-input-sm" />
+              <span class="mr-checkbox__control" id="cb-ctrl-sm"></span>
+              <span class="mr-checkbox__label">Checkbox sm</span>
+            </label>
+            <label class="mr-checkbox" data-size="md" id="cb-md">
+              <input type="checkbox" class="mr-checkbox__input" id="cb-input-md" />
+              <span class="mr-checkbox__control" id="cb-ctrl-md"></span>
+              <span class="mr-checkbox__label">Checkbox md</span>
+            </label>
+            <label class="mr-checkbox" data-size="lg" id="cb-lg">
+              <input type="checkbox" class="mr-checkbox__input" id="cb-input-lg" />
+              <span class="mr-checkbox__control" id="cb-ctrl-lg"></span>
+              <span class="mr-checkbox__label">Checkbox lg</span>
+            </label>
+            <label class="mr-checkbox" data-checked id="cb-checked">
+              <input type="checkbox" class="mr-checkbox__input" checked id="cb-input-checked" />
+              <span class="mr-checkbox__control" id="cb-ctrl-checked"></span>
+              <span class="mr-checkbox__label">Checkbox coché</span>
+            </label>
+          </body>
+        </html>
+    `)
+
+    const cbMetrics = await pageCheckbox.evaluate(() => {
+        const getStyle = (id) => window.getComputedStyle(document.getElementById(id))
+        const getRect = (id) => document.getElementById(id).getBoundingClientRect()
+        const getAfter = (id) => window.getComputedStyle(document.getElementById(id), '::after')
+        return {
+            sm: {
+                width: getRect('cb-ctrl-sm').width,
+                height: getRect('cb-ctrl-sm').height,
+                rowHeight: getRect('cb-sm').height,
+            },
+            md: {
+                width: getRect('cb-ctrl-md').width,
+                height: getRect('cb-ctrl-md').height,
+                borderRadius: parseFloat(getStyle('cb-ctrl-md').borderRadius),
+                rowHeight: getRect('cb-md').height,
+                gap: parseFloat(getStyle('cb-md').gap),
+            },
+            lg: {
+                width: getRect('cb-ctrl-lg').width,
+                height: getRect('cb-ctrl-lg').height,
+            },
+            input: {
+                opacity: parseFloat(getStyle('cb-input-md').opacity),
+                width: parseFloat(getStyle('cb-input-md').width),
+                height: parseFloat(getStyle('cb-input-md').height),
+            },
+            checked: {
+                afterOpacity: parseFloat(getAfter('cb-ctrl-checked').opacity),
+            },
+        }
+    })
+    await pageCheckbox.close()
+
+    assert.strictEqual(
+        cbMetrics.sm.width,
+        16,
+        `Checkbox sm box width attendue a 16px, obtenu: ${cbMetrics.sm.width}px`
+    )
+    assert.strictEqual(
+        cbMetrics.sm.height,
+        16,
+        `Checkbox sm box height attendue a 16px, obtenu: ${cbMetrics.sm.height}px`
+    )
+    assert.strictEqual(
+        cbMetrics.md.width,
+        16,
+        `Checkbox md box width attendue a 16px, obtenu: ${cbMetrics.md.width}px`
+    )
+    assert.strictEqual(
+        cbMetrics.md.height,
+        16,
+        `Checkbox md box height attendue a 16px, obtenu: ${cbMetrics.md.height}px`
+    )
+    assert.strictEqual(
+        cbMetrics.lg.width,
+        20,
+        `Checkbox lg box width attendue a 20px, obtenu: ${cbMetrics.lg.width}px`
+    )
+    assert.strictEqual(
+        cbMetrics.lg.height,
+        20,
+        `Checkbox lg box height attendue a 20px, obtenu: ${cbMetrics.lg.height}px`
+    )
+    assert.strictEqual(
+        cbMetrics.md.borderRadius,
+        4,
+        `Checkbox border-radius attendu a 4px, obtenu: ${cbMetrics.md.borderRadius}px`
+    )
+    assert(
+        cbMetrics.md.rowHeight >= 24,
+        `Checkbox row height attendue >= 24px, obtenu: ${cbMetrics.md.rowHeight}px`
+    )
+    assert.strictEqual(
+        cbMetrics.md.gap,
+        8,
+        `Checkbox gap attendu a 8px, obtenu: ${cbMetrics.md.gap}px`
+    )
+    assert.strictEqual(
+        cbMetrics.input.opacity,
+        0,
+        `Checkbox native input opacity attendue a 0, obtenu: ${cbMetrics.input.opacity}`
+    )
+    assert.strictEqual(
+        cbMetrics.checked.afterOpacity,
+        1,
+        `Checkbox checked ::after opacity attendue a 1, obtenu: ${cbMetrics.checked.afterOpacity}`
+    )
+
+    console.log(
+        'OK: Checkbox conforme (boîte 16px sm/md, 20px lg, radius 4px, row-height >= 24px, gap 8px, glyphe actif 1).'
+    )
 }

@@ -65,7 +65,9 @@
         --mr-size-control-lg: 2.5rem;
 
         /* Rayons : base de 2px multipliee par la suite (0, 2, 3, 5, 8).
+         * sm vaut 2 fois 2px = 4px = 0.25rem, ajuste par le levier de marque.
          * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque. */
+        --mr-radius-sm: calc(0.25rem * var(--mr-ref-radius-scale));
         --mr-radius-md: calc(0.375rem * var(--mr-ref-radius-scale));
 
         /* Typographie : echelle numerique CSS 400, 500, 600, 700 ; medium vaut 500 */

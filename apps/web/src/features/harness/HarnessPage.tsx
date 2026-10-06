@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
     Button,
+    Checkbox,
     CopyButton,
     Field,
     IconButton,
@@ -754,11 +755,69 @@ function SelectHarness() {
     )
 }
 
+function CheckboxHarness() {
+    return (
+        <>
+            <Sample label="taille sm">
+                <Checkbox size="sm" label="Option sm (boîte 16px, texte 12px)" />
+            </Sample>
+            <Sample label="taille md (défaut)">
+                <Checkbox size="md" label="Option md (boîte 16px, texte 14px)" />
+            </Sample>
+            <Sample label="taille lg">
+                <Checkbox size="lg" label="Option lg (boîte 20px, texte 14px)" />
+            </Sample>
+            <Sample label="coché par défaut">
+                <Checkbox defaultChecked label="Accepter les conditions d'utilisation" />
+            </Sample>
+            <Sample label="indéterminé (sélection partielle)">
+                <Checkbox indeterminate label="3 sur 8 éléments sélectionnés" />
+            </Sample>
+            <Sample label="ton accent (défaut)">
+                <Checkbox tone="accent" defaultChecked label="Ton accent" />
+            </Sample>
+            <Sample label="ton neutre">
+                <Checkbox tone="neutral" defaultChecked label="Ton neutre" />
+            </Sample>
+            <Sample label="ton danger">
+                <Checkbox tone="danger" defaultChecked label="Supprimer définitivement" />
+            </Sample>
+            <Sample label="invalide (erreur)">
+                <Checkbox
+                    invalid
+                    label="Consentement obligatoire"
+                    error="Vous devez accepter pour continuer."
+                />
+            </Sample>
+            <Sample label="avec description d'aide (hint)">
+                <Checkbox
+                    label="Recevoir les notifications"
+                    hint="Un récapitulatif hebdomadaire vous sera envoyé par e-mail."
+                    defaultChecked
+                />
+            </Sample>
+            <Sample label="désactivé non coché">
+                <Checkbox disabled label="Option indisponible" />
+            </Sample>
+            <Sample label="désactivé coché">
+                <Checkbox disabled defaultChecked label="Option requise par l'organisation" />
+            </Sample>
+            <Sample label="désactivé indéterminé">
+                <Checkbox disabled indeterminate label="Sélection partielle verrouillée" />
+            </Sample>
+            <Sample label="sans libellé (aria-label)">
+                <Checkbox aria-label="Sélectionner la ligne" />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
     textarea: TextareaHarness,
     select: SelectHarness,
+    checkbox: CheckboxHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -772,6 +831,7 @@ const establishedComponents = [
     { slug: 'input', label: 'Input' },
     { slug: 'textarea', label: 'Textarea' },
     { slug: 'select', label: 'Select' },
+    { slug: 'checkbox', label: 'Checkbox' },
     { slug: 'field', label: 'Field' },
 ] as const
 

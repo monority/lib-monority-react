@@ -123,6 +123,29 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur button.css (<= 0,2,0).'
     )
+
+    // 6. Prouver en positif que checkbox.css respecte selector-max-specificity "0,2,0"
+    const checkboxCssPath = path.resolve(
+        __dirname,
+        '../../packages/styles/src/recipes/checkbox.css'
+    )
+    const resultCheckboxSpec = await stylelint.lint({
+        files: checkboxCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultCheckboxSpec.errored,
+        false,
+        'checkbox.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultCheckboxSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur checkbox.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur checkbox.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

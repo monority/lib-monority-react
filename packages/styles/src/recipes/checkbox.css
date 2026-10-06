@@ -1,0 +1,257 @@
+/* Recette du composant Checkbox (couche mr.components)
+ *
+ * Controle de selection binaire ou indeterminee.
+ *
+ * Dimensions de la boite :
+ * - sm : 16px (inline-size / block-size: --mr-space-4)
+ * - md (defaut) : 16px (inline-size / block-size: --mr-space-4)
+ * - lg : 20px (inline-size / block-size: --mr-space-5)
+ *
+ * Rayon de la boite : 4px (--mr-radius-sm)
+ * Bordure de la boite : 1px solid (--mr-border-control)
+ *
+ * Ordre de priorite des etats :
+ * desactive > invalide > survol.
+ *
+ * Glyphe indicateur :
+ * - Coche en ::after (45% x 70%, 2px solid, rotation 45deg)
+ * - Tiret en ::after pour indeterminate (60% x 0, 2px solid border-block-end)
+ */
+@layer mr.components {
+    /* Rangee interactive englobante */
+    :where(.mr-checkbox) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        min-block-size: calc(var(--mr-space-4) + var(--mr-space-2));
+        box-sizing: border-box;
+        cursor: pointer;
+        user-select: none;
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        line-height: inherit;
+        color: var(--mr-text-primary);
+        vertical-align: middle;
+        position: relative;
+    }
+
+    /* Input natif masque visuellement tout en restant accessible au clavier et lecteurs d'ecran */
+    :where(.mr-checkbox__input) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Boite carree de controle visuel */
+    :where(.mr-checkbox__control) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-sm);
+        background-color: var(--mr-bg-sunken);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+    }
+
+    /* Glyphe de coche (via pseudo-element) */
+    :where(.mr-checkbox__control)::after {
+        content: '';
+        display: block;
+        box-sizing: border-box;
+        inline-size: 45%;
+        block-size: 70%;
+        border-inline-end: 2px solid var(--mr-bg-canvas);
+        border-block-end: 2px solid var(--mr-bg-canvas);
+        transform: translateY(-10%) rotate(45deg);
+        opacity: 0;
+        transition: opacity var(--mr-duration-state);
+    }
+
+    /* Taille sm : typographie 12px, boite 16px */
+    :where(.mr-checkbox[data-size='sm']) {
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Taille lg : boite 20px */
+    :where(.mr-checkbox[data-size='lg']) :where(.mr-checkbox__control) {
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    /* Etat coche */
+    :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control),
+    :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control) {
+        background-color: var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control)::after,
+    :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control)::after {
+        opacity: 1;
+    }
+
+    /* Etat indetermine (tiret horizontal) */
+    :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control)::after {
+        inline-size: 60%;
+        block-size: 0;
+        border-inline-end: 0;
+        border-block-end: 2px solid var(--mr-bg-canvas);
+        transform: none;
+        opacity: 1;
+    }
+
+    /* Ton neutre */
+    :where(.mr-checkbox[data-tone='neutral'][data-checked]) :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='neutral'][data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
+    }
+
+    /* Ton danger */
+    :where(.mr-checkbox[data-tone='danger']) :where(.mr-checkbox__control) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-checkbox[data-tone='danger'][data-checked]) :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='danger'][data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: var(--mr-danger-solid);
+        border-color: var(--mr-danger-solid);
+    }
+
+    /* Survol non coche au repos */
+    :where(.mr-checkbox:hover:not(:where([data-disabled]))) :where(.mr-checkbox__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche accent */
+    :where(.mr-checkbox[data-checked]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-indeterminate]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche neutral */
+    :where(.mr-checkbox[data-tone='neutral'][data-checked]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='neutral'][data-indeterminate]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche danger */
+    :where(.mr-checkbox[data-tone='danger'][data-checked]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='danger'][data-indeterminate]:hover:not(:where([data-disabled])))
+        :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Focus visible sur la boite de controle */
+    :where(.mr-checkbox__input:focus-visible) + :where(.mr-checkbox__control) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    /* Invalide (erreur) */
+    :where(.mr-checkbox[data-invalid]:not(:where([data-checked])):not(:where([data-indeterminate])))
+        :where(.mr-checkbox__control) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    /* Desactive */
+    :where(.mr-checkbox[data-disabled]) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-checkbox[data-disabled]) :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-sunken),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        cursor: not-allowed;
+    }
+
+    :where(.mr-checkbox[data-disabled]) :where(.mr-checkbox__label) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-checkbox[data-disabled][data-checked]) :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-disabled][data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    /* Libelle */
+    :where(.mr-checkbox__label) {
+        display: inline-block;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+        cursor: pointer;
+    }
+}
