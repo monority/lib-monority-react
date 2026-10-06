@@ -131,9 +131,9 @@ function toISODateString(date: Date | null): string {
 const ChevronLeftIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path
-            d="M13 4L7 10L13 16"
+            d="M12.5 5L7.5 10L12.5 15"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
@@ -143,9 +143,9 @@ const ChevronLeftIcon = () => (
 const ChevronRightIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path
-            d="M7 4L13 10L7 16"
+            d="M7.5 5L12.5 10L7.5 15"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
@@ -153,19 +153,11 @@ const ChevronRightIcon = () => (
 )
 
 const CalendarIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <rect
-            x="1.5"
-            y="2.5"
-            width="15"
-            height="13"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-        />
-        <path d="M1.5 6.5H16.5" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M5.5 1.5V4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M12.5 1.5V4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M3 8.5H17" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M6.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M13.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
 )
 
@@ -365,6 +357,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
         disabled = false,
         required = false,
         invalid = false,
+        fullWidth = false,
         value,
         defaultValue,
         onChange,
@@ -373,6 +366,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
         disabledDates,
         placeholder = 'Select a date',
         popoverClassName,
+        style,
         ...props
     },
     ref
@@ -426,7 +420,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                 setPosition({
                     top: r.bottom + OVERLAY_OFFSET,
                     left: r.left,
-                    width: Math.max(r.width, DATEPICKER_MIN_WIDTH),
+                    width: fullWidth
+                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
+                        : DATEPICKER_MIN_WIDTH,
                 })
                 setPositioned(true)
             }
@@ -454,7 +450,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                 setPosition({
                     top: r.bottom + OVERLAY_OFFSET,
                     left: r.left,
-                    width: Math.max(r.width, DATEPICKER_MIN_WIDTH),
+                    width: fullWidth
+                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
+                        : DATEPICKER_MIN_WIDTH,
                 })
                 setPositioned(true)
             }
@@ -522,7 +520,14 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
             disabled={disabled}
             required={required}
         >
-            <div className={cn('mr-datepicker-wrapper', className)}>
+            <div
+                className={cn('mr-datepicker-wrapper', className)}
+                data-full-width={fullWidth ? 'true' : undefined}
+                style={{
+                    maxWidth: fullWidth ? undefined : `${DATEPICKER_MIN_WIDTH}px`,
+                    ...style,
+                }}
+            >
                 <Field label={label} hint={hint} error={error}>
                     <div
                         ref={rootRef}
@@ -571,7 +576,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                                   position: 'fixed',
                                   top: `${position.top}px`,
                                   left: `${position.left}px`,
-                                  minWidth: `${position.width}px`,
+                                  width: `${position.width}px`,
                                   visibility: positioned ? undefined : 'hidden',
                               }}
                           >

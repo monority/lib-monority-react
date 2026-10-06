@@ -200,11 +200,12 @@
     :where(.mr-datepicker__popover) {
         z-index: 50;
         box-sizing: border-box;
-        padding: var(--mr-space-3);
-        background-color: var(--mr-bg-canvas);
+        padding: var(--mr-space-4);
+        background-color: var(--mr-bg-raised);
         border: 1px solid var(--mr-border-control);
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-lg);
         box-shadow: var(--mr-shadow-overlay);
+        user-select: none;
     }
 
     /* En-tete du calendrier (mois / annee et boutons prev / next) */
@@ -212,13 +213,16 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-block-end: var(--mr-space-2);
         margin-block-end: var(--mr-space-2);
+        border-block-end: 1px solid var(--mr-border-subtle);
     }
 
     :where(.mr-datepicker__month-label) {
         font-weight: var(--mr-font-weight-medium);
         font-size: var(--mr-font-size-md);
         color: var(--mr-text-primary);
+        text-transform: capitalize;
     }
 
     :where(.mr-datepicker__nav-btn) {
@@ -229,28 +233,27 @@
         block-size: var(--mr-size-control-sm);
         padding: 0;
         margin: 0;
-        border: 0;
-        border-radius: var(--mr-radius-sm);
-        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        background-color: transparent;
         color: var(--mr-text-secondary);
         cursor: pointer;
-        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
     }
 
     @media (hover: hover) {
         :where(.mr-datepicker__nav-btn):hover {
-            background-color: color-mix(
-                in oklch,
-                transparent,
-                var(--mr-text-primary) var(--mr-state-hover-mix)
-            );
+            background-color: var(--mr-bg-sunken);
+            border-color: var(--mr-border-subtle);
             color: var(--mr-text-primary);
         }
     }
 
     :where(.mr-datepicker__nav-btn):focus-visible {
+        border-color: var(--mr-text-secondary);
         outline: 1px solid var(--mr-text-secondary);
-        outline-offset: 1px;
+        outline-offset: 0;
     }
 
     /* En-tetes des jours de la semaine (dim, lun, mar...) */
@@ -292,39 +295,38 @@
         min-block-size: var(--mr-size-control-sm);
         padding: 0;
         margin: 0;
-        border: 0;
-        border-radius: var(--mr-radius-sm);
-        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        background-color: transparent;
         color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-font-size-sm);
         font-weight: inherit;
         font-variant-numeric: tabular-nums;
         cursor: pointer;
-        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
     }
 
     @media (hover: hover) {
         :where(.mr-datepicker__day):hover:where(
                 :not([data-selected], :disabled, [data-disabled='true'])
             ) {
-            background-color: color-mix(
-                in oklch,
-                transparent,
-                var(--mr-text-primary) var(--mr-state-hover-mix)
-            );
+            background-color: var(--mr-bg-sunken);
+            border-color: var(--mr-border-subtle);
+            color: var(--mr-text-primary);
         }
     }
 
-    /* Jour courant (aujourd'hui) non selectionne */
+    /* Jour courant (aujourd'hui) non selectionne : contour propre */
     :where(.mr-datepicker__day[data-today='true']):where(:not([data-selected])) {
         font-weight: var(--mr-font-weight-medium);
-        box-shadow: inset 0 -2px 0 0 var(--mr-text-primary);
+        border-color: var(--mr-border-control);
     }
 
     :where(.mr-datepicker__popover[data-tone='accent'])
         :where(.mr-datepicker__day[data-today='true']):where(:not([data-selected])) {
-        box-shadow: inset 0 -2px 0 0 var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
     }
 
     /* Jour selectionne (ton neutral defaut ADR-020 : noir en clair, blanc en sombre) */
@@ -332,6 +334,7 @@
         background-color: var(--mr-bg-inverse);
         color: var(--mr-text-on-inverse);
         font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
     }
 
     /* Jour selectionne (ton accent explicite) */
@@ -339,12 +342,23 @@
         :where(.mr-datepicker__day[data-selected='true']) {
         background-color: var(--mr-accent-solid);
         color: var(--mr-bg-canvas);
+        font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
+    }
+
+    /* Jour selectionne (ton danger explicite) */
+    :where(.mr-datepicker__popover[data-tone='danger'])
+        :where(.mr-datepicker__day[data-selected='true']) {
+        background-color: var(--mr-danger-solid);
+        color: var(--mr-danger-on-solid);
+        font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
     }
 
     /* Jours hors du mois courant */
     :where(.mr-datepicker__day:not([data-current-month])):where(:not([data-selected='true'])) {
         color: var(--mr-text-secondary);
-        opacity: 0.5;
+        opacity: 0.4;
     }
 
     /* Jour desactive */
@@ -352,17 +366,17 @@
     :where(.mr-datepicker__day[data-disabled='true']) {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
-        opacity: 0.4;
+        opacity: 0.3;
     }
 
     /* Focus visible sur cellule de jour */
     :where(.mr-datepicker__day):focus-visible {
         outline: 1px solid var(--mr-text-secondary);
-        outline-offset: 0;
+        outline-offset: 1px;
     }
 
     :where(.mr-datepicker__popover[data-tone='accent']) :where(.mr-datepicker__day):focus-visible {
         outline: 1px solid var(--mr-accent-solid);
-        outline-offset: 0;
+        outline-offset: 1px;
     }
 }
