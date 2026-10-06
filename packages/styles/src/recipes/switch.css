@@ -258,16 +258,12 @@
             var(--mr-bg-sunken),
             var(--mr-bg-canvas) var(--mr-state-disabled-mix)
         );
-        border-color: color-mix(
-            in oklch,
-            var(--mr-border-control),
-            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
-        );
+        border-color: var(--mr-border-control);
     }
 
-    :where(.mr-switch[data-disabled]:not(:where([data-checked]))) :where(.mr-switch__thumb),
-    :where(.mr-switch:has(:where(.mr-switch__input:disabled:not(:checked))))
-        :where(.mr-switch__thumb) {
+    /* Pouce desactive : rond gris visible quel que soit l'etat */
+    :where(.mr-switch[data-disabled]) :where(.mr-switch__thumb),
+    :where(.mr-switch:has(:where(.mr-switch__input:disabled))) :where(.mr-switch__thumb) {
         background-color: var(--mr-text-disabled);
     }
 
