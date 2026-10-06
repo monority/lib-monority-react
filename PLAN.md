@@ -17,25 +17,21 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Theme sombre approfondi (themes/dark.css) : canevas ajuste a L=0.17 pour un rendu profond et net
-- Theme Slate recalibre (themes/slate.css) : ardoise acier sobre (hue 255, chroma 0.022, canevas L=0.18)
-- Theme Ocean recalibre (themes/ocean.css) : bleu marine nuit riche / Midnight Navy (hue 260, chroma 0.05, canevas L=0.18)
-- Theme Night aligne sur l'officiel Tokyo Night (themes/night.css) : canevas #1a1b26 (H=280, C=0.021, L=0.226)
-- Decouverte dynamique des themes du dossier themes/ (6 themes actifs : light, dark, oled, slate, ocean, night)
-- Verifications de contraste et d'etats Button/Input/Field conformes sur les 6 themes
-- Navigation harness prete pour light, dark, oled, slate et dim
+- 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
+- Theme High Contrast cree (themes/high-contrast.css) : WCAG AAA (canevas L=1, textes 20.6:1 et 13.6:1, bordure 7.4:1, accent > 9.3:1)
+- Verifications de contraste et d'etats Button/Input/Field conformes sur les 7 themes
+- Decouverte dynamique des themes du dossier themes/ et tests de portees imbriquees valides
 - Tests rendered automatises et pnpm verify 6 etapes vert (1251 tests unitaires)
 - Textarea non commence, en attente de validation utilisateur
 Point de contrôle (apres Textarea, 4e composant) :
 1. revue des tokens (doublons, noms contre vocabulaire, tokens sans lecteur)
 2. decision sur le patron de recette et sur le nom partage des champs
-3. ajout des themes suivants : ocean, night, high-contrast
-4. test Firefox et WebKit avec Playwright dans le cache utilisateur
-5. branchement de pnpm verify en CI avec installation de Chromium
-6. bilan de poids et duree de verify a froid
-7. revue de docs/foundation/ contre le code
-8. decisions ouvertes a trancher
-9. preparation du changelog
-10. nettoyage de l'historique a decider avec l'utilisateur
+3. test Firefox et WebKit avec Playwright dans le cache utilisateur
+4. branchement de pnpm verify en CI avec installation de Chromium
+5. bilan de poids et duree de verify a froid
+6. revue de docs/foundation/ contre le code
+7. decisions ouvertes a trancher
+8. preparation du changelog
+9. nettoyage de l'historique a decider avec l'utilisateur
 
 
