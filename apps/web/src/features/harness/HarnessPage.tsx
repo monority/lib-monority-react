@@ -9,6 +9,7 @@ import {
     PasswordInput,
     positionOverlay,
     Spinner,
+    Textarea,
     ThemeScope,
 } from '@monority/ui'
 import './harness.css'
@@ -493,9 +494,133 @@ function FieldHarness() {
     )
 }
 
+function TextareaHarness() {
+    return (
+        <>
+            <Sample label="taille sm">
+                <Textarea
+                    size="sm"
+                    id="textarea-size-sm"
+                    defaultValue="Taille sm (padding-inline: 12px)"
+                    placeholder="sm..."
+                />
+            </Sample>
+            <Sample label="taille md">
+                <Textarea
+                    size="md"
+                    id="textarea-size-md"
+                    defaultValue="Taille md (padding-inline: 16px)"
+                    placeholder="md..."
+                />
+            </Sample>
+            <Sample label="taille md par defaut">
+                <Textarea
+                    id="textarea-size-default"
+                    defaultValue="Taille md defaut"
+                    placeholder="defaut..."
+                />
+            </Sample>
+            <Sample label="taille lg">
+                <Textarea
+                    size="lg"
+                    id="textarea-size-lg"
+                    defaultValue="Taille lg (padding-inline: 20px)"
+                    placeholder="lg..."
+                />
+            </Sample>
+            <Sample label="champ vide avec placeholder">
+                <Textarea placeholder="Entrez une description detaillee..." />
+            </Sample>
+            <Sample label="champ avec valeur">
+                <Textarea defaultValue="Texte multiligne saisi dans le textarea." />
+            </Sample>
+            <Sample label="survol réel">
+                <Textarea
+                    id="textarea-harness-hover"
+                    defaultValue="Survol réel"
+                    placeholder="Survol..."
+                />
+            </Sample>
+            <Sample label="focus clavier">
+                <Textarea
+                    id="textarea-harness-focus"
+                    defaultValue="Champ actif avec focus"
+                    placeholder="Entrez une valeur..."
+                />
+            </Sample>
+            <Sample label="invalide">
+                <Textarea invalid defaultValue="Contenu non conforme" />
+            </Sample>
+            <Sample label="invalide avec focus">
+                <Textarea
+                    id="textarea-harness-invalid-focus"
+                    invalid
+                    defaultValue="Erreur avec focus"
+                />
+            </Sample>
+            <Sample label="désactivé">
+                <Textarea disabled defaultValue="Champ désactivé en écriture" />
+            </Sample>
+            <Sample label="placeholder désactivé">
+                <Textarea disabled placeholder="Placeholder désactivé..." />
+            </Sample>
+            <Sample label="lecture seule">
+                <Textarea
+                    readOnly
+                    defaultValue="Ce texte est en lecture seule et ne peut pas être modifié."
+                />
+            </Sample>
+            <Sample label="redimensionnement vertical (défaut)">
+                <Textarea
+                    resize="vertical"
+                    defaultValue="Redimensionnement vertical (resize: vertical)."
+                />
+            </Sample>
+            <Sample label="redimensionnement none">
+                <Textarea resize="none" defaultValue="Redimensionnement interdit (resize: none)." />
+            </Sample>
+            <Sample label="redimensionnement both">
+                <Textarea
+                    resize="both"
+                    defaultValue="Redimensionnement vertical uniquement même avec both."
+                />
+            </Sample>
+            <Sample label="avec label et texte d'aide">
+                <Textarea
+                    label="Description du projet"
+                    hint="Expliquez brièvement votre projet en quelques phrases."
+                    placeholder="Votre description..."
+                />
+            </Sample>
+            <Sample label="avec message d'erreur et invalide">
+                <Textarea
+                    label="Commentaire"
+                    error="Le commentaire ne respecte pas les règles de modération."
+                    defaultValue="Contenu refusé"
+                />
+            </Sample>
+            <Sample label="avec compteur de caractères">
+                <Textarea
+                    label="Bio"
+                    maxLength={100}
+                    defaultValue="Ceci est un texte de présentation court."
+                />
+            </Sample>
+            <Sample label="compteur proche de la limite">
+                <Textarea
+                    label="Message limité"
+                    maxLength={25}
+                    defaultValue="Message presque à la limite"
+                />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
+    textarea: TextareaHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -507,6 +632,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
 const establishedComponents = [
     { slug: 'button', label: 'Button' },
     { slug: 'input', label: 'Input' },
+    { slug: 'textarea', label: 'Textarea' },
     { slug: 'field', label: 'Field' },
 ] as const
 
