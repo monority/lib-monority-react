@@ -1,14 +1,14 @@
 /* Theme Night dans la couche mr.themes.
- * Atmosphere Tokyo Night (variante sombre indigo-violette).
- * Redefinit localement les primitives neutres (hue: 275, chroma: 0.03)
+ * Atmosphere violet amethyste profond (variante sombre veloutee).
+ * Redefinit localement les primitives neutres (hue: 295, chroma: 0.028)
  * et les tokens sombres associes. */
 @layer mr.themes {
     :where([data-theme='night'], [data-theme='tokyo-night']) {
         color-scheme: dark;
 
-        /* Primitives de neutres teintes pour night (Tokyo Night indigo nocturne) */
-        --mr-ref-neutral-hue: 275;
-        --mr-ref-neutral-chroma: 0.03;
+        /* Primitives de neutres teintes pour night (violet amethyste profond) */
+        --mr-ref-neutral-hue: 295;
+        --mr-ref-neutral-chroma: 0.028;
 
         /* Fonds */
         --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
@@ -17,7 +17,7 @@
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-secondary: oklch(0.605 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Texte desactive : ratio 3.48:1 sur canevas */
+        /* Texte desactive : ratio 3.47:1 sur canevas */
         --mr-text-disabled: oklch(0.525 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Bordure de controle : ratio discret 1.95:1 (ADR-026) */
@@ -26,7 +26,7 @@
         /* Levier de luminosite de l'accent pour fond sombre */
         --mr-ref-accent-lightness: 0.635;
 
-        /* Danger sombre : ratio >= 4.8:1 sur canevas (5.30:1) */
+        /* Danger sombre : ratio >= 4.8:1 sur canevas (5.31:1) */
         --mr-danger-solid: oklch(0.65 0.2 25);
     }
 }
