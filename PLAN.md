@@ -21,7 +21,7 @@ Etat :
 - Spinner : recette dans recipes/spinner.css, diametres 16/20/24px (sm/md/lg), arc 270 degres 2px, rotation mr-spin, ralenti en mouvement reduit, tons base/muted/inverse/accent
 - Select multiple : correction du dimensionnement min-height 80px, chevron masque via data-multiple, espacement des options
 - Invalide interactif : echantillons dynamiques pour tous les controles avec disparition automatique de l'erreur des condition valide
-- DatePicker : declencheur adapte a la largeur du calendrier (280px par defaut), prop fullWidth, fond opaque raised non transparent, en-tete et icones calibres
+- DatePicker : declencheur adapte (280px par defaut), prop fullWidth, fond opaque raised, heritage dynamique de data-theme/brand/density sur le popover porte
 - Visibilite des bordures sombres : rehaussement de --mr-border-control (L=0.48 en dark/dim/ocean/slate, L=0.46 en oled, L=0.49 en night)
 - Tokens de surface ajoutes : --mr-bg-surface, --mr-bg-raised, --mr-bg-overlay, --mr-border-default, --mr-border-subtle sur tous les 7 themes
 - Tests Playwright (dimensions et contrastes) et Stylelint verts sur les 7 themes
