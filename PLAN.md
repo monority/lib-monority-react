@@ -17,9 +17,12 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 11 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Field (recettes dans mr.components)
-- DatePicker : recette dans recipes/date-picker.css, ton neutre par defaut (ADR-020), accent et danger, declencheur 28/32/40px, popover overlay, grille calendrier cellules >= 28px (WCAG 2.5.8), tabular-nums, navigation mois, accessibilite dialog/grid/gridcell
-- Tests de dimensions Playwright et test negatif de specificite Stylelint ajoutes (etape 11 et section 23)
-- 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
-- Tests rendered automatises et pnpm verify vert
-- Prochaine etape : composant suivant de la famille formulaire ou date (Calendar, DateRangePicker, Combobox, FileUpload, FormSection)
+- 12 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Spinner, Field (recettes dans mr.components)
+- Spinner : recette dans recipes/spinner.css, diametres 16/20/24px (sm/md/lg), arc 270 degres 2px, rotation mr-spin, ralenti en mouvement reduit, tons base/muted/inverse/accent
+- Select multiple : correction du dimensionnement min-height 80px, chevron masque via data-multiple, espacement des options
+- Invalide interactif : echantillons dynamiques pour tous les controles avec disparition automatique de l'erreur des condition valide
+- DatePicker : declencheur adapte a la largeur du calendrier (280px par defaut), prop fullWidth, fond opaque raised non transparent, en-tete et icones calibres
+- Visibilite des bordures sombres : rehaussement de --mr-border-control (L=0.48 en dark/dim/ocean/slate, L=0.46 en oled, L=0.49 en night)
+- Tokens de surface ajoutes : --mr-bg-surface, --mr-bg-raised, --mr-bg-overlay, --mr-border-default, --mr-border-subtle sur tous les 7 themes
+- Tests Playwright (dimensions et contrastes) et Stylelint verts sur les 7 themes
+- Prochaine etape : composant suivant (Calendar, DateRangePicker, Combobox, FileUpload, FormSection)
