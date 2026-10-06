@@ -308,6 +308,7 @@ export async function testContrast(browser) {
     const buttonPath = path.join(ROOT, 'packages/styles/src/recipes/button.css')
     const inputPath = path.join(ROOT, 'packages/styles/src/recipes/input.css')
     const fieldPath = path.join(ROOT, 'packages/styles/src/recipes/field.css')
+    const textareaPath = path.join(ROOT, 'packages/styles/src/recipes/textarea.css')
 
     if (
         !fs.existsSync(layersPath) ||
@@ -318,7 +319,8 @@ export async function testContrast(browser) {
         !fs.existsSync(themesDir) ||
         !fs.existsSync(buttonPath) ||
         !fs.existsSync(inputPath) ||
-        !fs.existsSync(fieldPath)
+        !fs.existsSync(fieldPath) ||
+        !fs.existsSync(textareaPath)
     ) {
         console.error('Fichiers CSS requis introuvables.')
         process.exit(1)
@@ -341,6 +343,7 @@ export async function testContrast(browser) {
     const buttonCss = fs.readFileSync(buttonPath, 'utf8')
     const inputCss = fs.readFileSync(inputPath, 'utf8')
     const fieldCss = fs.readFileSync(fieldPath, 'utf8')
+    const textareaCss = fs.readFileSync(textareaPath, 'utf8')
 
     // Verification des regles de portee pour conteneur decale et theme
     assert(
@@ -396,6 +399,7 @@ export async function testContrast(browser) {
         ${buttonCss}
         ${inputCss}
         ${fieldCss}
+        ${textareaCss}
     `
 
     // Decouverte dynamique des themes du dossier themes/ (AGENTS.md section 3.3)

@@ -483,4 +483,131 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Input with icon et Input with password conformes (paddings 36/40/48px, hauteurs 28/32/40px, toggle interactif).'
     )
+
+    // 7. Dimensions et proprietes du composant Textarea
+    const pageTextarea = await browser.newPage()
+    await pageTextarea.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body>
+            <textarea class="mr-textarea" data-size="sm" id="ta-sm">sm</textarea>
+            <textarea class="mr-textarea" data-size="md" id="ta-md">md</textarea>
+            <textarea class="mr-textarea" data-size="lg" id="ta-lg">lg</textarea>
+            <textarea class="mr-textarea" data-resize="none" id="ta-none">none</textarea>
+            <textarea class="mr-textarea" data-resize="vertical" id="ta-vert">vert</textarea>
+            <textarea class="mr-textarea" data-resize="both" id="ta-both">both</textarea>
+            <span class="mr-textarea__counter" id="ta-counter">12 / 100</span>
+          </body>
+        </html>
+    `)
+
+    const taMetrics = await pageTextarea.evaluate(() => {
+        const getStyle = (id) => window.getComputedStyle(document.getElementById(id))
+        const getRect = (id) => document.getElementById(id).getBoundingClientRect()
+        return {
+            sm: {
+                minHeight: parseFloat(getStyle('ta-sm').minHeight),
+                paddingTop: parseFloat(getStyle('ta-sm').paddingTop),
+                paddingBottom: parseFloat(getStyle('ta-sm').paddingBottom),
+                paddingLeft: parseFloat(getStyle('ta-sm').paddingLeft),
+                paddingRight: parseFloat(getStyle('ta-sm').paddingRight),
+                height: getRect('ta-sm').height,
+            },
+            md: {
+                minHeight: parseFloat(getStyle('ta-md').minHeight),
+                paddingTop: parseFloat(getStyle('ta-md').paddingTop),
+                paddingBottom: parseFloat(getStyle('ta-md').paddingBottom),
+                paddingLeft: parseFloat(getStyle('ta-md').paddingLeft),
+                paddingRight: parseFloat(getStyle('ta-md').paddingRight),
+                height: getRect('ta-md').height,
+            },
+            lg: {
+                minHeight: parseFloat(getStyle('ta-lg').minHeight),
+                paddingTop: parseFloat(getStyle('ta-lg').paddingTop),
+                paddingBottom: parseFloat(getStyle('ta-lg').paddingBottom),
+                paddingLeft: parseFloat(getStyle('ta-lg').paddingLeft),
+                paddingRight: parseFloat(getStyle('ta-lg').paddingRight),
+                height: getRect('ta-lg').height,
+            },
+            resizeNone: getStyle('ta-none').resize,
+            resizeVert: getStyle('ta-vert').resize,
+            resizeBoth: getStyle('ta-both').resize,
+            counter: {
+                fontSize: parseFloat(getStyle('ta-counter').fontSize),
+                marginTop: parseFloat(getStyle('ta-counter').marginTop),
+            },
+        }
+    })
+    await pageTextarea.close()
+
+    assert.strictEqual(
+        taMetrics.sm.minHeight,
+        80,
+        `Textarea sm min-height attendu a 80px, obtenu: ${taMetrics.sm.minHeight}px`
+    )
+    assert.strictEqual(
+        taMetrics.md.minHeight,
+        80,
+        `Textarea md min-height attendu a 80px, obtenu: ${taMetrics.md.minHeight}px`
+    )
+    assert.strictEqual(
+        taMetrics.lg.minHeight,
+        80,
+        `Textarea lg min-height attendu a 80px, obtenu: ${taMetrics.lg.minHeight}px`
+    )
+    assert.strictEqual(
+        taMetrics.md.paddingTop,
+        8,
+        `Textarea padding-top attendu a 8px, obtenu: ${taMetrics.md.paddingTop}px`
+    )
+    assert.strictEqual(
+        taMetrics.md.paddingBottom,
+        8,
+        `Textarea padding-bottom attendu a 8px, obtenu: ${taMetrics.md.paddingBottom}px`
+    )
+    assert.strictEqual(
+        taMetrics.sm.paddingLeft,
+        12,
+        `Textarea sm padding-left attendu a 12px, obtenu: ${taMetrics.sm.paddingLeft}px`
+    )
+    assert.strictEqual(
+        taMetrics.md.paddingLeft,
+        16,
+        `Textarea md padding-left attendu a 16px, obtenu: ${taMetrics.md.paddingLeft}px`
+    )
+    assert.strictEqual(
+        taMetrics.lg.paddingLeft,
+        20,
+        `Textarea lg padding-left attendu a 20px, obtenu: ${taMetrics.lg.paddingLeft}px`
+    )
+    assert.strictEqual(
+        taMetrics.resizeNone,
+        'none',
+        `Textarea data-resize="none" attendu en none, obtenu: ${taMetrics.resizeNone}`
+    )
+    assert.strictEqual(
+        taMetrics.resizeVert,
+        'vertical',
+        `Textarea data-resize="vertical" attendu en vertical, obtenu: ${taMetrics.resizeVert}`
+    )
+    assert.strictEqual(
+        taMetrics.resizeBoth,
+        'vertical',
+        `Textarea data-resize="both" doit etre restreint a vertical, obtenu: ${taMetrics.resizeBoth}`
+    )
+    assert.strictEqual(
+        taMetrics.counter.fontSize,
+        12,
+        `Textarea counter font-size attendu a 12px (sm), obtenu: ${taMetrics.counter.fontSize}px`
+    )
+    assert.strictEqual(
+        taMetrics.counter.marginTop,
+        8,
+        `Textarea counter margin-top attendu a 8px (space-2), obtenu: ${taMetrics.counter.marginTop}px`
+    )
+
+    console.log(
+        'OK: Textarea conforme (min-height: 80px, padding-block: 8px, padding-inline: 12/16/20px, resize controle).'
+    )
 }

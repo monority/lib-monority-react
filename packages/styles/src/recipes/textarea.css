@@ -1,0 +1,139 @@
+/* Recette du composant Textarea (couche mr.components)
+ *
+ * Champ de saisie textuelle multiligne.
+ *
+ * Dimensions :
+ * - min-block-size : 80px (calc(2 * var(--mr-size-control-lg)))
+ * - padding-block : 8px (var(--mr-space-2)) obligatoire sur toutes les tailles
+ * - sm : padding-inline: var(--mr-space-3) (12px)
+ * - md (defaut) : padding-inline: var(--mr-space-4) (16px)
+ * - lg : padding-inline: var(--mr-space-5) (20px)
+ * Typographie constante : font-size (--mr-font-size-md), radius (--mr-radius-md) identiques sur les 3 tailles.
+ *
+ * Redimensionnement :
+ * - vertical par defaut
+ * - data-resize="none" : resize: none
+ * - data-resize="vertical" ou "both" : resize: vertical (redimensionnement horizontal proscrit)
+ *
+ * Ordre de priorite des etats :
+ * desactive > lecture seule (aucun effet de survol) > invalide > survol.
+ */
+@layer mr.components {
+    :where(.mr-textarea) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        min-block-size: calc(2 * var(--mr-size-control-lg));
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-4);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+        resize: vertical;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Taille sm : padding horizontal 12px (space-3) */
+    :where(.mr-textarea)[data-size='sm'] {
+        padding-inline: var(--mr-space-3);
+    }
+
+    /* Taille md (defaut) : padding horizontal 16px (space-4) */
+    :where(.mr-textarea)[data-size='md'],
+    :where(.mr-textarea):not([data-size]) {
+        padding-inline: var(--mr-space-4);
+    }
+
+    /* Taille lg : padding horizontal 20px (space-5) */
+    :where(.mr-textarea)[data-size='lg'] {
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Redimensionnement controle */
+    :where(.mr-textarea)[data-resize='none'] {
+        resize: none;
+    }
+
+    :where(.mr-textarea)[data-resize='vertical'],
+    :where(.mr-textarea)[data-resize='both'] {
+        resize: vertical;
+    }
+
+    /* Placeholder */
+    :where(.mr-textarea)::placeholder {
+        color: var(--mr-text-secondary);
+        opacity: 1;
+    }
+
+    /* Focus visible et clavier : anneau au contact outline-offset: 0 */
+    :where(.mr-textarea):focus-visible,
+    :where(.mr-textarea):focus {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Survol (uniquement avec pointeur survolant) : exclut desactive, lecture seule et invalide */
+    @media (hover: hover) {
+        :where(.mr-textarea):hover:where(:not(:disabled, :read-only, [aria-invalid='true'])) {
+            border-color: color-mix(
+                in oklch,
+                var(--mr-border-control),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Etat invalide : bordure de statut danger ; texte saisi et placeholder conserves */
+    :where(.mr-textarea)[aria-invalid='true'] {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-textarea)[aria-invalid='true']:focus-visible,
+    :where(.mr-textarea)[aria-invalid='true']:focus {
+        border-color: var(--mr-danger-solid);
+        outline: 2px solid var(--mr-danger-solid);
+        outline-offset: 0;
+    }
+
+    /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
+    :where(.mr-textarea):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-textarea):disabled::placeholder {
+        color: var(--mr-text-disabled);
+    }
+
+    /* Etat lecture seule : aspect identique au repos, curseur default, aucun survol */
+    :where(.mr-textarea):read-only:where(:not(:disabled)) {
+        cursor: default;
+    }
+
+    /* Compteur de caracteres associe */
+    :where(.mr-textarea__counter) {
+        display: block;
+        margin-block-start: var(--mr-space-2);
+        text-align: end;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-textarea__counter)[data-near-limit] {
+        color: var(--mr-danger-solid);
+        font-weight: var(--mr-font-weight-medium);
+    }
+}
