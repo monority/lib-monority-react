@@ -28,13 +28,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
 ) {
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
-    const isInvalid = invalid || error != null
+    const isInvalid = invalid || Boolean(error)
 
     return (
         <FormControl
             id={id}
-            hint={hint != null}
-            error={error != null}
+            hint={Boolean(hint)}
+            error={Boolean(error)}
             disabled={disabled}
             required={required}
             tone={resolvedTone}
@@ -47,6 +47,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                     data-size={resolvedSize}
                     data-disabled={disabled ? true : undefined}
                     data-invalid={isInvalid ? true : undefined}
+                    data-multiple={props.multiple ? true : undefined}
                 >
                     <InputBase as="select" ref={ref} className="mr-select" {...props}>
                         {children}

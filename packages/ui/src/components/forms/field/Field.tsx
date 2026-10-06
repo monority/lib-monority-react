@@ -35,8 +35,8 @@ export function Field({
     const resolvedHintId = hintId ?? ctx.hintId
     const resolvedErrorId = errorId ?? ctx.errorId
     const resolvedRequired = required ?? ctx.isRequired
-    const hasHint = hint != null
-    const hasError = error != null
+    const hasHint = Boolean(hint)
+    const hasError = Boolean(error)
 
     return (
         <div

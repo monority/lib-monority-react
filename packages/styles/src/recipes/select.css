@@ -91,7 +91,7 @@
     }
 
     /* Taille sm : 28px */
-    :where(.mr-select)[data-size='sm'] {
+    :where(.mr-select:not([multiple], [size]))[data-size='sm'] {
         block-size: var(--mr-size-control-sm);
         min-block-size: var(--mr-size-control-sm);
         padding-inline-start: var(--mr-space-3);
@@ -99,8 +99,8 @@
     }
 
     /* Taille md (defaut) : 32px */
-    :where(.mr-select)[data-size='md'],
-    :where(.mr-select):not([data-size]) {
+    :where(.mr-select:not([multiple], [size]))[data-size='md'],
+    :where(.mr-select:not([multiple], [size])):not([data-size]) {
         block-size: var(--mr-size-control-md);
         min-block-size: var(--mr-size-control-md);
         padding-inline-start: var(--mr-space-4);
@@ -108,7 +108,7 @@
     }
 
     /* Taille lg : 40px */
-    :where(.mr-select)[data-size='lg'] {
+    :where(.mr-select:not([multiple], [size]))[data-size='lg'] {
         block-size: var(--mr-size-control-lg);
         min-block-size: var(--mr-size-control-lg);
         padding-inline-start: var(--mr-space-5);
@@ -170,10 +170,13 @@
     }
 
     /* Selection multiple ou avec attribut size : mode liste, pas de chevron */
+    :where(.mr-select-wrapper[data-multiple])::after,
     :where(.mr-select-wrapper:has(:where(.mr-select[multiple], .mr-select[size])))::after {
         content: none;
+        display: none;
     }
 
+    :where(.mr-select-wrapper[data-multiple]),
     :where(.mr-select-wrapper:has(:where(.mr-select[multiple], .mr-select[size]))) {
         block-size: auto;
         min-block-size: 0;
@@ -181,9 +184,19 @@
 
     :where(.mr-select:is([multiple], [size])) {
         block-size: auto;
-        min-block-size: 0;
-        padding-inline-end: var(--mr-space-4);
+        min-block-size: calc(var(--mr-size-control-md) * 2.5);
+        padding-inline-start: var(--mr-space-3);
+        padding-inline-end: var(--mr-space-3);
+        padding-block: var(--mr-space-1);
         white-space: normal;
-        overflow: auto;
+        overflow-y: auto;
+        cursor: default;
+    }
+
+    :where(.mr-select:is([multiple], [size])) option {
+        padding-inline: var(--mr-space-2);
+        padding-block: var(--mr-space-1);
+        border-radius: var(--mr-radius-sm);
+        margin-block: 1px;
     }
 }
