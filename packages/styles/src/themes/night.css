@@ -1,32 +1,33 @@
 /* Theme Night dans la couche mr.themes.
- * Atmosphere violet amethyste profond (variante sombre veloutee).
- * Redefinit localement les primitives neutres (hue: 295, chroma: 0.028)
+ * Fidele a la palette officielle Tokyo Night (https://github.com/tokyo-night/tokyo-night-vscode-theme).
+ * Redefinit localement les primitives neutres (hue: 280, chroma: 0.021)
  * et les tokens sombres associes. */
 @layer mr.themes {
     :where([data-theme='night'], [data-theme='tokyo-night']) {
         color-scheme: dark;
 
-        /* Primitives de neutres teintes pour night (violet amethyste profond) */
-        --mr-ref-neutral-hue: 295;
-        --mr-ref-neutral-chroma: 0.028;
+        /* Primitives de neutres teintes pour Tokyo Night (H=280, C=0.021) */
+        --mr-ref-neutral-hue: 280;
+        --mr-ref-neutral-chroma: 0.021;
 
-        /* Fonds */
-        --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Fonds : canevas officiel Tokyo Night #1a1b26 (L=0.226) et fond creuse #14141b */
+        --mr-bg-canvas: oklch(0.226 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-sunken: oklch(0.195 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-text-secondary: oklch(0.605 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.63 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Texte desactive : ratio 3.47:1 sur canevas */
-        --mr-text-disabled: oklch(0.525 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Texte desactive : ratio 3.48:1 sur canevas */
+        --mr-text-disabled: oklch(0.548 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordure de controle : ratio discret 1.95:1 (ADR-026) */
-        --mr-border-control: oklch(0.39 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordure de controle : ratio discret 1.97:1 (ADR-026) */
+        --mr-border-control: oklch(0.415 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond sombre */
         --mr-ref-accent-lightness: 0.635;
 
-        /* Danger sombre : ratio >= 4.8:1 sur canevas (5.31:1) */
+        /* Danger sombre : ratio >= 4.8:1 sur canevas (4.81:1) */
         --mr-danger-solid: oklch(0.65 0.2 25);
     }
 }

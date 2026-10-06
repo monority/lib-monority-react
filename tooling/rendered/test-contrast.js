@@ -1389,7 +1389,7 @@ export async function testContrast(browser) {
     )
     console.log(`- night-theme : color-scheme = ${nightCs}, canvas = ${nightCanvas}`)
     assert.strictEqual(nightCs, 'dark', 'night doit resoudre color-scheme: dark')
-    assert(nightCanvas.includes('0.18'), 'night canvas doit valoir 0.18 (violet amethyste)')
+    assert(nightCanvas.includes('0.226'), 'night canvas doit valoir 0.226 (Tokyo Night #1a1b26)')
 
     await pageNested.close()
 }
