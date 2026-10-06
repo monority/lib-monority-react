@@ -17,8 +17,9 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 6 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Field (recettes dans mr.components)
-- Checkbox ajuste : ton neutre par defaut (ADR-020, noir en clair / blanc en sombre), ton accent explicite preserve, gestion dynamique de l'erreur dans le harness
+- 7 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, Field (recettes dans mr.components)
+- Switch conforme : piste 36x20 sm, 44x24 md, 52x28 lg, pouce 16/20/24px, translation 100%, ton neutre par defaut (ADR-020), variantes accent et danger
+- Tokens introduits : --mr-space-6 (24px = 1.5rem), --mr-radius-full (9999px), --mr-switch-thumb-off (blanc pur)
 - 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
-- Tests rendered automatises et pnpm verify vert (1253 tests unitaires ui + 94 tests web)
-- Prochaine etape : composant suivant de la famille formulaire (Switch ou RadioGroup)
+- Tests rendered automatises et pnpm verify vert (1254 tests unitaires ui + 94 tests web)
+- Prochaine etape : composant suivant de la famille formulaire (RadioGroup)

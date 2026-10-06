@@ -22,7 +22,7 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
     },
     ref
 ) {
-    const resolvedTone = tone ?? 'accent'
+    const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
     const isInvalid = invalid || Boolean(error)
     const { describedBy, errorId, hintId, inputId } = useFormControl()

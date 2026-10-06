@@ -1,0 +1,315 @@
+/* Recette du composant Switch dans la couche mr.components.
+ * Respect strict de l'architecture CSS de Monority UI :
+ * - Specificite maximale 0,2,0 (:where() pour reduire a 0,1,0 ou 0,2,0)
+ * - Aucune valeur brute hors 0, 1px, 2px et pourcentages (Stylelint monority/no-raw-values)
+ * - Transitions regroupees sous --mr-duration-state (150ms)
+ * - Etats interactifs derives par color-mix()
+ * - Style de base neutre (ADR-020) : noir en clair, blanc en sombre
+ */
+@layer mr.components {
+    /* Rangee du switch (alignement contenu et controle) */
+    :where(.mr-switch__row) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+        min-block-size: var(--mr-space-6);
+        cursor: pointer;
+    }
+
+    /* Bloc contenu textuel (libelle, description, erreur) */
+    :where(.mr-switch__content) {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: 0;
+        min-inline-size: 0;
+    }
+
+    :where(.mr-switch__content) :where(.mr-field__label) {
+        cursor: pointer;
+        overflow-wrap: anywhere;
+    }
+
+    /* Conteneur interactif du controle */
+    :where(.mr-switch) {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        flex-shrink: 0;
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        line-height: inherit;
+        cursor: pointer;
+        user-select: none;
+        vertical-align: middle;
+    }
+
+    /* Input natif masque de facon accessible */
+    :where(.mr-switch__input) {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    /* Piste oblongue */
+    :where(.mr-switch__control) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        inline-size: calc(var(--mr-space-6) + var(--mr-space-5));
+        block-size: var(--mr-space-6);
+        padding: 1px;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-bg-sunken);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+    }
+
+    /* Pouce circulaire coulissant */
+    :where(.mr-switch__thumb) {
+        display: block;
+        box-sizing: border-box;
+        block-size: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--mr-switch-thumb-off);
+        transform: translateX(0);
+        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state);
+    }
+
+    /* Taille sm : piste 36px x 20px, pouce 16px */
+    :where(.mr-switch[data-size='sm']) :where(.mr-switch__control) {
+        inline-size: calc(var(--mr-space-5) + var(--mr-space-4));
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-switch[data-size='sm']) {
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Taille lg : piste 52px x 28px, pouce 24px */
+    :where(.mr-switch[data-size='lg']) :where(.mr-switch__control) {
+        inline-size: calc(var(--mr-size-control-sm) + var(--mr-space-6));
+        block-size: var(--mr-size-control-sm);
+    }
+
+    /* Deplacement du pouce a l'etat coche */
+    :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
+    :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
+        transform: translateX(100%);
+    }
+
+    /* Support RTL : deplacement inverse */
+    :where([dir='rtl'] .mr-switch[data-checked]) :where(.mr-switch__thumb),
+    :where([dir='rtl'] .mr-switch__input:checked)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(-100%);
+    }
+
+    /* Etat coche neutre par defaut (ADR-020 : noir en clair, blanc en sombre) */
+    :where(.mr-switch[data-checked]) :where(.mr-switch__control),
+    :where(.mr-switch__input:checked) + :where(.mr-switch__control) {
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
+    }
+
+    :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
+    :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
+        background-color: var(--mr-text-on-inverse);
+    }
+
+    /* Ton neutre explicite */
+    :where(.mr-switch[data-tone='neutral'][data-checked]) :where(.mr-switch__control) {
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
+    }
+
+    :where(.mr-switch[data-tone='neutral'][data-checked]) :where(.mr-switch__thumb) {
+        background-color: var(--mr-text-on-inverse);
+    }
+
+    /* Ton accent (variante explicite de marque) */
+    :where(.mr-switch[data-tone='accent'][data-checked]) :where(.mr-switch__control) {
+        background-color: var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-switch[data-tone='accent'][data-checked]) :where(.mr-switch__thumb) {
+        background-color: var(--mr-bg-canvas);
+    }
+
+    /* Ton danger */
+    :where(.mr-switch[data-tone='danger'][data-checked]) :where(.mr-switch__control) {
+        background-color: var(--mr-danger-solid);
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-switch[data-tone='danger'][data-checked]) :where(.mr-switch__thumb) {
+        background-color: var(--mr-bg-canvas);
+    }
+
+    /* Survol non coche au repos */
+    :where(.mr-switch:hover:not(:where([data-disabled]))) :where(.mr-switch__control),
+    :where(.mr-switch__row:hover:not(:has(:where([data-disabled])))) :where(.mr-switch__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche neutre (defaut) */
+    :where(.mr-switch[data-checked]:hover:not(:where([data-disabled]))) :where(.mr-switch__control),
+    :where(.mr-switch__row:hover:not(:has(:where([data-disabled]))))
+        :where(.mr-switch[data-checked])
+        :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche accent */
+    :where(.mr-switch[data-tone='accent'][data-checked]):hover :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol coche danger */
+    :where(.mr-switch[data-tone='danger'][data-checked]):hover :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Focus visible sur l'input natif */
+    :where(.mr-switch__input:focus-visible) + :where(.mr-switch__control) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    /* Etat invalide */
+    :where(.mr-switch[data-invalid]) :where(.mr-switch__control) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-switch[data-invalid] .mr-switch__input:focus-visible) + :where(.mr-switch__control) {
+        outline-color: var(--mr-danger-solid);
+    }
+
+    /* Etat desactive */
+    :where(.mr-switch[data-disabled]),
+    :where(.mr-switch:has(:where(.mr-switch__input:disabled))) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-switch[data-disabled]) :where(.mr-switch__input),
+    :where(.mr-switch__input:disabled) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-switch__row:has(:where([data-disabled]))) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-switch__row:has(:where([data-disabled]))) :where(.mr-field__label),
+    :where(.mr-switch__row:has(:where([data-disabled]))) :where(.mr-field__hint) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-switch[data-disabled]:not(:where([data-checked]))) :where(.mr-switch__control),
+    :where(.mr-switch:has(:where(.mr-switch__input:disabled:not(:checked))))
+        :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-sunken),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-switch[data-disabled]:not(:where([data-checked]))) :where(.mr-switch__thumb),
+    :where(.mr-switch:has(:where(.mr-switch__input:disabled:not(:checked))))
+        :where(.mr-switch__thumb) {
+        background-color: var(--mr-text-disabled);
+    }
+
+    :where(.mr-switch[data-disabled][data-checked]) :where(.mr-switch__control),
+    :where(.mr-switch:has(:where(.mr-switch__input:disabled:checked))) :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-switch[data-tone='accent'][data-disabled][data-checked])
+        :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-switch[data-tone='danger'][data-disabled][data-checked])
+        :where(.mr-switch__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+}

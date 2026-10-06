@@ -22,7 +22,8 @@
         "duration",
         "ease",
         "size",
-        "state"
+        "state",
+        "switch"
     ],
     "roles": {
         "bg": ["canvas", "surface", "raised", "sunken", "overlay", "inverse"],
@@ -35,6 +36,7 @@
         "font-size": ["sm", "md"],
         "duration": ["state", "panel"],
         "state": ["hover-mix", "active-mix", "disabled-mix"],
-        "radius": ["sm", "md"]
+        "radius": ["sm", "md", "full"],
+        "switch": ["thumb-off"]
     }
 }

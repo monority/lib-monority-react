@@ -11,6 +11,7 @@ import {
     positionOverlay,
     Select,
     Spinner,
+    Switch,
     Textarea,
     ThemeScope,
 } from '@monority/ui'
@@ -821,12 +822,73 @@ function CheckboxHarness() {
     )
 }
 
+function InvalidSwitchSample() {
+    const [enabled, setEnabled] = useState(false)
+    return (
+        <Switch
+            checked={enabled}
+            onChange={(e) => setEnabled(e.target.checked)}
+            invalid={!enabled}
+            label="Confirmation de sécurité (activez pour valider)"
+            error={!enabled ? 'Activation obligatoire pour poursuivre.' : undefined}
+        />
+    )
+}
+
+function SwitchHarness() {
+    return (
+        <>
+            <Sample label="taille sm (piste 36x20px, pouce 16px)">
+                <Switch size="sm" label="Option sm" />
+            </Sample>
+            <Sample label="taille md (défaut, piste 44x24px, pouce 20px)">
+                <Switch size="md" label="Option md" />
+            </Sample>
+            <Sample label="taille lg (piste 52x28px, pouce 24px)">
+                <Switch size="lg" label="Option lg" />
+            </Sample>
+            <Sample label="activé neutre (défaut)">
+                <Switch defaultChecked label="Activer les alertes" />
+            </Sample>
+            <Sample label="ton neutre (défaut)">
+                <Switch tone="neutral" defaultChecked label="Ton neutre (noir/blanc)" />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <Switch tone="accent" defaultChecked label="Ton accent (marque)" />
+            </Sample>
+            <Sample label="ton danger">
+                <Switch tone="danger" defaultChecked label="Protection contre suppression" />
+            </Sample>
+            <Sample label="invalide (se valide au clic)">
+                <InvalidSwitchSample />
+            </Sample>
+            <Sample label="avec description d'aide (hint)">
+                <Switch
+                    label="Mode sombre automatique"
+                    hint="Bascule automatiquement selon les préférences du système."
+                    defaultChecked
+                />
+            </Sample>
+            <Sample label="désactivé non activé">
+                <Switch disabled label="Fonctionnalité désactivée" />
+            </Sample>
+            <Sample label="désactivé activé neutre">
+                <Switch disabled defaultChecked label="Paramètre imposé par l'organisation" />
+            </Sample>
+            <Sample label="sans libellé (aria-label)">
+                <Switch aria-label="Basculer l'option" />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
     textarea: TextareaHarness,
     select: SelectHarness,
     checkbox: CheckboxHarness,
+    switch: SwitchHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -841,6 +903,7 @@ const establishedComponents = [
     { slug: 'textarea', label: 'Textarea' },
     { slug: 'select', label: 'Select' },
     { slug: 'checkbox', label: 'Checkbox' },
+    { slug: 'switch', label: 'Switch' },
     { slug: 'field', label: 'Field' },
 ] as const
 

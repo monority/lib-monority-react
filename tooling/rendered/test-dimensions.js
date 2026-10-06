@@ -844,4 +844,166 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Checkbox conforme (boîte 16px sm/md, 20px lg, radius 4px, row-height >= 24px, gap 8px, glyphe actif 1).'
     )
+
+    // Verification du composant Switch (piste 36x20 sm, 44x24 md, 52x28 lg, pouce 16/20/24px)
+    const pageSwitch = await browser.newPage()
+    await pageSwitch.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <div class="mr-switch__row" id="sw-row-sm">
+              <label class="mr-switch" data-size="sm" id="sw-sm">
+                <input type="checkbox" role="switch" class="mr-switch__input" id="sw-input-sm" />
+                <span class="mr-switch__control" id="sw-ctrl-sm">
+                  <span class="mr-switch__thumb" id="sw-thumb-sm"></span>
+                </span>
+              </label>
+            </div>
+            <div class="mr-switch__row" id="sw-row-md">
+              <label class="mr-switch" data-size="md" id="sw-md">
+                <input type="checkbox" role="switch" class="mr-switch__input" id="sw-input-md" />
+                <span class="mr-switch__control" id="sw-ctrl-md">
+                  <span class="mr-switch__thumb" id="sw-thumb-md"></span>
+                </span>
+              </label>
+            </div>
+            <div class="mr-switch__row" id="sw-row-lg">
+              <label class="mr-switch" data-size="lg" id="sw-lg">
+                <input type="checkbox" role="switch" class="mr-switch__input" id="sw-input-lg" />
+                <span class="mr-switch__control" id="sw-ctrl-lg">
+                  <span class="mr-switch__thumb" id="sw-thumb-lg"></span>
+                </span>
+              </label>
+            </div>
+            <label class="mr-switch" data-checked id="sw-checked">
+              <input type="checkbox" role="switch" class="mr-switch__input" checked id="sw-input-checked" />
+              <span class="mr-switch__control" id="sw-ctrl-checked">
+                <span class="mr-switch__thumb" id="sw-thumb-checked"></span>
+              </span>
+            </label>
+          </body>
+        </html>
+    `)
+
+    const swMetrics = await pageSwitch.evaluate(() => {
+        const getStyle = (id) => window.getComputedStyle(document.getElementById(id))
+        const getRect = (id) => document.getElementById(id).getBoundingClientRect()
+        return {
+            sm: {
+                trackWidth: getRect('sw-ctrl-sm').width,
+                trackHeight: getRect('sw-ctrl-sm').height,
+                thumbWidth: getRect('sw-thumb-sm').width,
+                thumbHeight: getRect('sw-thumb-sm').height,
+                rowHeight: getRect('sw-row-sm').height,
+            },
+            md: {
+                trackWidth: getRect('sw-ctrl-md').width,
+                trackHeight: getRect('sw-ctrl-md').height,
+                thumbWidth: getRect('sw-thumb-md').width,
+                thumbHeight: getRect('sw-thumb-md').height,
+                rowHeight: getRect('sw-row-md').height,
+                borderRadius: parseFloat(getStyle('sw-ctrl-md').borderRadius),
+            },
+            lg: {
+                trackWidth: getRect('sw-ctrl-lg').width,
+                trackHeight: getRect('sw-ctrl-lg').height,
+                thumbWidth: getRect('sw-thumb-lg').width,
+                thumbHeight: getRect('sw-thumb-lg').height,
+                rowHeight: getRect('sw-row-lg').height,
+            },
+            input: {
+                opacity: parseFloat(getStyle('sw-input-md').opacity),
+            },
+            checked: {
+                transform: getStyle('sw-thumb-checked').transform,
+                thumbLeft: getRect('sw-thumb-checked').left,
+                trackRight: getRect('sw-ctrl-checked').right,
+                trackLeft: getRect('sw-ctrl-checked').left,
+            },
+        }
+    })
+    await pageSwitch.close()
+
+    assert.strictEqual(
+        swMetrics.sm.trackWidth,
+        36,
+        `Switch sm track width attendue a 36px, obtenu: ${swMetrics.sm.trackWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.sm.trackHeight,
+        20,
+        `Switch sm track height attendue a 20px, obtenu: ${swMetrics.sm.trackHeight}px`
+    )
+    assert.strictEqual(
+        swMetrics.sm.thumbWidth,
+        16,
+        `Switch sm thumb width attendu a 16px, obtenu: ${swMetrics.sm.thumbWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.sm.thumbHeight,
+        16,
+        `Switch sm thumb height attendu a 16px, obtenu: ${swMetrics.sm.thumbHeight}px`
+    )
+
+    assert.strictEqual(
+        swMetrics.md.trackWidth,
+        44,
+        `Switch md track width attendue a 44px, obtenu: ${swMetrics.md.trackWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.md.trackHeight,
+        24,
+        `Switch md track height attendue a 24px, obtenu: ${swMetrics.md.trackHeight}px`
+    )
+    assert.strictEqual(
+        swMetrics.md.thumbWidth,
+        20,
+        `Switch md thumb width attendu a 20px, obtenu: ${swMetrics.md.thumbWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.md.thumbHeight,
+        20,
+        `Switch md thumb height attendu a 20px, obtenu: ${swMetrics.md.thumbHeight}px`
+    )
+
+    assert.strictEqual(
+        swMetrics.lg.trackWidth,
+        52,
+        `Switch lg track width attendue a 52px, obtenu: ${swMetrics.lg.trackWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.lg.trackHeight,
+        28,
+        `Switch lg track height attendue a 28px, obtenu: ${swMetrics.lg.trackHeight}px`
+    )
+    assert.strictEqual(
+        swMetrics.lg.thumbWidth,
+        24,
+        `Switch lg thumb width attendu a 24px, obtenu: ${swMetrics.lg.thumbWidth}px`
+    )
+    assert.strictEqual(
+        swMetrics.lg.thumbHeight,
+        24,
+        `Switch lg thumb height attendu a 24px, obtenu: ${swMetrics.lg.thumbHeight}px`
+    )
+
+    assert(
+        swMetrics.md.rowHeight >= 24,
+        `Switch row height attendue >= 24px, obtenu: ${swMetrics.md.rowHeight}px`
+    )
+    assert.strictEqual(
+        swMetrics.input.opacity,
+        0,
+        `Switch native input opacity attendue a 0, obtenu: ${swMetrics.input.opacity}`
+    )
+    assert.notStrictEqual(
+        swMetrics.checked.transform,
+        'none',
+        'Switch checked thumb transform doit etre active'
+    )
+
+    console.log(
+        'OK: Switch conforme (piste 36x20 sm, 44x24 md, 52x28 lg, pouce 16/20/24px, row-height >= 24px, transform actif).'
+    )
 }

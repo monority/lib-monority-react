@@ -55,6 +55,7 @@
         --mr-space-3: 0.75rem;
         --mr-space-4: 1rem;
         --mr-space-5: 1.25rem;
+        --mr-space-6: 1.5rem;
 
         /* Tailles de controle : N fois 0.25rem (grille de 4px).
          * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)
@@ -66,9 +67,14 @@
 
         /* Rayons : base de 2px multipliee par la suite (0, 2, 3, 5, 8).
          * sm vaut 2 fois 2px = 4px = 0.25rem, ajuste par le levier de marque.
-         * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque. */
+         * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque.
+         * full pour les pilules et controles arrondis oblongs. */
         --mr-radius-sm: calc(0.25rem * var(--mr-ref-radius-scale));
         --mr-radius-md: calc(0.375rem * var(--mr-ref-radius-scale));
+        --mr-radius-full: 9999px;
+
+        /* Pouce du switch au repos (off) : fond blanc en clair et sombre */
+        --mr-switch-thumb-off: oklch(1 0 0);
 
         /* Typographie : echelle numerique CSS 400, 500, 600, 700 ; medium vaut 500 */
         --mr-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system,

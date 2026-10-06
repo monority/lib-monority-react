@@ -146,6 +146,26 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur checkbox.css (<= 0,2,0).'
     )
+
+    // 7. Prouver en positif que switch.css respecte selector-max-specificity "0,2,0"
+    const switchCssPath = path.resolve(__dirname, '../../packages/styles/src/recipes/switch.css')
+    const resultSwitchSpec = await stylelint.lint({
+        files: switchCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultSwitchSpec.errored,
+        false,
+        'switch.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultSwitchSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur switch.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur switch.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {
