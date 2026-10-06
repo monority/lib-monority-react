@@ -8,6 +8,7 @@ import {
     Input,
     PasswordInput,
     positionOverlay,
+    Select,
     Spinner,
     Textarea,
     ThemeScope,
@@ -624,10 +625,140 @@ function TextareaHarness() {
     )
 }
 
+function SelectHarness() {
+    return (
+        <>
+            <Sample label="taille sm">
+                <Select size="sm" id="select-size-sm" defaultValue="fr">
+                    <option value="fr">France (sm 28px)</option>
+                    <option value="de">Allemagne</option>
+                    <option value="es">Espagne</option>
+                </Select>
+            </Sample>
+            <Sample label="taille md">
+                <Select size="md" id="select-size-md" defaultValue="fr">
+                    <option value="fr">France (md 32px)</option>
+                    <option value="de">Allemagne</option>
+                    <option value="es">Espagne</option>
+                </Select>
+            </Sample>
+            <Sample label="taille md par defaut">
+                <Select id="select-size-default" defaultValue="fr">
+                    <option value="fr">France (défaut)</option>
+                    <option value="de">Allemagne</option>
+                </Select>
+            </Sample>
+            <Sample label="taille lg">
+                <Select size="lg" id="select-size-lg" defaultValue="fr">
+                    <option value="fr">France (lg 40px)</option>
+                    <option value="de">Allemagne</option>
+                    <option value="es">Espagne</option>
+                </Select>
+            </Sample>
+            <Sample label="alignement bouton et select sm">
+                <div style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}>
+                    <Button size="sm">Bouton sm</Button>
+                    <Select size="sm" defaultValue="1">
+                        <option value="1">Select sm</option>
+                    </Select>
+                </div>
+            </Sample>
+            <Sample label="alignement bouton et select md">
+                <div style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}>
+                    <Button size="md">Bouton md</Button>
+                    <Select size="md" defaultValue="1">
+                        <option value="1">Select md</option>
+                    </Select>
+                </div>
+            </Sample>
+            <Sample label="alignement bouton et select lg">
+                <div style={{ display: 'flex', alignItems: 'stretch', gap: '8px' }}>
+                    <Button size="lg">Bouton lg</Button>
+                    <Select size="lg" defaultValue="1">
+                        <option value="1">Select lg</option>
+                    </Select>
+                </div>
+            </Sample>
+            <Sample label="avec placeholder non selectionne">
+                <Select defaultValue="">
+                    <option value="">Choisissez une option...</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                </Select>
+            </Sample>
+            <Sample label="survol réel">
+                <Select id="select-harness-hover" defaultValue="hover">
+                    <option value="hover">Survol réel</option>
+                </Select>
+            </Sample>
+            <Sample label="focus clavier">
+                <Select id="select-harness-focus" defaultValue="focus">
+                    <option value="focus">Focus clavier</option>
+                </Select>
+            </Sample>
+            <Sample label="invalide">
+                <Select invalid defaultValue="">
+                    <option value="">Sélection requise...</option>
+                    <option value="1">Option 1</option>
+                </Select>
+            </Sample>
+            <Sample label="invalide avec focus">
+                <Select id="select-harness-invalid-focus" invalid defaultValue="err">
+                    <option value="err">Erreur avec focus</option>
+                </Select>
+            </Sample>
+            <Sample label="désactivé">
+                <Select disabled defaultValue="dis">
+                    <option value="dis">Sélecteur désactivé</option>
+                </Select>
+            </Sample>
+            <Sample label="avec option desactivee">
+                <Select defaultValue="1">
+                    <option value="1">Option active</option>
+                    <option value="2" disabled>
+                        Option indisponible (désactivée)
+                    </option>
+                    <option value="3">Autre option</option>
+                </Select>
+            </Sample>
+            <Sample label="avec label et texte d'aide">
+                <Select
+                    label="Pays de résidence"
+                    hint="Sélectionnez votre pays pour adapter la devise."
+                    defaultValue="fr"
+                >
+                    <option value="fr">France</option>
+                    <option value="be">Belgique</option>
+                    <option value="ch">Suisse</option>
+                    <option value="ca">Canada</option>
+                </Select>
+            </Sample>
+            <Sample label="avec message d'erreur et invalide">
+                <Select
+                    label="Devise"
+                    error="Cette devise n'est pas acceptée pour votre région."
+                    defaultValue="usd"
+                >
+                    <option value="usd">USD — Dollar américain</option>
+                    <option value="eur">EUR — Euro</option>
+                </Select>
+            </Sample>
+            <Sample label="mode multiple">
+                <Select multiple defaultValue={['1', '2']}>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </Select>
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
     textarea: TextareaHarness,
+    select: SelectHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -640,6 +771,7 @@ const establishedComponents = [
     { slug: 'button', label: 'Button' },
     { slug: 'input', label: 'Input' },
     { slug: 'textarea', label: 'Textarea' },
+    { slug: 'select', label: 'Select' },
     { slug: 'field', label: 'Field' },
 ] as const
 

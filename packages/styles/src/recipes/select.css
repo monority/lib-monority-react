@@ -1,0 +1,189 @@
+/* Recette du composant Select (couche mr.components)
+ *
+ * Controle de selection natif stylise.
+ *
+ * Tailles et dimensions (parite stricte avec Input et Button) :
+ * - sm : 28px (min-block-size: --mr-size-control-sm, padding-inline-start: --mr-space-3)
+ * - md (defaut) : 32px (min-block-size: --mr-size-control-md, padding-inline-start: --mr-space-4)
+ * - lg : 40px (min-block-size: --mr-size-control-lg, padding-inline-start: --mr-space-5)
+ * Typographie constante : font-size (--mr-font-size-md), font-weight et radius identiques sur les 3 tailles.
+ *
+ * Ordre de priorite des etats :
+ * desactive > invalide > survol.
+ *
+ * Chevron indicateur :
+ * - Pseudo-element ::after sur .mr-select-wrapper
+ * - Masque quand select est en mode multiple ou possede un attribut size
+ */
+@layer mr.components {
+    /* Conteneur d'encapsulation du Select */
+    :where(.mr-select-wrapper) {
+        position: relative;
+        display: inline-flex;
+        inline-size: 100%;
+        box-sizing: border-box;
+        vertical-align: middle;
+    }
+
+    /* Chevron indicateur CSS */
+    :where(.mr-select-wrapper)::after {
+        content: '';
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--mr-space-4);
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
+        border-inline-end: 2px solid var(--mr-text-secondary);
+        border-block-end: 2px solid var(--mr-text-secondary);
+        box-sizing: border-box;
+        pointer-events: none;
+        transform: translateY(-70%) rotate(45deg);
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Chevron en taille sm */
+    :where(.mr-select-wrapper)[data-size='sm']::after {
+        inset-inline-end: var(--mr-space-3);
+        inline-size: calc(var(--mr-space-2) - 2px);
+        block-size: calc(var(--mr-space-2) - 2px);
+    }
+
+    /* Chevron en taille lg */
+    :where(.mr-select-wrapper)[data-size='lg']::after {
+        inset-inline-end: var(--mr-space-5);
+        inline-size: calc(var(--mr-space-2) + 2px);
+        block-size: calc(var(--mr-space-2) + 2px);
+    }
+
+    /* Element natif select */
+    :where(.mr-select) {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline-start: var(--mr-space-4);
+        padding-inline-end: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+        padding-block: 0;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+        vertical-align: middle;
+        cursor: pointer;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Option par defaut non selectionnee (placeholder avec value vide) */
+    :where(.mr-select):has(:where(option[value='']):checked) {
+        color: var(--mr-text-secondary);
+    }
+
+    /* Taille sm : 28px */
+    :where(.mr-select)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline-start: var(--mr-space-3);
+        padding-inline-end: calc(var(--mr-space-3) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    /* Taille md (defaut) : 32px */
+    :where(.mr-select)[data-size='md'],
+    :where(.mr-select):not([data-size]) {
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline-start: var(--mr-space-4);
+        padding-inline-end: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-select)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline-start: var(--mr-space-5);
+        padding-inline-end: calc(var(--mr-space-5) + var(--mr-space-5) + var(--mr-space-2));
+    }
+
+    /* Focus visible et clavier : anneau au contact outline-offset: 0 */
+    :where(.mr-select):focus-visible,
+    :where(.mr-select):focus {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Survol (uniquement avec pointeur survolant) : exclut desactive et invalide */
+    @media (hover: hover) {
+        :where(.mr-select):hover:where(:not(:disabled, [aria-invalid='true'])) {
+            border-color: color-mix(
+                in oklch,
+                var(--mr-border-control),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+
+        :where(.mr-select-wrapper):hover:where(:not([data-disabled], [data-invalid]))::after {
+            border-color: var(--mr-text-primary);
+        }
+    }
+
+    /* Etat invalide : bordure de statut danger */
+    :where(.mr-select)[aria-invalid='true'] {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-select)[aria-invalid='true']:focus-visible,
+    :where(.mr-select)[aria-invalid='true']:focus {
+        border-color: var(--mr-danger-solid);
+        outline: 2px solid var(--mr-danger-solid);
+        outline-offset: 0;
+    }
+
+    :where(.mr-select-wrapper)[data-invalid]::after {
+        border-color: var(--mr-danger-solid);
+    }
+
+    /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
+    :where(.mr-select):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-select-wrapper)[data-disabled]::after {
+        border-color: var(--mr-text-disabled);
+    }
+
+    /* Selection multiple ou avec attribut size : mode liste, pas de chevron */
+    :where(.mr-select-wrapper:has(:where(.mr-select[multiple], .mr-select[size])))::after {
+        content: none;
+    }
+
+    :where(.mr-select-wrapper:has(:where(.mr-select[multiple], .mr-select[size]))) {
+        block-size: auto;
+        min-block-size: 0;
+    }
+
+    :where(.mr-select:is([multiple], [size])) {
+        block-size: auto;
+        min-block-size: 0;
+        padding-inline-end: var(--mr-space-4);
+        white-space: normal;
+        overflow: auto;
+    }
+}

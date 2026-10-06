@@ -610,4 +610,115 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Textarea conforme (min-height: 80px, padding-block: 8px, padding-inline: 12/16/20px, resize controle).'
     )
+
+    // 12. Verification Select (hauteurs 28/32/40px, paddings-inline, appearance: none)
+    const pageSelect = await browser.newPage()
+    await pageSelect.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <span class="mr-select-wrapper" data-size="sm" id="wrap-sm">
+              <select class="mr-select" data-size="sm" id="sel-sm">
+                <option value="1">Option 1</option>
+              </select>
+            </span>
+            <span class="mr-select-wrapper" data-size="md" id="wrap-md">
+              <select class="mr-select" data-size="md" id="sel-md">
+                <option value="1">Option 1</option>
+              </select>
+            </span>
+            <span class="mr-select-wrapper" data-size="lg" id="wrap-lg">
+              <select class="mr-select" data-size="lg" id="sel-lg">
+                <option value="1">Option 1</option>
+              </select>
+            </span>
+          </body>
+        </html>
+    `)
+
+    const selMetrics = await pageSelect.evaluate(() => {
+        const getStyle = (id) => window.getComputedStyle(document.getElementById(id))
+        const getRect = (id) => document.getElementById(id).getBoundingClientRect()
+        return {
+            sm: {
+                height: getRect('sel-sm').height,
+                paddingLeft: parseFloat(getStyle('sel-sm').paddingLeft),
+                paddingRight: parseFloat(getStyle('sel-sm').paddingRight),
+            },
+            md: {
+                height: getRect('sel-md').height,
+                paddingLeft: parseFloat(getStyle('sel-md').paddingLeft),
+                paddingRight: parseFloat(getStyle('sel-md').paddingRight),
+                borderRadius: parseFloat(getStyle('sel-md').borderRadius),
+                appearance: getStyle('sel-md').appearance,
+            },
+            lg: {
+                height: getRect('sel-lg').height,
+                paddingLeft: parseFloat(getStyle('sel-lg').paddingLeft),
+                paddingRight: parseFloat(getStyle('sel-lg').paddingRight),
+            },
+        }
+    })
+    await pageSelect.close()
+
+    assert.strictEqual(
+        selMetrics.sm.height,
+        28,
+        `Select sm hauteur attendue a 28px, obtenu: ${selMetrics.sm.height}px`
+    )
+    assert.strictEqual(
+        selMetrics.md.height,
+        32,
+        `Select md hauteur attendue a 32px, obtenu: ${selMetrics.md.height}px`
+    )
+    assert.strictEqual(
+        selMetrics.lg.height,
+        40,
+        `Select lg hauteur attendue a 40px, obtenu: ${selMetrics.lg.height}px`
+    )
+    assert.strictEqual(
+        selMetrics.sm.paddingLeft,
+        12,
+        `Select sm padding-left attendu a 12px, obtenu: ${selMetrics.sm.paddingLeft}px`
+    )
+    assert.strictEqual(
+        selMetrics.md.paddingLeft,
+        16,
+        `Select md padding-left attendu a 16px, obtenu: ${selMetrics.md.paddingLeft}px`
+    )
+    assert.strictEqual(
+        selMetrics.lg.paddingLeft,
+        20,
+        `Select lg padding-left attendu a 20px, obtenu: ${selMetrics.lg.paddingLeft}px`
+    )
+    assert.strictEqual(
+        selMetrics.sm.paddingRight,
+        36,
+        `Select sm padding-right attendu a 36px, obtenu: ${selMetrics.sm.paddingRight}px`
+    )
+    assert.strictEqual(
+        selMetrics.md.paddingRight,
+        40,
+        `Select md padding-right attendu a 40px, obtenu: ${selMetrics.md.paddingRight}px`
+    )
+    assert.strictEqual(
+        selMetrics.lg.paddingRight,
+        48,
+        `Select lg padding-right attendu a 48px, obtenu: ${selMetrics.lg.paddingRight}px`
+    )
+    assert.strictEqual(
+        selMetrics.md.borderRadius,
+        6,
+        `Select border-radius attendu a 6px, obtenu: ${selMetrics.md.borderRadius}px`
+    )
+    assert.strictEqual(
+        selMetrics.md.appearance,
+        'none',
+        `Select appearance attendu a none, obtenu: ${selMetrics.md.appearance}`
+    )
+
+    console.log(
+        'OK: Select conforme (hauteurs 28/32/40px, paddings 12/16/20px et 32/40/48px, appearance: none, radius: 6px).'
+    )
 }
