@@ -20,7 +20,7 @@ Etat :
 - Theme sombre approfondi (themes/dark.css) : canevas ajuste a L=0.17 pour un rendu profond et net
 - Theme Slate recalibre (themes/slate.css) : ardoise acier sobre (hue 255, chroma 0.022, canevas L=0.18)
 - Theme Ocean recalibre (themes/ocean.css) : bleu marine nuit riche / Midnight Navy (hue 260, chroma 0.05, canevas L=0.18)
-- Theme Night integre (themes/night.css) : ambiance Tokyo Night indigo nocturne (hue 275, chroma 0.03, canevas L=0.18)
+- Theme Night recalibre (themes/night.css) : violet amethyste profond sans bleu (hue 295, chroma 0.028, canevas L=0.18)
 - Decouverte dynamique des themes du dossier themes/ (6 themes actifs : light, dark, oled, slate, ocean, night)
 - Verifications de contraste et d'etats Button/Input/Field conformes sur les 6 themes
 - Navigation harness prete pour light, dark, oled, slate et dim
