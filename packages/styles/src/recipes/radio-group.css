@@ -1,0 +1,263 @@
+/* Recette du composant RadioGroup dans la couche mr.components.
+ * Respect strict de l'architecture CSS de Monority UI :
+ * - Specificite maximale 0,2,0 (:where() pour reduire la specificite)
+ * - Aucune valeur brute hors 0, 1px, 2px et pourcentages (Stylelint monority/no-raw-values)
+ * - Transitions regroupees sous --mr-duration-state (150ms)
+ * - Etats interactifs derives par color-mix()
+ * - Style de base neutre (ADR-020) : noir en clair, blanc en sombre
+ */
+@layer mr.components {
+    /* Conteneur du groupe de boutons radio */
+    :where(.mr-radio-group) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
+
+    :where(.mr-radio-group[data-size='sm']) {
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-radio-group[data-size='lg']) {
+        gap: var(--mr-space-4);
+    }
+
+    /* Option radio individuelle (ligne cliquable) */
+    :where(.mr-radio) {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        gap: var(--mr-space-2);
+        min-block-size: var(--mr-space-6);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        line-height: inherit;
+        color: var(--mr-text-primary);
+        user-select: none;
+    }
+
+    :where(.mr-radio-group[data-size='sm']) :where(.mr-radio) {
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Input natif masque accessiblement */
+    :where(.mr-radio__input) {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    /* Cercle de controle visuel */
+    :where(.mr-radio__control) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+        border: 1px solid var(--mr-border-control);
+        border-radius: 50%;
+        background-color: var(--mr-bg-sunken);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+    }
+
+    :where(.mr-radio-group[data-size='lg']) :where(.mr-radio__control) {
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    /* Point central indicateur */
+    :where(.mr-radio__dot) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 40%;
+        block-size: 40%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--mr-bg-inverse);
+        opacity: 0;
+        transform: scale(0.4);
+        transition: opacity var(--mr-duration-state), transform var(--mr-duration-state),
+            background-color var(--mr-duration-state);
+    }
+
+    /* Corps textuel (libelle + description eventuelle) */
+    :where(.mr-radio__body) {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    :where(.mr-radio__label) {
+        cursor: pointer;
+        line-height: inherit;
+    }
+
+    :where(.mr-radio__description) {
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: 1.35;
+    }
+
+    /* Etat selectionne par defaut (ton neutre ADR-020) */
+    :where(.mr-radio[data-checked]) :where(.mr-radio__control),
+    :where(.mr-radio__input:checked) + :where(.mr-radio__control) {
+        border-color: var(--mr-bg-inverse);
+    }
+
+    :where(.mr-radio[data-checked]) :where(.mr-radio__dot),
+    :where(.mr-radio__input:checked) + :where(.mr-radio__control) :where(.mr-radio__dot) {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Ton neutre explicite */
+    :where(.mr-radio-group[data-tone='neutral'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__control) {
+        border-color: var(--mr-bg-inverse);
+    }
+
+    :where(.mr-radio-group[data-tone='neutral'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__dot) {
+        background-color: var(--mr-bg-inverse);
+    }
+
+    /* Ton accent de marque */
+    :where(.mr-radio-group[data-tone='accent'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__control) {
+        border-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-radio-group[data-tone='accent'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__dot) {
+        background-color: var(--mr-accent-solid);
+    }
+
+    /* Ton danger */
+    :where(.mr-radio-group[data-tone='danger'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__control) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-radio-group[data-tone='danger'])
+        :where(.mr-radio[data-checked])
+        :where(.mr-radio__dot) {
+        background-color: var(--mr-danger-solid);
+    }
+
+    /* Survol au repos */
+    :where(.mr-radio:hover:not(:where([data-disabled]))) :where(.mr-radio__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol selectionne neutre */
+    :where(.mr-radio[data-checked]:hover:not(:where([data-disabled]))) :where(.mr-radio__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol selectionne accent */
+    :where(.mr-radio-group[data-tone='accent'])
+        :where(.mr-radio[data-checked]:hover:not(:where([data-disabled])))
+        :where(.mr-radio__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-accent-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Survol selectionne danger */
+    :where(.mr-radio-group[data-tone='danger'])
+        :where(.mr-radio[data-checked]:hover:not(:where([data-disabled])))
+        :where(.mr-radio__control) {
+        border-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+    }
+
+    /* Anneau de focus visible */
+    :where(.mr-radio__input:focus-visible) + :where(.mr-radio__control) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    /* Groupe invalide : bordure rouge sur option non selectionnee */
+    :where(.mr-radio-group[data-invalid])
+        :where(.mr-radio:not(:where([data-checked])))
+        :where(.mr-radio__control) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-radio-group[data-invalid] .mr-radio__input:focus-visible)
+        + :where(.mr-radio__control) {
+        outline-color: var(--mr-danger-solid);
+    }
+
+    /* Etat desactive */
+    :where(.mr-radio-group[data-disabled]),
+    :where(.mr-radio[data-disabled]),
+    :where(.mr-radio:has(:where(.mr-radio__input:disabled))) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-radio[data-disabled]) :where(.mr-radio__input),
+    :where(.mr-radio__input:disabled) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-radio[data-disabled]) :where(.mr-radio__label),
+    :where(.mr-radio:has(:where(.mr-radio__input:disabled))) :where(.mr-radio__label),
+    :where(.mr-radio[data-disabled]) :where(.mr-radio__description),
+    :where(.mr-radio:has(:where(.mr-radio__input:disabled))) :where(.mr-radio__description) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-radio[data-disabled]) :where(.mr-radio__control),
+    :where(.mr-radio:has(:where(.mr-radio__input:disabled))) :where(.mr-radio__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-sunken),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: var(--mr-border-control);
+        cursor: not-allowed;
+    }
+
+    /* Point central desactive visible en gris */
+    :where(.mr-radio[data-disabled]) :where(.mr-radio__dot),
+    :where(.mr-radio:has(:where(.mr-radio__input:disabled))) :where(.mr-radio__dot) {
+        background-color: var(--mr-text-disabled);
+    }
+}

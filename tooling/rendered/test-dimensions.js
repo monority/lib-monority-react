@@ -1006,4 +1006,132 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Switch conforme (piste 36x20 sm, 44x24 md, 52x28 lg, pouce 16/20/24px, row-height >= 24px, transform actif).'
     )
+
+    // 20. Dimensions et geometrie RadioGroup
+    const pageRadio = await browser.newPage()
+    await pageRadio.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="font-family: sans-serif; padding: 20px;">
+            <div id="rg-sm" class="mr-radio-group" data-size="sm">
+              <label class="mr-radio" data-checked="true">
+                <input type="radio" class="mr-radio__input" checked />
+                <span class="mr-radio__control"><span class="mr-radio__dot"></span></span>
+                <span class="mr-radio__body"><span class="mr-radio__label">Option SM</span></span>
+              </label>
+            </div>
+            <div id="rg-md" class="mr-radio-group" data-size="md">
+              <label class="mr-radio" data-checked="true">
+                <input type="radio" class="mr-radio__input" checked />
+                <span class="mr-radio__control"><span class="mr-radio__dot"></span></span>
+                <span class="mr-radio__body"><span class="mr-radio__label">Option MD</span></span>
+              </label>
+            </div>
+            <div id="rg-lg" class="mr-radio-group" data-size="lg">
+              <label class="mr-radio" data-checked="true">
+                <input type="radio" class="mr-radio__input" checked />
+                <span class="mr-radio__control"><span class="mr-radio__dot"></span></span>
+                <span class="mr-radio__body"><span class="mr-radio__label">Option LG</span></span>
+              </label>
+            </div>
+          </body>
+        </html>
+    `)
+
+    const radioMetrics = await pageRadio.evaluate(() => {
+        const getM = (id) => {
+            const el = document.getElementById(id)
+            const radio = el.querySelector('.mr-radio')
+            const control = el.querySelector('.mr-radio__control')
+            const dot = el.querySelector('.mr-radio__dot')
+            const input = el.querySelector('.mr-radio__input')
+            const rRadio = radio.getBoundingClientRect()
+            const rControl = control.getBoundingClientRect()
+            const rDot = dot.getBoundingClientRect()
+            const sControl = window.getComputedStyle(control)
+            const sDot = window.getComputedStyle(dot)
+            const sInput = window.getComputedStyle(input)
+            const sRadio = window.getComputedStyle(radio)
+
+            return {
+                rowHeight: Math.round(rRadio.height),
+                controlWidth: Math.round(rControl.width),
+                controlHeight: Math.round(rControl.height),
+                dotWidth: Math.round(rDot.width * 10) / 10,
+                dotHeight: Math.round(rDot.height * 10) / 10,
+                fontSize: sRadio.fontSize,
+                borderRadius: sControl.borderRadius,
+                dotOpacity: sDot.opacity,
+                inputOpacity: Number.parseFloat(sInput.opacity),
+            }
+        }
+        return {
+            sm: getM('rg-sm'),
+            md: getM('rg-md'),
+            lg: getM('rg-lg'),
+        }
+    })
+
+    assert.strictEqual(
+        radioMetrics.sm.controlWidth,
+        16,
+        `Radio sm control width attendu a 16px, obtenu: ${radioMetrics.sm.controlWidth}px`
+    )
+    assert.strictEqual(
+        radioMetrics.sm.controlHeight,
+        16,
+        `Radio sm control height attendu a 16px, obtenu: ${radioMetrics.sm.controlHeight}px`
+    )
+    assert.strictEqual(
+        radioMetrics.sm.fontSize,
+        '12px',
+        `Radio sm font size attendu a 12px, obtenu: ${radioMetrics.sm.fontSize}`
+    )
+
+    assert.strictEqual(
+        radioMetrics.md.controlWidth,
+        16,
+        `Radio md control width attendu a 16px, obtenu: ${radioMetrics.md.controlWidth}px`
+    )
+    assert.strictEqual(
+        radioMetrics.md.controlHeight,
+        16,
+        `Radio md control height attendu a 16px, obtenu: ${radioMetrics.md.controlHeight}px`
+    )
+    assert.strictEqual(
+        radioMetrics.md.fontSize,
+        '14px',
+        `Radio md font size attendu a 14px, obtenu: ${radioMetrics.md.fontSize}`
+    )
+
+    assert.strictEqual(
+        radioMetrics.lg.controlWidth,
+        20,
+        `Radio lg control width attendu a 20px, obtenu: ${radioMetrics.lg.controlWidth}px`
+    )
+    assert.strictEqual(
+        radioMetrics.lg.controlHeight,
+        20,
+        `Radio lg control height attendu a 20px, obtenu: ${radioMetrics.lg.controlHeight}px`
+    )
+
+    assert(
+        radioMetrics.md.rowHeight >= 24,
+        `Radio row height attendue >= 24px, obtenu: ${radioMetrics.md.rowHeight}px`
+    )
+    assert.strictEqual(
+        radioMetrics.md.inputOpacity,
+        0,
+        `Radio native input opacity attendue a 0, obtenu: ${radioMetrics.md.inputOpacity}`
+    )
+    assert.strictEqual(
+        radioMetrics.md.dotOpacity,
+        '1',
+        `Radio checked dot opacity attendue a 1, obtenu: ${radioMetrics.md.dotOpacity}`
+    )
+
+    console.log(
+        'OK: RadioGroup conforme (cercle 16px sm/md, 20px lg, row-height >= 24px, dot visible, input accessible).'
+    )
 }

@@ -9,6 +9,7 @@ import {
     Input,
     PasswordInput,
     positionOverlay,
+    RadioGroup,
     Select,
     Spinner,
     Switch,
@@ -882,6 +883,74 @@ function SwitchHarness() {
     )
 }
 
+function RadioGroupHarness() {
+    const defaultItems = [
+        { value: 'email', label: 'Email uniquement' },
+        { value: 'push', label: 'Notifications push' },
+        { value: 'all', label: 'Toutes les notifications' },
+    ]
+
+    const describedItems = [
+        {
+            value: 'standard',
+            label: 'Livraison standard',
+            description: 'Sous 3 à 5 jours ouvrés.',
+        },
+        {
+            value: 'express',
+            label: 'Livraison express',
+            description: 'Livré le lendemain avant 13h.',
+        },
+    ]
+
+    const disabledItems = [
+        { value: 'opt1', label: 'Option disponible' },
+        { value: 'opt2', label: 'Option désactivée', disabled: true },
+        { value: 'opt3', label: 'Autre option' },
+    ]
+
+    return (
+        <>
+            <Sample label="taille sm (cercle 16px, texte 12px)">
+                <RadioGroup size="sm" defaultValue="email" items={defaultItems} />
+            </Sample>
+            <Sample label="taille md (défaut, cercle 16px, texte 14px)">
+                <RadioGroup size="md" defaultValue="email" items={defaultItems} />
+            </Sample>
+            <Sample label="taille lg (cercle 20px, texte 14px)">
+                <RadioGroup size="lg" defaultValue="email" items={defaultItems} />
+            </Sample>
+            <Sample label="ton neutre (défaut, noir/blanc)">
+                <RadioGroup tone="neutral" defaultValue="push" items={defaultItems} />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <RadioGroup tone="accent" defaultValue="push" items={defaultItems} />
+            </Sample>
+            <Sample label="ton danger">
+                <RadioGroup tone="danger" defaultValue="push" items={defaultItems} />
+            </Sample>
+            <Sample label="avec description d'aide sur les options">
+                <RadioGroup defaultValue="standard" items={describedItems} />
+            </Sample>
+            <Sample label="invalide (avec erreur de champ)">
+                <RadioGroup
+                    defaultValue=""
+                    items={defaultItems}
+                    invalid
+                    label="Préférence de communication"
+                    error="Veuillez sélectionner un canal de communication."
+                />
+            </Sample>
+            <Sample label="groupe désactivé (rond et contour visibles)">
+                <RadioGroup disabled defaultValue="email" items={defaultItems} />
+            </Sample>
+            <Sample label="option individuelle désactivée">
+                <RadioGroup defaultValue="opt1" items={disabledItems} />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -889,6 +958,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     select: SelectHarness,
     checkbox: CheckboxHarness,
     switch: SwitchHarness,
+    'radio-group': RadioGroupHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -904,6 +974,7 @@ const establishedComponents = [
     { slug: 'select', label: 'Select' },
     { slug: 'checkbox', label: 'Checkbox' },
     { slug: 'switch', label: 'Switch' },
+    { slug: 'radio-group', label: 'RadioGroup' },
     { slug: 'field', label: 'Field' },
 ] as const
 

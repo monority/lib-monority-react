@@ -166,6 +166,29 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur switch.css (<= 0,2,0).'
     )
+
+    // 8. Prouver en positif que radio-group.css respecte selector-max-specificity "0,2,0"
+    const radioGroupCssPath = path.resolve(
+        __dirname,
+        '../../packages/styles/src/recipes/radio-group.css'
+    )
+    const resultRadioGroupSpec = await stylelint.lint({
+        files: radioGroupCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultRadioGroupSpec.errored,
+        false,
+        'radio-group.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultRadioGroupSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur radio-group.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur radio-group.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

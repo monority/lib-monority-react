@@ -22,7 +22,7 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
 ) {
     const ctx = useFormControl()
     const groupName = name || `${ctx.inputId}-name`
-    const resolvedTone = tone ?? 'accent'
+    const resolvedTone = tone ?? 'neutral'
     const resolvedSize = ctx.size
     const isInvalid = ctx.isInvalid
     const isControlled = value !== undefined
