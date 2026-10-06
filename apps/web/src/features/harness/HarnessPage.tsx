@@ -1319,6 +1319,13 @@ export function HarnessPage() {
 
     const currentQuery = searchParams.toString() ? `?${searchParams.toString()}` : ''
 
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.documentElement.dataset.theme = theme
+            document.documentElement.dataset.themeChoice = theme
+        }
+    }, [theme])
+
     return (
         <main
             className="harness-page"

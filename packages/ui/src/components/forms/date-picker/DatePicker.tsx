@@ -358,6 +358,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
         required = false,
         invalid = false,
         fullWidth = false,
+        theme: themeProp,
+        brand: brandProp,
+        density: densityProp,
         value,
         defaultValue,
         onChange,
@@ -384,6 +387,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     // hidden until the first real measurement lands.
     const [positioned, setPositioned] = useState(false)
 
+    const [inheritedTheme, setInheritedTheme] = useState<string | undefined>(undefined)
+    const [inheritedBrand, setInheritedBrand] = useState<string | undefined>(undefined)
+    const [inheritedDensity, setInheritedDensity] = useState<string | undefined>(undefined)
+
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLInputElement>(null)
     const popoverRef = useRef<HTMLDivElement>(null)
@@ -392,6 +399,44 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     const resolvedSize = size ?? 'md'
     const resolvedTone = tone ?? 'neutral'
     const isInvalid = invalid || Boolean(error)
+
+    // Capture inherited theme, brand and density from trigger DOM ancestry
+    useEffect(() => {
+        if (!open) return
+        if (rootRef.current) {
+            const themeEl = rootRef.current.closest('[data-theme]')
+            const brandEl = rootRef.current.closest('[data-brand]')
+            const densityEl = rootRef.current.closest('[data-density]')
+
+            setInheritedTheme(
+                themeEl?.getAttribute('data-theme') ??
+                    (typeof document !== 'undefined'
+                        ? (document.documentElement.getAttribute('data-theme') ?? undefined)
+                        : undefined)
+            )
+            setInheritedBrand(brandEl?.getAttribute('data-brand') ?? undefined)
+            setInheritedDensity(densityEl?.getAttribute('data-density') ?? undefined)
+        }
+    }, [open])
+
+    const activeTheme =
+        themeProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-theme]')?.getAttribute('data-theme') ??
+              (typeof document !== 'undefined'
+                  ? (document.documentElement.getAttribute('data-theme') ?? undefined)
+                  : undefined))
+            : inheritedTheme)
+    const activeBrand =
+        brandProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-brand]')?.getAttribute('data-brand') ?? undefined)
+            : inheritedBrand)
+    const activeDensity =
+        densityProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-density]')?.getAttribute('data-density') ?? undefined)
+            : inheritedDensity)
 
     // Sync controlled value
     useEffect(() => {
@@ -570,6 +615,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                               className={cn('mr-datepicker__popover', popoverClassName)}
                               data-size={resolvedSize}
                               data-tone={resolvedTone}
+                              data-theme={activeTheme}
+                              data-brand={activeBrand}
+                              data-density={activeDensity}
                               role="dialog"
                               aria-label="Choose date"
                               style={{

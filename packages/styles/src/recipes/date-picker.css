@@ -202,6 +202,7 @@
         box-sizing: border-box;
         padding: var(--mr-space-4);
         background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-lg);
         box-shadow: var(--mr-shadow-overlay);

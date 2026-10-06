@@ -15,6 +15,9 @@ export interface DatePickerProps
     error?: ReactNode
     invalid?: boolean
     fullWidth?: boolean
+    theme?: string
+    brand?: string
+    density?: string
     // Value
     value?: Date | string | null
     defaultValue?: Date | string
