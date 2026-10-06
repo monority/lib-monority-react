@@ -1,2 +1,6 @@
 export { NumberInput } from './NumberInput'
-export type { NumberInputProps, NumberInputSize } from './NumberInput.types'
+export type {
+    NumberInputProps,
+    NumberInputSize,
+    NumberInputTone,
+} from './NumberInput.types'

@@ -52,7 +52,12 @@ export {
 export { FileUpload, type FileUploadProps, type FileUploadSize } from './file-upload'
 export { FormSection, type FormSectionProps } from './form-section'
 export { Input, type InputProps } from './input'
-export { NumberInput, type NumberInputProps, type NumberInputSize } from './number-input'
+export {
+    NumberInput,
+    type NumberInputProps,
+    type NumberInputSize,
+    type NumberInputTone,
+} from './number-input'
 export { PasswordInput, type PasswordInputProps, type PasswordInputSize } from './password-input'
 export { RadioGroup } from './radio-group'
 export { Select, type SelectProps, type SelectTone, type SelectSize } from './select'

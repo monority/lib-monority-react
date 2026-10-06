@@ -1222,4 +1222,126 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: Slider conforme (zone interactive 20px sm / 24px md/lg, appearance: none, value tabular-nums >= 40px).'
     )
+
+    // Verification du composant NumberInput (hauteurs 28/32/40px, paddings start 12/16/20px, tabular-nums, boutons integres)
+    const pageNumberInput = await browser.newPage()
+    await pageNumberInput.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <div id="num-sm" class="mr-number-input-field">
+              <div class="mr-number-input__wrapper" data-size="sm">
+                <input type="text" class="mr-number-input" data-size="sm" value="42" />
+                <div class="mr-number-input__actions" data-size="sm">
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--down" aria-label="Decrement">−</button>
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--up" aria-label="Increment">+</button>
+                </div>
+              </div>
+            </div>
+            <div id="num-md" class="mr-number-input-field">
+              <div class="mr-number-input__wrapper" data-size="md">
+                <input type="text" class="mr-number-input" data-size="md" value="100" />
+                <div class="mr-number-input__actions" data-size="md">
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--down" aria-label="Decrement">−</button>
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--up" aria-label="Increment">+</button>
+                </div>
+              </div>
+            </div>
+            <div id="num-lg" class="mr-number-input-field">
+              <div class="mr-number-input__wrapper" data-size="lg">
+                <input type="text" class="mr-number-input" data-size="lg" value="250" />
+                <div class="mr-number-input__actions" data-size="lg">
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--down" aria-label="Decrement">−</button>
+                  <button type="button" class="mr-number-input__btn mr-number-input__btn--up" aria-label="Increment">+</button>
+                </div>
+              </div>
+            </div>
+          </body>
+        </html>
+    `)
+
+    const numMetrics = await pageNumberInput.evaluate(() => {
+        const getM = (id) => {
+            const el = document.getElementById(id)
+            const input = el.querySelector('.mr-number-input')
+            const actions = el.querySelector('.mr-number-input__actions')
+            const buttons = el.querySelectorAll('.mr-number-input__btn')
+            const rInput = input.getBoundingClientRect()
+            const sInput = window.getComputedStyle(input)
+            const rBtnDown = buttons[0].getBoundingClientRect()
+            const rBtnUp = buttons[1].getBoundingClientRect()
+
+            return {
+                inputHeight: Math.round(rInput.height),
+                paddingLeft: Math.round(parseFloat(sInput.paddingLeft)),
+                borderRadius: Math.round(parseFloat(sInput.borderRadius)),
+                fontVariantNumeric: sInput.fontVariantNumeric,
+                buttonCount: buttons.length,
+                btnDownWidth: Math.round(rBtnDown.width),
+                btnDownHeight: Math.round(rBtnDown.height),
+                btnUpWidth: Math.round(rBtnUp.width),
+                btnUpHeight: Math.round(rBtnUp.height),
+            }
+        }
+        return {
+            sm: getM('num-sm'),
+            md: getM('num-md'),
+            lg: getM('num-lg'),
+        }
+    })
+
+    assert.strictEqual(
+        numMetrics.sm.inputHeight,
+        28,
+        `NumberInput sm height attendu a 28px, obtenu: ${numMetrics.sm.inputHeight}px`
+    )
+    assert.strictEqual(
+        numMetrics.md.inputHeight,
+        32,
+        `NumberInput md height attendu a 32px, obtenu: ${numMetrics.md.inputHeight}px`
+    )
+    assert.strictEqual(
+        numMetrics.lg.inputHeight,
+        40,
+        `NumberInput lg height attendu a 40px, obtenu: ${numMetrics.lg.inputHeight}px`
+    )
+    assert.strictEqual(
+        numMetrics.sm.paddingLeft,
+        12,
+        `NumberInput sm padding-left attendu a 12px, obtenu: ${numMetrics.sm.paddingLeft}px`
+    )
+    assert.strictEqual(
+        numMetrics.md.paddingLeft,
+        16,
+        `NumberInput md padding-left attendu a 16px, obtenu: ${numMetrics.md.paddingLeft}px`
+    )
+    assert.strictEqual(
+        numMetrics.lg.paddingLeft,
+        20,
+        `NumberInput lg padding-left attendu a 20px, obtenu: ${numMetrics.lg.paddingLeft}px`
+    )
+    assert.strictEqual(
+        numMetrics.md.borderRadius,
+        6,
+        `NumberInput border-radius attendu a 6px, obtenu: ${numMetrics.md.borderRadius}px`
+    )
+    assert.strictEqual(
+        numMetrics.md.fontVariantNumeric,
+        'tabular-nums',
+        'NumberInput font-variant-numeric doit etre tabular-nums'
+    )
+    assert.strictEqual(numMetrics.md.buttonCount, 2, 'NumberInput doit contenir 2 boutons de pas')
+    assert(
+        numMetrics.md.btnDownWidth >= 20,
+        `Bouton pas decrement attendu >= 20px, obtenu: ${numMetrics.md.btnDownWidth}px`
+    )
+    assert(
+        numMetrics.md.btnUpWidth >= 20,
+        `Bouton pas increment attendu >= 20px, obtenu: ${numMetrics.md.btnUpWidth}px`
+    )
+
+    console.log(
+        'OK: NumberInput conforme (hauteurs 28/32/40px, paddings 12/16/20px, radius 6px, tabular-nums, 2 boutons integres).'
+    )
 }

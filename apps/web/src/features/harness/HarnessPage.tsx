@@ -7,6 +7,7 @@ import {
     Field,
     IconButton,
     Input,
+    NumberInput,
     PasswordInput,
     positionOverlay,
     RadioGroup,
@@ -991,6 +992,54 @@ function SliderHarness() {
     )
 }
 
+function NumberInputHarness() {
+    return (
+        <>
+            <Sample label="taille sm (hauteur 28px, boutons intégrés)">
+                <NumberInput size="sm" defaultValue={42} label="Quantité sm" />
+            </Sample>
+            <Sample label="taille md (défaut, hauteur 32px)">
+                <NumberInput size="md" defaultValue={100} label="Quantité md" />
+            </Sample>
+            <Sample label="taille lg (hauteur 40px)">
+                <NumberInput size="lg" defaultValue={250} label="Quantité lg" />
+            </Sample>
+            <Sample label="ton neutre (défaut ADR-020)">
+                <NumberInput tone="neutral" defaultValue={5} label="Ton neutre" />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <NumberInput tone="accent" defaultValue={10} label="Ton accent" />
+            </Sample>
+            <Sample label="ton danger">
+                <NumberInput tone="danger" defaultValue={99} label="Ton danger" />
+            </Sample>
+            <Sample label="bornes min=0 max=10 (bouton + désactivé au max)">
+                <NumberInput
+                    min={0}
+                    max={10}
+                    defaultValue={10}
+                    label="Stock disponible (max 10)"
+                    hint="Le bouton + est désactivé lorsque la borne max est atteinte."
+                />
+            </Sample>
+            <Sample label="invalide (avec message d'erreur)">
+                <NumberInput
+                    invalid
+                    defaultValue={-1}
+                    label="Nombre d'invités"
+                    error="Le nombre d'invités doit être positif."
+                />
+            </Sample>
+            <Sample label="désactivé (boutons et texte estompés)">
+                <NumberInput disabled defaultValue={12} label="Paramètre système (verrouillé)" />
+            </Sample>
+            <Sample label="lecture seule (boutons inactifs)">
+                <NumberInput readOnly defaultValue={88} label="Valeur de référence" />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1000,6 +1049,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     switch: SwitchHarness,
     'radio-group': RadioGroupHarness,
     slider: SliderHarness,
+    'number-input': NumberInputHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -1017,6 +1067,7 @@ const establishedComponents = [
     { slug: 'switch', label: 'Switch' },
     { slug: 'radio-group', label: 'RadioGroup' },
     { slug: 'slider', label: 'Slider' },
+    { slug: 'number-input', label: 'NumberInput' },
     { slug: 'field', label: 'Field' },
 ] as const
 

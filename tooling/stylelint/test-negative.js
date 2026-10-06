@@ -209,6 +209,29 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur slider.css (<= 0,2,0).'
     )
+
+    // 10. Prouver en positif que number-input.css respecte selector-max-specificity "0,2,0"
+    const numberInputCssPath = path.resolve(
+        __dirname,
+        '../../packages/styles/src/recipes/number-input.css'
+    )
+    const resultNumberInputSpec = await stylelint.lint({
+        files: numberInputCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultNumberInputSpec.errored,
+        false,
+        'number-input.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultNumberInputSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur number-input.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur number-input.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {
