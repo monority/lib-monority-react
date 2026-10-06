@@ -172,4 +172,42 @@ describe('Textarea', () => {
         const view = render(<Textarea value="Controlled" onChange={() => {}} />)
         expect(view.querySelector('textarea')?.value).toBe('Controlled')
     })
+
+    it('updates character count and removes over-limit state when characters in excess are removed', () => {
+        const view = render(<Textarea maxLength={25} defaultValue="Message presque à la limite" />)
+        const textarea = view.querySelector('textarea') as HTMLTextAreaElement
+        const counter = view.querySelector('.mr-textarea__counter')
+        expect(counter?.textContent).toBe('27 / 25')
+        expect(counter?.getAttribute('data-near-limit')).toBe('true')
+        expect(counter?.getAttribute('data-over-limit')).toBe('true')
+        expect(textarea.getAttribute('aria-invalid')).toBe('true')
+
+        // Remove the 2 characters in excess down to exact limit (25)
+        act(() => {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLTextAreaElement.prototype,
+                'value'
+            )?.set
+            nativeInputValueSetter?.call(textarea, 'Message presque à la limi')
+            textarea.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(counter?.textContent).toBe('25 / 25')
+        expect(counter?.getAttribute('data-near-limit')).toBeNull()
+        expect(counter?.getAttribute('data-over-limit')).toBeNull()
+        expect(textarea.getAttribute('aria-invalid')).toBeNull()
+
+        // Remove more characters
+        act(() => {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLTextAreaElement.prototype,
+                'value'
+            )?.set
+            nativeInputValueSetter?.call(textarea, 'Court')
+            textarea.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(counter?.textContent).toBe('5 / 25')
+        expect(counter?.getAttribute('data-near-limit')).toBeNull()
+        expect(counter?.getAttribute('data-over-limit')).toBeNull()
+        expect(textarea.getAttribute('aria-invalid')).toBeNull()
+    })
 })

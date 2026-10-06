@@ -132,7 +132,8 @@
         color: var(--mr-text-secondary);
     }
 
-    :where(.mr-textarea__counter)[data-near-limit] {
+    :where(.mr-textarea__counter)[data-near-limit],
+    :where(.mr-textarea__counter)[data-over-limit] {
         color: var(--mr-danger-solid);
         font-weight: var(--mr-font-weight-medium);
     }

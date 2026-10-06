@@ -28,7 +28,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
 ) {
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
-    const isInvalid = invalid || error != null
     const isControlled = value !== undefined
 
     // Track char count for uncontrolled
@@ -44,10 +43,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     }
 
     const currentLength = isControlled ? String(value ?? '').length : charCount
-    const isNearLimit =
-        typeof maxLength !== 'undefined' && maxLength > 0
-            ? currentLength / maxLength >= 0.85
-            : false
+    const isOverLimit =
+        typeof maxLength !== 'undefined' && maxLength > 0 ? currentLength > maxLength : false
+    const isInvalid = invalid || error != null || isOverLimit
 
     return (
         <FormControl
@@ -75,7 +73,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
                 {typeof maxLength !== 'undefined' && maxLength > 0 ? (
                     <span
                         className="mr-textarea__counter"
-                        data-near-limit={isNearLimit ? true : undefined}
+                        data-near-limit={isOverLimit ? true : undefined}
+                        data-over-limit={isOverLimit ? true : undefined}
                         aria-live="polite"
                     >
                         {currentLength} / {maxLength}

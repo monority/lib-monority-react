@@ -606,7 +606,14 @@ function TextareaHarness() {
                     defaultValue="Ceci est un texte de présentation court."
                 />
             </Sample>
-            <Sample label="compteur proche de la limite">
+            <Sample label="compteur avec limite atteinte (25/25)">
+                <Textarea
+                    label="Limite exacte"
+                    maxLength={25}
+                    defaultValue="Message de 25 caracteres!"
+                />
+            </Sample>
+            <Sample label="compteur avec dépassement de limite">
                 <Textarea
                     label="Message limité"
                     maxLength={25}

@@ -18,9 +18,9 @@ Button en premier (B1 a B6).
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
 - 4 composants finalises et integres au harness : Button, Input, Field, Textarea (recettes dans mr.components)
-- Textarea visible sur /harness/textarea et dans la navigation establishedComponents
+- Textarea : compteur de caracteres et etat d'erreur corriges (retour au noir des que les caracteres en trop sont retires)
 - 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
-- Tests rendered automatises et pnpm verify 6 etapes vert (1251 tests unitaires ui + 94 tests web)
+- Tests rendered automatises et pnpm verify 6 etapes vert (1252 tests unitaires ui + 94 tests web)
 - Prochaine etape : revue du point de controle ou suite des composants de formulaires
 
 
