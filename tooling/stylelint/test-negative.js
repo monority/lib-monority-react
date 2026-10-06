@@ -255,6 +255,26 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur date-picker.css (<= 0,2,0).'
     )
+
+    // 12. Prouver en positif que spinner.css respecte selector-max-specificity "0,2,0"
+    const spinnerCssPath = path.resolve(__dirname, '../../packages/styles/src/recipes/spinner.css')
+    const resultSpinnerSpec = await stylelint.lint({
+        files: spinnerCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultSpinnerSpec.errored,
+        false,
+        'spinner.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultSpinnerSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur spinner.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur spinner.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

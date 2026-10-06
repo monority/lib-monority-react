@@ -1,0 +1,83 @@
+/* Recette du composant Spinner (couche mr.components)
+ *
+ * Indicateur rotatif de chargement indetermine.
+ * Arc ouvert de 270 degres (bordure 2px, currentColor).
+ *
+ * Tailles :
+ * - sm : 16px (--mr-space-4)
+ * - md (defaut) : 20px (--mr-space-5)
+ * - lg : 24px (--mr-space-6)
+ *
+ * Tons :
+ * - base (defaut) : var(--mr-text-primary)
+ * - muted : var(--mr-text-secondary)
+ * - inverse : var(--mr-text-on-inverse)
+ * - accent : var(--mr-accent-solid)
+ */
+@layer mr.components {
+    :where(.mr-spinner) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        color: var(--mr-text-primary);
+        box-sizing: border-box;
+        vertical-align: middle;
+        flex-shrink: 0;
+    }
+
+    :where(.mr-spinner__ring) {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        box-sizing: border-box;
+        border: 2px solid currentColor;
+        border-inline-end-color: transparent;
+        border-radius: var(--mr-radius-full);
+        transform-origin: center;
+        will-change: transform;
+        animation: mr-spin calc(5 * var(--mr-duration-state)) linear infinite;
+    }
+
+    /* Tailles */
+    :where(.mr-spinner)[data-size='sm'] {
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-spinner)[data-size='md'],
+    :where(.mr-spinner):not([data-size]) {
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-spinner)[data-size='lg'] {
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+    }
+
+    /* Tons */
+    :where(.mr-spinner)[data-tone='base'] {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-spinner)[data-tone='muted'] {
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-spinner)[data-tone='inverse'] {
+        color: var(--mr-text-on-inverse);
+    }
+
+    :where(.mr-spinner)[data-tone='accent'] {
+        color: var(--mr-accent-solid);
+    }
+
+    /* Preference de mouvement reduit : ralentit la rotation sans la figer */
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-spinner__ring) {
+            animation-duration: calc(10 * var(--mr-duration-state));
+        }
+    }
+}

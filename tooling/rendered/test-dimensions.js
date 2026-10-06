@@ -1467,8 +1467,8 @@ export async function testControlDimensions(browser) {
     )
     assert.strictEqual(
         dpMetrics.popoverRadius,
-        6,
-        `DatePicker popover border-radius attendu a 6px, obtenu: ${dpMetrics.popoverRadius}px`
+        12,
+        `DatePicker popover border-radius attendu a 12px, obtenu: ${dpMetrics.popoverRadius}px`
     )
     assert(
         dpMetrics.dayWidth >= 28,
@@ -1485,6 +1485,79 @@ export async function testControlDimensions(browser) {
     )
 
     console.log(
-        'OK: DatePicker conforme (hauteurs 28/32/40px, paddings 12/16/20px, radius 6px, cellules >= 28px, tabular-nums).'
+        'OK: DatePicker conforme (hauteurs 28/32/40px, paddings 12/16/20px, radius 12px, cellules >= 28px, tabular-nums).'
     )
+
+    // Verification du composant Spinner (diametres 16/20/24px, ring circulaire anime mr-spin)
+    const pageSpinner = await browser.newPage()
+    await pageSpinner.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <span id="sp-sm" class="mr-spinner" data-size="sm"><span class="mr-spinner__ring"></span></span>
+            <span id="sp-md" class="mr-spinner" data-size="md"><span class="mr-spinner__ring"></span></span>
+            <span id="sp-lg" class="mr-spinner" data-size="lg"><span class="mr-spinner__ring"></span></span>
+          </body>
+        </html>
+    `)
+
+    const spMetrics = await pageSpinner.evaluate(() => {
+        const getS = (id) => {
+            const el = document.getElementById(id)
+            const ring = el.querySelector('.mr-spinner__ring')
+            const rEl = el.getBoundingClientRect()
+            const sRing = window.getComputedStyle(ring)
+            return {
+                width: Math.round(rEl.width),
+                height: Math.round(rEl.height),
+                animationName: sRing.animationName,
+                borderRadius: parseFloat(sRing.borderRadius),
+            }
+        }
+        return {
+            sm: getS('sp-sm'),
+            md: getS('sp-md'),
+            lg: getS('sp-lg'),
+        }
+    })
+    await pageSpinner.close()
+
+    assert.strictEqual(
+        spMetrics.sm.width,
+        16,
+        `Spinner sm width attendu a 16px, obtenu: ${spMetrics.sm.width}px`
+    )
+    assert.strictEqual(
+        spMetrics.sm.height,
+        16,
+        `Spinner sm height attendu a 16px, obtenu: ${spMetrics.sm.height}px`
+    )
+    assert.strictEqual(
+        spMetrics.md.width,
+        20,
+        `Spinner md width attendu a 20px, obtenu: ${spMetrics.md.width}px`
+    )
+    assert.strictEqual(
+        spMetrics.md.height,
+        20,
+        `Spinner md height attendu a 20px, obtenu: ${spMetrics.md.height}px`
+    )
+    assert.strictEqual(
+        spMetrics.lg.width,
+        24,
+        `Spinner lg width attendu a 24px, obtenu: ${spMetrics.lg.width}px`
+    )
+    assert.strictEqual(
+        spMetrics.lg.height,
+        24,
+        `Spinner lg height attendu a 24px, obtenu: ${spMetrics.lg.height}px`
+    )
+    assert.strictEqual(spMetrics.md.animationName, 'mr-spin', 'Spinner animation attendue mr-spin')
+    assert(
+        spMetrics.md.borderRadius >= 10,
+        `Spinner ring border-radius attendu >= 10px, obtenu: ${spMetrics.md.borderRadius}px`
+    )
+
+    console.log('OK: Spinner conforme (diametres 16/20/24px, animation mr-spin, ring circulaire).')
 }
