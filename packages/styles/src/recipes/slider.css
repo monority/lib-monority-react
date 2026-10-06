@@ -1,0 +1,249 @@
+/* Recette du composant Slider dans la couche mr.components.
+ * Respect strict de l'architecture CSS de Monority UI :
+ * - Specificite maximale 0,2,0 (:where() pour reduire la specificite)
+ * - Aucune valeur brute hors 0, 1px, 2px et pourcentages (Stylelint monority/no-raw-values)
+ * - Transitions regroupees sous --mr-duration-state (150ms)
+ * - Etats interactifs derives par color-mix()
+ * - Style de base neutre (ADR-020) : noir en clair, blanc en sombre
+ */
+@layer mr.components {
+    /* Champ conteneur avec libelle et messages d'aide */
+    :where(.mr-slider-field) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
+
+    /* Rangee horizontale alignant le curseur et la valeur numerique */
+    :where(.mr-slider__row) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
+
+    /* Curseur interactif natif de type range */
+    :where(.mr-slider) {
+        --mr-slider-fill: var(--mr-bg-inverse);
+        -webkit-appearance: none;
+        appearance: none;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--mr-space-6);
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        user-select: none;
+        touch-action: none;
+    }
+
+    :where(.mr-slider):focus-visible {
+        outline: none;
+    }
+
+    /* Piste WebKit / Blink */
+    :where(.mr-slider)::-webkit-slider-runnable-track {
+        width: 100%;
+        height: var(--mr-space-1);
+        border-radius: var(--mr-radius-full);
+        background: linear-gradient(
+            to right,
+            var(--mr-slider-fill, var(--mr-bg-inverse)) 0%,
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-progress, 50%),
+            var(--mr-border-control) var(--mr-slider-progress, 50%),
+            var(--mr-border-control) 100%
+        );
+        transition: background-color var(--mr-duration-state);
+    }
+
+    /* Piste Firefox */
+    :where(.mr-slider)::-moz-range-track {
+        width: 100%;
+        height: var(--mr-space-1);
+        border-radius: var(--mr-radius-full);
+        background: linear-gradient(
+            to right,
+            var(--mr-slider-fill, var(--mr-bg-inverse)) 0%,
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-progress, 50%),
+            var(--mr-border-control) var(--mr-slider-progress, 50%),
+            var(--mr-border-control) 100%
+        );
+        transition: background-color var(--mr-duration-state);
+    }
+
+    /* Pouce manipulateur WebKit */
+    :where(.mr-slider)::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        box-sizing: border-box;
+        width: var(--mr-space-4);
+        height: var(--mr-space-4);
+        border-radius: 50%;
+        background-color: var(--mr-bg-inverse);
+        border: 2px solid var(--mr-bg-canvas);
+        box-shadow: 0 0 0 1px var(--mr-border-control);
+        cursor: pointer;
+        margin-top: calc((var(--mr-space-1) - var(--mr-space-4)) / 2);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            transform var(--mr-duration-state);
+    }
+
+    /* Pouce manipulateur Firefox */
+    :where(.mr-slider)::-moz-range-thumb {
+        box-sizing: border-box;
+        width: var(--mr-space-4);
+        height: var(--mr-space-4);
+        border-radius: 50%;
+        background-color: var(--mr-bg-inverse);
+        border: 2px solid var(--mr-bg-canvas);
+        box-shadow: 0 0 0 1px var(--mr-border-control);
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            transform var(--mr-duration-state);
+    }
+
+    /* Taille sm : pouce 14px, zone interactive 20px */
+    :where(.mr-slider[data-size='sm']) {
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-slider[data-size='sm'])::-webkit-slider-thumb {
+        width: calc(var(--mr-space-4) - 2px);
+        height: calc(var(--mr-space-4) - 2px);
+        margin-top: calc((var(--mr-space-1) - (var(--mr-space-4) - 2px)) / 2);
+    }
+
+    :where(.mr-slider[data-size='sm'])::-moz-range-thumb {
+        width: calc(var(--mr-space-4) - 2px);
+        height: calc(var(--mr-space-4) - 2px);
+    }
+
+    /* Taille lg : pouce 20px, piste 6px */
+    :where(.mr-slider[data-size='lg'])::-webkit-slider-runnable-track {
+        height: calc(var(--mr-space-1) + 2px);
+    }
+
+    :where(.mr-slider[data-size='lg'])::-moz-range-track {
+        height: calc(var(--mr-space-1) + 2px);
+    }
+
+    :where(.mr-slider[data-size='lg'])::-webkit-slider-thumb {
+        width: var(--mr-space-5);
+        height: var(--mr-space-5);
+        margin-top: calc(((var(--mr-space-1) + 2px) - var(--mr-space-5)) / 2);
+    }
+
+    :where(.mr-slider[data-size='lg'])::-moz-range-thumb {
+        width: var(--mr-space-5);
+        height: var(--mr-space-5);
+    }
+
+    /* Ton neutre explicite */
+    :where(.mr-slider[data-tone='neutral']) {
+        --mr-slider-fill: var(--mr-bg-inverse);
+    }
+
+    /* Ton accent de marque */
+    :where(.mr-slider[data-tone='accent']) {
+        --mr-slider-fill: var(--mr-accent-solid);
+    }
+
+    :where(.mr-slider[data-tone='accent'])::-webkit-slider-thumb {
+        background-color: var(--mr-accent-solid);
+        box-shadow: 0 0 0 1px var(--mr-accent-solid);
+    }
+
+    :where(.mr-slider[data-tone='accent'])::-moz-range-thumb {
+        background-color: var(--mr-accent-solid);
+        box-shadow: 0 0 0 1px var(--mr-accent-solid);
+    }
+
+    /* Ton danger */
+    :where(.mr-slider[data-tone='danger']) {
+        --mr-slider-fill: var(--mr-danger-solid);
+    }
+
+    :where(.mr-slider[data-tone='danger'])::-webkit-slider-thumb {
+        background-color: var(--mr-danger-solid);
+        box-shadow: 0 0 0 1px var(--mr-danger-solid);
+    }
+
+    :where(.mr-slider[data-tone='danger'])::-moz-range-thumb {
+        background-color: var(--mr-danger-solid);
+        box-shadow: 0 0 0 1px var(--mr-danger-solid);
+    }
+
+    /* Survol */
+    :where(.mr-slider:hover:not(:where([data-disabled])))::-webkit-slider-thumb {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 1px var(--mr-text-primary);
+    }
+
+    :where(.mr-slider:hover:not(:where([data-disabled])))::-moz-range-thumb {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 1px var(--mr-text-primary);
+    }
+
+    /* Anneau de focus visible */
+    :where(.mr-slider:focus-visible)::-webkit-slider-thumb {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-slider:focus-visible)::-moz-range-thumb {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    /* Etat invalide : piste teintee danger */
+    :where(.mr-slider[data-invalid])::-webkit-slider-runnable-track {
+        background: color-mix(in oklch, var(--mr-danger-solid) 30%, var(--mr-border-control));
+    }
+
+    :where(.mr-slider[data-invalid])::-moz-range-track {
+        background: color-mix(in oklch, var(--mr-danger-solid) 30%, var(--mr-border-control));
+    }
+
+    /* Etat desactive */
+    :where(.mr-slider[data-disabled]),
+    :where(.mr-slider:disabled) {
+        cursor: not-allowed;
+    }
+
+    :where(.mr-slider[data-disabled])::-webkit-slider-thumb,
+    :where(.mr-slider:disabled)::-webkit-slider-thumb {
+        background-color: var(--mr-text-disabled);
+        box-shadow: 0 0 0 1px var(--mr-border-control);
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    :where(.mr-slider[data-disabled])::-moz-range-thumb,
+    :where(.mr-slider:disabled)::-moz-range-thumb {
+        background-color: var(--mr-text-disabled);
+        box-shadow: 0 0 0 1px var(--mr-border-control);
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Affichage numerique de la valeur courante */
+    :where(.mr-slider__value) {
+        min-inline-size: var(--mr-size-control-lg);
+        text-align: end;
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-sm);
+        font-variant-numeric: tabular-nums;
+        color: var(--mr-text-primary);
+        user-select: none;
+    }
+
+    :where(.mr-slider[data-disabled]) ~ :where(.mr-slider__value),
+    :where(.mr-slider:disabled) ~ :where(.mr-slider__value) {
+        color: var(--mr-text-disabled);
+    }
+}

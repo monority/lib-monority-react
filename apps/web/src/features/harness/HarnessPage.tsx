@@ -11,6 +11,7 @@ import {
     positionOverlay,
     RadioGroup,
     Select,
+    Slider,
     Spinner,
     Switch,
     Textarea,
@@ -951,6 +952,45 @@ function RadioGroupHarness() {
     )
 }
 
+function SliderHarness() {
+    return (
+        <>
+            <Sample label="taille sm (zone 20px, pouce 14px)">
+                <Slider size="sm" defaultValue={30} label="Luminosité sm" />
+            </Sample>
+            <Sample label="taille md (défaut, zone 24px, pouce 16px)">
+                <Slider size="md" defaultValue={50} label="Volume principal" />
+            </Sample>
+            <Sample label="taille lg (zone 24px, pouce 20px, piste 6px)">
+                <Slider size="lg" defaultValue={75} label="Zoom lg" />
+            </Sample>
+            <Sample label="ton neutre (défaut, noir/blanc)">
+                <Slider tone="neutral" defaultValue={50} label="Contraste neutre" />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <Slider tone="accent" defaultValue={65} label="Progression accent" />
+            </Sample>
+            <Sample label="ton danger">
+                <Slider tone="danger" defaultValue={85} label="Niveau critique" />
+            </Sample>
+            <Sample label="invalide (avec message d'erreur)">
+                <Slider
+                    invalid
+                    defaultValue={95}
+                    label="Seuil d'alerte"
+                    error="La valeur dépasse le seuil autorisé (90)."
+                />
+            </Sample>
+            <Sample label="désactivé (pouce et piste gris visibles)">
+                <Slider disabled defaultValue={40} label="Paramètre verrouillé" />
+            </Sample>
+            <Sample label="sans affichage de valeur (showValue=false)">
+                <Slider showValue={false} defaultValue={60} label="Sensibilité" />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -959,6 +999,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     checkbox: CheckboxHarness,
     switch: SwitchHarness,
     'radio-group': RadioGroupHarness,
+    slider: SliderHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -975,6 +1016,7 @@ const establishedComponents = [
     { slug: 'checkbox', label: 'Checkbox' },
     { slug: 'switch', label: 'Switch' },
     { slug: 'radio-group', label: 'RadioGroup' },
+    { slug: 'slider', label: 'Slider' },
     { slug: 'field', label: 'Field' },
 ] as const
 

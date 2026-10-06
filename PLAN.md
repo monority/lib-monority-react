@@ -17,9 +17,10 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 8 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Field (recettes dans mr.components)
-- RadioGroup : recette dans recipes/radio-group.css, ton neutre par defaut (ADR-020), cercle 16px sm/md, 20px lg, point central 40% (scale+opacity), contour et point gris visibles a l'etat desactive
+- 9 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, Field (recettes dans mr.components)
+- Slider : recette dans recipes/slider.css, ton neutre par defaut (ADR-020), accent et danger, progression dynamique --mr-slider-progress, piste 4px sm/md et 6px lg, pouce 14px sm, 16px md, 20px lg, pouce et piste gris visibles au desactive
+- Token semantique ajoute : --mr-space-1 (4px = 0.25rem) dans semantic.css
 - Tests de dimensions Playwright et test negatif de specificite Stylelint ajoutes
 - 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
-- Tests rendered automatises et pnpm verify vert (1254 tests unitaires ui + 94 tests web)
-- Prochaine etape : composant suivant de la famille formulaire (Slider ou autre)
+- Tests rendered automatises et pnpm verify vert (1256 tests unitaires ui + 94 tests web)
+- Prochaine etape : composant suivant de la famille formulaire (PasswordInput, NumberInput ou composant complexe)

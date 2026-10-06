@@ -34,8 +34,33 @@ describe('Slider', () => {
 
         expect(input?.type).toBe('range')
         expect(input?.getAttribute('data-size')).toBe('md')
+        expect(input?.getAttribute('data-tone')).toBe('neutral')
         expect(input?.className).toContain('mr-slider')
         expect(output?.textContent).toBe('50')
+    })
+
+    it('applies tones correctly', () => {
+        expect(
+            render(<Slider tone="accent" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('accent')
+        expect(
+            render(<Slider tone="danger" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('danger')
+        expect(
+            render(<Slider tone="neutral" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('neutral')
+    })
+
+    it('calculates --mr-slider-progress variable', () => {
+        const view = render(<Slider value={25} min={0} max={100} />)
+        const input = view.querySelector('input') as HTMLInputElement
+        expect(input?.style.getPropertyValue('--mr-slider-progress')).toBe('25%')
     })
 
     it('maps disabled, required and error states', () => {

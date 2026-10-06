@@ -1,5 +1,6 @@
 import type { InputHTMLAttributes, ReactNode } from 'react'
 
+export type SliderTone = 'neutral' | 'accent' | 'danger'
 export type SliderSize = 'sm' | 'md' | 'lg'
 
 export interface SliderProps
@@ -7,6 +8,7 @@ export interface SliderProps
         InputHTMLAttributes<HTMLInputElement>,
         'type' | 'size' | 'value' | 'defaultValue' | 'onChange'
     > {
+    tone?: SliderTone
     size?: SliderSize
     label?: ReactNode
     hint?: ReactNode

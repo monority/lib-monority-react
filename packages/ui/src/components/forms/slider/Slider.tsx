@@ -7,6 +7,7 @@ import type { SliderProps } from './Slider.types'
 
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
     {
+        tone,
         size,
         label,
         hint,
@@ -14,6 +15,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
         id,
         className,
         inputClassName,
+        style,
         value,
         defaultValue = 50,
         min = 0,
@@ -33,6 +35,16 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
     const isControlled = value !== undefined
     const isInvalid = invalid || Boolean(error)
     const displayValue = isControlled ? value : internalValue
+    const resolvedTone = tone ?? 'neutral'
+
+    const numMin = typeof min === 'number' ? min : Number(min ?? 0)
+    const numMax = typeof max === 'number' ? max : Number(max ?? 100)
+    const numValue =
+        typeof displayValue === 'number' ? displayValue : Number(displayValue ?? numMin)
+    const progressPercent =
+        numMax > numMin
+            ? Math.min(100, Math.max(0, ((numValue - numMin) / (numMax - numMin)) * 100))
+            : 0
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const nextValue = Number(event.target.value)
@@ -45,6 +57,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
         <FormControl
             id={id}
             size={size}
+            tone={resolvedTone}
             hint={!!hint}
             error={!!error}
             disabled={disabled}
@@ -63,6 +76,10 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
                         type="range"
                         ref={ref}
                         className={cn('mr-slider', inputClassName)}
+                        style={{
+                            ...style,
+                            ['--mr-slider-progress' as string]: `${progressPercent}%`,
+                        }}
                         min={min}
                         max={max}
                         step={step}
@@ -82,4 +99,4 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
     )
 })
 
-export type { SliderProps, SliderSize } from './Slider.types'
+export type { SliderProps, SliderSize, SliderTone } from './Slider.types'

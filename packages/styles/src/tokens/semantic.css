@@ -51,6 +51,7 @@
          * space-3 (12px = 0.75rem) pour sm (28px = 1.75rem),
          * space-4 (16px = 1.0rem) pour md (32px = 2.0rem),
          * space-5 (20px = 1.25rem) pour lg (40px = 2.5rem). */
+        --mr-space-1: 0.25rem;
         --mr-space-2: 0.5rem;
         --mr-space-3: 0.75rem;
         --mr-space-4: 1rem;

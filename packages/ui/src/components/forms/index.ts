@@ -56,6 +56,6 @@ export { NumberInput, type NumberInputProps, type NumberInputSize } from './numb
 export { PasswordInput, type PasswordInputProps, type PasswordInputSize } from './password-input'
 export { RadioGroup } from './radio-group'
 export { Select, type SelectProps, type SelectTone, type SelectSize } from './select'
-export { Slider, type SliderProps, type SliderSize } from './slider'
+export { Slider, type SliderProps, type SliderSize, type SliderTone } from './slider'
 export { Switch } from './switch'
 export { Textarea, type TextareaProps, type TextareaTone, type TextareaSize } from './textarea'

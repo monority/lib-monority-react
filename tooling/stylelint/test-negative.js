@@ -189,6 +189,26 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur radio-group.css (<= 0,2,0).'
     )
+
+    // 9. Prouver en positif que slider.css respecte selector-max-specificity "0,2,0"
+    const sliderCssPath = path.resolve(__dirname, '../../packages/styles/src/recipes/slider.css')
+    const resultSliderSpec = await stylelint.lint({
+        files: sliderCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultSliderSpec.errored,
+        false,
+        'slider.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultSliderSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur slider.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur slider.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

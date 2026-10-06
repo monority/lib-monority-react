@@ -1134,4 +1134,92 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: RadioGroup conforme (cercle 16px sm/md, 20px lg, row-height >= 24px, dot visible, input accessible).'
     )
+
+    // 21. Dimensions et geometrie Slider
+    const pageSlider = await browser.newPage()
+    await pageSlider.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="font-family: sans-serif; padding: 20px;">
+            <div id="sl-sm" class="mr-slider-field">
+              <div class="mr-slider__row">
+                <input type="range" class="mr-slider" data-size="sm" value="30" />
+                <output class="mr-slider__value">30</output>
+              </div>
+            </div>
+            <div id="sl-md" class="mr-slider-field">
+              <div class="mr-slider__row">
+                <input type="range" class="mr-slider" data-size="md" value="50" />
+                <output class="mr-slider__value">50</output>
+              </div>
+            </div>
+            <div id="sl-lg" class="mr-slider-field">
+              <div class="mr-slider__row">
+                <input type="range" class="mr-slider" data-size="lg" value="80" />
+                <output class="mr-slider__value">80</output>
+              </div>
+            </div>
+          </body>
+        </html>
+    `)
+
+    const sliderMetrics = await pageSlider.evaluate(() => {
+        const getM = (id) => {
+            const el = document.getElementById(id)
+            const input = el.querySelector('.mr-slider')
+            const value = el.querySelector('.mr-slider__value')
+            const rInput = input.getBoundingClientRect()
+            const rValue = value.getBoundingClientRect()
+            const sInput = window.getComputedStyle(input)
+            const sValue = window.getComputedStyle(value)
+
+            return {
+                inputHeight: Math.round(rInput.height),
+                valueWidth: Math.round(rValue.width),
+                valueHeight: Math.round(rValue.height),
+                fontVariantNumeric: sValue.fontVariantNumeric,
+                appearance: sInput.appearance,
+            }
+        }
+        return {
+            sm: getM('sl-sm'),
+            md: getM('sl-md'),
+            lg: getM('sl-lg'),
+        }
+    })
+
+    assert.strictEqual(
+        sliderMetrics.sm.inputHeight,
+        20,
+        `Slider sm input height attendu a 20px, obtenu: ${sliderMetrics.sm.inputHeight}px`
+    )
+    assert.strictEqual(
+        sliderMetrics.md.inputHeight,
+        24,
+        `Slider md input height attendu a 24px, obtenu: ${sliderMetrics.md.inputHeight}px`
+    )
+    assert.strictEqual(
+        sliderMetrics.lg.inputHeight,
+        24,
+        `Slider lg input height attendu a 24px, obtenu: ${sliderMetrics.lg.inputHeight}px`
+    )
+    assert(
+        sliderMetrics.md.valueWidth >= 40,
+        `Slider value min-width attendu >= 40px, obtenu: ${sliderMetrics.md.valueWidth}px`
+    )
+    assert.strictEqual(
+        sliderMetrics.md.appearance,
+        'none',
+        'Slider input appearance doit etre none'
+    )
+    assert.strictEqual(
+        sliderMetrics.md.fontVariantNumeric,
+        'tabular-nums',
+        'Slider value font-variant-numeric doit etre tabular-nums'
+    )
+
+    console.log(
+        'OK: Slider conforme (zone interactive 20px sm / 24px md/lg, appearance: none, value tabular-nums >= 40px).'
+    )
 }
