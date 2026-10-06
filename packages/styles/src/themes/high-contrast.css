@@ -1,0 +1,33 @@
+/* Theme High Contrast dans la couche mr.themes.
+ * Rehausse au standard WCAG AAA pour basse vision et forte luminosite ambiante.
+ * Fond blanc pur, textes renforces, bordure de controle 7.4:1 au repos (WCAG AAA >= 7:1)
+ * et accent a fort contraste (> 9.3:1). */
+@layer mr.themes {
+    :where([data-theme='high-contrast']) {
+        color-scheme: light;
+
+        /* Primitives de neutres (noir/blanc pur, chroma 0) */
+        --mr-ref-neutral-hue: 0;
+        --mr-ref-neutral-chroma: 0;
+
+        /* Fonds : canevas blanc absolu et fond creuse blanc */
+        --mr-bg-canvas: oklch(1 0 0);
+        --mr-bg-sunken: oklch(1 0 0);
+
+        /* Textes : noir intense (ratio 20.6:1) et secondaire renforce (ratio 13.6:1, AAA) */
+        --mr-text-primary: oklch(0.1 0 0);
+        --mr-text-secondary: oklch(0.3 0 0);
+
+        /* Texte desactive : ratio 6.0:1 (superieur au seuil WCAG AA 4.5:1) */
+        --mr-text-disabled: oklch(0.5 0 0);
+
+        /* Bordure de controle : ratio 7.44:1 (conforme a l'exigence WCAG AAA 7:1) */
+        --mr-border-control: oklch(0.45 0 0);
+
+        /* Levier de luminosite de l'accent : fort contraste (> 9.3:1) sur canevas clair */
+        --mr-ref-accent-lightness: 0.38;
+
+        /* Danger : rouge profond solid ratio 8.55:1 sur canevas blanc */
+        --mr-danger-solid: oklch(0.42 0.2 25);
+    }
+}

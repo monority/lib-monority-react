@@ -8,6 +8,7 @@
 @import './themes/slate.css';
 @import './themes/ocean.css';
 @import './themes/night.css';
+@import './themes/high-contrast.css';
 @import './recipes/button.css';
 @import './recipes/input.css';
 @import './recipes/field.css';

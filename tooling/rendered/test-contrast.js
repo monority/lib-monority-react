@@ -300,6 +300,7 @@ export async function testContrast(browser) {
     )
 
     const layersPath = path.join(ROOT, 'packages/styles/src/layers.css')
+    const canvasPath = path.join(ROOT, 'packages/styles/src/base/canvas.css')
     const colorSchemePath = path.join(ROOT, 'packages/styles/src/base/color-scheme.css')
     const refPath = path.join(ROOT, 'packages/styles/src/tokens/ref.css')
     const semanticPath = path.join(ROOT, 'packages/styles/src/tokens/semantic.css')
@@ -310,6 +311,7 @@ export async function testContrast(browser) {
 
     if (
         !fs.existsSync(layersPath) ||
+        !fs.existsSync(canvasPath) ||
         !fs.existsSync(colorSchemePath) ||
         !fs.existsSync(semanticPath) ||
         !fs.existsSync(refPath) ||
@@ -323,6 +325,7 @@ export async function testContrast(browser) {
     }
 
     const layersCss = fs.readFileSync(layersPath, 'utf8')
+    const canvasCss = fs.readFileSync(canvasPath, 'utf8')
     const colorSchemeCss = fs.readFileSync(colorSchemePath, 'utf8')
 
     const refCss = fs.readFileSync(refPath, 'utf8')
@@ -371,6 +374,13 @@ export async function testContrast(browser) {
             "slate.css doit utiliser le selecteur :where([data-theme='slate'])"
         )
     }
+    const hcCss = themeCssMap.get('high-contrast.css')
+    if (hcCss) {
+        assert(
+            hcCss.includes(":where([data-theme='high-contrast'])"),
+            "high-contrast.css doit utiliser le selecteur :where([data-theme='high-contrast'])"
+        )
+    }
     console.log(
         'OK: Declarations de portee et selecteurs conformes dans semantic.css, ref.css et themes/.'
     )
@@ -378,6 +388,7 @@ export async function testContrast(browser) {
     const themesCss = Array.from(themeCssMap.values()).join('\n')
     const fullCss = `
         ${layersCss}
+        ${canvasCss}
         ${colorSchemeCss}
         ${refCss}
         ${semanticCss}
@@ -1266,6 +1277,9 @@ export async function testContrast(browser) {
         <div data-theme="night" id="night-root">
             <button class="mr-btn" id="btn-night">Night</button>
         </div>
+        <div data-theme="high-contrast" id="high-contrast-root">
+            <button class="mr-btn" id="btn-hc">High Contrast</button>
+        </div>
     `)
 
     // 1. Light dans Dark
@@ -1390,6 +1404,21 @@ export async function testContrast(browser) {
     console.log(`- night-theme : color-scheme = ${nightCs}, canvas = ${nightCanvas}`)
     assert.strictEqual(nightCs, 'dark', 'night doit resoudre color-scheme: dark')
     assert(nightCanvas.includes('0.226'), 'night canvas doit valoir 0.226 (Tokyo Night #1a1b26)')
+
+    // 8. High Contrast theme
+    const hcCs = await pageNested.$eval(
+        '#high-contrast-root',
+        (el) => window.getComputedStyle(el).colorScheme
+    )
+    const hcCanvas = await pageNested.$eval('#high-contrast-root', (el) =>
+        window.getComputedStyle(el).getPropertyValue('--mr-bg-canvas').trim()
+    )
+    console.log(`- high-contrast-theme : color-scheme = ${hcCs}, canvas = ${hcCanvas}`)
+    assert.strictEqual(hcCs, 'light', 'high-contrast doit resoudre color-scheme: light')
+    assert(
+        hcCanvas.includes('1 0 0') || hcCanvas === 'oklch(1 0 0)',
+        'high-contrast canvas doit valoir oklch(1 0 0)'
+    )
 
     await pageNested.close()
 }
