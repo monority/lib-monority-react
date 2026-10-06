@@ -2,6 +2,10 @@
  *
  * Controle de selection binaire ou indeterminee.
  *
+ * Style de base neutre (ADR-020) :
+ * - Coche et tiret neutres par defaut (--mr-bg-inverse, --mr-text-on-inverse)
+ * - Couleur de marque (--mr-accent-solid) reservee a la variante explicite data-tone="accent"
+ *
  * Dimensions de la boite :
  * - sm : 16px (inline-size / block-size: --mr-space-4)
  * - md (defaut) : 16px (inline-size / block-size: --mr-space-4)
@@ -66,15 +70,15 @@
         transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
     }
 
-    /* Glyphe de coche (via pseudo-element) */
+    /* Glyphe de coche (via pseudo-element, couleur neutre par defaut) */
     :where(.mr-checkbox__control)::after {
         content: '';
         display: block;
         box-sizing: border-box;
         inline-size: 45%;
         block-size: 70%;
-        border-inline-end: 2px solid var(--mr-bg-canvas);
-        border-block-end: 2px solid var(--mr-bg-canvas);
+        border-inline-end: 2px solid var(--mr-text-on-inverse);
+        border-block-end: 2px solid var(--mr-text-on-inverse);
         transform: translateY(-10%) rotate(45deg);
         opacity: 0;
         transition: opacity var(--mr-duration-state);
@@ -91,11 +95,11 @@
         block-size: var(--mr-space-5);
     }
 
-    /* Etat coche */
+    /* Etat coche neutre par defaut (ADR-020 : noir en clair, blanc en sombre) */
     :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control),
     :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control) {
-        background-color: var(--mr-accent-solid);
-        border-color: var(--mr-accent-solid);
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
     }
 
     :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control)::after,
@@ -103,26 +107,43 @@
         opacity: 1;
     }
 
-    /* Etat indetermine (tiret horizontal) */
+    /* Etat indetermine neutre par defaut (tiret horizontal) */
     :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control) {
-        background-color: var(--mr-accent-solid);
-        border-color: var(--mr-accent-solid);
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
     }
 
     :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control)::after {
         inline-size: 60%;
         block-size: 0;
         border-inline-end: 0;
-        border-block-end: 2px solid var(--mr-bg-canvas);
+        border-block-end: 2px solid var(--mr-text-on-inverse);
         transform: none;
         opacity: 1;
     }
 
-    /* Ton neutre */
+    /* Ton neutre explicite */
     :where(.mr-checkbox[data-tone='neutral'][data-checked]) :where(.mr-checkbox__control),
     :where(.mr-checkbox[data-tone='neutral'][data-indeterminate]) :where(.mr-checkbox__control) {
         background-color: var(--mr-bg-inverse);
         border-color: var(--mr-bg-inverse);
+    }
+
+    /* Ton accent (variante explicite de marque) */
+    :where(.mr-checkbox[data-tone='accent'][data-checked]) :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='accent'][data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-checkbox[data-tone='accent'][data-checked]) :where(.mr-checkbox__control)::after {
+        border-inline-end-color: var(--mr-bg-canvas);
+        border-block-end-color: var(--mr-bg-canvas);
+    }
+
+    :where(.mr-checkbox[data-tone='accent'][data-indeterminate])
+        :where(.mr-checkbox__control)::after {
+        border-block-end-color: var(--mr-bg-canvas);
     }
 
     /* Ton danger */
@@ -136,6 +157,16 @@
         border-color: var(--mr-danger-solid);
     }
 
+    :where(.mr-checkbox[data-tone='danger'][data-checked]) :where(.mr-checkbox__control)::after {
+        border-inline-end-color: var(--mr-bg-canvas);
+        border-block-end-color: var(--mr-bg-canvas);
+    }
+
+    :where(.mr-checkbox[data-tone='danger'][data-indeterminate])
+        :where(.mr-checkbox__control)::after {
+        border-block-end-color: var(--mr-bg-canvas);
+    }
+
     /* Survol non coche au repos */
     :where(.mr-checkbox:hover:not(:where([data-disabled]))) :where(.mr-checkbox__control) {
         border-color: color-mix(
@@ -145,36 +176,36 @@
         );
     }
 
-    /* Survol coche accent */
+    /* Survol coche neutre (defaut) */
     :where(.mr-checkbox[data-checked]:hover:not(:where([data-disabled])))
         :where(.mr-checkbox__control),
     :where(.mr-checkbox[data-indeterminate]:hover:not(:where([data-disabled])))
         :where(.mr-checkbox__control) {
         background-color: color-mix(
             in oklch,
-            var(--mr-accent-solid),
+            var(--mr-bg-inverse),
             var(--mr-bg-canvas) var(--mr-state-hover-mix)
         );
         border-color: color-mix(
             in oklch,
-            var(--mr-accent-solid),
+            var(--mr-bg-inverse),
             var(--mr-bg-canvas) var(--mr-state-hover-mix)
         );
     }
 
-    /* Survol coche neutral */
-    :where(.mr-checkbox[data-tone='neutral'][data-checked]:hover:not(:where([data-disabled])))
+    /* Survol coche accent */
+    :where(.mr-checkbox[data-tone='accent'][data-checked]:hover:not(:where([data-disabled])))
         :where(.mr-checkbox__control),
-    :where(.mr-checkbox[data-tone='neutral'][data-indeterminate]:hover:not(:where([data-disabled])))
+    :where(.mr-checkbox[data-tone='accent'][data-indeterminate]:hover:not(:where([data-disabled])))
         :where(.mr-checkbox__control) {
         background-color: color-mix(
             in oklch,
-            var(--mr-bg-inverse),
+            var(--mr-accent-solid),
             var(--mr-bg-canvas) var(--mr-state-hover-mix)
         );
         border-color: color-mix(
             in oklch,
-            var(--mr-bg-inverse),
+            var(--mr-accent-solid),
             var(--mr-bg-canvas) var(--mr-state-hover-mix)
         );
     }
@@ -234,6 +265,22 @@
 
     :where(.mr-checkbox[data-disabled][data-checked]) :where(.mr-checkbox__control),
     :where(.mr-checkbox[data-disabled][data-indeterminate]) :where(.mr-checkbox__control) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-checkbox[data-tone='accent'][data-disabled][data-checked])
+        :where(.mr-checkbox__control),
+    :where(.mr-checkbox[data-tone='accent'][data-disabled][data-indeterminate])
+        :where(.mr-checkbox__control) {
         background-color: color-mix(
             in oklch,
             var(--mr-accent-solid),

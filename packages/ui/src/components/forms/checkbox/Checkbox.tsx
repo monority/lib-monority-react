@@ -25,7 +25,7 @@ const CheckboxInner = forwardRef<HTMLInputElement, Omit<CheckboxProps, 'id'>>(
         ref
     ) {
         const ctx = useFormControl()
-        const resolvedTone = tone ?? 'accent'
+        const resolvedTone = tone ?? 'neutral'
         const resolvedSize = size ?? 'md'
         const isInvalid = invalid || Boolean(error)
 

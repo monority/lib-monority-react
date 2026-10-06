@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
     Button,
@@ -755,6 +755,19 @@ function SelectHarness() {
     )
 }
 
+function InvalidCheckboxSample() {
+    const [accepted, setAccepted] = useState(false)
+    return (
+        <Checkbox
+            checked={accepted}
+            onChange={(e) => setAccepted(e.target.checked)}
+            invalid={!accepted}
+            label="Consentement obligatoire (cliquez pour valider)"
+            error={!accepted ? 'Vous devez accepter pour continuer.' : undefined}
+        />
+    )
+}
+
 function CheckboxHarness() {
     return (
         <>
@@ -767,27 +780,23 @@ function CheckboxHarness() {
             <Sample label="taille lg">
                 <Checkbox size="lg" label="Option lg (boîte 20px, texte 14px)" />
             </Sample>
-            <Sample label="coché par défaut">
+            <Sample label="coché neutre (défaut)">
                 <Checkbox defaultChecked label="Accepter les conditions d'utilisation" />
             </Sample>
-            <Sample label="indéterminé (sélection partielle)">
+            <Sample label="indéterminé neutre (défaut)">
                 <Checkbox indeterminate label="3 sur 8 éléments sélectionnés" />
             </Sample>
-            <Sample label="ton accent (défaut)">
-                <Checkbox tone="accent" defaultChecked label="Ton accent" />
+            <Sample label="ton neutre (défaut)">
+                <Checkbox tone="neutral" defaultChecked label="Ton neutre (noir/blanc)" />
             </Sample>
-            <Sample label="ton neutre">
-                <Checkbox tone="neutral" defaultChecked label="Ton neutre" />
+            <Sample label="ton accent (marque)">
+                <Checkbox tone="accent" defaultChecked label="Ton accent (marque)" />
             </Sample>
             <Sample label="ton danger">
                 <Checkbox tone="danger" defaultChecked label="Supprimer définitivement" />
             </Sample>
-            <Sample label="invalide (erreur)">
-                <Checkbox
-                    invalid
-                    label="Consentement obligatoire"
-                    error="Vous devez accepter pour continuer."
-                />
+            <Sample label="invalide (se valide au clic)">
+                <InvalidCheckboxSample />
             </Sample>
             <Sample label="avec description d'aide (hint)">
                 <Checkbox
@@ -799,10 +808,10 @@ function CheckboxHarness() {
             <Sample label="désactivé non coché">
                 <Checkbox disabled label="Option indisponible" />
             </Sample>
-            <Sample label="désactivé coché">
+            <Sample label="désactivé coché neutre">
                 <Checkbox disabled defaultChecked label="Option requise par l'organisation" />
             </Sample>
-            <Sample label="désactivé indéterminé">
+            <Sample label="désactivé indéterminé neutre">
                 <Checkbox disabled indeterminate label="Sélection partielle verrouillée" />
             </Sample>
             <Sample label="sans libellé (aria-label)">
