@@ -4,6 +4,7 @@ import {
     Button,
     Checkbox,
     CopyButton,
+    DatePicker,
     Field,
     IconButton,
     Input,
@@ -1040,6 +1041,57 @@ function NumberInputHarness() {
     )
 }
 
+function DatePickerHarness() {
+    return (
+        <>
+            <Sample label="taille sm (hauteur 28px)">
+                <DatePicker size="sm" defaultValue={new Date(2025, 5, 15)} label="Date sm" />
+            </Sample>
+            <Sample label="taille md (défaut, hauteur 32px)">
+                <DatePicker
+                    size="md"
+                    defaultValue={new Date(2025, 5, 15)}
+                    label="Date de réservation"
+                />
+            </Sample>
+            <Sample label="taille lg (hauteur 40px)">
+                <DatePicker size="lg" defaultValue={new Date(2025, 5, 15)} label="Date lg" />
+            </Sample>
+            <Sample label="ton neutre (défaut ADR-020)">
+                <DatePicker
+                    tone="neutral"
+                    defaultValue={new Date(2025, 5, 15)}
+                    label="Ton neutre"
+                />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <DatePicker tone="accent" defaultValue={new Date(2025, 5, 15)} label="Ton accent" />
+            </Sample>
+            <Sample label="ton danger">
+                <DatePicker tone="danger" defaultValue={new Date(2025, 5, 15)} label="Ton danger" />
+            </Sample>
+            <Sample label="avec placeholder (champ vide)">
+                <DatePicker placeholder="Sélectionner une date..." label="Événement" />
+            </Sample>
+            <Sample label="invalide (avec message d'erreur)">
+                <DatePicker
+                    invalid
+                    defaultValue={new Date(2024, 0, 1)}
+                    label="Date de départ"
+                    error="La date doit être postérieure à aujourd'hui."
+                />
+            </Sample>
+            <Sample label="désactivé">
+                <DatePicker
+                    disabled
+                    defaultValue={new Date(2025, 5, 15)}
+                    label="Date verrouillée"
+                />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1050,6 +1102,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     'radio-group': RadioGroupHarness,
     slider: SliderHarness,
     'number-input': NumberInputHarness,
+    'date-picker': DatePickerHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -1068,6 +1121,7 @@ const establishedComponents = [
     { slug: 'radio-group', label: 'RadioGroup' },
     { slug: 'slider', label: 'Slider' },
     { slug: 'number-input', label: 'NumberInput' },
+    { slug: 'date-picker', label: 'DatePicker' },
     { slug: 'field', label: 'Field' },
 ] as const
 

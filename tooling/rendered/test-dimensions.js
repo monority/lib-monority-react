@@ -1344,4 +1344,147 @@ export async function testControlDimensions(browser) {
     console.log(
         'OK: NumberInput conforme (hauteurs 28/32/40px, paddings 12/16/20px, radius 6px, tabular-nums, 2 boutons integres).'
     )
+
+    // Verification du composant DatePicker (declencheur 28/32/40px, padding 12/16/20px, radius 6px, grille cellules >= 28px, tabular-nums)
+    const pageDatePicker = await browser.newPage()
+    await pageDatePicker.setContent(`
+        <!DOCTYPE html>
+        <html data-theme="light">
+          <head><style>${distCss}</style></head>
+          <body style="margin: 0; padding: 20px;">
+            <div class="mr-datepicker-wrapper">
+              <div id="dp-sm" class="mr-datepicker" data-size="sm">
+                <input type="text" readonly class="mr-datepicker__trigger" value="2026-10-06" />
+                <span class="mr-datepicker__icon"><svg width="14" height="14"></svg></span>
+              </div>
+            </div>
+            <div class="mr-datepicker-wrapper">
+              <div id="dp-md" class="mr-datepicker" data-size="md">
+                <input type="text" readonly class="mr-datepicker__trigger" value="2026-10-06" />
+                <span class="mr-datepicker__icon"><svg width="14" height="14"></svg></span>
+              </div>
+            </div>
+            <div class="mr-datepicker-wrapper">
+              <div id="dp-lg" class="mr-datepicker" data-size="lg">
+                <input type="text" readonly class="mr-datepicker__trigger" value="2026-10-06" />
+                <span class="mr-datepicker__icon"><svg width="14" height="14"></svg></span>
+              </div>
+            </div>
+            <div id="dp-popover" class="mr-datepicker__popover" data-size="md">
+              <div class="mr-datepicker__header">
+                <button type="button" class="mr-datepicker__nav-btn" aria-label="Previous month">&lt;</button>
+                <span class="mr-datepicker__month-label">Octobre 2026</span>
+                <button type="button" class="mr-datepicker__nav-btn" aria-label="Next month">&gt;</button>
+              </div>
+              <div class="mr-datepicker__grid" role="grid">
+                <button type="button" class="mr-datepicker__day" id="dp-day-1">1</button>
+                <button type="button" class="mr-datepicker__day" data-selected="true" id="dp-day-selected">6</button>
+                <button type="button" class="mr-datepicker__day" data-today="true" id="dp-day-today">15</button>
+              </div>
+            </div>
+          </body>
+        </html>
+    `)
+
+    const dpMetrics = await pageDatePicker.evaluate(() => {
+        const getTrigger = (id) => {
+            const el = document.getElementById(id)
+            const trigger = el.querySelector('.mr-datepicker__trigger')
+            const icon = el.querySelector('.mr-datepicker__icon')
+            const rTrigger = trigger.getBoundingClientRect()
+            const sTrigger = window.getComputedStyle(trigger)
+            const rIcon = icon.getBoundingClientRect()
+            return {
+                height: Math.round(rTrigger.height),
+                paddingLeft: Math.round(parseFloat(sTrigger.paddingLeft)),
+                borderRadius: Math.round(parseFloat(sTrigger.borderRadius)),
+                cursor: sTrigger.cursor,
+                iconWidth: Math.round(rIcon.width),
+                iconHeight: Math.round(rIcon.height),
+            }
+        }
+        const popover = document.getElementById('dp-popover')
+        const sPopover = window.getComputedStyle(popover)
+        const day = document.getElementById('dp-day-1')
+        const rDay = day.getBoundingClientRect()
+        const sDay = window.getComputedStyle(day)
+
+        return {
+            sm: getTrigger('dp-sm'),
+            md: getTrigger('dp-md'),
+            lg: getTrigger('dp-lg'),
+            popoverRadius: Math.round(parseFloat(sPopover.borderRadius)),
+            dayWidth: Math.round(rDay.width),
+            dayHeight: Math.round(rDay.height),
+            dayFontVariantNumeric: sDay.fontVariantNumeric,
+        }
+    })
+    await pageDatePicker.close()
+
+    assert.strictEqual(
+        dpMetrics.sm.height,
+        28,
+        `DatePicker sm trigger height attendu a 28px, obtenu: ${dpMetrics.sm.height}px`
+    )
+    assert.strictEqual(
+        dpMetrics.md.height,
+        32,
+        `DatePicker md trigger height attendu a 32px, obtenu: ${dpMetrics.md.height}px`
+    )
+    assert.strictEqual(
+        dpMetrics.lg.height,
+        40,
+        `DatePicker lg trigger height attendu a 40px, obtenu: ${dpMetrics.lg.height}px`
+    )
+    assert.strictEqual(
+        dpMetrics.sm.paddingLeft,
+        12,
+        `DatePicker sm padding-left attendu a 12px, obtenu: ${dpMetrics.sm.paddingLeft}px`
+    )
+    assert.strictEqual(
+        dpMetrics.md.paddingLeft,
+        16,
+        `DatePicker md padding-left attendu a 16px, obtenu: ${dpMetrics.md.paddingLeft}px`
+    )
+    assert.strictEqual(
+        dpMetrics.lg.paddingLeft,
+        20,
+        `DatePicker lg padding-left attendu a 20px, obtenu: ${dpMetrics.lg.paddingLeft}px`
+    )
+    assert.strictEqual(
+        dpMetrics.md.borderRadius,
+        6,
+        `DatePicker border-radius attendu a 6px, obtenu: ${dpMetrics.md.borderRadius}px`
+    )
+    assert.strictEqual(
+        dpMetrics.md.cursor,
+        'pointer',
+        'DatePicker trigger cursor doit etre pointer'
+    )
+    assert(
+        dpMetrics.md.iconWidth >= 14,
+        `DatePicker icone attendue >= 14px, obtenu: ${dpMetrics.md.iconWidth}px`
+    )
+    assert.strictEqual(
+        dpMetrics.popoverRadius,
+        6,
+        `DatePicker popover border-radius attendu a 6px, obtenu: ${dpMetrics.popoverRadius}px`
+    )
+    assert(
+        dpMetrics.dayWidth >= 28,
+        `DatePicker day cell width attendue >= 28px, obtenu: ${dpMetrics.dayWidth}px`
+    )
+    assert(
+        dpMetrics.dayHeight >= 28,
+        `DatePicker day cell height attendue >= 28px, obtenu: ${dpMetrics.dayHeight}px`
+    )
+    assert.strictEqual(
+        dpMetrics.dayFontVariantNumeric,
+        'tabular-nums',
+        'DatePicker day font-variant-numeric doit etre tabular-nums'
+    )
+
+    console.log(
+        'OK: DatePicker conforme (hauteurs 28/32/40px, paddings 12/16/20px, radius 6px, cellules >= 28px, tabular-nums).'
+    )
 }

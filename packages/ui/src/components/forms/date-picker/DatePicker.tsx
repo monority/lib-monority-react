@@ -364,6 +364,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
         inputClassName,
         disabled = false,
         required = false,
+        invalid = false,
         value,
         defaultValue,
         onChange,
@@ -396,7 +397,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
 
     const resolvedSize = size ?? 'md'
     const resolvedTone = tone ?? 'neutral'
-    const isInvalid = Boolean(error)
+    const isInvalid = invalid || Boolean(error)
 
     // Sync controlled value
     useEffect(() => {
@@ -563,6 +564,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                               ref={popoverRef}
                               className={cn('mr-datepicker__popover', popoverClassName)}
                               data-size={resolvedSize}
+                              data-tone={resolvedTone}
                               role="dialog"
                               aria-label="Choose date"
                               style={{

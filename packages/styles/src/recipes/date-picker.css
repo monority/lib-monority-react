@@ -1,0 +1,368 @@
+/* Recette du composant DatePicker (couche mr.components)
+ *
+ * Micro-etape : selecteur de date avec declencheur input et surface flottante popover.
+ *
+ * Dimensions :
+ * - sm : 28px (min-block-size: --mr-size-control-sm, padding-inline-start: --mr-space-3)
+ * - md (defaut) : 32px (min-block-size: --mr-size-control-md, padding-inline-start: --mr-space-4)
+ * - lg : 40px (min-block-size: --mr-size-control-lg, padding-inline-start: --mr-space-5)
+ *
+ * Surface flottante :
+ * - padding : var(--mr-space-3)
+ * - fond : var(--mr-bg-canvas)
+ * - bordure : 1px solid var(--mr-border-control)
+ * - rayon : var(--mr-radius-md)
+ * - ombre : var(--mr-shadow-overlay)
+ *
+ * Cellules de jour :
+ * - min-inline-size: var(--mr-size-control-sm), min-block-size: var(--mr-size-control-sm) (28px >= 24px WCAG 2.5.8)
+ * - chiffres : tabular-nums
+ * - selection : ton neutre par defaut (noir en clair, blanc en sombre), ton accent sur option explicite
+ * - jour courant : surlignage inferieur 2px
+ */
+@layer mr.components {
+    :where(.mr-datepicker-wrapper) {
+        display: flex;
+        flex-direction: column;
+        inline-size: 100%;
+    }
+
+    /* Conteneur du declencheur et de l'icone */
+    :where(.mr-datepicker) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Declencheur (InputBase en lecture seule agissant comme bouton de declenchement) */
+    :where(.mr-datepicker__trigger) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline-start: var(--mr-space-4);
+        padding-inline-end: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+        padding-block: 0;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+        vertical-align: middle;
+        cursor: pointer;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Tailles du declencheur */
+    :where(.mr-datepicker)[data-size='sm'] :where(.mr-datepicker__trigger),
+    :where(.mr-datepicker__trigger)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline-start: var(--mr-space-3);
+        padding-inline-end: calc(var(--mr-space-3) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-datepicker)[data-size='md'] :where(.mr-datepicker__trigger),
+    :where(.mr-datepicker__trigger)[data-size='md'] {
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline-start: var(--mr-space-4);
+        padding-inline-end: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-datepicker)[data-size='lg'] :where(.mr-datepicker__trigger),
+    :where(.mr-datepicker__trigger)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline-start: var(--mr-space-5);
+        padding-inline-end: calc(var(--mr-space-5) + var(--mr-space-5) + var(--mr-space-2));
+    }
+
+    /* Icone calendrier integree a la fin du declencheur */
+    :where(.mr-datepicker__icon) {
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        inset-inline-end: var(--mr-space-4);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+        color: var(--mr-text-secondary);
+        pointer-events: none;
+        box-sizing: border-box;
+        line-height: 1;
+    }
+
+    :where(.mr-datepicker__icon) > svg {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    :where(.mr-datepicker)[data-size='sm'] :where(.mr-datepicker__icon) {
+        inset-inline-end: var(--mr-space-3);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-datepicker)[data-size='lg'] :where(.mr-datepicker__icon) {
+        inset-inline-end: var(--mr-space-5);
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-datepicker)[data-disabled='true'] :where(.mr-datepicker__icon) {
+        color: var(--mr-text-disabled);
+    }
+
+    /* Placeholder */
+    :where(.mr-datepicker__trigger)::placeholder {
+        color: var(--mr-text-secondary);
+        opacity: 1;
+    }
+
+    /* Focus du declencheur (ton neutral defaut ADR-020) */
+    :where(.mr-datepicker__trigger):focus-visible,
+    :where(.mr-datepicker__trigger):focus {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Focus accent (ton explicite accent) */
+    :where(.mr-datepicker[data-tone='accent']) :where(.mr-datepicker__trigger):focus-visible,
+    :where(.mr-datepicker[data-tone='accent']) :where(.mr-datepicker__trigger):focus,
+    :where(.mr-datepicker__trigger[data-tone='accent']):focus-visible,
+    :where(.mr-datepicker__trigger[data-tone='accent']):focus {
+        border-color: var(--mr-accent-solid);
+        outline: 1px solid var(--mr-accent-solid);
+        outline-offset: 0;
+    }
+
+    /* Survol du declencheur */
+    @media (hover: hover) {
+        :where(.mr-datepicker__trigger):hover:where(
+                :not(:disabled, [aria-invalid='true'], [data-tone='danger'])
+            ) {
+            border-color: color-mix(
+                in oklch,
+                var(--mr-border-control),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Etat invalide / danger */
+    :where(.mr-datepicker[data-invalid='true']) :where(.mr-datepicker__trigger),
+    :where(.mr-datepicker__trigger)[aria-invalid='true'],
+    :where(.mr-datepicker__trigger)[data-invalid='true'],
+    :where(.mr-datepicker[data-tone='danger']) :where(.mr-datepicker__trigger),
+    :where(.mr-datepicker__trigger[data-tone='danger']) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-datepicker[data-invalid='true']) :where(.mr-datepicker__trigger):focus-visible,
+    :where(.mr-datepicker[data-invalid='true']) :where(.mr-datepicker__trigger):focus,
+    :where(.mr-datepicker__trigger)[aria-invalid='true']:focus-visible,
+    :where(.mr-datepicker__trigger)[aria-invalid='true']:focus,
+    :where(.mr-datepicker[data-tone='danger']) :where(.mr-datepicker__trigger):focus-visible,
+    :where(.mr-datepicker[data-tone='danger']) :where(.mr-datepicker__trigger):focus,
+    :where(.mr-datepicker__trigger[data-tone='danger']):focus-visible,
+    :where(.mr-datepicker__trigger[data-tone='danger']):focus {
+        border-color: var(--mr-danger-solid);
+        outline: 2px solid var(--mr-danger-solid);
+        outline-offset: 0;
+    }
+
+    /* Etat desactive */
+    :where(.mr-datepicker__trigger):disabled,
+    :where(.mr-datepicker__trigger)[data-disabled='true'],
+    :where(.mr-datepicker[data-disabled='true']) :where(.mr-datepicker__trigger) {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    /* ─── Surface flottante (Popover) ─────────────────────────── */
+    :where(.mr-datepicker__popover) {
+        z-index: 50;
+        box-sizing: border-box;
+        padding: var(--mr-space-3);
+        background-color: var(--mr-bg-canvas);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+    }
+
+    /* En-tete du calendrier (mois / annee et boutons prev / next) */
+    :where(.mr-datepicker__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-block-end: var(--mr-space-2);
+    }
+
+    :where(.mr-datepicker__month-label) {
+        font-weight: var(--mr-font-weight-medium);
+        font-size: var(--mr-font-size-md);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-datepicker__nav-btn) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-datepicker__nav-btn):hover {
+            background-color: color-mix(
+                in oklch,
+                transparent,
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+            color: var(--mr-text-primary);
+        }
+    }
+
+    :where(.mr-datepicker__nav-btn):focus-visible {
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 1px;
+    }
+
+    /* En-tetes des jours de la semaine (dim, lun, mar...) */
+    :where(.mr-datepicker__day-names) {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        margin-block-end: var(--mr-space-1);
+    }
+
+    :where(.mr-datepicker__day-name) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        padding-block: var(--mr-space-1);
+        text-transform: uppercase;
+        user-select: none;
+    }
+
+    /* Grille des jours du mois */
+    :where(.mr-datepicker__grid) {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+    }
+
+    /* Cellule d'un jour */
+    :where(.mr-datepicker__day) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 100%;
+        aspect-ratio: 1;
+        min-inline-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        font-weight: inherit;
+        font-variant-numeric: tabular-nums;
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-datepicker__day):hover:where(
+                :not([data-selected], :disabled, [data-disabled='true'])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                transparent,
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Jour courant (aujourd'hui) non selectionne */
+    :where(.mr-datepicker__day[data-today='true']):where(:not([data-selected])) {
+        font-weight: var(--mr-font-weight-medium);
+        box-shadow: inset 0 -2px 0 0 var(--mr-text-primary);
+    }
+
+    :where(.mr-datepicker__popover[data-tone='accent'])
+        :where(.mr-datepicker__day[data-today='true']):where(:not([data-selected])) {
+        box-shadow: inset 0 -2px 0 0 var(--mr-accent-solid);
+    }
+
+    /* Jour selectionne (ton neutral defaut ADR-020 : noir en clair, blanc en sombre) */
+    :where(.mr-datepicker__day[data-selected='true']) {
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    /* Jour selectionne (ton accent explicite) */
+    :where(.mr-datepicker__popover[data-tone='accent'])
+        :where(.mr-datepicker__day[data-selected='true']) {
+        background-color: var(--mr-accent-solid);
+        color: var(--mr-bg-canvas);
+    }
+
+    /* Jours hors du mois courant */
+    :where(.mr-datepicker__day:not([data-current-month])):where(:not([data-selected='true'])) {
+        color: var(--mr-text-secondary);
+        opacity: 0.5;
+    }
+
+    /* Jour desactive */
+    :where(.mr-datepicker__day:disabled),
+    :where(.mr-datepicker__day[data-disabled='true']) {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        opacity: 0.4;
+    }
+
+    /* Focus visible sur cellule de jour */
+    :where(.mr-datepicker__day):focus-visible {
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    :where(.mr-datepicker__popover[data-tone='accent']) :where(.mr-datepicker__day):focus-visible {
+        outline: 1px solid var(--mr-accent-solid);
+        outline-offset: 0;
+    }
+}

@@ -24,5 +24,8 @@
         /* Danger sombre : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.5:1) sur canevas sombre (L=0.17).
          * --mr-danger-on-solid herite de var(--mr-bg-canvas), conservant la meme regle unique qu'en clair. */
         --mr-danger-solid: oklch(0.65 0.2 25);
+
+        /* Ombre overlay pour surfaces flottantes sombres */
+        --mr-shadow-overlay: 0 4px 20px -2px oklch(0 0 0 / 0.45), 0 2px 8px -1px oklch(0 0 0 / 0.35);
     }
 }

@@ -17,9 +17,9 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 10 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, Field (recettes dans mr.components)
-- NumberInput : recette dans recipes/number-input.css, ton neutre par defaut (ADR-020), accent et danger, hauteurs 28/32/40px, paddings 12/16/20px, tabular-nums, boutons pas integres fantomes 20/24/28px, role spinbutton, aria-valuenow/min/max, onValueChange, touches fleches et PageUp/Down
-- Tests de dimensions Playwright et test negatif de specificite Stylelint ajoutes
+- 11 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Field (recettes dans mr.components)
+- DatePicker : recette dans recipes/date-picker.css, ton neutre par defaut (ADR-020), accent et danger, declencheur 28/32/40px, popover overlay, grille calendrier cellules >= 28px (WCAG 2.5.8), tabular-nums, navigation mois, accessibilite dialog/grid/gridcell
+- Tests de dimensions Playwright et test negatif de specificite Stylelint ajoutes (etape 11 et section 23)
 - 7 themes finalises et actifs (light, dark, oled, slate, ocean, night, high-contrast) + alias dim
-- Tests rendered automatises et pnpm verify vert (1263 tests unitaires ui + 94 tests web)
-- Prochaine etape : composant suivant de la famille formulaire (PasswordInput deja integre dans Input, ou FormSection, FileUpload, Combobox, DatePicker)
+- Tests rendered automatises et pnpm verify vert
+- Prochaine etape : composant suivant de la famille formulaire ou date (Calendar, DateRangePicker, Combobox, FileUpload, FormSection)

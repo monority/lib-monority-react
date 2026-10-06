@@ -232,6 +232,29 @@ async function run() {
     console.log(
         'OK: Validation positive confirmee pour selector-max-specificity sur number-input.css (<= 0,2,0).'
     )
+
+    // 11. Prouver en positif que date-picker.css respecte selector-max-specificity "0,2,0"
+    const datePickerCssPath = path.resolve(
+        __dirname,
+        '../../packages/styles/src/recipes/date-picker.css'
+    )
+    const resultDatePickerSpec = await stylelint.lint({
+        files: datePickerCssPath,
+        configFile,
+    })
+    assert.strictEqual(
+        resultDatePickerSpec.errored,
+        false,
+        'date-picker.css DOIT respecter selector-max-specificity 0,2,0'
+    )
+    assert.strictEqual(
+        resultDatePickerSpec.results[0]?.warnings?.length ?? 0,
+        0,
+        'Aucun avertissement de specificite attendu sur date-picker.css'
+    )
+    console.log(
+        'OK: Validation positive confirmee pour selector-max-specificity sur date-picker.css (<= 0,2,0).'
+    )
 }
 
 run().catch((err) => {

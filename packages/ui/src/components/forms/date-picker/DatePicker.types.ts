@@ -13,6 +13,7 @@ export interface DatePickerProps
     label?: ReactNode
     hint?: ReactNode
     error?: ReactNode
+    invalid?: boolean
     // Value
     value?: Date | string | null
     defaultValue?: Date | string

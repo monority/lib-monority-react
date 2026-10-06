@@ -29,5 +29,8 @@
 
         /* Danger : rouge profond solid ratio 8.55:1 sur canevas blanc */
         --mr-danger-solid: oklch(0.42 0.2 25);
+
+        /* Ombre overlay : neutralisee en haut contraste (bordure AAA nette) */
+        --mr-shadow-overlay: none;
     }
 }

@@ -270,4 +270,34 @@ describe('DatePicker', () => {
         expect(trigger?.value).toBe('')
         expect(trigger?.placeholder).toBe('Pick a date')
     })
+
+    // 21. Tone variants
+    it('applies neutral tone by default and allows accent and danger', () => {
+        const viewNeutral = render(<DatePicker label="Date" />)
+        expect(viewNeutral.querySelector('.mr-datepicker')?.getAttribute('data-tone')).toBe(
+            'neutral'
+        )
+        cleanup()
+
+        const viewAccent = render(<DatePicker label="Date" tone="accent" />)
+        expect(viewAccent.querySelector('.mr-datepicker')?.getAttribute('data-tone')).toBe('accent')
+        const triggerAccent = viewAccent.querySelector('input[type="text"]') as HTMLInputElement
+        act(() => triggerAccent?.click())
+        expect(document.querySelector('.mr-datepicker__popover')?.getAttribute('data-tone')).toBe(
+            'accent'
+        )
+        cleanup()
+
+        const viewDanger = render(<DatePicker label="Date" tone="danger" />)
+        expect(viewDanger.querySelector('.mr-datepicker')?.getAttribute('data-tone')).toBe('danger')
+    })
+
+    // 22. invalid prop directly
+    it('applies invalid attribute when invalid prop is true', () => {
+        const view = render(<DatePicker label="Date" invalid />)
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        expect(trigger?.getAttribute('aria-invalid')).toBe('true')
+        expect(trigger?.getAttribute('data-invalid')).toBe('true')
+        expect(view.querySelector('.mr-datepicker')?.getAttribute('data-invalid')).toBe('true')
+    })
 })
