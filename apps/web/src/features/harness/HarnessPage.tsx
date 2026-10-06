@@ -190,10 +190,38 @@ function SpinnerHarness() {
     return (
         <>
             {(['sm', 'md', 'lg'] as const).map((size) => (
-                <Sample key={size} label={size}>
+                <Sample key={size} label={`taille ${size}`}>
                     <Spinner size={size} />
                 </Sample>
             ))}
+            {(['base', 'muted', 'inverse'] as const).map((tone) => (
+                <Sample key={tone} label={`ton ${tone}`}>
+                    <div
+                        style={{
+                            backgroundColor:
+                                tone === 'inverse' ? 'var(--mr-bg-inverse)' : undefined,
+                            padding: tone === 'inverse' ? '8px' : undefined,
+                            borderRadius: '4px',
+                            display: 'inline-flex',
+                        }}
+                    >
+                        <Spinner tone={tone} />
+                    </div>
+                </Sample>
+            ))}
+            <Sample label="chargement en ligne">
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        color: 'var(--mr-text-secondary)',
+                    }}
+                >
+                    <Spinner size="sm" />
+                    <span>Chargement des données en cours...</span>
+                </div>
+            </Sample>
         </>
     )
 }
@@ -232,6 +260,22 @@ function PositionHarness() {
                 Overlay
             </div>
         </div>
+    )
+}
+
+function InvalidInputSample() {
+    const [val, setVal] = useState('750')
+    const isInvalid = val.trim().length !== 5
+    return (
+        <Input
+            size="md"
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
+            invalid={isInvalid}
+            label="Code postal (saisissez 5 chiffres pour valider)"
+            error={isInvalid ? 'Le code postal doit comporter exactement 5 chiffres.' : undefined}
+            placeholder="ex: 75001"
+        />
     )
 }
 
@@ -333,8 +377,11 @@ function InputHarness() {
                     placeholder="Entrez une valeur..."
                 />
             </Sample>
-            <Sample label="invalide">
+            <Sample label="invalide (statique)">
                 <Input invalid defaultValue="Valeur erronée" placeholder="Entrez une valeur..." />
+            </Sample>
+            <Sample label="invalide (se valide à 5 chiffres)">
+                <InvalidInputSample />
             </Sample>
             <Sample label="invalide avec focus">
                 <Input
@@ -501,6 +548,25 @@ function FieldHarness() {
     )
 }
 
+function InvalidTextareaSample() {
+    const [text, setText] = useState('Trop court')
+    const isInvalid = text.trim().length < 20
+    return (
+        <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            invalid={isInvalid}
+            label="Commentaire détaillé (au moins 20 caractères pour valider)"
+            error={
+                isInvalid
+                    ? `Commentaire trop court (${text.trim().length}/20 caractères requis).`
+                    : undefined
+            }
+            placeholder="Saisissez au moins 20 caractères..."
+        />
+    )
+}
+
 function TextareaHarness() {
     return (
         <>
@@ -606,6 +672,9 @@ function TextareaHarness() {
                     defaultValue="Contenu refusé"
                 />
             </Sample>
+            <Sample label="invalide (se valide dès 20 caractères)">
+                <InvalidTextareaSample />
+            </Sample>
             <Sample label="avec compteur de caractères">
                 <Textarea
                     label="Bio"
@@ -628,6 +697,26 @@ function TextareaHarness() {
                 />
             </Sample>
         </>
+    )
+}
+
+function InvalidSelectSample() {
+    const [val, setVal] = useState('')
+    const isInvalid = !val
+    return (
+        <Select
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
+            invalid={isInvalid}
+            label="Pays (sélectionnez une option pour valider)"
+            error={isInvalid ? 'Veuillez sélectionner un pays pour continuer.' : undefined}
+        >
+            <option value="">Sélectionnez un pays...</option>
+            <option value="fr">France</option>
+            <option value="be">Belgique</option>
+            <option value="ch">Suisse</option>
+            <option value="ca">Canada</option>
+        </Select>
     )
 }
 
@@ -749,11 +838,15 @@ function SelectHarness() {
                     <option value="eur">EUR — Euro</option>
                 </Select>
             </Sample>
+            <Sample label="invalide (se valide à la sélection)">
+                <InvalidSelectSample />
+            </Sample>
             <Sample label="mode multiple">
                 <Select multiple defaultValue={['1', '2']}>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <option value="1">Option 1 — France</option>
+                    <option value="2">Option 2 — Belgique</option>
+                    <option value="3">Option 3 — Suisse</option>
+                    <option value="4">Option 4 — Canada</option>
                 </Select>
             </Sample>
         </>
@@ -886,6 +979,25 @@ function SwitchHarness() {
     )
 }
 
+function InvalidRadioGroupSample({
+    items,
+}: {
+    items: { value: string; label: string }[]
+}) {
+    const [val, setVal] = useState('')
+    const isInvalid = !val
+    return (
+        <RadioGroup
+            value={val}
+            onChange={setVal}
+            invalid={isInvalid}
+            label="Préférence de communication (cliquez pour valider)"
+            error={isInvalid ? 'Veuillez sélectionner un canal de communication.' : undefined}
+            items={items}
+        />
+    )
+}
+
 function RadioGroupHarness() {
     const defaultItems = [
         { value: 'email', label: 'Email uniquement' },
@@ -944,6 +1056,9 @@ function RadioGroupHarness() {
                     error="Veuillez sélectionner un canal de communication."
                 />
             </Sample>
+            <Sample label="invalide (se valide au clic)">
+                <InvalidRadioGroupSample items={defaultItems} />
+            </Sample>
             <Sample label="groupe désactivé (rond et contour visibles)">
                 <RadioGroup disabled defaultValue="email" items={defaultItems} />
             </Sample>
@@ -951,6 +1066,20 @@ function RadioGroupHarness() {
                 <RadioGroup defaultValue="opt1" items={disabledItems} />
             </Sample>
         </>
+    )
+}
+
+function InvalidSliderSample() {
+    const [val, setVal] = useState(95)
+    const isInvalid = val > 80
+    return (
+        <Slider
+            value={val}
+            onValueChange={setVal}
+            invalid={isInvalid}
+            label="Seuil d'alerte (glissez sous 80 pour valider)"
+            error={isInvalid ? `Valeur excessive (${val}) : doit être <= 80.` : undefined}
+        />
     )
 }
 
@@ -983,6 +1112,9 @@ function SliderHarness() {
                     error="La valeur dépasse le seuil autorisé (90)."
                 />
             </Sample>
+            <Sample label="invalide (se valide sous 80)">
+                <InvalidSliderSample />
+            </Sample>
             <Sample label="désactivé (pouce et piste gris visibles)">
                 <Slider disabled defaultValue={40} label="Paramètre verrouillé" />
             </Sample>
@@ -990,6 +1122,20 @@ function SliderHarness() {
                 <Slider showValue={false} defaultValue={60} label="Sensibilité" />
             </Sample>
         </>
+    )
+}
+
+function InvalidNumberInputSample() {
+    const [val, setVal] = useState(-2)
+    const isInvalid = val < 0
+    return (
+        <NumberInput
+            value={val}
+            onValueChange={(n) => setVal(n ?? 0)}
+            invalid={isInvalid}
+            label="Nombre d'invités (utilisez + ou saisissez >= 0 pour valider)"
+            error={isInvalid ? "Le nombre d'invités doit être positif ou nul." : undefined}
+        />
     )
 }
 
@@ -1031,6 +1177,9 @@ function NumberInputHarness() {
                     error="Le nombre d'invités doit être positif."
                 />
             </Sample>
+            <Sample label="invalide (se valide dès >= 0)">
+                <InvalidNumberInputSample />
+            </Sample>
             <Sample label="désactivé (boutons et texte estompés)">
                 <NumberInput disabled defaultValue={12} label="Paramètre système (verrouillé)" />
             </Sample>
@@ -1038,6 +1187,22 @@ function NumberInputHarness() {
                 <NumberInput readOnly defaultValue={88} label="Valeur de référence" />
             </Sample>
         </>
+    )
+}
+
+function InvalidDatePickerSample() {
+    const [date, setDate] = useState<Date | null>(new Date(2020, 0, 1))
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const isInvalid = !date || date < today
+    return (
+        <DatePicker
+            value={date}
+            onChange={setDate}
+            invalid={isInvalid}
+            label="Date de départ (choisissez une date future pour valider)"
+            error={isInvalid ? "La date doit être aujourd'hui ou dans le futur." : undefined}
+        />
     )
 }
 
@@ -1081,6 +1246,12 @@ function DatePickerHarness() {
                     error="La date doit être postérieure à aujourd'hui."
                 />
             </Sample>
+            <Sample label="invalide (se valide sur date future)">
+                <InvalidDatePickerSample />
+            </Sample>
+            <Sample label="pleine largeur (fullWidth)">
+                <DatePicker fullWidth defaultValue={new Date(2025, 5, 15)} label="Pleine largeur" />
+            </Sample>
             <Sample label="désactivé">
                 <DatePicker
                     disabled
@@ -1122,6 +1293,7 @@ const establishedComponents = [
     { slug: 'slider', label: 'Slider' },
     { slug: 'number-input', label: 'NumberInput' },
     { slug: 'date-picker', label: 'DatePicker' },
+    { slug: 'spinner', label: 'Spinner' },
     { slug: 'field', label: 'Field' },
 ] as const
 
@@ -1129,7 +1301,6 @@ const otherComponents = [
     { slug: 'icon-button', label: 'IconButton' },
     { slug: 'copy-button', label: 'CopyButton' },
     { slug: 'button-link', label: 'ButtonLink' },
-    { slug: 'spinner', label: 'Spinner' },
 ] as const
 
 export function HarnessPage() {
