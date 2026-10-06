@@ -13,6 +13,9 @@
         /* Fonds : canevas blanc absolu et fond creuse blanc */
         --mr-bg-canvas: oklch(1 0 0);
         --mr-bg-sunken: oklch(1 0 0);
+        --mr-bg-surface: oklch(1 0 0);
+        --mr-bg-raised: oklch(1 0 0);
+        --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes : noir intense (ratio 20.6:1) et secondaire renforce (ratio 13.6:1, AAA) */
         --mr-text-primary: oklch(0.1 0 0);
@@ -21,8 +24,10 @@
         /* Texte desactive : ratio 6.0:1 (superieur au seuil WCAG AA 4.5:1) */
         --mr-text-disabled: oklch(0.5 0 0);
 
-        /* Bordure de controle : ratio 7.44:1 (conforme a l'exigence WCAG AAA 7:1) */
+        /* Bordures : ratio >= 7.4:1 (conforme a l'exigence WCAG AAA 7:1) */
         --mr-border-control: oklch(0.45 0 0);
+        --mr-border-default: oklch(0.45 0 0);
+        --mr-border-subtle: oklch(0.45 0 0);
 
         /* Levier de luminosite de l'accent : fort contraste (> 9.3:1) sur canevas clair */
         --mr-ref-accent-lightness: 0.38;

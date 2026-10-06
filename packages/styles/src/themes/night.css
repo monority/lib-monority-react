@@ -13,6 +13,9 @@
         /* Fonds : canevas officiel Tokyo Night #1a1b26 (L=0.226) et fond creuse #14141b */
         --mr-bg-canvas: oklch(0.226 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-sunken: oklch(0.195 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.26 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.29 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
@@ -21,8 +24,10 @@
         /* Texte desactive : ratio 3.48:1 sur canevas */
         --mr-text-disabled: oklch(0.548 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordure de controle : ratio discret 1.97:1 (ADR-026) */
-        --mr-border-control: oklch(0.415 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.49 pour des bordures nettement visibles en theme Tokyo Night */
+        --mr-border-control: oklch(0.49 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.42 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.33 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond sombre */
         --mr-ref-accent-lightness: 0.635;

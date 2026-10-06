@@ -12,6 +12,9 @@
 
         /* Fonds */
         --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
@@ -20,8 +23,10 @@
         /* Texte desactive : ratio 3.49:1 sur canevas */
         --mr-text-disabled: oklch(0.525 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordure de controle : ratio discret 1.96:1 (ADR-026) */
-        --mr-border-control: oklch(0.39 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.48 pour des bordures nettement visibles en theme Ocean */
+        --mr-border-control: oklch(0.48 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.4 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond sombre */
         --mr-ref-accent-lightness: 0.635;

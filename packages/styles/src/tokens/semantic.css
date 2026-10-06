@@ -9,7 +9,10 @@
     :where(:root, [data-theme]) {
         /* Fonds */
         --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.985 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.995 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-sunken: var(--mr-bg-canvas);
+        --mr-bg-overlay: var(--mr-bg-raised);
         --mr-bg-inverse: var(--mr-text-primary);
 
         /* Textes */
@@ -22,6 +25,8 @@
          * border-control : luminosite 0.75 calculee pour assurer un ratio discret de 1.95:1 sur le canevas clair
          * (ADR-026 : bordure discrete au repos, accessibilite garantie par l'anneau de focus a 4.8:1 et le theme contraste). */
         --mr-border-control: oklch(0.75 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Statut Danger :
          * Regle unique : le texte a la couleur du canevas (--mr-danger-on-solid: var(--mr-bg-canvas)),

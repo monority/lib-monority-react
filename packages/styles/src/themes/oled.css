@@ -8,6 +8,9 @@
         /* Fonds : noir absolu pour le canevas, fond de champ legerement rehausse */
         --mr-bg-canvas: oklch(0 0 0);
         --mr-bg-sunken: oklch(0.12 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.16 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.2 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
@@ -16,8 +19,10 @@
         /* Texte desactive : luminosite 0.498 reproduit le ratio de 3.46:1 sur le canevas */
         --mr-text-disabled: oklch(0.498 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordure de controle : luminosite 0.37 calibree pour un ratio discret de 1.95:1 sur fond sunken et 2.01:1 sur canevas */
-        --mr-border-control: oklch(0.37 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.46 pour une bordure nettement visible sur canevas OLED */
+        --mr-border-control: oklch(0.46 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.38 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.28 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond OLED :
          * 0.60 assure un contraste >= 5.0:1 de l'anneau de focus sur canevas */

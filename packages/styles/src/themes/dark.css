@@ -6,6 +6,9 @@
 
         /* Fonds : canevas sombre approfondi a L=0.17 pour un contraste plus net */
         --mr-bg-canvas: oklch(0.17 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.26 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
@@ -14,8 +17,10 @@
         /* Texte desactive : luminosite 0.52 reproduit le ratio de 3.47:1 sur son canevas */
         --mr-text-disabled: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordure de controle : luminosite 0.385 calibree pour un ratio discret de 1.95:1 sur canevas sombre (ADR-026) */
-        --mr-border-control: oklch(0.385 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.48 pour des bordures nettement visibles en mode sombre */
+        --mr-border-control: oklch(0.48 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.4 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond sombre :
          * 0.635 reproduit le contraste de ~5.5:1 de l'anneau de focus sur canevas */
