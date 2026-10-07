@@ -17,9 +17,8 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Bouton principal blanc (variant default/primary) retabli dans EmptyStateHarness (commit 7c721d3)
-- Second bouton Importer maintenu en variante secondary sombre
-- Diagnostic d'inspection termine : 118.23px et 74.42px confirment la largeur (W), hauteur identique a 28px (H)
-- Verifications : pnpm verify vert (6 etapes), tests unitaires et web passants
-- Prochaine etape : validation utilisateur sur l'equilibrage visuel des actions mixtes EmptyState
+- Equilibrage optique des actions d'EmptyState applique (commit a28d89f, min-inline-size: 120px)
+- Boutons 'Creer un dossier' (primaire blanc) et 'Importer' (secondaire sombre) harmonises a 120px x 28px
+- Verifications : pnpm verify vert (6 etapes), rendu verifie sur Chromium en clair et sombre
+- Prochaine etape : revue des composants restants de la demande initiale (select multiple, spinner, alertes...)
 
