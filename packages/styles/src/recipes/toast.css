@@ -1,0 +1,105 @@
+/* Recette Toast dans la couche mr.components (spec v4).
+ * Notification ephemere ou confirmation d'action en bas a droite.
+ * Rail gauche 2px du ton, surface overlay. */
+@layer mr.components {
+    :where(.mr-toast) {
+        position: relative;
+        box-sizing: border-box;
+        background-color: var(--mr-bg-overlay);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        padding: var(--mr-space-4);
+        min-inline-size: calc(var(--mr-space-6) * 10);
+        font-family: var(--mr-font-family-sans);
+        overflow: hidden;
+    }
+
+    /* Rail signature a gauche (2px) */
+    :where(.mr-toast)::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block: 0;
+        inline-size: 2px;
+        background-color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-toast)[data-tone='neutral']::before {
+        background-color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-toast)[data-tone='accent']::before {
+        background-color: var(--mr-accent-text);
+    }
+
+    :where(.mr-toast)[data-tone='success']::before {
+        background-color: var(--mr-success-text);
+    }
+
+    :where(.mr-toast)[data-tone='warning']::before {
+        background-color: var(--mr-warning-text);
+    }
+
+    :where(.mr-toast)[data-tone='danger']::before {
+        background-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-toast)[data-tone='info']::before {
+        background-color: var(--mr-info-text);
+    }
+
+    /* Corps du Toast */
+    :where(.mr-toast__body) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-toast__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-toast__heading) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-toast__title) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-toast__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-toast__close) {
+        margin-inline-start: auto;
+        flex-shrink: 0;
+    }
+
+    /* Zone d'ancrage / conteneur live (ToastProvider) */
+    :where(.mr-toast-viewport) {
+        position: fixed;
+        inset-block-end: var(--mr-space-4);
+        inset-inline-end: var(--mr-space-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-2);
+        z-index: 1300;
+        pointer-events: none;
+    }
+
+    :where(.mr-toast-viewport) > * {
+        pointer-events: auto;
+    }
+}

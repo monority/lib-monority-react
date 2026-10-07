@@ -1,7 +1,12 @@
-import { forwardRef } from 'react'
-import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
-import type { InlineAlertProps, InlineAlertTone } from './InlineAlert.types'
+import { cn } from '@/lib/cn'
+import type {
+    InlineAlertActionProps,
+    InlineAlertDescriptionProps,
+    InlineAlertProps,
+    InlineAlertTitleProps,
+    InlineAlertTone,
+} from './InlineAlert.types'
 
 const roleByTone: Record<InlineAlertTone, string> = {
     info: 'status',
@@ -10,38 +15,94 @@ const roleByTone: Record<InlineAlertTone, string> = {
     danger: 'alert',
 }
 
-export const InlineAlert = forwardRef<HTMLDivElement, InlineAlertProps>(function InlineAlert(
-    { tone, title, description, actionLabel, onAction, className, children, ...props },
-    ref
-) {
+function InlineAlertTitle({ className, children, ref, ...props }: InlineAlertTitleProps) {
+    return (
+        <strong ref={ref} className={cn('mr-inline-alert__title', className)} {...props}>
+            {children}
+        </strong>
+    )
+}
+
+function InlineAlertDescription({
+    className,
+    children,
+    ref,
+    ...props
+}: InlineAlertDescriptionProps) {
+    return (
+        <p ref={ref} className={cn('mr-inline-alert__description', className)} {...props}>
+            {children}
+        </p>
+    )
+}
+
+function InlineAlertAction({ className, children, ref, ...props }: InlineAlertActionProps) {
+    return (
+        <Button
+            ref={ref}
+            size="sm"
+            variant="ghost"
+            className={cn('mr-inline-alert__action', className)}
+            {...props}
+        >
+            {children}
+        </Button>
+    )
+}
+
+export function InlineAlert({
+    tone,
+    title,
+    description,
+    actionLabel,
+    onAction,
+    className,
+    children,
+    role,
+    ref,
+    ...props
+}: InlineAlertProps) {
     const resolvedTone = tone ?? 'info'
+    const resolvedRole = role ?? roleByTone[resolvedTone]
+    const hasStructuredProps = Boolean(title || description)
 
     return (
         <div
             ref={ref}
             className={cn('mr-inline-alert', className)}
-            role={roleByTone[resolvedTone]}
+            role={resolvedRole}
             data-tone={resolvedTone}
             {...props}
         >
             <div className="mr-inline-alert__marker" aria-hidden="true" />
             <div className="mr-inline-alert__body">
-                {title ? <strong className="mr-inline-alert__title">{title}</strong> : null}
-                {description ? <p className="mr-inline-alert__description">{description}</p> : null}
-                {children ? <div className="mr-inline-alert__content">{children}</div> : null}
+                {hasStructuredProps ? (
+                    <>
+                        {title ? <InlineAlertTitle>{title}</InlineAlertTitle> : null}
+                        {description ? (
+                            <InlineAlertDescription>{description}</InlineAlertDescription>
+                        ) : null}
+                        {children}
+                    </>
+                ) : (
+                    children
+                )}
             </div>
             {actionLabel ? (
-                <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={onAction}
-                    className="mr-inline-alert__action"
-                >
-                    {actionLabel}
-                </Button>
+                <InlineAlertAction onClick={onAction}>{actionLabel}</InlineAlertAction>
             ) : null}
         </div>
     )
-})
+}
 
-export type { InlineAlertProps, InlineAlertTone } from './InlineAlert.types'
+InlineAlert.Title = InlineAlertTitle
+InlineAlert.Description = InlineAlertDescription
+InlineAlert.Action = InlineAlertAction
+
+export type {
+    InlineAlertActionProps,
+    InlineAlertDescriptionProps,
+    InlineAlertProps,
+    InlineAlertTitleProps,
+    InlineAlertTone,
+} from './InlineAlert.types'

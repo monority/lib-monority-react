@@ -17,10 +17,11 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 21 composants finalises et integres au harness : Formulaires (17), Button, IconButton, CopyButton, Toggle, ToggleGroup (recettes dans mr.components)
-- Famille Actions finalisee :
-  - Toggle : recette CSS toggle.css avec rail signature, React 19 ref, useControllableState sans effet
-  - ToggleGroup : composantisation ToggleGroup.Item declaratif + support items, recette toggle-group.css
-  - IconButton & CopyButton : modernisation React 19 ref, integration harness dans establishedComponents
-- Tests unitaires (1 266 UI + 94 Web), test:dist, Stylelint et verify verts
-- Prochaine etape : famille Feedback (Badge, Banner, Callout, InlineAlert, Toast)
+- 30 composants finalises et integres au harness dans establishedComponents (Formulaires 17, Actions 4, Feedback 9)
+- Famille Feedback modernisee et composantisee :
+  - Badge (Badge.Dot), Banner (Banner.Title/Description/Eyebrow/Actions/Close), Callout (Callout.Title/Description/Content)
+  - InlineAlert (InlineAlert.Title/Description/Action), EmptyState (EmptyState.Icon/Title/Description/Actions)
+  - AsyncStateNotice, Progress (Progress.Track/Bar/Meta/Label/Value), Skeleton (Skeleton.Line), Toast (Toast.Title/Description/Close)
+  - 9 recettes CSS dans mr.components, 0 valeur brute, specificite max 0,2,0 via :where(), retrocompatibilite 100%
+- Verifications : 1 288 tests UI + 94 Web passants, test:dist vert, pnpm verify vert (6 etapes)
+- Prochaine etape : famille Overlays ou Navigation

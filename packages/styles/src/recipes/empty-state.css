@@ -1,0 +1,61 @@
+/* Recette EmptyState dans la couche mr.components (spec v4).
+ * Explique une absence de contenu (vide, chargement, erreur) au centre d'une zone.
+ * Hauteur minimale 120px, centrage complet. */
+@layer mr.components {
+    :where(.mr-empty-state) {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: var(--mr-space-6);
+        min-block-size: calc(var(--mr-space-6) * 5);
+        gap: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+    }
+
+    :where(.mr-empty-state__icon) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-text-tertiary);
+        font-size: var(--mr-size-control-md);
+        line-height: 1;
+    }
+
+    :where(.mr-empty-state__content) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-empty-state__title) {
+        margin: 0;
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-empty-state__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: 1.4;
+        max-inline-size: 100%;
+    }
+
+    :where(.mr-empty-state__actions) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        margin-top: var(--mr-space-1);
+    }
+
+    /* Etats */
+    :where(.mr-empty-state)[data-state='error'] :where(.mr-empty-state__icon) {
+        color: var(--mr-danger-solid);
+    }
+}

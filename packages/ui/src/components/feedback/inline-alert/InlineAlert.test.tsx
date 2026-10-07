@@ -63,4 +63,19 @@ describe('InlineAlert', () => {
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-inline-alert')
     })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <InlineAlert tone="danger">
+                <InlineAlert.Title>Alerte</InlineAlert.Title>
+                <InlineAlert.Description>Échec de transmission</InlineAlert.Description>
+                <InlineAlert.Action>Réessayer</InlineAlert.Action>
+            </InlineAlert>
+        )
+        expect(view.querySelector('.mr-inline-alert__title')?.textContent).toBe('Alerte')
+        expect(view.querySelector('.mr-inline-alert__description')?.textContent).toBe(
+            'Échec de transmission'
+        )
+        expect(view.querySelector('button')?.textContent).toBe('Réessayer')
+    })
 })

@@ -28,14 +28,26 @@
         --mr-border-default: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Statut Danger :
-         * Regle unique : le texte a la couleur du canevas (--mr-danger-on-solid: var(--mr-bg-canvas)),
-         * et --mr-danger-solid verifie au moins 4.8:1 avec le canevas du theme (double contraste texte
-         * WCAG 1.4.3 >= 4.5:1 et UI WCAG 1.4.11 >= 3.0:1 avec marge).
-         * L=0.52 en clair donne 5.37:1 sur canevas clair.
-         * Chroma 0.20 : valeur maximale conservant une marge de gamut sRGB >= 0.04 dans les deux themes (teinte fixe 25). */
+        /* Statuts et tons de retour (danger 25, succes 155, avertissement 80, info 255) :
+         * Roles : subtle (fond), border (bordure), text (texte, point, icone, rail).
+         * Conformes WCAG AA >= 4.5:1 pour le texte sur subtle et sur canevas. */
         --mr-danger-solid: oklch(0.52 0.2 25);
         --mr-danger-on-solid: var(--mr-bg-canvas);
+        --mr-danger-subtle: oklch(0.96 0.04 25);
+        --mr-danger-border: oklch(0.85 0.08 25);
+        --mr-danger-text: oklch(0.45 0.18 25);
+
+        --mr-success-subtle: oklch(0.96 0.04 155);
+        --mr-success-border: oklch(0.85 0.08 155);
+        --mr-success-text: oklch(0.4 0.14 155);
+
+        --mr-warning-subtle: oklch(0.96 0.04 80);
+        --mr-warning-border: oklch(0.85 0.08 80);
+        --mr-warning-text: oklch(0.42 0.14 80);
+
+        --mr-info-subtle: oklch(0.96 0.04 255);
+        --mr-info-border: oklch(0.85 0.08 255);
+        --mr-info-text: oklch(0.42 0.14 255);
 
         /* Pourcentages de melange d'etat :
          * L'etat s'obtient en rapprochant --mr-bg-inverse du canevas, plus fort a l'actif qu'au survol
@@ -115,6 +127,13 @@
             var(--mr-ref-accent-lightness) calc(var(--mr-ref-brand-chroma) * 0.7)
                 var(--mr-ref-brand-hue)
         );
+        --mr-accent-subtle: color-mix(in oklch, var(--mr-accent-solid) 12%, var(--mr-bg-canvas));
+        --mr-accent-border: color-mix(
+            in oklch,
+            var(--mr-accent-solid) 30%,
+            var(--mr-border-default)
+        );
+        --mr-accent-text: var(--mr-accent-solid);
 
         /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
         --mr-focus-ring: var(--mr-accent-solid);

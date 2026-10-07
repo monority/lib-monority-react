@@ -1,0 +1,114 @@
+/* Recette Banner dans la couche mr.components (spec v4).
+ * Annonce d'etat global en bande pleine largeur en tete de page.
+ * Neutral par defaut (ADR-020). Tons : neutral, accent, success, warning, danger, info. */
+@layer mr.components {
+    :where(.mr-banner) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-4);
+        gap: var(--mr-space-2);
+        border-block-end: 1px solid var(--mr-border-default);
+        font-family: var(--mr-font-family-sans);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+    }
+
+    /* Rail lateral ou marqueur decoratif */
+    :where(.mr-banner__marker) {
+        inline-size: 2px;
+        align-self: stretch;
+        background-color: currentColor;
+        flex-shrink: 0;
+        border-radius: var(--mr-radius-full);
+    }
+
+    /* Corps de l'annonce */
+    :where(.mr-banner__body) {
+        display: flex;
+        flex: 1 1 auto;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--mr-space-2);
+        min-inline-size: 0;
+    }
+
+    :where(.mr-banner__eyebrow) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        text-transform: uppercase;
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-banner__title) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-banner__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-banner__actions) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        margin-inline-start: auto;
+        flex-shrink: 0;
+    }
+
+    :where(.mr-banner__close) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        padding: var(--mr-space-1);
+        border-radius: var(--mr-radius-sm);
+        flex-shrink: 0;
+    }
+
+    /* Tons semantiques */
+    :where(.mr-banner)[data-tone='neutral'] {
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+        border-block-end-color: var(--mr-border-default);
+    }
+
+    :where(.mr-banner)[data-tone='accent'] {
+        background-color: var(--mr-accent-subtle);
+        color: var(--mr-accent-text);
+        border-block-end-color: var(--mr-accent-border);
+    }
+
+    :where(.mr-banner)[data-tone='success'] {
+        background-color: var(--mr-success-subtle);
+        color: var(--mr-success-text);
+        border-block-end-color: var(--mr-success-border);
+    }
+
+    :where(.mr-banner)[data-tone='warning'] {
+        background-color: var(--mr-warning-subtle);
+        color: var(--mr-warning-text);
+        border-block-end-color: var(--mr-warning-border);
+    }
+
+    :where(.mr-banner)[data-tone='danger'] {
+        background-color: var(--mr-danger-subtle);
+        color: var(--mr-danger-text);
+        border-block-end-color: var(--mr-danger-border);
+    }
+
+    :where(.mr-banner)[data-tone='info'] {
+        background-color: var(--mr-info-subtle);
+        color: var(--mr-info-text);
+        border-block-end-color: var(--mr-info-border);
+    }
+}

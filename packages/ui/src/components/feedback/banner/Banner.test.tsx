@@ -46,10 +46,17 @@ describe('Banner', () => {
         expect(view.querySelector('.mr-banner__description')?.textContent).toBe('Details here')
     })
 
-    it('applies tone', () => {
+    it('applies tone and role="status" for non-danger', () => {
         const view = render(<Banner tone="success" title="Done" />)
         const el = view.querySelector('section')
         expect(el?.getAttribute('data-tone')).toBe('success')
+        expect(el?.getAttribute('role')).toBe('status')
+    })
+
+    it('applies role="alert" for danger tone', () => {
+        const view = render(<Banner tone="danger" title="Alerte critique" />)
+        const el = view.querySelector('section')
+        expect(el?.getAttribute('role')).toBe('alert')
     })
 
     it('forwards ref', () => {
@@ -57,5 +64,51 @@ describe('Banner', () => {
         render(<Banner ref={ref} title="Test" />)
         expect(ref.current?.tagName).toBe('SECTION')
         expect(ref.current?.className).toContain('mr-banner')
+    })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <Banner tone="warning">
+                <Banner.Eyebrow>Avis</Banner.Eyebrow>
+                <Banner.Title>Mise à jour</Banner.Title>
+                <Banner.Description>Redémarrage prévu.</Banner.Description>
+                <Banner.Actions>
+                    <button type="button">Voir</button>
+                </Banner.Actions>
+            </Banner>
+        )
+
+        expect(view.querySelector('.mr-banner__eyebrow')?.textContent).toBe('Avis')
+        expect(view.querySelector('.mr-banner__title')?.textContent).toBe('Mise à jour')
+        expect(view.querySelector('.mr-banner__description')?.textContent).toBe(
+            'Redémarrage prévu.'
+        )
+        expect(view.querySelector('button')?.textContent).toBe('Voir')
+    })
+
+    it('renders dismiss button when dismissible or onDismiss provided', () => {
+        let dismissed = false
+        const view = render(
+            <Banner
+                title="Notice"
+                dismissible
+                onDismiss={() => {
+                    dismissed = true
+                }}
+            />
+        )
+        const closeBtn = view.querySelector('.mr-banner__close') as HTMLButtonElement
+        expect(closeBtn).not.toBeNull()
+        expect(closeBtn.getAttribute('aria-label')).toBe("Fermer l'annonce")
+
+        act(() => {
+            closeBtn.click()
+        })
+        expect(dismissed).toBe(true)
+    })
+
+    it('does not render when open is false', () => {
+        const view = render(<Banner open={false} title="Hidden" />)
+        expect(view.querySelector('.mr-banner')).toBeNull()
     })
 })

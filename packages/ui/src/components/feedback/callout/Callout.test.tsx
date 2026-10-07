@@ -85,7 +85,25 @@ describe('Callout', () => {
         )
     })
 
-    it.each(['neutral', 'info', 'success', 'warning', 'danger'] as const)(
+    it('supports size="sm"', () => {
+        const view = render(<Callout size="sm" title="Compact" />)
+        expect(view.querySelector('.mr-callout')?.getAttribute('data-size')).toBe('sm')
+    })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <Callout tone="info">
+                <Callout.Title>Titre composé</Callout.Title>
+                <Callout.Description>Description composée</Callout.Description>
+            </Callout>
+        )
+        expect(view.querySelector('.mr-callout__title')?.textContent).toBe('Titre composé')
+        expect(view.querySelector('.mr-callout__description')?.textContent).toBe(
+            'Description composée'
+        )
+    })
+
+    it.each(['neutral', 'accent', 'info', 'success', 'warning', 'danger'] as const)(
         'sets data-tone="%s" for tone="%s"',
         (tone) => {
             const view = render(<Callout tone={tone} title="Test" />)

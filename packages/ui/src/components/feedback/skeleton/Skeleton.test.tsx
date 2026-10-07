@@ -38,7 +38,6 @@ describe('Skeleton', () => {
         const view = render(<Skeleton />)
         const el = view.querySelector('div')
         expect(el?.getAttribute('data-size')).toBe('md')
-        expect(el?.getAttribute('data-size')).toBe('md')
     })
 
     it('applies sm and lg sizes', () => {
@@ -51,13 +50,31 @@ describe('Skeleton', () => {
     it('accepts custom width and height', () => {
         const view = render(<Skeleton width="200px" height="100px" />)
         const el = view.querySelector('div')
-        expect(el?.style.width).toBe('200px')
-        expect(el?.style.height).toBe('100px')
+        expect(el?.style.inlineSize).toBe('200px')
+        expect(el?.style.blockSize).toBe('100px')
     })
 
     it('applies rounded class when rounded is true', () => {
         const view = render(<Skeleton rounded />)
         expect(view.querySelector('div')?.getAttribute('data-rounded')).toBe('true')
+    })
+
+    it('applies circle attribute when circle is true', () => {
+        const view = render(<Skeleton circle />)
+        expect(view.querySelector('div')?.getAttribute('data-circle')).toBe('true')
+        expect(view.querySelector('div')?.getAttribute('data-rounded')).toBe('true')
+    })
+
+    it('renders multiple lines with last line reduced when lines > 1', () => {
+        const view = render(<Skeleton lines={3} />)
+        const lines = view.querySelectorAll('.mr-skeleton')
+        expect(lines.length).toBe(3)
+        expect((lines[2] as HTMLElement).style.inlineSize).toBe('60%')
+    })
+
+    it('renders compound Skeleton.Line', () => {
+        const view = render(<Skeleton.Line />)
+        expect(view.querySelector('.mr-skeleton')).not.toBeNull()
     })
 
     it('forwards ref', () => {

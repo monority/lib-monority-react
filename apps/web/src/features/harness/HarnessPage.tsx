@@ -1,29 +1,38 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
+    AsyncStateNotice,
+    Badge,
+    Banner,
     Button,
     Calendar,
+    Callout,
     Checkbox,
     Combobox,
     type ComboboxItem,
     CopyButton,
     DatePicker,
     DateRangePicker,
+    EmptyState,
     Field,
     FileUpload,
     FormSection,
     IconButton,
+    InlineAlert,
     Input,
     NumberInput,
     PasswordInput,
     positionOverlay,
+    Progress,
     RadioGroup,
     Select,
+    Skeleton,
     Slider,
     Spinner,
     Switch,
     Textarea,
     ThemeScope,
+    Toast,
     Toggle,
     ToggleGroup,
 } from '@monority/ui'
@@ -1731,6 +1740,344 @@ function ToggleGroupHarness() {
     )
 }
 
+function BadgeHarness() {
+    const tones = ['neutral', 'accent', 'success', 'warning', 'danger', 'info'] as const
+    const sizes = ['sm', 'md'] as const
+    return (
+        <>
+            {tones.flatMap((tone) =>
+                sizes.map((size) => (
+                    <Sample key={`${tone}-${size}`} label={`${tone} ${size}`}>
+                        <Badge tone={tone} size={size}>
+                            Badge {tone}
+                        </Badge>
+                    </Sample>
+                ))
+            )}
+            <Sample label="avec point (prop dot)">
+                <Badge tone="accent" dot>
+                    Actif
+                </Badge>
+            </Sample>
+            <Sample label="mode composé avec Badge.Dot">
+                <Badge tone="success">
+                    <Badge.Dot />
+                    En ligne
+                </Badge>
+            </Sample>
+            <Sample label="points de statut">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Badge tone="success" dot>
+                        Opérationnel
+                    </Badge>
+                    <Badge tone="warning" dot>
+                        Dégradé
+                    </Badge>
+                    <Badge tone="danger" dot>
+                        Panne
+                    </Badge>
+                    <Badge tone="info" dot>
+                        Maintenance
+                    </Badge>
+                </div>
+            </Sample>
+        </>
+    )
+}
+
+function BannerHarness() {
+    const tones = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'] as const
+    return (
+        <>
+            {tones.map((tone) => (
+                <Sample key={tone} label={`ton ${tone}`}>
+                    <Banner
+                        tone={tone}
+                        title={`Annonce ${tone}`}
+                        description="Ceci est une bannière informative pleine largeur."
+                    />
+                </Sample>
+            ))}
+            <Sample label="avec eyebrow et actions">
+                <Banner
+                    tone="accent"
+                    eyebrow="Nouveauté"
+                    title="Version 2.0 disponible"
+                    description="Découvrez les nouvelles fonctionnalités du système."
+                    actions={<Button size="sm">Découvrir</Button>}
+                />
+            </Sample>
+            <Sample label="fermable (dismissible)">
+                <Banner
+                    tone="info"
+                    title="Mise à jour planifiée"
+                    description="Une maintenance aura lieu cette nuit à 02:00 UTC."
+                    dismissible
+                />
+            </Sample>
+            <Sample label="mode composé déclaratif">
+                <Banner tone="warning">
+                    <Banner.Eyebrow>Avertissement</Banner.Eyebrow>
+                    <Banner.Title>Quota bientôt atteint</Banner.Title>
+                    <Banner.Description>
+                        Vous utilisez 85% de votre capacité allouée.
+                    </Banner.Description>
+                    <Banner.Actions>
+                        <Button size="sm" variant="secondary">
+                            Augmenter le quota
+                        </Button>
+                    </Banner.Actions>
+                    <Banner.Close />
+                </Banner>
+            </Sample>
+        </>
+    )
+}
+
+function CalloutHarness() {
+    const tones = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'] as const
+    const sizes = ['sm', 'md'] as const
+    return (
+        <>
+            {tones.flatMap((tone) =>
+                sizes.map((size) => (
+                    <Sample key={`${tone}-${size}`} label={`${tone} ${size}`}>
+                        <Callout
+                            tone={tone}
+                            size={size}
+                            title={`Remarque ${tone} (${size})`}
+                            description="Une information contextuelle importante à retenir."
+                        />
+                    </Sample>
+                ))
+            )}
+            <Sample label="mode composé déclaratif">
+                <Callout tone="accent">
+                    <Callout.Title>Astuce de productivité</Callout.Title>
+                    <Callout.Content>
+                        <Callout.Description>
+                            Utilisez le raccourci Cmd+K pour ouvrir la palette de commandes.
+                        </Callout.Description>
+                    </Callout.Content>
+                </Callout>
+            </Sample>
+            <Sample label="sans titre avec contenu direct">
+                <Callout tone="info">
+                    Ce bloc informatif ne possède pas de titre séparé mais transmet son message
+                    clairement.
+                </Callout>
+            </Sample>
+        </>
+    )
+}
+
+function InlineAlertHarness() {
+    const tones = ['info', 'success', 'warning', 'danger'] as const
+    return (
+        <>
+            {tones.map((tone) => (
+                <Sample key={tone} label={`ton ${tone}`}>
+                    <InlineAlert
+                        tone={tone}
+                        title={`Alerte ${tone}`}
+                        description="Message d'alerte en ligne au sein du flux de saisie."
+                    />
+                </Sample>
+            ))}
+            <Sample label="avec actionLabel">
+                <InlineAlert
+                    tone="danger"
+                    title="Échec de synchronisation"
+                    description="Impossible de contacter le serveur distant."
+                    actionLabel="Réessayer"
+                    onAction={() => {}}
+                />
+            </Sample>
+            <Sample label="mode composé déclaratif">
+                <InlineAlert tone="warning">
+                    <InlineAlert.Title>Session expirée</InlineAlert.Title>
+                    <InlineAlert.Description>
+                        Votre session arrive à échéance dans 2 minutes.
+                    </InlineAlert.Description>
+                    <InlineAlert.Action>
+                        <Button size="sm" variant="secondary">
+                            Prolonger
+                        </Button>
+                    </InlineAlert.Action>
+                </InlineAlert>
+            </Sample>
+        </>
+    )
+}
+
+function EmptyStateHarness() {
+    return (
+        <>
+            <Sample label="état par défaut (empty)">
+                <EmptyState
+                    title="Aucun document trouvé"
+                    description="Vous n'avez pas encore téléversé de fichier dans ce dossier."
+                    action={<Button size="sm">Ajouter un fichier</Button>}
+                />
+            </Sample>
+            <Sample label="état loading">
+                <EmptyState
+                    state="loading"
+                    title="Chargement des données"
+                    description="Veuillez patienter pendant la récupération des éléments..."
+                />
+            </Sample>
+            <Sample label="état error">
+                <EmptyState
+                    state="error"
+                    title="Erreur de chargement"
+                    description="Une erreur inattendue est survenue lors de l'accès aux données."
+                    action={
+                        <Button size="sm" variant="secondary">
+                            Réessayer
+                        </Button>
+                    }
+                />
+            </Sample>
+            <Sample label="mode composé déclaratif">
+                <EmptyState>
+                    <EmptyState.Icon>📁</EmptyState.Icon>
+                    <EmptyState.Title>Dossier vide</EmptyState.Title>
+                    <EmptyState.Description>
+                        Créez un premier sous-dossier ou glissez des fichiers ici.
+                    </EmptyState.Description>
+                    <EmptyState.Actions>
+                        <Button size="sm">Créer un dossier</Button>
+                        <Button size="sm" variant="secondary">
+                            Importer
+                        </Button>
+                    </EmptyState.Actions>
+                </EmptyState>
+            </Sample>
+        </>
+    )
+}
+
+function AsyncStateNoticeHarness() {
+    return (
+        <>
+            <Sample label="état loading">
+                <AsyncStateNotice isLoading loadingMessage="Synchronisation en arrière-plan..." />
+            </Sample>
+            <Sample label="état error">
+                <AsyncStateNotice
+                    isError
+                    errorMessage="La requête a échoué avec le code 503 Service Unavailable."
+                />
+            </Sample>
+            <Sample label="état loading avec contenu personnalisé">
+                <AsyncStateNotice
+                    isLoading
+                    loadingContent={
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Spinner size="sm" />
+                            <span>Traitement du lot en cours...</span>
+                        </div>
+                    }
+                />
+            </Sample>
+        </>
+    )
+}
+
+function ProgressHarness() {
+    const tones = ['accent', 'neutral', 'success', 'warning', 'danger', 'info'] as const
+    return (
+        <>
+            {tones.map((tone) => (
+                <Sample key={tone} label={`ton ${tone} (50%)`}>
+                    <Progress value={50} tone={tone} label={`Progression ${tone}`} showValue />
+                </Sample>
+            ))}
+            <Sample label="mode indéterminé">
+                <Progress mode="indeterminate" label="Téléchargement en cours" />
+            </Sample>
+            <Sample label="mode composé déclaratif">
+                <Progress value={75} tone="accent">
+                    <Progress.Meta>
+                        <Progress.Label>Traitement des lots</Progress.Label>
+                        <Progress.Value>75%</Progress.Value>
+                    </Progress.Meta>
+                    <Progress.Track>
+                        <Progress.Bar />
+                    </Progress.Track>
+                </Progress>
+            </Sample>
+            <Sample label="sans libellé visible">
+                <Progress value={30} aria-label="Progression silencieuse" />
+            </Sample>
+        </>
+    )
+}
+
+function SkeletonHarness() {
+    return (
+        <>
+            <Sample label="texte standard (lignes multiples)">
+                <Skeleton lines={3} />
+            </Sample>
+            <Sample label="bloc circulaire (avatar)">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Skeleton circle width="40px" height="40px" />
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <Skeleton height="14px" width="60%" />
+                        <Skeleton height="12px" width="40%" />
+                    </div>
+                </div>
+            </Sample>
+            <Sample label="bloc rectangulaire (carte)">
+                <Skeleton height="120px" rounded />
+            </Sample>
+            <Sample label="mode composé avec Skeleton.Line">
+                <Skeleton>
+                    <Skeleton.Line style={{ height: '18px', width: '80%' }} />
+                    <Skeleton.Line style={{ height: '14px', width: '100%' }} />
+                    <Skeleton.Line style={{ height: '14px', width: '50%' }} />
+                </Skeleton>
+            </Sample>
+        </>
+    )
+}
+
+function ToastHarness() {
+    const tones = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'] as const
+    return (
+        <>
+            {tones.map((tone) => (
+                <Sample key={tone} label={`ton ${tone}`}>
+                    <Toast
+                        tone={tone}
+                        title={`Notification ${tone}`}
+                        description="Message de notification éphémère."
+                        onClose={() => {}}
+                    />
+                </Sample>
+            ))}
+            <Sample label="mode composé déclaratif">
+                <Toast tone="success">
+                    <Toast.Title>Enregistrement effectué</Toast.Title>
+                    <Toast.Description>
+                        Toutes vos modifications ont été sauvegardées sur le cloud.
+                    </Toast.Description>
+                    <Toast.Close onClick={() => {}} />
+                </Toast>
+            </Sample>
+            <Sample label="avec contenu additionnel">
+                <Toast tone="accent" title="Fichier supprimé" onClose={() => {}}>
+                    <p style={{ margin: '4px 0 0', fontSize: '13px' }}>
+                        Le fichier a été déplacé dans la corbeille.
+                    </p>
+                </Toast>
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1754,6 +2101,15 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     'copy-button': CopyButtonHarness,
     'button-link': ButtonLinkHarness,
     spinner: SpinnerHarness,
+    badge: BadgeHarness,
+    banner: BannerHarness,
+    callout: CalloutHarness,
+    'inline-alert': InlineAlertHarness,
+    'empty-state': EmptyStateHarness,
+    'async-state-notice': AsyncStateNoticeHarness,
+    progress: ProgressHarness,
+    skeleton: SkeletonHarness,
+    toast: ToastHarness,
     __position: PositionHarness,
 }
 
@@ -1778,6 +2134,15 @@ const establishedComponents = [
     { slug: 'file-upload', label: 'FileUpload' },
     { slug: 'form-section', label: 'FormSection' },
     { slug: 'spinner', label: 'Spinner' },
+    { slug: 'badge', label: 'Badge' },
+    { slug: 'banner', label: 'Banner' },
+    { slug: 'callout', label: 'Callout' },
+    { slug: 'inline-alert', label: 'InlineAlert' },
+    { slug: 'empty-state', label: 'EmptyState' },
+    { slug: 'async-state-notice', label: 'AsyncStateNotice' },
+    { slug: 'progress', label: 'Progress' },
+    { slug: 'skeleton', label: 'Skeleton' },
+    { slug: 'toast', label: 'Toast' },
     { slug: 'field', label: 'Field' },
 ] as const
 

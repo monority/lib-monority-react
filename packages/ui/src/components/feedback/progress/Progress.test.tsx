@@ -90,4 +90,29 @@ describe('Progress', () => {
 
         expect(track.onclick).toBeNull()
     })
+
+    it('supports custom max', () => {
+        const view = render(<Progress value={50} max={200} />)
+        const track = view.querySelector('[role="progressbar"]')
+        expect(track?.getAttribute('aria-valuemax')).toBe('200')
+        expect(track?.getAttribute('aria-valuenow')).toBe('50')
+        expect(view.querySelector('.mr-progress__value')?.textContent).toBe('25%')
+    })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <div className="mr-progress">
+                <Progress.Meta>
+                    <Progress.Label>Statut</Progress.Label>
+                    <Progress.Value>75%</Progress.Value>
+                </Progress.Meta>
+                <Progress.Track>
+                    <Progress.Bar style={{ inlineSize: '75%' }} />
+                </Progress.Track>
+            </div>
+        )
+        expect(view.querySelector('.mr-progress__label')?.textContent).toBe('Statut')
+        expect(view.querySelector('.mr-progress__value')?.textContent).toBe('75%')
+        expect(view.querySelector('.mr-progress__track')).not.toBeNull()
+    })
 })

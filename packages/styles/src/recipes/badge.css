@@ -1,0 +1,87 @@
+/* Recette Badge dans la couche mr.components (spec v4).
+ * Pastille de statut ou de categorie compacte en contexte.
+ * Neutral par defaut (ADR-020). Tons : neutral, accent, success, warning, danger, info. */
+@layer mr.components {
+    :where(.mr-badge) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-medium);
+        font-variant-numeric: tabular-nums;
+        border-radius: var(--mr-radius-sm);
+        border: 1px solid var(--mr-border-subtle);
+        line-height: 1;
+        white-space: nowrap;
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+    }
+
+    /* Tailles : sm par defaut (20px), md (24px) */
+    :where(.mr-badge),
+    :where(.mr-badge)[data-size='sm'] {
+        block-size: var(--mr-space-5);
+        padding-inline: calc(var(--mr-space-2) - 2px);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    :where(.mr-badge)[data-size='md'] {
+        block-size: var(--mr-space-6);
+        padding-inline: var(--mr-space-2);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Point facultatif (dot) */
+    :where(.mr-badge__dot) {
+        display: inline-block;
+        inline-size: calc(var(--mr-space-2) - 2px);
+        block-size: calc(var(--mr-space-2) - 2px);
+        border-radius: var(--mr-radius-full);
+        margin-inline-end: calc(var(--mr-space-2) - 2px);
+        background-color: currentColor;
+        flex-shrink: 0;
+    }
+
+    /* Tons semantiques et retrocompatibilite data-variant */
+    :where(.mr-badge)[data-tone='neutral'],
+    :where(.mr-badge)[data-variant='default'] {
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+        border-color: var(--mr-border-subtle);
+    }
+
+    :where(.mr-badge)[data-tone='accent'],
+    :where(.mr-badge)[data-variant='primary'] {
+        background-color: var(--mr-accent-subtle);
+        color: var(--mr-accent-text);
+        border-color: var(--mr-accent-border);
+    }
+
+    :where(.mr-badge)[data-tone='success'],
+    :where(.mr-badge)[data-variant='success'] {
+        background-color: var(--mr-success-subtle);
+        color: var(--mr-success-text);
+        border-color: var(--mr-success-border);
+    }
+
+    :where(.mr-badge)[data-tone='warning'],
+    :where(.mr-badge)[data-variant='warning'] {
+        background-color: var(--mr-warning-subtle);
+        color: var(--mr-warning-text);
+        border-color: var(--mr-warning-border);
+    }
+
+    :where(.mr-badge)[data-tone='danger'],
+    :where(.mr-badge)[data-variant='danger'] {
+        background-color: var(--mr-danger-subtle);
+        color: var(--mr-danger-text);
+        border-color: var(--mr-danger-border);
+    }
+
+    :where(.mr-badge)[data-tone='info'] {
+        background-color: var(--mr-info-subtle);
+        color: var(--mr-info-text);
+        border-color: var(--mr-info-border);
+    }
+}

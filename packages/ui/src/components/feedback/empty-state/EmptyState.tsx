@@ -1,44 +1,125 @@
-import { forwardRef } from 'react'
+import { Spinner } from '@/components/feedback/spinner/Spinner'
 import { cn } from '@/lib/cn'
-import { Title } from '@/components/typography/title/Title'
-import { Text } from '@/components/typography/text/Text'
-import type { EmptyStateProps } from './EmptyState.types'
+import type {
+    EmptyStateActionsProps,
+    EmptyStateDescriptionProps,
+    EmptyStateIconProps,
+    EmptyStateProps,
+    EmptyStateStatus,
+    EmptyStateTitleProps,
+} from './EmptyState.types'
 
-export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
-    { title, description, icon, action, secondaryAction, className, ...props },
-    ref
-) {
+function EmptyStateIcon({ className, children, ref, ...props }: EmptyStateIconProps) {
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-empty-state__icon', className)}
+            aria-hidden="true"
+            {...props}
+        >
+            {children}
+        </div>
+    )
+}
+
+function EmptyStateTitle({ className, children, ref, ...props }: EmptyStateTitleProps) {
+    return (
+        <h3
+            ref={ref as React.Ref<HTMLHeadingElement>}
+            className={cn('mr-empty-state__title', className)}
+            {...props}
+        >
+            {children}
+        </h3>
+    )
+}
+
+function EmptyStateDescription({ className, children, ref, ...props }: EmptyStateDescriptionProps) {
+    return (
+        <p ref={ref} className={cn('mr-empty-state__description', className)} {...props}>
+            {children}
+        </p>
+    )
+}
+
+function EmptyStateActions({ className, children, ref, ...props }: EmptyStateActionsProps) {
+    return (
+        <div ref={ref} className={cn('mr-empty-state__actions', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function EmptyState({
+    title,
+    description,
+    icon,
+    action,
+    secondaryAction,
+    state = 'empty',
+    className,
+    children,
+    role,
+    ref,
+    ...props
+}: EmptyStateProps) {
+    const resolvedRole = role ?? (state === 'error' ? 'alert' : 'status')
+    const isLoading = state === 'loading'
+    const hasStructuredProps = Boolean(title || description)
+
+    const renderedIcon = isLoading ? (
+        <EmptyStateIcon>
+            <Spinner size="md" tone="muted" aria-hidden="true" />
+        </EmptyStateIcon>
+    ) : icon ? (
+        <EmptyStateIcon>{icon}</EmptyStateIcon>
+    ) : null
+
     return (
         <div
             ref={ref}
             className={cn('mr-empty-state', className)}
-            data-has-icon={icon ? 'true' : undefined}
+            role={resolvedRole}
+            data-state={state}
+            aria-busy={isLoading ? 'true' : undefined}
+            data-has-icon={renderedIcon ? 'true' : undefined}
             data-has-actions={action || secondaryAction ? 'true' : undefined}
             {...props}
         >
-            {icon ? (
-                <div className="mr-empty-state__icon" aria-hidden="true">
-                    {icon}
-                </div>
-            ) : null}
+            {renderedIcon}
             <div className="mr-empty-state__content">
-                <Title as="h3" size="sm" className="mr-empty-state__title">
-                    {title}
-                </Title>
-                {description ? (
-                    <Text tone="muted" className="mr-empty-state__description">
-                        {description}
-                    </Text>
-                ) : null}
+                {hasStructuredProps ? (
+                    <>
+                        {title ? <EmptyStateTitle>{title}</EmptyStateTitle> : null}
+                        {description ? (
+                            <EmptyStateDescription>{description}</EmptyStateDescription>
+                        ) : null}
+                        {children}
+                    </>
+                ) : (
+                    children
+                )}
             </div>
             {action || secondaryAction ? (
-                <div className="mr-empty-state__actions">
+                <EmptyStateActions>
                     {action}
                     {secondaryAction}
-                </div>
+                </EmptyStateActions>
             ) : null}
         </div>
     )
-})
+}
 
-export type { EmptyStateProps } from './EmptyState.types'
+EmptyState.Icon = EmptyStateIcon
+EmptyState.Title = EmptyStateTitle
+EmptyState.Description = EmptyStateDescription
+EmptyState.Actions = EmptyStateActions
+
+export type {
+    EmptyStateActionsProps,
+    EmptyStateDescriptionProps,
+    EmptyStateIconProps,
+    EmptyStateProps,
+    EmptyStateStatus,
+    EmptyStateTitleProps,
+} from './EmptyState.types'

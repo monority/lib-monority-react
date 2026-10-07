@@ -1,0 +1,98 @@
+/* Recette Callout dans la couche mr.components (spec v4).
+ * Message contextuel en bloc dans le flux.
+ * Neutral par defaut (ADR-020). Tons : neutral, accent, success, warning, danger, info. */
+@layer mr.components {
+    :where(.mr-callout) {
+        position: relative;
+        display: flex;
+        box-sizing: border-box;
+        border-radius: var(--mr-radius-md);
+        border: 1px solid var(--mr-border-default);
+        font-family: var(--mr-font-family-sans);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+    }
+
+    /* Tailles : md par defaut, sm compacte (absorbe InlineAlert) */
+    :where(.mr-callout),
+    :where(.mr-callout)[data-size='md'] {
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-4);
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-callout)[data-size='sm'] {
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        gap: var(--mr-space-2);
+    }
+
+    /* Indicateur visuel du ton */
+    :where(.mr-callout__indicator) {
+        inline-size: 2px;
+        align-self: stretch;
+        background-color: currentColor;
+        border-radius: var(--mr-radius-full);
+        flex-shrink: 0;
+    }
+
+    /* Contenu */
+    :where(.mr-callout__content) {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+        min-inline-size: 0;
+    }
+
+    :where(.mr-callout__title) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-callout__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: 1.4;
+    }
+
+    /* Tons semantiques */
+    :where(.mr-callout)[data-tone='neutral'] {
+        background-color: var(--mr-bg-sunken);
+        border-color: var(--mr-border-default);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-callout)[data-tone='accent'] {
+        background-color: var(--mr-accent-subtle);
+        border-color: var(--mr-accent-border);
+        color: var(--mr-accent-text);
+    }
+
+    :where(.mr-callout)[data-tone='success'] {
+        background-color: var(--mr-success-subtle);
+        border-color: var(--mr-success-border);
+        color: var(--mr-success-text);
+    }
+
+    :where(.mr-callout)[data-tone='warning'] {
+        background-color: var(--mr-warning-subtle);
+        border-color: var(--mr-warning-border);
+        color: var(--mr-warning-text);
+    }
+
+    :where(.mr-callout)[data-tone='danger'] {
+        background-color: var(--mr-danger-subtle);
+        border-color: var(--mr-danger-border);
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-callout)[data-tone='info'] {
+        background-color: var(--mr-info-subtle);
+        border-color: var(--mr-info-border);
+        color: var(--mr-info-text);
+    }
+}

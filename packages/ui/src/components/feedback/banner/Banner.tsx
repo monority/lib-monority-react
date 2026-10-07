@@ -1,38 +1,126 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
-import type { BannerProps } from './Banner.types'
+import type {
+    BannerActionsProps,
+    BannerCloseProps,
+    BannerDescriptionProps,
+    BannerEyebrowProps,
+    BannerProps,
+    BannerTitleProps,
+} from './Banner.types'
 
-export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
-    { tone, eyebrow, title, description, actions, className, children, ...props },
-    ref
-) {
-    const resolvedTone = tone ?? 'info'
-    const hasStructuredContent = Boolean(eyebrow || title || description)
+function BannerTitle({ className, children, ref, ...props }: BannerTitleProps) {
+    return (
+        <strong ref={ref} className={cn('mr-banner__title', className)} {...props}>
+            {children}
+        </strong>
+    )
+}
+
+function BannerDescription({ className, children, ref, ...props }: BannerDescriptionProps) {
+    return (
+        <p ref={ref} className={cn('mr-banner__description', className)} {...props}>
+            {children}
+        </p>
+    )
+}
+
+function BannerEyebrow({ className, children, ref, ...props }: BannerEyebrowProps) {
+    return (
+        <span ref={ref} className={cn('mr-banner__eyebrow', className)} {...props}>
+            {children}
+        </span>
+    )
+}
+
+function BannerActions({ className, children, ref, ...props }: BannerActionsProps) {
+    return (
+        <div ref={ref} className={cn('mr-banner__actions', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+function BannerClose({ className, children, ref, onClick, ...props }: BannerCloseProps) {
+    return (
+        <button
+            ref={ref}
+            type="button"
+            className={cn('mr-banner__close', className)}
+            aria-label="Fermer l'annonce"
+            onClick={onClick}
+            {...props}
+        >
+            {children ?? '×'}
+        </button>
+    )
+}
+
+export function Banner({
+    tone = 'info',
+    eyebrow,
+    title,
+    description,
+    actions,
+    dismissible,
+    onDismiss,
+    open,
+    className,
+    children,
+    role,
+    ref,
+    ...props
+}: BannerProps) {
+    if (open === false) return null
+
+    const resolvedRole = role ?? (tone === 'danger' ? 'alert' : 'status')
+    const hasStructuredProps = Boolean(eyebrow || title || description)
+    const showDismiss = dismissible || Boolean(onDismiss)
 
     return (
         <section
             ref={ref}
             className={cn('mr-banner', className)}
-            data-tone={resolvedTone}
+            data-tone={tone}
+            role={resolvedRole}
             {...props}
         >
             <div className="mr-banner__marker" aria-hidden="true" />
             <div className="mr-banner__body">
-                {hasStructuredContent ? (
+                {hasStructuredProps ? (
                     <>
-                        {eyebrow ? <span className="mr-banner__eyebrow">{eyebrow}</span> : null}
-                        {title ? <strong className="mr-banner__title">{title}</strong> : null}
-                        {description ? (
-                            <p className="mr-banner__description">{description}</p>
-                        ) : null}
+                        {eyebrow ? <BannerEyebrow>{eyebrow}</BannerEyebrow> : null}
+                        {title ? <BannerTitle>{title}</BannerTitle> : null}
+                        {description ? <BannerDescription>{description}</BannerDescription> : null}
+                        {children}
                     </>
-                ) : children ? (
-                    <p className="mr-banner__description">{children}</p>
-                ) : null}
+                ) : typeof children === 'string' || typeof children === 'number' ? (
+                    <BannerDescription>{children}</BannerDescription>
+                ) : (
+                    children
+                )}
             </div>
-            {actions ? <div className="mr-banner__actions">{actions}</div> : null}
+            {actions || showDismiss ? (
+                <BannerActions>
+                    {actions}
+                    {showDismiss ? <BannerClose onClick={onDismiss} /> : null}
+                </BannerActions>
+            ) : null}
         </section>
     )
-})
+}
 
-export type { BannerProps, BannerTone } from './Banner.types'
+Banner.Title = BannerTitle
+Banner.Description = BannerDescription
+Banner.Eyebrow = BannerEyebrow
+Banner.Actions = BannerActions
+Banner.Close = BannerClose
+
+export type {
+    BannerActionsProps,
+    BannerCloseProps,
+    BannerDescriptionProps,
+    BannerEyebrowProps,
+    BannerProps,
+    BannerTitleProps,
+    BannerTone,
+} from './Banner.types'
