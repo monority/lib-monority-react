@@ -54,6 +54,10 @@
         margin-top: var(--mr-space-1);
     }
 
+    :where(.mr-empty-state__actions) > :where(.mr-btn) {
+        min-inline-size: calc(var(--mr-space-6) * 5);
+    }
+
     /* Etats */
     :where(.mr-empty-state)[data-state='error'] :where(.mr-empty-state__icon) {
         color: var(--mr-danger-solid);
