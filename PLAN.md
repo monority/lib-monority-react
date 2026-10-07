@@ -17,8 +17,8 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Bouton secondaire calibre avec fond de surface (--mr-bg-surface) sur repos, survol, actif et desactive
-- Equilibre optique retabli entre variantes primary et secondary sur surfaces et canevas
-- Verifications : pnpm verify vert (6 etapes), 133 contrastes conformes sur 7 themes, tests dist et unitaires passants
-- Prochaine etape : validation utilisateur ou suite des composants
+- Button sm aligne sur la spec v4 avec font-size: var(--mr-font-size-sm) (0.75rem / 12px)
+- Diagnostic approfondi de la perception de hauteur des boutons EmptyState consigne
+- Verifications : pnpm verify vert (6 etapes), 1288 tests unitaires passants, dist synchronise
+- Prochaine etape : retour utilisateur et suite des composants
 

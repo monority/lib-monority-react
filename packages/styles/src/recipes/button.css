@@ -44,6 +44,7 @@
         block-size: var(--mr-size-control-sm);
         min-block-size: var(--mr-size-control-sm);
         padding-inline: var(--mr-space-3);
+        font-size: var(--mr-font-size-sm);
     }
 
     /* Taille md (defaut) : 32px */
