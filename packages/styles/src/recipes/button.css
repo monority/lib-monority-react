@@ -106,7 +106,7 @@
     :where(.mr-btn)[data-variant='secondary'],
     :where(.mr-btn)[data-variant='muted'],
     :where(.mr-btn)[data-variant='warning'] {
-        background-color: var(--mr-bg-canvas);
+        background-color: var(--mr-bg-surface);
         border-color: var(--mr-border-control);
         color: var(--mr-text-primary);
     }
@@ -184,7 +184,14 @@
             ),
         :where(.mr-btn)[data-variant='warning']:hover:where(
                 :not(:disabled, [aria-disabled='true'], [data-loading])
-            ),
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-surface),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+
         :where(.mr-btn)[data-variant='ghost']:hover:where(
                 :not(:disabled, [aria-disabled='true'], [data-loading])
             ),
@@ -231,7 +238,14 @@
         ),
     :where(.mr-btn)[data-variant='warning']:active:where(
             :not(:disabled, [aria-disabled='true'], [data-loading])
-        ),
+        ) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-surface),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
     :where(.mr-btn)[data-variant='ghost']:active:where(
             :not(:disabled, [aria-disabled='true'], [data-loading])
         ),
@@ -279,7 +293,7 @@
     :where(.mr-btn)[data-variant='muted'][aria-disabled='true']:where(:not([data-loading])),
     :where(.mr-btn)[data-variant='warning']:disabled:where(:not([data-loading])),
     :where(.mr-btn)[data-variant='warning'][aria-disabled='true']:where(:not([data-loading])) {
-        background-color: var(--mr-bg-canvas);
+        background-color: var(--mr-bg-surface);
         border-color: color-mix(
             in oklch,
             var(--mr-border-control),
