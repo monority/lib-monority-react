@@ -1,0 +1,43 @@
+/* Recette du composant DateRangePicker (couche mr.components)
+ *
+ * Selecteur de periode combinant deux DatePicker lies par un separateur.
+ *
+ * Dimensions et alignement :
+ * - Flexbox en ligne avec separateur fleche centre
+ * - Compensation verticale du separateur en presence d'etiquettes de champ
+ * - Tailles sm / md / lg heritees sur les DatePicker enfants
+ */
+@layer mr.components {
+    /* Conteneur principal */
+    :where(.mr-date-range-picker) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+        inline-size: fit-content;
+    }
+
+    /* Separateur entre la date de debut et la date de fin */
+    :where(.mr-date-range-picker__separator) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-text-secondary);
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        user-select: none;
+        padding-inline: var(--mr-space-1);
+        line-height: 1;
+    }
+
+    /* Alignement du separateur au niveau des champs quand des labels existent */
+    :where(.mr-date-range-picker):has(:where(.mr-field__label))
+        :where(.mr-date-range-picker__separator) {
+        margin-block-start: var(--mr-space-5);
+    }
+
+    :where(.mr-date-range-picker)[data-size='sm']:has(:where(.mr-field__label))
+        :where(.mr-date-range-picker__separator) {
+        margin-block-start: var(--mr-space-4);
+    }
+}

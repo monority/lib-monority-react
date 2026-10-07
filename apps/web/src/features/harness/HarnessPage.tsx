@@ -8,6 +8,7 @@ import {
     type ComboboxItem,
     CopyButton,
     DatePicker,
+    DateRangePicker,
     Field,
     IconButton,
     Input,
@@ -1387,6 +1388,66 @@ function ComboboxHarness() {
     )
 }
 
+function DateRangePickerHarness() {
+    return (
+        <>
+            <Sample label="taille sm (hauteur 28px)">
+                <DateRangePicker
+                    size="sm"
+                    fromLabel="Début"
+                    toLabel="Fin"
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+            <Sample label="taille md (défaut, hauteur 32px)">
+                <DateRangePicker
+                    size="md"
+                    fromLabel="Date d'arrivée"
+                    toLabel="Date de départ"
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+            <Sample label="taille lg (hauteur 40px)">
+                <DateRangePicker
+                    size="lg"
+                    fromLabel="Période du"
+                    toLabel="Au"
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+            <Sample label="sans étiquette (champs nus avec flèche)">
+                <DateRangePicker
+                    fromLabel=""
+                    toLabel=""
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+            <Sample label="avec texte d'aide (hint)">
+                <DateRangePicker
+                    fromLabel="Début de mission"
+                    toLabel="Fin de mission"
+                    hint="Sélectionnez une période continue."
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+            <Sample label="désactivé">
+                <DateRangePicker
+                    disabled
+                    fromLabel="Période verrouillée"
+                    toLabel="Fin"
+                    fromProps={{ defaultValue: new Date(2025, 5, 1) }}
+                    toProps={{ defaultValue: new Date(2025, 5, 15) }}
+                />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1398,6 +1459,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     slider: SliderHarness,
     'number-input': NumberInputHarness,
     'date-picker': DatePickerHarness,
+    'date-range-picker': DateRangePickerHarness,
     calendar: CalendarHarness,
     combobox: ComboboxHarness,
     field: FieldHarness,
@@ -1419,6 +1481,7 @@ const establishedComponents = [
     { slug: 'slider', label: 'Slider' },
     { slug: 'number-input', label: 'NumberInput' },
     { slug: 'date-picker', label: 'DatePicker' },
+    { slug: 'date-range-picker', label: 'DateRangePicker' },
     { slug: 'calendar', label: 'Calendar' },
     { slug: 'combobox', label: 'Combobox' },
     { slug: 'spinner', label: 'Spinner' },

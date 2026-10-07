@@ -17,9 +17,7 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 14 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Spinner, Field, Calendar, Combobox (recettes dans mr.components)
-- Calendar : recette dans recipes/calendar.css, cellules 28px/32px, tabular-nums, etats repos/survol/aujourd'hui/selectionne/desactive/hors-mois, multi-mois et semaines fixes
-- Combobox : recette dans recipes/combobox.css, hauteurs 28/32/40px, popover liste avec signature rail neutre 2px par defaut (ADR-020) et accent/danger explicites, heritage dynamique data-theme/brand/density sur portail
-- Harness enrichi avec echantillons complets (interactif, validation, tailles, tons) pour Calendar et Combobox
+- 15 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, DateRangePicker, Spinner, Field, Calendar, Combobox (recettes dans mr.components)
+- DateRangePicker : recette dans recipes/date-range-picker.css, alignement du separateur fleche, compensation en presence d'etiquettes de champ
 - Tests unitaires (1 265 UI + 94 Web), Stylelint et verify 8 etapes verts
-- Prochaine etape : composant suivant (DateRangePicker, FileUpload, FormSection)
+- Prochaine etape : composant suivant (FileUpload, FormSection)
