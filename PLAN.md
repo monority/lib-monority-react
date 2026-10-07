@@ -17,7 +17,8 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 15 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, DateRangePicker, Spinner, Field, Calendar, Combobox (recettes dans mr.components)
-- DateRangePicker : recette dans recipes/date-range-picker.css, alignement du separateur fleche, compensation en presence d'etiquettes de champ
-- Tests unitaires (1 265 UI + 94 Web), Stylelint et verify 8 etapes verts
-- Prochaine etape : composant suivant (FileUpload, FormSection)
+- 17 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, DateRangePicker, Spinner, Field, Calendar, Combobox, FileUpload, FormSection (recettes dans mr.components)
+- FileUpload : DropZone (glisser-deposer), FileTrigger (bouton secondaire), FileList (taille tabular-nums, bouton suppression)
+- FormSection : en-tete (titre h3, description, meta), corps de champs, pied d'actions avec separateur
+- Tests unitaires (1 265 UI + 94 Web), Stylelint et verify verts
+- Prochaine etape : validation utilisateur et lot de composants suivant

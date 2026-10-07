@@ -10,6 +10,8 @@ import {
     DatePicker,
     DateRangePicker,
     Field,
+    FileUpload,
+    FormSection,
     IconButton,
     Input,
     NumberInput,
@@ -1448,6 +1450,115 @@ function DateRangePickerHarness() {
     )
 }
 
+function FileUploadHarness() {
+    const dummyFiles = [
+        new File(['rapport content'], 'rapport-annuel-2025.pdf', { type: 'application/pdf' }),
+        new File(['image content'], 'capture-ecran-dashboard.png', { type: 'image/png' }),
+    ]
+
+    return (
+        <>
+            <Sample label="taille sm (zone compacte)">
+                <FileUpload
+                    size="sm"
+                    label="Justificatif de domicile (sm)"
+                    description="Glissez votre document ou cliquez pour parcourir"
+                />
+            </Sample>
+            <Sample label="taille md (défaut)">
+                <FileUpload
+                    size="md"
+                    label="Pièce d'identité"
+                    description="Formats acceptés : PDF, JPG, PNG jusqu'à 10 Mo"
+                />
+            </Sample>
+            <Sample label="taille lg (zone large)">
+                <FileUpload
+                    size="lg"
+                    label="Documents de candidature (lg)"
+                    description="Glissez vos CV, lettres de motivation et portfolios"
+                    multiple
+                />
+            </Sample>
+            <Sample label="avec fichiers sélectionnés (liste et suppression)">
+                <FileUpload
+                    label="Pièces jointes"
+                    files={dummyFiles}
+                    description="Fichiers prêts pour l'envoi"
+                />
+            </Sample>
+            <Sample label="invalide (erreur de validation)">
+                <FileUpload
+                    invalid
+                    label="Document requis"
+                    error="Veuillez téléverser un fichier valide."
+                />
+            </Sample>
+            <Sample label="désactivé">
+                <FileUpload
+                    disabled
+                    label="Zone verrouillée"
+                    description="Le téléversement est temporairement suspendu"
+                />
+            </Sample>
+        </>
+    )
+}
+
+function FormSectionHarness() {
+    return (
+        <>
+            <Sample label="section standard (titre, description et champs)">
+                <FormSection
+                    title="Informations personnelles"
+                    description="Renseignez vos coordonnées de contact pour les notifications."
+                    meta="Étape 1 sur 3"
+                    actions={
+                        <Button variant="secondary" size="sm">
+                            Enregistrer le brouillon
+                        </Button>
+                    }
+                >
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <Input label="Nom complet" defaultValue="Alexandre Martin" />
+                        <Input
+                            label="Adresse email"
+                            type="email"
+                            defaultValue="alexandre@example.com"
+                        />
+                    </div>
+                </FormSection>
+            </Sample>
+            <Sample label="section simple (titre seul)">
+                <FormSection title="Paramètres de sécurité">
+                    <Switch label="Authentification à deux facteurs" defaultChecked />
+                </FormSection>
+            </Sample>
+            <Sample label="section avec actions de pied de page">
+                <FormSection
+                    title="Préférences régionales"
+                    description="Choisissez votre langue et votre fuseau horaire."
+                    actions={
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <Button variant="ghost" size="sm">
+                                Annuler
+                            </Button>
+                            <Button variant="primary" size="sm">
+                                Appliquer
+                            </Button>
+                        </div>
+                    }
+                >
+                    <Select label="Langue" defaultValue="fr">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </Select>
+                </FormSection>
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1462,6 +1573,8 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     'date-range-picker': DateRangePickerHarness,
     calendar: CalendarHarness,
     combobox: ComboboxHarness,
+    'file-upload': FileUploadHarness,
+    'form-section': FormSectionHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -1484,6 +1597,8 @@ const establishedComponents = [
     { slug: 'date-range-picker', label: 'DateRangePicker' },
     { slug: 'calendar', label: 'Calendar' },
     { slug: 'combobox', label: 'Combobox' },
+    { slug: 'file-upload', label: 'FileUpload' },
+    { slug: 'form-section', label: 'FormSection' },
     { slug: 'spinner', label: 'Spinner' },
     { slug: 'field', label: 'Field' },
 ] as const
