@@ -1,34 +1,42 @@
-import { forwardRef } from 'react'
+import type { MouseEvent } from 'react'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { SelectProps } from './Select.types'
 
-// Les variantes et tailles sont portées par les attributs `data-*`
-// (`data-tone`, `data-size`, `data-disabled`, `data-invalid`) émis par
-// `InputBase` depuis le contexte `FormControl` : aucune classe de modifier BEM.
-// Voir docs/conventions.md ("Un seul jeu de sélecteurs").
-
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        invalid = false,
-        disabled = false,
-        required = false,
-        children,
-        ...props
-    },
-    ref
-) {
+export function Select({
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    invalid = false,
+    disabled = false,
+    required = false,
+    children,
+    ref,
+    onMouseDown,
+    ...props
+}: SelectProps) {
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
     const isInvalid = invalid || Boolean(error)
+
+    const handleMouseDown = (e: MouseEvent<HTMLSelectElement>) => {
+        onMouseDown?.(e)
+        if (e.defaultPrevented || !props.multiple) return
+        const target = e.target as HTMLElement
+        if (target.tagName === 'OPTION') {
+            e.preventDefault()
+            const option = target as HTMLOptionElement
+            option.selected = !option.selected
+            const select = e.currentTarget
+            select.focus()
+            select.dispatchEvent(new Event('change', { bubbles: true }))
+        }
+    }
 
     return (
         <FormControl
@@ -49,13 +57,19 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                     data-invalid={isInvalid ? true : undefined}
                     data-multiple={props.multiple ? true : undefined}
                 >
-                    <InputBase as="select" ref={ref} className="mr-select" {...props}>
+                    <InputBase
+                        as="select"
+                        ref={ref}
+                        className="mr-select"
+                        onMouseDown={handleMouseDown}
+                        {...props}
+                    >
                         {children}
                     </InputBase>
                 </span>
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { SelectProps, SelectTone, SelectSize } from './Select.types'

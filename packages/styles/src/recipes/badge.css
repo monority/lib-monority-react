@@ -14,6 +14,7 @@
         border: 1px solid var(--mr-border-subtle);
         line-height: 1;
         white-space: nowrap;
+        text-transform: none;
         background-color: var(--mr-bg-sunken);
         color: var(--mr-text-secondary);
     }

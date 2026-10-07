@@ -80,4 +80,14 @@
             animation-duration: calc(10 * var(--mr-duration-state));
         }
     }
+
+    /* Animation rotative continue */
+    @keyframes mr-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 }

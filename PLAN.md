@@ -17,11 +17,16 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 30 composants finalises et integres au harness dans establishedComponents (Formulaires 17, Actions 4, Feedback 9)
-- Famille Feedback modernisee et composantisee :
-  - Badge (Badge.Dot), Banner (Banner.Title/Description/Eyebrow/Actions/Close), Callout (Callout.Title/Description/Content)
-  - InlineAlert (InlineAlert.Title/Description/Action), EmptyState (EmptyState.Icon/Title/Description/Actions)
-  - AsyncStateNotice, Progress (Progress.Track/Bar/Meta/Label/Value), Skeleton (Skeleton.Line), Toast (Toast.Title/Description/Close)
-  - 9 recettes CSS dans mr.components, 0 valeur brute, specificite max 0,2,0 via :where(), retrocompatibilite 100%
-- Verifications : 1 288 tests UI + 94 Web passants, test:dist vert, pnpm verify vert (6 etapes)
-- Prochaine etape : famille Overlays ou Navigation
+- Corrections visuelles et ergonomiques terminees sur 10 points :
+  - Select : support multiple moderne sans friction (clic direct sans Ctrl/Cmd, style option actif)
+  - Switch : lisibilite du bouton au repos en theme clair amelioree (piste et bordure du pouce calibrees)
+  - Radio : centrage deterministe du point (taille space-2 et centrage CSS Grid sans biais de sous-pixel)
+  - Themes : teintes d'accent distinctives pour night (violet neon), ocean (turquoise), slate (indigo)
+  - FileUpload : correction du repli de la zone large (min-block-size par taille et token d'espace valide)
+  - Spinner : keyframes mr-spin declarees dans mr.components
+  - Badge : majuscule forcee corrigee au niveau de la portee du harness
+  - Statuts : chroma et contraste renforces pour info, warning, success, danger (WCAG AA 100% conforme)
+  - Alertes : modernisation de Banner, Callout et InlineAlert (conteneur sobre, bordure d'accent integree)
+  - Toast : carte flottante sur-elevee et bordure d'accent integree moderne
+- Verifications : pnpm verify vert (6 etapes), 133 contrastes conformes sur 7 themes, tests dist et unitaires passants
+- Prochaine etape : revue utilisateur et suite des composants

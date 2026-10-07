@@ -89,7 +89,7 @@ function Sample({ label, children }: { label: string; children: React.ReactNode 
             data-harness-sample
             data-testid={`sample-${label.toLowerCase().replaceAll(' ', '-')}`}
         >
-            <span>{label}</span>
+            <span className="harness-sample-label">{label}</span>
             {children}
         </section>
     )

@@ -61,9 +61,8 @@
     /* Cercle de controle visuel */
     :where(.mr-radio__control) {
         position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        place-items: center;
         flex-shrink: 0;
         box-sizing: border-box;
         inline-size: var(--mr-space-4);
@@ -83,8 +82,8 @@
     :where(.mr-radio__dot) {
         display: block;
         box-sizing: border-box;
-        inline-size: 40%;
-        block-size: 40%;
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
         aspect-ratio: 1;
         border-radius: 50%;
         background-color: var(--mr-bg-inverse);
@@ -92,6 +91,11 @@
         transform: scale(0.4);
         transition: opacity var(--mr-duration-state), transform var(--mr-duration-state),
             background-color var(--mr-duration-state);
+    }
+
+    :where(.mr-radio-group[data-size='lg']) :where(.mr-radio__dot) {
+        inline-size: calc(var(--mr-space-2) + 2px);
+        block-size: calc(var(--mr-space-2) + 2px);
     }
 
     /* Corps textuel (libelle + description eventuelle) */

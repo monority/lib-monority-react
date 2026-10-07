@@ -199,4 +199,9 @@
         border-radius: var(--mr-radius-sm);
         margin-block: 1px;
     }
+
+    :where(.mr-select:is([multiple], [size])) option:checked {
+        background-color: var(--mr-accent-solid);
+        color: var(--mr-text-on-inverse);
+    }
 }

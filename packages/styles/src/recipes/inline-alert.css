@@ -5,24 +5,21 @@
     :where(.mr-inline-alert) {
         box-sizing: border-box;
         display: flex;
-        align-items: flex-start;
-        gap: var(--mr-space-2);
+        align-items: center;
+        gap: var(--mr-space-3);
         padding-block: var(--mr-space-2);
         padding-inline: var(--mr-space-3);
-        border-radius: var(--mr-radius-sm);
+        border-radius: var(--mr-radius-md);
         border: 1px solid var(--mr-border-default);
+        border-inline-start: var(--mr-space-1) solid var(--mr-info-text);
         font-family: var(--mr-font-family-sans);
         background-color: var(--mr-info-subtle);
-        color: var(--mr-info-text);
+        color: var(--mr-text-primary);
     }
 
+    /* Rail lateral integre au border-inline-start */
     :where(.mr-inline-alert__marker) {
-        inline-size: 2px;
-        align-self: stretch;
-        min-block-size: var(--mr-space-4);
-        background-color: currentColor;
-        border-radius: var(--mr-radius-full);
-        flex-shrink: 0;
+        display: none;
     }
 
     :where(.mr-inline-alert__body) {
@@ -62,24 +59,28 @@
     :where(.mr-inline-alert)[data-tone='info'] {
         background-color: var(--mr-info-subtle);
         border-color: var(--mr-info-border);
-        color: var(--mr-info-text);
+        border-inline-start-color: var(--mr-info-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-inline-alert)[data-tone='success'] {
         background-color: var(--mr-success-subtle);
         border-color: var(--mr-success-border);
-        color: var(--mr-success-text);
+        border-inline-start-color: var(--mr-success-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-inline-alert)[data-tone='warning'] {
         background-color: var(--mr-warning-subtle);
         border-color: var(--mr-warning-border);
-        color: var(--mr-warning-text);
+        border-inline-start-color: var(--mr-warning-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-inline-alert)[data-tone='danger'] {
         background-color: var(--mr-danger-subtle);
         border-color: var(--mr-danger-border);
-        color: var(--mr-danger-text);
+        border-inline-start-color: var(--mr-danger-solid);
+        color: var(--mr-text-primary);
     }
 }

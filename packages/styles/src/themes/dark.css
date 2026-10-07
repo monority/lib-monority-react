@@ -29,21 +29,21 @@
         /* Danger sombre : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.5:1) sur canevas sombre (L=0.17).
          * --mr-danger-on-solid herite de var(--mr-bg-canvas), conservant la meme regle unique qu'en clair. */
         --mr-danger-solid: oklch(0.65 0.2 25);
-        --mr-danger-subtle: oklch(0.24 0.05 25);
-        --mr-danger-border: oklch(0.35 0.08 25);
-        --mr-danger-text: oklch(0.72 0.16 25);
+        --mr-danger-subtle: oklch(0.24 0.065 25);
+        --mr-danger-border: oklch(0.38 0.12 25);
+        --mr-danger-text: oklch(0.76 0.17 25);
 
-        --mr-success-subtle: oklch(0.24 0.05 155);
-        --mr-success-border: oklch(0.35 0.08 155);
-        --mr-success-text: oklch(0.72 0.14 155);
+        --mr-success-subtle: oklch(0.24 0.065 155);
+        --mr-success-border: oklch(0.38 0.12 155);
+        --mr-success-text: oklch(0.76 0.15 155);
 
-        --mr-warning-subtle: oklch(0.24 0.05 80);
-        --mr-warning-border: oklch(0.35 0.08 80);
-        --mr-warning-text: oklch(0.75 0.14 80);
+        --mr-warning-subtle: oklch(0.25 0.07 80);
+        --mr-warning-border: oklch(0.38 0.12 80);
+        --mr-warning-text: oklch(0.78 0.15 80);
 
-        --mr-info-subtle: oklch(0.24 0.05 255);
-        --mr-info-border: oklch(0.35 0.08 255);
-        --mr-info-text: oklch(0.72 0.14 255);
+        --mr-info-subtle: oklch(0.24 0.065 255);
+        --mr-info-border: oklch(0.38 0.12 255);
+        --mr-info-text: oklch(0.76 0.15 255);
 
         /* Ombre overlay pour surfaces flottantes sombres */
         --mr-shadow-overlay: 0 4px 20px -2px oklch(0 0 0 / 0.45), 0 2px 8px -1px oklch(0 0 0 / 0.35);

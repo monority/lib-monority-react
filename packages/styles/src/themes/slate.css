@@ -10,6 +10,10 @@
         --mr-ref-neutral-hue: 255;
         --mr-ref-neutral-chroma: 0.022;
 
+        /* Couleur d'accent dediee pour slate (indigo ardoise) */
+        --mr-ref-brand-hue: 245;
+        --mr-ref-brand-chroma: 0.14;
+
         /* Fonds */
         --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-surface: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));

@@ -92,7 +92,7 @@
     background: var(--mr-bg-raised, var(--mr-bg-canvas));
 }
 
-[data-harness-sample] > span {
+[data-harness-sample] > .harness-sample-label {
     color: var(--mr-text-tertiary, var(--mr-text-primary));
     font-size: var(--mr-font-size-md);
     text-transform: uppercase;

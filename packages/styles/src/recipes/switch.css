@@ -71,7 +71,7 @@
         padding: 1px;
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
-        background-color: var(--mr-bg-sunken);
+        background-color: color-mix(in oklch, var(--mr-bg-sunken), var(--mr-text-primary) 8%);
         transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
     }
 
@@ -83,8 +83,11 @@
         aspect-ratio: 1;
         border-radius: 50%;
         background-color: var(--mr-switch-thumb-off);
+        border: 1px solid var(--mr-border-control);
+        box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 15%, transparent);
         transform: translateX(0);
-        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state);
+        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state),
+            border-color var(--mr-duration-state), box-shadow var(--mr-duration-state);
     }
 
     /* Taille sm : piste 36px x 20px, pouce 16px */
@@ -127,6 +130,8 @@
     :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
     :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
         background-color: var(--mr-text-on-inverse);
+        border-color: transparent;
+        box-shadow: none;
     }
 
     /* Ton neutre explicite */
@@ -265,6 +270,8 @@
     :where(.mr-switch[data-disabled]) :where(.mr-switch__thumb),
     :where(.mr-switch:has(:where(.mr-switch__input:disabled))) :where(.mr-switch__thumb) {
         background-color: var(--mr-text-disabled);
+        border-color: transparent;
+        box-shadow: none;
     }
 
     :where(.mr-switch[data-disabled][data-checked]) :where(.mr-switch__control),

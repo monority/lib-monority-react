@@ -8,8 +8,9 @@
         box-sizing: border-box;
         border-radius: var(--mr-radius-md);
         border: 1px solid var(--mr-border-default);
+        border-inline-start: var(--mr-space-1) solid var(--mr-border-control);
         font-family: var(--mr-font-family-sans);
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
     }
 
@@ -27,13 +28,9 @@
         gap: var(--mr-space-2);
     }
 
-    /* Indicateur visuel du ton */
+    /* Indicateur visuel integre au border-inline-start */
     :where(.mr-callout__indicator) {
-        inline-size: 2px;
-        align-self: stretch;
-        background-color: currentColor;
-        border-radius: var(--mr-radius-full);
-        flex-shrink: 0;
+        display: none;
     }
 
     /* Contenu */
@@ -61,38 +58,44 @@
 
     /* Tons semantiques */
     :where(.mr-callout)[data-tone='neutral'] {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
         border-color: var(--mr-border-default);
-        color: var(--mr-text-secondary);
+        border-inline-start-color: var(--mr-text-secondary);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-callout)[data-tone='accent'] {
         background-color: var(--mr-accent-subtle);
         border-color: var(--mr-accent-border);
-        color: var(--mr-accent-text);
+        border-inline-start-color: var(--mr-accent-solid);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-callout)[data-tone='success'] {
         background-color: var(--mr-success-subtle);
         border-color: var(--mr-success-border);
-        color: var(--mr-success-text);
+        border-inline-start-color: var(--mr-success-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-callout)[data-tone='warning'] {
         background-color: var(--mr-warning-subtle);
         border-color: var(--mr-warning-border);
-        color: var(--mr-warning-text);
+        border-inline-start-color: var(--mr-warning-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-callout)[data-tone='danger'] {
         background-color: var(--mr-danger-subtle);
         border-color: var(--mr-danger-border);
-        color: var(--mr-danger-text);
+        border-inline-start-color: var(--mr-danger-solid);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-callout)[data-tone='info'] {
         background-color: var(--mr-info-subtle);
         border-color: var(--mr-info-border);
-        color: var(--mr-info-text);
+        border-inline-start-color: var(--mr-info-text);
+        color: var(--mr-text-primary);
     }
 }

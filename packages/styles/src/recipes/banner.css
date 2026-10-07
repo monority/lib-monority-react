@@ -7,22 +7,20 @@
         align-items: center;
         box-sizing: border-box;
         inline-size: 100%;
-        padding-block: var(--mr-space-2);
+        padding-block: var(--mr-space-3);
         padding-inline: var(--mr-space-4);
-        gap: var(--mr-space-2);
-        border-block-end: 1px solid var(--mr-border-default);
+        gap: var(--mr-space-3);
+        border: 1px solid var(--mr-border-default);
+        border-inline-start: var(--mr-space-1) solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
         font-family: var(--mr-font-family-sans);
-        background-color: var(--mr-bg-sunken);
-        color: var(--mr-text-secondary);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
     }
 
-    /* Rail lateral ou marqueur decoratif */
+    /* Rail lateral integre au border-inline-start */
     :where(.mr-banner__marker) {
-        inline-size: 2px;
-        align-self: stretch;
-        background-color: currentColor;
-        flex-shrink: 0;
-        border-radius: var(--mr-radius-full);
+        display: none;
     }
 
     /* Corps de l'annonce */
@@ -30,7 +28,7 @@
         display: flex;
         flex: 1 1 auto;
         flex-wrap: wrap;
-        align-items: baseline;
+        align-items: center;
         gap: var(--mr-space-2);
         min-inline-size: 0;
     }
@@ -39,7 +37,12 @@
         font-size: var(--mr-font-size-sm);
         font-weight: var(--mr-font-weight-medium);
         text-transform: uppercase;
-        color: var(--mr-text-secondary);
+        padding-inline: calc(var(--mr-space-2) - 2px);
+        padding-block: 1px;
+        border-radius: var(--mr-radius-sm);
+        background-color: color-mix(in oklch, currentColor 12%, transparent);
+        color: inherit;
+        line-height: 1.2;
     }
 
     :where(.mr-banner__title) {
@@ -51,7 +54,7 @@
     :where(.mr-banner__description) {
         margin: 0;
         font-size: var(--mr-font-size-sm);
-        color: var(--mr-text-primary);
+        color: var(--mr-text-secondary);
     }
 
     :where(.mr-banner__actions) {
@@ -67,48 +70,62 @@
         align-items: center;
         justify-content: center;
         background: transparent;
-        border: 0;
-        color: inherit;
+        border: 1px solid transparent;
+        color: var(--mr-text-secondary);
         cursor: pointer;
         padding: var(--mr-space-1);
         border-radius: var(--mr-radius-sm);
         flex-shrink: 0;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-banner__close):hover {
+            background-color: color-mix(in oklch, currentColor 10%, transparent);
+            color: var(--mr-text-primary);
+        }
     }
 
     /* Tons semantiques */
     :where(.mr-banner)[data-tone='neutral'] {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
         color: var(--mr-text-secondary);
-        border-block-end-color: var(--mr-border-default);
+        border-color: var(--mr-border-default);
+        border-inline-start-color: var(--mr-text-secondary);
     }
 
     :where(.mr-banner)[data-tone='accent'] {
         background-color: var(--mr-accent-subtle);
         color: var(--mr-accent-text);
-        border-block-end-color: var(--mr-accent-border);
+        border-color: var(--mr-accent-border);
+        border-inline-start-color: var(--mr-accent-solid);
     }
 
     :where(.mr-banner)[data-tone='success'] {
         background-color: var(--mr-success-subtle);
         color: var(--mr-success-text);
-        border-block-end-color: var(--mr-success-border);
+        border-color: var(--mr-success-border);
+        border-inline-start-color: var(--mr-success-text);
     }
 
     :where(.mr-banner)[data-tone='warning'] {
         background-color: var(--mr-warning-subtle);
         color: var(--mr-warning-text);
-        border-block-end-color: var(--mr-warning-border);
+        border-color: var(--mr-warning-border);
+        border-inline-start-color: var(--mr-warning-text);
     }
 
     :where(.mr-banner)[data-tone='danger'] {
         background-color: var(--mr-danger-subtle);
         color: var(--mr-danger-text);
-        border-block-end-color: var(--mr-danger-border);
+        border-color: var(--mr-danger-border);
+        border-inline-start-color: var(--mr-danger-solid);
     }
 
     :where(.mr-banner)[data-tone='info'] {
         background-color: var(--mr-info-subtle);
         color: var(--mr-info-text);
-        border-block-end-color: var(--mr-info-border);
+        border-color: var(--mr-info-border);
+        border-inline-start-color: var(--mr-info-text);
     }
 }

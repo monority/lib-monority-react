@@ -10,6 +10,10 @@
         --mr-ref-neutral-hue: 260;
         --mr-ref-neutral-chroma: 0.05;
 
+        /* Couleur d'accent dediee pour ocean (turquoise marine vibrant) */
+        --mr-ref-brand-hue: 195;
+        --mr-ref-brand-chroma: 0.15;
+
         /* Fonds */
         --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-surface: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
