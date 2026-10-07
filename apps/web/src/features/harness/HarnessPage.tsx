@@ -56,7 +56,7 @@ const ClearIcon = () => (
     </svg>
 )
 
-const themes = ['light', 'dark', 'dim', 'oled', 'slate', 'ocean', 'night', 'high-contrast'] as const
+const themes = ['light', 'dark', 'oled', 'slate', 'ocean', 'night', 'high-contrast'] as const
 const densities = ['comfortable', 'compact'] as const
 const brands = ['monority', 'studio'] as const
 type Theme = (typeof themes)[number]
