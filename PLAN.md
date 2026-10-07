@@ -17,12 +17,9 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 12 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Spinner, Field (recettes dans mr.components)
-- Spinner : recette dans recipes/spinner.css, diametres 16/20/24px (sm/md/lg), arc 270 degres 2px, rotation mr-spin, ralenti en mouvement reduit, tons base/muted/inverse/accent
-- Select multiple : correction du dimensionnement min-height 80px, chevron masque via data-multiple, espacement des options
-- Invalide interactif : echantillons dynamiques pour tous les controles avec disparition automatique de l'erreur des condition valide
-- DatePicker : declencheur adapte (280px par defaut), prop fullWidth, fond opaque raised, heritage dynamique de data-theme/brand/density sur le popover porte
-- Visibilite des bordures sombres : rehaussement de --mr-border-control (L=0.48 en dark/dim/ocean/slate, L=0.46 en oled, L=0.49 en night)
-- Tokens et themes : 7 themes canoniques dans le harness (dim conserve comme alias de dark en CSS), surfaces et bordures harmonisees
-- Tests Playwright (dimensions et contrastes) et Stylelint verts sur les 7 themes
-- Prochaine etape : composant suivant (Calendar, DateRangePicker, Combobox, FileUpload, FormSection)
+- 14 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, Spinner, Field, Calendar, Combobox (recettes dans mr.components)
+- Calendar : recette dans recipes/calendar.css, cellules 28px/32px, tabular-nums, etats repos/survol/aujourd'hui/selectionne/desactive/hors-mois, multi-mois et semaines fixes
+- Combobox : recette dans recipes/combobox.css, hauteurs 28/32/40px, popover liste avec signature rail accent 2px, heritage dynamique data-theme/brand/density sur portail
+- Harness enrichi avec echantillons complets (interactif, validation, tailles, tons) pour Calendar et Combobox
+- Tests unitaires (1 265 UI + 94 Web), Stylelint et verify 8 etapes verts
+- Prochaine etape : composant suivant (DateRangePicker, FileUpload, FormSection)

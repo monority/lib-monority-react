@@ -141,6 +141,16 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
         }
     }
 
+    const activeTheme = rootRef.current
+        ? (rootRef.current.closest('[data-theme]')?.getAttribute('data-theme') ?? undefined)
+        : undefined
+    const activeBrand = rootRef.current
+        ? (rootRef.current.closest('[data-brand]')?.getAttribute('data-brand') ?? undefined)
+        : undefined
+    const activeDensity = rootRef.current
+        ? (rootRef.current.closest('[data-density]')?.getAttribute('data-density') ?? undefined)
+        : undefined
+
     return (
         <FormControl
             id={inputId}
@@ -203,6 +213,11 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
                                   className="mr-combobox__list"
                                   role="listbox"
                                   aria-label={typeof label === 'string' ? label : undefined}
+                                  data-size={resolvedSize}
+                                  data-tone={resolvedTone}
+                                  data-theme={activeTheme}
+                                  data-brand={activeBrand}
+                                  data-density={activeDensity}
                                   style={{
                                       position: 'fixed',
                                       top: `${position.top}px`,

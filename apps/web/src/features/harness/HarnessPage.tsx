@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
     Button,
+    Calendar,
     Checkbox,
+    Combobox,
+    type ComboboxItem,
     CopyButton,
     DatePicker,
     Field,
@@ -1263,6 +1266,127 @@ function DatePickerHarness() {
     )
 }
 
+function InteractiveCalendarSample() {
+    const [val, setVal] = useState<Date | null>(new Date(2025, 5, 15))
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Calendar value={val} onChange={setVal} />
+            <span style={{ fontSize: '13px', color: 'var(--mr-text-secondary)' }}>
+                Sélection : {val ? val.toLocaleDateString('fr-FR') : 'aucune'}
+            </span>
+        </div>
+    )
+}
+
+function CalendarHarness() {
+    return (
+        <>
+            <Sample label="défaut (juin 2025, jour 15 sélectionné)">
+                <Calendar defaultValue={new Date(2025, 5, 15)} />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <Calendar defaultValue={new Date(2025, 5, 15)} data-tone="accent" />
+            </Sample>
+            <Sample label="interactif (sélectionnez un jour)">
+                <InteractiveCalendarSample />
+            </Sample>
+            <Sample label="bornes min et max (10 au 20 juin 2025)">
+                <Calendar
+                    minDate={new Date(2025, 5, 10)}
+                    maxDate={new Date(2025, 5, 20)}
+                    defaultValue={new Date(2025, 5, 15)}
+                />
+            </Sample>
+            <Sample label="weekends désactivés">
+                <Calendar
+                    defaultValue={new Date(2025, 5, 15)}
+                    disabledDates={(d) => d.getDay() === 0 || d.getDay() === 6}
+                />
+            </Sample>
+            <Sample label="semaines fixes (fixedWeeks, 6 semaines)">
+                <Calendar defaultValue={new Date(2025, 5, 15)} fixedWeeks />
+            </Sample>
+            <Sample label="masquer jours hors mois (showOutsideDays=false)">
+                <Calendar defaultValue={new Date(2025, 5, 15)} showOutsideDays={false} />
+            </Sample>
+            <Sample label="deux mois consécutifs (numberOfMonths=2)">
+                <Calendar defaultValue={new Date(2025, 5, 15)} numberOfMonths={2} />
+            </Sample>
+        </>
+    )
+}
+
+function InvalidComboboxSample({ items }: { items: ComboboxItem[] }) {
+    const [val, setVal] = useState('')
+    const isInvalid = !val
+    return (
+        <Combobox
+            value={val}
+            onChange={setVal}
+            invalid={isInvalid}
+            label="Pays requis (sélectionnez pour valider)"
+            error={isInvalid ? 'Veuillez sélectionner un pays dans la liste.' : undefined}
+            items={items}
+        />
+    )
+}
+
+function ComboboxHarness() {
+    const countries: ComboboxItem[] = [
+        { value: 'fr', label: 'France', description: "Europe de l'Ouest" },
+        { value: 'de', label: 'Allemagne', description: 'Europe centrale' },
+        { value: 'es', label: 'Espagne', description: 'Péninsule Ibérique' },
+        { value: 'it', label: 'Italie', description: 'Europe du Sud' },
+        { value: 'jp', label: 'Japon', description: "Asie de l'Est" },
+        { value: 'ca', label: 'Canada', description: 'Amérique du Nord' },
+    ]
+
+    return (
+        <>
+            <Sample label="taille sm (hauteur 28px)">
+                <Combobox size="sm" defaultValue="fr" label="Pays sm" items={countries} />
+            </Sample>
+            <Sample label="taille md (défaut, hauteur 32px)">
+                <Combobox size="md" defaultValue="fr" label="Pays de résidence" items={countries} />
+            </Sample>
+            <Sample label="taille lg (hauteur 40px)">
+                <Combobox size="lg" defaultValue="fr" label="Pays lg" items={countries} />
+            </Sample>
+            <Sample label="ton neutre (défaut ADR-020)">
+                <Combobox tone="neutral" defaultValue="fr" label="Ton neutre" items={countries} />
+            </Sample>
+            <Sample label="ton accent (marque)">
+                <Combobox tone="accent" defaultValue="fr" label="Ton accent" items={countries} />
+            </Sample>
+            <Sample label="ton danger">
+                <Combobox tone="danger" defaultValue="fr" label="Ton danger" items={countries} />
+            </Sample>
+            <Sample label="avec placeholder (champ vide)">
+                <Combobox
+                    placeholder="Rechercher un pays..."
+                    label="Destination"
+                    items={countries}
+                />
+            </Sample>
+            <Sample label="invalide (avec message d'erreur)">
+                <Combobox
+                    invalid
+                    defaultValue=""
+                    label="Pays obligatoire"
+                    error="Ce champ est requis."
+                    items={countries}
+                />
+            </Sample>
+            <Sample label="invalide (se valide à la sélection)">
+                <InvalidComboboxSample items={countries} />
+            </Sample>
+            <Sample label="désactivé">
+                <Combobox disabled defaultValue="fr" label="Pays verrouillé" items={countries} />
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1274,6 +1398,8 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     slider: SliderHarness,
     'number-input': NumberInputHarness,
     'date-picker': DatePickerHarness,
+    calendar: CalendarHarness,
+    combobox: ComboboxHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -1293,6 +1419,8 @@ const establishedComponents = [
     { slug: 'slider', label: 'Slider' },
     { slug: 'number-input', label: 'NumberInput' },
     { slug: 'date-picker', label: 'DatePicker' },
+    { slug: 'calendar', label: 'Calendar' },
+    { slug: 'combobox', label: 'Combobox' },
     { slug: 'spinner', label: 'Spinner' },
     { slug: 'field', label: 'Field' },
 ] as const
