@@ -17,8 +17,8 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Button sm aligne sur la spec v4 avec font-size: var(--mr-font-size-sm) (0.75rem / 12px)
-- Diagnostic approfondi de la perception de hauteur des boutons EmptyState consigne
-- Verifications : pnpm verify vert (6 etapes), 1288 tests unitaires passants, dist synchronise
-- Prochaine etape : retour utilisateur et suite des composants
+- EmptyState actions harmonisees en variante secondary dans le harness (spec v4 §7.18 respectee)
+- Dualite primaire blanc vs secondaire noir resolue sur le mode compose declaratif
+- Verifications : pnpm verify vert (6 etapes), 1288 tests unitaires passants, 94 tests web passants
+- Prochaine etape : validation utilisateur et suite des composants
 

@@ -1947,7 +1947,9 @@ function EmptyStateHarness() {
                         Créez un premier sous-dossier ou glissez des fichiers ici.
                     </EmptyState.Description>
                     <EmptyState.Actions>
-                        <Button size="sm">Créer un dossier</Button>
+                        <Button size="sm" variant="secondary">
+                            Créer un dossier
+                        </Button>
                         <Button size="sm" variant="secondary">
                             Importer
                         </Button>
