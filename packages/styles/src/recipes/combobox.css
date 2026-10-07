@@ -14,7 +14,8 @@
  * - ombre : var(--mr-shadow-overlay)
  *
  * Option selectionnee :
- * - rail lateral 2px var(--mr-accent-solid), fond var(--mr-accent-subtle)
+ * - Ton neutre (defaut ADR-020) : rail lateral 2px var(--mr-text-primary), fond var(--mr-bg-sunken)
+ * - Ton accent (explicite) : rail lateral 2px var(--mr-accent-solid), fond var(--mr-accent-subtle)
  */
 @layer mr.components {
     /* Conteneur principal */
@@ -198,13 +199,36 @@
         color: var(--mr-text-primary);
     }
 
-    /* Option selectionnee : signature rail gauche + fond accent-subtle */
+    /* Option selectionnee (ton neutre defaut ADR-020 : noir en clair, blanc en sombre) */
     :where(.mr-combobox__item[data-selected='true']),
     :where(.mr-combobox__item.is-selected),
     :where(.mr-combobox__item[aria-selected='true']) {
+        background-color: var(--mr-bg-sunken);
+        border-inline-start: 2px solid var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    /* Option selectionnee (ton accent explicite) */
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item[aria-selected='true']),
+    :where(.mr-combobox__list[data-tone='accent']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox__list[data-tone='accent']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox__list[data-tone='accent'])
+        :where(.mr-combobox__item[aria-selected='true']) {
         background-color: var(--mr-accent-subtle);
         border-inline-start: 2px solid var(--mr-accent-solid);
-        font-weight: var(--mr-font-weight-medium);
+    }
+
+    /* Option selectionnee (ton danger explicite) */
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item[aria-selected='true']),
+    :where(.mr-combobox__list[data-tone='danger']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox__list[data-tone='danger']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox__list[data-tone='danger'])
+        :where(.mr-combobox__item[aria-selected='true']) {
+        border-inline-start: 2px solid var(--mr-danger-solid);
     }
 
     :where(.mr-combobox__item-label) {
