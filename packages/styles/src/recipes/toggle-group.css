@@ -1,0 +1,103 @@
+/* Recette du composant ToggleGroup (couche mr.components)
+ *
+ * Groupe de boutons a bascule / segmented control.
+ *
+ * Structure :
+ * - Conteneur segmente (.mr-toggle-group) : fond sunken, bordure border-subtle, padding 2px
+ * - Segments (.mr-toggle-group__item) : bascules s'integrant au conteneur avec rail inferieur d'accentuation en etat actif
+ */
+@layer mr.components {
+    :where(.mr-toggle-group) {
+        display: inline-flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 2px;
+        gap: 2px;
+        background-color: var(--mr-bg-sunken);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        user-select: none;
+    }
+
+    /* Orientation */
+    :where(.mr-toggle-group)[data-orientation='vertical'] {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Segments du groupe */
+    :where(.mr-toggle-group) :where(.mr-toggle-group__item) {
+        border-color: transparent;
+        background-color: transparent;
+        color: var(--mr-text-secondary);
+        border-radius: var(--mr-radius-sm);
+    }
+
+    /* Survol inactif */
+    @media (hover: hover) {
+        :where(.mr-toggle-group)
+            :where(.mr-toggle-group__item):hover:where(
+                :not(:disabled, [data-state='on'], [aria-pressed='true'])
+            ) {
+            background-color: var(--mr-bg-surface);
+            color: var(--mr-text-primary);
+            border-color: transparent;
+        }
+    }
+
+    /* Segment actif / selectionne */
+    :where(.mr-toggle-group)
+        :where(.mr-toggle-group__item):where(
+            [data-state='on'],
+            [aria-pressed='true'],
+            .mr-toggle-group__item--active
+        ) {
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
+        border-color: var(--mr-border-subtle);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-toggle-group)
+            :where(.mr-toggle-group__item):where(
+                [data-state='on'],
+                [aria-pressed='true'],
+                .mr-toggle-group__item--active
+            ):hover:where(:not(:disabled, [aria-disabled='true'])) {
+            background-color: var(--mr-bg-raised);
+            border-color: var(--mr-border-subtle);
+        }
+    }
+
+    /* Rail d'accent inferieur du segment actif */
+    :where(.mr-toggle-group)
+        :where(.mr-toggle-group__item):where(
+            [data-state='on'],
+            [aria-pressed='true'],
+            .mr-toggle-group__item--active
+        )::after {
+        content: '';
+        position: absolute;
+        inset-inline: var(--mr-space-2);
+        inset-block-end: 2px;
+        block-size: 2px;
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-text-primary);
+    }
+
+    :where(.mr-toggle-group[data-tone='accent'])
+        :where(.mr-toggle-group__item):where(
+            [data-state='on'],
+            [aria-pressed='true'],
+            .mr-toggle-group__item--active
+        )::after {
+        background-color: var(--mr-accent-solid);
+    }
+
+    /* Focus visible */
+    :where(.mr-toggle-group) :where(.mr-toggle-group__item):focus-visible {
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: -2px;
+        z-index: 1;
+    }
+}

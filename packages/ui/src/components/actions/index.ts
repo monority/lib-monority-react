@@ -11,13 +11,22 @@ export {
     type IconButtonSize,
     type IconButtonTone,
 } from './icon-button'
-export { Toggle, type ToggleProps, type ToggleVariant, type ToggleSize } from './toggle'
+export {
+    Toggle,
+    type ToggleProps,
+    type ToggleVariant,
+    type ToggleSize,
+    type ToggleTone,
+} from './toggle'
 export {
     ToggleGroup,
+    ToggleGroupItem,
     type ToggleGroupProps,
-    type ToggleGroupItem,
+    type ToggleGroupItemProps,
+    type ToggleGroupItemData,
     type ToggleGroupType,
     type ToggleGroupOrientation,
     type ToggleGroupVariant,
     type ToggleGroupSize,
+    type ToggleGroupTone,
 } from './toggle-group'

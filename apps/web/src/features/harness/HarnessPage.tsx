@@ -24,6 +24,8 @@ import {
     Switch,
     Textarea,
     ThemeScope,
+    Toggle,
+    ToggleGroup,
 } from '@monority/ui'
 import './harness.css'
 
@@ -1559,6 +1561,176 @@ function FormSectionHarness() {
     )
 }
 
+function ToggleHarness() {
+    return (
+        <>
+            <Sample label="taille sm (repos et pressé)">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle size="sm">Basculer</Toggle>
+                    <Toggle size="sm" defaultPressed>
+                        Actif
+                    </Toggle>
+                </div>
+            </Sample>
+            <Sample label="taille md (défaut, repos et pressé)">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle size="md">Basculer</Toggle>
+                    <Toggle size="md" defaultPressed>
+                        Actif
+                    </Toggle>
+                </div>
+            </Sample>
+            <Sample label="taille lg (repos et pressé)">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle size="lg">Basculer</Toggle>
+                    <Toggle size="lg" defaultPressed>
+                        Actif
+                    </Toggle>
+                </div>
+            </Sample>
+            <Sample label="variantes outline et ghost">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle variant="outline">Outline</Toggle>
+                    <Toggle variant="outline" defaultPressed>
+                        Outline actif
+                    </Toggle>
+                    <Toggle variant="ghost">Ghost</Toggle>
+                    <Toggle variant="ghost" defaultPressed>
+                        Ghost actif
+                    </Toggle>
+                </div>
+            </Sample>
+            <Sample label="ton accent (rail de couleur de marque)">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle tone="accent" defaultPressed>
+                        Accent actif
+                    </Toggle>
+                    <Toggle tone="accent" variant="outline" defaultPressed>
+                        Outline accent
+                    </Toggle>
+                </div>
+            </Sample>
+            <Sample label="états désactivés">
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Toggle disabled>Inactif désactivé</Toggle>
+                    <Toggle disabled defaultPressed>
+                        Actif désactivé
+                    </Toggle>
+                </div>
+            </Sample>
+        </>
+    )
+}
+
+function ToggleGroupHarness() {
+    return (
+        <>
+            <Sample label="mode single par prop items">
+                <ToggleGroup
+                    type="single"
+                    defaultValue="center"
+                    items={[
+                        { value: 'left', label: 'Gauche' },
+                        { value: 'center', label: 'Centre' },
+                        { value: 'right', label: 'Droite' },
+                    ]}
+                />
+            </Sample>
+            <Sample label="mode multiple par prop items">
+                <ToggleGroup
+                    type="multiple"
+                    defaultValue={['bold', 'italic']}
+                    items={[
+                        { value: 'bold', label: 'Gras' },
+                        { value: 'italic', label: 'Italique' },
+                        { value: 'underline', label: 'Souligné' },
+                    ]}
+                />
+            </Sample>
+            <Sample label="mode composé déclaratif avec ToggleGroup.Item">
+                <ToggleGroup type="single" defaultValue="list">
+                    <ToggleGroup.Item value="grid">Grille</ToggleGroup.Item>
+                    <ToggleGroup.Item value="list">Liste</ToggleGroup.Item>
+                    <ToggleGroup.Item value="table">Tableau</ToggleGroup.Item>
+                </ToggleGroup>
+            </Sample>
+            <Sample label="tailles sm, md, lg">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <ToggleGroup
+                        size="sm"
+                        defaultValue="1"
+                        items={[
+                            { value: '1', label: 'Jour' },
+                            { value: '2', label: 'Semaine' },
+                            { value: '3', label: 'Mois' },
+                        ]}
+                    />
+                    <ToggleGroup
+                        size="md"
+                        defaultValue="1"
+                        items={[
+                            { value: '1', label: 'Jour' },
+                            { value: '2', label: 'Semaine' },
+                            { value: '3', label: 'Mois' },
+                        ]}
+                    />
+                    <ToggleGroup
+                        size="lg"
+                        defaultValue="1"
+                        items={[
+                            { value: '1', label: 'Jour' },
+                            { value: '2', label: 'Semaine' },
+                            { value: '3', label: 'Mois' },
+                        ]}
+                    />
+                </div>
+            </Sample>
+            <Sample label="orientation verticale">
+                <ToggleGroup
+                    orientation="vertical"
+                    defaultValue="top"
+                    items={[
+                        { value: 'top', label: 'Haut' },
+                        { value: 'middle', label: 'Milieu' },
+                        { value: 'bottom', label: 'Bas' },
+                    ]}
+                />
+            </Sample>
+            <Sample label="ton accent avec rail coloré">
+                <ToggleGroup
+                    tone="accent"
+                    defaultValue="active"
+                    items={[
+                        { value: 'all', label: 'Tous' },
+                        { value: 'active', label: 'Actifs' },
+                        { value: 'completed', label: 'Terminés' },
+                    ]}
+                />
+            </Sample>
+            <Sample label="groupe désactivé et item individuel désactivé">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <ToggleGroup
+                        disabled
+                        defaultValue="1"
+                        items={[
+                            { value: '1', label: 'Option A' },
+                            { value: '2', label: 'Option B' },
+                        ]}
+                    />
+                    <ToggleGroup
+                        defaultValue="1"
+                        items={[
+                            { value: '1', label: 'Disponible' },
+                            { value: '2', label: 'Verrouillé', disabled: true },
+                            { value: '3', label: 'Disponible' },
+                        ]}
+                    />
+                </div>
+            </Sample>
+        </>
+    )
+}
+
 const harnesses: Record<string, () => React.JSX.Element> = {
     button: ButtonHarness,
     input: InputHarness,
@@ -1575,6 +1747,8 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     combobox: ComboboxHarness,
     'file-upload': FileUploadHarness,
     'form-section': FormSectionHarness,
+    toggle: ToggleHarness,
+    'toggle-group': ToggleGroupHarness,
     field: FieldHarness,
     'icon-button': IconButtonHarness,
     'copy-button': CopyButtonHarness,
@@ -1585,6 +1759,10 @@ const harnesses: Record<string, () => React.JSX.Element> = {
 
 const establishedComponents = [
     { slug: 'button', label: 'Button' },
+    { slug: 'icon-button', label: 'IconButton' },
+    { slug: 'copy-button', label: 'CopyButton' },
+    { slug: 'toggle', label: 'Toggle' },
+    { slug: 'toggle-group', label: 'ToggleGroup' },
     { slug: 'input', label: 'Input' },
     { slug: 'textarea', label: 'Textarea' },
     { slug: 'select', label: 'Select' },
@@ -1603,11 +1781,7 @@ const establishedComponents = [
     { slug: 'field', label: 'Field' },
 ] as const
 
-const otherComponents = [
-    { slug: 'icon-button', label: 'IconButton' },
-    { slug: 'copy-button', label: 'CopyButton' },
-    { slug: 'button-link', label: 'ButtonLink' },
-] as const
+const otherComponents = [{ slug: 'button-link', label: 'ButtonLink' }] as const
 
 export function HarnessPage() {
     const { component = 'button' } = useParams()

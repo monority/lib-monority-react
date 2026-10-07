@@ -17,7 +17,10 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- 17 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, DateRangePicker, Spinner, Field, Calendar, Combobox, FileUpload, FormSection (recettes dans mr.components)
-- AGENTS.md consolide : integration bicephale du Contrat d'ingenierie (52 regles) et du Contrat operationnel Monority UI (couches CSS, budget verify, Git, React 19)
-- Tests unitaires (1 265 UI + 94 Web), Stylelint et verify verts
-- Prochaine etape : lot de composants suivant (Actions / Feedback / Layout)
+- 21 composants finalises et integres au harness : Formulaires (17), Button, IconButton, CopyButton, Toggle, ToggleGroup (recettes dans mr.components)
+- Famille Actions finalisee :
+  - Toggle : recette CSS toggle.css avec rail signature, React 19 ref, useControllableState sans effet
+  - ToggleGroup : composantisation ToggleGroup.Item declaratif + support items, recette toggle-group.css
+  - IconButton & CopyButton : modernisation React 19 ref, integration harness dans establishedComponents
+- Tests unitaires (1 266 UI + 94 Web), test:dist, Stylelint et verify verts
+- Prochaine etape : famille Feedback (Badge, Banner, Callout, InlineAlert, Toast)

@@ -299,4 +299,26 @@ describe('ToggleGroup', () => {
 
         expect(group?.className).toContain('custom-class')
     })
+
+    it('supports declarative composition via ToggleGroup.Item children', () => {
+        const onValueChange = vi.fn()
+        const view = render(
+            <ToggleGroup type="single" defaultValue="right" onValueChange={onValueChange}>
+                <ToggleGroup.Item value="left">Gauche</ToggleGroup.Item>
+                <ToggleGroup.Item value="center">Centre</ToggleGroup.Item>
+                <ToggleGroup.Item value="right">Droite</ToggleGroup.Item>
+            </ToggleGroup>
+        )
+        const buttons = view.querySelectorAll('button')
+        expect(buttons.length).toBe(3)
+        expect(buttons[2]?.getAttribute('aria-pressed')).toBe('true')
+        expect(buttons[0]?.getAttribute('aria-pressed')).toBe('false')
+
+        act(() => {
+            buttons[0]?.click()
+        })
+        expect(onValueChange).toHaveBeenCalledWith('left')
+        expect(buttons[0]?.getAttribute('aria-pressed')).toBe('true')
+        expect(buttons[2]?.getAttribute('aria-pressed')).toBe('false')
+    })
 })
