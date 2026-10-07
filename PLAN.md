@@ -18,7 +18,6 @@ Button en premier (B1 a B6).
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
 - 17 composants finalises et integres au harness : Button, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, NumberInput, DatePicker, DateRangePicker, Spinner, Field, Calendar, Combobox, FileUpload, FormSection (recettes dans mr.components)
-- FileUpload : DropZone (glisser-deposer), FileTrigger (bouton secondaire), FileList (taille tabular-nums, bouton suppression)
-- FormSection : en-tete (titre h3, description, meta), corps de champs, pied d'actions avec separateur
+- AGENTS.md consolide : integration bicephale du Contrat d'ingenierie (52 regles) et du Contrat operationnel Monority UI (couches CSS, budget verify, Git, React 19)
 - Tests unitaires (1 265 UI + 94 Web), Stylelint et verify verts
-- Prochaine etape : validation utilisateur et lot de composants suivant
+- Prochaine etape : lot de composants suivant (Actions / Feedback / Layout)
