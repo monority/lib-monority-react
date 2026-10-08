@@ -2,30 +2,28 @@ import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 import type { TextareaProps } from './Textarea.types'
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        invalid = false,
-        disabled = false,
-        required = false,
-        resize = 'vertical',
-        value,
-        defaultValue,
-        onChange,
-        maxLength,
-        ...props
-    },
-    ref
-) {
+export function Textarea({
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    invalid = false,
+    disabled = false,
+    required = false,
+    resize = 'vertical',
+    value,
+    defaultValue,
+    onChange,
+    maxLength,
+    ref,
+    ...props
+}: TextareaProps) {
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
     const isControlled = value !== undefined
@@ -83,6 +81,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { TextareaProps, TextareaTone, TextareaSize } from './Textarea.types'

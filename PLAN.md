@@ -17,9 +17,8 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Typography complet : Title, Text, Kbd, PreCode (100% de la famille migree)
-- Recettes CSS : title.css, text.css, kbd.css, pre-code.css sous @layer mr.components
-- Tokens semantiques : font-size (xs a 2xl), font-family (mono), graisses, hauteurs de ligne et tracking ajoutes
-- Modernisation React 19 : ref en prop directe (sans forwardRef), types stricts, enrichissement des tons de Text
+- Phase 1 terminee : nettoyage physique de packages/tokens/ et scratch/
+- Typage strict : suppression du dernier any dans ToggleGroup.types.ts
+- Modernisation Forms complete : Textarea migre vers React 19 (ref en prop directe, zero forwardRef dans Forms)
 - Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui et 94 tests @monority/web
-- Prochaine etape : migration de la famille Layout ou Overlays
+- Prochaine etape : Phase 2 — migration de la famille Layout (11 composants)

@@ -17,7 +17,7 @@ export interface ToggleGroupProps
     type?: ToggleGroupType
     value?: string | string[]
     defaultValue?: string | string[]
-    onValueChange?: (value: any) => void
+    onValueChange?: (value: string | string[]) => void
     disabled?: boolean
     orientation?: ToggleGroupOrientation
     variant?: ToggleGroupVariant
