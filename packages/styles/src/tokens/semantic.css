@@ -57,9 +57,18 @@
         --mr-state-active-mix: 24%;
         --mr-state-disabled-mix: 84%;
 
-        /* Mouvement : micro-interactions d'etat.
-         * Regle : multiples de 50ms (3 x 50ms pour les micro-interactions d'etat). */
+        /* Mouvement : micro-interactions et boucles continues.
+         * Regle : multiples de 50ms (ADR-021).
+         * state : 150ms (3 x 50ms) pour les micro-interactions d'etat.
+         * panel : 200ms (4 x 50ms) pour les surfaces coulissantes.
+         * spin  : 800ms (16 x 50ms) pour la rotation d'attente.
+         * pulse : 1200ms (24 x 50ms) pour l'oscillation de squelette.
+         * loop  : 1500ms (30 x 50ms) pour le balayage de progression. */
         --mr-duration-state: 150ms;
+        --mr-duration-panel: 200ms;
+        --mr-duration-spin: 800ms;
+        --mr-duration-pulse: 1200ms;
+        --mr-duration-loop: 1500ms;
 
         /* Espacement : --mr-space-N vaut N fois 0.25rem (grille arithmetique de 4px).
          * Regle de proportion du padding horizontal de controle :
@@ -108,12 +117,19 @@
         --mr-font-weight-medium: 500;
     }
 
-    /* Neutralisation du mouvement pour les utilisateurs qui le demandent.
+    /* Neutralisation et adoucissement du mouvement sous mouvement reduit (ADR-021).
+     * Les transitions d'etat et de panneau tombent a 0ms.
+     * La rotation d'attente est ralentie a 1600ms (spec 5.11) pour preserver la perception d'activite sans inconfort vestibulaire.
+     * La pulsation et le balayage sont ralentis et adoucis pour eviter toute distraction.
      * Doit vivre dans mr.tokens apres la declaration par defaut pour ne pas perdre
      * face a la couche des tokens a specificite egale. */
     @media (prefers-reduced-motion: reduce) {
         :where(:root, [data-theme]) {
             --mr-duration-state: 0ms;
+            --mr-duration-panel: 0ms;
+            --mr-duration-spin: 1600ms;
+            --mr-duration-pulse: 2400ms;
+            --mr-duration-loop: 3000ms;
         }
     }
 

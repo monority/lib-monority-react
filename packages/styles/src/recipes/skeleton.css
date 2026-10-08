@@ -8,7 +8,7 @@
             opacity: 1;
         }
         50% {
-            opacity: 0.55;
+            opacity: 0.35;
         }
     }
 
@@ -17,14 +17,7 @@
         box-sizing: border-box;
         background-color: var(--mr-bg-sunken);
         border-radius: var(--mr-radius-sm);
-        animation: mr-skeleton-pulse calc(8 * var(--mr-duration-state)) ease-in-out infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        :where(.mr-skeleton) {
-            animation: none;
-            opacity: 1;
-        }
+        animation: mr-skeleton-pulse var(--mr-duration-pulse) ease-in-out infinite;
     }
 
     /* Formes */

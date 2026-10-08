@@ -37,7 +37,7 @@
         border-radius: var(--mr-radius-full);
         transform-origin: center;
         will-change: transform;
-        animation: mr-spin calc(5 * var(--mr-duration-state)) linear infinite;
+        animation: mr-spin var(--mr-duration-spin) linear infinite;
     }
 
     /* Tailles */
@@ -72,13 +72,6 @@
 
     :where(.mr-spinner)[data-tone='accent'] {
         color: var(--mr-accent-solid);
-    }
-
-    /* Preference de mouvement reduit : ralentit la rotation sans la figer */
-    @media (prefers-reduced-motion: reduce) {
-        :where(.mr-spinner__ring) {
-            animation-duration: calc(10 * var(--mr-duration-state));
-        }
     }
 
     /* Animation rotative continue */

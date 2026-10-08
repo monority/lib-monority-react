@@ -150,7 +150,7 @@
         border: 2px solid currentColor;
         border-inline-end-color: transparent;
         border-radius: 50%;
-        animation: mr-spin calc(4 * var(--mr-duration-state)) linear infinite;
+        animation: mr-spin var(--mr-duration-spin) linear infinite;
     }
 
     @keyframes mr-spin {

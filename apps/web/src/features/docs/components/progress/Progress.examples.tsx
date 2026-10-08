@@ -40,11 +40,6 @@ export function ProgressAnimatedExample() {
     const directionRef = useRef(1)
 
     useEffect(() => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            setValue(100)
-            return
-        }
-
         const interval = window.setInterval(() => {
             setValue((current) => {
                 const next = Math.min(100, Math.max(0, current + 5 * directionRef.current))

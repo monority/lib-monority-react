@@ -61,17 +61,7 @@
     :where(.mr-progress__bar--indeterminate) {
         position: absolute;
         inset-block: 0;
-        animation: mr-progress-indeterminate calc(10 * var(--mr-duration-state)) ease-in-out
-            infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        :where(.mr-progress)[data-mode='indeterminate'] :where(.mr-progress__bar),
-        :where(.mr-progress__bar--indeterminate) {
-            animation: none;
-            inset-inline-start: 33%;
-            inline-size: 34%;
-        }
+        animation: mr-progress-indeterminate var(--mr-duration-loop) ease-in-out infinite;
     }
 
     /* Tons */

@@ -37,7 +37,7 @@
         "focus": ["ring"],
         "size": ["control-sm", "control-md", "control-lg"],
         "font-size": ["sm", "md"],
-        "duration": ["state", "panel"],
+        "duration": ["state", "panel", "spin", "pulse", "loop"],
         "state": ["hover-mix", "active-mix", "disabled-mix"],
         "radius": ["sm", "md", "full"],
         "switch": ["thumb-off"]
