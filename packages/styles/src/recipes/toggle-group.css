@@ -4,7 +4,7 @@
  *
  * Structure :
  * - Conteneur segmente (.mr-toggle-group) : fond sunken, bordure border-subtle, padding 2px
- * - Segments (.mr-toggle-group__item) : bascules s'integrant au conteneur avec rail inferieur d'accentuation en etat actif
+ * - Segments (.mr-toggle-group__item) : bascules s'integrant au conteneur avec fond raised en etat actif (style segmented control sans soulignement)
  */
 @layer mr.components {
     :where(.mr-toggle-group) {
@@ -69,29 +69,16 @@
         }
     }
 
-    /* Rail d'accent inferieur du segment actif */
-    :where(.mr-toggle-group)
-        :where(.mr-toggle-group__item):where(
-            [data-state='on'],
-            [aria-pressed='true'],
-            .mr-toggle-group__item--active
-        )::after {
-        content: '';
-        position: absolute;
-        inset-inline: var(--mr-space-2);
-        inset-block-end: 2px;
-        block-size: 2px;
-        border-radius: var(--mr-radius-full);
-        background-color: var(--mr-text-primary);
-    }
-
+    /* Ton accent : segment actif avec fond accentue */
     :where(.mr-toggle-group[data-tone='accent'])
         :where(.mr-toggle-group__item):where(
             [data-state='on'],
             [aria-pressed='true'],
             .mr-toggle-group__item--active
-        )::after {
+        ) {
         background-color: var(--mr-accent-solid);
+        color: var(--mr-text-on-inverse);
+        border-color: transparent;
     }
 
     /* Focus visible */
