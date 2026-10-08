@@ -1,22 +1,20 @@
-import { forwardRef, useState, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { CarouselProps } from './Carousel.types'
 
-export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carousel(
-    {
-        slides,
-        autoPlay = false,
-        interval = 5000,
-        showArrows = true,
-        showDots = true,
-        loop = false,
-        orientation = 'horizontal',
-        slideClassName,
-        className,
-        ...props
-    },
-    ref
-) {
+export function Carousel({
+    slides,
+    autoPlay = false,
+    interval = 5000,
+    showArrows = true,
+    showDots = true,
+    loop = false,
+    orientation = 'horizontal',
+    slideClassName,
+    className,
+    ref,
+    ...props
+}: CarouselProps) {
     const [current, setCurrent] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
     const total = slides.length
@@ -118,4 +116,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(function Carou
             )}
         </div>
     )
-})
+}
+
+export type { CarouselProps } from './Carousel.types'

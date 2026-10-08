@@ -17,12 +17,12 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Banner : harmonisation carte neutre et icones par ton (commit 49eb679)
-- Display : creation des recettes card.css et avatar.css sous @layer mr.components
-- Card : modernisation React 19, sous-composants composes (Header, Title, Description, Content, Footer), accessibilite interactive (role button, tabindex)
-- Avatar : modernisation React 19, support statut en ligne/absent (dot 8px), tailles sm (24px), md (32px), lg (40px)
+- Display complet : Card, Avatar, Collapsible, Accordion, Carousel (100% de la famille migree)
+- Recettes CSS : card.css, avatar.css, collapsible.css, accordion.css, carousel.css sous @layer mr.components
+- Modernisation React 19 et hooks internes : ref en prop directe (sans forwardRef), utilisation de useControllableState
 - Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui et 94 tests @monority/web
-- Prochaine etape : migration de la tranche suivante (Typography ou suite de Display)
+- Prochaine etape : migration de la famille Typography (Title, Text, Kbd, PreCode)
+
 
 
 

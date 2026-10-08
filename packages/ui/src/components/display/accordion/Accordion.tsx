@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useId, useRef, useState } from 'react'
+import { useCallback, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { AccordionItem, AccordionProps } from './Accordion.types'
 
@@ -9,20 +9,19 @@ import type { AccordionItem, AccordionProps } from './Accordion.types'
  * - Home / End jump to the first / last enabled trigger
  * - Enter / Space toggle the focused trigger (native button behavior)
  */
-export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Accordion(
-    {
-        items = [],
-        defaultValue,
-        value: controlledValue,
-        onChange,
-        allowMultiple = false,
-        collapsible = false,
-        size,
-        className,
-        ...props
-    },
-    ref
-) {
+export function Accordion({
+    items = [],
+    defaultValue,
+    value: controlledValue,
+    onChange,
+    onValueChange,
+    allowMultiple = false,
+    collapsible = false,
+    size = 'md',
+    className,
+    ref,
+    ...props
+}: AccordionProps) {
     const [internalValue, setInternalValue] = useState<string[]>(() => {
         if (defaultValue === undefined) return []
         return Array.isArray(defaultValue) ? defaultValue : [defaultValue]
@@ -36,7 +35,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Acc
         : internalValue
 
     const generatedId = useId()
-    const resolvedSize = size ?? 'md'
     const firstEnabledIndex = Math.max(
         0,
         items.findIndex((item) => !item.disabled)
@@ -103,17 +101,13 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Acc
             if (!isControlled) setInternalValue(newValues)
             const result = allowMultiple ? newValues : (newValues[0] ?? '')
             onChange?.(result as string | string[])
+            onValueChange?.(result as string | string[])
         },
-        [openValues, allowMultiple, isControlled, onChange]
+        [openValues, allowMultiple, isControlled, onChange, onValueChange]
     )
 
     return (
-        <div
-            ref={ref}
-            className={cn('mr-accordion', className)}
-            data-size={resolvedSize}
-            {...props}
-        >
+        <div ref={ref} className={cn('mr-accordion', className)} data-size={size} {...props}>
             {items.map((item: AccordionItem, index: number) => {
                 const isOpen = openValues.includes(item.value)
                 const panelId = `${generatedId}-panel-${item.value}`
@@ -161,6 +155,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Acc
             })}
         </div>
     )
-})
+}
 
 export type { AccordionItem, AccordionProps, AccordionSize } from './Accordion.types'

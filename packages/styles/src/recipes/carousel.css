@@ -1,0 +1,133 @@
+/* Recette du composant Carousel (couche mr.components)
+ *
+ * Diaporama d'elements defilants avec controle par fleches et points d'etape.
+ *
+ * Tokens :
+ * - Rayon : --mr-radius-md
+ * - Ecart : --mr-space-3
+ * - Commandes : fleches controlees via --mr-size-control-md
+ * - Points : --mr-space-2, actif --mr-text-primary
+ * - Transition : --mr-duration-panel (200ms)
+ */
+@layer mr.components {
+    :where(.mr-carousel) {
+        position: relative;
+        display: grid;
+        grid-template-areas:
+            'viewport'
+            'dots';
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    :where(.mr-carousel__viewport) {
+        grid-area: viewport;
+        inline-size: 100%;
+        overflow: hidden;
+        border-radius: var(--mr-radius-md);
+    }
+
+    :where(.mr-carousel__track) {
+        display: flex;
+        transition: transform var(--mr-duration-panel);
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__track) {
+        flex-direction: column;
+    }
+
+    :where(.mr-carousel__slide) {
+        flex: 0 0 100%;
+        min-inline-size: 0;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-carousel__slide)[aria-hidden='true'] {
+        visibility: hidden;
+    }
+
+    :where(.mr-carousel__arrow) {
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-md);
+        block-size: var(--mr-size-control-md);
+        padding: 0;
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        line-height: 1;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    :where(.mr-carousel__arrow):first-of-type {
+        inset-inline-start: var(--mr-space-2);
+    }
+
+    :where(.mr-carousel__arrow):last-of-type {
+        inset-inline-end: var(--mr-space-2);
+    }
+
+    :where(.mr-carousel__arrow):hover:not(:disabled) {
+        background-color: var(--mr-bg-raised);
+        border-color: var(--mr-border-default);
+    }
+
+    :where(.mr-carousel__arrow):focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-carousel__arrow):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        opacity: 0.5;
+    }
+
+    :where(.mr-carousel__dots) {
+        grid-area: dots;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-carousel__dot) {
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
+        padding: 0;
+        border: none;
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-border-default);
+        cursor: pointer;
+        opacity: 0.5;
+        transition: background-color var(--mr-duration-state), transform var(--mr-duration-state),
+            opacity var(--mr-duration-state);
+    }
+
+    :where(.mr-carousel__dot):hover,
+    :where(.mr-carousel__dot)[data-active='true'] {
+        background-color: var(--mr-text-primary);
+        opacity: 1;
+        transform: scale(1.25);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-carousel__track),
+        :where(.mr-carousel__dot),
+        :where(.mr-carousel__arrow) {
+            transition: none;
+        }
+    }
+}

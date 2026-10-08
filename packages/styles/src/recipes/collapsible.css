@@ -1,0 +1,157 @@
+/* Recette du composant Collapsible (couche mr.components)
+ *
+ * Section isolee de contenu repliable sous un declencheur.
+ *
+ * Tokens :
+ * - Fond : --mr-bg-surface
+ * - Bordure : 1px solid --mr-border-subtle
+ * - Rayon : --mr-radius-md
+ * - Declencheur : hauteur derivee de --mr-size-control-*, texte --mr-text-primary
+ * - Chevron : rotation a 180 deg en --mr-duration-state
+ */
+@layer mr.components {
+    :where(.mr-collapsible) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-surface);
+        overflow: hidden;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    :where(.mr-collapsible)[data-state='open'] {
+        border-color: var(--mr-border-default);
+    }
+
+    :where(.mr-collapsible__trigger) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+        inline-size: 100%;
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        padding-block: var(--mr-space-2);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        text-align: start;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    :where(.mr-collapsible__trigger):hover {
+        background-color: var(--mr-bg-raised);
+    }
+
+    :where(.mr-collapsible__trigger):focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    :where(.mr-collapsible__label) {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        overflow-wrap: anywhere;
+    }
+
+    :where(.mr-collapsible__icon) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+        flex: 0 0 auto;
+        border-radius: var(--mr-radius-full);
+        border: 1px solid var(--mr-border-subtle);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state);
+    }
+
+    :where(.mr-collapsible__icon)::before {
+        content: '';
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
+        border-inline-end: 2px solid currentColor;
+        border-block-end: 2px solid currentColor;
+        transform: translateY(-1px) rotate(45deg);
+    }
+
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__icon) {
+        transform: rotate(180deg);
+        border-color: var(--mr-border-default);
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-collapsible__panel) {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        visibility: hidden;
+        transition: grid-template-rows var(--mr-duration-panel), opacity var(--mr-duration-state),
+            visibility 0s linear var(--mr-duration-panel);
+    }
+
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__panel) {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
+    }
+
+    :where(.mr-collapsible__content) {
+        min-block-size: 0;
+        overflow: hidden;
+        padding-inline: var(--mr-space-4);
+        padding-block: var(--mr-space-3);
+        border-block-start: 1px solid var(--mr-border-subtle);
+        color: var(--mr-text-primary);
+        font-size: var(--mr-font-size-md);
+    }
+
+    /* Tailles */
+    :where(.mr-collapsible)[data-size='sm'] :where(.mr-collapsible__trigger) {
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+        padding-block: var(--mr-space-1);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    :where(.mr-collapsible)[data-size='sm'] :where(.mr-collapsible__content) {
+        padding-inline: var(--mr-space-3);
+        padding-block: var(--mr-space-2);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    :where(.mr-collapsible)[data-size='sm'] :where(.mr-collapsible__icon) {
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-collapsible)[data-size='lg'] :where(.mr-collapsible__trigger) {
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
+        padding-block: var(--mr-space-3);
+    }
+
+    :where(.mr-collapsible)[data-size='lg'] :where(.mr-collapsible__content) {
+        padding-inline: var(--mr-space-5);
+        padding-block: var(--mr-space-4);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-collapsible),
+        :where(.mr-collapsible__trigger),
+        :where(.mr-collapsible__icon),
+        :where(.mr-collapsible__panel) {
+            transition: none;
+        }
+    }
+}
