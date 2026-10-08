@@ -66,3 +66,11 @@
 @import './recipes/dropdown-menu.css';
 @import './recipes/context-menu.css';
 @import './recipes/command-palette.css';
+@import './recipes/tabs.css';
+@import './recipes/breadcrumb.css';
+@import './recipes/pagination.css';
+@import './recipes/topbar.css';
+@import './recipes/sidebar-layout.css';
+@import './recipes/filter-bar.css';
+@import './recipes/menubar.css';
+@import './recipes/navigation-menu.css';

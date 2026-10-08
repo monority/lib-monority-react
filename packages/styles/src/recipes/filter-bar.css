@@ -1,0 +1,17 @@
+/* Recette FilterBar dans la couche mr.components (spec v4).
+ * Barre horizontale d'actions et filtres de recherche. */
+@layer mr.components {
+    :where(.mr-filter-bar) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        gap: var(--mr-space-3);
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-4);
+        background-color: var(--mr-bg-raised);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+    }
+}

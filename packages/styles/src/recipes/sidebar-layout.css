@@ -1,0 +1,56 @@
+/* Recette SidebarLayout dans la couche mr.components (spec v4).
+ * Structure de page à deux volets avec barre latérale et contenu défilant. */
+@layer mr.components {
+    :where(.mr-sidebar-layout) {
+        display: flex;
+        box-sizing: border-box;
+        inline-size: 100%;
+        min-block-size: 100%;
+        background-color: var(--mr-bg-canvas);
+    }
+
+    :where(.mr-sidebar-layout__sidebar) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        border-inline-end: 1px solid var(--mr-border-subtle);
+        background-color: var(--mr-bg-surface);
+    }
+
+    /* Largeurs de barre laterale */
+    :where(.mr-sidebar-layout)[data-sidebar-width='sm'] > :where(.mr-sidebar-layout__sidebar) {
+        inline-size: calc(var(--mr-space-6) * 8);
+    }
+
+    :where(.mr-sidebar-layout)[data-sidebar-width='md'] > :where(.mr-sidebar-layout__sidebar),
+    :where(.mr-sidebar-layout):not([data-sidebar-width]) > :where(.mr-sidebar-layout__sidebar) {
+        inline-size: calc(var(--mr-space-6) * 10);
+    }
+
+    :where(.mr-sidebar-layout)[data-sidebar-width='lg'] > :where(.mr-sidebar-layout__sidebar) {
+        inline-size: calc(var(--mr-space-6) * 12);
+    }
+
+    :where(.mr-sidebar-layout__main) {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0%;
+        min-inline-size: 0;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-sidebar-layout__header) {
+        box-sizing: border-box;
+        border-block-end: 1px solid var(--mr-border-subtle);
+        padding-inline: var(--mr-space-6);
+        padding-block: var(--mr-space-4);
+    }
+
+    :where(.mr-sidebar-layout__content) {
+        flex: 1 1 0%;
+        box-sizing: border-box;
+        padding-inline: var(--mr-space-6);
+        padding-block: var(--mr-space-6);
+    }
+}

@@ -1,11 +1,15 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { SidebarLayoutProps } from './SidebarLayout.types'
 
-export const SidebarLayout = forwardRef<HTMLDivElement, SidebarLayoutProps>(function SidebarLayout(
-    { sidebar, header, children, sidebarWidth = 'md', className, ...props },
-    ref
-) {
+export function SidebarLayout({
+    ref,
+    sidebar,
+    header,
+    children,
+    sidebarWidth = 'md',
+    className,
+    ...props
+}: SidebarLayoutProps) {
     return (
         <div
             ref={ref}
@@ -20,6 +24,6 @@ export const SidebarLayout = forwardRef<HTMLDivElement, SidebarLayoutProps>(func
             </div>
         </div>
     )
-})
+}
 
 export type { SidebarLayoutProps, SidebarWidth } from './SidebarLayout.types'

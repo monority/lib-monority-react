@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type TabsTone = 'neutral' | 'accent' | 'danger'
 export type TabsSize = 'sm' | 'md' | 'lg'
@@ -11,6 +11,7 @@ export interface TabItem {
 
 export interface TabsProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onChange' | 'defaultValue'> {
+    ref?: Ref<HTMLDivElement>
     tone?: TabsTone
     size?: TabsSize
     items: TabItem[]

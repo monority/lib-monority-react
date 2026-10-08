@@ -1,0 +1,18 @@
+/* Recette Topbar dans la couche mr.components (spec v4).
+ * Barre supérieure de navigation et d'état persistante collée en haut d'écran. */
+@layer mr.components {
+    :where(.mr-topbar) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: calc(var(--mr-space-6) * 2);
+        padding-inline: var(--mr-space-4);
+        background-color: var(--mr-bg-surface);
+        border-block-end: 1px solid var(--mr-border-subtle);
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 40;
+        gap: var(--mr-space-4);
+    }
+}

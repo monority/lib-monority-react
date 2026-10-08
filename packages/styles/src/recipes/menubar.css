@@ -1,0 +1,115 @@
+/* Recette Menubar dans la couche mr.components (spec v4).
+ * Barre de menus d'application de bureau avec menus déroulants et raccourcis. */
+@layer mr.components {
+    :where(.mr-menubar) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        gap: var(--mr-space-1);
+        padding: var(--mr-space-1);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+    }
+
+    :where(.mr-menubar__menu-wrapper) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-menubar__trigger) {
+        display: inline-flex;
+        align-items: center;
+        box-sizing: border-box;
+        block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        cursor: pointer;
+        user-select: none;
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-menubar__trigger:hover:not(:disabled)),
+    :where(.mr-menubar__menu-wrapper[data-active='true']) > :where(.mr-menubar__trigger) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-menubar__trigger:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    :where(.mr-menubar__menu) {
+        position: absolute;
+        inset-block-start: 100%;
+        inset-inline-start: 0;
+        z-index: 50;
+        min-inline-size: calc(var(--mr-space-6) * 5);
+        margin-block-start: var(--mr-space-1);
+        padding: var(--mr-space-1);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    :where(.mr-menubar__item) {
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        box-sizing: border-box;
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+        text-align: start;
+        cursor: pointer;
+        gap: var(--mr-space-2);
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-menubar__item:hover:not(:disabled)) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-menubar__item:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    :where(.mr-menubar__item--danger) {
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-menubar__item:disabled),
+    :where(.mr-menubar__item--disabled) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-menubar__separator) {
+        block-size: 1px;
+        margin-block: var(--mr-space-1);
+        background-color: var(--mr-border-subtle);
+    }
+
+    :where(.mr-menubar__shortcut) {
+        margin-inline-start: auto;
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-tertiary);
+        font-family: var(--mr-font-family-mono);
+    }
+}

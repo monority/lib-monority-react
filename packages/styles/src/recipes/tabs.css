@@ -1,0 +1,103 @@
+/* Recette Tabs dans la couche mr.components (spec v4).
+ * Organisation du contenu en panneaux alternatifs avec rangée d'onglets et rail actif. */
+@layer mr.components {
+    :where(.mr-tabs) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        border-block-end: 1px solid var(--mr-border-subtle);
+        gap: 0;
+    }
+
+    :where(.mr-tabs)[data-full-width='true'] {
+        inline-size: 100%;
+    }
+
+    :where(.mr-tabs)[data-full-width='true'] > :where(.mr-tabs__tab) {
+        flex: 1 1 0%;
+    }
+
+    :where(.mr-tabs__tab) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+        text-decoration: none;
+        transition: color var(--mr-duration-state) ease;
+    }
+
+    /* Tailles */
+    :where(.mr-tabs)[data-size='sm'] > :where(.mr-tabs__tab) {
+        block-size: var(--mr-size-control-sm);
+        font-size: var(--mr-font-size-sm);
+        padding-inline: var(--mr-space-3);
+    }
+
+    :where(.mr-tabs)[data-size='md'] > :where(.mr-tabs__tab),
+    :where(.mr-tabs):not([data-size]) > :where(.mr-tabs__tab) {
+        block-size: var(--mr-size-control-md);
+        font-size: var(--mr-font-size-sm);
+        padding-inline: var(--mr-space-4);
+    }
+
+    :where(.mr-tabs)[data-size='lg'] > :where(.mr-tabs__tab) {
+        block-size: var(--mr-size-control-lg);
+        font-size: var(--mr-font-size-md);
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Survol */
+    :where(.mr-tabs__tab:hover:not(:disabled)):not([data-disabled='true']) {
+        color: var(--mr-text-primary);
+    }
+
+    /* Focus */
+    :where(.mr-tabs__tab:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    /* Actif */
+    :where(.mr-tabs__tab[data-active='true']),
+    :where(.mr-tabs__tab[aria-selected='true']) {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-tabs__tab[data-active='true'])::after,
+    :where(.mr-tabs__tab[aria-selected='true'])::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        inset-block-end: -1px;
+        block-size: 2px;
+        background-color: var(--mr-accent-solid);
+    }
+
+    /* Tons d'accentuation */
+    :where(.mr-tabs)[data-tone='neutral'] > :where(.mr-tabs__tab[data-active='true'])::after,
+    :where(.mr-tabs)[data-tone='neutral'] > :where(.mr-tabs__tab[aria-selected='true'])::after {
+        background-color: var(--mr-text-primary);
+    }
+
+    :where(.mr-tabs)[data-tone='danger'] > :where(.mr-tabs__tab[data-active='true'])::after,
+    :where(.mr-tabs)[data-tone='danger'] > :where(.mr-tabs__tab[aria-selected='true'])::after {
+        background-color: var(--mr-danger-solid);
+    }
+
+    /* Desactive */
+    :where(.mr-tabs__tab:disabled),
+    :where(.mr-tabs__tab[data-disabled='true']) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+}
