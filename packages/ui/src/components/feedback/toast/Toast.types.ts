@@ -28,4 +28,3 @@ export interface ToastDescriptionProps extends HTMLAttributes<HTMLParagraphEleme
 export interface ToastCloseProps extends HTMLAttributes<HTMLButtonElement> {
     ref?: Ref<HTMLButtonElement>
 }
-

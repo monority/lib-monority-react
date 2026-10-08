@@ -1,5 +1,11 @@
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './button'
 export {
+    ButtonLink,
+    type ButtonLinkProps,
+    type ButtonLinkSize,
+    type ButtonLinkVariant,
+} from './button-link'
+export {
     CopyButton,
     type CopyButtonProps,
     type CopyButtonSize,

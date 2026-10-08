@@ -14,6 +14,7 @@ const root = join(process.cwd(), '..', '..')
 const componentsDir = join(process.cwd(), 'src', 'features', 'docs', 'components')
 
 const REDIRECTS: Record<string, string> = {
+    'button-link': 'button',
     'copy-button': 'button',
     'icon-button': 'button',
     'number-input': 'input',

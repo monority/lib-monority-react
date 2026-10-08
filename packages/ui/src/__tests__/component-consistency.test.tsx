@@ -190,6 +190,7 @@ describe('Step 24 · public variants still exported (no breaking change)', () =>
     it('keeps every audited family importable', async () => {
         const [
             buttonMod,
+            buttonLinkMod,
             iconButtonMod,
             badgeMod,
             alertMod,
@@ -202,6 +203,7 @@ describe('Step 24 · public variants still exported (no breaking change)', () =>
             accordionMod,
         ] = await Promise.all([
             import('../components/actions/button/Button'),
+            import('../components/actions/button-link/ButtonLink'),
             import('../components/actions/icon-button/IconButton'),
             import('../components/feedback/badge/Badge'),
             import('../components/feedback/inline-alert/InlineAlert'),
@@ -214,6 +216,7 @@ describe('Step 24 · public variants still exported (no breaking change)', () =>
             import('../components/display/accordion/Accordion'),
         ])
         expect(buttonMod.Button).toBeTruthy()
+        expect(buttonLinkMod.ButtonLink).toBeTruthy()
         expect(iconButtonMod.IconButton).toBeTruthy()
         expect(badgeMod.Badge).toBeTruthy()
         expect(alertMod.InlineAlert).toBeTruthy()

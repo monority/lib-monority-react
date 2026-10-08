@@ -44,6 +44,12 @@
             "import": "./dist/button.js",
             "default": "./dist/button.js"
         },
+        "./button-link": {
+            "types": "./dist/buttonLink.d.ts",
+            "monority-source": "./src/components/actions/button-link/index.ts",
+            "import": "./dist/buttonLink.js",
+            "default": "./dist/buttonLink.js"
+        },
         "./input": {
             "types": "./dist/input.d.ts",
             "monority-source": "./src/components/forms/input/index.ts",

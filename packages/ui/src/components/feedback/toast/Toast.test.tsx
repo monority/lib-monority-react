@@ -99,4 +99,3 @@ describe('Toast', () => {
         expect(iconEl?.querySelector('svg')).not.toBeNull()
     })
 })
-

@@ -25,6 +25,7 @@ const declaredSubpaths = Object.keys(manifest.exports)
 import {
     // Actions
     Button,
+    ButtonLink,
     CopyButton,
     IconButton,
     Toggle,
@@ -103,6 +104,7 @@ import {
 describe('root barrel import (@monority/ui)', () => {
     const components: Record<string, unknown> = {
         Button,
+        ButtonLink,
         CopyButton,
         IconButton,
         Toggle,
@@ -223,6 +225,11 @@ describe('sub-path imports (@monority/ui/<name>)', () => {
     it('imports Button from @monority/ui/button', async () => {
         const { Button } = await import('@monority/ui/button')
         expect(Button).toBeDefined()
+    })
+
+    it('imports ButtonLink from @monority/ui/button-link', async () => {
+        const { ButtonLink } = await import('@monority/ui/button-link')
+        expect(ButtonLink).toBeDefined()
     })
 
     it('imports Callout from @monority/ui/callout', async () => {

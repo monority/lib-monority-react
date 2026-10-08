@@ -5,6 +5,7 @@ import {
     Badge,
     Banner,
     Button,
+    ButtonLink,
     Calendar,
     Callout,
     Checkbox,
@@ -244,10 +245,55 @@ function SpinnerHarness() {
 }
 
 function ButtonLinkHarness() {
+    const variants = ['primary', 'secondary', 'ghost', 'danger'] as const
     return (
-        <Sample label="pending 3.1">
-            <span data-testid="button-link-pending">ButtonLink · étape 3.1</span>
-        </Sample>
+        <>
+            {variants.flatMap((variant) =>
+                (['sm', 'md', 'lg'] as const).map((size) => (
+                    <Sample key={`${variant}-${size}`} label={`${variant} ${size}`}>
+                        <ButtonLink href="/harness/button-link" variant={variant} size={size}>
+                            Lien
+                        </ButtonLink>
+                    </Sample>
+                ))
+            )}
+            <Sample label="disabled">
+                <ButtonLink href="/harness/button-link" disabled>
+                    Lien désactivé
+                </ButtonLink>
+            </Sample>
+            <Sample label="danger disabled">
+                <ButtonLink href="/harness/button-link" variant="danger" disabled>
+                    Action destructive
+                </ButtonLink>
+            </Sample>
+            <Sample label="loading primary">
+                <ButtonLink href="/harness/button-link" variant="primary" loading>
+                    Navigation en cours
+                </ButtonLink>
+            </Sample>
+            <Sample label="loading secondary">
+                <ButtonLink href="/harness/button-link" variant="secondary" loading>
+                    Navigation en cours
+                </ButtonLink>
+            </Sample>
+            <Sample label="with icons">
+                <ButtonLink
+                    href="/harness/button-link"
+                    iconLeading={<SearchIcon />}
+                    iconTrailing={<CheckIcon />}
+                >
+                    Recherche
+                </ButtonLink>
+            </Sample>
+            <Sample label="full width">
+                <div style={{ width: '100%' }}>
+                    <ButtonLink href="/harness/button-link" fullWidth>
+                        Pleine largeur
+                    </ButtonLink>
+                </div>
+            </Sample>
+        </>
     )
 }
 
@@ -2115,6 +2161,7 @@ const harnesses: Record<string, () => React.JSX.Element> = {
 
 const establishedComponents = [
     { slug: 'button', label: 'Button' },
+    { slug: 'button-link', label: 'ButtonLink' },
     { slug: 'icon-button', label: 'IconButton' },
     { slug: 'copy-button', label: 'CopyButton' },
     { slug: 'toggle', label: 'Toggle' },
@@ -2146,7 +2193,7 @@ const establishedComponents = [
     { slug: 'field', label: 'Field' },
 ] as const
 
-const otherComponents = [{ slug: 'button-link', label: 'ButtonLink' }] as const
+const otherComponents: readonly { slug: string; label: string }[] = []
 
 export function HarnessPage() {
     const { component = 'button' } = useParams()

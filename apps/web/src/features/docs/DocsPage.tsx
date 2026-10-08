@@ -13,6 +13,7 @@ type LazyComponent = React.LazyExoticComponent<ComponentType>
 
 function getDocComponent(slug: string) {
     const redirects: Record<string, string> = {
+        'button-link': 'button',
         'copy-button': 'button',
         'icon-button': 'button',
         'number-input': 'input',
