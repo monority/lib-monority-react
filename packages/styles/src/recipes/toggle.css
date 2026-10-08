@@ -82,33 +82,51 @@
 
     /* Etat presse (actif / on) */
     :where(.mr-toggle):where([data-state='on'], [aria-pressed='true']) {
-        background-color: var(--mr-bg-raised);
-        border-color: var(--mr-border-control);
-        color: var(--mr-text-primary);
+        background-color: var(--mr-bg-inverse);
+        border-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
     }
 
     @media (hover: hover) {
         :where(.mr-toggle):where([data-state='on'], [aria-pressed='true']):hover:where(
                 :not(:disabled, [aria-disabled='true'])
             ) {
-            background-color: var(--mr-bg-sunken);
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-inverse),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+            border-color: color-mix(
+                in oklch,
+                var(--mr-bg-inverse),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
         }
     }
 
-    /* Rail d'accent signature en etat presse */
-    :where(.mr-toggle):where([data-state='on'], [aria-pressed='true'])::after {
-        content: '';
-        position: absolute;
-        inset-inline: var(--mr-space-2);
-        inset-block-end: 2px;
-        block-size: 2px;
-        border-radius: var(--mr-radius-full);
-        background-color: var(--mr-text-primary);
+    /* Ton accent : bouton actif avec fond accentue */
+    :where(.mr-toggle[data-tone='accent']):where([data-state='on'], [aria-pressed='true']) {
+        background-color: var(--mr-accent-solid);
+        border-color: var(--mr-accent-solid);
+        color: var(--mr-text-on-inverse);
     }
 
-    /* Rail accentue sur demande explicite (ADR-020) */
-    :where(.mr-toggle[data-tone='accent']):where([data-state='on'], [aria-pressed='true'])::after {
-        background-color: var(--mr-accent-solid);
+    @media (hover: hover) {
+        :where(.mr-toggle[data-tone='accent']):where(
+                [data-state='on'],
+                [aria-pressed='true']
+            ):hover:where(:not(:disabled, [aria-disabled='true'])) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-accent-solid),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+            border-color: color-mix(
+                in oklch,
+                var(--mr-accent-solid),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+        }
     }
 
     /* Focus visible */
@@ -124,10 +142,5 @@
         color: var(--mr-text-disabled);
         border-color: var(--mr-border-subtle);
         opacity: 0.5;
-    }
-
-    :where(.mr-toggle):disabled::after,
-    :where(.mr-toggle[aria-disabled='true'])::after {
-        display: none;
     }
 }
