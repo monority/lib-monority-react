@@ -111,4 +111,17 @@ describe('Banner', () => {
         const view = render(<Banner open={false} title="Hidden" />)
         expect(view.querySelector('.mr-banner')).toBeNull()
     })
+
+    it('renders default tone icon and allows custom or disabled icon', () => {
+        const defaultView = render(<Banner tone="warning" title="Warning banner" />)
+        expect(defaultView.querySelector('.mr-banner__icon svg')).not.toBeNull()
+
+        const disabledView = render(<Banner icon={false} title="No icon banner" />)
+        expect(disabledView.querySelector('.mr-banner__icon')).toBeNull()
+
+        const customView = render(
+            <Banner icon={<span className="custom-banner-icon">*</span>} title="Custom icon" />
+        )
+        expect(customView.querySelector('.custom-banner-icon')).not.toBeNull()
+    })
 })

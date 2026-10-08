@@ -4,6 +4,7 @@ export type {
     BannerCloseProps,
     BannerDescriptionProps,
     BannerEyebrowProps,
+    BannerIconProps,
     BannerProps,
     BannerTitleProps,
     BannerTone,

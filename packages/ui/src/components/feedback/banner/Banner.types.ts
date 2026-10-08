@@ -12,7 +12,12 @@ export interface BannerProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> 
     dismissible?: boolean
     onDismiss?: () => void
     open?: boolean
+    icon?: ReactNode | boolean
     children?: ReactNode
+}
+
+export interface BannerIconProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
 }
 
 export interface BannerTitleProps extends HTMLAttributes<HTMLElement> {

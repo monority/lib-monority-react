@@ -19,7 +19,9 @@ Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
 - Toggle : remplacement du rail souligne par une inversion de couleur nette au repos et actif (commit 1d1a0bc)
 - Callout et InlineAlert : alignement sur Toast (surface neutre, icones de statut colorees uniques, commit 623ec91)
-- Animations : normalisation de Spinner, AsyncStateNotice, Progress et Skeleton sur tokens semantiques dedies (spin 800ms/1600ms, pulse 1200ms/2400ms, loop 1500ms/3000ms), activite continue garantie sous tout profil
-- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1300 tests unitaires @monority/ui et 94 tests @monority/web
-- Prochaine etape : validation utilisateur et poursuite des demandes d'alignement design system
+- Animations : normalisation de Spinner, AsyncStateNotice, Progress et Skeleton sur tokens semantiques dedies (commit 2fb450a)
+- Banner : harmonisation avec Toast, Callout et InlineAlert (surface neutre, bordure standard, icones SVG par tone)
+- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1301 tests unitaires @monority/ui et 94 tests @monority/web
+- Prochaine etape : migration de la famille suivante et poursuite de la feuille de route
+
 
