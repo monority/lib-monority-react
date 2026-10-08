@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import {
     AsyncStateNotice,
     Badge,
@@ -38,6 +38,57 @@ import {
     ToggleGroup,
 } from '@monority/ui'
 import './harness.css'
+import {
+    AlertDialogHarness,
+    CommandPaletteHarness,
+    ContextMenuHarness,
+    DrawerHarness,
+    DropdownMenuHarness,
+    HoverCardHarness,
+    ModalHarness,
+    PopoverHarness,
+    TooltipHarness,
+} from './modules/overlays'
+import {
+    BreadcrumbHarness,
+    FilterBarHarness,
+    MenubarHarness,
+    NavigationMenuHarness,
+    PaginationHarness,
+    SidebarLayoutHarness,
+    TabsHarness,
+    TopbarHarness,
+} from './modules/navigation'
+import {
+    DataListHarness,
+    DataTableHarness,
+    MetricGridHarness,
+    StatCardHarness,
+    TableHarness,
+} from './modules/data'
+import {
+    AccordionHarness,
+    AvatarHarness,
+    CardHarness,
+    CarouselHarness,
+    CollapsibleHarness,
+} from './modules/display'
+import {
+    AspectRatioHarness,
+    ContainerHarness,
+    DividerHarness,
+    GridHarness,
+    PageHeaderHarness,
+    ResizableHarness,
+    ScrollAreaHarness,
+    SectionHarness,
+    SeparatorHarness,
+    StackHarness,
+    ToolbarHarness,
+} from './modules/layout'
+import { KbdHarness, PreCodeHarness, TextHarness, TitleHarness } from './modules/typography'
+import { PasswordInputHarness } from './modules/forms-extra'
+import { InfiniteScrollHarness } from './modules/experimental'
 
 const SearchIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -2125,8 +2176,16 @@ function ToastHarness() {
 }
 
 const harnesses: Record<string, () => React.JSX.Element> = {
+    // Actions
     button: ButtonHarness,
+    'button-link': ButtonLinkHarness,
+    'icon-button': IconButtonHarness,
+    'copy-button': CopyButtonHarness,
+    toggle: ToggleHarness,
+    'toggle-group': ToggleGroupHarness,
+    // Forms
     input: InputHarness,
+    'password-input': PasswordInputHarness,
     textarea: TextareaHarness,
     select: SelectHarness,
     checkbox: CheckboxHarness,
@@ -2140,12 +2199,8 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     combobox: ComboboxHarness,
     'file-upload': FileUploadHarness,
     'form-section': FormSectionHarness,
-    toggle: ToggleHarness,
-    'toggle-group': ToggleGroupHarness,
     field: FieldHarness,
-    'icon-button': IconButtonHarness,
-    'copy-button': CopyButtonHarness,
-    'button-link': ButtonLinkHarness,
+    // Feedback
     spinner: SpinnerHarness,
     badge: BadgeHarness,
     banner: BannerHarness,
@@ -2156,47 +2211,181 @@ const harnesses: Record<string, () => React.JSX.Element> = {
     progress: ProgressHarness,
     skeleton: SkeletonHarness,
     toast: ToastHarness,
+    // Overlays
+    modal: ModalHarness,
+    'alert-dialog': AlertDialogHarness,
+    drawer: DrawerHarness,
+    tooltip: TooltipHarness,
+    popover: PopoverHarness,
+    'dropdown-menu': DropdownMenuHarness,
+    'context-menu': ContextMenuHarness,
+    'hover-card': HoverCardHarness,
+    'command-palette': CommandPaletteHarness,
+    // Navigation
+    tabs: TabsHarness,
+    breadcrumb: BreadcrumbHarness,
+    pagination: PaginationHarness,
+    topbar: TopbarHarness,
+    'sidebar-layout': SidebarLayoutHarness,
+    'filter-bar': FilterBarHarness,
+    menubar: MenubarHarness,
+    'navigation-menu': NavigationMenuHarness,
+    // Data
+    table: TableHarness,
+    'data-table': DataTableHarness,
+    'data-list': DataListHarness,
+    'stat-card': StatCardHarness,
+    'metric-grid': MetricGridHarness,
+    // Display
+    card: CardHarness,
+    accordion: AccordionHarness,
+    avatar: AvatarHarness,
+    carousel: CarouselHarness,
+    collapsible: CollapsibleHarness,
+    // Layout
+    'aspect-ratio': AspectRatioHarness,
+    container: ContainerHarness,
+    divider: DividerHarness,
+    grid: GridHarness,
+    'page-header': PageHeaderHarness,
+    resizable: ResizableHarness,
+    'scroll-area': ScrollAreaHarness,
+    section: SectionHarness,
+    separator: SeparatorHarness,
+    stack: StackHarness,
+    toolbar: ToolbarHarness,
+    // Typography
+    title: TitleHarness,
+    text: TextHarness,
+    kbd: KbdHarness,
+    'pre-code': PreCodeHarness,
+    // Experimental
+    'infinite-scroll': InfiniteScrollHarness,
     __position: PositionHarness,
 }
 
-const establishedComponents = [
-    { slug: 'button', label: 'Button' },
-    { slug: 'button-link', label: 'ButtonLink' },
-    { slug: 'icon-button', label: 'IconButton' },
-    { slug: 'copy-button', label: 'CopyButton' },
-    { slug: 'toggle', label: 'Toggle' },
-    { slug: 'toggle-group', label: 'ToggleGroup' },
-    { slug: 'input', label: 'Input' },
-    { slug: 'textarea', label: 'Textarea' },
-    { slug: 'select', label: 'Select' },
-    { slug: 'checkbox', label: 'Checkbox' },
-    { slug: 'switch', label: 'Switch' },
-    { slug: 'radio-group', label: 'RadioGroup' },
-    { slug: 'slider', label: 'Slider' },
-    { slug: 'number-input', label: 'NumberInput' },
-    { slug: 'date-picker', label: 'DatePicker' },
-    { slug: 'date-range-picker', label: 'DateRangePicker' },
-    { slug: 'calendar', label: 'Calendar' },
-    { slug: 'combobox', label: 'Combobox' },
-    { slug: 'file-upload', label: 'FileUpload' },
-    { slug: 'form-section', label: 'FormSection' },
-    { slug: 'spinner', label: 'Spinner' },
-    { slug: 'badge', label: 'Badge' },
-    { slug: 'banner', label: 'Banner' },
-    { slug: 'callout', label: 'Callout' },
-    { slug: 'inline-alert', label: 'InlineAlert' },
-    { slug: 'empty-state', label: 'EmptyState' },
-    { slug: 'async-state-notice', label: 'AsyncStateNotice' },
-    { slug: 'progress', label: 'Progress' },
-    { slug: 'skeleton', label: 'Skeleton' },
-    { slug: 'toast', label: 'Toast' },
-    { slug: 'field', label: 'Field' },
+export type ComponentCategory =
+    | 'Actions'
+    | 'Forms'
+    | 'Feedback'
+    | 'Overlays'
+    | 'Navigation'
+    | 'Data'
+    | 'Display'
+    | 'Layout'
+    | 'Typography'
+    | 'Experimental'
+
+const categories: readonly ComponentCategory[] = [
+    'Actions',
+    'Forms',
+    'Feedback',
+    'Overlays',
+    'Navigation',
+    'Data',
+    'Display',
+    'Layout',
+    'Typography',
+    'Experimental',
+] as const
+
+const establishedComponents: readonly {
+    slug: string
+    label: string
+    category: ComponentCategory
+}[] = [
+    // Actions (6)
+    { slug: 'button', label: 'Button', category: 'Actions' },
+    { slug: 'button-link', label: 'ButtonLink', category: 'Actions' },
+    { slug: 'icon-button', label: 'IconButton', category: 'Actions' },
+    { slug: 'copy-button', label: 'CopyButton', category: 'Actions' },
+    { slug: 'toggle', label: 'Toggle', category: 'Actions' },
+    { slug: 'toggle-group', label: 'ToggleGroup', category: 'Actions' },
+    // Forms (16)
+    { slug: 'input', label: 'Input', category: 'Forms' },
+    { slug: 'password-input', label: 'PasswordInput', category: 'Forms' },
+    { slug: 'textarea', label: 'Textarea', category: 'Forms' },
+    { slug: 'select', label: 'Select', category: 'Forms' },
+    { slug: 'checkbox', label: 'Checkbox', category: 'Forms' },
+    { slug: 'switch', label: 'Switch', category: 'Forms' },
+    { slug: 'radio-group', label: 'RadioGroup', category: 'Forms' },
+    { slug: 'slider', label: 'Slider', category: 'Forms' },
+    { slug: 'number-input', label: 'NumberInput', category: 'Forms' },
+    { slug: 'date-picker', label: 'DatePicker', category: 'Forms' },
+    { slug: 'date-range-picker', label: 'DateRangePicker', category: 'Forms' },
+    { slug: 'calendar', label: 'Calendar', category: 'Forms' },
+    { slug: 'combobox', label: 'Combobox', category: 'Forms' },
+    { slug: 'file-upload', label: 'FileUpload', category: 'Forms' },
+    { slug: 'form-section', label: 'FormSection', category: 'Forms' },
+    { slug: 'field', label: 'Field', category: 'Forms' },
+    // Feedback (10)
+    { slug: 'spinner', label: 'Spinner', category: 'Feedback' },
+    { slug: 'badge', label: 'Badge', category: 'Feedback' },
+    { slug: 'banner', label: 'Banner', category: 'Feedback' },
+    { slug: 'callout', label: 'Callout', category: 'Feedback' },
+    { slug: 'inline-alert', label: 'InlineAlert', category: 'Feedback' },
+    { slug: 'empty-state', label: 'EmptyState', category: 'Feedback' },
+    { slug: 'async-state-notice', label: 'AsyncStateNotice', category: 'Feedback' },
+    { slug: 'progress', label: 'Progress', category: 'Feedback' },
+    { slug: 'skeleton', label: 'Skeleton', category: 'Feedback' },
+    { slug: 'toast', label: 'Toast', category: 'Feedback' },
+    // Overlays (9)
+    { slug: 'modal', label: 'Modal', category: 'Overlays' },
+    { slug: 'alert-dialog', label: 'AlertDialog', category: 'Overlays' },
+    { slug: 'drawer', label: 'Drawer', category: 'Overlays' },
+    { slug: 'tooltip', label: 'Tooltip', category: 'Overlays' },
+    { slug: 'popover', label: 'Popover', category: 'Overlays' },
+    { slug: 'dropdown-menu', label: 'DropdownMenu', category: 'Overlays' },
+    { slug: 'context-menu', label: 'ContextMenu', category: 'Overlays' },
+    { slug: 'hover-card', label: 'HoverCard', category: 'Overlays' },
+    { slug: 'command-palette', label: 'CommandPalette', category: 'Overlays' },
+    // Navigation (8)
+    { slug: 'tabs', label: 'Tabs', category: 'Navigation' },
+    { slug: 'breadcrumb', label: 'Breadcrumb', category: 'Navigation' },
+    { slug: 'pagination', label: 'Pagination', category: 'Navigation' },
+    { slug: 'topbar', label: 'Topbar', category: 'Navigation' },
+    { slug: 'sidebar-layout', label: 'SidebarLayout', category: 'Navigation' },
+    { slug: 'filter-bar', label: 'FilterBar', category: 'Navigation' },
+    { slug: 'menubar', label: 'Menubar', category: 'Navigation' },
+    { slug: 'navigation-menu', label: 'NavigationMenu', category: 'Navigation' },
+    // Data (5)
+    { slug: 'table', label: 'Table', category: 'Data' },
+    { slug: 'data-table', label: 'DataTable', category: 'Data' },
+    { slug: 'data-list', label: 'DataList', category: 'Data' },
+    { slug: 'stat-card', label: 'StatCard', category: 'Data' },
+    { slug: 'metric-grid', label: 'MetricGrid', category: 'Data' },
+    // Display (5)
+    { slug: 'card', label: 'Card', category: 'Display' },
+    { slug: 'accordion', label: 'Accordion', category: 'Display' },
+    { slug: 'avatar', label: 'Avatar', category: 'Display' },
+    { slug: 'carousel', label: 'Carousel', category: 'Display' },
+    { slug: 'collapsible', label: 'Collapsible', category: 'Display' },
+    // Layout (11)
+    { slug: 'aspect-ratio', label: 'AspectRatio', category: 'Layout' },
+    { slug: 'container', label: 'Container', category: 'Layout' },
+    { slug: 'divider', label: 'Divider', category: 'Layout' },
+    { slug: 'grid', label: 'Grid', category: 'Layout' },
+    { slug: 'page-header', label: 'PageHeader', category: 'Layout' },
+    { slug: 'resizable', label: 'Resizable', category: 'Layout' },
+    { slug: 'scroll-area', label: 'ScrollArea', category: 'Layout' },
+    { slug: 'section', label: 'Section', category: 'Layout' },
+    { slug: 'separator', label: 'Separator', category: 'Layout' },
+    { slug: 'stack', label: 'Stack', category: 'Layout' },
+    { slug: 'toolbar', label: 'Toolbar', category: 'Layout' },
+    // Typography (4)
+    { slug: 'title', label: 'Title', category: 'Typography' },
+    { slug: 'text', label: 'Text', category: 'Typography' },
+    { slug: 'kbd', label: 'Kbd', category: 'Typography' },
+    { slug: 'pre-code', label: 'PreCode', category: 'Typography' },
+    // Experimental (1)
+    { slug: 'infinite-scroll', label: 'InfiniteScroll', category: 'Experimental' },
 ] as const
 
 const otherComponents: readonly { slug: string; label: string }[] = []
 
 export function HarnessPage() {
     const { component = 'button' } = useParams()
+    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const theme = isAllowed(themes, searchParams.get('theme'))
         ? (searchParams.get('theme') as Theme)
@@ -2210,6 +2399,7 @@ export function HarnessPage() {
     const Harness = harnesses[component] ?? harnesses.button!
 
     const currentQuery = searchParams.toString() ? `?${searchParams.toString()}` : ''
+    const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
     useEffect(() => {
         if (typeof document !== 'undefined') {
@@ -2217,6 +2407,10 @@ export function HarnessPage() {
             document.documentElement.dataset.themeChoice = theme
         }
     }, [theme])
+
+    const filteredComponents = establishedComponents.filter(
+        (c) => selectedCategory === 'all' || c.category === selectedCategory
+    )
 
     return (
         <main
@@ -2226,9 +2420,66 @@ export function HarnessPage() {
             data-theme={theme}
         >
             <nav className="harness-controls" data-testid="harness-controls">
+                <div
+                    className="harness-controls-group"
+                    style={{
+                        width: '100%',
+                        justifyContent: 'space-between',
+                        gap: 'var(--mr-space-2)',
+                    }}
+                >
+                    <div
+                        style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' }}
+                    >
+                        <span className="harness-controls-label">
+                            Composants ({establishedComponents.length}) :
+                        </span>
+                        <select
+                            className="harness-select"
+                            value={component}
+                            aria-label="Sélectionner un composant"
+                            onChange={(e) => navigate(`/harness/${e.target.value}${currentQuery}`)}
+                        >
+                            {categories.map((cat) => (
+                                <optgroup
+                                    key={cat}
+                                    label={`${cat} (${establishedComponents.filter((c) => c.category === cat).length})`}
+                                >
+                                    {establishedComponents
+                                        .filter((c) => c.category === cat)
+                                        .map((c) => (
+                                            <option key={c.slug} value={c.slug}>
+                                                {c.label}
+                                            </option>
+                                        ))}
+                                </optgroup>
+                            ))}
+                        </select>
+                    </div>
+                    <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                        <button
+                            type="button"
+                            className="harness-controls-btn"
+                            data-active={selectedCategory === 'all'}
+                            onClick={() => setSelectedCategory('all')}
+                        >
+                            Tous
+                        </button>
+                        {categories.map((cat) => (
+                            <button
+                                key={cat}
+                                type="button"
+                                className="harness-controls-btn"
+                                data-active={selectedCategory === cat}
+                                onClick={() => setSelectedCategory(cat)}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                </div>
                 <div className="harness-controls-group" data-testid="harness-components-nav">
-                    <span className="harness-controls-label">Composants :</span>
-                    {establishedComponents.map((c) => (
+                    {filteredComponents.map((c) => (
                         <Link
                             key={c.slug}
                             to={`/harness/${c.slug}${currentQuery}`}

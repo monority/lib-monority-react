@@ -68,6 +68,21 @@
     opacity: 0.85;
 }
 
+.harness-select {
+    padding: 3px 8px;
+    border-radius: var(--mr-radius-md);
+    border: 1px solid
+        var(
+            --mr-border-control,
+            color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) 70%)
+        );
+    background: var(--mr-bg-raised, var(--mr-bg-surface, #ffffff));
+    color: var(--mr-text-primary);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
 .harness-page > [data-theme] {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
