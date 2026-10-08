@@ -1,4 +1,4 @@
-import { forwardRef, useId, useRef } from 'react'
+import { useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
@@ -7,10 +7,7 @@ import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ModalProps } from './Modal.types'
 
-export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
-    { open, title, children, onClose, className, ...props },
-    ref
-) {
+export function Modal({ ref, open, title, children, onClose, className, ...props }: ModalProps) {
     const titleId = useId()
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
@@ -65,6 +62,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
         </div>,
         portalTarget
     )
-})
+}
 
 export type { ModalProps } from './Modal.types'

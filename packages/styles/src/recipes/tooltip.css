@@ -1,0 +1,35 @@
+/* Recette Tooltip dans la couche mr.components (spec v4).
+ * Infobulle legere et discrete pilotee par le survol et le focus. */
+@layer mr.components {
+    :where(.mr-tooltip) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-tooltip__content) {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-block-end: var(--mr-space-1);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--mr-duration-state) ease;
+        z-index: 50;
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
+        border-radius: var(--mr-radius-sm);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        line-height: var(--mr-line-height-sm);
+        white-space: nowrap;
+    }
+
+    :where(.mr-tooltip:hover:not([data-hidden])) :where(.mr-tooltip__content),
+    :where(.mr-tooltip:focus-within:not([data-hidden])) :where(.mr-tooltip__content) {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

@@ -1,25 +1,23 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { PopoverProps } from './Popover.types'
 
-export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover(
-    {
-        trigger,
-        children,
-        open: controlledOpen,
-        defaultOpen = false,
-        onOpenChange,
-        align = 'center',
-        side = 'bottom',
-        className,
-        contentClassName,
-        ...props
-    },
-    ref
-) {
+export function Popover({
+    ref,
+    trigger,
+    children,
+    open: controlledOpen,
+    defaultOpen = false,
+    onOpenChange,
+    align = 'center',
+    side = 'bottom',
+    className,
+    contentClassName,
+    ...props
+}: PopoverProps) {
     const instanceId = useId()
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerElementRef = useRef<Element | null>(null)
@@ -158,4 +156,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
                 : null}
         </div>
     )
-})
+}
+
+export type { PopoverProps } from './Popover.types'

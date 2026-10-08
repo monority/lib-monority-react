@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
@@ -7,21 +7,19 @@ import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { AlertDialogProps } from './AlertDialog.types'
 
-export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(function AlertDialog(
-    {
-        open,
-        title,
-        description,
-        confirmLabel = 'Confirmer',
-        cancelLabel = 'Annuler',
-        tone = 'default',
-        onConfirm,
-        onCancel,
-        className,
-        ...props
-    },
-    ref
-) {
+export function AlertDialog({
+    ref,
+    open,
+    title,
+    description,
+    confirmLabel = 'Confirmer',
+    cancelLabel = 'Annuler',
+    tone = 'default',
+    onConfirm,
+    onCancel,
+    className,
+    ...props
+}: AlertDialogProps) {
     const generatedId = useId()
     const titleId = `${generatedId}-title`
     const descriptionId = description ? `${generatedId}-description` : undefined
@@ -99,6 +97,6 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(function
         </div>,
         portalTarget
     )
-})
+}
 
 export type { AlertDialogProps, AlertDialogTone } from './AlertDialog.types'

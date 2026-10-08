@@ -1,0 +1,32 @@
+/* Recette Popover dans la couche mr.components (spec v4).
+ * Surface flottante contextualisee a un declencheur. */
+@layer mr.components {
+    :where(.mr-popover) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-popover__trigger) {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    :where(.mr-popover__anchor) {
+        display: inline-flex;
+    }
+
+    :where(.mr-popover__content) {
+        position: fixed;
+        z-index: 50;
+        box-sizing: border-box;
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        padding: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+        outline: none;
+    }
+}

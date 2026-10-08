@@ -1,9 +1,10 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type PopoverAlign = 'start' | 'center' | 'end'
 export type PopoverSide = 'top' | 'bottom' | 'left' | 'right'
 
 export interface PopoverProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     trigger: ReactNode | string
     children: ReactNode
     open?: boolean

@@ -1,0 +1,109 @@
+/* Recette CommandPalette dans la couche mr.components (spec v4).
+ * Palette de commandes modale avec recherche rapide d'actions. */
+@layer mr.components {
+    :where(.mr-command-palette__panel),
+    :where(.mr-command) {
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: var(--mr-size-container-sm);
+        background-color: var(--mr-bg-overlay);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-lg);
+        box-shadow: var(--mr-shadow-overlay);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        outline: none;
+    }
+
+    :where(.mr-command__layout) {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    :where(.mr-command__header) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-2);
+        padding: var(--mr-space-4);
+        border-block-end: 1px solid var(--mr-border-subtle);
+    }
+
+    :where(.mr-command__input) {
+        width: 100%;
+    }
+
+    :where(.mr-command__list) {
+        max-height: calc(var(--mr-space-6) * 8);
+        overflow-y: auto;
+        padding: var(--mr-space-2);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    :where(.mr-command__item) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        border: 0;
+        background: transparent;
+        border-radius: var(--mr-radius-sm);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+        text-align: start;
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-command__item.is-active),
+    :where(.mr-command__item:hover) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse) var(--mr-state-hover-mix),
+            transparent
+        );
+    }
+
+    :where(.mr-command__item-main) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        min-width: 0;
+    }
+
+    :where(.mr-command__item-group) {
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-command__item-label) {
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    :where(.mr-command__item-description) {
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-command__shortcut) {
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-command__empty) {
+        padding: var(--mr-space-4);
+        text-align: center;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+}

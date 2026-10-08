@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, Ref } from 'react'
 
 export interface CommandItem {
     value: string
@@ -11,6 +11,7 @@ export interface CommandItem {
 }
 
 export interface CommandPaletteProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     open: boolean
     onClose?: () => void
     items?: CommandItem[]

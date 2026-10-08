@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { usePortalTarget } from '@/internal/use-portal-target'
@@ -8,19 +8,17 @@ function isActionableItem(item: ContextMenuItem) {
     return item.type !== 'separator' && !item.disabled
 }
 
-export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function ContextMenu(
-    {
-        trigger,
-        items = [],
-        open: controlledOpen,
-        defaultOpen = false,
-        onOpenChange,
-        className,
-        contentClassName,
-        ...props
-    },
-    ref
-) {
+export function ContextMenu({
+    ref,
+    trigger,
+    items = [],
+    open: controlledOpen,
+    defaultOpen = false,
+    onOpenChange,
+    className,
+    contentClassName,
+    ...props
+}: ContextMenuProps) {
     const instanceId = useId()
     const rootRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
@@ -202,4 +200,6 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function
                 : null}
         </div>
     )
-})
+}
+
+export type { ContextMenuProps, ContextMenuItem } from './ContextMenu.types'

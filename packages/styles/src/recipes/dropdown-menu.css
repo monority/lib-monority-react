@@ -1,0 +1,84 @@
+/* Recette DropdownMenu dans la couche mr.components (spec v4).
+ * Menu deroulant d'actions et de choix contextualises. */
+@layer mr.components {
+    :where(.mr-dropdown) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-dropdown__trigger) {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    :where(.mr-dropdown__anchor) {
+        display: inline-flex;
+    }
+
+    :where(.mr-dropdown__content) {
+        position: fixed;
+        z-index: 50;
+        box-sizing: border-box;
+        min-width: calc(var(--mr-space-6) * 5);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-1);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        outline: none;
+    }
+
+    :where(.mr-dropdown__separator) {
+        height: 1px;
+        margin-block: var(--mr-space-1);
+        background-color: var(--mr-border-subtle);
+    }
+
+    :where(.mr-dropdown__item) {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        border: 0;
+        background: transparent;
+        border-radius: var(--mr-radius-sm);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+        text-align: start;
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-dropdown__item:hover:not(:disabled)),
+    :where(.mr-dropdown__item:focus:not(:disabled)) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse) var(--mr-state-hover-mix),
+            transparent
+        );
+        outline: none;
+    }
+
+    :where(.mr-dropdown__item.is-danger),
+    :where(.mr-dropdown__item[data-danger]) {
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-dropdown__item.is-danger:hover:not(:disabled)),
+    :where(.mr-dropdown__item.is-danger:focus:not(:disabled)) {
+        background-color: var(--mr-danger-subtle);
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-dropdown__item:disabled) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+}

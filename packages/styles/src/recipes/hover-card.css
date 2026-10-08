@@ -1,0 +1,38 @@
+/* Recette HoverCard dans la couche mr.components (spec v4).
+ * Carte flottante declenchee par survol avec previsualisation de contenu riche. */
+@layer mr.components {
+    :where(.mr-hovercard) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-hovercard__trigger) {
+        display: inline-flex;
+    }
+
+    :where(.mr-hovercard__content) {
+        position: fixed;
+        z-index: 50;
+        box-sizing: border-box;
+        width: max-content;
+        max-width: calc(var(--mr-size-container-sm) - var(--mr-space-6) * 2);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        padding: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-primary);
+        outline: none;
+    }
+
+    :where(.mr-hovercard__arrow) {
+        position: absolute;
+        width: var(--mr-space-2);
+        height: var(--mr-space-2);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        transform: rotate(45deg);
+    }
+}

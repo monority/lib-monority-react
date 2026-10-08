@@ -57,3 +57,12 @@
 @import './recipes/page-header.css';
 @import './recipes/toolbar.css';
 @import './recipes/resizable.css';
+@import './recipes/modal.css';
+@import './recipes/alert-dialog.css';
+@import './recipes/drawer.css';
+@import './recipes/popover.css';
+@import './recipes/tooltip.css';
+@import './recipes/hover-card.css';
+@import './recipes/dropdown-menu.css';
+@import './recipes/context-menu.css';
+@import './recipes/command-palette.css';

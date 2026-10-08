@@ -1,0 +1,85 @@
+/* Recette Drawer dans la couche mr.components (spec v4).
+ * Panneau lateral coulissant pour contenu secondaire ou edition longue. */
+@layer mr.components {
+    :where(.mr-drawer__backdrop) {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-drawer__backdrop)[data-side='right'] {
+        justify-content: flex-end;
+    }
+
+    :where(.mr-drawer__backdrop)[data-side='left'] {
+        justify-content: flex-start;
+    }
+
+    :where(.mr-drawer__backdrop-surface) {
+        position: fixed;
+        inset: 0;
+        background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
+        backdrop-filter: blur(var(--mr-space-1));
+    }
+
+    :where(.mr-drawer),
+    :where(.mr-drawer__panel) {
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: calc(var(--mr-size-container-sm) - var(--mr-space-6));
+        height: 100%;
+        background-color: var(--mr-bg-overlay);
+        border-inline-start: 1px solid var(--mr-border-default);
+        box-shadow: var(--mr-shadow-overlay);
+        padding: var(--mr-space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-4);
+        overflow-y: auto;
+        outline: none;
+        transition: transform var(--mr-duration-panel) ease;
+    }
+
+    :where(.mr-drawer__panel)[data-side='left'] {
+        border-inline-start: 0;
+        border-inline-end: 1px solid var(--mr-border-default);
+    }
+
+    :where(.mr-drawer__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-drawer__heading) {
+        flex: 1;
+        min-width: 0;
+    }
+
+    :where(.mr-drawer__title) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-lg);
+        font-weight: var(--mr-font-weight-semibold);
+        line-height: var(--mr-line-height-lg);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-drawer__close) {
+        flex-shrink: 0;
+    }
+
+    :where(.mr-drawer__body) {
+        flex: 1;
+        overflow-y: auto;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-base);
+        line-height: var(--mr-line-height-lg);
+        color: var(--mr-text-primary);
+    }
+}

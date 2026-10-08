@@ -1,8 +1,9 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type AlertDialogTone = 'default' | 'danger'
 
 export interface AlertDialogProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     open: boolean
     title: string
     description?: ReactNode

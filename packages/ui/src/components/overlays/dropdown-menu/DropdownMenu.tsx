@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
@@ -9,21 +9,19 @@ function isActionableItem(item: DropdownMenuItem) {
     return item.type !== 'separator' && !item.disabled
 }
 
-export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(function DropdownMenu(
-    {
-        trigger,
-        items = [],
-        open: controlledOpen,
-        defaultOpen = false,
-        onOpenChange,
-        align = 'end',
-        side = 'bottom',
-        className,
-        contentClassName,
-        ...props
-    },
-    ref
-) {
+export function DropdownMenu({
+    ref,
+    trigger,
+    items = [],
+    open: controlledOpen,
+    defaultOpen = false,
+    onOpenChange,
+    align = 'end',
+    side = 'bottom',
+    className,
+    contentClassName,
+    ...props
+}: DropdownMenuProps) {
     const instanceId = useId()
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerElementRef = useRef<Element | null>(null)
@@ -242,4 +240,6 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(functi
                 : null}
         </div>
     )
-})
+}
+
+export type { DropdownMenuProps, DropdownMenuItem } from './DropdownMenu.types'

@@ -1,0 +1,76 @@
+/* Recette Modal dans la couche mr.components (spec v4).
+ * Boite de dialogue modale au-dessus d'un voile semi-transparent. */
+@layer mr.components {
+    :where(.mr-modal) {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: var(--mr-space-4);
+    }
+
+    /* Voile d'arriere-plan */
+    :where(.mr-modal__backdrop) {
+        position: fixed;
+        inset: 0;
+        background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
+        backdrop-filter: blur(var(--mr-space-1));
+    }
+
+    /* Panneau central */
+    :where(.mr-modal__panel) {
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: var(--mr-size-container-sm);
+        max-height: 100%;
+        overflow-y: auto;
+        background-color: var(--mr-bg-overlay);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-lg);
+        box-shadow: var(--mr-shadow-overlay);
+        padding: var(--mr-space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-4);
+        outline: none;
+    }
+
+    /* En-tete */
+    :where(.mr-modal__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-modal__heading) {
+        flex: 1;
+        min-width: 0;
+    }
+
+    :where(.mr-modal__title) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-lg);
+        font-weight: var(--mr-font-weight-semibold);
+        line-height: var(--mr-line-height-lg);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-modal__close) {
+        flex-shrink: 0;
+    }
+
+    /* Corps du dialogue */
+    :where(.mr-modal__body) {
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-base);
+        line-height: var(--mr-line-height-lg);
+        color: var(--mr-text-primary);
+    }
+}
