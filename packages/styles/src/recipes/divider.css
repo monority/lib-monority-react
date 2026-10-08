@@ -1,0 +1,52 @@
+/* Recette Divider dans la couche mr.components (spec v4).
+ * Ligne de separation avec label optionnel au centre.
+ * Orientation : horizontal (defaut), vertical. */
+@layer mr.components {
+    :where(.mr-divider) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    :where(.mr-divider)::before,
+    :where(.mr-divider)::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--mr-border-subtle);
+    }
+
+    /* Label textuel central */
+    :where(.mr-divider__label) {
+        padding-inline: var(--mr-space-2);
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        line-height: var(--mr-line-height-sm);
+        letter-spacing: var(--mr-tracking-label);
+        color: var(--mr-text-secondary);
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    /* Orientation verticale */
+    :where(.mr-divider)[data-orientation='vertical'] {
+        display: inline-flex;
+        flex-direction: column;
+        width: 1px;
+        height: 100%;
+        align-self: stretch;
+    }
+
+    :where(.mr-divider)[data-orientation='vertical']::before,
+    :where(.mr-divider)[data-orientation='vertical']::after {
+        width: 1px;
+        height: auto;
+    }
+
+    :where(.mr-divider)[data-orientation='vertical'] :where(.mr-divider__label) {
+        padding-inline: 0;
+        padding-block: var(--mr-space-2);
+    }
+}

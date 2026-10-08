@@ -1,11 +1,13 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { SeparatorProps } from './Separator.types'
 
-export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(function Separator(
-    { orientation = 'horizontal', decorative = false, className, ...props },
-    ref
-) {
+export function Separator({
+    ref,
+    orientation = 'horizontal',
+    decorative = false,
+    className,
+    ...props
+}: SeparatorProps) {
     const role = decorative ? 'presentation' : 'separator'
 
     return (
@@ -18,6 +20,6 @@ export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(function Sep
             {...props}
         />
     )
-})
+}
 
 export type { SeparatorProps } from './Separator.types'

@@ -92,6 +92,12 @@
         --mr-size-control-md: 2rem;
         --mr-size-control-lg: 2.5rem;
 
+        /* Tailles de conteneur (largeurs maximales) */
+        --mr-size-container-sm: 40rem;
+        --mr-size-container-md: 48rem;
+        --mr-size-container-lg: 64rem;
+        --mr-size-container-xl: 80rem;
+
         /* Rayons : base de 2px multipliee par la suite (0, 2, 3, 5, 8).
          * sm vaut 2 fois 2px = 4px = 0.25rem, ajuste par le levier de marque.
          * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque.

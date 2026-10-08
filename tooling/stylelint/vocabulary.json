@@ -36,7 +36,15 @@
         "success": ["subtle", "border", "text"],
         "info": ["subtle", "border", "text"],
         "focus": ["ring"],
-        "size": ["control-sm", "control-md", "control-lg"],
+        "size": [
+            "control-sm",
+            "control-md",
+            "control-lg",
+            "container-sm",
+            "container-md",
+            "container-lg",
+            "container-xl"
+        ],
         "font-family": ["sans", "mono"],
         "font-size": ["xs", "sm", "md", "base", "lg", "xl", "2xl"],
         "font-weight": ["regular", "medium", "semibold"],

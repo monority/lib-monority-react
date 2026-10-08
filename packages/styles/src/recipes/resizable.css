@@ -1,0 +1,86 @@
+/* Recette Resizable dans la couche mr.components (spec v4).
+ * Partage l'espace entre des panneaux ajustables par poignee glissante.
+ * Orientation : horizontal (defaut), vertical. */
+@layer mr.components {
+    :where(.mr-resizable) {
+        display: flex;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    :where(.mr-resizable)[data-direction='horizontal'] {
+        flex-direction: row;
+    }
+
+    :where(.mr-resizable)[data-direction='vertical'] {
+        flex-direction: column;
+    }
+
+    :where(.mr-resizable__panel) {
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    :where(.mr-resizable__handle) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background: var(--mr-border-default);
+        outline: none;
+        transition: background var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-resizable__handle)[data-direction='horizontal'] {
+        width: 1px;
+        cursor: col-resize;
+    }
+
+    :where(.mr-resizable__handle)[data-direction='horizontal']::after {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inset-inline: calc(0px - var(--mr-space-1));
+        width: calc(var(--mr-space-2) + 1px);
+    }
+
+    :where(.mr-resizable__handle)[data-direction='vertical'] {
+        height: 1px;
+        cursor: row-resize;
+    }
+
+    :where(.mr-resizable__handle)[data-direction='vertical']::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        inset-block: calc(0px - var(--mr-space-1));
+        height: calc(var(--mr-space-2) + 1px);
+    }
+
+    :where(.mr-resizable__handle:hover),
+    :where(.mr-resizable__handle)[data-active='true'] {
+        background: var(--mr-accent-border);
+    }
+
+    :where(.mr-resizable__handle:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 1px;
+        z-index: 1;
+    }
+
+    :where(.mr-resizable__handle-indicator) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        color: var(--mr-text-secondary);
+        pointer-events: none;
+        border-radius: var(--mr-radius-sm);
+        background: var(--mr-bg-surface);
+        padding: 2px;
+        border: 1px solid var(--mr-border-subtle);
+    }
+}

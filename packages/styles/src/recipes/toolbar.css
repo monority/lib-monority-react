@@ -1,0 +1,22 @@
+/* Recette Toolbar dans la couche mr.components (spec v4).
+ * Barre d'outils regroupant boutons d'action et selecteurs. */
+@layer mr.components {
+    :where(.mr-toolbar) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: var(--mr-size-control-md);
+        gap: var(--mr-space-2);
+        padding-inline: var(--mr-space-2);
+        background: transparent;
+        overflow-x: auto;
+    }
+
+    /* Densite compacte */
+    :where([data-density='compact'] .mr-toolbar, .mr-toolbar[data-density='compact']) {
+        min-height: var(--mr-size-control-sm);
+        gap: var(--mr-space-1);
+        padding-inline: var(--mr-space-1);
+    }
+}

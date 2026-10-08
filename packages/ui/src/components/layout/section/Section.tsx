@@ -1,20 +1,17 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { SectionProps } from './Section.types'
 
-export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
-    {
-        className,
-        spacing = 'md',
-        variant = 'default',
-        as,
-        title,
-        titleAs: TitleTag = 'h2',
-        children,
-        ...props
-    },
-    ref
-) {
+export function Section({
+    ref,
+    className,
+    spacing = 'md',
+    variant = 'default',
+    as,
+    title,
+    titleAs: TitleTag = 'h2',
+    children,
+    ...props
+}: SectionProps) {
     const Component = as ?? 'section'
 
     return (
@@ -29,4 +26,4 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
             {children}
         </Component>
     )
-})
+}

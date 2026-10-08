@@ -1,11 +1,14 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { DividerProps } from './Divider.types'
 
-export const Divider = forwardRef<HTMLDivElement, DividerProps>(function Divider(
-    { className, label, children, orientation = 'horizontal', ...props },
-    ref
-) {
+export function Divider({
+    ref,
+    className,
+    label,
+    children,
+    orientation = 'horizontal',
+    ...props
+}: DividerProps) {
     return (
         <div
             ref={ref}
@@ -20,6 +23,6 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(function Divider
             ) : null}
         </div>
     )
-})
+}
 
 export type { DividerProps } from './Divider.types'

@@ -1,10 +1,11 @@
-import type { ElementType, HTMLAttributes, ReactNode } from 'react'
+import type { ElementType, HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type SectionSpacing = 'sm' | 'md' | 'lg' | 'xl'
 
 export type SectionVariant = 'default' | 'bordered' | 'muted' | 'card'
 
 export interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
+    ref?: Ref<HTMLElement>
     /** Spacing preset (vertical gap + padding) */
     spacing?: SectionSpacing
     /** Visual variant */
