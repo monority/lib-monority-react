@@ -110,4 +110,16 @@ describe('Callout', () => {
             expect(view.querySelector('div')?.getAttribute('data-tone')).toBe(tone)
         }
     )
+
+    it('renders a tone-specific icon by default and allows custom icon', () => {
+        const view = render(<Callout tone="success" title="Bravo" />)
+        const iconEl = view.querySelector('.mr-callout__icon')
+        expect(iconEl).not.toBeNull()
+        expect(iconEl?.querySelector('svg')).not.toBeNull()
+
+        const custom = render(
+            <Callout title="Custom" icon={<span data-testid="custom-callout-icon">★</span>} />
+        )
+        expect(custom.querySelector('[data-testid="custom-callout-icon"]')).not.toBeNull()
+    })
 })

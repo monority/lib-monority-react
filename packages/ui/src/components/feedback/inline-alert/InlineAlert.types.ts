@@ -9,7 +9,12 @@ export interface InlineAlertProps extends Omit<HTMLAttributes<HTMLDivElement>, '
     description?: ReactNode
     actionLabel?: ReactNode
     onAction?: () => void
+    icon?: ReactNode
     children?: ReactNode
+}
+
+export interface InlineAlertIconProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
 }
 
 export interface InlineAlertTitleProps extends HTMLAttributes<HTMLElement> {

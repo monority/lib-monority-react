@@ -1,20 +1,20 @@
-/* Recette Callout dans la couche mr.components (spec v4).
- * Message contextuel en bloc dans le flux.
- * Neutral par defaut (ADR-020). Tons : neutral, accent, success, warning, danger, info. */
+/* Recette Callout dans la couche mr.components.
+ * Message contextuel en bloc dans le flux, stylise avec carte neutre et icone coloree.
+ * Tons : neutral, accent, success, warning, danger, info. */
 @layer mr.components {
     :where(.mr-callout) {
         position: relative;
         display: flex;
+        align-items: flex-start;
         box-sizing: border-box;
         border-radius: var(--mr-radius-md);
         border: 1px solid var(--mr-border-default);
-        border-inline-start: var(--mr-space-1) solid var(--mr-border-control);
         font-family: var(--mr-font-family-sans);
         background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
     }
 
-    /* Tailles : md par defaut, sm compacte (absorbe InlineAlert) */
+    /* Tailles : md par defaut, sm compacte */
     :where(.mr-callout),
     :where(.mr-callout)[data-size='md'] {
         padding-block: var(--mr-space-3);
@@ -28,7 +28,22 @@
         gap: var(--mr-space-2);
     }
 
-    /* Indicateur visuel integre au border-inline-start */
+    :where(.mr-callout__icon) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        margin-block-start: 1px;
+    }
+
+    :where(.mr-callout)[data-size='sm'] :where(.mr-callout__icon) {
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    /* Indicateur visuel legacy neutralise */
     :where(.mr-callout__indicator) {
         display: none;
     }
@@ -56,46 +71,28 @@
         line-height: 1.4;
     }
 
-    /* Tons semantiques */
-    :where(.mr-callout)[data-tone='neutral'] {
-        background-color: var(--mr-bg-surface);
-        border-color: var(--mr-border-default);
-        border-inline-start-color: var(--mr-text-secondary);
-        color: var(--mr-text-primary);
+    /* Couleurs portees par l'icone selon le ton (comme Toast) */
+    :where(.mr-callout)[data-tone='neutral'] :where(.mr-callout__icon) {
+        color: var(--mr-text-secondary);
     }
 
-    :where(.mr-callout)[data-tone='accent'] {
-        background-color: var(--mr-accent-subtle);
-        border-color: var(--mr-accent-border);
-        border-inline-start-color: var(--mr-accent-solid);
-        color: var(--mr-text-primary);
+    :where(.mr-callout)[data-tone='accent'] :where(.mr-callout__icon) {
+        color: var(--mr-accent-solid);
     }
 
-    :where(.mr-callout)[data-tone='success'] {
-        background-color: var(--mr-success-subtle);
-        border-color: var(--mr-success-border);
-        border-inline-start-color: var(--mr-success-text);
-        color: var(--mr-text-primary);
+    :where(.mr-callout)[data-tone='info'] :where(.mr-callout__icon) {
+        color: var(--mr-info-text);
     }
 
-    :where(.mr-callout)[data-tone='warning'] {
-        background-color: var(--mr-warning-subtle);
-        border-color: var(--mr-warning-border);
-        border-inline-start-color: var(--mr-warning-text);
-        color: var(--mr-text-primary);
+    :where(.mr-callout)[data-tone='success'] :where(.mr-callout__icon) {
+        color: var(--mr-success-text);
     }
 
-    :where(.mr-callout)[data-tone='danger'] {
-        background-color: var(--mr-danger-subtle);
-        border-color: var(--mr-danger-border);
-        border-inline-start-color: var(--mr-danger-solid);
-        color: var(--mr-text-primary);
+    :where(.mr-callout)[data-tone='warning'] :where(.mr-callout__icon) {
+        color: var(--mr-warning-text);
     }
 
-    :where(.mr-callout)[data-tone='info'] {
-        background-color: var(--mr-info-subtle);
-        border-color: var(--mr-info-border);
-        border-inline-start-color: var(--mr-info-text);
-        color: var(--mr-text-primary);
+    :where(.mr-callout)[data-tone='danger'] :where(.mr-callout__icon) {
+        color: var(--mr-danger-solid);
     }
 }

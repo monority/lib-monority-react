@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn'
 import type {
     InlineAlertActionProps,
     InlineAlertDescriptionProps,
+    InlineAlertIconProps,
     InlineAlertProps,
     InlineAlertTitleProps,
     InlineAlertTone,
@@ -13,6 +14,85 @@ const roleByTone: Record<InlineAlertTone, string> = {
     success: 'status',
     warning: 'alert',
     danger: 'alert',
+}
+
+const defaultIcons: Record<InlineAlertTone, React.ReactElement> = {
+    info: (
+        <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="10" cy="10" r="8" />
+            <path d="M10 9v5M10 6h.01" />
+        </svg>
+    ),
+    success: (
+        <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="10" cy="10" r="8" />
+            <path d="M6.5 10l2.5 2.5 4.5-4.5" />
+        </svg>
+    ),
+    warning: (
+        <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <path d="M10 3L2 17h16L10 3zM10 8v4M10 14h.01" />
+        </svg>
+    ),
+    danger: (
+        <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="10" cy="10" r="8" />
+            <path d="M10 7v4M10 13h.01" />
+        </svg>
+    ),
+}
+
+function InlineAlertIcon({ className, children, ref, ...props }: InlineAlertIconProps) {
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-inline-alert__icon', className)}
+            aria-hidden="true"
+            {...props}
+        >
+            {children}
+        </div>
+    )
 }
 
 function InlineAlertTitle({ className, children, ref, ...props }: InlineAlertTitleProps) {
@@ -56,6 +136,7 @@ export function InlineAlert({
     description,
     actionLabel,
     onAction,
+    icon,
     className,
     children,
     role,
@@ -65,6 +146,7 @@ export function InlineAlert({
     const resolvedTone = tone ?? 'info'
     const resolvedRole = role ?? roleByTone[resolvedTone]
     const hasStructuredProps = Boolean(title || description)
+    const showIcon = icon !== null
 
     return (
         <div
@@ -74,7 +156,11 @@ export function InlineAlert({
             data-tone={resolvedTone}
             {...props}
         >
-            <div className="mr-inline-alert__marker" aria-hidden="true" />
+            {showIcon ? (
+                <div className="mr-inline-alert__icon" aria-hidden="true">
+                    {icon ?? defaultIcons[resolvedTone]}
+                </div>
+            ) : null}
             <div className="mr-inline-alert__body">
                 {hasStructuredProps ? (
                     <>
@@ -95,6 +181,7 @@ export function InlineAlert({
     )
 }
 
+InlineAlert.Icon = InlineAlertIcon
 InlineAlert.Title = InlineAlertTitle
 InlineAlert.Description = InlineAlertDescription
 InlineAlert.Action = InlineAlertAction
@@ -102,6 +189,7 @@ InlineAlert.Action = InlineAlertAction
 export type {
     InlineAlertActionProps,
     InlineAlertDescriptionProps,
+    InlineAlertIconProps,
     InlineAlertProps,
     InlineAlertTitleProps,
     InlineAlertTone,

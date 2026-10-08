@@ -78,4 +78,16 @@ describe('InlineAlert', () => {
         )
         expect(view.querySelector('button')?.textContent).toBe('Réessayer')
     })
+
+    it('renders a tone-specific icon by default and allows custom icon', () => {
+        const view = render(<InlineAlert title="Success" tone="success" />)
+        const iconEl = view.querySelector('.mr-inline-alert__icon')
+        expect(iconEl).not.toBeNull()
+        expect(iconEl?.querySelector('svg')).not.toBeNull()
+
+        const custom = render(
+            <InlineAlert title="Custom" icon={<span data-testid="custom-icon">★</span>} />
+        )
+        expect(custom.querySelector('[data-testid="custom-icon"]')).not.toBeNull()
+    })
 })

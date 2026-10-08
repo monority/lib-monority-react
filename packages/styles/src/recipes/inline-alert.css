@@ -1,23 +1,31 @@
-/* Recette InlineAlert dans la couche mr.components (spec v4).
- * Alerte compacte dans le flux, appelee a converger avec Callout sm.
+/* Recette InlineAlert dans la couche mr.components.
+ * Alerte compacte dans le flux, stylisee avec carte neutre et icone coloree.
  * Tons : info, success, warning, danger. */
 @layer mr.components {
     :where(.mr-inline-alert) {
         box-sizing: border-box;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: var(--mr-space-3);
-        padding-block: var(--mr-space-2);
+        padding-block: var(--mr-space-3);
         padding-inline: var(--mr-space-3);
         border-radius: var(--mr-radius-md);
         border: 1px solid var(--mr-border-default);
-        border-inline-start: var(--mr-space-1) solid var(--mr-info-text);
         font-family: var(--mr-font-family-sans);
-        background-color: var(--mr-info-subtle);
+        background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
     }
 
-    /* Rail lateral integre au border-inline-start */
+    :where(.mr-inline-alert__icon) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        margin-block-start: 1px;
+    }
+
     :where(.mr-inline-alert__marker) {
         display: none;
     }
@@ -44,43 +52,25 @@
         line-height: 1.4;
     }
 
-    :where(.mr-inline-alert__content) {
-        font-size: var(--mr-font-size-sm);
-        color: var(--mr-text-secondary);
-        line-height: 1.4;
-    }
-
     :where(.mr-inline-alert__action) {
         flex-shrink: 0;
         align-self: center;
     }
 
-    /* Tons */
-    :where(.mr-inline-alert)[data-tone='info'] {
-        background-color: var(--mr-info-subtle);
-        border-color: var(--mr-info-border);
-        border-inline-start-color: var(--mr-info-text);
-        color: var(--mr-text-primary);
+    /* Couleurs portees par l'icone selon le ton (comme Toast) */
+    :where(.mr-inline-alert)[data-tone='info'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-info-text);
     }
 
-    :where(.mr-inline-alert)[data-tone='success'] {
-        background-color: var(--mr-success-subtle);
-        border-color: var(--mr-success-border);
-        border-inline-start-color: var(--mr-success-text);
-        color: var(--mr-text-primary);
+    :where(.mr-inline-alert)[data-tone='success'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-success-text);
     }
 
-    :where(.mr-inline-alert)[data-tone='warning'] {
-        background-color: var(--mr-warning-subtle);
-        border-color: var(--mr-warning-border);
-        border-inline-start-color: var(--mr-warning-text);
-        color: var(--mr-text-primary);
+    :where(.mr-inline-alert)[data-tone='warning'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-warning-text);
     }
 
-    :where(.mr-inline-alert)[data-tone='danger'] {
-        background-color: var(--mr-danger-subtle);
-        border-color: var(--mr-danger-border);
-        border-inline-start-color: var(--mr-danger-solid);
-        color: var(--mr-text-primary);
+    :where(.mr-inline-alert)[data-tone='danger'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-danger-solid);
     }
 }
