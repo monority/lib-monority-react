@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
@@ -9,28 +9,26 @@ import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ComboboxProps, ComboboxItem } from './Combobox.types'
 import type { ComboboxTone, ComboboxSize } from './Combobox.types'
 
-export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        items = [],
-        value,
-        defaultValue = '',
-        onChange,
-        placeholder = 'Rechercher...',
-        emptyLabel = 'Aucun resultat',
-        invalid = false,
-        disabled = false,
-        required = false,
-        ...props
-    },
-    ref
-) {
+export function Combobox({
+    ref,
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    items = [],
+    value,
+    defaultValue = '',
+    onChange,
+    placeholder = 'Rechercher...',
+    emptyLabel = 'Aucun resultat',
+    invalid = false,
+    disabled = false,
+    required = false,
+    ...props
+}: ComboboxProps) {
     const generatedId = useId()
     const inputId = id || generatedId
 
@@ -55,8 +53,11 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     const handleRef = useCallback(
         (node: HTMLInputElement | null) => {
             inputRef.current = node
-            if (typeof ref === 'function') ref(node)
-            else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as { current: HTMLInputElement | null }).current = node
+            }
         },
         [ref]
     )
@@ -268,4 +269,4 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
             </Field>
         </FormControl>
     )
-})
+}

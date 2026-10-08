@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { Field } from '@/components/forms/field/Field'
@@ -24,32 +24,30 @@ function parseNumeric(value: string): number | null {
     return n
 }
 
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(function NumberInput(
-    {
-        size,
-        tone,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        inputClassName,
-        wrapperClassName,
-        disabled = false,
-        required = false,
-        readOnly = false,
-        invalid = false,
-        min,
-        max,
-        step = 1,
-        value: controlledValue,
-        onChange,
-        onValueChange,
-        defaultValue,
-        ...props
-    },
-    ref
-) {
+export function NumberInput({
+    ref,
+    size,
+    tone,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    inputClassName,
+    wrapperClassName,
+    disabled = false,
+    required = false,
+    readOnly = false,
+    invalid = false,
+    min,
+    max,
+    step = 1,
+    value: controlledValue,
+    onChange,
+    onValueChange,
+    defaultValue,
+    ...props
+}: NumberInputProps) {
     const generatedId = useId()
     const inputId = id || generatedId
     const resolvedSize = size ?? 'md'
@@ -196,8 +194,12 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
                         as="input"
                         ref={(el) => {
                             inputRef.current = el as HTMLInputElement | null
-                            if (typeof ref === 'function') ref(el as HTMLInputElement | null)
-                            else if (ref) ref.current = el as HTMLInputElement | null
+                            if (typeof ref === 'function') {
+                                ref(el as HTMLInputElement | null)
+                            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                                ;(ref as { current: HTMLInputElement | null }).current =
+                                    el as HTMLInputElement | null
+                            }
                         }}
                         type="text"
                         inputMode="decimal"
@@ -243,6 +245,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { NumberInputProps, NumberInputSize, NumberInputTone } from './NumberInput.types'

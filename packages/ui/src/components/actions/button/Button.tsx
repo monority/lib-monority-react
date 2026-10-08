@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { ButtonProps } from './Button.types'
 
@@ -50,31 +50,29 @@ function CheckIcon() {
 
 /* -- Component -- */
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-    {
-        as: Component = 'button',
-        variant,
-        size,
-        className,
-        type = 'button',
-        fullWidth = false,
-        loading = false,
-        iconLeading,
-        iconTrailing,
-        children,
-        disabled,
-        // Copy mode props
-        copyValue,
-        copiedLabel = 'Copied!',
-        duration = 2000,
-        // Icon-only mode props
-        iconOnly,
-        onClick,
-        'aria-label': ariaLabel,
-        ...props
-    },
-    ref
-) {
+export function Button({
+    ref,
+    as: Component = 'button',
+    variant,
+    size,
+    className,
+    type = 'button',
+    fullWidth = false,
+    loading = false,
+    iconLeading,
+    iconTrailing,
+    children,
+    disabled,
+    // Copy mode props
+    copyValue,
+    copiedLabel = 'Copied!',
+    duration = 2000,
+    // Icon-only mode props
+    iconOnly,
+    onClick,
+    'aria-label': ariaLabel,
+    ...props
+}: ButtonProps) {
     const [copied, setCopied] = useState(false)
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -180,6 +178,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             )}
         </Component>
     )
-})
+}
 
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'

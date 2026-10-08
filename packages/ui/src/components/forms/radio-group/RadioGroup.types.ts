@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type RadioGroupTone = 'accent' | 'neutral' | 'danger'
 export type RadioGroupSize = 'sm' | 'md' | 'lg'
@@ -12,6 +12,7 @@ export interface RadioItem {
 
 export interface RadioGroupProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
+    ref?: Ref<HTMLDivElement>
     tone?: RadioGroupTone
     size?: RadioGroupSize
     label?: ReactNode

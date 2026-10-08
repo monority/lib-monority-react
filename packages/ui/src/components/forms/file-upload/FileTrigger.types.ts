@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
 
 export interface FileTriggerProps
     extends Omit<
@@ -12,6 +12,7 @@ export interface FileTriggerProps
         | 'onSelect'
         | 'required'
     > {
+    ref?: Ref<HTMLInputElement>
     accept?: string | string[]
     multiple?: boolean
     onSelect?: (files: File[]) => void

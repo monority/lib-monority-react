@@ -17,9 +17,9 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Phase 5 terminee : migration de la famille Data (5 composants : DataList, StatCard, MetricGrid, Table, DataTable) et experimental (InfiniteScroll)
-- 6 recettes CSS creees dans packages/styles/src/recipes/ sous @layer mr.components, 100% tokens, zero valeur brute, specificite <= 0,2,0
-- Enregistrement dans packages/styles/src/index.css
-- Modernisation Data et Experimental complete : 6 composants migres vers React 19 (ref en prop directe, zero forwardRef)
-- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui (24 tests Data, 15 tests InfiniteScroll passants), 94 tests @monority/web
-- Prochaine etape : Phase 6 — Modernisation des formulaires restants, Button et Spinner (eradication totale forwardRef), audit dist et cloture
+- Phase 6 terminee : eradication totale de forwardRef sur tout le monorepo
+- Modernisation React 19 achevee pour Button, Spinner, et toute la famille forms (Calendar, Checkbox, Combobox, DatePicker, DateRangePicker, Field, DropZone, FileTrigger, FileUpload, FormSection, Input, NumberInput, PasswordInput, RadioGroup, Slider, Switch)
+- ref declaree en prop standard directe (Ref<T>) sur chaque interface et composant
+- Les 71 recettes CSS de tous les composants sont ecrites, enregistrees dans packages/styles/src/index.css, sous @layer mr.components, 100% tokens sans valeur brute
+- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui passants, 94 tests @monority/web passants
+- Prochaine etape : Phase 7 — Audit final d'optimisation 10/10, bundle/dist verification et rapport de synthese

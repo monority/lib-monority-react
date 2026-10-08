@@ -1,36 +1,34 @@
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 import { cn } from '@/lib/cn'
 import { FormControl, useFormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import type { SliderProps } from './Slider.types'
 
-export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        inputClassName,
-        style,
-        value,
-        defaultValue = 50,
-        min = 0,
-        max = 100,
-        step = 1,
-        showValue = true,
-        disabled = false,
-        required = false,
-        invalid = false,
-        onChange,
-        onValueChange,
-        ...props
-    },
-    ref
-) {
+export function Slider({
+    ref,
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    inputClassName,
+    style,
+    value,
+    defaultValue = 50,
+    min = 0,
+    max = 100,
+    step = 1,
+    showValue = true,
+    disabled = false,
+    required = false,
+    invalid = false,
+    onChange,
+    onValueChange,
+    ...props
+}: SliderProps) {
     const [internalValue, setInternalValue] = useState(defaultValue)
     const isControlled = value !== undefined
     const isInvalid = invalid || Boolean(error)
@@ -97,6 +95,6 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { SliderProps, SliderSize, SliderTone } from './Slider.types'

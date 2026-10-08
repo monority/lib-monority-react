@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
@@ -36,27 +36,25 @@ const EyeOffIcon = () => (
     </svg>
 )
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-    {
-        tone,
-        size: density,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        inputClassName,
-        invalid = false,
-        required = false,
-        disabled = false,
-        type,
-        iconLeading,
-        iconTrailing,
-        showPasswordToggle = false,
-        ...props
-    },
-    ref
-) {
+export function Input({
+    ref,
+    tone,
+    size: density,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    inputClassName,
+    invalid = false,
+    required = false,
+    disabled = false,
+    type,
+    iconLeading,
+    iconTrailing,
+    showPasswordToggle = false,
+    ...props
+}: InputProps) {
     const [showPassword, setShowPassword] = useState(false)
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = density ?? 'md'
@@ -142,6 +140,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { InputProps, InputTone, InputSize } from './Input.types'

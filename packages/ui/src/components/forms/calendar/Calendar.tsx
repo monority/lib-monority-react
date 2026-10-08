@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import type { CalendarProps } from './Calendar.types'
 
@@ -119,23 +119,21 @@ const ChevronRightIcon = () => (
 
 // ─── Main component ───────────────────────────────────────────────────
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calendar(
-    {
-        value,
-        defaultValue = null,
-        onChange,
-        minDate,
-        maxDate,
-        disabledDates,
-        locale,
-        showOutsideDays = true,
-        fixedWeeks = false,
-        numberOfMonths = 1,
-        className,
-        ...props
-    },
-    ref
-) {
+export function Calendar({
+    ref,
+    value,
+    defaultValue = null,
+    onChange,
+    minDate,
+    maxDate,
+    disabledDates,
+    locale,
+    showOutsideDays = true,
+    fixedWeeks = false,
+    numberOfMonths = 1,
+    className,
+    ...props
+}: CalendarProps) {
     const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
     const selectedDate = value !== undefined ? value : internalValue
     const today = new Date()
@@ -337,6 +335,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
             </div>
         </div>
     )
-})
+}
 
 export type { CalendarProps } from './Calendar.types'

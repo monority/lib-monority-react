@@ -1,25 +1,23 @@
 import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl, useFormControl } from '@/primitives/form-control'
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 import type { RadioGroupProps } from './RadioGroup.types'
 
-const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroupInner(
-    {
-        tone,
-        label,
-        hint,
-        error,
-        className,
-        items = [],
-        value,
-        defaultValue,
-        onChange,
-        name,
-        ...props
-    },
-    ref
-) {
+function RadioGroupInner({
+    ref,
+    tone,
+    label,
+    hint,
+    error,
+    className,
+    items = [],
+    value,
+    defaultValue,
+    onChange,
+    name,
+    ...props
+}: RadioGroupProps) {
     const ctx = useFormControl()
     const groupName = name || `${ctx.inputId}-name`
     const resolvedTone = tone ?? 'neutral'
@@ -99,25 +97,23 @@ const RadioGroupInner = forwardRef<HTMLDivElement, RadioGroupProps>(function Rad
             </div>
         </Field>
     )
-})
+}
 
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-    function RadioGroup(props, ref) {
-        const { id, hint, error, disabled, required, invalid, size, ...rest } = props
-        return (
-            <FormControl
-                id={id}
-                hint={hint != null}
-                error={error != null}
-                disabled={disabled}
-                required={required}
-                invalid={invalid}
-                size={size}
-            >
-                <RadioGroupInner ref={ref} {...rest} hint={hint} error={error} />
-            </FormControl>
-        )
-    }
-)
+export function RadioGroup(props: RadioGroupProps) {
+    const { id, hint, error, disabled, required, invalid, size, ref, ...rest } = props
+    return (
+        <FormControl
+            id={id}
+            hint={hint != null}
+            error={error != null}
+            disabled={disabled}
+            required={required}
+            invalid={invalid}
+            size={size}
+        >
+            <RadioGroupInner ref={ref} {...rest} hint={hint} error={error} />
+        </FormControl>
+    )
+}
 
 export type { RadioGroupProps, RadioItem, RadioGroupSize, RadioGroupTone } from './RadioGroup.types'

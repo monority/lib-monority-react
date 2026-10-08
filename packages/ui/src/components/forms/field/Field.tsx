@@ -1,5 +1,4 @@
-import type { HTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react'
-import { forwardRef } from 'react'
+import type { HTMLAttributes, LabelHTMLAttributes, ReactNode, Ref } from 'react'
 import { cn } from '@/lib/cn'
 import { useFormControl } from '@/primitives/form-control'
 
@@ -64,65 +63,58 @@ export function Field({
 // ─── FieldLabel ──────────────────────────────────────────────────────────────
 
 export interface FieldLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+    ref?: Ref<HTMLLabelElement>
     required?: boolean
     children?: ReactNode
 }
 
-export const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(function FieldLabel(
-    { required, className, children, ...props },
-    ref
-) {
+export function FieldLabel({ ref, required, className, children, ...props }: FieldLabelProps) {
     return (
         <label ref={ref} className={cn('mr-field__label', className)} {...props}>
             {children}
             {required ? <span className="mr-field__required"> *</span> : null}
         </label>
     )
-})
+}
 
 // ─── FieldContent ────────────────────────────────────────────────────────────
 
 export interface FieldContentProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     children?: ReactNode
 }
 
-export const FieldContent = forwardRef<HTMLDivElement, FieldContentProps>(function FieldContent(
-    { className, children, ...props },
-    ref
-) {
+export function FieldContent({ ref, className, children, ...props }: FieldContentProps) {
     return (
         <div ref={ref} className={cn('mr-field__content', className)} {...props}>
             {children}
         </div>
     )
-})
+}
 
 // ─── FieldDescription ────────────────────────────────────────────────────────
 
 export interface FieldDescriptionProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
     children?: ReactNode
 }
 
-export const FieldDescription = forwardRef<HTMLSpanElement, FieldDescriptionProps>(
-    function FieldDescription({ className, children, ...props }, ref) {
-        return (
-            <span ref={ref} className={cn('mr-field__hint', className)} {...props}>
-                {children}
-            </span>
-        )
-    }
-)
+export function FieldDescription({ ref, className, children, ...props }: FieldDescriptionProps) {
+    return (
+        <span ref={ref} className={cn('mr-field__hint', className)} {...props}>
+            {children}
+        </span>
+    )
+}
 
 // ─── FieldError ──────────────────────────────────────────────────────────────
 
 export interface FieldErrorProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
     children?: ReactNode
 }
 
-export const FieldError = forwardRef<HTMLSpanElement, FieldErrorProps>(function FieldError(
-    { className, children, ...props },
-    ref
-) {
+export function FieldError({ ref, className, children, ...props }: FieldErrorProps) {
     return (
         <span
             ref={ref}
@@ -134,19 +126,23 @@ export const FieldError = forwardRef<HTMLSpanElement, FieldErrorProps>(function 
             {children}
         </span>
     )
-})
+}
 
 // ─── FieldGroup ──────────────────────────────────────────────────────────────
 
 export interface FieldGroupProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     direction?: 'row' | 'column'
     children?: ReactNode
 }
 
-export const FieldGroup = forwardRef<HTMLDivElement, FieldGroupProps>(function FieldGroup(
-    { direction = 'column', className, children, ...props },
-    ref
-) {
+export function FieldGroup({
+    ref,
+    direction = 'column',
+    className,
+    children,
+    ...props
+}: FieldGroupProps) {
     return (
         <div
             ref={ref}
@@ -156,68 +152,68 @@ export const FieldGroup = forwardRef<HTMLDivElement, FieldGroupProps>(function F
             {children}
         </div>
     )
-})
+}
 
 // ─── FieldLegend ─────────────────────────────────────────────────────────────
 
 export interface FieldLegendProps extends HTMLAttributes<HTMLLegendElement> {
+    ref?: Ref<HTMLLegendElement>
     required?: boolean
     children?: ReactNode
 }
 
-export const FieldLegend = forwardRef<HTMLLegendElement, FieldLegendProps>(function FieldLegend(
-    { required, className, children, ...props },
-    ref
-) {
+export function FieldLegend({ ref, required, className, children, ...props }: FieldLegendProps) {
     return (
         <legend ref={ref} className={cn('mr-field__legend', className)} {...props}>
             {children}
             {required ? <span className="mr-field__required"> *</span> : null}
         </legend>
     )
-})
+}
 
 // ─── FieldSeparator ──────────────────────────────────────────────────────────
 
-export interface FieldSeparatorProps extends HTMLAttributes<HTMLHRElement> {}
+export interface FieldSeparatorProps extends HTMLAttributes<HTMLHRElement> {
+    ref?: Ref<HTMLHRElement>
+}
 
-export const FieldSeparator = forwardRef<HTMLHRElement, FieldSeparatorProps>(
-    function FieldSeparator({ className, ...props }, ref) {
-        return <hr ref={ref} className={cn('mr-field__separator', className)} {...props} />
-    }
-)
+export function FieldSeparator({ ref, className, ...props }: FieldSeparatorProps) {
+    return <hr ref={ref} className={cn('mr-field__separator', className)} {...props} />
+}
 
 // ─── FieldSet ────────────────────────────────────────────────────────────────
 
 export interface FieldSetProps extends HTMLAttributes<HTMLFieldSetElement> {
+    ref?: Ref<HTMLFieldSetElement>
     children?: ReactNode
 }
 
-export const FieldSet = forwardRef<HTMLFieldSetElement, FieldSetProps>(function FieldSet(
-    { className, children, ...props },
-    ref
-) {
+export function FieldSet({ ref, className, children, ...props }: FieldSetProps) {
     return (
         <fieldset ref={ref} className={cn('mr-field__set', className)} {...props}>
             {children}
         </fieldset>
     )
-})
+}
 
 // ─── FieldTitle ──────────────────────────────────────────────────────────────
 
 export interface FieldTitleProps extends HTMLAttributes<HTMLHeadingElement> {
+    ref?: Ref<HTMLHeadingElement>
     as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     children?: ReactNode
 }
 
-export const FieldTitle = forwardRef<HTMLHeadingElement, FieldTitleProps>(function FieldTitle(
-    { as: Tag = 'h3', className, children, ...props },
-    ref
-) {
+export function FieldTitle({
+    ref,
+    as: Tag = 'h3',
+    className,
+    children,
+    ...props
+}: FieldTitleProps) {
     return (
         <Tag ref={ref} className={cn('mr-field__title', className)} {...props}>
             {children}
         </Tag>
     )
-})
+}

@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ElementType, ReactNode } from 'react'
+import type { ButtonHTMLAttributes, ElementType, ReactNode, Ref } from 'react'
 
 export type ButtonVariant =
     | 'primary'
@@ -11,6 +11,7 @@ export type ButtonVariant =
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'as' | 'type'> {
+    ref?: Ref<HTMLButtonElement>
     as?: ElementType
     variant?: ButtonVariant
     size?: ButtonSize

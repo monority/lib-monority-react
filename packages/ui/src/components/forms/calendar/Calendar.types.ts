@@ -1,7 +1,8 @@
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, Ref } from 'react'
 
 export interface CalendarProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
+    ref?: Ref<HTMLDivElement>
     value?: Date | null
     defaultValue?: Date | null
     onChange?: (date: Date | null) => void

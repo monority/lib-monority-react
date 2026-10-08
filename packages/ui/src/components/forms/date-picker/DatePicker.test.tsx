@@ -254,7 +254,7 @@ describe('DatePicker', () => {
         expect(outOfMonth).not.toBeUndefined()
     })
 
-    // 19. forwardRef works
+    // 19. ref prop works
     it('forwards ref to hidden input', () => {
         const ref = createRef<HTMLInputElement>()
         render(<DatePicker ref={ref} name="my-date" />)

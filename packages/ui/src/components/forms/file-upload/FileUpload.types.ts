@@ -1,8 +1,9 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export type FileUploadSize = 'sm' | 'md' | 'lg'
 
 export interface FileUploadProps {
+    ref?: Ref<HTMLInputElement>
     size?: FileUploadSize
     label?: ReactNode
     hint?: ReactNode

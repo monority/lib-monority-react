@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 import { DATEPICKER_MIN_WIDTH, OVERLAY_OFFSET } from '@/lib/constants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { DatePickerProps } from './DatePicker.types'
 
@@ -344,36 +344,34 @@ function CalendarGrid({
 
 // ─── Main component ───────────────────────────────────────────────────
 
-export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function DatePicker(
-    {
-        size,
-        tone,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        inputClassName,
-        disabled = false,
-        required = false,
-        invalid = false,
-        fullWidth = false,
-        theme: themeProp,
-        brand: brandProp,
-        density: densityProp,
-        value,
-        defaultValue,
-        onChange,
-        minDate,
-        maxDate,
-        disabledDates,
-        placeholder = 'Select a date',
-        popoverClassName,
-        style,
-        ...props
-    },
-    ref
-) {
+export function DatePicker({
+    ref,
+    size,
+    tone,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    inputClassName,
+    disabled = false,
+    required = false,
+    invalid = false,
+    fullWidth = false,
+    theme: themeProp,
+    brand: brandProp,
+    density: densityProp,
+    value,
+    defaultValue,
+    onChange,
+    minDate,
+    maxDate,
+    disabledDates,
+    placeholder = 'Select a date',
+    popoverClassName,
+    style,
+    ...props
+}: DatePickerProps) {
     const isControlled = value !== undefined
     const initialDate = parseDate(isControlled ? value : defaultValue)
 
@@ -548,8 +546,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     // Forward ref to hidden input
     const hiddenInputRef = useCallback(
         (node: HTMLInputElement | null) => {
-            if (typeof ref === 'function') ref(node)
-            else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as { current: HTMLInputElement | null }).current = node
+            }
         },
         [ref]
     )
@@ -658,6 +659,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
             </div>
         </FormControl>
     )
-})
+}
 
 export type { DatePickerProps, DatePickerSize, DatePickerTone } from './DatePicker.types'
