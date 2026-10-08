@@ -1,0 +1,109 @@
+/* Recette DataTable dans la couche mr.components (spec v4).
+ * Tableau de données interactif avec tri, sélection et pagination. */
+@layer mr.components {
+    :where(.mr-data-table) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        inline-size: 100%;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-data-table__caption) {
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        text-align: start;
+        margin-block-end: var(--mr-space-2);
+    }
+
+    :where(.mr-data-table__container) {
+        inline-size: 100%;
+        overflow-x: auto;
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+    }
+
+    :where(.mr-data-table__table) {
+        inline-size: 100%;
+        border-collapse: collapse;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        text-align: start;
+    }
+
+    :where(.mr-data-table__head) {
+        background-color: var(--mr-bg-sunken);
+        border-block-end: 1px solid var(--mr-border-subtle);
+    }
+
+    :where(.mr-data-table__th) {
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        text-transform: uppercase;
+        letter-spacing: var(--mr-tracking-label);
+        color: var(--mr-text-tertiary);
+        text-align: start;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    :where(.mr-data-table__sort-btn) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        text-transform: inherit;
+        letter-spacing: inherit;
+    }
+
+    :where(.mr-data-table__sort-btn:hover) {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-data-table__sort-indicator) {
+        display: inline-flex;
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-data-table__select-cell) {
+        inline-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-2);
+        text-align: center;
+    }
+
+    :where(.mr-data-table__body) {
+        background-color: transparent;
+    }
+
+    :where(.mr-data-table__tr) {
+        border-block-end: 1px solid var(--mr-border-subtle);
+        transition: background-color var(--mr-duration-state) ease;
+        position: relative;
+    }
+
+    :where(.mr-data-table__tr:hover) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-data-table__tr[data-selected='true']),
+    :where(.mr-data-table__tr--selected) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-data-table__td) {
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-3);
+        color: var(--mr-text-primary);
+        font-variant-numeric: tabular-nums;
+    }
+}

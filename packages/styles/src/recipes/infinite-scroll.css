@@ -1,0 +1,52 @@
+/* Recette InfiniteScroll dans la couche mr.components (spec v4).
+ * Composant de défilement infini et sentinelle. */
+@layer mr.components {
+    :where(.mr-infinite-scroll) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        inline-size: 100%;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-infinite-scroll__sentinel) {
+        block-size: 1px;
+        inline-size: 100%;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    :where(.mr-infinite-scroll__loader),
+    :where(.mr-infinite-scroll__end),
+    :where(.mr-infinite-scroll__empty),
+    :where(.mr-infinite-scroll__error) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-block: var(--mr-space-4);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-tertiary);
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-infinite-scroll__error) {
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-infinite-scroll__retry) {
+        margin-inline-start: var(--mr-space-2);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-3);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-sm);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-xs);
+        cursor: pointer;
+    }
+
+    :where(.mr-infinite-scroll__retry:hover) {
+        background-color: var(--mr-bg-sunken);
+    }
+}

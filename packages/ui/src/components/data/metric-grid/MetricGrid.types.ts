@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, Ref } from 'react'
 import type { StatCardProps } from '@/components/data/stat-card/StatCard.types'
 
 export interface MetricGridItem extends StatCardProps {
@@ -6,5 +6,6 @@ export interface MetricGridItem extends StatCardProps {
 }
 
 export interface MetricGridProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     items?: MetricGridItem[]
 }

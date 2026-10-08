@@ -1,0 +1,101 @@
+/* Recette StatCard dans la couche mr.components (spec v4).
+ * Carte spécialisée pour l'affichage synthétique d'une métrique clé. */
+@layer mr.components {
+    :where(.mr-stat-card) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-stat-card__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-stat-card__label) {
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        text-transform: uppercase;
+        letter-spacing: var(--mr-tracking-label);
+        color: var(--mr-text-tertiary);
+    }
+
+    :where(.mr-stat-card__header-end) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-stat-card__icon) {
+        display: inline-flex;
+        align-items: center;
+        color: var(--mr-text-tertiary);
+    }
+
+    :where(.mr-stat-card__trend) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    :where(.mr-stat-card__trend-marker) {
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-text-tertiary);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='success'] {
+        color: var(--mr-success-text);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='success'] :where(.mr-stat-card__trend-marker) {
+        background-color: var(--mr-success-text);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='danger'] {
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='danger'] :where(.mr-stat-card__trend-marker) {
+        background-color: var(--mr-danger-text);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='warning'] {
+        color: var(--mr-warning-text);
+    }
+
+    :where(.mr-stat-card__trend)[data-trend-tone='warning'] :where(.mr-stat-card__trend-marker) {
+        background-color: var(--mr-warning-text);
+    }
+
+    :where(.mr-stat-card__metric) {
+        display: flex;
+        align-items: baseline;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-stat-card__value) {
+        font-variant-numeric: tabular-nums;
+        letter-spacing: var(--mr-tracking-display);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-stat-card__description) {
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-stat-card__footer) {
+        display: flex;
+        align-items: center;
+        padding-block-start: var(--mr-space-2);
+        border-block-start: 1px solid var(--mr-border-subtle);
+    }
+}

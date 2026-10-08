@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface InfiniteScrollProps {
+    ref?: Ref<HTMLDivElement>
     /** Children (la liste des items) */
     children?: ReactNode
 

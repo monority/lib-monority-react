@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type DataListColumns = 'auto' | 'split'
 
@@ -10,6 +10,7 @@ export interface DataListItem {
 }
 
 export interface DataListProps extends HTMLAttributes<HTMLDListElement> {
+    ref?: Ref<HTMLDListElement>
     items?: DataListItem[]
     columns?: DataListColumns
     itemClassName?: string

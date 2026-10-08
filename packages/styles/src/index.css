@@ -74,3 +74,9 @@
 @import './recipes/filter-bar.css';
 @import './recipes/menubar.css';
 @import './recipes/navigation-menu.css';
+@import './recipes/data-list.css';
+@import './recipes/stat-card.css';
+@import './recipes/metric-grid.css';
+@import './recipes/table.css';
+@import './recipes/data-table.css';
+@import './recipes/infinite-scroll.css';

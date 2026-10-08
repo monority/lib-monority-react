@@ -1,12 +1,8 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { StatCard } from '@/components/data/stat-card/StatCard'
 import type { MetricGridProps } from './MetricGrid.types'
 
-export const MetricGrid = forwardRef<HTMLDivElement, MetricGridProps>(function MetricGrid(
-    { items = [], className, ...props },
-    ref
-) {
+export function MetricGrid({ ref, items = [], className, ...props }: MetricGridProps) {
     return (
         <div ref={ref} className={cn('mr-metric-grid', className)} {...props}>
             {items.map(({ key, ...cardProps }) => (
@@ -14,6 +10,6 @@ export const MetricGrid = forwardRef<HTMLDivElement, MetricGridProps>(function M
             ))}
         </div>
     )
-})
+}
 
 export type { MetricGridProps, MetricGridItem } from './MetricGrid.types'
