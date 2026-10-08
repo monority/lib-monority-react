@@ -1,11 +1,16 @@
-import { createElement, forwardRef } from 'react'
+import { createElement } from 'react'
 import { cn } from '@/lib/cn'
 import type { TextProps } from './Text.types'
 
-export const Text = forwardRef<HTMLElement, TextProps>(function Text(
-    { as = 'p', tone = 'base', size = 'md', className, children, ...props },
-    ref
-) {
+export function Text({
+    as = 'p',
+    tone = 'base',
+    size = 'md',
+    className,
+    children,
+    ref,
+    ...props
+}: TextProps) {
     return createElement(
         as,
         {
@@ -17,6 +22,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         },
         children
     )
-})
+}
 
 export type { TextProps, TextTone, TextSize } from './Text.types'

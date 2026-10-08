@@ -1,11 +1,8 @@
-import { createElement, forwardRef } from 'react'
+import { createElement } from 'react'
 import { cn } from '@/lib/cn'
 import type { TitleProps } from './Title.types'
 
-export const Title = forwardRef<HTMLElement, TitleProps>(function Title(
-    { as = 'h2', size = 'md', className, children, ...props },
-    ref
-) {
+export function Title({ as = 'h2', size = 'md', className, children, ref, ...props }: TitleProps) {
     return createElement(
         as,
         {
@@ -16,6 +13,6 @@ export const Title = forwardRef<HTMLElement, TitleProps>(function Title(
         },
         children
     )
-})
+}
 
 export type { TitleProps, TitleSize } from './Title.types'

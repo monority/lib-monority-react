@@ -23,7 +23,8 @@
         "ease",
         "size",
         "state",
-        "switch"
+        "switch",
+        "tracking"
     ],
     "roles": {
         "bg": ["canvas", "surface", "raised", "sunken", "overlay", "inverse"],
@@ -36,10 +37,14 @@
         "info": ["subtle", "border", "text"],
         "focus": ["ring"],
         "size": ["control-sm", "control-md", "control-lg"],
-        "font-size": ["sm", "md"],
+        "font-family": ["sans", "mono"],
+        "font-size": ["xs", "sm", "md", "base", "lg", "xl", "2xl"],
+        "font-weight": ["regular", "medium", "semibold"],
+        "line-height": ["sm", "md", "lg", "xl", "2xl"],
         "duration": ["state", "panel", "spin", "pulse", "loop"],
         "state": ["hover-mix", "active-mix", "disabled-mix"],
-        "radius": ["sm", "md", "full"],
-        "switch": ["thumb-off"]
+        "radius": ["sm", "md", "lg", "full"],
+        "switch": ["thumb-off"],
+        "tracking": ["display", "h1", "label"]
     }
 }

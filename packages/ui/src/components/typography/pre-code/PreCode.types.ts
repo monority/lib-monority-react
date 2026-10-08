@@ -9,4 +9,5 @@ export interface PreCodeProps extends HTMLAttributes<HTMLPreElement> {
     language?: string
     size?: PreCodeSize
     wrap?: boolean
+    ref?: Ref<HTMLPreElement>
 }

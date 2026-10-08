@@ -1,11 +1,17 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { PreCodeProps } from './PreCode.types'
 
-export const PreCode = forwardRef<HTMLPreElement, PreCodeProps>(function PreCode(
-    { children, className, codeClassName, codeRef, language, size = 'md', wrap = false, ...props },
-    ref
-) {
+export function PreCode({
+    children,
+    className,
+    codeClassName,
+    codeRef,
+    language,
+    size = 'md',
+    wrap = false,
+    ref,
+    ...props
+}: PreCodeProps) {
     const languageClassName = language ? `language-${language}` : undefined
 
     return (
@@ -21,6 +27,6 @@ export const PreCode = forwardRef<HTMLPreElement, PreCodeProps>(function PreCode
             </code>
         </pre>
     )
-})
+}
 
 export type { PreCodeProps, PreCodeSize } from './PreCode.types'

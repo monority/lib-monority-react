@@ -17,12 +17,9 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Display complet : Card, Avatar, Collapsible, Accordion, Carousel (100% de la famille migree)
-- Recettes CSS : card.css, avatar.css, collapsible.css, accordion.css, carousel.css sous @layer mr.components
-- Modernisation React 19 et hooks internes : ref en prop directe (sans forwardRef), utilisation de useControllableState
+- Typography complet : Title, Text, Kbd, PreCode (100% de la famille migree)
+- Recettes CSS : title.css, text.css, kbd.css, pre-code.css sous @layer mr.components
+- Tokens semantiques : font-size (xs a 2xl), font-family (mono), graisses, hauteurs de ligne et tracking ajoutes
+- Modernisation React 19 : ref en prop directe (sans forwardRef), types stricts, enrichissement des tons de Text
 - Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui et 94 tests @monority/web
-- Prochaine etape : migration de la famille Typography (Title, Text, Kbd, PreCode)
-
-
-
-
+- Prochaine etape : migration de la famille Layout ou Overlays

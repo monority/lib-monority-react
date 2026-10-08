@@ -42,3 +42,7 @@
 @import './recipes/collapsible.css';
 @import './recipes/accordion.css';
 @import './recipes/carousel.css';
+@import './recipes/title.css';
+@import './recipes/text.css';
+@import './recipes/kbd.css';
+@import './recipes/pre-code.css';

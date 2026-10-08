@@ -1,0 +1,51 @@
+/* Recette PreCode dans la couche mr.components (spec v4).
+ * Bloc de code multiligne scrollable ou pliable.
+ * Fond sunken, bordure subtle, rayon lg, typographie mono. */
+@layer mr.components {
+    :where(.mr-pre-code) {
+        margin: 0;
+        box-sizing: border-box;
+        display: block;
+        font-family: var(--mr-font-family-mono);
+        color: var(--mr-text-primary);
+        background-color: var(--mr-bg-sunken);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-lg);
+        overflow-x: auto;
+        tab-size: 2;
+        white-space: pre;
+    }
+
+    /* Taille md par defaut */
+    :where(.mr-pre-code),
+    :where(.mr-pre-code)[data-size='md'] {
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-md);
+        padding: var(--mr-space-4);
+    }
+
+    /* Taille sm compacte */
+    :where(.mr-pre-code)[data-size='sm'] {
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-sm);
+        padding: var(--mr-space-3);
+    }
+
+    /* Mode renvoi a la ligne automatique */
+    :where(.mr-pre-code)[data-wrap='true'] {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    /* Balise code interne */
+    :where(.mr-pre-code) code {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+        background: transparent;
+        border: 0;
+        padding: 0;
+    }
+}
