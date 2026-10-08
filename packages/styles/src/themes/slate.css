@@ -37,5 +37,20 @@
 
         /* Danger sombre : ratio >= 4.8:1 sur canevas (5.29:1) */
         --mr-danger-solid: oklch(0.65 0.2 25);
+        --mr-danger-subtle: oklch(0.24 0.065 25);
+        --mr-danger-border: oklch(0.38 0.12 25);
+        --mr-danger-text: oklch(0.76 0.17 25);
+
+        --mr-success-subtle: oklch(0.24 0.065 155);
+        --mr-success-border: oklch(0.38 0.12 155);
+        --mr-success-text: oklch(0.76 0.15 155);
+
+        --mr-warning-subtle: oklch(0.25 0.07 80);
+        --mr-warning-border: oklch(0.38 0.12 80);
+        --mr-warning-text: oklch(0.78 0.15 80);
+
+        --mr-info-subtle: oklch(0.24 0.065 255);
+        --mr-info-border: oklch(0.38 0.12 255);
+        --mr-info-text: oklch(0.76 0.15 255);
     }
 }

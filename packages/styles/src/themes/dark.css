@@ -23,8 +23,8 @@
         --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Levier de luminosite de l'accent pour fond sombre :
-         * 0.635 reproduit le contraste de ~5.5:1 de l'anneau de focus sur canevas */
-        --mr-ref-accent-lightness: 0.635;
+         * 0.955 pour un accent neutre blanc clair et net */
+        --mr-ref-accent-lightness: 0.955;
 
         /* Danger sombre : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.5:1) sur canevas sombre (L=0.17).
          * --mr-danger-on-solid herite de var(--mr-bg-canvas), conservant la meme regle unique qu'en clair. */
