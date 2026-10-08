@@ -1,15 +1,16 @@
 /* Recette Toast dans la couche mr.components (spec v4).
  * Notification ephemere ou confirmation d'action flottante.
- * Carte moderne sur-elevee avec bordure de ton integree. */
+ * Carte moderne sur-elevee neutre avec icone de statut coloree. */
 @layer mr.components {
     :where(.mr-toast) {
         position: relative;
         box-sizing: border-box;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--mr-space-3);
         background-color: var(--mr-bg-surface);
         border: 1px solid var(--mr-border-default);
-        border-inline-start: var(--mr-space-1) solid var(--mr-border-control);
         border-radius: var(--mr-radius-lg);
         box-shadow: var(--mr-shadow-overlay);
         padding-block: var(--mr-space-3);
@@ -21,40 +22,44 @@
         overflow: hidden;
     }
 
-    /* Tons semantiques : bordure d'accent et teinte de fond subtile */
-    :where(.mr-toast)[data-tone='neutral'] {
-        border-inline-start-color: var(--mr-border-control);
+    /* Icone de statut coloree selon le ton */
+    :where(.mr-toast__icon) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        margin-block-start: 2px;
+        color: var(--mr-text-secondary);
     }
 
-    :where(.mr-toast)[data-tone='accent'] {
-        border-inline-start-color: var(--mr-accent-solid);
-        background-color: color-mix(in oklch, var(--mr-accent-subtle) 30%, var(--mr-bg-surface));
+    :where(.mr-toast)[data-tone='success'] :where(.mr-toast__icon) {
+        color: var(--mr-success-text);
     }
 
-    :where(.mr-toast)[data-tone='success'] {
-        border-inline-start-color: var(--mr-success-text);
-        background-color: color-mix(in oklch, var(--mr-success-subtle) 35%, var(--mr-bg-surface));
+    :where(.mr-toast)[data-tone='warning'] :where(.mr-toast__icon) {
+        color: var(--mr-warning-text);
     }
 
-    :where(.mr-toast)[data-tone='warning'] {
-        border-inline-start-color: var(--mr-warning-text);
-        background-color: color-mix(in oklch, var(--mr-warning-subtle) 35%, var(--mr-bg-surface));
+    :where(.mr-toast)[data-tone='danger'] :where(.mr-toast__icon) {
+        color: var(--mr-danger-text);
     }
 
-    :where(.mr-toast)[data-tone='danger'] {
-        border-inline-start-color: var(--mr-danger-solid);
-        background-color: color-mix(in oklch, var(--mr-danger-subtle) 35%, var(--mr-bg-surface));
+    :where(.mr-toast)[data-tone='info'] :where(.mr-toast__icon) {
+        color: var(--mr-info-text);
     }
 
-    :where(.mr-toast)[data-tone='info'] {
-        border-inline-start-color: var(--mr-info-text);
-        background-color: color-mix(in oklch, var(--mr-info-subtle) 35%, var(--mr-bg-surface));
+    :where(.mr-toast)[data-tone='accent'] :where(.mr-toast__icon) {
+        color: var(--mr-accent-text);
     }
 
     /* Corps du Toast */
     :where(.mr-toast__body) {
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
+        min-inline-size: 0;
         gap: var(--mr-space-1);
     }
 
@@ -62,13 +67,12 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-2);
     }
 
     :where(.mr-toast__heading) {
         display: flex;
         align-items: center;
-        gap: var(--mr-space-2);
         min-inline-size: 0;
     }
 
@@ -86,10 +90,34 @@
         line-height: 1.4;
     }
 
+    /* Bouton fermer ergonomique et aligne */
     :where(.mr-toast__close) {
-        margin-inline-start: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        padding: 0;
+        margin: calc(var(--mr-space-1) * -0.5) calc(var(--mr-space-2) * -0.5) 0 auto;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-sm);
+        background-color: transparent;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
         flex-shrink: 0;
-        align-self: flex-start;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-toast__close):hover {
+            background-color: var(--mr-bg-sunken);
+            color: var(--mr-text-primary);
+        }
+    }
+
+    :where(.mr-toast__close):focus-visible {
+        outline: 1px solid var(--mr-focus-ring);
+        outline-offset: 1px;
     }
 
     /* Zone d'ancrage / conteneur live (ToastProvider) */

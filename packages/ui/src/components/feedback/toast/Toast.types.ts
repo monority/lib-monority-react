@@ -5,11 +5,16 @@ export type ToastTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger' 
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     ref?: Ref<HTMLDivElement>
     tone?: ToastTone
+    icon?: ReactNode
     title?: ReactNode
     description?: ReactNode
     onClose?: () => void
     onOpenChange?: (open: boolean) => void
     children?: ReactNode
+}
+
+export interface ToastIconProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
 }
 
 export interface ToastTitleProps extends HTMLAttributes<HTMLElement> {
@@ -23,3 +28,4 @@ export interface ToastDescriptionProps extends HTMLAttributes<HTMLParagraphEleme
 export interface ToastCloseProps extends HTMLAttributes<HTMLButtonElement> {
     ref?: Ref<HTMLButtonElement>
 }
+

@@ -78,6 +78,9 @@ describe('Toast', () => {
     it('renders compound components declaratively', () => {
         const view = render(
             <Toast tone="info">
+                <Toast.Icon>
+                    <span data-testid="custom-icon">★</span>
+                </Toast.Icon>
                 <Toast.Title>Notification</Toast.Title>
                 <Toast.Description>Synchronisation terminée</Toast.Description>
             </Toast>
@@ -86,5 +89,14 @@ describe('Toast', () => {
         expect(view.querySelector('.mr-toast__description')?.textContent).toBe(
             'Synchronisation terminée'
         )
+        expect(view.querySelector('[data-testid="custom-icon"]')).not.toBeNull()
+    })
+
+    it('renders default tone icon when structured props are used', () => {
+        const view = render(<Toast tone="success" title="Bravo" />)
+        const iconEl = view.querySelector('.mr-toast__icon')
+        expect(iconEl).not.toBeNull()
+        expect(iconEl?.querySelector('svg')).not.toBeNull()
     })
 })
+
