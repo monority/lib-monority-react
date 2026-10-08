@@ -17,11 +17,12 @@ Button en premier (B1 a B6).
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
 Etat :
-- Toggle : remplacement du rail souligne par une inversion de couleur nette au repos et actif (commit 1d1a0bc)
-- Callout et InlineAlert : alignement sur Toast (surface neutre, icones de statut colorees uniques, commit 623ec91)
-- Animations : normalisation de Spinner, AsyncStateNotice, Progress et Skeleton sur tokens semantiques dedies (commit 2fb450a)
-- Banner : harmonisation avec Toast, Callout et InlineAlert (surface neutre, bordure standard, icones SVG par tone)
-- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1301 tests unitaires @monority/ui et 94 tests @monority/web
-- Prochaine etape : migration de la famille suivante et poursuite de la feuille de route
+- Banner : harmonisation carte neutre et icones par ton (commit 49eb679)
+- Display : creation des recettes card.css et avatar.css sous @layer mr.components
+- Card : modernisation React 19, sous-composants composes (Header, Title, Description, Content, Footer), accessibilite interactive (role button, tabindex)
+- Avatar : modernisation React 19, support statut en ligne/absent (dot 8px), tailles sm (24px), md (32px), lg (40px)
+- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1303 tests unitaires @monority/ui et 94 tests @monority/web
+- Prochaine etape : migration de la tranche suivante (Typography ou suite de Display)
+
 
 

@@ -36,10 +36,9 @@ describe('Card', () => {
         expect(card?.textContent).toBe('Content')
         expect(card?.className).toContain('mr-card')
         expect(card?.getAttribute('data-padding')).toBe('md')
-        expect(card?.getAttribute('data-padding')).toBe('md')
     })
 
-    it('maps padding and interactive state to stable hooks', () => {
+    it('maps padding and interactive state to stable hooks and a11y', () => {
         const view = render(
             <Card padding="lg" interactive>
                 Feature
@@ -49,8 +48,8 @@ describe('Card', () => {
 
         expect(card?.getAttribute('data-padding')).toBe('lg')
         expect(card?.getAttribute('data-interactive')).toBe('true')
-        expect(card?.getAttribute('data-padding')).toBe('lg')
-        expect(card?.getAttribute('data-interactive')).toBe('true')
+        expect(card?.getAttribute('role')).toBe('button')
+        expect(card?.getAttribute('tabindex')).toBe('0')
     })
 
     it('forwards ref to the root div element', () => {
@@ -64,12 +63,34 @@ describe('Card', () => {
         const view = render(<Card padding="sm">Content</Card>)
         const card = view.querySelector('div')
         expect(card?.getAttribute('data-padding')).toBe('sm')
-        expect(card?.getAttribute('data-padding')).toBe('sm')
     })
 
     it('passes className to the root', () => {
         const view = render(<Card className="custom">Content</Card>)
         const card = view.querySelector('div')
         expect(card?.className).toContain('custom')
+    })
+
+    it('renders compound subcomponents correctly', () => {
+        const view = render(
+            <Card>
+                <Card.Header>
+                    <Card.Title>Card Title</Card.Title>
+                    <Card.Description>Card Description</Card.Description>
+                </Card.Header>
+                <Card.Content>
+                    <span>Card Body Content</span>
+                </Card.Content>
+                <Card.Footer>
+                    <span>Card Footer Content</span>
+                </Card.Footer>
+            </Card>
+        )
+
+        expect(view.querySelector('.mr-card__header')).not.toBeNull()
+        expect(view.querySelector('.mr-card__title')?.textContent).toBe('Card Title')
+        expect(view.querySelector('.mr-card__description')?.textContent).toBe('Card Description')
+        expect(view.querySelector('.mr-card__content')?.textContent).toBe('Card Body Content')
+        expect(view.querySelector('.mr-card__footer')?.textContent).toBe('Card Footer Content')
     })
 })

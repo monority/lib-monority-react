@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { AvatarProps } from './Avatar.types'
 
@@ -19,22 +19,29 @@ function getInitials(name?: string): string {
  *   if provided, otherwise initials derived from `name`.
  * - `name` also provides the accessible name unless `alt` (or an explicit
  *   `aria-label`) is set.
+ * - `status` optionally renders an indicator dot ('online' | 'offline').
  */
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
-    { src, alt = '', name, size, className, children, ...props },
-    ref
-) {
-    const resolvedSize = size ?? 'md'
+export function Avatar({
+    src,
+    alt = '',
+    name,
+    size = 'md',
+    status,
+    className,
+    children,
+    ref,
+    ...props
+}: AvatarProps) {
     const [imgError, setImgError] = useState(false)
     const initials = useMemo(() => getInitials(name), [name])
-    const showImage = src && !imgError
+    const showImage = Boolean(src && !imgError)
     const accessibleName = alt || name
 
     return (
         <div
             ref={ref}
             className={cn('mr-avatar', className)}
-            data-size={resolvedSize}
+            data-size={size}
             role={accessibleName ? 'img' : undefined}
             aria-label={accessibleName || undefined}
             {...props}
@@ -51,8 +58,11 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
                     {children ?? initials}
                 </span>
             )}
+            {status ? (
+                <span className="mr-avatar__status" data-status={status} aria-hidden="true" />
+            ) : null}
         </div>
     )
-})
+}
 
-export type { AvatarProps, AvatarSize } from './Avatar.types'
+export type { AvatarProps, AvatarSize, AvatarStatus } from './Avatar.types'

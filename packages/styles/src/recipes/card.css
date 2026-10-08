@@ -1,0 +1,105 @@
+/* Recette du composant Card (couche mr.components)
+ *
+ * Conteneur structurant principal pour grouper des informations et actions coherentes.
+ *
+ * Tokens :
+ * - Surface : --mr-bg-surface
+ * - Bordure : 1px solid --mr-border-subtle
+ * - Rayon : --mr-radius-lg
+ * - Padding et ecart adaptes selon [data-padding] (sm, md, lg)
+ * - Etat interactif : survol sur --mr-bg-raised et --mr-border-default, anneau de focus
+ */
+@layer mr.components {
+    :where(.mr-card) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        min-inline-size: 0;
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-lg);
+        overflow-wrap: anywhere;
+    }
+
+    /* Padding sm : compact */
+    :where(.mr-card)[data-padding='sm'] {
+        padding: var(--mr-space-3);
+        gap: var(--mr-space-2);
+    }
+
+    /* Padding md (defaut) */
+    :where(.mr-card)[data-padding='md'],
+    :where(.mr-card):not([data-padding]) {
+        padding: var(--mr-space-4);
+        gap: var(--mr-space-3);
+    }
+
+    /* Padding lg : aere */
+    :where(.mr-card)[data-padding='lg'] {
+        padding: var(--mr-space-5);
+        gap: var(--mr-space-4);
+    }
+
+    /* Sous-elements structurels */
+    :where(.mr-card__header) {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
+        padding-block-end: var(--mr-space-3);
+        border-block-end: 1px solid var(--mr-border-subtle);
+    }
+
+    :where(.mr-card__title) {
+        margin: 0;
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        line-height: inherit;
+    }
+
+    :where(.mr-card__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: inherit;
+    }
+
+    :where(.mr-card__content) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-3);
+        min-inline-size: 0;
+    }
+
+    :where(.mr-card__footer) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--mr-space-3);
+        margin-block-start: auto;
+        padding-block-start: var(--mr-space-3);
+        border-block-start: 1px solid var(--mr-border-subtle);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+
+    /* Variante interactive */
+    :where(.mr-card)[data-interactive='true'] {
+        cursor: pointer;
+        user-select: none;
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+    }
+
+    :where(.mr-card)[data-interactive='true']:hover {
+        background-color: var(--mr-bg-raised);
+        border-color: var(--mr-border-default);
+    }
+
+    :where(.mr-card)[data-interactive='true']:focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+}
