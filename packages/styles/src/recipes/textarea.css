@@ -104,7 +104,8 @@
     }
 
     /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
-    :where(.mr-textarea):disabled {
+    :where(.mr-textarea):disabled,
+    :where(.mr-textarea)[data-disabled='true'] {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
         border-color: color-mix(
@@ -112,9 +113,11 @@
             var(--mr-border-control),
             var(--mr-bg-canvas) var(--mr-state-disabled-mix)
         );
+        resize: none;
     }
 
-    :where(.mr-textarea):disabled::placeholder {
+    :where(.mr-textarea):disabled::placeholder,
+    :where(.mr-textarea)[data-disabled='true']::placeholder {
         color: var(--mr-text-disabled);
     }
 

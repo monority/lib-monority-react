@@ -14,22 +14,18 @@
         box-sizing: border-box;
     }
 
-    :where(button, input, textarea, select):where([class^='mr-'], [class*=' mr-']),
-    :where([class^='mr-'], [class*=' mr-']) :where(button, input, textarea, select) {
+    :where(button, input, textarea, select):where([class^='mr-'], [class*=' mr-']) {
         font: inherit;
     }
 
     :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote):where(
             [class^='mr-'],
             [class*=' mr-']
-        ),
-    :where([class^='mr-'], [class*=' mr-'])
-        :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote) {
+        ) {
         margin: 0;
     }
 
-    :where(img, picture, svg, video):where([class^='mr-'], [class*=' mr-']),
-    :where([class^='mr-'], [class*=' mr-']) :where(img, picture, svg, video) {
+    :where(img, picture, svg, video):where([class^='mr-'], [class*=' mr-']) {
         display: block;
         max-inline-size: 100%;
     }
