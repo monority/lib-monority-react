@@ -1,3 +1,5 @@
-:root {
-    color-scheme: light;
+@layer mr.base {
+    :where([data-theme='light']) {
+        color-scheme: light;
+    }
 }

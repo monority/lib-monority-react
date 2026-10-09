@@ -1,0 +1,70 @@
+/* Recette Table dans la couche mr.components (spec v4).
+ * Affichage tabulaire sobre de données structurées. */
+@layer mr.components {
+    :where(.mr-table) {
+        box-sizing: border-box;
+        inline-size: 100%;
+        overflow-x: auto;
+    }
+
+    :where(.mr-table__table) {
+        inline-size: 100%;
+        border-collapse: collapse;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        text-align: start;
+    }
+
+    :where(.mr-table__head) {
+        background-color: var(--mr-bg-sunken);
+        border-block-end: 1px solid var(--mr-border-subtle);
+    }
+
+    :where(.mr-table__th) {
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        text-transform: uppercase;
+        letter-spacing: var(--mr-tracking-label);
+        color: var(--mr-text-tertiary);
+        text-align: start;
+        white-space: nowrap;
+    }
+
+    :where(.mr-table__body) {
+        background-color: transparent;
+    }
+
+    :where(.mr-table__tr) {
+        border-block-end: 1px solid var(--mr-border-subtle);
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-table__tr:hover) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-table__td) {
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-3);
+        color: var(--mr-text-primary);
+        font-variant-numeric: tabular-nums;
+        text-align: start;
+        vertical-align: middle;
+    }
+
+    :where(.mr-table__cell--left) {
+        text-align: start;
+    }
+
+    :where(.mr-table__cell--center) {
+        text-align: center;
+    }
+
+    :where(.mr-table__cell--right) {
+        text-align: end;
+    }
+}

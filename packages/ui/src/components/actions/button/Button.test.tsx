@@ -54,7 +54,8 @@ describe('Button', () => {
         expect(button?.getAttribute('data-full-width')).toBe('true')
         expect(button?.getAttribute('data-loading')).toBe('true')
         expect(button?.getAttribute('data-disabled')).toBe('true')
-        expect(button?.hasAttribute('disabled')).toBe(true)
+        expect(button?.hasAttribute('disabled')).toBe(false)
+        expect(button?.getAttribute('aria-disabled')).toBe('true')
         expect(button?.getAttribute('aria-busy')).toBe('true')
     })
 
@@ -132,6 +133,22 @@ describe('Button', () => {
         expect(button?.getAttribute('data-loading')).toBe('true')
     })
 
+    it('preserves focus and stays in tab order during loading using aria-disabled', () => {
+        const view = render(<Button>Submit</Button>)
+        const button = view.querySelector('button')!
+        button.focus()
+        expect(document.activeElement).toBe(button)
+
+        act(() => {
+            root?.render(<Button loading>Submit</Button>)
+        })
+
+        expect(document.activeElement).toBe(button)
+        expect(button.hasAttribute('disabled')).toBe(false)
+        expect(button.getAttribute('aria-disabled')).toBe('true')
+        expect(button.getAttribute('aria-busy')).toBe('true')
+    })
+
     it('calls onClick when clicked', () => {
         const onClick = vi.fn()
         const view = render(<Button onClick={onClick}>Click me</Button>)
@@ -152,6 +169,93 @@ describe('Button', () => {
         expect(link).not.toBeNull()
         expect(link?.getAttribute('href')).toBe('#')
         expect(link?.getAttribute('data-variant')).toBe('primary')
+    })
+
+    it('blocks click and keyboard events when disabled or loading for non-native elements', () => {
+        const onClick = vi.fn()
+        const viewDisabled = render(
+            <Button as="div" disabled onClick={onClick}>
+                Disabled Div
+            </Button>
+        )
+        const divDisabled = viewDisabled.querySelector('div.mr-btn')
+        act(() => {
+            divDisabled?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+        })
+        expect(onClick).not.toHaveBeenCalled()
+
+        const viewLoading = render(
+            <Button as="div" loading onClick={onClick}>
+                Loading Div
+            </Button>
+        )
+        const divLoading = viewLoading.querySelector('div.mr-btn')
+        act(() => {
+            divLoading?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+        })
+        expect(onClick).not.toHaveBeenCalled()
+    })
+
+    it('prevents form submission when loading on click and enter key', () => {
+        const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault())
+        const view = render(
+            <form onSubmit={onSubmit}>
+                <Button type="submit" loading>
+                    Submit
+                </Button>
+            </form>
+        )
+        const button = view.querySelector('button')!
+
+        act(() => {
+            button.click()
+        })
+        expect(onSubmit).not.toHaveBeenCalled()
+
+        act(() => {
+            button.focus()
+            button.dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })
+            )
+        })
+        expect(onSubmit).not.toHaveBeenCalled()
+    })
+
+    it('prevents navigation when as="a" is loading or disabled while keeping focus', () => {
+        const onClick = vi.fn()
+        const viewLoading = render(
+            <Button as="a" href="https://example.com" loading onClick={onClick}>
+                Link Loading
+            </Button>
+        )
+        const linkLoading = viewLoading.querySelector('a')!
+        linkLoading.focus()
+        expect(document.activeElement).toBe(linkLoading)
+
+        let clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true })
+        act(() => {
+            linkLoading.dispatchEvent(clickEvent)
+        })
+        expect(clickEvent.defaultPrevented).toBe(true)
+        expect(onClick).not.toHaveBeenCalled()
+        expect(document.activeElement).toBe(linkLoading)
+
+        const viewDisabled = render(
+            <Button as="a" href="https://example.com" disabled onClick={onClick}>
+                Link Disabled
+            </Button>
+        )
+        const linkDisabled = viewDisabled.querySelector('a')!
+        linkDisabled.focus()
+        expect(document.activeElement).toBe(linkDisabled)
+
+        clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true })
+        act(() => {
+            linkDisabled.dispatchEvent(clickEvent)
+        })
+        expect(clickEvent.defaultPrevented).toBe(true)
+        expect(onClick).not.toHaveBeenCalled()
+        expect(document.activeElement).toBe(linkDisabled)
     })
 
     describe('copy mode', () => {

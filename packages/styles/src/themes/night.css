@@ -1,0 +1,57 @@
+/* Theme Night dans la couche mr.themes.
+ * Fidele a la palette officielle Tokyo Night (https://github.com/tokyo-night/tokyo-night-vscode-theme).
+ * Redefinit localement les primitives neutres (hue: 280, chroma: 0.021)
+ * et les tokens sombres associes. */
+@layer mr.themes {
+    :where([data-theme='night'], [data-theme='tokyo-night']) {
+        color-scheme: dark;
+
+        /* Primitives de neutres teintes pour Tokyo Night (H=280, C=0.021) */
+        --mr-ref-neutral-hue: 280;
+        --mr-ref-neutral-chroma: 0.021;
+
+        /* Couleur d'accent dediee pour Tokyo Night (violet neon emblematique) */
+        --mr-ref-brand-hue: 290;
+        --mr-ref-brand-chroma: 0.16;
+
+        /* Fonds : canevas officiel Tokyo Night #1a1b26 (L=0.226) et fond creuse #14141b */
+        --mr-bg-canvas: oklch(0.226 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-sunken: oklch(0.195 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.26 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.29 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
+
+        /* Textes */
+        --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.63 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Texte desactive : ratio 3.48:1 sur canevas */
+        --mr-text-disabled: oklch(0.548 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Bordures : luminosite 0.49 pour des bordures nettement visibles en theme Tokyo Night */
+        --mr-border-control: oklch(0.49 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.42 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.33 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Levier de luminosite de l'accent pour fond sombre */
+        --mr-ref-accent-lightness: 0.635;
+
+        /* Danger sombre : ratio >= 4.8:1 sur canevas (4.81:1) */
+        --mr-danger-solid: oklch(0.66 0.2 25);
+        --mr-danger-subtle: oklch(0.27 0.065 25);
+        --mr-danger-border: oklch(0.42 0.12 25);
+        --mr-danger-text: oklch(0.8 0.17 25);
+
+        --mr-success-subtle: oklch(0.27 0.065 155);
+        --mr-success-border: oklch(0.42 0.12 155);
+        --mr-success-text: oklch(0.8 0.15 155);
+
+        --mr-warning-subtle: oklch(0.28 0.07 80);
+        --mr-warning-border: oklch(0.42 0.12 80);
+        --mr-warning-text: oklch(0.82 0.15 80);
+
+        --mr-info-subtle: oklch(0.27 0.065 255);
+        --mr-info-border: oklch(0.42 0.12 255);
+        --mr-info-text: oklch(0.8 0.15 255);
+    }
+}

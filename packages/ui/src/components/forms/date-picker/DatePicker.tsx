@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 import { DATEPICKER_MIN_WIDTH, OVERLAY_OFFSET } from '@/lib/constants'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { DatePickerProps } from './DatePicker.types'
 
@@ -131,9 +131,9 @@ function toISODateString(date: Date | null): string {
 const ChevronLeftIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path
-            d="M13 4L7 10L13 16"
+            d="M12.5 5L7.5 10L12.5 15"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
@@ -143,9 +143,9 @@ const ChevronLeftIcon = () => (
 const ChevronRightIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path
-            d="M7 4L13 10L7 16"
+            d="M7.5 5L12.5 10L7.5 15"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
@@ -153,19 +153,11 @@ const ChevronRightIcon = () => (
 )
 
 const CalendarIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <rect
-            x="1.5"
-            y="2.5"
-            width="15"
-            height="13"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-        />
-        <path d="M1.5 6.5H16.5" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M5.5 1.5V4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M12.5 1.5V4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M3 8.5H17" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M6.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M13.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
 )
 
@@ -173,9 +165,26 @@ interface CalendarHeaderProps {
     viewDate: Date
     onPrev: () => void
     onNext: () => void
+    showPickers?: boolean
+    onViewDateChange?: (date: Date) => void
+    minDate?: Date
+    maxDate?: Date
 }
 
-function CalendarHeader({ viewDate, onPrev, onNext }: CalendarHeaderProps) {
+function CalendarHeader({
+    viewDate,
+    onPrev,
+    onNext,
+    showPickers,
+    onViewDateChange,
+    minDate,
+    maxDate,
+}: CalendarHeaderProps) {
+    const today = new Date()
+    const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
+    const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
+
     return (
         <div className="mr-datepicker__header">
             <button
@@ -187,7 +196,50 @@ function CalendarHeader({ viewDate, onPrev, onNext }: CalendarHeaderProps) {
             >
                 <ChevronLeftIcon />
             </button>
-            <span className="mr-datepicker__month-label">{formatMonthYear(viewDate)}</span>
+            {showPickers ? (
+                <div className="mr-calendar__pickers">
+                    <select
+                        className="mr-calendar__select mr-calendar__select--month"
+                        aria-label="Select month"
+                        value={viewDate.getMonth()}
+                        onChange={(e) => {
+                            const next = new Date(viewDate)
+                            next.setMonth(Number(e.target.value))
+                            onViewDateChange?.(next)
+                        }}
+                    >
+                        {Array.from({ length: 12 }, (_, i) => {
+                            const d = new Date(2024, i, 1)
+                            const name = new Intl.DateTimeFormat('en-US', {
+                                month: 'short',
+                            }).format(d)
+                            return (
+                                <option key={i} value={i}>
+                                    {name}
+                                </option>
+                            )
+                        })}
+                    </select>
+                    <select
+                        className="mr-calendar__select mr-calendar__select--year"
+                        aria-label="Select year"
+                        value={viewDate.getFullYear()}
+                        onChange={(e) => {
+                            const next = new Date(viewDate)
+                            next.setFullYear(Number(e.target.value))
+                            onViewDateChange?.(next)
+                        }}
+                    >
+                        {years.map((y) => (
+                            <option key={y} value={y}>
+                                {y}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            ) : (
+                <span className="mr-datepicker__month-label">{formatMonthYear(viewDate)}</span>
+            )}
             <button
                 type="button"
                 className="mr-datepicker__nav-btn"
@@ -352,30 +404,35 @@ function CalendarGrid({
 
 // ─── Main component ───────────────────────────────────────────────────
 
-export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function DatePicker(
-    {
-        size,
-        tone,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        inputClassName,
-        disabled = false,
-        required = false,
-        value,
-        defaultValue,
-        onChange,
-        minDate,
-        maxDate,
-        disabledDates,
-        placeholder = 'Select a date',
-        popoverClassName,
-        ...props
-    },
-    ref
-) {
+export function DatePicker({
+    ref,
+    size,
+    tone,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    inputClassName,
+    disabled = false,
+    required = false,
+    invalid = false,
+    fullWidth = false,
+    theme: themeProp,
+    brand: brandProp,
+    density: densityProp,
+    value,
+    defaultValue,
+    onChange,
+    minDate,
+    maxDate,
+    disabledDates,
+    placeholder = 'Select a date',
+    showPickers = false,
+    popoverClassName,
+    style,
+    ...props
+}: DatePickerProps) {
     const isControlled = value !== undefined
     const initialDate = parseDate(isControlled ? value : defaultValue)
 
@@ -389,6 +446,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     // hidden until the first real measurement lands.
     const [positioned, setPositioned] = useState(false)
 
+    const [inheritedTheme, setInheritedTheme] = useState<string | undefined>(undefined)
+    const [inheritedBrand, setInheritedBrand] = useState<string | undefined>(undefined)
+    const [inheritedDensity, setInheritedDensity] = useState<string | undefined>(undefined)
+
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLInputElement>(null)
     const popoverRef = useRef<HTMLDivElement>(null)
@@ -396,7 +457,45 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
 
     const resolvedSize = size ?? 'md'
     const resolvedTone = tone ?? 'neutral'
-    const isInvalid = Boolean(error)
+    const isInvalid = invalid || Boolean(error)
+
+    // Capture inherited theme, brand and density from trigger DOM ancestry
+    useEffect(() => {
+        if (!open) return
+        if (rootRef.current) {
+            const themeEl = rootRef.current.closest('[data-theme]')
+            const brandEl = rootRef.current.closest('[data-brand]')
+            const densityEl = rootRef.current.closest('[data-density]')
+
+            setInheritedTheme(
+                themeEl?.getAttribute('data-theme') ??
+                    (typeof document !== 'undefined'
+                        ? (document.documentElement.getAttribute('data-theme') ?? undefined)
+                        : undefined)
+            )
+            setInheritedBrand(brandEl?.getAttribute('data-brand') ?? undefined)
+            setInheritedDensity(densityEl?.getAttribute('data-density') ?? undefined)
+        }
+    }, [open])
+
+    const activeTheme =
+        themeProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-theme]')?.getAttribute('data-theme') ??
+              (typeof document !== 'undefined'
+                  ? (document.documentElement.getAttribute('data-theme') ?? undefined)
+                  : undefined))
+            : inheritedTheme)
+    const activeBrand =
+        brandProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-brand]')?.getAttribute('data-brand') ?? undefined)
+            : inheritedBrand)
+    const activeDensity =
+        densityProp ??
+        (rootRef.current
+            ? (rootRef.current.closest('[data-density]')?.getAttribute('data-density') ?? undefined)
+            : inheritedDensity)
 
     // Sync controlled value
     useEffect(() => {
@@ -425,7 +524,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                 setPosition({
                     top: r.bottom + OVERLAY_OFFSET,
                     left: r.left,
-                    width: Math.max(r.width, DATEPICKER_MIN_WIDTH),
+                    width: fullWidth
+                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
+                        : DATEPICKER_MIN_WIDTH,
                 })
                 setPositioned(true)
             }
@@ -453,7 +554,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                 setPosition({
                     top: r.bottom + OVERLAY_OFFSET,
                     left: r.left,
-                    width: Math.max(r.width, DATEPICKER_MIN_WIDTH),
+                    width: fullWidth
+                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
+                        : DATEPICKER_MIN_WIDTH,
                 })
                 setPositioned(true)
             }
@@ -504,8 +607,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     // Forward ref to hidden input
     const hiddenInputRef = useCallback(
         (node: HTMLInputElement | null) => {
-            if (typeof ref === 'function') ref(node)
-            else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as { current: HTMLInputElement | null }).current = node
+            }
         },
         [ref]
     )
@@ -521,7 +627,14 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
             disabled={disabled}
             required={required}
         >
-            <div className={cn('mr-datepicker-wrapper', className)}>
+            <div
+                className={cn('mr-datepicker-wrapper', className)}
+                data-full-width={fullWidth ? 'true' : undefined}
+                style={{
+                    maxWidth: fullWidth ? undefined : `${DATEPICKER_MIN_WIDTH}px`,
+                    ...style,
+                }}
+            >
                 <Field label={label} hint={hint} error={error}>
                     <div
                         ref={rootRef}
@@ -563,13 +676,17 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                               ref={popoverRef}
                               className={cn('mr-datepicker__popover', popoverClassName)}
                               data-size={resolvedSize}
+                              data-tone={resolvedTone}
+                              data-theme={activeTheme}
+                              data-brand={activeBrand}
+                              data-density={activeDensity}
                               role="dialog"
                               aria-label="Choose date"
                               style={{
                                   position: 'fixed',
                                   top: `${position.top}px`,
                                   left: `${position.left}px`,
-                                  minWidth: `${position.width}px`,
+                                  width: `${position.width}px`,
                                   visibility: positioned ? undefined : 'hidden',
                               }}
                           >
@@ -577,6 +694,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
                                   viewDate={viewDate}
                                   onPrev={handlePrevMonth}
                                   onNext={handleNextMonth}
+                                  showPickers={showPickers}
+                                  onViewDateChange={setViewDate}
+                                  minDate={minDate}
+                                  maxDate={maxDate}
                               />
                               <CalendarGrid
                                   key={viewDate.toISOString()}
@@ -603,6 +724,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
             </div>
         </FormControl>
     )
-})
+}
 
 export type { DatePickerProps, DatePickerSize, DatePickerTone } from './DatePicker.types'

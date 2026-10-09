@@ -1,2 +1,10 @@
 export { Card } from './Card'
-export type { CardPadding, CardProps } from './Card.types'
+export type {
+    CardContentProps,
+    CardDescriptionProps,
+    CardFooterProps,
+    CardHeaderProps,
+    CardPadding,
+    CardProps,
+    CardTitleProps,
+} from './Card.types'

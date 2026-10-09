@@ -1,12 +1,17 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
 import type { TableProps } from './Table.types'
 
-export const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
-    { columns = [], rows = [], getRowId, emptyState, className, tableClassName, ...props },
-    ref
-) {
+export function Table({
+    ref,
+    columns = [],
+    rows = [],
+    getRowId,
+    emptyState,
+    className,
+    tableClassName,
+    ...props
+}: TableProps) {
     if (rows.length === 0) {
         return (
             <div ref={ref} className={cn('mr-table', className)} {...props}>
@@ -51,6 +56,6 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
             </table>
         </div>
     )
-})
+}
 
 export type { TableProps, Column } from './Table.types'

@@ -3,6 +3,7 @@ import type { ComponentPropsWithoutRef } from 'react'
 export type ThemeScopeTheme =
     | 'light'
     | 'dark'
+    | 'dim'
     | 'slate'
     | 'oled'
     | 'ocean'

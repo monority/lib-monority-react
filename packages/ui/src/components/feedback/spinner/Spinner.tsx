@@ -1,11 +1,7 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { SpinnerProps } from './Spinner.types'
 
-export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(
-    { size = 'md', tone = 'base', className, ...props },
-    ref
-) {
+export function Spinner({ ref, size = 'md', tone = 'base', className, ...props }: SpinnerProps) {
     return (
         <span
             ref={ref}
@@ -19,6 +15,6 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
             <span className="mr-spinner__ring" />
         </span>
     )
-})
+}
 
 export type { SpinnerProps, SpinnerSize, SpinnerTone } from './Spinner.types'

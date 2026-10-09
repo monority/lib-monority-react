@@ -1,0 +1,80 @@
+/* Recette Pagination dans la couche mr.components (spec v4).
+ * Contrôle de navigation séquentielle et directe entre pages de données. */
+@layer mr.components {
+    :where(.mr-pagination) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+    }
+
+    :where(.mr-pagination__pages) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-pagination__slot) {
+        display: flex;
+        align-items: center;
+    }
+
+    :where(.mr-pagination__btn) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        block-size: var(--mr-size-control-sm);
+        min-inline-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-2);
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        background: transparent;
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        font-variant-numeric: tabular-nums;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+        gap: var(--mr-space-1);
+        transition: background-color var(--mr-duration-state) ease, color var(--mr-duration-state)
+            ease;
+    }
+
+    :where(.mr-pagination__btn:hover:not(:disabled)) {
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-pagination__btn:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    :where(.mr-pagination__btn[data-active='true']),
+    :where(.mr-pagination__btn--active),
+    :where(.mr-pagination__btn[aria-current='page']) {
+        color: var(--mr-text-primary);
+        background-color: var(--mr-bg-sunken);
+        border-color: var(--mr-border-control);
+    }
+
+    :where(.mr-pagination__btn:disabled) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-pagination__ellipsis) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding-inline: var(--mr-space-2);
+        color: var(--mr-text-tertiary);
+        user-select: none;
+    }
+}

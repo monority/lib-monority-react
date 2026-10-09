@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export interface BreadcrumbItem {
     label: ReactNode
@@ -6,5 +6,6 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
+    ref?: Ref<HTMLElement>
     items?: BreadcrumbItem[]
 }

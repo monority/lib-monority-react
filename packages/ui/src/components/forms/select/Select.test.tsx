@@ -136,4 +136,21 @@ describe('Select', () => {
             expect(view.querySelector('.mr-select-wrapper')).toBeTruthy()
         }
     })
+
+    it('renders options array and placeholder', () => {
+        const view = render(
+            <Select
+                placeholder="Choose role"
+                options={[
+                    { value: 'admin', label: 'Admin' },
+                    { value: 'viewer', label: 'Viewer', disabled: true },
+                ]}
+            />
+        )
+        const select = view.querySelector('select')
+        expect(select?.children.length).toBe(3)
+        expect(select?.children[0]?.textContent).toBe('Choose role')
+        expect(select?.children[1]?.textContent).toBe('Admin')
+        expect((select?.children[2] as HTMLOptionElement)?.disabled).toBe(true)
+    })
 })

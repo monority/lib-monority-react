@@ -36,6 +36,8 @@ describe('Badge', () => {
         expect(badge?.textContent).toBe('Draft')
         expect(badge?.className).toContain('mr-badge')
         expect(badge?.getAttribute('data-variant')).toBe('default')
+        expect(badge?.getAttribute('data-tone')).toBe('neutral')
+        expect(badge?.getAttribute('data-size')).toBe('sm')
     })
 
     it('maps variant to class and data hooks', () => {
@@ -43,6 +45,7 @@ describe('Badge', () => {
         const badge = view.querySelector('span')
 
         expect(badge?.getAttribute('data-variant')).toBe('success')
+        expect(badge?.getAttribute('data-tone')).toBe('success')
     })
 
     it('forwards ref to the root span element', () => {
@@ -56,11 +59,47 @@ describe('Badge', () => {
         const view = render(<Badge variant="primary">New</Badge>)
         const badge = view.querySelector('span')
         expect(badge?.getAttribute('data-variant')).toBe('primary')
+        expect(badge?.getAttribute('data-tone')).toBe('accent')
     })
 
     it('renders with variant="danger"', () => {
         const view = render(<Badge variant="danger">Error</Badge>)
         const badge = view.querySelector('span')
         expect(badge?.getAttribute('data-variant')).toBe('danger')
+        expect(badge?.getAttribute('data-tone')).toBe('danger')
+    })
+
+    it('renders with semantic tone', () => {
+        const view = render(<Badge tone="info">Information</Badge>)
+        const badge = view.querySelector('span')
+        expect(badge?.getAttribute('data-tone')).toBe('info')
+    })
+
+    it('renders dot indicator with dot prop', () => {
+        const view = render(
+            <Badge dot tone="success">
+                Online
+            </Badge>
+        )
+        const dot = view.querySelector('.mr-badge__dot')
+        expect(dot).not.toBeNull()
+        expect(dot?.getAttribute('aria-hidden')).toBe('true')
+    })
+
+    it('renders with compound Badge.Dot', () => {
+        const view = render(
+            <Badge tone="accent">
+                <Badge.Dot />
+                Actif
+            </Badge>
+        )
+        const dot = view.querySelector('.mr-badge__dot')
+        expect(dot).not.toBeNull()
+    })
+
+    it('supports size="md"', () => {
+        const view = render(<Badge size="md">Large</Badge>)
+        const badge = view.querySelector('span')
+        expect(badge?.getAttribute('data-size')).toBe('md')
     })
 })

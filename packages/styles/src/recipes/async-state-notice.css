@@ -1,0 +1,26 @@
+/* Recette AsyncStateNotice dans la couche mr.components (spec v4).
+ * Notification d'etat asynchrone (chargement, erreur) inline. */
+@layer mr.components {
+    :where(.mr-async-state-notice) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        padding-block: var(--mr-space-2);
+        padding-inline: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-async-state-notice)[data-state='loading'] {
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-async-state-notice)[data-state='error'] {
+        color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-async-state-notice__message) {
+        line-height: 1.4;
+    }
+}

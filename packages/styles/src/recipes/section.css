@@ -1,0 +1,61 @@
+/* Recette Section dans la couche mr.components (spec v4).
+ * Rythme une page en blocs structures avec titre facultatif et espacement controle.
+ * Espacements : sm, md (defaut), lg, xl.
+ * Variantes : default, bordered, muted, card. */
+@layer mr.components {
+    :where(.mr-section) {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding-block: var(--mr-space-4);
+    }
+
+    /* Espacements verticaux */
+    :where(.mr-section)[data-spacing='sm'] {
+        padding-block: var(--mr-space-2);
+    }
+
+    :where(.mr-section)[data-spacing='md'] {
+        padding-block: var(--mr-space-4);
+    }
+
+    :where(.mr-section)[data-spacing='lg'] {
+        padding-block: var(--mr-space-6);
+    }
+
+    :where(.mr-section)[data-spacing='xl'] {
+        padding-block: calc(var(--mr-space-6) + var(--mr-space-4));
+    }
+
+    /* Variantes visuelles */
+    :where(.mr-section)[data-variant='bordered'] {
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        padding-inline: var(--mr-space-4);
+    }
+
+    :where(.mr-section)[data-variant='muted'] {
+        background: var(--mr-bg-sunken);
+        border-radius: var(--mr-radius-md);
+        padding-inline: var(--mr-space-4);
+    }
+
+    :where(.mr-section)[data-variant='card'] {
+        background: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        padding-inline: var(--mr-space-4);
+        box-shadow: var(--mr-shadow-overlay);
+    }
+
+    /* Titre interne */
+    :where(.mr-section__title) {
+        margin: 0;
+        margin-block-end: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-lg);
+        font-weight: var(--mr-font-weight-semibold);
+        line-height: var(--mr-line-height-lg);
+        color: var(--mr-text-primary);
+    }
+}

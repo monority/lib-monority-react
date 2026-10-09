@@ -1,0 +1,9 @@
+/* Fixture valide respectant la regle no-raw-values */
+.mr-test-valid {
+    margin: 0;
+    width: 100%;
+    border: 1px solid var(--mr-border-default);
+    outline-offset: 2px;
+    padding: var(--mr-space-4);
+    color: var(--mr-text-primary);
+}

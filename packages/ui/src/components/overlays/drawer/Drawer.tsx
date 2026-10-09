@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
@@ -7,10 +7,16 @@ import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { DrawerProps } from './Drawer.types'
 
-export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
-    { open, title, children, side = 'right', onClose, className, ...props },
-    ref
-) {
+export function Drawer({
+    ref,
+    open,
+    title,
+    children,
+    side = 'right',
+    onClose,
+    className,
+    ...props
+}: DrawerProps) {
     const generatedId = useId()
     const titleId = `${generatedId}-title`
     const panelRef = useRef<HTMLDivElement>(null)
@@ -39,7 +45,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
             return
         }
 
-        ref.current = node
+        if ('current' in ref) {
+            ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+        }
     }
 
     useEffect(() => {
@@ -97,6 +105,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
         </div>,
         portalTarget
     )
-})
+}
 
 export type { DrawerProps, DrawerSide } from './Drawer.types'

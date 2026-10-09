@@ -5,6 +5,7 @@ export default defineConfig({
     entry: {
         index: 'src/index.ts',
         button: 'src/components/actions/button/index.ts',
+        buttonLink: 'src/components/actions/button-link/index.ts',
         input: 'src/components/forms/input/index.ts',
         badge: 'src/components/feedback/badge/index.ts',
         card: 'src/components/display/card/index.ts',

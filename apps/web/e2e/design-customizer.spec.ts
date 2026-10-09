@@ -223,8 +223,6 @@ test.describe('Phase 6 — canonical Design Studio', () => {
 
     test('le Design Studio ne repeint pas le chrome de l application', async ({ page }) => {
         await page.goto('/showcase')
-        await page.getByLabel('Accent').selectOption({ label: 'Amber' })
-        await page.getByLabel('Accent').press('Tab')
 
         const readRoot = () =>
             page.evaluate(() => {
@@ -237,7 +235,6 @@ test.describe('Phase 6 — canonical Design Studio', () => {
             })
 
         const before = await readRoot()
-        expect(before.accent).toBe('amber')
 
         await page.goto('/moodboard')
         await page

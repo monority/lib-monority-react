@@ -1,11 +1,8 @@
-import { forwardRef, useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import type { MenubarProps, MenuItem } from './Menubar.types'
 
-export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(function Menubar(
-    { items, defaultActive, className, ...props },
-    ref
-) {
+export function Menubar({ ref, items, defaultActive, className, ...props }: MenubarProps) {
     const [activeMenu, setActiveMenu] = useState<string | null>(defaultActive ?? null)
     const menubarRef = useRef<HTMLDivElement>(null)
 
@@ -46,7 +43,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(function Menubar
         <div
             ref={(node) => {
                 if (typeof ref === 'function') ref(node)
-                else if (ref) ref.current = node
+                else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
                 ;(menubarRef as React.MutableRefObject<HTMLDivElement | null>).current = node
             }}
             role="menubar"
@@ -124,6 +121,6 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(function Menubar
             })}
         </div>
     )
-})
+}
 
 export type { MenubarProps, MenubarMenu, MenuItem } from './Menubar.types'

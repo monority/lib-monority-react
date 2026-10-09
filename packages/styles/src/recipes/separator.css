@@ -1,0 +1,24 @@
+/* Recette Separator dans la couche mr.components (spec v4).
+ * Ligne de separation fine horizontale ou verticale.
+ * Orientation : horizontal (defaut), vertical. */
+@layer mr.components {
+    :where(.mr-separator) {
+        box-sizing: border-box;
+        flex-shrink: 0;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        background: var(--mr-border-subtle);
+    }
+
+    :where(.mr-separator)[data-orientation='horizontal'] {
+        width: 100%;
+        height: 1px;
+    }
+
+    :where(.mr-separator)[data-orientation='vertical'] {
+        width: 1px;
+        height: 100%;
+        align-self: stretch;
+    }
+}

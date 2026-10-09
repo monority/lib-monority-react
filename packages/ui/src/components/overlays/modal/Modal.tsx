@@ -1,4 +1,4 @@
-import { forwardRef, useId, useRef } from 'react'
+import { useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
@@ -7,11 +7,19 @@ import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ModalProps } from './Modal.types'
 
-export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
-    { open, title, children, onClose, className, ...props },
-    ref
-) {
+export function Modal({
+    ref,
+    open,
+    title,
+    description,
+    footer,
+    children,
+    onClose,
+    className,
+    ...props
+}: ModalProps) {
     const titleId = useId()
+    const descriptionId = useId()
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
     const portalTarget = usePortalTarget()
@@ -41,6 +49,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={titleId}
+                aria-describedby={description ? descriptionId : undefined}
                 tabIndex={-1}
             >
                 <header className="mr-modal__header">
@@ -48,6 +57,11 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
                         <h3 className={cn('mr-title', 'mr-modal__title')} id={titleId}>
                             {title}
                         </h3>
+                        {description ? (
+                            <p className="mr-modal__description" id={descriptionId}>
+                                {description}
+                            </p>
+                        ) : null}
                     </div>
                     <Button
                         ref={closeButtonRef}
@@ -57,14 +71,28 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
                         onClick={onClose}
                         aria-label="Fermer la fenetre"
                     >
-                        Fermer
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M4 4l8 8M12 4l-8 8"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                            />
+                        </svg>
                     </Button>
                 </header>
                 <div className="mr-modal__body">{children}</div>
+                {footer ? <footer className="mr-modal__footer">{footer}</footer> : null}
             </div>
         </div>,
         portalTarget
     )
-})
+}
 
 export type { ModalProps } from './Modal.types'

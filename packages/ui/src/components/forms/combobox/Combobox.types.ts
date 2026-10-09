@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
 
 export interface ComboboxItem {
     value: string
@@ -15,6 +15,7 @@ export interface ComboboxProps
         InputHTMLAttributes<HTMLInputElement>,
         'type' | 'size' | 'onChange' | 'children' | 'defaultValue'
     > {
+    ref?: Ref<HTMLInputElement>
     tone?: ComboboxTone
     size?: ComboboxSize
     label?: ReactNode

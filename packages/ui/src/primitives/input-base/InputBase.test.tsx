@@ -57,19 +57,19 @@ describe('InputBase', () => {
         expect(el?.className).toContain('mr-input-base')
     })
 
-    it('forwardRef works', () => {
+    it('ref prop works', () => {
         const ref = createRef<HTMLInputElement>()
         render(<InputBase as="input" ref={ref} />)
         expect(ref.current).toBeInstanceOf(HTMLInputElement)
     })
 
-    it('forwardRef works for textarea', () => {
+    it('ref prop works for textarea', () => {
         const ref = createRef<HTMLTextAreaElement>()
         render(<InputBase as="textarea" ref={ref} />)
         expect(ref.current).toBeInstanceOf(HTMLTextAreaElement)
     })
 
-    it('forwardRef works for select', () => {
+    it('ref prop works for select', () => {
         const ref = createRef<HTMLSelectElement>()
         render(<InputBase as="select" ref={ref} />)
         expect(ref.current).toBeInstanceOf(HTMLSelectElement)

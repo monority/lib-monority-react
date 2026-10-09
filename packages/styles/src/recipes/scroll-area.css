@@ -1,0 +1,38 @@
+/* Recette ScrollArea dans la couche mr.components (spec v4).
+ * Zone a defilement natif discret avec barres fines.
+ * Orientation : vertical (defaut), horizontal, both. */
+@layer mr.components {
+    :where(.mr-scroll-area) {
+        box-sizing: border-box;
+        max-width: 100%;
+        max-height: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: var(--mr-border-default) transparent;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    :where(.mr-scroll-area)[data-orientation='vertical'] {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    :where(.mr-scroll-area)[data-orientation='horizontal'] {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    :where(.mr-scroll-area)[data-orientation='both'] {
+        overflow: auto;
+    }
+
+    /* Masquage de la barre de defilement */
+    :where(.mr-scroll-area--hide) {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    :where(.mr-scroll-area--hide)::-webkit-scrollbar {
+        display: none;
+    }
+}

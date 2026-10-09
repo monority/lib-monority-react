@@ -27,18 +27,23 @@ afterEach(() => {
 })
 
 describe('Switch', () => {
-    it('renders default unchecked state with accent tone and md size', () => {
+    it('renders default unchecked state with neutral tone and md size', () => {
         const view = render(<Switch label="Enable notifications" />)
         const switchEl = view.querySelector('.mr-switch')
         const input = view.querySelector('input')
         expect(view.textContent).toContain('Enable notifications')
-        expect(switchEl?.getAttribute('data-tone')).toBe('accent')
+        expect(switchEl?.getAttribute('data-tone')).toBe('neutral')
         expect(switchEl?.getAttribute('data-size')).toBe('md')
         expect(switchEl?.getAttribute('data-checked')).toBeNull()
         expect(input?.type).toBe('checkbox')
         expect(input?.checked).toBe(false)
         expect(input?.getAttribute('aria-invalid')).toBeNull()
         expect(input?.getAttribute('role')).toBe('switch')
+    })
+
+    it('renders explicit accent tone when specified', () => {
+        const view = render(<Switch tone="accent" label="Accent" />)
+        expect(view.querySelector('.mr-switch')?.getAttribute('data-tone')).toBe('accent')
     })
 
     it('maps checked, disabled, invalid and required states', () => {

@@ -1,0 +1,327 @@
+/* Recette du composant Button (couche mr.components)
+ *
+ * Role control et variantes secondaire / discrete :
+ * - Le role control de border est defini dans 04-tokens-et-themes.md (--mr-border-control).
+ * - Secondaire : fond opaque --mr-bg-canvas, bordure --mr-border-control (WCAG 1.4.11 >= 3.0:1),
+ *   texte --mr-text-primary. Etats derives par color-mix vers --mr-text-primary (survol 12%, actif 24%, desactive 84%).
+ * - Discrete (ghost) : fond et bordure transparents au repos, texte --mr-text-primary, memes etats de survol et actif.
+ * - Danger : fond plein --mr-danger-solid, texte --mr-danger-on-solid (heritant de --mr-bg-canvas).
+ *   Etats interactifs derives par color-mix vers --mr-text-primary (survol 12%, actif 24%, ADR-023).
+ *
+ * Limite fond opaque : --mr-bg-canvas est utilise temporairement pour le fond opaque du controle a bordure.
+ * Sur une surface plus haute (carte), cela creerait un trou de la couleur du canevas.
+ * Aucun token cree maintenant : la decision d'un jeton de fond de controle partage se prendra avec Input, deuxieme lecteur.
+ *
+ * Limite variante discrete : le contraste du texte du bouton ghost (>= 4.5:1) est garanti seulement
+ * sur les fonds canevas ; sur un autre fond, c'est a la surface hote de le garantir.
+ */
+@layer mr.components {
+    :where(.mr-btn) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin: 0;
+        padding-block: 0;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        gap: var(--mr-space-2);
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
+    }
+
+    /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
+    :where(.mr-btn)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Taille md (defaut) : 32px */
+    :where(.mr-btn)[data-size='md'],
+    :where(.mr-btn):not([data-size]) {
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        gap: var(--mr-space-2);
+        font-size: var(--mr-font-size-md);
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-btn)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Carre icone seule (iconOnly) : largeur egale a la hauteur, padding annule */
+    :where(.mr-btn)[data-icon-only] {
+        padding-inline: 0;
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='sm']):not([data-full-width]) {
+        inline-size: var(--mr-size-control-sm);
+        min-inline-size: var(--mr-size-control-sm);
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='md'], :not([data-size])):not(
+            [data-full-width]
+        ) {
+        inline-size: var(--mr-size-control-md);
+        min-inline-size: var(--mr-size-control-md);
+    }
+
+    :where(.mr-btn)[data-icon-only]:where([data-size='lg']):not([data-full-width]) {
+        inline-size: var(--mr-size-control-lg);
+        min-inline-size: var(--mr-size-control-lg);
+    }
+
+    /* Pleine largeur (fullWidth) : 100% de la largeur du conteneur.
+     * S'applique a toutes les variantes, y compris iconOnly avec icone centree. */
+    :where(.mr-btn)[data-full-width] {
+        display: flex;
+        inline-size: 100%;
+    }
+
+    /* Variante primary (action principale neutre) : repos */
+    :where(.mr-btn)[data-variant='primary'],
+    :where(.mr-btn):not([data-variant]) {
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
+    }
+
+    /* Variante secondary (action avec bordure de controle) : repos
+     * Alias de compatibilite :
+     * - muted : alias direct vers secondary
+     * - warning : alias deprecie vers secondary conformement a button.md ligne 97 */
+    :where(.mr-btn)[data-variant='secondary'],
+    :where(.mr-btn)[data-variant='muted'],
+    :where(.mr-btn)[data-variant='warning'] {
+        background-color: var(--mr-bg-surface);
+        border-color: var(--mr-border-control);
+        color: var(--mr-text-primary);
+    }
+
+    /* Variante ghost (action discrete sans bordure) : repos */
+    :where(.mr-btn)[data-variant='ghost'],
+    :where(.mr-btn)[data-variant='subtle'] {
+        background-color: transparent;
+        color: var(--mr-text-primary);
+    }
+
+    /* Variante danger (action destructive pleine) : repos */
+    :where(.mr-btn)[data-variant='danger'] {
+        background-color: var(--mr-danger-solid);
+        color: var(--mr-danger-on-solid);
+    }
+
+    /* Etat chargement (loading) : l'element conserve l'apparence de repos de sa variante,
+     * les etats survol et actif sont exclus par :where(:not([data-loading])), curseur de progression.
+     * Pas de pointer-events: none : le curseur progress reste visible et elementFromPoint atteint le bouton,
+     * les interactions et soumissions sont bloquees par la garde JavaScript du composant.
+     * Le spinner superpose sera integre avec le composant dedie Spinner (phase suivante). */
+    :where(.mr-btn)[data-loading] {
+        position: relative;
+        cursor: progress;
+    }
+
+    :where(.mr-btn)[data-loading] > * {
+        opacity: 0;
+    }
+
+    :where(.mr-btn)[data-loading]::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+        box-sizing: border-box;
+        border: 2px solid currentColor;
+        border-inline-end-color: transparent;
+        border-radius: 50%;
+        animation: mr-spin var(--mr-duration-spin) linear infinite;
+    }
+
+    @keyframes mr-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Survol (uniquement avec pointeur survolant) */
+    @media (hover: hover) {
+        :where(.mr-btn)[data-variant='primary']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn):not([data-variant]):hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-inverse),
+                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            );
+        }
+
+        :where(.mr-btn)[data-variant='secondary']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn)[data-variant='muted']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn)[data-variant='warning']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-surface),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+
+        :where(.mr-btn)[data-variant='ghost']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ),
+        :where(.mr-btn)[data-variant='subtle']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-bg-canvas),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+
+        :where(.mr-btn)[data-variant='danger']:hover:where(
+                :not(:disabled, [aria-disabled='true'], [data-loading])
+            ) {
+            background-color: color-mix(
+                in oklch,
+                var(--mr-danger-solid),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Actif (pression) */
+    :where(.mr-btn)[data-variant='primary']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn):not([data-variant]):active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-active-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='secondary']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='muted']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='warning']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-surface),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='ghost']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ),
+    :where(.mr-btn)[data-variant='subtle']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-canvas),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='danger']:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+    }
+
+    /* Desactive (hors chargement) */
+    :where(.mr-btn):disabled:where(:not([data-loading])),
+    :where(.mr-btn)[aria-disabled='true']:where(:not([data-loading])) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-btn)[data-variant='primary']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='primary'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn):not([data-variant]):disabled:where(:not([data-loading])),
+    :where(.mr-btn):not([data-variant])[aria-disabled='true']:where(:not([data-loading])) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-bg-inverse),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='secondary']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='secondary'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='muted']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='muted'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='warning']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='warning'][aria-disabled='true']:where(:not([data-loading])) {
+        background-color: var(--mr-bg-surface);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-btn)[data-variant='ghost']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='ghost'][aria-disabled='true']:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='subtle']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='subtle'][aria-disabled='true']:where(:not([data-loading])) {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    :where(.mr-btn)[data-variant='danger']:disabled:where(:not([data-loading])),
+    :where(.mr-btn)[data-variant='danger'][aria-disabled='true']:where(:not([data-loading])) {
+        background-color: color-mix(
+            in oklch,
+            var(--mr-danger-solid),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    /* Focus visible */
+    :where(.mr-btn):focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+}

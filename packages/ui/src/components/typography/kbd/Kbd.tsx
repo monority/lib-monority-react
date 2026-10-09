@@ -1,11 +1,7 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { KbdProps } from './Kbd.types'
 
-export const Kbd = forwardRef<HTMLElement, KbdProps>(function Kbd(
-    { children, size, keys, className, ...props },
-    ref
-) {
+export function Kbd({ children, size, keys, className, ref, ...props }: KbdProps) {
     if (keys) {
         return (
             <kbd ref={ref} className={cn('mr-kbd', className)} data-size={size} {...props}>
@@ -23,4 +19,4 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(function Kbd(
             {children}
         </kbd>
     )
-})
+}

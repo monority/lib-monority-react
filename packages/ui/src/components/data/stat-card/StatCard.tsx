@@ -1,14 +1,21 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { Card } from '@/components/display/card/Card'
 import { Text } from '@/components/typography/text/Text'
 import { Title } from '@/components/typography/title/Title'
 import type { StatCardProps } from './StatCard.types'
 
-export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(function StatCard(
-    { label, value, trend, trendTone, description, icon, footer, className, ...props },
-    ref
-) {
+export function StatCard({
+    ref,
+    label,
+    value,
+    trend,
+    trendTone,
+    description,
+    icon,
+    footer,
+    className,
+    ...props
+}: StatCardProps) {
     const resolvedTrendTone = trendTone ?? 'neutral'
 
     return (
@@ -48,6 +55,6 @@ export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(function StatC
             {footer != null ? <div className="mr-stat-card__footer">{footer}</div> : null}
         </Card>
     )
-})
+}
 
 export type { StatCardProps, StatCardTone } from './StatCard.types'

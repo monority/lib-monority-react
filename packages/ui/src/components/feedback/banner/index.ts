@@ -1,2 +1,11 @@
 export { Banner } from './Banner'
-export type { BannerProps, BannerTone } from './Banner.types'
+export type {
+    BannerActionsProps,
+    BannerCloseProps,
+    BannerDescriptionProps,
+    BannerEyebrowProps,
+    BannerIconProps,
+    BannerProps,
+    BannerTitleProps,
+    BannerTone,
+} from './Banner.types'

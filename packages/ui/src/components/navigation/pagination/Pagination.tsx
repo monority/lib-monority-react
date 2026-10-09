@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react'
+import { useMemo } from 'react'
 import { cn } from '@/lib/cn'
 import type { PaginationProps } from './Pagination.types'
 
@@ -23,10 +23,14 @@ function buildPages(current: number, total: number): (number | 'ellipsis')[] {
     return result
 }
 
-export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination(
-    { page = 1, totalPages = 1, onPageChange, className, ...props },
-    ref
-) {
+export function Pagination({
+    ref,
+    page = 1,
+    totalPages = 1,
+    onPageChange,
+    className,
+    ...props
+}: PaginationProps) {
     const pages = useMemo(() => buildPages(page, totalPages), [page, totalPages])
 
     return (
@@ -40,6 +44,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
                 <button
                     type="button"
                     className="mr-pagination__btn mr-pagination__btn--nav"
+                    data-variant="nav"
                     disabled={page <= 1}
                     onClick={() => onPageChange?.(page - 1)}
                     aria-label="Previous page"
@@ -66,6 +71,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
                                 'mr-pagination__btn mr-pagination__btn--page',
                                 entry === page && 'mr-pagination__btn--active'
                             )}
+                            data-variant="page"
+                            data-active={entry === page ? 'true' : undefined}
                             aria-current={entry === page ? 'page' : undefined}
                             onClick={() => onPageChange?.(entry)}
                         >
@@ -78,6 +85,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
                 <button
                     type="button"
                     className="mr-pagination__btn mr-pagination__btn--nav"
+                    data-variant="nav"
                     disabled={page >= totalPages}
                     onClick={() => onPageChange?.(page + 1)}
                     aria-label="Next page"
@@ -88,6 +96,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
             </div>
         </nav>
     )
-})
+}
 
 export type { PaginationProps } from './Pagination.types'

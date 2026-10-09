@@ -34,8 +34,33 @@ describe('Slider', () => {
 
         expect(input?.type).toBe('range')
         expect(input?.getAttribute('data-size')).toBe('md')
+        expect(input?.getAttribute('data-tone')).toBe('neutral')
         expect(input?.className).toContain('mr-slider')
         expect(output?.textContent).toBe('50')
+    })
+
+    it('applies tones correctly', () => {
+        expect(
+            render(<Slider tone="accent" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('accent')
+        expect(
+            render(<Slider tone="danger" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('danger')
+        expect(
+            render(<Slider tone="neutral" />)
+                .querySelector('input')
+                ?.getAttribute('data-tone')
+        ).toBe('neutral')
+    })
+
+    it('calculates --mr-slider-progress variable', () => {
+        const view = render(<Slider value={25} min={0} max={100} />)
+        const input = view.querySelector('input') as HTMLInputElement
+        expect(input?.style.getPropertyValue('--mr-slider-progress')).toBe('25%')
     })
 
     it('maps disabled, required and error states', () => {
@@ -122,5 +147,27 @@ describe('Slider', () => {
     it('tolerates an out-of-range controlled value without crashing', () => {
         const view = render(<Slider value={150} min={0} max={100} />)
         expect(view.querySelector('input')).not.toBeNull()
+    })
+
+    it('supports dual-thumb range mode', () => {
+        const onValueChange = vi.fn()
+        const view = render(<Slider range value={[20, 80]} onValueChange={onValueChange} />)
+        const inputs = view.querySelectorAll('input')
+        expect(inputs.length).toBe(2)
+        expect(inputs[0]?.value).toBe('20')
+        expect(inputs[1]?.value).toBe('80')
+
+        const output = view.querySelector('output')
+        expect(output?.textContent).toBe('20 – 80')
+
+        act(() => {
+            const nativeSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
+            nativeSetter?.call(inputs[0], '30')
+            inputs[0]?.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(onValueChange).toHaveBeenCalledWith([30, 80])
     })
 })

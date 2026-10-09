@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
@@ -93,25 +93,23 @@ function calculatePosition(
     }
 }
 
-export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(function HoverCard(
-    {
-        children,
-        content,
-        openDelay = 300,
-        closeDelay = 150,
-        side = 'bottom',
-        align = 'center',
-        sideOffset = OVERLAY_OFFSET,
-        defaultOpen = false,
-        open: controlledOpen,
-        onOpenChange,
-        arrow = true,
-        className,
-        contentClassName,
-        ...props
-    },
-    ref
-) {
+export function HoverCard({
+    ref,
+    children,
+    content,
+    openDelay = 300,
+    closeDelay = 150,
+    side = 'bottom',
+    align = 'center',
+    sideOffset = OVERLAY_OFFSET,
+    defaultOpen = false,
+    open: controlledOpen,
+    onOpenChange,
+    arrow = true,
+    className,
+    contentClassName,
+    ...props
+}: HoverCardProps) {
     const instanceId = useId()
     const triggerRef = useRef<HTMLSpanElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
@@ -235,6 +233,6 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(function Hov
                 : null}
         </div>
     )
-})
+}
 
 export type { HoverCardProps } from './HoverCard.types'

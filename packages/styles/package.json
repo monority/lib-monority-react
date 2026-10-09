@@ -7,10 +7,7 @@
     "scripts": {
         "build": "node -e \"console.log('@monority/styles: les CSS sont des sources, rien a compiler')\"",
         "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
-        "test": "node --test ./scripts/*.test.mjs",
+        "test": "node ../../tooling/stylelint/test-negative.js",
         "typecheck": "echo 'no types'"
-    },
-    "devDependencies": {
-        "@monority/tokens": "workspace:*"
     }
 }

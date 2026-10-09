@@ -1,0 +1,51 @@
+/* Theme sombre dans la couche mr.themes.
+ * dim est un alias de dark declare par selecteur groupe (jamais de bloc propre). */
+@layer mr.themes {
+    :where([data-theme='dark'], [data-theme='dim']) {
+        color-scheme: dark;
+
+        /* Fonds : canevas sombre approfondi a L=0.17 pour un contraste plus net */
+        --mr-bg-canvas: oklch(0.17 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.26 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
+
+        /* Textes */
+        --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.62 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Texte desactive : luminosite 0.52 reproduit le ratio de 3.47:1 sur son canevas */
+        --mr-text-disabled: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Bordures : luminosite 0.48 pour des bordures nettement visibles en mode sombre */
+        --mr-border-control: oklch(0.48 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.4 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Levier de luminosite de l'accent pour fond sombre :
+         * 0.955 pour un accent neutre blanc clair et net */
+        --mr-ref-accent-lightness: 0.955;
+
+        /* Danger sombre : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.5:1) sur canevas sombre (L=0.17).
+         * --mr-danger-on-solid herite de var(--mr-bg-canvas), conservant la meme regle unique qu'en clair. */
+        --mr-danger-solid: oklch(0.65 0.2 25);
+        --mr-danger-subtle: oklch(0.24 0.065 25);
+        --mr-danger-border: oklch(0.38 0.12 25);
+        --mr-danger-text: oklch(0.76 0.17 25);
+
+        --mr-success-subtle: oklch(0.24 0.065 155);
+        --mr-success-border: oklch(0.38 0.12 155);
+        --mr-success-text: oklch(0.76 0.15 155);
+
+        --mr-warning-subtle: oklch(0.25 0.07 80);
+        --mr-warning-border: oklch(0.38 0.12 80);
+        --mr-warning-text: oklch(0.78 0.15 80);
+
+        --mr-info-subtle: oklch(0.24 0.065 255);
+        --mr-info-border: oklch(0.38 0.12 255);
+        --mr-info-text: oklch(0.76 0.15 255);
+
+        /* Ombre overlay pour surfaces flottantes sombres */
+        --mr-shadow-overlay: 0 4px 20px -2px oklch(0 0 0 / 0.45), 0 2px 8px -1px oklch(0 0 0 / 0.35);
+    }
+}

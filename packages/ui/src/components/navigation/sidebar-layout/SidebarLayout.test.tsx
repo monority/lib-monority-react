@@ -67,4 +67,29 @@ describe('SidebarLayout', () => {
         render(<SidebarLayout ref={ref} />)
         expect(ref.current?.tagName).toBe('DIV')
     })
+
+    it('supports collapsible mode with toggle button', () => {
+        const onOpenChange = vi.fn()
+        const view = render(
+            <SidebarLayout
+                collapsible
+                defaultOpen={true}
+                onOpenChange={onOpenChange}
+                sidebar={<nav>Nav</nav>}
+            >
+                Main
+            </SidebarLayout>
+        )
+        const toggleBtn = view.querySelector('.mr-sidebar-layout__toggle') as HTMLButtonElement
+        expect(toggleBtn).not.toBeNull()
+        expect(view.querySelector('.mr-sidebar-layout')?.getAttribute('data-collapsed')).toBeNull()
+
+        act(() => {
+            toggleBtn.click()
+        })
+        expect(view.querySelector('.mr-sidebar-layout')?.getAttribute('data-collapsed')).toBe(
+            'true'
+        )
+        expect(onOpenChange).toHaveBeenCalledWith(false)
+    })
 })

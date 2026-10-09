@@ -48,7 +48,6 @@ describe('Toast', () => {
         const view = render(<Toast tone="success" title="OK" />)
         const el = view.querySelector('div')
         expect(el?.getAttribute('data-tone')).toBe('success')
-        expect(el?.getAttribute('data-tone')).toBe('success')
     })
 
     it('forwards ref', () => {
@@ -56,5 +55,47 @@ describe('Toast', () => {
         render(<Toast ref={ref} title="Test" />)
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-toast')
+    })
+
+    it('calls onOpenChange on close button click', () => {
+        let openState: boolean | undefined = true
+        const view = render(
+            <Toast
+                title="Test"
+                onOpenChange={(open) => {
+                    openState = open
+                }}
+            />
+        )
+        const closeBtn = view.querySelector('button') as HTMLButtonElement
+        expect(closeBtn).not.toBeNull()
+        act(() => {
+            closeBtn.click()
+        })
+        expect(openState).toBe(false)
+    })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <Toast tone="info">
+                <Toast.Icon>
+                    <span data-testid="custom-icon">★</span>
+                </Toast.Icon>
+                <Toast.Title>Notification</Toast.Title>
+                <Toast.Description>Synchronisation terminée</Toast.Description>
+            </Toast>
+        )
+        expect(view.querySelector('.mr-toast__title')?.textContent).toBe('Notification')
+        expect(view.querySelector('.mr-toast__description')?.textContent).toBe(
+            'Synchronisation terminée'
+        )
+        expect(view.querySelector('[data-testid="custom-icon"]')).not.toBeNull()
+    })
+
+    it('renders default tone icon when structured props are used', () => {
+        const view = render(<Toast tone="success" title="Bravo" />)
+        const iconEl = view.querySelector('.mr-toast__icon')
+        expect(iconEl).not.toBeNull()
+        expect(iconEl?.querySelector('svg')).not.toBeNull()
     })
 })

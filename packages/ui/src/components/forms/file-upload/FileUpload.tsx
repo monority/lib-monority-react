@@ -1,34 +1,32 @@
 import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { DropZone } from './DropZone'
 import { FileList } from './FileList'
 import { FileTrigger } from './FileTrigger'
 import type { FileUploadProps } from './FileUpload.types'
 
-export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function FileUpload(
-    {
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        accept,
-        placeholder,
-        multiple = false,
-        disabled = false,
-        required = false,
-        invalid = false,
-        name,
-        actionLabel,
-        description,
-        files: controlledFiles,
-        onFilesChange,
-    },
-    ref
-) {
+export function FileUpload({
+    ref,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    accept,
+    placeholder,
+    multiple = false,
+    disabled = false,
+    required = false,
+    invalid = false,
+    name,
+    actionLabel,
+    description,
+    files: controlledFiles,
+    onFilesChange,
+}: FileUploadProps) {
     const [internalFiles, setInternalFiles] = useState<File[]>([])
     const generatedId = useId()
     const inputRef = useRef<HTMLInputElement | null>(null)
@@ -65,8 +63,11 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
     const setInputRef = useCallback(
         (node: HTMLInputElement | null) => {
             inputRef.current = node
-            if (typeof ref === 'function') ref(node)
-            else if (ref) ref.current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as { current: HTMLInputElement | null }).current = node
+            }
         },
         [ref]
     )
@@ -143,6 +144,6 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { FileUploadProps, FileUploadSize } from './FileUpload.types'

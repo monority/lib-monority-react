@@ -144,4 +144,16 @@ describe('Tooltip', () => {
         )
         expect(view.querySelector('[data-testid="plain"]')).not.toBeNull()
     })
+
+    it('supports side, arrow, and delayMs props', () => {
+        const view = render(
+            <Tooltip content="Help text" side="right" arrow delayMs={200}>
+                <button type="button">Trigger</button>
+            </Tooltip>
+        )
+        const wrapper = view.querySelector('.mr-tooltip') as HTMLElement
+        expect(wrapper.getAttribute('data-side')).toBe('right')
+        expect(wrapper.getAttribute('data-arrow')).toBe('true')
+        expect(wrapper.style.getPropertyValue('--mr-tooltip-delay')).toBe('200ms')
+    })
 })

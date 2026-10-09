@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import type { CalendarProps } from './Calendar.types'
 
@@ -119,27 +119,30 @@ const ChevronRightIcon = () => (
 
 // ─── Main component ───────────────────────────────────────────────────
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calendar(
-    {
-        value,
-        defaultValue = null,
-        onChange,
-        minDate,
-        maxDate,
-        disabledDates,
-        locale,
-        showOutsideDays = true,
-        fixedWeeks = false,
-        numberOfMonths = 1,
-        className,
-        ...props
-    },
-    ref
-) {
+export function Calendar({
+    ref,
+    value,
+    defaultValue = null,
+    onChange,
+    minDate,
+    maxDate,
+    disabledDates,
+    locale,
+    showOutsideDays = true,
+    fixedWeeks = false,
+    numberOfMonths = 1,
+    showPickers = false,
+    className,
+    ...props
+}: CalendarProps) {
     const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
     const selectedDate = value !== undefined ? value : internalValue
     const today = new Date()
     const [viewDate, setViewDate] = useState(() => startOfMonth(selectedDate || today))
+
+    const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
+    const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
 
     // Sync controlled value changes
     useEffect(() => {
@@ -221,9 +224,52 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
                     >
                         <ChevronLeftIcon />
                     </button>
-                    <span className="mr-calendar__month-label">
-                        {formatMonthYear(monthDate, locale)}
-                    </span>
+                    {showPickers ? (
+                        <div className="mr-calendar__pickers">
+                            <select
+                                className="mr-calendar__select mr-calendar__select--month"
+                                aria-label="Select month"
+                                value={monthDate.getMonth()}
+                                onChange={(e) => {
+                                    const next = new Date(viewDate)
+                                    next.setMonth(Number(e.target.value))
+                                    setViewDate(next)
+                                }}
+                            >
+                                {Array.from({ length: 12 }, (_, i) => {
+                                    const d = new Date(2024, i, 1)
+                                    const name = new Intl.DateTimeFormat(locale ?? 'en-US', {
+                                        month: 'short',
+                                    }).format(d)
+                                    return (
+                                        <option key={i} value={i}>
+                                            {name}
+                                        </option>
+                                    )
+                                })}
+                            </select>
+                            <select
+                                className="mr-calendar__select mr-calendar__select--year"
+                                aria-label="Select year"
+                                value={monthDate.getFullYear()}
+                                onChange={(e) => {
+                                    const next = new Date(viewDate)
+                                    next.setFullYear(Number(e.target.value))
+                                    setViewDate(next)
+                                }}
+                            >
+                                {years.map((y) => (
+                                    <option key={y} value={y}>
+                                        {y}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    ) : (
+                        <span className="mr-calendar__month-label">
+                            {formatMonthYear(monthDate, locale)}
+                        </span>
+                    )}
                     <button
                         type="button"
                         onClick={handleNextMonth}
@@ -337,6 +383,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
             </div>
         </div>
     )
-})
+}
 
 export type { CalendarProps } from './Calendar.types'

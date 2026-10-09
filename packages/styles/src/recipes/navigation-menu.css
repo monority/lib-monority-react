@@ -1,0 +1,128 @@
+/* Recette NavigationMenu dans la couche mr.components (spec v4).
+ * Menu de navigation principale avec listes d'éléments, sous-menus et indicateur actif. */
+@layer mr.components {
+    :where(.mr-nav-menu) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-nav-menu__list) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-nav-menu__item) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    :where(.mr-nav-menu__trigger),
+    :where(.mr-nav-menu__link) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+        block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+        border: 0;
+        border-radius: var(--mr-radius-sm);
+        background: transparent;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        text-decoration: none;
+        cursor: pointer;
+        transition: color var(--mr-duration-state) ease, background-color var(--mr-duration-state)
+            ease;
+    }
+
+    :where(.mr-nav-menu__trigger:hover),
+    :where(.mr-nav-menu__link:hover),
+    :where(.mr-nav-menu__item[data-active='true']) > :where(.mr-nav-menu__trigger) {
+        color: var(--mr-text-primary);
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-nav-menu__trigger:focus-visible),
+    :where(.mr-nav-menu__link:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
+    :where(.mr-nav-menu__chevron) {
+        transition: transform var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-nav-menu__item[data-active='true']) :where(.mr-nav-menu__chevron) {
+        transform: rotate(180deg);
+    }
+
+    :where(.mr-nav-menu__content) {
+        position: absolute;
+        inset-block-start: 100%;
+        inset-inline-start: 0;
+        z-index: 50;
+        min-inline-size: calc(var(--mr-space-6) * 7);
+        margin-block-start: var(--mr-space-1);
+        padding: var(--mr-space-2);
+        background-color: var(--mr-bg-surface);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+    }
+
+    :where(.mr-nav-menu__sub-list) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-nav-menu__sub-item) {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--mr-space-3);
+        padding: var(--mr-space-2);
+        border-radius: var(--mr-radius-sm);
+        text-decoration: none;
+        color: var(--mr-text-primary);
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-nav-menu__sub-item:hover) {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-nav-menu__sub-label) {
+        display: block;
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-nav-menu__sub-desc) {
+        display: block;
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-tertiary);
+    }
+
+    :where(.mr-nav-menu__indicator) {
+        position: absolute;
+        inset-block-end: -1px;
+        block-size: 2px;
+        background-color: var(--mr-accent-solid);
+        transition: transform var(--mr-duration-state) ease, width var(--mr-duration-state) ease,
+            opacity var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-nav-menu__item--disabled) > :where(.mr-nav-menu__trigger),
+    :where(.mr-nav-menu__link--disabled) {
+        color: var(--mr-text-disabled);
+        cursor: not-allowed;
+    }
+}

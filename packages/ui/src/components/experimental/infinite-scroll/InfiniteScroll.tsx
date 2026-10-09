@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect, useCallback, useState, type RefObject } from 'react'
+import { useRef, useEffect, useCallback, useState, type RefObject } from 'react'
 import { cn } from '@/lib/cn'
 import type { InfiniteScrollProps } from './InfiniteScroll.types'
 
@@ -33,127 +33,123 @@ function useIntersectionObserver(
     }, [targetRef, options.root, options.rootMargin, options.threshold, options.disabled, callback])
 }
 
-export const InfiniteScroll = forwardRef<HTMLDivElement, InfiniteScrollProps>(
-    function InfiniteScroll(
-        {
-            children,
-            onLoadMore,
-            hasMore = true,
-            loader,
-            endMessage,
-            emptyMessage,
-            error,
-            onRetry,
-            threshold,
-            rootMargin,
-            scrollableParent,
-            reverse = false,
-            disabled = false,
-            cooldown = 0,
-            className,
-            ...props
+export function InfiniteScroll({
+    ref,
+    children,
+    onLoadMore,
+    hasMore = true,
+    loader,
+    endMessage,
+    emptyMessage,
+    error,
+    onRetry,
+    threshold,
+    rootMargin,
+    scrollableParent,
+    reverse = false,
+    disabled = false,
+    cooldown = 0,
+    className,
+    ...props
+}: InfiniteScrollProps) {
+    const sentinelRef = useRef<HTMLDivElement | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const cooldownRef = useRef(false)
+    const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const hasItems = useRef(false)
+
+    useEffect(() => {
+        if (children) {
+            hasItems.current = true
+            setIsLoading(false)
+        }
+    }, [children])
+
+    useEffect(
+        () => () => {
+            if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current)
         },
-        ref
-    ) {
-        const sentinelRef = useRef<HTMLDivElement | null>(null)
-        const [isLoading, setIsLoading] = useState(false)
-        const cooldownRef = useRef(false)
-        const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-        const hasItems = useRef(false)
+        []
+    )
 
-        useEffect(() => {
-            if (children) {
-                hasItems.current = true
-                setIsLoading(false)
-            }
-        }, [children])
+    const handleIntersect = useCallback(() => {
+        if (cooldownRef.current || !hasMore || disabled) return
 
-        useEffect(
-            () => () => {
-                if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current)
+        setIsLoading(true)
+        cooldownRef.current = true
+
+        // Always release cooldown (default 200ms debounce prevents rapid re-triggers)
+        cooldownTimerRef.current = setTimeout(
+            () => {
+                cooldownRef.current = false
+                cooldownTimerRef.current = null
             },
-            []
+            cooldown > 0 ? cooldown : 200
         )
 
-        const handleIntersect = useCallback(() => {
-            if (cooldownRef.current || !hasMore || disabled) return
+        onLoadMore?.()
+    }, [hasMore, disabled, cooldown, onLoadMore])
 
-            setIsLoading(true)
-            cooldownRef.current = true
+    // Reset loading state when hasMore becomes false (end of list)
+    useEffect(() => {
+        if (!hasMore) setIsLoading(false)
+    }, [hasMore])
 
-            // Always release cooldown (default 200ms debounce prevents rapid re-triggers)
-            cooldownTimerRef.current = setTimeout(
-                () => {
-                    cooldownRef.current = false
-                    cooldownTimerRef.current = null
-                },
-                cooldown > 0 ? cooldown : 200
-            )
+    useIntersectionObserver(
+        sentinelRef,
+        { root: scrollableParent, rootMargin, threshold, disabled: disabled || !hasMore },
+        handleIntersect
+    )
 
-            onLoadMore?.()
-        }, [hasMore, disabled, cooldown, onLoadMore])
+    const childrenArr = Array.isArray(children) ? children : [children]
+    const hasChildren = childrenArr.some((c) => c != null)
 
-        // Reset loading state when hasMore becomes false (end of list)
-        useEffect(() => {
-            if (!hasMore) setIsLoading(false)
-        }, [hasMore])
+    const sentinel = (
+        <div ref={sentinelRef} className="mr-infinite-scroll__sentinel" aria-hidden="true" />
+    )
 
-        useIntersectionObserver(
-            sentinelRef,
-            { root: scrollableParent, rootMargin, threshold, disabled: disabled || !hasMore },
-            handleIntersect
-        )
-
-        const childrenArr = Array.isArray(children) ? children : [children]
-        const hasChildren = childrenArr.some((c) => c != null)
-
-        const sentinel = (
-            <div ref={sentinelRef} className="mr-infinite-scroll__sentinel" aria-hidden="true" />
-        )
-
-        const loaderElement =
-            isLoading && !error ? (
-                <div className="mr-infinite-scroll__loader" role="status" aria-live="polite">
-                    {loader || 'Loading...'}
-                </div>
-            ) : null
-
-        const endElement =
-            !hasMore && !error ? (
-                hasChildren && endMessage ? (
-                    <div className="mr-infinite-scroll__end">{endMessage}</div>
-                ) : !hasChildren && emptyMessage ? (
-                    <div className="mr-infinite-scroll__empty">{emptyMessage}</div>
-                ) : null
-            ) : null
-
-        const errorElement = error ? (
-            <div className="mr-infinite-scroll__error">
-                {error}
-                {onRetry && (
-                    <button type="button" className="mr-infinite-scroll__retry" onClick={onRetry}>
-                        Retry
-                    </button>
-                )}
+    const loaderElement =
+        isLoading && !error ? (
+            <div className="mr-infinite-scroll__loader" role="status" aria-live="polite">
+                {loader || 'Loading...'}
             </div>
         ) : null
 
-        return (
-            <div
-                ref={ref}
-                className={cn('mr-infinite-scroll', className)}
-                data-reverse={reverse || undefined}
-                {...props}
-            >
-                {reverse && sentinel}
-                {children}
-                {!reverse && sentinel}
-                {loaderElement}
-                {endElement}
-                {errorElement}
-            </div>
-        )
-    }
-)
+    const endElement =
+        !hasMore && !error ? (
+            hasChildren && endMessage ? (
+                <div className="mr-infinite-scroll__end">{endMessage}</div>
+            ) : !hasChildren && emptyMessage ? (
+                <div className="mr-infinite-scroll__empty">{emptyMessage}</div>
+            ) : null
+        ) : null
+
+    const errorElement = error ? (
+        <div className="mr-infinite-scroll__error">
+            {error}
+            {onRetry && (
+                <button type="button" className="mr-infinite-scroll__retry" onClick={onRetry}>
+                    Retry
+                </button>
+            )}
+        </div>
+    ) : null
+
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-infinite-scroll', className)}
+            data-reverse={reverse || undefined}
+            {...props}
+        >
+            {reverse && sentinel}
+            {children}
+            {!reverse && sentinel}
+            {loaderElement}
+            {endElement}
+            {errorElement}
+        </div>
+    )
+}
 
 export type { InfiniteScrollProps } from './InfiniteScroll.types'

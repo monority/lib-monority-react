@@ -1,11 +1,17 @@
-import { forwardRef, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import type { DropZoneProps } from './DropZone.types'
 
-export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(function DropZone(
-    { onDrop, accept, multiple, disabled = false, children, className, ...props },
-    ref
-) {
+export function DropZone({
+    ref,
+    onDrop,
+    accept,
+    multiple,
+    disabled = false,
+    children,
+    className,
+    ...props
+}: DropZoneProps) {
     const [isDragging, setIsDragging] = useState(false)
 
     const isValidFile = useCallback(
@@ -93,6 +99,6 @@ export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(function DropZ
             )}
         </div>
     )
-})
+}
 
 export type { DropZoneProps } from './DropZone.types'

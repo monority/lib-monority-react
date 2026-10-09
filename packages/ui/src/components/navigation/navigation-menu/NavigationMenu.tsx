@@ -1,4 +1,4 @@
-import { forwardRef, useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/cn'
 import type { NavigationMenuProps } from './NavigationMenu.types'
 
@@ -6,10 +6,15 @@ function getItemValue(label: string): string {
     return label.toLowerCase().replace(/\s+/g, '-')
 }
 
-export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(function NavigationMenu(
-    { items, defaultValue, value: controlledValue, onValueChange, className, ...props },
-    ref
-) {
+export function NavigationMenu({
+    ref,
+    items,
+    defaultValue,
+    value: controlledValue,
+    onValueChange,
+    className,
+    ...props
+}: NavigationMenuProps) {
     const [activeValue, setActiveValue] = useState(defaultValue ?? '')
     const value = controlledValue ?? activeValue
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
@@ -186,6 +191,6 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
             </div>
         </nav>
     )
-})
+}
 
 export type { NavigationMenuProps, NavigationItem, NavigationSubItem } from './NavigationMenu.types'

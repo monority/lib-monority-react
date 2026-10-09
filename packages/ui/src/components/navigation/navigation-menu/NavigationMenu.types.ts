@@ -1,4 +1,4 @@
-import type { ReactNode, HTMLAttributes } from 'react'
+import type { ReactNode, HTMLAttributes, Ref } from 'react'
 
 export interface NavigationSubItem {
     label: string
@@ -16,6 +16,7 @@ export interface NavigationItem {
 }
 
 export interface NavigationMenuProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+    ref?: Ref<HTMLElement>
     items: NavigationItem[]
     defaultValue?: string
     value?: string

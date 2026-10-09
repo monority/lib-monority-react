@@ -1,0 +1,22 @@
+/* Primitives de la bibliotheque dans la couche mr.tokens.
+ * Uniquement les leviers modifiables par la marque, les themes et la mise a l'echelle.
+ * Aucune recette ne lit directement une primitive. */
+@layer mr.tokens {
+    :root {
+        /* Interface publique de la marque : redefinie sur [data-brand] */
+        --mr-ref-brand-hue: 200;
+        --mr-ref-brand-chroma: 0;
+
+        /* Neutres : redefinis localement par les themes teintes */
+        --mr-ref-neutral-hue: 215;
+        --mr-ref-neutral-chroma: 0;
+
+        /* Levier de mise a l'echelle des rayons */
+        --mr-ref-radius-scale: 1;
+    }
+
+    /* Levier de luminosite d'accent par defaut (theme clair : noir/anthracite neutre), redefini par theme */
+    :where(:root, [data-theme]) {
+        --mr-ref-accent-lightness: 0.22;
+    }
+}

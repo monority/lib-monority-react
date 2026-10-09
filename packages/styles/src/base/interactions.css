@@ -1,5 +1,0 @@
-@media (hover: hover) {
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--mr-text-secondary);
-    }
-}

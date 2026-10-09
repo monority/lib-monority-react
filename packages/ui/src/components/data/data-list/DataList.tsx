@@ -1,11 +1,14 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { DataListProps } from './DataList.types'
 
-export const DataList = forwardRef<HTMLDListElement, DataListProps>(function DataList(
-    { items = [], columns, className, itemClassName, ...props },
-    ref
-) {
+export function DataList({
+    ref,
+    items = [],
+    columns,
+    className,
+    itemClassName,
+    ...props
+}: DataListProps) {
     return (
         <dl ref={ref} className={cn('mr-data-list', className)} data-columns={columns} {...props}>
             {items.map((item, index) => {
@@ -27,6 +30,6 @@ export const DataList = forwardRef<HTMLDListElement, DataListProps>(function Dat
             })}
         </dl>
     )
-})
+}
 
 export type { DataListProps, DataListItem, DataListColumns } from './DataList.types'

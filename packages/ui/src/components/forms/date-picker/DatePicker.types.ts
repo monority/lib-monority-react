@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
 
 export type DatePickerSize = 'sm' | 'md' | 'lg'
 export type DatePickerTone = 'neutral' | 'accent' | 'danger'
@@ -8,11 +8,17 @@ export interface DatePickerProps
         InputHTMLAttributes<HTMLInputElement>,
         'type' | 'size' | 'value' | 'onChange' | 'defaultValue'
     > {
+    ref?: Ref<HTMLInputElement>
     size?: DatePickerSize
     tone?: DatePickerTone
     label?: ReactNode
     hint?: ReactNode
     error?: ReactNode
+    invalid?: boolean
+    fullWidth?: boolean
+    theme?: string
+    brand?: string
+    density?: string
     // Value
     value?: Date | string | null
     defaultValue?: Date | string
@@ -22,6 +28,7 @@ export interface DatePickerProps
     maxDate?: Date
     disabledDates?: Date[] | ((date: Date) => boolean)
     placeholder?: string
+    showPickers?: boolean
     // Styling
     inputClassName?: string
     popoverClassName?: string

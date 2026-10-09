@@ -1,24 +1,22 @@
-import { forwardRef, useCallback, useId, useState } from 'react'
+import { useCallback, useId, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { cn } from '@/lib/cn'
 import type { TabsProps } from './Tabs.types'
 
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
-    {
-        tone,
-        size,
-        items,
-        value,
-        defaultValue,
-        onChange,
-        className,
-        'aria-label': ariaLabel = 'Tabs',
-        disabled = false,
-        fullWidth = false,
-        ...props
-    },
-    ref
-) {
+export function Tabs({
+    ref,
+    tone,
+    size,
+    items,
+    value,
+    defaultValue,
+    onChange,
+    className,
+    'aria-label': ariaLabel = 'Tabs',
+    disabled = false,
+    fullWidth = false,
+    ...props
+}: TabsProps) {
     const instanceId = useId()
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
@@ -137,6 +135,6 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
             })}
         </div>
     )
-})
+}
 
 export type { TabsProps, TabsTone, TabsSize, TabItem } from './Tabs.types'

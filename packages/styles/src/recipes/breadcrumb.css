@@ -1,0 +1,55 @@
+/* Recette Breadcrumb dans la couche mr.components (spec v4).
+ * Fil d'Ariane textuel matérialisant l'arborescence et l'emplacement de la page courante. */
+@layer mr.components {
+    :where(.mr-breadcrumb) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-md);
+    }
+
+    :where(.mr-breadcrumb__list) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--mr-space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    :where(.mr-breadcrumb__item) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-breadcrumb__link) {
+        color: var(--mr-text-secondary);
+        text-decoration: none;
+        transition: color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-breadcrumb__link:hover) {
+        color: var(--mr-text-primary);
+        text-decoration: underline;
+    }
+
+    :where(.mr-breadcrumb__link:focus-visible) {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-breadcrumb__current) {
+        color: var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    :where(.mr-breadcrumb__separator) {
+        color: var(--mr-text-tertiary);
+        font-family: var(--mr-font-family-mono);
+        user-select: none;
+    }
+}

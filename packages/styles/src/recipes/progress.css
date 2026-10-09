@@ -1,0 +1,87 @@
+/* Recette Progress dans la couche mr.components (spec v4).
+ * Barre de progression lineaire (determinee ou indeterminee).
+ * Neutral par defaut (ADR-020). Tons : neutral, accent, success, warning, danger, info. */
+@layer mr.components {
+    @keyframes mr-progress-indeterminate {
+        0% {
+            inset-inline-start: -35%;
+            inline-size: 35%;
+        }
+        100% {
+            inset-inline-start: 100%;
+            inline-size: 35%;
+        }
+    }
+
+    :where(.mr-progress) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-2);
+        inline-size: 100%;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+    }
+
+    :where(.mr-progress__meta) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: var(--mr-font-size-sm);
+        line-height: 1.4;
+    }
+
+    :where(.mr-progress__label) {
+        color: var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    :where(.mr-progress__value) {
+        color: var(--mr-text-secondary);
+        font-variant-numeric: tabular-nums;
+    }
+
+    :where(.mr-progress__track) {
+        position: relative;
+        inline-size: 100%;
+        block-size: var(--mr-space-1);
+        background-color: var(--mr-bg-sunken);
+        border-radius: var(--mr-radius-full);
+        overflow: hidden;
+    }
+
+    :where(.mr-progress__bar) {
+        block-size: 100%;
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-text-primary);
+        transition: inline-size var(--mr-duration-state) ease;
+    }
+
+    /* Mode indetermine */
+    :where(.mr-progress)[data-mode='indeterminate'] :where(.mr-progress__bar),
+    :where(.mr-progress__bar--indeterminate) {
+        position: absolute;
+        inset-block: 0;
+        animation: mr-progress-indeterminate var(--mr-duration-loop) ease-in-out infinite;
+    }
+
+    /* Tons */
+    :where(.mr-progress)[data-tone='accent'] :where(.mr-progress__bar) {
+        background-color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-progress)[data-tone='success'] :where(.mr-progress__bar) {
+        background-color: var(--mr-success-text);
+    }
+
+    :where(.mr-progress)[data-tone='warning'] :where(.mr-progress__bar) {
+        background-color: var(--mr-warning-text);
+    }
+
+    :where(.mr-progress)[data-tone='danger'] :where(.mr-progress__bar) {
+        background-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-progress)[data-tone='info'] :where(.mr-progress__bar) {
+        background-color: var(--mr-info-text);
+    }
+}

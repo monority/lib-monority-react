@@ -99,8 +99,7 @@ supprimé deux fonctionnalités et le sous-chemin public `@monority/ui/divider`.
 - L'échelle `--mr-space-*` est un alias déprécié de l'échelle 4px
   `--mr-spacing-*`. Elle reste la référence de fait : **116 fichiers** l'utilisent.
   11 alias dépréciés en dépendent.
-- Point d'entrée : `packages/tokens/src/deprecated.json` (avec
-  `node packages/tokens/scripts/check-deprecated.mjs --warn`), tables de
+- Point d'entrée : `packages/tokens/src/deprecated.json`, tables de
   correspondance dans `docs/design/audit/migration-table.md`.
 - **Point d'attention** : 3px, 9px et 14px n'ont pas d'équivalent exact sur la
   grille 4px ; 28px et 56px sont absents de la grille. Une migration
@@ -121,8 +120,7 @@ supprimé deux fonctionnalités et le sous-chemin public `@monority/ui/divider`.
 ## Alias dépréciés conservés (option retenue)
 
 Ces familles n’ont pas d’équivalent vivant dans leur échelle. Elles restent
-des alias dépréciés, volontairement, et **aucun token n’a été créé**. Elles
-sont suivies par `node packages/tokens/scripts/check-deprecated.mjs --warn`.
+des alias dépréciés, volontairement, et **aucun token n'a été créé**.
 
 | Famille | Occurrences | État |
 | --- | ---: | --- |
@@ -148,7 +146,7 @@ sera inscrite ici au moment de l’arbitrage, pas avant.
 
 | Quoi | Où |
 | --- | --- |
-| Tokens dépréciés et règles de retrait | `packages/tokens/src/deprecated.json`, `pnpm --filter @monority/tokens test` |
+| Tokens dépréciés et règles de retrait | Archive `archive/tokens-json-d899d22` (supprimés en Phase 1) |
 | Contrat d'API publique | `packages/ui/src/__tests__/exports.test.ts` (134 tests) |
 | Composition et invariants BEM/data | `packages/ui/src/__tests__/bem-modifiers.test.tsx` |
 | Contrat docs ↔ API | `apps/web/src/features/docs/*-contract.test.ts` |

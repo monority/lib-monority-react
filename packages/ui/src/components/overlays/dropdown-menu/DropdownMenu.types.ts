@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type DropdownAlign = 'start' | 'center' | 'end'
 export type DropdownSide = 'top' | 'bottom' | 'left' | 'right'
@@ -9,10 +9,13 @@ export interface DropdownMenuItem {
     type?: 'item' | 'separator'
     disabled?: boolean
     danger?: boolean
+    icon?: ReactNode
+    shortcut?: string
     onSelect?: (value: string) => void
 }
 
 export interface DropdownMenuProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     trigger: ReactNode | string
     items?: DropdownMenuItem[]
     open?: boolean

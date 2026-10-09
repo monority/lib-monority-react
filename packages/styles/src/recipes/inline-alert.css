@@ -1,0 +1,76 @@
+/* Recette InlineAlert dans la couche mr.components.
+ * Alerte compacte dans le flux, stylisee avec carte neutre et icone coloree.
+ * Tons : info, success, warning, danger. */
+@layer mr.components {
+    :where(.mr-inline-alert) {
+        box-sizing: border-box;
+        display: flex;
+        align-items: flex-start;
+        gap: var(--mr-space-3);
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-3);
+        border-radius: var(--mr-radius-md);
+        border: 1px solid var(--mr-border-default);
+        font-family: var(--mr-font-family-sans);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-inline-alert__icon) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        margin-block-start: 1px;
+    }
+
+    :where(.mr-inline-alert__marker) {
+        display: none;
+    }
+
+    :where(.mr-inline-alert__body) {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: 2px;
+        min-inline-size: 0;
+    }
+
+    :where(.mr-inline-alert__title) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-inline-alert__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: 1.4;
+    }
+
+    :where(.mr-inline-alert__action) {
+        flex-shrink: 0;
+        align-self: center;
+    }
+
+    /* Couleurs portees par l'icone selon le ton (comme Toast) */
+    :where(.mr-inline-alert)[data-tone='info'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-info-text);
+    }
+
+    :where(.mr-inline-alert)[data-tone='success'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-success-text);
+    }
+
+    :where(.mr-inline-alert)[data-tone='warning'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-warning-text);
+    }
+
+    :where(.mr-inline-alert)[data-tone='danger'] :where(.mr-inline-alert__icon) {
+        color: var(--mr-danger-solid);
+    }
+}

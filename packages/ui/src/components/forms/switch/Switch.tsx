@@ -1,28 +1,26 @@
 import { FieldDescription, FieldError, FieldLabel } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl, useFormControl } from '@/primitives/form-control'
-import { forwardRef, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { SwitchProps } from './Switch.types'
 
-const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInner(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        className,
-        checked,
-        defaultChecked,
-        onChange,
-        disabled = false,
-        required = false,
-        invalid = false,
-        ...props
-    },
-    ref
-) {
-    const resolvedTone = tone ?? 'accent'
+function SwitchInner({
+    ref,
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    className,
+    checked,
+    defaultChecked,
+    onChange,
+    disabled = false,
+    required = false,
+    invalid = false,
+    ...props
+}: SwitchProps) {
+    const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
     const isInvalid = invalid || Boolean(error)
     const { describedBy, errorId, hintId, inputId } = useFormControl()
@@ -94,9 +92,9 @@ const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(function SwitchInn
             </div>
         </div>
     )
-})
+}
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(props, ref) {
+export function Switch({ ref, ...props }: SwitchProps) {
     const { id, ...rest } = props
     return (
         <FormControl
@@ -109,6 +107,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
             <SwitchInner ref={ref} {...rest} />
         </FormControl>
     )
-})
+}
 
 export type { SwitchProps, SwitchSize, SwitchTone } from './Switch.types'

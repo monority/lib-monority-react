@@ -1,0 +1,123 @@
+/* Recette Banner dans la couche mr.components (spec v4).
+ * Annonce d'etat global en bande pleine largeur en tete de page.
+ * Carte neutre epuree avec icone de statut coloree (comme Toast, Callout, InlineAlert).
+ * Tons : neutral, accent, success, warning, danger, info. */
+@layer mr.components {
+    :where(.mr-banner) {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-4);
+        gap: var(--mr-space-3);
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        font-family: var(--mr-font-family-sans);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+    }
+
+    /* Icone de statut coloree */
+    :where(.mr-banner__icon) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    /* Rail lateral legacy neutralise */
+    :where(.mr-banner__marker) {
+        display: none;
+    }
+
+    /* Corps de l'annonce */
+    :where(.mr-banner__body) {
+        display: flex;
+        flex: 1 1 auto;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--mr-space-2);
+        min-inline-size: 0;
+    }
+
+    :where(.mr-banner__eyebrow) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        text-transform: uppercase;
+        padding-inline: calc(var(--mr-space-2) - 2px);
+        padding-block: 1px;
+        border-radius: var(--mr-radius-sm);
+        background-color: color-mix(in oklch, currentColor 12%, transparent);
+        color: inherit;
+        line-height: 1.2;
+    }
+
+    :where(.mr-banner__title) {
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-banner__description) {
+        margin: 0;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-banner__actions) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        margin-inline-start: auto;
+        flex-shrink: 0;
+    }
+
+    :where(.mr-banner__close) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        padding: var(--mr-space-1);
+        border-radius: var(--mr-radius-sm);
+        flex-shrink: 0;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-banner__close):hover {
+            background-color: var(--mr-bg-sunken);
+            color: var(--mr-text-primary);
+        }
+    }
+
+    /* Couleurs portees par l'icone selon le ton (comme Toast, Callout, InlineAlert) */
+    :where(.mr-banner)[data-tone='neutral'] :where(.mr-banner__icon) {
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-banner)[data-tone='accent'] :where(.mr-banner__icon) {
+        color: var(--mr-accent-solid);
+    }
+
+    :where(.mr-banner)[data-tone='info'] :where(.mr-banner__icon) {
+        color: var(--mr-info-text);
+    }
+
+    :where(.mr-banner)[data-tone='success'] :where(.mr-banner__icon) {
+        color: var(--mr-success-text);
+    }
+
+    :where(.mr-banner)[data-tone='warning'] :where(.mr-banner__icon) {
+        color: var(--mr-warning-text);
+    }
+
+    :where(.mr-banner)[data-tone='danger'] :where(.mr-banner__icon) {
+        color: var(--mr-danger-solid);
+    }
+}

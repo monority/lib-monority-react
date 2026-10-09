@@ -29,18 +29,24 @@ afterEach(() => {
 })
 
 describe('Checkbox', () => {
-    it('renders default unchecked state with accent tone and md size', () => {
+    it('renders default unchecked state with neutral tone and md size', () => {
         const view = render(<Checkbox label="Accept terms" />)
         const label = view.querySelector('label')
         const input = view.querySelector('input')
 
         expect(label?.textContent).toBe('Accept terms')
-        expect(label?.getAttribute('data-tone')).toBe('accent')
+        expect(label?.getAttribute('data-tone')).toBe('neutral')
         expect(label?.getAttribute('data-size')).toBe('md')
         expect(label?.getAttribute('data-checked')).toBeNull()
         expect(input?.type).toBe('checkbox')
         expect(input?.checked).toBe(false)
         expect(input?.getAttribute('aria-invalid')).toBeNull()
+    })
+
+    it('renders explicit accent tone when requested', () => {
+        const view = render(<Checkbox label="Accept terms" tone="accent" />)
+        const label = view.querySelector('label')
+        expect(label?.getAttribute('data-tone')).toBe('accent')
     })
 
     it('maps checked, disabled, invalid, required and indeterminate states to hooks', () => {

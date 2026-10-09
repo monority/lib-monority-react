@@ -1,0 +1,267 @@
+/* Recette du composant Input (couche mr.components)
+ *
+ * Micro-etape I3 : tailles (sm, md, lg), hauteur et alignement avec Button.
+ *
+ * Tailles :
+ * - sm : 28px (min-block-size: --mr-size-control-sm, padding-inline: --mr-space-3)
+ * - md (defaut) : 32px (min-block-size: --mr-size-control-md, padding-inline: --mr-space-4)
+ * - lg : 40px (min-block-size: --mr-size-control-lg, padding-inline: --mr-space-5)
+ * Typographie constante : font-size (--mr-font-size-md), font-weight et radius identiques sur les 3 tailles.
+ *
+ * Ordre de priorite des etats :
+ * desactive > lecture seule (aucun effet de survol) > invalide > survol.
+ * Concretement : le survol exclut desactive, lecture seule et invalide ;
+ * la bordure invalide ne change pas au survol ;
+ * le focus invalide garde la bordure et l'anneau de danger.
+ *
+ * Decision lecture seule :
+ * Aucune difference visuelle au repos (bordure et couleurs identiques a l'etat normal
+ * pour conserver 3:1 sur la bordure), cursor: default, aucun survol, focus clavier avec
+ * l'anneau normal de l'Input (WCAG n'impose pas de distinction visuelle pour la lecture seule,
+ * un fond distinct exigerait un nouveau token qui n'a pas encore de lecteur).
+ *
+ * Exception de focus :
+ * - Contour d'anneau direct au contact du champ (outline-offset: 0)
+ *   et bordure coloree avec var(--mr-text-secondary) ou var(--mr-danger-solid).
+ * - Preuve chiffree des ratios de contraste de l'anneau de focus (WCAG 1.4.11 >= 3.0:1) :
+ *   - Anneau normal sur canevas exterieur (Clair) : 4.83:1
+ *   - Anneau normal sur canevas exterieur (Sombre) : 4.81:1
+ *   - Anneau invalide sur canevas exterieur (Clair) : 5.37:1
+ *   - Anneau invalide sur canevas exterieur (Sombre) : 4.87:1
+ *
+ * Limite fond opaque (ADR-024) :
+ * - Le fond opaque du champ utilise --mr-bg-sunken (heritant de --mr-bg-canvas en clair et sombre, rehausse en OLED).
+ * - Bande admissible pour ratio >= 3.0:1 : L >= 0.921 en clair ; L <= 0.254 en sombre.
+ */
+@layer mr.components {
+    :where(.mr-input, .mr-password-input) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        padding-block: 0;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+        vertical-align: middle;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
+    :where(.mr-input, .mr-password-input)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+    }
+
+    /* Taille md (defaut) : 32px */
+    :where(.mr-input, .mr-password-input)[data-size='md'],
+    :where(.mr-input, .mr-password-input):not([data-size]) {
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-input, .mr-password-input)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Conteneur d'input avec icone(s) ou bascule de mot de passe */
+    :where(.mr-input__wrapper, .mr-password-input__wrapper) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Icones decoratives intégrées */
+    :where(.mr-input__icon) {
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-text-secondary);
+        pointer-events: none;
+        box-sizing: border-box;
+        line-height: 1;
+    }
+
+    /* Bouton interactif de revelation / masquage du mot de passe */
+    :where(.mr-password-input__toggle) {
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        line-height: 1;
+        border-radius: var(--mr-radius-md);
+        transition: color var(--mr-duration-state);
+        box-sizing: border-box;
+    }
+
+    :where(.mr-password-input__toggle):hover {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-password-input__toggle):focus-visible {
+        color: var(--mr-text-primary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-password-input__toggle):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+    }
+
+    :where(.mr-input__icon, .mr-password-input__toggle) > svg {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    /* Position et dimensions des icones et de la bascule mot de passe */
+    :where(.mr-input__wrapper, .mr-password-input__wrapper) :where(.mr-input__icon--leading) {
+        inset-inline-start: var(--mr-space-4);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-input__wrapper, .mr-password-input__wrapper)
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        inset-inline-end: var(--mr-space-4);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='sm']
+        :where(.mr-input__icon--leading) {
+        inset-inline-start: var(--mr-space-3);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='sm']
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        inset-inline-end: var(--mr-space-3);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='lg']
+        :where(.mr-input__icon--leading) {
+        inset-inline-start: var(--mr-space-5);
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='lg']
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        inset-inline-end: var(--mr-space-5);
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    /* Ajustement du padding lateral avec icone ou bascule de mot de passe */
+    :where(.mr-input, .mr-password-input)[data-has-leading-icon] {
+        padding-inline-start: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)[data-size='sm'][data-has-leading-icon] {
+        padding-inline-start: calc(var(--mr-space-3) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)[data-size='lg'][data-has-leading-icon] {
+        padding-inline-start: calc(var(--mr-space-5) + var(--mr-space-5) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)[data-has-trailing-icon] {
+        padding-inline-end: calc(var(--mr-space-4) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)[data-size='sm'][data-has-trailing-icon] {
+        padding-inline-end: calc(var(--mr-space-3) + var(--mr-space-4) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)[data-size='lg'][data-has-trailing-icon] {
+        padding-inline-end: calc(var(--mr-space-5) + var(--mr-space-5) + var(--mr-space-2));
+    }
+
+    :where(.mr-input, .mr-password-input)::placeholder {
+        color: var(--mr-text-secondary);
+        opacity: 1;
+    }
+
+    :where(.mr-input, .mr-password-input):focus-visible,
+    :where(.mr-input, .mr-password-input):focus {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Survol (uniquement avec pointeur survolant) : exclut desactive, lecture seule et invalide */
+    @media (hover: hover) {
+        :where(.mr-input, .mr-password-input):hover:where(
+                :not(:disabled, :read-only, [aria-invalid='true'])
+            ) {
+            border-color: color-mix(
+                in oklch,
+                var(--mr-border-control),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Etat invalide : bordure de statut danger ; texte saisi et placeholder conserves */
+    :where(.mr-input, .mr-password-input)[aria-invalid='true'] {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-input, .mr-password-input)[aria-invalid='true']:focus-visible,
+    :where(.mr-input, .mr-password-input)[aria-invalid='true']:focus {
+        border-color: var(--mr-danger-solid);
+        outline: 2px solid var(--mr-danger-solid);
+        outline-offset: 0;
+    }
+
+    /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
+    :where(.mr-input, .mr-password-input):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    :where(.mr-input, .mr-password-input):disabled::placeholder {
+        color: var(--mr-text-disabled);
+    }
+
+    /* Etat lecture seule : aspect identique au repos, curseur default, aucun survol */
+    :where(.mr-input, .mr-password-input):read-only:where(:not(:disabled)) {
+        cursor: default;
+    }
+}

@@ -32,6 +32,7 @@ describe('EmptyState', () => {
     it('renders title', () => {
         const view = render(<EmptyState title="Nothing here" />)
         expect(view.textContent).toContain('Nothing here')
+        expect(view.querySelector('.mr-empty-state')?.getAttribute('role')).toBe('status')
     })
 
     it('renders description when provided', () => {
@@ -54,5 +55,39 @@ describe('EmptyState', () => {
         render(<EmptyState ref={ref} title="Test" />)
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-empty-state')
+    })
+
+    it('renders loading state with aria-busy and spinner', () => {
+        const view = render(<EmptyState state="loading" title="Chargement..." />)
+        const el = view.querySelector('.mr-empty-state')
+        expect(el?.getAttribute('aria-busy')).toBe('true')
+        expect(view.querySelector('.mr-spinner')).not.toBeNull()
+    })
+
+    it('renders error state with role="alert"', () => {
+        const view = render(<EmptyState state="error" title="Échec de synchronisation" />)
+        const el = view.querySelector('.mr-empty-state')
+        expect(el?.getAttribute('role')).toBe('alert')
+        expect(el?.getAttribute('data-state')).toBe('error')
+    })
+
+    it('renders compound components declaratively', () => {
+        const view = render(
+            <EmptyState>
+                <EmptyState.Icon>Icon</EmptyState.Icon>
+                <EmptyState.Title>Titre vide</EmptyState.Title>
+                <EmptyState.Description>Aucune donnée disponible</EmptyState.Description>
+                <EmptyState.Actions>
+                    <button type="button">Actualiser</button>
+                </EmptyState.Actions>
+            </EmptyState>
+        )
+        expect(view.querySelector('.mr-empty-state__title')?.textContent).toBe('Titre vide')
+        expect(view.querySelector('.mr-empty-state__description')?.textContent).toBe(
+            'Aucune donnée disponible'
+        )
+        expect(view.querySelector('.mr-empty-state__actions button')?.textContent).toBe(
+            'Actualiser'
+        )
     })
 })

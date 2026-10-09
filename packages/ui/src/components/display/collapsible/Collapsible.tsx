@@ -1,30 +1,32 @@
-import { forwardRef, useId, useState } from 'react'
+import { useId } from 'react'
 import { cn } from '@/lib/cn'
+import { useControllableState } from '@/internal/use-controllable-state'
 import type { CollapsibleProps } from './Collapsible.types'
 
-export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function Collapsible(
-    {
-        title,
-        children,
-        defaultOpen = false,
-        open: controlledOpen,
-        onOpenChange,
-        size,
-        className,
-        ...props
-    },
-    ref
-) {
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
-    const isControlled = controlledOpen !== undefined
-    const isOpen = isControlled ? controlledOpen : internalOpen
+export function Collapsible({
+    title,
+    children,
+    defaultOpen = false,
+    open: controlledOpen,
+    onOpenChange,
+    size = 'md',
+    disabled = false,
+    className,
+    ref,
+    ...props
+}: CollapsibleProps) {
+    const [isOpen, setIsOpen] = useControllableState<boolean>({
+        value: controlledOpen,
+        defaultValue: defaultOpen,
+        onChange: onOpenChange,
+    })
+
     const instanceId = useId()
     const state = isOpen ? 'open' : 'closed'
-    const resolvedSize = size ?? 'md'
 
     function toggle() {
-        if (!isControlled) setInternalOpen(!isOpen)
-        onOpenChange?.(!isOpen)
+        if (disabled) return
+        setIsOpen(!isOpen)
     }
 
     return (
@@ -32,7 +34,7 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
             ref={ref}
             className={cn('mr-collapsible', className)}
             data-open={isOpen || undefined}
-            data-size={resolvedSize}
+            data-size={size}
             data-state={state}
             {...props}
         >
@@ -43,6 +45,7 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
                 aria-expanded={isOpen}
                 aria-controls={`${instanceId}-panel`}
                 onClick={toggle}
+                disabled={disabled}
                 data-state={state}
             >
                 <span className="mr-collapsible__label">{title}</span>
@@ -60,6 +63,6 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
             </div>
         </div>
     )
-})
+}
 
 export type { CollapsibleProps } from './Collapsible.types'

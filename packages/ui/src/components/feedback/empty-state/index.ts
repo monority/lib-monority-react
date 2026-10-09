@@ -1,2 +1,9 @@
 export { EmptyState } from './EmptyState'
-export type { EmptyStateProps } from './EmptyState.types'
+export type {
+    EmptyStateActionsProps,
+    EmptyStateDescriptionProps,
+    EmptyStateIconProps,
+    EmptyStateProps,
+    EmptyStateStatus,
+    EmptyStateTitleProps,
+} from './EmptyState.types'

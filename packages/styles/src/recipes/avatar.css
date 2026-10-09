@@ -1,0 +1,84 @@
+/* Recette du composant Avatar (couche mr.components)
+ *
+ * Identification visuelle par image cadree ou initiales centrees.
+ *
+ * Tailles :
+ * - sm : 24px (--mr-space-6 = 1.5rem)
+ * - md : 32px (--mr-size-control-md = 2.0rem)
+ * - lg : 40px (--mr-size-control-lg = 2.5rem)
+ *
+ * Repli initiales :
+ * - Fond --mr-bg-sunken, texte --mr-text-secondary
+ *
+ * Statut optionnel :
+ * - Pastille 8px (--mr-space-2) avec bordure/anneau --mr-bg-surface
+ */
+@layer mr.components {
+    :where(.mr-avatar) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        border-radius: var(--mr-radius-full);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-secondary);
+        border: 1px solid var(--mr-border-subtle);
+        user-select: none;
+        vertical-align: middle;
+    }
+
+    /* Taille sm : 24px */
+    :where(.mr-avatar)[data-size='sm'] {
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Taille md (defaut) : 32px */
+    :where(.mr-avatar)[data-size='md'],
+    :where(.mr-avatar):not([data-size]) {
+        inline-size: var(--mr-size-control-md);
+        block-size: var(--mr-size-control-md);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Taille lg : 40px */
+    :where(.mr-avatar)[data-size='lg'] {
+        inline-size: var(--mr-size-control-lg);
+        block-size: var(--mr-size-control-lg);
+        font-size: var(--mr-font-size-md);
+    }
+
+    :where(.mr-avatar__img) {
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: var(--mr-radius-full);
+        object-fit: cover;
+    }
+
+    :where(.mr-avatar__initials) {
+        font-weight: var(--mr-font-weight-medium);
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    :where(.mr-avatar__status) {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        inline-size: var(--mr-space-2);
+        block-size: var(--mr-space-2);
+        border-radius: var(--mr-radius-full);
+        box-shadow: 0 0 0 1px var(--mr-bg-surface);
+    }
+
+    :where(.mr-avatar__status)[data-status='online'] {
+        background-color: var(--mr-success-text);
+    }
+
+    :where(.mr-avatar__status)[data-status='offline'] {
+        background-color: var(--mr-text-disabled);
+    }
+}

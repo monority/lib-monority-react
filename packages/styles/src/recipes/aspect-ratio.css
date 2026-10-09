@@ -1,0 +1,28 @@
+/* Recette AspectRatio dans la couche mr.components (spec v4).
+ * Maintient un rapport largeur/hauteur constant pour un media dans un conteneur fluide. */
+@layer mr.components {
+    :where(.mr-aspect-ratio) {
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        overflow: hidden;
+        background: var(--mr-bg-sunken);
+        border-radius: var(--mr-radius-md);
+    }
+
+    :where(.mr-aspect-ratio__content) {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    :where(.mr-aspect-ratio__content) > :is(img, video) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

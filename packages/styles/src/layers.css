@@ -1,0 +1,12 @@
+/* Ordre des couches de la bibliotheque, declare une seule fois ici.
+ *
+ * Toute regle de la bibliotheque vit dans une de ces couches. Les noms sont
+ * prefixes `mr.` pour ne pas entrer en collision avec les couches d'une
+ * application hote.
+ *
+ * Contrat de surcharge : le CSS d'un consommateur qui n'est dans aucune couche
+ * gagne toujours sur les couches ci-dessous, quel que soit son selecteur.
+ * Ne jamais contourner cet ordre avec `!important` ni en gonflant la
+ * specificite pour gagner : si une surcharge ne passe pas, c'est le
+ * contrat qui parle, pas un bogue. */
+@layer mr.reset, mr.base, mr.tokens, mr.themes, mr.components, mr.utilities;

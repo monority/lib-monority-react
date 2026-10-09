@@ -1,29 +1,27 @@
 import { cn } from '@/lib/cn'
 import { useFormControl } from '@/primitives/form-control'
-import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
+import { useCallback, useImperativeHandle, useRef } from 'react'
 import type { FileTriggerProps } from './FileTrigger.types'
 
-export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(function FileTrigger(
-    {
-        accept,
-        id,
-        multiple = false,
-        onSelect,
-        onChange,
-        name,
-        directory = false,
-        disabled = false,
-        required = false,
-        invalid = false,
-        children,
-        className,
-        'aria-label': ariaLabel,
-        'aria-describedby': ariaDescribedBy,
-        'aria-labelledby': ariaLabelledBy,
-        ...props
-    },
-    ref
-) {
+export function FileTrigger({
+    ref,
+    accept,
+    id,
+    multiple = false,
+    onSelect,
+    onChange,
+    name,
+    directory = false,
+    disabled = false,
+    required = false,
+    invalid = false,
+    children,
+    className,
+    'aria-label': ariaLabel,
+    'aria-describedby': ariaDescribedBy,
+    'aria-labelledby': ariaLabelledBy,
+    ...props
+}: FileTriggerProps) {
     const inputRef = useRef<HTMLInputElement>(null)
     const ctx = useFormControl()
     const resolvedId = id ?? ctx.inputId
@@ -105,6 +103,6 @@ export const FileTrigger = forwardRef<HTMLInputElement, FileTriggerProps>(functi
             ) : null}
         </>
     )
-})
+}
 
 export type { FileTriggerProps } from './FileTrigger.types'

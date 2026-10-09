@@ -87,4 +87,11 @@ describe('PreCode', () => {
         expect(view.querySelector('pre')?.getAttribute('data-testid')).toBe('snippet')
         expect(view.querySelector('code')?.className).toContain('inner')
     })
+
+    it('renders a copy button when copyable is true', () => {
+        const view = render(<PreCode copyable>const a = 1</PreCode>)
+        const copyBtn = view.querySelector('.mr-pre-code__copy-btn')
+        expect(copyBtn).not.toBeNull()
+        expect(view.querySelector('.mr-pre-code-container')).not.toBeNull()
+    })
 })

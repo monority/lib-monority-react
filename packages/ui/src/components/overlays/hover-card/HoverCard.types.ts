@@ -1,9 +1,10 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type HoverCardAlign = 'start' | 'center' | 'end'
 export type HoverCardSide = 'top' | 'bottom' | 'left' | 'right'
 
 export interface HoverCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
+    ref?: Ref<HTMLDivElement>
     children: ReactNode
     content: ReactNode
     openDelay?: number

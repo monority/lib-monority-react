@@ -1,0 +1,49 @@
+/* Theme OLED dans la couche mr.themes.
+ * Fond noir absolu (oklch 0 0 0), fond des champs legerement rehausse (oklch 0.12),
+ * et bordure de controle discrete calibree a 1.95:1 sur fond de champ (ADR-026). */
+@layer mr.themes {
+    :where([data-theme='oled']) {
+        color-scheme: dark;
+
+        /* Fonds : noir absolu pour le canevas, fond de champ legerement rehausse */
+        --mr-bg-canvas: oklch(0 0 0);
+        --mr-bg-sunken: oklch(0.12 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.16 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.2 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-overlay: var(--mr-bg-raised);
+
+        /* Textes */
+        --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Texte desactive : luminosite 0.498 reproduit le ratio de 3.46:1 sur le canevas */
+        --mr-text-disabled: oklch(0.498 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Bordures : luminosite 0.46 pour une bordure nettement visible sur canevas OLED */
+        --mr-border-control: oklch(0.46 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.38 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.28 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Levier de luminosite de l'accent pour fond OLED :
+         * 0.955 pour un accent neutre blanc pur sur noir absolu */
+        --mr-ref-accent-lightness: 0.955;
+
+        /* Danger OLED : L=0.65 calcule pour assurer un ratio >= 4.8:1 (5.91:1) sur canevas */
+        --mr-danger-solid: oklch(0.65 0.2 25);
+        --mr-danger-subtle: oklch(0.2 0.065 25);
+        --mr-danger-border: oklch(0.36 0.12 25);
+        --mr-danger-text: oklch(0.78 0.17 25);
+
+        --mr-success-subtle: oklch(0.2 0.065 155);
+        --mr-success-border: oklch(0.36 0.12 155);
+        --mr-success-text: oklch(0.78 0.15 155);
+
+        --mr-warning-subtle: oklch(0.21 0.07 80);
+        --mr-warning-border: oklch(0.36 0.12 80);
+        --mr-warning-text: oklch(0.8 0.15 80);
+
+        --mr-info-subtle: oklch(0.2 0.065 255);
+        --mr-info-border: oklch(0.36 0.12 255);
+        --mr-info-text: oklch(0.78 0.15 255);
+    }
+}

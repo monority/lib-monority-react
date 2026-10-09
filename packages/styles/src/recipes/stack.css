@@ -1,0 +1,78 @@
+/* Recette Stack dans la couche mr.components (spec v4).
+ * Empile des blocs dans une direction donnee avec un espacement uniforme.
+ * Direction : vertical (defaut), horizontal.
+ * Ecarts : xs (space-1), sm (space-2), md (space-3, defaut), lg (space-4), xl (space-6). */
+@layer mr.components {
+    :where(.mr-stack) {
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        gap: var(--mr-space-3);
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    /* Directions */
+    :where(.mr-stack)[data-direction='vertical'] {
+        flex-direction: column;
+    }
+
+    :where(.mr-stack)[data-direction='horizontal'] {
+        flex-direction: row;
+    }
+
+    /* Ecarts */
+    :where(.mr-stack)[data-gap='xs'] {
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-stack)[data-gap='sm'] {
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-stack)[data-gap='md'] {
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-stack)[data-gap='lg'] {
+        gap: var(--mr-space-4);
+    }
+
+    :where(.mr-stack)[data-gap='xl'] {
+        gap: var(--mr-space-6);
+    }
+
+    /* Alignements */
+    :where(.mr-stack)[data-align='stretch'] {
+        align-items: stretch;
+    }
+
+    :where(.mr-stack)[data-align='start'] {
+        align-items: flex-start;
+    }
+
+    :where(.mr-stack)[data-align='center'] {
+        align-items: center;
+    }
+
+    :where(.mr-stack)[data-align='end'] {
+        align-items: flex-end;
+    }
+
+    /* Justifications */
+    :where(.mr-stack)[data-justify='start'] {
+        justify-content: flex-start;
+    }
+
+    :where(.mr-stack)[data-justify='center'] {
+        justify-content: center;
+    }
+
+    :where(.mr-stack)[data-justify='end'] {
+        justify-content: flex-end;
+    }
+
+    :where(.mr-stack)[data-justify='between'] {
+        justify-content: space-between;
+    }
+}

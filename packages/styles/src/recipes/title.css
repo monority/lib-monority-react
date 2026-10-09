@@ -1,0 +1,41 @@
+/* Recette Title dans la couche mr.components (spec v4).
+ * Titre structurant dans la hierarchie de document.
+ * Tailles : display (32px), lg (24px / h1), md (18px / h2, defaut), sm (16px / h3). */
+@layer mr.components {
+    :where(.mr-title) {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-semibold);
+        color: var(--mr-text-primary);
+        letter-spacing: 0;
+        overflow-wrap: break-word;
+    }
+
+    /* Taille md (defaut / h2) */
+    :where(.mr-title),
+    :where(.mr-title)[data-size='md'] {
+        font-size: var(--mr-font-size-lg);
+        line-height: var(--mr-line-height-lg);
+    }
+
+    /* Taille display (titre majeur / 32px) */
+    :where(.mr-title)[data-size='display'] {
+        font-size: var(--mr-font-size-2xl);
+        line-height: var(--mr-line-height-2xl);
+        letter-spacing: var(--mr-tracking-display);
+    }
+
+    /* Taille lg (titre de page / h1 / 24px) */
+    :where(.mr-title)[data-size='lg'] {
+        font-size: var(--mr-font-size-xl);
+        line-height: var(--mr-line-height-xl);
+        letter-spacing: var(--mr-tracking-h1);
+    }
+
+    /* Taille sm (titre de carte ou groupe / h3 / 16px) */
+    :where(.mr-title)[data-size='sm'] {
+        font-size: var(--mr-font-size-base);
+        line-height: var(--mr-line-height-lg);
+    }
+}

@@ -1,11 +1,15 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { ScrollAreaProps } from './ScrollArea.types'
 
-export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function ScrollArea(
-    { orientation = 'vertical', hideScrollbar = false, children, className, style, ...props },
-    ref
-) {
+export function ScrollArea({
+    ref,
+    orientation = 'vertical',
+    hideScrollbar = false,
+    children,
+    className,
+    style,
+    ...props
+}: ScrollAreaProps) {
     return (
         <div
             ref={ref}
@@ -17,6 +21,6 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
             {children}
         </div>
     )
-})
+}
 
 export type { ScrollAreaProps } from './ScrollArea.types'

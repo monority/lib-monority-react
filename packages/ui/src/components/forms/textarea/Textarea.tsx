@@ -2,33 +2,30 @@ import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 import type { TextareaProps } from './Textarea.types'
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-    {
-        tone,
-        size,
-        label,
-        hint,
-        error,
-        id,
-        className,
-        invalid = false,
-        disabled = false,
-        required = false,
-        resize = 'vertical',
-        value,
-        defaultValue,
-        onChange,
-        maxLength,
-        ...props
-    },
-    ref
-) {
+export function Textarea({
+    tone,
+    size,
+    label,
+    hint,
+    error,
+    id,
+    className,
+    invalid = false,
+    disabled = false,
+    required = false,
+    resize = 'vertical',
+    value,
+    defaultValue,
+    onChange,
+    maxLength,
+    ref,
+    ...props
+}: TextareaProps) {
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = size ?? 'md'
-    const isInvalid = invalid || error != null
     const isControlled = value !== undefined
 
     // Track char count for uncontrolled
@@ -44,10 +41,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     }
 
     const currentLength = isControlled ? String(value ?? '').length : charCount
-    const isNearLimit =
-        typeof maxLength !== 'undefined' && maxLength > 0
-            ? currentLength / maxLength >= 0.85
-            : false
+    const isOverLimit =
+        typeof maxLength !== 'undefined' && maxLength > 0 ? currentLength > maxLength : false
+    const isInvalid = invalid || error != null || isOverLimit
 
     return (
         <FormControl
@@ -75,7 +71,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
                 {typeof maxLength !== 'undefined' && maxLength > 0 ? (
                     <span
                         className="mr-textarea__counter"
-                        data-near-limit={isNearLimit ? true : undefined}
+                        data-near-limit={isOverLimit ? true : undefined}
+                        data-over-limit={isOverLimit ? true : undefined}
                         aria-live="polite"
                     >
                         {currentLength} / {maxLength}
@@ -84,6 +81,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
             </Field>
         </FormControl>
     )
-})
+}
 
 export type { TextareaProps, TextareaTone, TextareaSize } from './Textarea.types'

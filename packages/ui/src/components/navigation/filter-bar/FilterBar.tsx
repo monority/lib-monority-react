@@ -1,11 +1,7 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import type { FilterBarProps } from './FilterBar.types'
 
-export const FilterBar = forwardRef<HTMLDivElement, FilterBarProps>(function FilterBar(
-    { className, children, ...props },
-    ref
-) {
+export function FilterBar({ ref, className, children, ...props }: FilterBarProps) {
     return (
         <div
             ref={ref}
@@ -17,6 +13,6 @@ export const FilterBar = forwardRef<HTMLDivElement, FilterBarProps>(function Fil
             {children}
         </div>
     )
-})
+}
 
 export type { FilterBarProps } from './FilterBar.types'

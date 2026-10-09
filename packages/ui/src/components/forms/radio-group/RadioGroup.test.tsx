@@ -32,10 +32,10 @@ const items = [
 ]
 
 describe('RadioGroup', () => {
-    it('renders with accent tone and md size by default', () => {
+    it('renders with neutral tone and md size by default', () => {
         const view = render(<RadioGroup label="Choose" items={items} />)
         const group = view.querySelector('[role="radiogroup"]')
-        expect(group?.getAttribute('data-tone')).toBe('accent')
+        expect(group?.getAttribute('data-tone')).toBe('neutral')
         expect(group?.getAttribute('data-size')).toBe('md')
     })
 
@@ -105,6 +105,11 @@ describe('RadioGroup', () => {
                 .querySelector('[role="radiogroup"]')
                 ?.getAttribute('data-tone')
         ).toBe('neutral')
+        expect(
+            render(<RadioGroup tone="accent" items={items} />)
+                .querySelector('[role="radiogroup"]')
+                ?.getAttribute('data-tone')
+        ).toBe('accent')
     })
 
     it('forwards ref to the radiogroup container div', () => {

@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { ButtonProps } from './Button.types'
 
@@ -50,31 +50,29 @@ function CheckIcon() {
 
 /* -- Component -- */
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-    {
-        as: Component = 'button',
-        variant,
-        size,
-        className,
-        type = 'button',
-        fullWidth = false,
-        loading = false,
-        iconLeading,
-        iconTrailing,
-        children,
-        disabled,
-        // Copy mode props
-        copyValue,
-        copiedLabel = 'Copied!',
-        duration = 2000,
-        // Icon-only mode props
-        iconOnly,
-        onClick,
-        'aria-label': ariaLabel,
-        ...props
-    },
-    ref
-) {
+export function Button({
+    ref,
+    as: Component = 'button',
+    variant,
+    size,
+    className,
+    type = 'button',
+    fullWidth = false,
+    loading = false,
+    iconLeading,
+    iconTrailing,
+    children,
+    disabled,
+    // Copy mode props
+    copyValue,
+    copiedLabel = 'Copied!',
+    duration = 2000,
+    // Icon-only mode props
+    iconOnly,
+    onClick,
+    'aria-label': ariaLabel,
+    ...props
+}: ButtonProps) {
     const [copied, setCopied] = useState(false)
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -86,6 +84,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 
     const handleClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
+            if (isDisabled) {
+                event.preventDefault()
+                return
+            }
             if (copyValue && !copied) {
                 navigator.clipboard.writeText(copyValue)
                 setCopied(true)
@@ -93,7 +95,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             }
             onClick?.(event)
         },
-        [copyValue, duration, copied, onClick]
+        [isDisabled, copyValue, duration, copied, onClick]
+    )
+
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLButtonElement>) => {
+            if (isDisabled && (event.key === 'Enter' || event.key === ' ')) {
+                event.preventDefault()
+                return
+            }
+            props.onKeyDown?.(event)
+        },
+        [isDisabled, props.onKeyDown]
     )
 
     // -- Copy mode icon --
@@ -124,8 +137,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             ref={ref}
             className={cn('mr-btn', className)}
             type={Component === 'button' ? type : undefined}
-            disabled={Component === 'button' ? isDisabled : undefined}
-            aria-disabled={Component !== 'button' && isDisabled ? true : undefined}
+            disabled={Component === 'button' ? disabled : undefined}
+            aria-disabled={isDisabled ? true : undefined}
             aria-busy={loading || undefined}
             aria-label={resolvedAriaLabel}
             data-variant={resolvedVariant}
@@ -136,12 +149,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             data-icon-only={iconOnly || (showCopyIcon && !children) ? true : undefined}
             data-copied={copied ? true : undefined}
             onClick={handleClick}
+            onKeyDown={handleKeyDown}
             {...props}
         >
             {iconOnly || (showCopyIcon && !children) ? (
                 <>
                     {copyIconEl}
-                    {children}
+                    {children != null && (
+                        <span className="mr-btn__icon" key="icon">
+                            {children}
+                        </span>
+                    )}
                 </>
             ) : (
                 <>
@@ -160,6 +178,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             )}
         </Component>
     )
-})
+}
 
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button.types'

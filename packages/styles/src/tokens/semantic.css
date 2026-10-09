@@ -1,0 +1,192 @@
+/* Tokens semantiques par defaut (theme clair) dans la couche mr.tokens.
+ * Un token se declare uniquement sur les portees qui peuvent changer sa valeur :
+ * - neutres, echelles et alias sous :where(:root, [data-theme]) pour ne pas
+ *   ecraser le theme actif lors d'un changement local de marque.
+ * - tokens dependants de la marque sous :where(:root, [data-theme], [data-brand])
+ *   car la marque et les themes teintes peuvent redefinir ses leviers. */
+@layer mr.tokens {
+    /* Valeurs literales, dependantes des neutres, echelles et alias */
+    :where(:root, [data-theme]) {
+        /* Fonds */
+        --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-surface: oklch(0.985 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-raised: oklch(0.995 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-sunken: var(--mr-bg-canvas);
+        --mr-bg-overlay: var(--mr-bg-raised);
+        --mr-bg-inverse: var(--mr-text-primary);
+
+        /* Textes */
+        --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-on-inverse: var(--mr-bg-canvas);
+        --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Bordures :
+         * border-control : luminosite 0.75 calculee pour assurer un ratio discret de 1.95:1 sur le canevas clair
+         * (ADR-026 : bordure discrete au repos, accessibilite garantie par l'anneau de focus a 4.8:1 et le theme contraste). */
+        --mr-border-control: oklch(0.75 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-default: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+
+        /* Statuts et tons de retour (danger 25, succes 155, avertissement 80, info 255) :
+         * Roles : subtle (fond), border (bordure), text (texte, point, icone, rail).
+         * Conformes WCAG AA >= 4.5:1 pour le texte sur subtle et sur canevas. */
+        --mr-danger-solid: oklch(0.52 0.2 25);
+        --mr-danger-on-solid: var(--mr-bg-canvas);
+        --mr-danger-subtle: oklch(0.945 0.065 25);
+        --mr-danger-border: oklch(0.82 0.12 25);
+        --mr-danger-text: oklch(0.42 0.18 25);
+
+        --mr-success-subtle: oklch(0.945 0.065 155);
+        --mr-success-border: oklch(0.82 0.12 155);
+        --mr-success-text: oklch(0.38 0.15 155);
+
+        --mr-warning-subtle: oklch(0.945 0.07 80);
+        --mr-warning-border: oklch(0.82 0.13 80);
+        --mr-warning-text: oklch(0.4 0.15 80);
+
+        --mr-info-subtle: oklch(0.945 0.065 255);
+        --mr-info-border: oklch(0.82 0.12 255);
+        --mr-info-text: oklch(0.38 0.15 255);
+
+        /* Pourcentages de melange d'etat :
+         * L'etat s'obtient en rapprochant --mr-bg-inverse du canevas, plus fort a l'actif qu'au survol
+         * (formule identique en theme clair et en theme sombre par permutation des tokens).
+         * Grille arithmetique en multiples de 12% : 1x12 (survol), 2x12 (actif), 7x12 (desactive). */
+        --mr-state-hover-mix: 12%;
+        --mr-state-active-mix: 24%;
+        --mr-state-disabled-mix: 84%;
+
+        /* Mouvement : micro-interactions et boucles continues.
+         * Regle : multiples de 50ms (ADR-021).
+         * state : 150ms (3 x 50ms) pour les micro-interactions d'etat.
+         * panel : 200ms (4 x 50ms) pour les surfaces coulissantes.
+         * spin  : 800ms (16 x 50ms) pour la rotation d'attente.
+         * pulse : 1200ms (24 x 50ms) pour l'oscillation de squelette.
+         * loop  : 1500ms (30 x 50ms) pour le balayage de progression. */
+        --mr-duration-state: 150ms;
+        --mr-duration-panel: 200ms;
+        --mr-duration-spin: 800ms;
+        --mr-duration-pulse: 1200ms;
+        --mr-duration-loop: 1500ms;
+
+        /* Espacement : --mr-space-N vaut N fois 0.25rem (grille arithmetique de 4px).
+         * Regle de proportion du padding horizontal de controle :
+         * L'espacement horizontal padding-inline vaut la moitie de la hauteur de controle
+         * arrondie au pas de 0.25rem inferieur :
+         * space-3 (12px = 0.75rem) pour sm (28px = 1.75rem),
+         * space-4 (16px = 1.0rem) pour md (32px = 2.0rem),
+         * space-5 (20px = 1.25rem) pour lg (40px = 2.5rem). */
+        --mr-space-1: 0.25rem;
+        --mr-space-2: 0.5rem;
+        --mr-space-3: 0.75rem;
+        --mr-space-4: 1rem;
+        --mr-space-5: 1.25rem;
+        --mr-space-6: 1.5rem;
+
+        /* Tailles de controle : N fois 0.25rem (grille de 4px).
+         * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)
+         * md: 2rem (32px = 8x4px)
+         * lg: 2.5rem (40px = 10x4px) */
+        --mr-size-control-sm: 1.75rem;
+        --mr-size-control-md: 2rem;
+        --mr-size-control-lg: 2.5rem;
+
+        /* Tailles de conteneur (largeurs maximales) */
+        --mr-size-container-sm: 40rem;
+        --mr-size-container-md: 48rem;
+        --mr-size-container-lg: 64rem;
+        --mr-size-container-xl: 80rem;
+
+        /* Rayons : base de 2px multipliee par la suite (0, 2, 3, 5, 8).
+         * sm vaut 2 fois 2px = 4px = 0.25rem, ajuste par le levier de marque.
+         * md vaut 3 fois 2px = 6px = 0.375rem, ajuste par le levier de marque.
+         * full pour les pilules et controles arrondis oblongs. */
+        --mr-radius-sm: calc(0.25rem * var(--mr-ref-radius-scale));
+        --mr-radius-md: calc(0.375rem * var(--mr-ref-radius-scale));
+        --mr-radius-lg: calc(0.75rem * var(--mr-ref-radius-scale));
+        --mr-radius-full: 9999px;
+
+        /* Ombre overlay : surfaces flottantes (popover, dropdown, datepicker) */
+        --mr-shadow-overlay: 0 4px 16px -2px oklch(0 0 0 / 0.12), 0 2px 6px -1px oklch(0 0 0 / 0.08);
+
+        /* Pouce du switch au repos (off) : fond blanc en clair et sombre */
+        --mr-switch-thumb-off: oklch(1 0 0);
+
+        /* Typographie : echelle numerique CSS 400, 500, 600, 700 ; medium vaut 500 */
+        --mr-font-family-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system,
+            'Segoe UI', sans-serif;
+        --mr-font-family-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, SFMono-Regular,
+            Menlo, Monaco, Consolas, monospace;
+
+        /* Echelle typographique (multiples de 0.125rem) :
+         * xs = 0.6875rem (11px)
+         * sm = 0.75rem (12px)
+         * md = 0.875rem (14px)
+         * base = 1rem (16px)
+         * lg = 1.125rem (18px)
+         * xl = 1.5rem (24px)
+         * 2xl = 2rem (32px) */
+        --mr-font-size-xs: 0.6875rem;
+        --mr-font-size-sm: 0.75rem;
+        --mr-font-size-md: 0.875rem;
+        --mr-font-size-base: 1rem;
+        --mr-font-size-lg: 1.125rem;
+        --mr-font-size-xl: 1.5rem;
+        --mr-font-size-2xl: 2rem;
+
+        --mr-font-weight-regular: 400;
+        --mr-font-weight-medium: 500;
+        --mr-font-weight-semibold: 600;
+
+        /* Hauteurs de ligne */
+        --mr-line-height-sm: 1rem;
+        --mr-line-height-md: 1.25rem;
+        --mr-line-height-lg: 1.5rem;
+        --mr-line-height-xl: 2rem;
+        --mr-line-height-2xl: 2.5rem;
+
+        /* Interlettrage */
+        --mr-tracking-display: -0.02em;
+        --mr-tracking-h1: -0.01em;
+        --mr-tracking-label: 0.05em;
+    }
+
+    /* Neutralisation et adoucissement du mouvement sous mouvement reduit (ADR-021).
+     * Les transitions d'etat et de panneau tombent a 0ms.
+     * La rotation d'attente est ralentie a 1600ms (spec 5.11) pour preserver la perception d'activite sans inconfort vestibulaire.
+     * La pulsation et le balayage sont ralentis et adoucis pour eviter toute distraction.
+     * Doit vivre dans mr.tokens apres la declaration par defaut pour ne pas perdre
+     * face a la couche des tokens a specificite egale. */
+    @media (prefers-reduced-motion: reduce) {
+        :where(:root, [data-theme]) {
+            --mr-duration-state: 0ms;
+            --mr-duration-panel: 0ms;
+            --mr-duration-spin: 1600ms;
+            --mr-duration-pulse: 2400ms;
+            --mr-duration-loop: 3000ms;
+        }
+    }
+
+    /* Valeurs dependantes de la marque */
+    :where(:root, [data-theme], [data-brand]) {
+        /* Marque / Accent :
+         * Lit le levier de luminosite du theme (--mr-ref-accent-lightness) pour survivre
+         * sous un conteneur [data-brand] sans rebasculer en luminosite claire.
+         * Facteur 0.70 sur brand-chroma maintient la marge sRGB >= 0.04 sur tout le balayage de teintes (0-330 deg). */
+        --mr-accent-solid: oklch(
+            var(--mr-ref-accent-lightness) calc(var(--mr-ref-brand-chroma) * 0.7)
+                var(--mr-ref-brand-hue)
+        );
+        --mr-accent-subtle: color-mix(in oklch, var(--mr-accent-solid) 12%, var(--mr-bg-canvas));
+        --mr-accent-border: color-mix(
+            in oklch,
+            var(--mr-accent-solid) 30%,
+            var(--mr-border-default)
+        );
+        --mr-accent-text: var(--mr-accent-solid);
+
+        /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
+        --mr-focus-ring: var(--mr-accent-solid);
+    }
+}

@@ -233,4 +233,18 @@ describe('DropdownMenu', () => {
 
         expect(container?.querySelector('.mr-dropdown')?.getAttribute('data-open')).not.toBe('true')
     })
+
+    it('renders icon and shortcut when provided', () => {
+        const itemsWithIcons = [
+            {
+                value: 'copy',
+                label: 'Copy',
+                icon: <span data-testid="copy-icon">C</span>,
+                shortcut: '⌘C',
+            },
+        ]
+        render(<DropdownMenu trigger="Actions" items={itemsWithIcons} defaultOpen />)
+        expect(document.body.querySelector('[data-testid="copy-icon"]')).not.toBeNull()
+        expect(document.body.querySelector('.mr-dropdown__item-shortcut')?.textContent).toBe('⌘C')
+    })
 })

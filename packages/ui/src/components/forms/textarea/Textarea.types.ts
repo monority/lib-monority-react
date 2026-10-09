@@ -1,4 +1,4 @@
-import type { ReactNode, TextareaHTMLAttributes } from 'react'
+import type { ReactNode, Ref, TextareaHTMLAttributes } from 'react'
 
 export type TextareaTone = 'neutral' | 'accent' | 'danger'
 export type TextareaSize = 'sm' | 'md' | 'lg'
@@ -15,4 +15,5 @@ export interface TextareaProps
     className?: string
     invalid?: boolean
     resize?: 'none' | 'vertical' | 'both'
+    ref?: Ref<HTMLTextAreaElement>
 }

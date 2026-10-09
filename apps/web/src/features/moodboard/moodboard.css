@@ -153,6 +153,20 @@
     color: var(--mr-text-primary);
 }
 
+.moodboard-preview-scope :where(.mr-btn)[data-variant='primary'] {
+    background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+    color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
+    border-color: var(--mr-control-accent-border, transparent);
+}
+
+.moodboard-preview-scope :where(.mr-btn)[data-variant='primary']:hover {
+    background-color: var(--mr-control-accent-hover, var(--mr-bg-inverse));
+}
+
+.moodboard-preview-scope :where(.mr-btn)[data-variant='primary']:active {
+    background-color: var(--mr-control-accent-active, var(--mr-bg-inverse));
+}
+
 /* === Preview === */
 
 .moodboard-preview {

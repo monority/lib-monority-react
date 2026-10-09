@@ -1,0 +1,7 @@
+/* Fixture invalide pour prouver le rejet des valeurs brutes hors ref.css et themes/ */
+.mr-test-violation {
+    padding: 16px;
+    color: #ff0000;
+    background-color: oklch(0.5 0.1 200);
+    transition: all 200ms;
+}

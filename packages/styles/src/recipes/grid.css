@@ -1,0 +1,41 @@
+/* Recette Grid dans la couche mr.components (spec v4).
+ * Aligne des blocs en colonnes regulieres avec un ecart uniforme.
+ * Colonnes : 1, 2 (defaut), 3, 4, auto-fit, auto-fill. */
+@layer mr.components {
+    :where(.mr-grid) {
+        display: grid;
+        box-sizing: border-box;
+        width: 100%;
+        gap: var(--mr-space-4);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='1'] {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='2'] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='3'] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='4'] {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='auto-fit'] {
+        grid-template-columns: repeat(auto-fit, minmax(calc(var(--mr-size-container-sm) / 2), 1fr));
+    }
+
+    :where(.mr-grid)[data-columns='auto-fill'] {
+        grid-template-columns: repeat(auto-fill, minmax(calc(var(--mr-size-container-sm) / 2), 1fr));
+    }
+
+    /* Densite compacte */
+    :where([data-density='compact'] .mr-grid, .mr-grid[data-density='compact']) {
+        gap: var(--mr-space-3);
+    }
+}

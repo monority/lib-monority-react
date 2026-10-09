@@ -1,0 +1,260 @@
+/* Recette du composant Calendar (couche mr.components)
+ *
+ * Calendrier autonome affichant un mois navigable sous forme de grille de jours.
+ *
+ * Dimensions :
+ * - Cellules de jour : min-inline-size: var(--mr-size-control-sm), min-block-size: var(--mr-size-control-sm) (28px >= 24px WCAG 2.5.8)
+ * - Boutons de navigation : block-size & inline-size: var(--mr-size-control-sm)
+ * - Chiffres : font-variant-numeric: tabular-nums
+ * - Rayon cellules : var(--mr-radius-md)
+ *
+ * Etats :
+ * - Repos : fond transparent, texte var(--mr-text-primary)
+ * - Survol : fond var(--mr-bg-sunken), bordure var(--mr-border-subtle)
+ * - Aujourd'hui : contour var(--mr-border-control), poids medium
+ * - Selectionne : fond var(--mr-bg-inverse), texte var(--mr-text-on-inverse)
+ * - Hors mois : opacite 0.4, texte var(--mr-text-secondary)
+ * - Desactive : opacite 0.3, curseur not-allowed, texte var(--mr-text-disabled)
+ */
+@layer mr.components {
+    /* Conteneur principal du calendrier */
+    :where(.mr-calendar) {
+        box-sizing: border-box;
+        display: inline-flex;
+        flex-direction: column;
+        padding: var(--mr-space-4);
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-lg);
+        user-select: none;
+    }
+
+    /* Conteneur des mois */
+    :where(.mr-calendar__months) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-4);
+    }
+
+    :where(.mr-calendar__months--multiple) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* Mois unique */
+    :where(.mr-calendar__month) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* En-tete du mois (titre et navigation) */
+    :where(.mr-calendar__header) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-block-end: var(--mr-space-2);
+        margin-block-end: var(--mr-space-2);
+        border-block-end: 1px solid var(--mr-border-subtle);
+    }
+
+    /* Libelle mois / annee */
+    :where(.mr-calendar__month-label) {
+        font-weight: var(--mr-font-weight-medium);
+        font-size: var(--mr-font-size-md);
+        color: var(--mr-text-primary);
+        text-transform: capitalize;
+    }
+
+    /* Selecteurs rapides de mois / annee */
+    :where(.mr-calendar__pickers) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-calendar__select) {
+        appearance: none;
+        background-color: transparent;
+        color: var(--mr-text-primary);
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-medium);
+        font-size: var(--mr-font-size-sm);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-sm);
+        cursor: pointer;
+        outline: none;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    :where(.mr-calendar__select):focus-visible {
+        border-color: var(--mr-border-control);
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 1px;
+    }
+
+    /* Boutons de navigation (precedent / suivant) */
+    :where(.mr-calendar__nav-btn) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        padding: 0;
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        background-color: transparent;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-calendar__nav-btn):hover {
+            background-color: var(--mr-bg-sunken);
+            border-color: var(--mr-border-subtle);
+            color: var(--mr-text-primary);
+        }
+    }
+
+    :where(.mr-calendar__nav-btn):focus-visible {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Grille du calendrier */
+    :where(.mr-calendar__grid) {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    /* Ligne des en-tetes de jours (lun, mar, mer...) */
+    :where(.mr-calendar__day-names) {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        margin-block-end: var(--mr-space-1);
+    }
+
+    :where(.mr-calendar__day-name) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        padding-block: var(--mr-space-1);
+        text-transform: uppercase;
+        user-select: none;
+    }
+
+    /* Ligne d'une semaine */
+    :where(.mr-calendar__week) {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+    }
+
+    /* Cellule de jour */
+    :where(.mr-calendar__day) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 100%;
+        aspect-ratio: 1;
+        min-inline-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding: 0;
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        background-color: transparent;
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        font-weight: inherit;
+        font-variant-numeric: tabular-nums;
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
+            border-color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-calendar__day):hover:where(
+                :not([data-selected], :disabled, [data-disabled='true'])
+            ) {
+            background-color: var(--mr-bg-sunken);
+            border-color: var(--mr-border-subtle);
+            color: var(--mr-text-primary);
+        }
+    }
+
+    /* Jour courant (aujourd'hui) non selectionne */
+    :where(.mr-calendar__day[data-today='true']):where(:not([data-selected])),
+    :where(.mr-calendar__day--today):where(:not([data-selected], .mr-calendar__day--selected)) {
+        font-weight: var(--mr-font-weight-medium);
+        border-color: var(--mr-border-control);
+    }
+
+    /* Jour selectionne (ton neutral defaut ADR-020) */
+    :where(.mr-calendar__day[data-selected='true']),
+    :where(.mr-calendar__day--selected) {
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
+        font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
+    }
+
+    /* Jour selectionne (ton accent explicite) */
+    :where(.mr-calendar[data-tone='accent']) :where(.mr-calendar__day[data-selected='true']),
+    :where(.mr-calendar[data-tone='accent']) :where(.mr-calendar__day--selected) {
+        background-color: var(--mr-accent-solid);
+        color: var(--mr-bg-canvas);
+        font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
+    }
+
+    /* Jours hors du mois courant */
+    :where(.mr-calendar__day:not([data-current-month], .mr-calendar__day--current-month)):where(
+            :not([data-selected], .mr-calendar__day--selected)
+        ),
+    :where(.mr-calendar__day--other-month):where(
+            :not([data-selected], .mr-calendar__day--selected)
+        ) {
+        color: var(--mr-text-secondary);
+        opacity: 0.4;
+    }
+
+    /* Jour desactive */
+    :where(.mr-calendar__day:disabled),
+    :where(.mr-calendar__day[data-disabled='true']),
+    :where(.mr-calendar__day--disabled) {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        opacity: 0.3;
+    }
+
+    /* Jour masque */
+    :where(.mr-calendar__day--hidden) {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Focus visible sur cellule de jour */
+    :where(.mr-calendar__day):focus-visible {
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 1px;
+    }
+
+    :where(.mr-calendar[data-tone='accent']) :where(.mr-calendar__day):focus-visible {
+        outline: 1px solid var(--mr-accent-solid);
+        outline-offset: 1px;
+    }
+}

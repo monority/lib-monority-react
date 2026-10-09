@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useId, useState } from 'react'
+import { useCallback, useId, useState } from 'react'
 import { cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/cn'
 import type { TooltipProps } from './Tooltip.types'
@@ -11,10 +11,17 @@ import type { TooltipProps } from './Tooltip.types'
  * WAI-ARIA Authoring Practices. `data-hidden` overrides the CSS open state
  * until the pointer leaves or focus moves, so Escape sticks while hovering.
  */
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(function Tooltip(
-    { content, children, className, ...props },
-    ref
-) {
+export function Tooltip({
+    ref,
+    content,
+    children,
+    side = 'top',
+    arrow = false,
+    delayMs = 0,
+    className,
+    style,
+    ...props
+}: TooltipProps) {
     const generatedId = useId()
     const [dismissed, setDismissed] = useState(false)
 
@@ -28,11 +35,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(function Tooltip
         setDismissed(false)
     }, [])
 
+    const tooltipStyle =
+        delayMs > 0
+            ? ({
+                  ...style,
+                  '--mr-tooltip-delay': `${delayMs}ms`,
+              } as React.CSSProperties)
+            : style
+
     return (
         <div
             ref={ref}
             className={cn('mr-tooltip', className)}
+            data-side={side}
+            data-arrow={arrow ? true : undefined}
             data-hidden={dismissed ? true : undefined}
+            style={tooltipStyle}
             onKeyDown={handleKeyDown}
             onMouseLeave={clearDismissal}
             onFocusCapture={clearDismissal}
@@ -49,6 +67,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(function Tooltip
             </div>
         </div>
     )
-})
+}
 
 export type { TooltipProps } from './Tooltip.types'

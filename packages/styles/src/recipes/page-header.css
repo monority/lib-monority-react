@@ -1,0 +1,18 @@
+/* Recette PageHeader dans la couche mr.components (spec v4).
+ * En-tete de page regroupant fil d'Ariane, titre, description et actions. */
+@layer mr.components {
+    :where(.mr-page-header) {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        width: 100%;
+        gap: var(--mr-space-3);
+        padding-block-end: var(--mr-space-4);
+    }
+
+    /* Densite compacte */
+    :where([data-density='compact'] .mr-page-header, .mr-page-header[data-density='compact']) {
+        gap: var(--mr-space-2);
+        padding-block-end: var(--mr-space-3);
+    }
+}

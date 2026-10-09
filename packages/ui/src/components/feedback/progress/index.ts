@@ -1,2 +1,11 @@
 export { Progress } from './Progress'
-export type { ProgressProps, ProgressTone } from './Progress.types'
+export type {
+    ProgressBarProps,
+    ProgressLabelProps,
+    ProgressMetaProps,
+    ProgressMode,
+    ProgressProps,
+    ProgressTone,
+    ProgressTrackProps,
+    ProgressValueProps,
+} from './Progress.types'

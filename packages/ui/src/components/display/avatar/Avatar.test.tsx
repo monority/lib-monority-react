@@ -97,4 +97,12 @@ describe('Avatar', () => {
         const view = render(<Avatar />)
         expect(view.querySelector('.mr-avatar__initials')?.textContent).toBe('?')
     })
+
+    it('renders status dot when status is provided', () => {
+        const view = render(<Avatar name="Alice" status="online" />)
+        const dot = view.querySelector('.mr-avatar__status')
+        expect(dot).not.toBeNull()
+        expect(dot?.getAttribute('data-status')).toBe('online')
+        expect(dot?.getAttribute('aria-hidden')).toBe('true')
+    })
 })

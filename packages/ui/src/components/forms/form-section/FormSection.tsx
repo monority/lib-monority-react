@@ -1,14 +1,18 @@
-import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 import { Card } from '@/components/display/card/Card'
 import { Title } from '@/components/typography/title/Title'
 import { Text } from '@/components/typography/text/Text'
 import type { FormSectionProps } from './FormSection.types'
 
-export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(function FormSection(
-    { title, description, meta, actions, children, className },
-    ref
-) {
+export function FormSection({
+    ref,
+    title,
+    description,
+    meta,
+    actions,
+    children,
+    className,
+}: FormSectionProps) {
     const hasHeader = title != null || description != null || meta != null
 
     return (
@@ -44,6 +48,6 @@ export const FormSection = forwardRef<HTMLDivElement, FormSectionProps>(function
             {actions != null ? <div className="mr-form-section__footer">{actions}</div> : null}
         </Card>
     )
-})
+}
 
 export type { FormSectionProps } from './FormSection.types'

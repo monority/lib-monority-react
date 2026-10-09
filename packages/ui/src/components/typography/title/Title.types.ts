@@ -1,4 +1,4 @@
-import type { ElementType, HTMLAttributes, ReactNode } from 'react'
+import type { ElementType, HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type TitleSize = 'sm' | 'md' | 'lg' | 'display'
 
@@ -7,4 +7,5 @@ export interface TitleProps extends Omit<HTMLAttributes<HTMLElement>, 'as'> {
     size?: TitleSize
     children?: ReactNode
     className?: string
+    ref?: Ref<HTMLElement>
 }

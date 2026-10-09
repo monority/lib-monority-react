@@ -1,21 +1,5 @@
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-
-const resolved = JSON.parse(
-    readFileSync(
-        fileURLToPath(new URL('../../../packages/tokens/dist/resolved.json', import.meta.url)),
-        'utf8'
-    )
-)
-
-const hexToRgb = (hex: string): string => {
-    const raw = hex.replace('#', '')
-    const value = raw.length === 3 ? [...raw].map((char) => char + char).join('') : raw
-    const channels = [0, 2, 4].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16))
-    return `rgb(${channels.join(', ')})`
-}
 
 async function blockHydration(page: Page) {
     await page.route('**/*.js', (route) => route.abort())
@@ -29,21 +13,16 @@ test.describe('Phase 2b — bootstrap du thème', () => {
         await page.goto('/docs', { waitUntil: 'domcontentloaded' })
 
         await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
-        const background = await page.locator('body').evaluate((element) => {
+        const { background, expectedCanvas } = await page.locator('body').evaluate((element) => {
+            const probe = document.createElement('div')
+            probe.style.backgroundColor = 'var(--mr-bg-canvas)'
+            element.appendChild(probe)
+            const expected = getComputedStyle(probe).backgroundColor
             const color = getComputedStyle(element).backgroundColor
-            const canvas = document.createElement('canvas')
-            canvas.width = 1
-            canvas.height = 1
-            const context = canvas.getContext('2d', { willReadFrequently: true })
-            if (!context) return color
-            context.fillStyle = color
-            context.fillRect(0, 0, 1, 1)
-            const [red, green, blue] = context.getImageData(0, 0, 1, 1).data
-            return `rgb(${red}, ${green}, ${blue})`
+            probe.remove()
+            return { background: color, expectedCanvas: expected }
         })
-        expect(background).toBe(
-            hexToRgb(resolved.values['dark.comfortable.monority']['--mr-bg-canvas'])
-        )
+        expect(background).toBe(expectedCanvas)
     })
 
     test('H3: system + prefers-contrast: more applique high-contrast avant hydratation', async ({

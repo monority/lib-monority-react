@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type SortDirection = 'asc' | 'desc'
 
@@ -18,6 +18,7 @@ export interface Sort {
 }
 
 export interface DataTableProps<T = unknown> extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     columns?: Column<T>[]
     rows?: T[]
     getRowId?: (row: T, index: number) => string

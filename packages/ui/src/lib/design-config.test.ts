@@ -133,7 +133,7 @@ describe('resolveDesignConfig resilience', () => {
             componentColor: 'cyan',
         } as unknown as DesignConfig
         expect(() => resolveDesignConfig(legacy)).not.toThrow()
-        expect(resolveDesignConfig(legacy).componentColor).toBe('var(--mr-accent)')
+        expect(resolveDesignConfig(legacy).componentColor).toBe('var(--mr-accent-solid)')
     })
 
     it('falls back to the default axis for every unknown value', () => {
@@ -165,7 +165,7 @@ describe('resolveDesignConfig resilience', () => {
         } as unknown as DesignConfig
         const resolved = resolveDesignConfig(partial)
         expect(resolved.accent).toEqual({ hue: 350, chroma: 0.13 })
-        expect(resolved.componentColor).toBe('var(--mr-accent)')
+        expect(resolved.componentColor).toBe('var(--mr-accent-solid)')
     })
 })
 

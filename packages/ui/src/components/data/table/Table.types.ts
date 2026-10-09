@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export interface Column {
     key: string
@@ -8,6 +8,7 @@ export interface Column {
 }
 
 export interface TableProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     columns?: Column[]
     rows?: Record<string, unknown>[]
     getRowId?: (row: Record<string, unknown>, index: number) => string

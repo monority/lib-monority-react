@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
 
 export type InputTone = 'neutral' | 'accent' | 'danger'
 export type InputSize = 'sm' | 'md' | 'lg'
@@ -7,12 +7,17 @@ export type InputSize = 'sm' | 'md' | 'lg'
 // would make React throw. Use `inputClassName` / field props instead.
 export interface InputProps
     extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'size' | 'children'> {
+    ref?: Ref<HTMLInputElement>
     label?: ReactNode
     hint?: ReactNode
     error?: ReactNode
     className?: string
     inputClassName?: string
+    /** @deprecated utiliser invalid */
     tone?: InputTone
     size?: InputSize
     invalid?: boolean
+    iconLeading?: ReactNode
+    iconTrailing?: ReactNode
+    showPasswordToggle?: boolean
 }

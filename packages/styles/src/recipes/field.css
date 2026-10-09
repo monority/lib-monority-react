@@ -1,0 +1,63 @@
+/* Recette du composant Field (couche mr.components)
+ *
+ * Micro-etape F1 : conteneur de champ (.mr-field) et etiquette (.mr-field__label).
+ *
+ * Structure :
+ * - Disposition en colonne (flex-direction: column) avec ecart vertical unique
+ *   entre l'etiquette et le controle (gap: var(--mr-space-2), soit 8px = 0.5rem).
+ * - Regle de pas : le pas vertical d'association directe du label a son controle
+ *   utilise le token --mr-space-2 (multiple de la grille de 0.25rem : 2 * 0.25rem = 0.5rem).
+ * - Etiquette : taille --mr-font-size-md (14px / 0.875rem), graisse --mr-font-weight-medium (500),
+ *   couleur --mr-text-primary.
+ *
+ * Neutralite pour les composants internes :
+ * - L'espacement ne s'applique que s'il y a au moins deux enfants (flex gap natif).
+ * - Un controle seul enveloppe dans .mr-field sans label (comme Input seul) ne subit aucun ecart.
+ * - Alignement flex-start : evite l'etirement transversal par defaut qui etendrait la zone cliquable
+ *   de controles en ligne comme Checkbox (.mr-checkbox). Les controles pleine largeur (Input)
+ *   portent leur propre inline-size: 100%. L'aide et l'erreur occupent 100% pour assurer leur retour a la ligne.
+ */
+@layer mr.components {
+    :where(.mr-field) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+        inline-size: 100%;
+    }
+
+    :where(.mr-field__label) {
+        display: inline-block;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+        cursor: default;
+    }
+
+    :where(.mr-field__hint) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        margin: 0;
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-field__error) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        margin: 0;
+        font-family: inherit;
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-field__required) {
+        color: var(--mr-danger-solid);
+    }
+}

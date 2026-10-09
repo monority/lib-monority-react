@@ -1,0 +1,92 @@
+/* Recette Tooltip dans la couche mr.components (spec v4).
+ * Infobulle legere et discrete pilotee par le survol et le focus. */
+@layer mr.components {
+    :where(.mr-tooltip) {
+        position: relative;
+        display: inline-flex;
+    }
+
+    :where(.mr-tooltip__content) {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-block-end: var(--mr-space-1);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms);
+        z-index: 50;
+        background-color: var(--mr-bg-inverse);
+        color: var(--mr-text-on-inverse);
+        border-radius: var(--mr-radius-sm);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        line-height: var(--mr-line-height-sm);
+        white-space: nowrap;
+        box-shadow: var(--mr-shadow-overlay);
+    }
+
+    :where(.mr-tooltip[data-side='bottom']) :where(.mr-tooltip__content) {
+        bottom: auto;
+        top: 100%;
+        margin-block-end: 0;
+        margin-block-start: var(--mr-space-1);
+    }
+
+    :where(.mr-tooltip[data-side='left']) :where(.mr-tooltip__content) {
+        bottom: auto;
+        left: auto;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-block-end: 0;
+        margin-inline-end: var(--mr-space-1);
+    }
+
+    :where(.mr-tooltip[data-side='right']) :where(.mr-tooltip__content) {
+        bottom: auto;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-block-end: 0;
+        margin-inline-start: var(--mr-space-1);
+    }
+
+    :where(.mr-tooltip[data-arrow='true']) :where(.mr-tooltip__content)::after {
+        content: '';
+        position: absolute;
+        inline-size: var(--mr-space-1);
+        block-size: var(--mr-space-1);
+        background-color: var(--mr-bg-inverse);
+        transform: rotate(45deg);
+    }
+
+    :where(.mr-tooltip[data-arrow='true']:not([data-side])) :where(.mr-tooltip__content)::after,
+    :where(.mr-tooltip[data-arrow='true'][data-side='top']) :where(.mr-tooltip__content)::after {
+        bottom: calc(-1 * var(--mr-space-1) / 2);
+        left: calc(50% - var(--mr-space-1) / 2);
+    }
+
+    :where(.mr-tooltip[data-arrow='true'][data-side='bottom']) :where(.mr-tooltip__content)::after {
+        top: calc(-1 * var(--mr-space-1) / 2);
+        left: calc(50% - var(--mr-space-1) / 2);
+    }
+
+    :where(.mr-tooltip[data-arrow='true'][data-side='left']) :where(.mr-tooltip__content)::after {
+        right: calc(-1 * var(--mr-space-1) / 2);
+        top: calc(50% - var(--mr-space-1) / 2);
+    }
+
+    :where(.mr-tooltip[data-arrow='true'][data-side='right']) :where(.mr-tooltip__content)::after {
+        left: calc(-1 * var(--mr-space-1) / 2);
+        top: calc(50% - var(--mr-space-1) / 2);
+    }
+
+    :where(.mr-tooltip:hover:not([data-hidden])) :where(.mr-tooltip__content),
+    :where(.mr-tooltip:focus-within:not([data-hidden])) :where(.mr-tooltip__content) {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

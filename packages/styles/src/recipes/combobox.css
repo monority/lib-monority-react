@@ -1,0 +1,253 @@
+/* Recette du composant Combobox (couche mr.components)
+ *
+ * Champ de saisie avec autocompletion et liste deroulante filtree.
+ *
+ * Tailles et dimensions (parite stricte avec Input et Select) :
+ * - sm : 28px (min-block-size: --mr-size-control-sm, padding-inline: --mr-space-3)
+ * - md (defaut) : 32px (min-block-size: --mr-size-control-md, padding-inline: --mr-space-4)
+ * - lg : 40px (min-block-size: --mr-size-control-lg, padding-inline: --mr-space-5)
+ *
+ * Liste flottante :
+ * - fond : var(--mr-bg-raised)
+ * - bordure : 1px solid var(--mr-border-control)
+ * - rayon : var(--mr-radius-md)
+ * - ombre : var(--mr-shadow-overlay)
+ *
+ * Option selectionnee :
+ * - Ton neutre (defaut ADR-020) : rail lateral 2px var(--mr-text-primary), fond var(--mr-bg-sunken)
+ * - Ton accent (explicite) : rail lateral 2px var(--mr-accent-solid), fond var(--mr-accent-subtle)
+ */
+@layer mr.components {
+    /* Conteneur principal */
+    :where(.mr-combobox) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Champ de saisie combobox */
+    :where(.mr-combobox__input) {
+        display: block;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+        padding-block: 0;
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: none;
+        vertical-align: middle;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    /* Tailles du champ de saisie */
+    :where(.mr-combobox)[data-size='sm'] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-size='sm'] {
+        block-size: var(--mr-size-control-sm);
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+    }
+
+    :where(.mr-combobox)[data-size='md'] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-size='md'] {
+        block-size: var(--mr-size-control-md);
+        min-block-size: var(--mr-size-control-md);
+        padding-inline: var(--mr-space-4);
+    }
+
+    :where(.mr-combobox)[data-size='lg'] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-size='lg'] {
+        block-size: var(--mr-size-control-lg);
+        min-block-size: var(--mr-size-control-lg);
+        padding-inline: var(--mr-space-5);
+    }
+
+    /* Placeholder */
+    :where(.mr-combobox__input)::placeholder {
+        color: var(--mr-text-secondary);
+        opacity: 1;
+    }
+
+    /* Focus (ton neutre defaut ADR-020) */
+    :where(.mr-combobox__input):focus-visible,
+    :where(.mr-combobox__input):focus {
+        border-color: var(--mr-text-secondary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 0;
+    }
+
+    /* Focus accent */
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__input):focus-visible,
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__input):focus,
+    :where(.mr-combobox__input[data-tone='accent']):focus-visible,
+    :where(.mr-combobox__input[data-tone='accent']):focus {
+        border-color: var(--mr-accent-solid);
+        outline: 1px solid var(--mr-accent-solid);
+        outline-offset: 0;
+    }
+
+    /* Survol */
+    @media (hover: hover) {
+        :where(.mr-combobox__input):hover:where(
+                :not(:disabled, [aria-invalid='true'], [data-tone='danger'])
+            ) {
+            border-color: color-mix(
+                in oklch,
+                var(--mr-border-control),
+                var(--mr-text-primary) var(--mr-state-hover-mix)
+            );
+        }
+    }
+
+    /* Etat invalide / danger */
+    :where(.mr-combobox[data-invalid='true']) :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[aria-invalid='true'],
+    :where(.mr-combobox__input)[data-invalid='true'],
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__input),
+    :where(.mr-combobox__input[data-tone='danger']) {
+        border-color: var(--mr-danger-solid);
+    }
+
+    :where(.mr-combobox[data-invalid='true']) :where(.mr-combobox__input):focus-visible,
+    :where(.mr-combobox[data-invalid='true']) :where(.mr-combobox__input):focus,
+    :where(.mr-combobox__input)[aria-invalid='true']:focus-visible,
+    :where(.mr-combobox__input)[aria-invalid='true']:focus,
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__input):focus-visible,
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__input):focus,
+    :where(.mr-combobox__input[data-tone='danger']):focus-visible,
+    :where(.mr-combobox__input[data-tone='danger']):focus {
+        border-color: var(--mr-danger-solid);
+        outline: 2px solid var(--mr-danger-solid);
+        outline-offset: 0;
+    }
+
+    /* Etat desactive */
+    :where(.mr-combobox__input):disabled,
+    :where(.mr-combobox__input)[data-disabled='true'],
+    :where(.mr-combobox[data-disabled='true']) :where(.mr-combobox__input) {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+        border-color: color-mix(
+            in oklch,
+            var(--mr-border-control),
+            var(--mr-bg-canvas) var(--mr-state-disabled-mix)
+        );
+    }
+
+    /* ─── Liste deroulante flottante (Popover) ─────────────────── */
+    :where(.mr-combobox__list) {
+        z-index: 50;
+        box-sizing: border-box;
+        padding: var(--mr-space-1);
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-md);
+        box-shadow: var(--mr-shadow-overlay);
+        max-block-size: calc(var(--mr-size-control-md) * 8);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        user-select: none;
+    }
+
+    /* Option de liste */
+    :where(.mr-combobox__item) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        inline-size: 100%;
+        box-sizing: border-box;
+        min-block-size: var(--mr-size-control-sm);
+        padding-inline: var(--mr-space-3);
+        padding-block: var(--mr-space-1);
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-sm);
+        background-color: transparent;
+        color: var(--mr-text-primary);
+        font-family: inherit;
+        font-size: var(--mr-font-size-md);
+        font-weight: inherit;
+        text-align: start;
+        cursor: pointer;
+        position: relative;
+        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-combobox__item):hover {
+            background-color: var(--mr-bg-sunken);
+            color: var(--mr-text-primary);
+        }
+    }
+
+    :where(.mr-combobox__item[data-active='true']),
+    :where(.mr-combobox__item.is-active) {
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
+    }
+
+    /* Option selectionnee (ton neutre defaut ADR-020 : noir en clair, blanc en sombre) */
+    :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox__item[aria-selected='true']) {
+        background-color: var(--mr-bg-sunken);
+        border-inline-start: 2px solid var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    /* Option selectionnee (ton accent explicite) */
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox[data-tone='accent']) :where(.mr-combobox__item[aria-selected='true']),
+    :where(.mr-combobox__list[data-tone='accent']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox__list[data-tone='accent']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox__list[data-tone='accent'])
+        :where(.mr-combobox__item[aria-selected='true']) {
+        background-color: var(--mr-accent-subtle);
+        border-inline-start: 2px solid var(--mr-accent-solid);
+    }
+
+    /* Option selectionnee (ton danger explicite) */
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox[data-tone='danger']) :where(.mr-combobox__item[aria-selected='true']),
+    :where(.mr-combobox__list[data-tone='danger']) :where(.mr-combobox__item[data-selected='true']),
+    :where(.mr-combobox__list[data-tone='danger']) :where(.mr-combobox__item.is-selected),
+    :where(.mr-combobox__list[data-tone='danger'])
+        :where(.mr-combobox__item[aria-selected='true']) {
+        border-inline-start: 2px solid var(--mr-danger-solid);
+    }
+
+    :where(.mr-combobox__item-label) {
+        font-size: var(--mr-font-size-md);
+        color: inherit;
+        line-height: inherit;
+    }
+
+    :where(.mr-combobox__item-description) {
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        margin-block-start: 2px;
+    }
+
+    /* Etat vide (aucun resultat) */
+    :where(.mr-combobox__empty) {
+        padding: var(--mr-space-3);
+        color: var(--mr-text-secondary);
+        font-size: var(--mr-font-size-sm);
+        text-align: center;
+    }
+}

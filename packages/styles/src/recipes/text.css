@@ -1,0 +1,66 @@
+/* Recette Text dans la couche mr.components (spec v4).
+ * Primitive typographique pour le corps de texte, descriptions et metadonnees.
+ * Tailles : sm (12px), md (14px, defaut), lg (16px).
+ * Tons : base/neutral, muted, strong, accent, success, warning, danger, info. */
+@layer mr.components {
+    :where(.mr-text) {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-regular);
+        overflow-wrap: break-word;
+    }
+
+    /* Tailles : md par defaut */
+    :where(.mr-text),
+    :where(.mr-text)[data-size='md'] {
+        font-size: var(--mr-font-size-md);
+        line-height: var(--mr-line-height-md);
+    }
+
+    :where(.mr-text)[data-size='sm'] {
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-sm);
+    }
+
+    :where(.mr-text)[data-size='lg'] {
+        font-size: var(--mr-font-size-base);
+        line-height: var(--mr-line-height-lg);
+    }
+
+    /* Tons de couleur et graisse */
+    :where(.mr-text),
+    :where(.mr-text)[data-tone='base'],
+    :where(.mr-text)[data-tone='neutral'] {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-text)[data-tone='muted'] {
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-text)[data-tone='strong'] {
+        color: var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-medium);
+    }
+
+    :where(.mr-text)[data-tone='accent'] {
+        color: var(--mr-accent-text);
+    }
+
+    :where(.mr-text)[data-tone='success'] {
+        color: var(--mr-success-text);
+    }
+
+    :where(.mr-text)[data-tone='warning'] {
+        color: var(--mr-warning-text);
+    }
+
+    :where(.mr-text)[data-tone='danger'] {
+        color: var(--mr-danger-text);
+    }
+
+    :where(.mr-text)[data-tone='info'] {
+        color: var(--mr-info-text);
+    }
+}
