@@ -129,32 +129,32 @@ interface ComponentRole {
    same meaning in every theme and never collides with an accent preset. */
 const componentRoles: Record<ComponentColorPreset, ComponentRole> = {
     theme: {
-        fill: 'var(--mr-accent)',
-        label: 'var(--mr-on-accent)',
-        hover: 'var(--mr-accent-hover)',
-        active: 'var(--mr-accent-active)',
+        fill: 'var(--mr-accent-solid)',
+        label: 'var(--mr-bg-canvas)',
+        hover: 'color-mix(in oklch, var(--mr-accent-solid), var(--mr-text-primary) var(--mr-state-hover-mix))',
+        active: 'color-mix(in oklch, var(--mr-accent-solid), var(--mr-text-primary) var(--mr-state-active-mix))',
         border: 'transparent',
     },
     neutral: {
         fill: 'var(--mr-text-primary)',
         label: 'var(--mr-bg-canvas)',
-        hover: 'color-mix(in srgb, var(--mr-text-primary) 88%, var(--mr-bg-canvas))',
-        active: 'color-mix(in srgb, var(--mr-text-primary) 76%, var(--mr-bg-canvas))',
+        hover: 'color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) var(--mr-state-hover-mix))',
+        active: 'color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) var(--mr-state-active-mix))',
         border: 'transparent',
     },
     soft: {
         fill: 'var(--mr-accent-subtle)',
         label: 'var(--mr-accent-text)',
-        hover: 'color-mix(in srgb, var(--mr-accent) 22%, var(--mr-accent-subtle))',
-        active: 'color-mix(in srgb, var(--mr-accent) 34%, var(--mr-accent-subtle))',
+        hover: 'color-mix(in oklch, var(--mr-accent-subtle), var(--mr-accent-solid) var(--mr-state-hover-mix))',
+        active: 'color-mix(in oklch, var(--mr-accent-subtle), var(--mr-accent-solid) var(--mr-state-active-mix))',
         border: 'var(--mr-accent-border)',
     },
     inverse: {
         fill: 'var(--mr-bg-canvas)',
         label: 'var(--mr-text-primary)',
-        hover: 'color-mix(in srgb, var(--mr-text-primary) 10%, var(--mr-bg-canvas))',
-        active: 'color-mix(in srgb, var(--mr-text-primary) 18%, var(--mr-bg-canvas))',
-        border: 'var(--mr-border-strong)',
+        hover: 'color-mix(in oklch, var(--mr-bg-canvas), var(--mr-text-primary) var(--mr-state-hover-mix))',
+        active: 'color-mix(in oklch, var(--mr-bg-canvas), var(--mr-text-primary) var(--mr-state-active-mix))',
+        border: 'var(--mr-border-control)',
     },
 }
 
@@ -233,6 +233,9 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
         style: {
             '--mr-brand-hue': String(accent.hue),
             '--mr-brand-chroma': String(accent.chroma),
+            '--mr-ref-brand-hue': String(accent.hue),
+            '--mr-ref-brand-chroma': String(accent.chroma),
+            '--mr-accent': 'var(--mr-accent-solid)',
             '--mr-control-accent': role.fill,
             '--mr-control-accent-hover': role.hover,
             '--mr-control-accent-active': role.active,
