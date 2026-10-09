@@ -16,8 +16,9 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : 8aa483f (plage 4825ea9..8aa483f)
+Commit de session : c6ba7c8 (plage 19849ca..c6ba7c8)
 Etat :
-- Ajustements : alignement rigoureux de la case tout selectionner de DataTable avec les lignes, retrait des separateurs d'en-tete/pied sur Modal, harmonisation complete d'AlertDialog avec Modal (animation d'entree, espacements, actions)
-- Verifications : pnpm verify vert (typecheck, format, lint:css, test:contrast, build, test, test:dist, test:audit), 1313 tests @monority/ui passants, 94 tests @monority/web passants
-- Prochaine etape : Validation visuelle des ajustements par l'utilisateur
+- Assainissement suite E2E Playwright termine : 512 tests e2e web passants, 1313 tests ui passants
+- Controles de qualite : pnpm verify vert (8 portes), test:dist vert, visual & behavioral E2E 100% verts
+- Accessibilite et contrastes : conformite WCAG AA sur surface pour tous les themes (axe 0 violations)
+- Prochaine etape : Jalons publication & documentation (revue docs/foundation et preparation changeset)
