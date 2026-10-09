@@ -16,10 +16,9 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : de2ecc8 (plage 2bc6079..de2ecc8)
+Commit de session : 8380a87 (plage de2ecc8..8380a87)
 Etat :
-- Rattachement de l'integralite des 75 composants au harness visuel (/harness) avec filtres par famille et selecteur
-- Correction Accordion : repliement par defaut (collapsible=true) et suppression du fond/cercle de fleche
-- Alignement Collapsible : suppression du fond/cercle de fleche
-- Verifications : pnpm verify vert (6 etapes : typecheck, format, lint:css, test:rendered, build, test), 1305 tests unitaires @monority/ui passants, 94 tests @monority/web passants
-- Prochaine etape : Plan d'amelioration cible composant par composant suite aux notes d'audit
+- Amelioration des composants: Tooltip, Popover, DropdownMenu, ContextMenu, HoverCard, Slider, Calendar, DatePicker, Select, Carousel, PreCode, SidebarLayout
+- Overlays enrichis (positionnement fin, keyframes d'entree, shortcuts, fleches), Slider double-range, pickers Calendar/DatePicker, SidebarLayout retractable
+- Verifications : pnpm verify vert (typecheck, format, lint:css, test:contrast, build, test, test:dist, test:audit), 1312 tests @monority/ui passants, 94 tests @monority/web passants
+- Prochaine etape : Poursuite des optimisations ciblees selon retour utilisateur
