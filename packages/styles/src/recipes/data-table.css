@@ -91,12 +91,6 @@
         color: var(--mr-accent-solid);
     }
 
-    :where(.mr-data-table__select-cell) {
-        inline-size: var(--mr-size-control-sm);
-        padding-inline: var(--mr-space-2);
-        text-align: center;
-    }
-
     :where(.mr-data-table__body) {
         background-color: transparent;
     }
@@ -123,6 +117,26 @@
         font-variant-numeric: tabular-nums;
         text-align: start;
         vertical-align: middle;
+    }
+
+    :where(.mr-data-table__th.mr-data-table__select-cell),
+    :where(.mr-data-table__td.mr-data-table__select-cell),
+    :where(.mr-data-table__select-cell) {
+        inline-size: var(--mr-size-control-md);
+        width: 1%;
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-3);
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    :where(.mr-data-table__select-cell) :where(.mr-checkbox) {
+        display: inline-flex;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
     }
 
     :where(.mr-table__cell--left),
