@@ -14,7 +14,7 @@
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-text-secondary: oklch(0.58 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Texte desactive : luminosite 0.498 reproduit le ratio de 3.46:1 sur le canevas */
         --mr-text-disabled: oklch(0.498 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));

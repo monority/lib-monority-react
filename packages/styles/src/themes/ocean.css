@@ -22,7 +22,7 @@
 
         /* Textes */
         --mr-text-primary: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-text-secondary: oklch(0.605 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-secondary: oklch(0.625 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Texte desactive : ratio 3.49:1 sur canevas */
         --mr-text-disabled: oklch(0.525 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
