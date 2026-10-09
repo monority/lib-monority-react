@@ -148,4 +148,26 @@ describe('Slider', () => {
         const view = render(<Slider value={150} min={0} max={100} />)
         expect(view.querySelector('input')).not.toBeNull()
     })
+
+    it('supports dual-thumb range mode', () => {
+        const onValueChange = vi.fn()
+        const view = render(<Slider range value={[20, 80]} onValueChange={onValueChange} />)
+        const inputs = view.querySelectorAll('input')
+        expect(inputs.length).toBe(2)
+        expect(inputs[0]?.value).toBe('20')
+        expect(inputs[1]?.value).toBe('80')
+
+        const output = view.querySelector('output')
+        expect(output?.textContent).toBe('20 – 80')
+
+        act(() => {
+            const nativeSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
+            nativeSetter?.call(inputs[0], '30')
+            inputs[0]?.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        expect(onValueChange).toHaveBeenCalledWith([30, 80])
+    })
 })

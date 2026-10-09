@@ -48,4 +48,24 @@
         border: 0;
         padding: 0;
     }
+
+    /* Conteneur pour bloc de code avec bouton de copie */
+    :where(.mr-pre-code-container) {
+        position: relative;
+        display: block;
+    }
+
+    :where(.mr-pre-code__copy-btn) {
+        position: absolute;
+        inset-block-start: var(--mr-space-2);
+        inset-inline-end: var(--mr-space-2);
+        z-index: 1;
+        opacity: 0.7;
+        transition: opacity var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-pre-code-container:hover) :where(.mr-pre-code__copy-btn),
+    :where(.mr-pre-code__copy-btn:focus-visible) {
+        opacity: 1;
+    }
 }

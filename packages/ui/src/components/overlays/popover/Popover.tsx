@@ -41,12 +41,20 @@ export function Popover({
             triggerElementRef.current ??
             rootRef.current?.querySelector('[data-mr-popover-trigger="true"]')
         if (!el) return
-        const rect = el.getBoundingClientRect()
+        const anchorRect = el.getBoundingClientRect()
+        const contentEl = contentRef.current
+        const floatingRect = contentEl ? contentEl.getBoundingClientRect() : { width: 0, height: 0 }
         const gap = OVERLAY_OFFSET
-        const top = side === 'top' ? rect.top - gap : rect.bottom + gap
-        let left = rect.left
-        if (align === 'center') left = rect.left + rect.width / 2
-        if (align === 'end') left = rect.right
+        const top = side === 'top' ? anchorRect.top - gap : anchorRect.bottom + gap
+        let left = anchorRect.left
+        if (align === 'center') {
+            left = anchorRect.left + anchorRect.width / 2 - floatingRect.width / 2
+        } else if (align === 'end') {
+            left = anchorRect.right - floatingRect.width
+        }
+        const padding = 8
+        const maxLeft = (window.innerWidth || 1024) - floatingRect.width - padding
+        left = Math.min(Math.max(left, padding), Math.max(padding, maxLeft))
         setPosition({ top, left })
         setPositioned(true)
     }, [align, side])

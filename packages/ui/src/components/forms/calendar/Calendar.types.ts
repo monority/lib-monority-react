@@ -13,4 +13,5 @@ export interface CalendarProps
     showOutsideDays?: boolean
     fixedWeeks?: boolean
     numberOfMonths?: number
+    showPickers?: boolean
 }

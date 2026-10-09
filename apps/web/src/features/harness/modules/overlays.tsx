@@ -128,13 +128,22 @@ export function DrawerHarness() {
 export function TooltipHarness() {
     return (
         <>
-            <Sample label="Basic Tooltip">
-                <div style={{ display: 'flex', gap: 'var(--mr-spacing-4)' }}>
-                    <Tooltip content="Adds a new record to the database">
-                        <Button>Hover or focus me</Button>
+            <Sample label="Tooltip Placements & Arrow">
+                <div style={{ display: 'flex', gap: 'var(--mr-spacing-3)', flexWrap: 'wrap' }}>
+                    <Tooltip content="Tooltip on top" side="top" arrow>
+                        <Button variant="secondary">Top (arrow)</Button>
                     </Tooltip>
-                    <Tooltip content="Permanent action cannot be undone">
-                        <Button variant="danger">Delete</Button>
+                    <Tooltip content="Tooltip on bottom" side="bottom" arrow>
+                        <Button variant="secondary">Bottom (arrow)</Button>
+                    </Tooltip>
+                    <Tooltip content="Tooltip on left" side="left" arrow>
+                        <Button variant="secondary">Left (arrow)</Button>
+                    </Tooltip>
+                    <Tooltip content="Tooltip on right" side="right" arrow>
+                        <Button variant="secondary">Right (arrow)</Button>
+                    </Tooltip>
+                    <Tooltip content="Delayed tooltip by 300ms" delayMs={300}>
+                        <Button variant="ghost">Delayed 300ms</Button>
                     </Tooltip>
                 </div>
             </Sample>
@@ -169,16 +178,16 @@ export function PopoverHarness() {
 
 export function DropdownMenuHarness() {
     const items = [
-        { value: 'profile', label: 'Profile' },
-        { value: 'billing', label: 'Billing' },
-        { value: 'settings', label: 'Settings' },
+        { value: 'profile', label: 'Profile', shortcut: '⇧⌘P' },
+        { value: 'billing', label: 'Billing', shortcut: '⌘B' },
+        { value: 'settings', label: 'Settings', shortcut: '⌘,' },
         { value: 'sep-1', label: '', type: 'separator' as const },
-        { value: 'logout', label: 'Sign out', danger: true },
+        { value: 'logout', label: 'Sign out', danger: true, shortcut: '⌥⇧Q' },
     ]
 
     return (
         <>
-            <Sample label="Dropdown Menu">
+            <Sample label="Dropdown Menu with Shortcuts">
                 <DropdownMenu
                     trigger={<Button variant="secondary">Options ▾</Button>}
                     items={items}
@@ -190,16 +199,16 @@ export function DropdownMenuHarness() {
 
 export function ContextMenuHarness() {
     const items = [
-        { value: 'cut', label: 'Cut' },
-        { value: 'copy', label: 'Copy' },
-        { value: 'paste', label: 'Paste' },
+        { value: 'cut', label: 'Cut', shortcut: '⌘X' },
+        { value: 'copy', label: 'Copy', shortcut: '⌘C' },
+        { value: 'paste', label: 'Paste', shortcut: '⌘V' },
         { value: 'sep-1', label: '', type: 'separator' as const },
-        { value: 'delete', label: 'Delete', danger: true },
+        { value: 'delete', label: 'Delete', danger: true, shortcut: '⌫' },
     ]
 
     return (
         <>
-            <Sample label="Context Menu">
+            <Sample label="Context Menu with Shortcuts">
                 <ContextMenu
                     trigger={
                         <div

@@ -66,6 +66,35 @@
         text-transform: capitalize;
     }
 
+    /* Selecteurs rapides de mois / annee */
+    :where(.mr-calendar__pickers) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-calendar__select) {
+        appearance: none;
+        background-color: transparent;
+        color: var(--mr-text-primary);
+        font-family: var(--mr-font-family-sans);
+        font-weight: var(--mr-font-weight-medium);
+        font-size: var(--mr-font-size-sm);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-sm);
+        cursor: pointer;
+        outline: none;
+        transition: border-color var(--mr-duration-state);
+    }
+
+    :where(.mr-calendar__select):focus-visible {
+        border-color: var(--mr-border-control);
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 1px;
+    }
+
     /* Boutons de navigation (precedent / suivant) */
     :where(.mr-calendar__nav-btn) {
         display: inline-flex;

@@ -165,9 +165,26 @@ interface CalendarHeaderProps {
     viewDate: Date
     onPrev: () => void
     onNext: () => void
+    showPickers?: boolean
+    onViewDateChange?: (date: Date) => void
+    minDate?: Date
+    maxDate?: Date
 }
 
-function CalendarHeader({ viewDate, onPrev, onNext }: CalendarHeaderProps) {
+function CalendarHeader({
+    viewDate,
+    onPrev,
+    onNext,
+    showPickers,
+    onViewDateChange,
+    minDate,
+    maxDate,
+}: CalendarHeaderProps) {
+    const today = new Date()
+    const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
+    const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
+
     return (
         <div className="mr-datepicker__header">
             <button
@@ -179,7 +196,50 @@ function CalendarHeader({ viewDate, onPrev, onNext }: CalendarHeaderProps) {
             >
                 <ChevronLeftIcon />
             </button>
-            <span className="mr-datepicker__month-label">{formatMonthYear(viewDate)}</span>
+            {showPickers ? (
+                <div className="mr-calendar__pickers">
+                    <select
+                        className="mr-calendar__select mr-calendar__select--month"
+                        aria-label="Select month"
+                        value={viewDate.getMonth()}
+                        onChange={(e) => {
+                            const next = new Date(viewDate)
+                            next.setMonth(Number(e.target.value))
+                            onViewDateChange?.(next)
+                        }}
+                    >
+                        {Array.from({ length: 12 }, (_, i) => {
+                            const d = new Date(2024, i, 1)
+                            const name = new Intl.DateTimeFormat('en-US', {
+                                month: 'short',
+                            }).format(d)
+                            return (
+                                <option key={i} value={i}>
+                                    {name}
+                                </option>
+                            )
+                        })}
+                    </select>
+                    <select
+                        className="mr-calendar__select mr-calendar__select--year"
+                        aria-label="Select year"
+                        value={viewDate.getFullYear()}
+                        onChange={(e) => {
+                            const next = new Date(viewDate)
+                            next.setFullYear(Number(e.target.value))
+                            onViewDateChange?.(next)
+                        }}
+                    >
+                        {years.map((y) => (
+                            <option key={y} value={y}>
+                                {y}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            ) : (
+                <span className="mr-datepicker__month-label">{formatMonthYear(viewDate)}</span>
+            )}
             <button
                 type="button"
                 className="mr-datepicker__nav-btn"
@@ -368,6 +428,7 @@ export function DatePicker({
     maxDate,
     disabledDates,
     placeholder = 'Select a date',
+    showPickers = false,
     popoverClassName,
     style,
     ...props
@@ -633,6 +694,10 @@ export function DatePicker({
                                   viewDate={viewDate}
                                   onPrev={handlePrevMonth}
                                   onNext={handleNextMonth}
+                                  showPickers={showPickers}
+                                  onViewDateChange={setViewDate}
+                                  minDate={minDate}
+                                  maxDate={maxDate}
                               />
                               <CalendarGrid
                                   key={viewDate.toISOString()}

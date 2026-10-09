@@ -190,7 +190,22 @@ export function ContextMenu({
                                           setOpenState(false)
                                       }}
                                   >
-                                      {item.label}
+                                      {item.icon ? (
+                                          <span
+                                              className="mr-context-menu__item-icon"
+                                              aria-hidden="true"
+                                          >
+                                              {item.icon}
+                                          </span>
+                                      ) : null}
+                                      <span className="mr-context-menu__item-label">
+                                          {item.label}
+                                      </span>
+                                      {item.shortcut ? (
+                                          <kbd className="mr-context-menu__item-shortcut">
+                                              {item.shortcut}
+                                          </kbd>
+                                      ) : null}
                                   </button>
                               )
                           )}

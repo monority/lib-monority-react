@@ -11,7 +11,17 @@ import type { TooltipProps } from './Tooltip.types'
  * WAI-ARIA Authoring Practices. `data-hidden` overrides the CSS open state
  * until the pointer leaves or focus moves, so Escape sticks while hovering.
  */
-export function Tooltip({ ref, content, children, className, ...props }: TooltipProps) {
+export function Tooltip({
+    ref,
+    content,
+    children,
+    side = 'top',
+    arrow = false,
+    delayMs = 0,
+    className,
+    style,
+    ...props
+}: TooltipProps) {
     const generatedId = useId()
     const [dismissed, setDismissed] = useState(false)
 
@@ -25,11 +35,22 @@ export function Tooltip({ ref, content, children, className, ...props }: Tooltip
         setDismissed(false)
     }, [])
 
+    const tooltipStyle =
+        delayMs > 0
+            ? ({
+                  ...style,
+                  '--mr-tooltip-delay': `${delayMs}ms`,
+              } as React.CSSProperties)
+            : style
+
     return (
         <div
             ref={ref}
             className={cn('mr-tooltip', className)}
+            data-side={side}
+            data-arrow={arrow ? true : undefined}
             data-hidden={dismissed ? true : undefined}
+            style={tooltipStyle}
             onKeyDown={handleKeyDown}
             onMouseLeave={clearDismissal}
             onFocusCapture={clearDismissal}

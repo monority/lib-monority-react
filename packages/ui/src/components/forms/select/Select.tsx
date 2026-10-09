@@ -16,6 +16,8 @@ export function Select({
     disabled = false,
     required = false,
     children,
+    options,
+    placeholder,
     ref,
     onMouseDown,
     ...props
@@ -64,6 +66,18 @@ export function Select({
                         onMouseDown={handleMouseDown}
                         {...props}
                     >
+                        {placeholder ? (
+                            <option value="" disabled hidden>
+                                {placeholder}
+                            </option>
+                        ) : null}
+                        {options
+                            ? options.map((opt) => (
+                                  <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+                                      {opt.label}
+                                  </option>
+                              ))
+                            : null}
                         {children}
                     </InputBase>
                 </span>
@@ -72,4 +86,4 @@ export function Select({
     )
 }
 
-export type { SelectProps, SelectTone, SelectSize } from './Select.types'
+export type { SelectProps, SelectTone, SelectSize, SelectOption } from './Select.types'

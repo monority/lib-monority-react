@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { CarouselProps } from './Carousel.types'
 
@@ -17,6 +17,8 @@ export function Carousel({
 }: CarouselProps) {
     const [current, setCurrent] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
+    const touchStartX = useRef<number | null>(null)
+    const touchStartY = useRef<number | null>(null)
     const total = slides.length
 
     const goTo = useCallback(
@@ -32,6 +34,34 @@ export function Carousel({
 
     const next = useCallback(() => goTo(current + 1), [current, goTo])
     const prev = useCallback(() => goTo(current - 1), [current, goTo])
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        touchStartX.current = e.touches[0]?.clientX ?? null
+        touchStartY.current = e.touches[0]?.clientY ?? null
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+        if (touchStartX.current === null || touchStartY.current === null) return
+        const endX = e.changedTouches[0]?.clientX ?? touchStartX.current
+        const endY = e.changedTouches[0]?.clientY ?? touchStartY.current
+        const diffX = touchStartX.current - endX
+        const diffY = touchStartY.current - endY
+        const threshold = 40
+
+        if (orientation === 'horizontal') {
+            if (Math.abs(diffX) > threshold && Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 0) next()
+                else prev()
+            }
+        } else {
+            if (Math.abs(diffY) > threshold && Math.abs(diffY) > Math.abs(diffX)) {
+                if (diffY > 0) next()
+                else prev()
+            }
+        }
+        touchStartX.current = null
+        touchStartY.current = null
+    }
 
     useEffect(() => {
         if (!autoPlay || isPaused || total <= 1) return
@@ -51,6 +81,8 @@ export function Carousel({
             data-orientation={orientation}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             {...props}
         >
             <div className="mr-carousel__viewport">

@@ -100,6 +100,11 @@ export function App() {
                     {codeSnippet}
                 </PreCode>
             </Sample>
+            <Sample label="PreCode with Copy Button">
+                <PreCode language="typescript" size="sm" copyable>
+                    {codeSnippet}
+                </PreCode>
+            </Sample>
         </>
     )
 }

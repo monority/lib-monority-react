@@ -221,4 +221,15 @@ describe('Calendar', () => {
         expect(row).toBeTruthy()
         expect(gridcell).toBeTruthy()
     })
+
+    it('renders month and year selectors when showPickers is true', () => {
+        const view = render(<Calendar showPickers value={new Date(2025, 4, 1)} />)
+        const monthSelect = view.querySelector('.mr-calendar__select--month') as HTMLSelectElement
+        const yearSelect = view.querySelector('.mr-calendar__select--year') as HTMLSelectElement
+
+        expect(monthSelect).not.toBeNull()
+        expect(yearSelect).not.toBeNull()
+        expect(monthSelect.value).toBe('4')
+        expect(yearSelect.value).toBe('2025')
+    })
 })

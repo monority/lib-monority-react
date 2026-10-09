@@ -8,4 +8,8 @@ export interface SidebarLayoutProps extends HTMLAttributes<HTMLDivElement> {
     header?: ReactNode
     children?: ReactNode
     sidebarWidth?: SidebarWidth
+    collapsible?: boolean
+    open?: boolean
+    defaultOpen?: boolean
+    onOpenChange?: (open: boolean) => void
 }

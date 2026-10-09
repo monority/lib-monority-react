@@ -182,6 +182,50 @@ export function SidebarLayoutHarness() {
                     </SidebarLayout>
                 </div>
             </Sample>
+            <Sample label="Sidebar Layout (Collapsible with Toggle)">
+                <div
+                    style={{
+                        height: 300,
+                        border: '1px solid var(--mr-border-default)',
+                        borderRadius: 'var(--mr-radius-md)',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <SidebarLayout
+                        collapsible
+                        sidebar={
+                            <div style={{ padding: 'var(--mr-spacing-3)' }}>
+                                <div
+                                    style={{
+                                        fontWeight: 'var(--mr-weight-semibold)',
+                                        marginBottom: 'var(--mr-spacing-2)',
+                                    }}
+                                >
+                                    Navigation
+                                </div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: 'var(--mr-spacing-1)',
+                                    }}
+                                >
+                                    <Button variant="ghost" size="sm">
+                                        Overview
+                                    </Button>
+                                    <Button variant="ghost" size="sm">
+                                        Analytics
+                                    </Button>
+                                </div>
+                            </div>
+                        }
+                    >
+                        <div style={{ padding: 'var(--mr-spacing-4)' }}>
+                            <p>Content area with responsive sidebar toggle in header.</p>
+                        </div>
+                    </SidebarLayout>
+                </div>
+            </Sample>
         </>
     )
 }

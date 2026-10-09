@@ -246,4 +246,59 @@
     :where(.mr-slider:disabled) ~ :where(.mr-slider__value) {
         color: var(--mr-text-disabled);
     }
+
+    /* Support du mode intervalle (double curseur) */
+    :where(.mr-slider-range-container) {
+        position: relative;
+        inline-size: 100%;
+        block-size: var(--mr-space-6);
+        display: flex;
+        align-items: center;
+    }
+
+    :where(.mr-slider--range) {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    :where(.mr-slider--range)::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+
+    :where(.mr-slider--range)::-moz-range-thumb {
+        pointer-events: auto;
+    }
+
+    :where(.mr-slider--range.mr-slider--lower)::-webkit-slider-runnable-track {
+        background: transparent;
+    }
+
+    :where(.mr-slider--range.mr-slider--lower)::-moz-range-track {
+        background: transparent;
+    }
+
+    :where(.mr-slider--range.mr-slider--upper)::-webkit-slider-runnable-track {
+        background: linear-gradient(
+            to right,
+            var(--mr-border-control) 0%,
+            var(--mr-border-control) var(--mr-slider-lower, 0%),
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-lower, 0%),
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-upper, 100%),
+            var(--mr-border-control) var(--mr-slider-upper, 100%),
+            var(--mr-border-control) 100%
+        );
+    }
+
+    :where(.mr-slider--range.mr-slider--upper)::-moz-range-track {
+        background: linear-gradient(
+            to right,
+            var(--mr-border-control) 0%,
+            var(--mr-border-control) var(--mr-slider-lower, 0%),
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-lower, 0%),
+            var(--mr-slider-fill, var(--mr-bg-inverse)) var(--mr-slider-upper, 100%),
+            var(--mr-border-control) var(--mr-slider-upper, 100%),
+            var(--mr-border-control) 100%
+        );
+    }
 }

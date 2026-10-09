@@ -53,4 +53,35 @@
         padding-inline: var(--mr-space-6);
         padding-block: var(--mr-space-6);
     }
+
+    /* Etat replie (collapsed) */
+    :where(.mr-sidebar-layout[data-collapsed='true']) > :where(.mr-sidebar-layout__sidebar) {
+        display: none;
+    }
+
+    /* Bouton de bascule */
+    :where(.mr-sidebar-layout__toggle) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        padding: 0;
+        margin: 0;
+        border: 1px solid var(--mr-border-subtle);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-primary);
+        cursor: pointer;
+        transition: background-color var(--mr-duration-state);
+    }
+
+    :where(.mr-sidebar-layout__toggle):hover {
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-sidebar-layout__toggle):focus-visible {
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 1px;
+    }
 }

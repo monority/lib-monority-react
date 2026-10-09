@@ -1235,6 +1235,9 @@ function SliderHarness() {
             <Sample label="sans affichage de valeur (showValue=false)">
                 <Slider showValue={false} defaultValue={60} label="Sensibilité" />
             </Sample>
+            <Sample label="mode intervalle (double curseur)">
+                <Slider range defaultValue={[20, 80]} label="Fourchette de prix (€)" />
+            </Sample>
         </>
     )
 }

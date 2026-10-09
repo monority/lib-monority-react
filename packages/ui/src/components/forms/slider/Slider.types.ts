@@ -19,11 +19,13 @@ export interface SliderProps
     /** Explicit invalid state. Also implied by `error`. */
     invalid?: boolean
     showValue?: boolean
-    /** Numeric slider value when controlled. */
-    value?: number
+    /** Whether this slider is a dual-thumb range slider. */
+    range?: boolean
+    /** Numeric slider value when controlled. Can be a tuple [min, max] when range is true. */
+    value?: number | [number, number]
     /** Initial value when uncontrolled. */
-    defaultValue?: number
+    defaultValue?: number | [number, number]
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     /** Called with the numeric slider value on every change. */
-    onValueChange?: (value: number) => void
+    onValueChange?: ((value: number) => void) | ((value: [number, number]) => void)
 }

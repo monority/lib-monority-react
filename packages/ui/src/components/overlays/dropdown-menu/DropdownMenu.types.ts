@@ -9,6 +9,8 @@ export interface DropdownMenuItem {
     type?: 'item' | 'separator'
     disabled?: boolean
     danger?: boolean
+    icon?: ReactNode
+    shortcut?: string
     onSelect?: (value: string) => void
 }
 
