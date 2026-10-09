@@ -12,31 +12,22 @@ const docModules: Record<string, LazyComponent> = {}
 type LazyComponent = React.LazyExoticComponent<ComponentType>
 
 function getDocComponent(slug: string) {
-    const redirects: Record<string, string> = {
-        'button-link': 'button',
-        'copy-button': 'button',
-        'icon-button': 'button',
-        'number-input': 'input',
-        'password-input': 'input',
-    }
-    const resolvedSlug = redirects[slug] ?? slug
-
-    if (!docModules[resolvedSlug]) {
-        const entry = docsComponentRegistry.find((r) => r.slug === resolvedSlug)
+    if (!docModules[slug]) {
+        const entry = docsComponentRegistry.find((r) => r.slug === slug)
         if (!entry) return null
 
-        const pascalName = resolvedSlug
+        const pascalName = slug
             .split('-')
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
             .join('')
 
-        docModules[resolvedSlug] = lazy(() =>
-            import(`./components/${resolvedSlug}/index.ts`).then((m) => ({
+        docModules[slug] = lazy(() =>
+            import(`./components/${slug}/index.ts`).then((m) => ({
                 default: m[`${pascalName}Docs`],
             }))
         )
     }
-    return docModules[resolvedSlug]
+    return docModules[slug]
 }
 
 function LoadingFallback() {

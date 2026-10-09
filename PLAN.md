@@ -15,10 +15,10 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : 2e3d17e (plage 19849ca..2e3d17e)
+Sauvegarde : git push -u origin feat/docs-parity-missing-components
+Commit de session : 27bae0f (plage 8f192b0..27bae0f)
 Etat :
-- Pull Request ouverte : #8 (refactor/css-foundation -> main), CI GitHub Actions verte
-- Controles de qualite : pnpm verify vert (8 portes), test:dist vert, visual & behavioral E2E 100% verts
-- Changesets et documentation : pret pour publication npm via release.yml lors du merge
-- Prochaine etape : Revue et fusion de la PR #8 sur main
+- Etape 1 terminee : parite 75/75 composants documentes atteinte
+- Pages ajoutees : ButtonLink, CopyButton, IconButton, NumberInput, PasswordInput
+- Controles de qualite : pnpm verify vert (8 portes), 94 tests web verts
+- Prochaine etape : Pousser la branche, ouvrir la PR, puis engager l'Etape 2 (polissage formulaires et navigation)

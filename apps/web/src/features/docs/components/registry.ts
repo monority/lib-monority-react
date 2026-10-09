@@ -17,6 +17,27 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     },
     {
         category: 'actions',
+        label: 'ButtonLink',
+        path: '/docs/button-link',
+        slug: 'button-link',
+        status: 'stable',
+    },
+    {
+        category: 'actions',
+        label: 'CopyButton',
+        path: '/docs/copy-button',
+        slug: 'copy-button',
+        status: 'stable',
+    },
+    {
+        category: 'actions',
+        label: 'IconButton',
+        path: '/docs/icon-button',
+        slug: 'icon-button',
+        status: 'stable',
+    },
+    {
+        category: 'actions',
         label: 'Toggle',
         path: '/docs/toggle',
         slug: 'toggle',
@@ -82,6 +103,20 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     { category: 'forms', label: 'Input', path: '/docs/input', slug: 'input', status: 'stable' },
+    {
+        category: 'forms',
+        label: 'NumberInput',
+        path: '/docs/number-input',
+        slug: 'number-input',
+        status: 'stable',
+    },
+    {
+        category: 'forms',
+        label: 'PasswordInput',
+        path: '/docs/password-input',
+        slug: 'password-input',
+        status: 'stable',
+    },
     {
         category: 'forms',
         label: 'RadioGroup',

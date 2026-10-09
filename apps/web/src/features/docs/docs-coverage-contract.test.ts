@@ -13,13 +13,7 @@ declare const process: { cwd(): string }
 const root = join(process.cwd(), '..', '..')
 const componentsDir = join(process.cwd(), 'src', 'features', 'docs', 'components')
 
-const REDIRECTS: Record<string, string> = {
-    'button-link': 'button',
-    'copy-button': 'button',
-    'icon-button': 'button',
-    'number-input': 'input',
-    'password-input': 'input',
-}
+const REDIRECTS: Record<string, string> = {}
 
 function readJson(path: string) {
     return JSON.parse(readFileSync(path, 'utf8')) as {
