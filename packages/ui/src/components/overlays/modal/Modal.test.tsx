@@ -168,4 +168,22 @@ describe('Modal', () => {
         )
         expect(document.body.style.overflow).toBe('')
     })
+
+    it('renders optional description and footer', () => {
+        render(
+            <Modal
+                open
+                title="Test"
+                description="Subtitle description"
+                footer={<button type="button">Action</button>}
+                onClose={() => {}}
+            >
+                Content
+            </Modal>
+        )
+        expect(document.body.querySelector('.mr-modal__description')?.textContent).toBe(
+            'Subtitle description'
+        )
+        expect(document.body.querySelector('.mr-modal__footer')?.textContent).toBe('Action')
+    })
 })

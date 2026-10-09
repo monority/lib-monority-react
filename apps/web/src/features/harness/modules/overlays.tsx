@@ -19,23 +19,23 @@ export function ModalHarness() {
         <>
             <Sample label="Basic Modal">
                 <Button onClick={() => setOpen(true)}>Open Modal</Button>
-                <Modal open={open} onClose={() => setOpen(false)} title="Account Settings">
-                    <div style={{ padding: 'var(--mr-spacing-4) 0' }}>
-                        <p>Manage your account preferences and security credentials.</p>
-                        <div
-                            style={{
-                                marginTop: 'var(--mr-spacing-4)',
-                                display: 'flex',
-                                gap: 'var(--mr-spacing-2)',
-                                justifyContent: 'flex-end',
-                            }}
-                        >
-                            <Button variant="secondary" onClick={() => setOpen(false)}>
+                <Modal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    title="Account Settings"
+                    description="Manage your account preferences and security credentials."
+                    footer={
+                        <>
+                            <Button variant="ghost" onClick={() => setOpen(false)}>
                                 Cancel
                             </Button>
                             <Button onClick={() => setOpen(false)}>Save changes</Button>
-                        </div>
-                    </div>
+                        </>
+                    }
+                >
+                    <p style={{ margin: 0, color: 'var(--mr-text-primary)' }}>
+                        Configure authentication methods, email notifications, and active sessions.
+                    </p>
                 </Modal>
             </Sample>
         </>

@@ -20,14 +20,25 @@
         backdrop-filter: blur(var(--mr-space-1));
     }
 
+    @keyframes mr-modal-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
     /* Panneau central */
     :where(.mr-modal__panel) {
         position: relative;
         z-index: 1;
         box-sizing: border-box;
-        width: 100%;
-        max-width: var(--mr-size-container-sm);
-        max-height: 100%;
+        inline-size: 100%;
+        max-inline-size: var(--mr-size-container-sm);
+        max-block-size: 100%;
         overflow-y: auto;
         background-color: var(--mr-bg-overlay);
         border: 1px solid var(--mr-border-default);
@@ -36,21 +47,24 @@
         padding: var(--mr-space-6);
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-4);
+        gap: var(--mr-space-5);
         outline: none;
+        animation: mr-modal-enter var(--mr-duration-panel) ease;
     }
 
     /* En-tete */
     :where(.mr-modal__header) {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-4);
+        padding-block-end: var(--mr-space-3);
+        border-block-end: 1px solid var(--mr-border-subtle);
     }
 
     :where(.mr-modal__heading) {
         flex: 1;
-        min-width: 0;
+        min-inline-size: 0;
     }
 
     :where(.mr-modal__title) {
@@ -62,15 +76,41 @@
         color: var(--mr-text-primary);
     }
 
+    :where(.mr-modal__description) {
+        margin: 0;
+        margin-block-start: var(--mr-space-1);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-md);
+        color: var(--mr-text-secondary);
+    }
+
     :where(.mr-modal__close) {
         flex-shrink: 0;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        padding: 0;
     }
 
     /* Corps du dialogue */
     :where(.mr-modal__body) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-4);
         font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-base);
         line-height: var(--mr-line-height-lg);
         color: var(--mr-text-primary);
+        flex: 1;
+    }
+
+    /* Pied de dialogue */
+    :where(.mr-modal__footer) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--mr-space-3);
+        padding-block-start: var(--mr-space-4);
+        border-block-start: 1px solid var(--mr-border-subtle);
     }
 }

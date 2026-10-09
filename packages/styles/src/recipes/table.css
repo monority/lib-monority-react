@@ -52,5 +52,19 @@
         padding-inline: var(--mr-space-3);
         color: var(--mr-text-primary);
         font-variant-numeric: tabular-nums;
+        text-align: start;
+        vertical-align: middle;
+    }
+
+    :where(.mr-table__cell--left) {
+        text-align: start;
+    }
+
+    :where(.mr-table__cell--center) {
+        text-align: center;
+    }
+
+    :where(.mr-table__cell--right) {
+        text-align: end;
     }
 }

@@ -1,12 +1,23 @@
 /* Recette DataTable dans la couche mr.components (spec v4).
- * Tableau de données interactif avec tri, sélection et pagination. */
+ * Tableau de donnees interactif avec tri, selection et pagination. */
 @layer mr.components {
-    :where(.mr-data-table) {
+    :where(.mr-data-table-wrap) {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
         inline-size: 100%;
+        overflow-x: auto;
         gap: var(--mr-space-3);
+    }
+
+    :where(.mr-data-table) {
+        display: table;
+        inline-size: 100%;
+        border-collapse: collapse;
+        box-sizing: border-box;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        text-align: start;
     }
 
     :where(.mr-data-table__caption) {
@@ -24,6 +35,7 @@
     }
 
     :where(.mr-data-table__table) {
+        display: table;
         inline-size: 100%;
         border-collapse: collapse;
         box-sizing: border-box;
@@ -38,19 +50,21 @@
     }
 
     :where(.mr-data-table__th) {
-        padding-block: var(--mr-space-2);
-        padding-inline: var(--mr-space-3);
-        font-family: var(--mr-font-family-mono);
+        padding-block: var(--mr-space-3);
+        padding-inline: var(--mr-space-4);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-xs);
         font-weight: var(--mr-font-weight-medium);
         text-transform: uppercase;
         letter-spacing: var(--mr-tracking-label);
-        color: var(--mr-text-tertiary);
+        color: var(--mr-text-secondary);
         text-align: start;
+        vertical-align: middle;
         white-space: nowrap;
         user-select: none;
     }
 
+    :where(.mr-data-table__sort),
     :where(.mr-data-table__sort-btn) {
         display: inline-flex;
         align-items: center;
@@ -63,8 +77,10 @@
         cursor: pointer;
         text-transform: inherit;
         letter-spacing: inherit;
+        text-align: inherit;
     }
 
+    :where(.mr-data-table__sort:hover),
     :where(.mr-data-table__sort-btn:hover) {
         color: var(--mr-text-primary);
     }
@@ -102,8 +118,33 @@
 
     :where(.mr-data-table__td) {
         padding-block: var(--mr-space-3);
-        padding-inline: var(--mr-space-3);
+        padding-inline: var(--mr-space-4);
         color: var(--mr-text-primary);
         font-variant-numeric: tabular-nums;
+        text-align: start;
+        vertical-align: middle;
+    }
+
+    :where(.mr-table__cell--left),
+    :where(.mr-data-table__cell--left) {
+        text-align: start;
+    }
+
+    :where(.mr-table__cell--center),
+    :where(.mr-data-table__cell--center) {
+        text-align: center;
+    }
+
+    :where(.mr-table__cell--center) :where(.mr-data-table__sort) {
+        margin-inline: auto;
+    }
+
+    :where(.mr-table__cell--right),
+    :where(.mr-data-table__cell--right) {
+        text-align: end;
+    }
+
+    :where(.mr-table__cell--right) :where(.mr-data-table__sort) {
+        margin-inline-start: auto;
     }
 }

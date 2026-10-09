@@ -137,20 +137,22 @@ export function SidebarLayoutHarness() {
                 >
                     <SidebarLayout
                         sidebar={
-                            <div style={{ padding: 'var(--mr-spacing-3)' }}>
+                            <div style={{ padding: 'var(--mr-space-3)' }}>
                                 <div
                                     style={{
-                                        fontWeight: 'var(--mr-weight-semibold)',
-                                        marginBottom: 'var(--mr-spacing-2)',
+                                        fontWeight: 'var(--mr-font-weight-semibold)',
+                                        marginBottom: 'var(--mr-space-2)',
+                                        fontSize: 'var(--mr-font-size-sm)',
+                                        color: 'var(--mr-text-primary)',
                                     }}
                                 >
-                                    Sidebar
+                                    Workspace
                                 </div>
                                 <div
                                     style={{
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        gap: 'var(--mr-spacing-1)',
+                                        gap: 'var(--mr-space-1)',
                                     }}
                                 >
                                     <Button variant="ghost" size="sm">
@@ -166,18 +168,20 @@ export function SidebarLayoutHarness() {
                             </div>
                         }
                         header={
-                            <div
+                            <span
                                 style={{
-                                    padding: 'var(--mr-spacing-2) var(--mr-spacing-3)',
-                                    borderBottom: '1px solid var(--mr-border-default)',
+                                    fontSize: 'var(--mr-font-size-sm)',
+                                    fontWeight: 'var(--mr-font-weight-medium)',
                                 }}
                             >
-                                Header
-                            </div>
+                                Dashboard Overview
+                            </span>
                         }
                     >
-                        <div style={{ padding: 'var(--mr-spacing-4)' }}>
-                            <p>Main content area inside the sidebar layout.</p>
+                        <div>
+                            <p style={{ margin: 0, color: 'var(--mr-text-primary)' }}>
+                                Main content area inside the sidebar layout.
+                            </p>
                         </div>
                     </SidebarLayout>
                 </div>
@@ -194,11 +198,13 @@ export function SidebarLayoutHarness() {
                     <SidebarLayout
                         collapsible
                         sidebar={
-                            <div style={{ padding: 'var(--mr-spacing-3)' }}>
+                            <div style={{ padding: 'var(--mr-space-3)' }}>
                                 <div
                                     style={{
-                                        fontWeight: 'var(--mr-weight-semibold)',
-                                        marginBottom: 'var(--mr-spacing-2)',
+                                        fontWeight: 'var(--mr-font-weight-semibold)',
+                                        marginBottom: 'var(--mr-space-2)',
+                                        fontSize: 'var(--mr-font-size-sm)',
+                                        color: 'var(--mr-text-primary)',
                                     }}
                                 >
                                     Navigation
@@ -207,7 +213,7 @@ export function SidebarLayoutHarness() {
                                     style={{
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        gap: 'var(--mr-spacing-1)',
+                                        gap: 'var(--mr-space-1)',
                                     }}
                                 >
                                     <Button variant="ghost" size="sm">
@@ -219,9 +225,21 @@ export function SidebarLayoutHarness() {
                                 </div>
                             </div>
                         }
+                        header={
+                            <span
+                                style={{
+                                    fontSize: 'var(--mr-font-size-sm)',
+                                    fontWeight: 'var(--mr-font-weight-medium)',
+                                }}
+                            >
+                                Collapsible View
+                            </span>
+                        }
                     >
-                        <div style={{ padding: 'var(--mr-spacing-4)' }}>
-                            <p>Content area with responsive sidebar toggle in header.</p>
+                        <div>
+                            <p style={{ margin: 0, color: 'var(--mr-text-primary)' }}>
+                                Content area with responsive sidebar toggle in header.
+                            </p>
                         </div>
                     </SidebarLayout>
                 </div>
