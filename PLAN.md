@@ -16,8 +16,8 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : 4825ea9 (plage 8380a87..4825ea9)
+Commit de session : 8aa483f (plage 4825ea9..8aa483f)
 Etat :
-- Corrections ciblees : Accordion/Collapsible (largeur pleine), DataTable/Table (alignement colonnes th/td et classes d'alignement), SidebarLayout (header flex et icone panneau), CommandPalette (nettoyage styles et tokens de couleur), Drawer (positionnement et animations top/bottom), Modal (espacements, description, footer, icone)
+- Ajustements : alignement rigoureux de la case tout selectionner de DataTable avec les lignes, retrait des separateurs d'en-tete/pied sur Modal, harmonisation complete d'AlertDialog avec Modal (animation d'entree, espacements, actions)
 - Verifications : pnpm verify vert (typecheck, format, lint:css, test:contrast, build, test, test:dist, test:audit), 1313 tests @monority/ui passants, 94 tests @monority/web passants
 - Prochaine etape : Validation visuelle des ajustements par l'utilisateur
