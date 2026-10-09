@@ -36,12 +36,10 @@ jobs:
 
       # Sans changeset en attente, changesets/action n'ouvre aucune PR de
       # version : le workflow degrade proprement (voir .changeset/README.md).
-      - name: Create Release Pull Request or Publish
+      - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          publish: pnpm release
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
