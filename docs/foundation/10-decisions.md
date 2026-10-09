@@ -41,6 +41,7 @@ Statuts : `Acceptée`, `Remplacée par ADR-xxx`, `Abandonnée`. Une décision re
 - ADR-024 : bande de luminosité des surfaces portant un contrôle bordé
 - ADR-025 : les styles de portée sont opt-in par data-theme ; la base ne modifie jamais la taille racine
 - ADR-026 : bordure de contrôle discrète au repos et accessibilité garantie par le focus et le thème contrasté
+- ADR-027 : calibrage de la luminosité du texte secondaire sur surface pour WCAG AA dans les thèmes sombres
 
 ## Décisions acceptées
 
@@ -202,6 +203,17 @@ Alternatives écartées :
 - Conserver le seuil 3,0:1 au repos (rendu visuel jugé trop lourd et inadapté au produit).
 - Différencier le fond de l'input par rapport au canevas (exigerait l'introduction prématurée d'un nouveau token de surface).
 Conséquences : Les bordures de saisie et de bouton secondaire s'intègrent de manière subtile et épurée. Le seuil de test automatisé dans `test-contrast.js` est ajusté à 1,8:1 pour les bordures de contrôle au repos et 2,0:1 au survol.
+
+### ADR-027 : calibrage de la luminosité du texte secondaire sur surface pour WCAG AA dans les thèmes sombres
+Statut : Acceptée.
+Contexte : Dans les thèmes sombres (`dark`, `ocean`, `oled`, `slate`), `--mr-text-secondary` posé sur `--mr-bg-surface` n'atteignait pas le seuil WCAG 2.2 AA (4,5:1 pour le texte courant) avec les valeurs initiales (ex. L=0,60 sur surface L=0,22 donnait 4,3:1), générant une violation Axe lors des audits d'accessibilité E2E.
+Décision :
+1. Rehausser la luminosité de `--mr-text-secondary` à 0,62 pour `dark`, 0,625 pour `ocean` et `slate`, et 0,60 pour `oled` (surface L=0,16).
+2. Garantir un ratio de contraste supérieur à 4,5:1 sur `--mr-bg-surface` pour tout texte secondaire sans altérer la hiérarchie visuelle par rapport au texte principal (`--mr-text-primary` à L=0,955).
+Alternatives écartées :
+- Assombrir `--mr-bg-surface` (réduirait l'écart perçu avec le canevas sombre et perturberait l'étagement des cartes).
+- Introduire un token contextuel `--mr-text-secondary-on-surface` (violait le principe d'un vocabulaire fermé et minimal).
+Conséquences : Le contraste sur `--mr-bg-surface` atteint désormais au moins 4,72:1 sur l'ensemble des thèmes sombres, garantissant 0 violation Axe et le respect strict du critère WCAG 1.4.3.
 
 ## Décisions ouvertes
 
