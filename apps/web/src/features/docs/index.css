@@ -336,7 +336,7 @@
 }
 
 .docs-infinite-scroll-viewport {
-    max-block-size: calc(var(--mr-space-8) * 2);
+    max-block-size: calc(var(--mr-space-6) * 5);
     overflow: auto;
     border: var(--mr-border-width) solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);

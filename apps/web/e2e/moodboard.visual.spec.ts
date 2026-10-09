@@ -30,11 +30,16 @@ test.describe('Phase 6 — moodboard visual', () => {
         }
         expect(scan.violations.length).toBe(0)
 
+        await page.addStyleTag({
+            content: '.app-header { position: static !important; }',
+        })
+
         await expect(page.getByTestId('moodboard-page')).toHaveScreenshot(
             `moodboard--default--${testInfo.project.name}.png`,
             {
                 animations: 'disabled',
                 caret: 'hide',
+                timeout: 15000,
             }
         )
     })

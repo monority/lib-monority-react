@@ -21,7 +21,7 @@ test('spinner reste animé en mouvement réduit et utilise la durée spin', asyn
 
 test('button conserve le padding horizontal et supprime le padding vertical', async ({ page }) => {
     await page.goto('/harness/button?theme=light&density=comfortable')
-    const button = page.locator('[data-testid="harness-page"] button').nth(1)
+    const button = page.locator('.mr-btn[data-size="md"]').first()
 
     await expect(button).toHaveCSS('padding-top', '0px')
     await expect(button).toHaveCSS('padding-bottom', '0px')

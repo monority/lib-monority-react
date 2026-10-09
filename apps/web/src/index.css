@@ -19,11 +19,12 @@
 
 /* Background global : canvas sombre + halo ambiant chaud */
 body {
-    background: radial-gradient(
-            ellipse 80% 35% at 50% 0%,
-            color-mix(in srgb, var(--mr-accent) 8%, transparent),
-            transparent 70%
-        ), var(--mr-bg-canvas);
+    background-color: var(--mr-bg-canvas);
+    background-image: radial-gradient(
+        ellipse 80% 35% at 50% 0%,
+        color-mix(in srgb, var(--mr-accent-solid) 8%, transparent),
+        transparent 70%
+    );
 }
 
 /* --- Home: centered hero --- */

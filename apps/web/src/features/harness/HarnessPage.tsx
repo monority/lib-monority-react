@@ -2415,6 +2415,21 @@ export function HarnessPage() {
         (c) => selectedCategory === 'all' || c.category === selectedCategory
     )
 
+    if (component === '__position') {
+        return (
+            <main
+                className="harness-page"
+                data-testid="harness-page"
+                data-harness-component={component}
+                data-theme={theme}
+            >
+                <ThemeScope theme={theme} density={density}>
+                    <PositionHarness />
+                </ThemeScope>
+            </main>
+        )
+    }
+
     return (
         <main
             className="harness-page"

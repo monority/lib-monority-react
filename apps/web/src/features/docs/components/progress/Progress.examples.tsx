@@ -36,20 +36,37 @@ export function ProgressIndeterminateExample() {
 }
 
 export function ProgressAnimatedExample() {
-    const [value, setValue] = useState(0)
-    const directionRef = useRef(1)
+    const [value, setValue] = useState(() =>
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 100
+            : 0
+    )
 
     useEffect(() => {
+        const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+        if (media.matches) {
+            setValue(100)
+            return
+        }
         const interval = window.setInterval(() => {
-            setValue((current) => {
-                const next = Math.min(100, Math.max(0, current + 5 * directionRef.current))
-                if (next >= 100) directionRef.current = -1
-                else if (next <= 0) directionRef.current = 1
-                return next
-            })
+            setValue((current) => Math.min(current + 5, 100))
         }, 200)
         return () => window.clearInterval(interval)
     }, [])
+
+    useEffect(() => {
+        if (
+            typeof window !== 'undefined' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+            return
+        }
+        if (value >= 100) {
+            const id = window.setTimeout(() => setValue(0), 1200)
+            return () => window.clearTimeout(id)
+        }
+    }, [value])
 
     return <Progress value={value} label="Packaging release" />
 }
