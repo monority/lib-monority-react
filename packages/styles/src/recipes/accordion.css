@@ -76,13 +76,11 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        inline-size: var(--mr-space-6);
-        block-size: var(--mr-space-6);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
         flex: 0 0 auto;
-        border-radius: var(--mr-radius-full);
-        background-color: var(--mr-bg-sunken);
         color: var(--mr-text-secondary);
-        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state);
+        transition: transform var(--mr-duration-state), color var(--mr-duration-state);
     }
 
     :where(.mr-accordion__icon)::before {
@@ -91,13 +89,16 @@
         block-size: var(--mr-space-2);
         border-inline-end: 2px solid currentColor;
         border-block-end: 2px solid currentColor;
-        transform: translateY(-1px) rotate(45deg);
+        transform: translateY(-2px) rotate(45deg);
+    }
+
+    :where(.mr-accordion__trigger):hover :where(.mr-accordion__icon) {
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-accordion__item)[data-open] :where(.mr-accordion__icon) {
         transform: rotate(180deg);
-        background-color: var(--mr-accent-subtle);
-        color: var(--mr-accent-text);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-accordion__panel) {
@@ -127,8 +128,8 @@
     }
 
     :where(.mr-accordion)[data-size='sm'] :where(.mr-accordion__icon) {
-        inline-size: var(--mr-space-5);
-        block-size: var(--mr-space-5);
+        inline-size: var(--mr-space-3);
+        block-size: var(--mr-space-3);
     }
 
     :where(.mr-accordion)[data-size='lg'] :where(.mr-accordion__trigger) {

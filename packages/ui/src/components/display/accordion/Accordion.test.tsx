@@ -62,6 +62,26 @@ describe('Accordion', () => {
         expect((panels[1] as HTMLElement).hidden).toBe(true)
     })
 
+    it('collapses an open item on trigger re-click by default', () => {
+        const view = render(<Accordion items={items} defaultValue="1" />)
+        const trigger = view.querySelector('.mr-accordion__trigger') as HTMLButtonElement
+        const panel = view.querySelector('.mr-accordion__panel') as HTMLElement
+        expect(panel.hidden).toBe(false)
+        act(() => trigger.click())
+        expect(panel.hidden).toBe(true)
+        expect(trigger.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    it('keeps item open when collapsible is explicitly false', () => {
+        const view = render(<Accordion items={items} defaultValue="1" collapsible={false} />)
+        const trigger = view.querySelector('.mr-accordion__trigger') as HTMLButtonElement
+        const panel = view.querySelector('.mr-accordion__panel') as HTMLElement
+        expect(panel.hidden).toBe(false)
+        act(() => trigger.click())
+        expect(panel.hidden).toBe(false)
+        expect(trigger.getAttribute('aria-expanded')).toBe('true')
+    })
+
     it('applies data-size attribute', () => {
         const view = render(<Accordion items={items} size="lg" />)
         expect(view.querySelector('.mr-accordion')?.getAttribute('data-size')).toBe('lg')

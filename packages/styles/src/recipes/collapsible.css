@@ -64,14 +64,11 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        inline-size: var(--mr-space-6);
-        block-size: var(--mr-space-6);
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
         flex: 0 0 auto;
-        border-radius: var(--mr-radius-full);
-        border: 1px solid var(--mr-border-subtle);
-        background-color: var(--mr-bg-sunken);
         color: var(--mr-text-secondary);
-        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state);
+        transition: transform var(--mr-duration-state), color var(--mr-duration-state);
     }
 
     :where(.mr-collapsible__icon)::before {
@@ -80,13 +77,15 @@
         block-size: var(--mr-space-2);
         border-inline-end: 2px solid currentColor;
         border-block-end: 2px solid currentColor;
-        transform: translateY(-1px) rotate(45deg);
+        transform: translateY(-2px) rotate(45deg);
+    }
+
+    :where(.mr-collapsible__trigger):hover :where(.mr-collapsible__icon) {
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__icon) {
         transform: rotate(180deg);
-        border-color: var(--mr-border-default);
-        background-color: var(--mr-bg-raised);
         color: var(--mr-text-primary);
     }
 
@@ -131,8 +130,8 @@
     }
 
     :where(.mr-collapsible)[data-size='sm'] :where(.mr-collapsible__icon) {
-        inline-size: var(--mr-space-5);
-        block-size: var(--mr-space-5);
+        inline-size: var(--mr-space-3);
+        block-size: var(--mr-space-3);
     }
 
     :where(.mr-collapsible)[data-size='lg'] :where(.mr-collapsible__trigger) {

@@ -16,7 +16,7 @@ export function Accordion({
     onChange,
     onValueChange,
     allowMultiple = false,
-    collapsible = false,
+    collapsible = true,
     size = 'md',
     className,
     ref,
