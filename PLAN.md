@@ -16,9 +16,9 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : 243b6bd (plage 19849ca..243b6bd)
+Commit de session : 2e3d17e (plage 19849ca..2e3d17e)
 Etat :
-- Assainissement suite E2E Playwright termine : 512 tests e2e web passants, 1313 tests ui passants
-- Changesets et documentation a jour : layers mr.* harmonises, changeset css foundation pret, ADR-027 consigne
+- Pull Request ouverte : #8 (refactor/css-foundation -> main), CI GitHub Actions verte
 - Controles de qualite : pnpm verify vert (8 portes), test:dist vert, visual & behavioral E2E 100% verts
-- Prochaine etape : Validation et cloture du chantier refactor/css-foundation
+- Changesets et documentation : pret pour publication npm via release.yml lors du merge
+- Prochaine etape : Revue et fusion de la PR #8 sur main
