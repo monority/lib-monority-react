@@ -21,5 +21,5 @@ Supprime des règles CSS mortes et réorganise les catégories de composants
   seuls les chemins de sources internes ont bougé.
 - Garde-fou ajouté : un test échoue si un template du générateur réintroduit un
   layer CSS non namespacé (un layer non déclaré est ordonné en dernier par le
-  navigateur, ce qui placerait le composant généré au-dessus de
-  `monority.overrides`).
+  navigateur, ce qui placerait le composant généré au-dessus des couches de la
+  bibliothèque).

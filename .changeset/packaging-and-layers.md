@@ -12,15 +12,13 @@ d'exports (`exports.test.ts`, 134 tests) :
    depuis `@monority/ui`. Elles restent utilisées en interne. Seuls `useTheme` et
    `useToast` sont exposés en tant que hooks.
 
-2. **Les layers CSS sont namespacés `monority.*`.** L'ordre de priorité est
-   inchangé, seul le nom change :
+2. **Les layers CSS sont namespacés `mr.*`.** L'ordre de priorité déclaré dans `layers.css` est :
 
    ```text
-   monority.reset → monority.tokens → monority.base → monority.recipes
-   → monority.components → monority.utilities → monority.overrides
+   mr.reset → mr.base → mr.tokens → mr.themes → mr.components → mr.utilities
    ```
 
-   Les applications qui surchargent `@layer` doivent mettre à jour le nom.
+   Les applications qui surchargent `@layer` doivent cibler les couches préfixées `mr.`. Le CSS non-couche d'une application gagne toujours.
 
 3. **`reset.css` et `utilities.css` sont devenus opt-in.** L'import par défaut
    (`@monority/ui/index.css`) n'inclut plus le reset de page ni les utilitaires.

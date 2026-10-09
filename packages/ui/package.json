@@ -1,7 +1,7 @@
 {
     "name": "@monority/ui",
     "version": "0.1.0",
-    "description": "A React component library with design system, dark mode, and 74 publicly exported components",
+    "description": "A React component library with design system, dark mode, and 75 publicly exported components",
     "license": "MIT",
     "repository": {
         "type": "git",
