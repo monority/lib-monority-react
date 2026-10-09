@@ -16,9 +16,8 @@ Button en premier (B1 a B6).
 
 ## Reprise
 Sauvegarde : git push origin refactor/css-foundation:backup/css-foundation-wip
-Commit de session : 8380a87 (plage de2ecc8..8380a87)
+Commit de session : 4825ea9 (plage 8380a87..4825ea9)
 Etat :
-- Amelioration des composants: Tooltip, Popover, DropdownMenu, ContextMenu, HoverCard, Slider, Calendar, DatePicker, Select, Carousel, PreCode, SidebarLayout
-- Overlays enrichis (positionnement fin, keyframes d'entree, shortcuts, fleches), Slider double-range, pickers Calendar/DatePicker, SidebarLayout retractable
-- Verifications : pnpm verify vert (typecheck, format, lint:css, test:contrast, build, test, test:dist, test:audit), 1312 tests @monority/ui passants, 94 tests @monority/web passants
-- Prochaine etape : Poursuite des optimisations ciblees selon retour utilisateur
+- Corrections ciblees : Accordion/Collapsible (largeur pleine), DataTable/Table (alignement colonnes th/td et classes d'alignement), SidebarLayout (header flex et icone panneau), CommandPalette (nettoyage styles et tokens de couleur), Drawer (positionnement et animations top/bottom), Modal (espacements, description, footer, icone)
+- Verifications : pnpm verify vert (typecheck, format, lint:css, test:contrast, build, test, test:dist, test:audit), 1313 tests @monority/ui passants, 94 tests @monority/web passants
+- Prochaine etape : Validation visuelle des ajustements par l'utilisateur
