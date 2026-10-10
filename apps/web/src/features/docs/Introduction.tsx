@@ -1,132 +1,132 @@
 import { Link } from 'react-router-dom'
-import { DocsCodeBlock } from './components/DocsCodeBlock'
+import { HeroHeader } from '@/shared/components/HeroHeader'
+import { CodeViewer } from '@/shared/components/CodeViewer'
+import { Card } from '@monority/ui/card'
+import { Grid } from '@monority/ui/grid'
+import { Badge } from '@monority/ui/badge'
+import { Stack } from '@monority/ui/stack'
+
+const features: {
+    variant: 'default' | 'primary' | 'success' | 'warning' | 'danger'
+    title: string
+    desc: string
+}[] = [
+    {
+        variant: 'primary',
+        title: 'System-first UI',
+        desc: 'Shared tokens, recipes, and components that keep shells, forms, and content surfaces visually aligned.',
+    },
+    {
+        variant: 'success',
+        title: 'Composable architecture',
+        desc: 'Use the main barrel for speed or sub-path imports when you want tighter bundle control.',
+    },
+    {
+        variant: 'warning',
+        title: 'Accessible defaults',
+        desc: 'Keyboard support, ARIA patterns, and focus handling are built into the component layer.',
+    },
+    {
+        variant: 'primary',
+        title: 'Theme-ready styling',
+        desc: 'CSS variable driven theming lets docs and products share the same visual language.',
+    },
+    {
+        variant: 'danger',
+        title: 'Broad coverage',
+        desc: 'From small typography helpers to data-heavy layouts and overlays, the library covers daily product work.',
+    },
+    {
+        variant: 'default',
+        title: 'Typed end to end',
+        desc: 'Strong TypeScript support keeps component APIs predictable as the design system grows.',
+    },
+]
 
 export function Introduction() {
     return (
         <div className="docs-page">
-            <header className="docs-hero">
-                <span className="docs-kicker">Monority UI</span>
-                <h1>Introduction</h1>
-                <p className="docs-description">
-                    A modern, accessible React component library for building calm, consistent
-                    product interfaces with production-ready primitives, layouts, feedback surfaces,
-                    and overlays.
-                </p>
-            </header>
+            <HeroHeader
+                kicker="Monority UI"
+                title="Introduction"
+                description="A modern, accessible React component library for building calm, consistent product interfaces with production-ready primitives, layouts, feedback surfaces, and overlays."
+            />
 
             <section className="docs-section">
-                <h2>What You Get</h2>
-                <div className="docs-feature-grid">
-                    {[
-                        {
-                            accent: 'accent',
-                            title: 'System-first UI',
-                            desc: 'Shared tokens, recipes, and components that keep shells, forms, and content surfaces visually aligned.',
-                        },
-                        {
-                            accent: 'success',
-                            title: 'Composable architecture',
-                            desc: 'Use the main barrel for speed or sub-path imports when you want tighter bundle control.',
-                        },
-                        {
-                            accent: 'warning',
-                            title: 'Accessible defaults',
-                            desc: 'Keyboard support, ARIA patterns, and focus handling are built into the component layer.',
-                        },
-                        {
-                            accent: 'info',
-                            title: 'Theme-ready styling',
-                            desc: 'CSS variable driven theming lets docs and products share the same visual language.',
-                        },
-                        {
-                            accent: 'danger',
-                            title: 'Broad coverage',
-                            desc: 'From small typography helpers to data-heavy layouts and overlays, the library covers daily product work.',
-                        },
-                        {
-                            accent: 'neutral',
-                            title: 'Typed end to end',
-                            desc: 'Strong TypeScript support keeps component APIs predictable as the design system grows.',
-                        },
-                    ].map((feature) => (
-                        <div key={feature.title} className="docs-feature-card">
-                            <div
-                                className={`docs-feature-card__accent docs-feature-card__accent--${feature.accent}`}
-                            />
-                            <h3>{feature.title}</h3>
-                            <p>{feature.desc}</p>
-                        </div>
+                <h2>Ce que propose la bibliothèque</h2>
+                <Grid columns="auto-fit">
+                    {features.map((feature) => (
+                        <Card key={feature.title} padding="md">
+                            <Stack gap="xs">
+                                <Badge variant={feature.variant} size="sm">
+                                    {feature.title}
+                                </Badge>
+                                <p
+                                    style={{
+                                        margin: '0.25rem 0 0',
+                                        fontSize: '0.875rem',
+                                        lineHeight: 1.5,
+                                        color: 'var(--mr-text-muted)',
+                                    }}
+                                >
+                                    {feature.desc}
+                                </p>
+                            </Stack>
+                        </Card>
                     ))}
-                </div>
+                </Grid>
             </section>
 
             <section className="docs-section">
-                <h2>Quick Start</h2>
-                <DocsCodeBlock className="docs-code-block" language="bash">
-                    npm install @monority/ui
-                </DocsCodeBlock>
-                <DocsCodeBlock className="docs-code-block">{`import { Button } from '@monority/ui'
-import '@monority/ui/styles.css'
-
-function App() {
-  return <Button>Open workspace</Button>
-}`}</DocsCodeBlock>
+                <h2>Démarrage rapide</h2>
+                <Stack gap="sm">
+                    <CodeViewer code="pnpm add @monority/ui" language="bash" filename="terminal" />
+                    <CodeViewer
+                        code={`import { Button } from '@monority/ui'\nimport '@monority/ui/styles.css'\n\nfunction App() {\n  return <Button>Open workspace</Button>\n}`}
+                        filename="App.tsx"
+                    />
+                </Stack>
                 <p className="docs-text" style={{ marginTop: '1rem' }}>
                     <Link to="/docs/installation" className="docs-text-link">
-                        Read the full installation guide
+                        Consulter le guide complet d'installation
                     </Link>
                 </p>
             </section>
 
             <section className="docs-section">
-                <h2>Component Categories</h2>
-                <p className="docs-text">
-                    Monority UI groups its components into practical product-facing areas:
-                </p>
-                <ul className="docs-list">
-                    <li>
-                        <strong>Primitives</strong> - Button, Input, Select, Checkbox, Switch -
-                        small focused building blocks
-                    </li>
-                    <li>
-                        <strong>Forms</strong> - Checkbox, Input, Select, Slider, Calendar,
-                        DatePicker, FileUpload, and more
-                    </li>
-                    <li>
-                        <strong>Actions</strong> - Button, Toggle, ToggleGroup - IconButton and
-                        CopyButton redirect to the Button page
-                    </li>
-                    <li>
-                        <strong>Typography</strong> - Text, Title, Kbd - plus the PreCode code block
-                        export
-                    </li>
-                    <li>
-                        <strong>Display</strong> - Accordion, Avatar, Card, Carousel, Collapsible,
-                        Table
-                    </li>
-                    <li>
-                        <strong>Data display</strong> - DataList, DataTable
-                    </li>
-                    <li>
-                        <strong>Feedback</strong> - Badge, Banner, Skeleton, Spinner, Toast,
-                        Progress
-                    </li>
-                    <li>
-                        <strong>Layout</strong> - Container, Grid, Stack, Divider, ScrollArea,
-                        Resizable
-                    </li>
-                    <li>
-                        <strong>Navigation</strong> - Tabs, Breadcrumb, Pagination, Menubar,
-                        NavigationMenu
-                    </li>
-                    <li>
-                        <strong>Overlays</strong> - Modal, Drawer, Tooltip, Popover, HoverCard,
-                        ContextMenu
-                    </li>
-                    <li>
-                        <strong>Experimental</strong> - InfiniteScroll
-                    </li>
-                </ul>
+                <h2>Catégories de composants</h2>
+                <Card padding="md">
+                    <ul className="docs-list" style={{ margin: 0 }}>
+                        <li>
+                            <strong>Actions</strong> — Button, ButtonLink, IconButton, CopyButton,
+                            Toggle, ToggleGroup
+                        </li>
+                        <li>
+                            <strong>Formulaires</strong> — Input, InputOTP, Select, Textarea,
+                            Checkbox, RadioGroup, Switch, Slider, Rating, DatePicker
+                        </li>
+                        <li>
+                            <strong>Navigation</strong> — Tabs, SegmentedControl, Stepper,
+                            Breadcrumb, Pagination, Toolbar, Topbar, SidebarLayout
+                        </li>
+                        <li>
+                            <strong>Overlays</strong> — Modal, AlertDialog, Sheet, Drawer, Tooltip,
+                            Popover, DropdownMenu
+                        </li>
+                        <li>
+                            <strong>Données & Affichage</strong> — DataTable, DataList, Table, Card,
+                            MetricGrid, StatCard, Timeline
+                        </li>
+                        <li>
+                            <strong>Feedback</strong> — Badge, BadgeDelta, Callout, InlineAlert,
+                            Banner, Progress, Spinner, Toast
+                        </li>
+                        <li>
+                            <strong>Disposition</strong> — Container, Grid, Stack, Section, Divider,
+                            Separator, ScrollArea
+                        </li>
+                    </ul>
+                </Card>
             </section>
         </div>
     )
