@@ -4,7 +4,7 @@ import { buildAbsoluteUrl, siteConfig } from '@/shared/seo/site-config'
 
 type SeoAttributes = Record<string, string>
 
-interface UsePageSeoOptions {
+export interface UsePageSeoOptions {
     title?: string
     description?: string
     image?: string

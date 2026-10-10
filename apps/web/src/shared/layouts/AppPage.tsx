@@ -1,9 +1,9 @@
 import { AppShell } from './AppShell'
-import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { usePageSeo, type UsePageSeoOptions } from '@/shared/seo/usePageSeo'
 import { Container, Stack } from '@monority/ui'
 
 interface AppPageProps {
-    seo?: Record<string, any>
+    seo?: UsePageSeoOptions
     containerSize?: 'sm' | 'md' | 'lg' | 'xl'
     stackGap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
     children?: React.ReactNode
