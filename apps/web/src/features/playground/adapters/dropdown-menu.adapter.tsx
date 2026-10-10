@@ -5,7 +5,7 @@ import type { PlaygroundDefinition, PlaygroundProps } from '../playground-types'
 const sampleItems = [
     { value: 'profile', label: 'Mon profil' },
     { value: 'settings', label: 'Parametres du compte' },
-    { value: 'sep1', type: 'separator' as const },
+    { value: 'sep1', type: 'separator' as const, label: '' },
     { value: 'logout', label: 'Se deconnecter', danger: true },
 ]
 

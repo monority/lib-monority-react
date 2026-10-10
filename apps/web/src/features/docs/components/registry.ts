@@ -322,6 +322,20 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'stable' },
     {
         category: 'navigation',
+        label: 'SegmentedControl',
+        path: '/docs/segmented-control',
+        slug: 'segmented-control',
+        status: 'stable',
+    },
+    {
+        category: 'navigation',
+        label: 'Stepper',
+        path: '/docs/stepper',
+        slug: 'stepper',
+        status: 'stable',
+    },
+    {
+        category: 'navigation',
         label: 'Topbar',
         path: '/docs/topbar',
         slug: 'topbar',

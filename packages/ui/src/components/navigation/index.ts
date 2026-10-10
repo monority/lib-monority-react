@@ -11,4 +11,21 @@ export { Pagination, type PaginationProps } from './pagination'
 export { SidebarLayout, type SidebarLayoutProps, type SidebarWidth } from './sidebar-layout'
 export { Tabs, type TabsProps, type TabsTone, type TabsSize } from './tabs'
 export type { TabItem } from './tabs'
+export {
+    SegmentedControl,
+    SegmentedControlItem,
+    type SegmentedControlProps,
+    type SegmentedControlItemProps,
+    type SegmentedControlOption,
+    type SegmentedControlSize,
+} from './segmented-control'
+export {
+    Stepper,
+    StepperStep,
+    type StepperProps,
+    type StepperStepProps,
+    type StepItemData,
+    type StepStatus,
+    type StepperOrientation,
+} from './stepper'
 export { Topbar, type TopbarProps } from './topbar'

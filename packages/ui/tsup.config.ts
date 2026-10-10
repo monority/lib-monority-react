@@ -38,6 +38,8 @@ export default defineConfig({
         dataTable: 'src/components/data/data-table/index.ts',
         timeline: 'src/components/data/timeline/index.ts',
         tabs: 'src/components/navigation/tabs/index.ts',
+        segmentedControl: 'src/components/navigation/segmented-control/index.ts',
+        stepper: 'src/components/navigation/stepper/index.ts',
         navigationMenu: 'src/components/navigation/navigation-menu/index.ts',
         menubar: 'src/components/navigation/menubar/index.ts',
         datePicker: 'src/components/forms/date-picker/index.ts',

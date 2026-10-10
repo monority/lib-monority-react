@@ -194,6 +194,18 @@
             "import": "./dist/tabs.js",
             "default": "./dist/tabs.js"
         },
+        "./segmented-control": {
+            "types": "./dist/segmentedControl.d.ts",
+            "monority-source": "./src/components/navigation/segmented-control/index.ts",
+            "import": "./dist/segmentedControl.js",
+            "default": "./dist/segmentedControl.js"
+        },
+        "./stepper": {
+            "types": "./dist/stepper.d.ts",
+            "monority-source": "./src/components/navigation/stepper/index.ts",
+            "import": "./dist/stepper.js",
+            "default": "./dist/stepper.js"
+        },
         "./navigation-menu": {
             "types": "./dist/navigationMenu.d.ts",
             "monority-source": "./src/components/navigation/navigation-menu/index.ts",

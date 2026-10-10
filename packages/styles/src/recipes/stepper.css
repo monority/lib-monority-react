@@ -1,0 +1,120 @@
+/* Recette Stepper dans la couche mr.components (spec v4).
+ * Fil d etapes sequentielles d un processus ou formulaire. */
+@layer mr.components {
+    :where(.mr-stepper) {
+        display: flex;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-stepper[data-orientation='horizontal']) {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    :where(.mr-stepper[data-orientation='vertical']) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    :where(.mr-stepper__item) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+    }
+
+    :where(.mr-stepper[data-orientation='vertical']) :where(.mr-stepper__item) {
+        align-items: flex-start;
+    }
+
+    :where(.mr-stepper__indicator) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        border-radius: var(--mr-radius-full);
+        border: 2px solid var(--mr-border-default);
+        background-color: var(--mr-bg-surface);
+        color: var(--mr-text-secondary);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-semibold);
+        line-height: 1;
+        transition: background-color var(--mr-duration-state) ease, border-color
+            var(--mr-duration-state) ease, color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-stepper__item[data-status='active']) :where(.mr-stepper__indicator) {
+        border-color: var(--mr-brand-primary);
+        background-color: var(--mr-brand-primary);
+        color: var(--mr-text-on-brand);
+    }
+
+    :where(.mr-stepper__item[data-status='completed']) :where(.mr-stepper__indicator) {
+        border-color: var(--mr-status-success-border);
+        background-color: var(--mr-status-success-bg);
+        color: var(--mr-status-success-text);
+    }
+
+    :where(.mr-stepper__content) {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1 1 auto;
+    }
+
+    :where(.mr-stepper__title) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        line-height: var(--mr-leading-snug);
+    }
+
+    :where(.mr-stepper__item[data-status='active']) :where(.mr-stepper__title) {
+        color: var(--mr-text-primary);
+        font-weight: var(--mr-font-weight-semibold);
+    }
+
+    :where(.mr-stepper__item[data-status='completed']) :where(.mr-stepper__title) {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-stepper__description) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-muted);
+        line-height: var(--mr-leading-normal);
+    }
+
+    :where(.mr-stepper__connector) {
+        flex: 1 1 auto;
+        height: 2px;
+        background-color: var(--mr-border-default);
+        margin-inline: var(--mr-space-2);
+        transition: background-color var(--mr-duration-state) ease;
+    }
+
+    :where(.mr-stepper__item[data-status='completed']) + :where(.mr-stepper__connector) {
+        background-color: var(--mr-status-success-border);
+    }
+
+    :where(.mr-stepper[data-orientation='vertical']) :where(.mr-stepper__connector) {
+        width: 2px;
+        height: auto;
+        min-block-size: var(--mr-space-5);
+        margin-inline: calc(var(--mr-size-control-sm) / 2 - 1px);
+        margin-block: var(--mr-space-1);
+    }
+}

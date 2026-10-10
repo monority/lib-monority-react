@@ -5,8 +5,8 @@ import { PlaygroundControls } from './PlaygroundControls'
 import type { PlaygroundProps } from './playground-types'
 
 describe('playground registry', () => {
-    it('exposes 34 stable components with unique slugs', () => {
-        expect(playgroundRegistry.length).toBe(34)
+    it('exposes 36 stable components with unique slugs', () => {
+        expect(playgroundRegistry.length).toBe(36)
         const slugs = playgroundRegistry.map((item) => item.slug)
         expect(new Set(slugs).size).toBe(slugs.length)
         for (const item of playgroundRegistry) {
