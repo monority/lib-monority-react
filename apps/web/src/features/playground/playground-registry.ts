@@ -12,18 +12,23 @@ import { inputPlayground } from './adapters/input.adapter'
 import { modalPlayground } from './adapters/modal.adapter'
 import { progressPlayground } from './adapters/progress.adapter'
 import { radioGroupPlayground } from './adapters/radio-group.adapter'
+import { ratingPlayground } from './adapters/rating.adapter'
 import { sectionPlayground } from './adapters/section.adapter'
 import { selectPlayground } from './adapters/select.adapter'
 import { separatorPlayground } from './adapters/separator.adapter'
+import { sheetPlayground } from './adapters/sheet.adapter'
 import { skeletonPlayground } from './adapters/skeleton.adapter'
 import { sliderPlayground } from './adapters/slider.adapter'
 import { spinnerPlayground } from './adapters/spinner.adapter'
 import { switchPlayground } from './adapters/switch.adapter'
 import { tabsPlayground } from './adapters/tabs.adapter'
 import { textareaPlayground } from './adapters/textarea.adapter'
+import { timelinePlayground } from './adapters/timeline.adapter'
 import { toastPlayground } from './adapters/toast.adapter'
 import { togglePlayground } from './adapters/toggle.adapter'
 import { tooltipPlayground } from './adapters/tooltip.adapter'
+import { badgeDeltaPlayground } from './adapters/badge-delta.adapter'
+import { inputOtpPlayground } from './adapters/input-otp.adapter'
 
 /**
  * Single source of truth for the Playground.
@@ -56,6 +61,11 @@ export const playgroundRegistry: PlaygroundDefinition[] = [
     cardPlayground,
     sectionPlayground,
     separatorPlayground,
+    sheetPlayground,
+    inputOtpPlayground,
+    timelinePlayground,
+    badgeDeltaPlayground,
+    ratingPlayground,
 ]
 
 export function getPlaygroundDefinition(slug: string): PlaygroundDefinition {

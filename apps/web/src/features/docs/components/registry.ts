@@ -105,6 +105,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     { category: 'forms', label: 'Input', path: '/docs/input', slug: 'input', status: 'stable' },
     {
         category: 'forms',
+        label: 'InputOTP',
+        path: '/docs/input-otp',
+        slug: 'input-otp',
+        status: 'stable',
+    },
+    {
+        category: 'forms',
         label: 'NumberInput',
         path: '/docs/number-input',
         slug: 'number-input',
@@ -126,6 +133,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     },
     { category: 'forms', label: 'Select', path: '/docs/select', slug: 'select', status: 'stable' },
     { category: 'forms', label: 'Slider', path: '/docs/slider', slug: 'slider', status: 'stable' },
+    { category: 'forms', label: 'Rating', path: '/docs/rating', slug: 'rating', status: 'stable' },
     { category: 'forms', label: 'Switch', path: '/docs/switch', slug: 'switch', status: 'stable' },
     {
         category: 'forms',
@@ -144,6 +152,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     { category: 'feedback', label: 'Badge', path: '/docs/badge', slug: 'badge', status: 'stable' },
+    {
+        category: 'feedback',
+        label: 'BadgeDelta',
+        path: '/docs/badge-delta',
+        slug: 'badge-delta',
+        status: 'stable',
+    },
     {
         category: 'feedback',
         label: 'Banner',
@@ -239,6 +254,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     { category: 'overlays', label: 'Modal', path: '/docs/modal', slug: 'modal', status: 'stable' },
+    {
+        category: 'overlays',
+        label: 'Sheet',
+        path: '/docs/sheet',
+        slug: 'sheet',
+        status: 'stable',
+    },
     {
         category: 'overlays',
         label: 'Popover',
@@ -366,6 +388,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         path: '/docs/data-table',
         slug: 'data-table',
         status: 'draft',
+    },
+    {
+        category: 'data',
+        label: 'Timeline',
+        path: '/docs/timeline',
+        slug: 'timeline',
+        status: 'stable',
     },
 
     // Typography

@@ -1,6 +1,25 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
+import { readFileSync } from 'node:fs'
+
+const uiPkg = JSON.parse(
+    readFileSync(path.resolve(__dirname, '../../packages/ui/package.json'), 'utf8')
+)
+
+const subpathAliases = Object.entries(uiPkg.exports || {})
+    .filter(([key]) => key.startsWith('./') && key !== '.' && !key.endsWith('.css'))
+    .map(([key, val]) => {
+        const subpath = key.replace('./', '')
+        const distFile =
+            typeof val === 'object' && val !== null && 'import' in val
+                ? val.import
+                : `./dist/${subpath}.js`
+        return {
+            find: `@monority/ui/${subpath}`,
+            replacement: path.resolve(__dirname, '../../packages/ui', distFile),
+        }
+    })
 
 export default defineConfig({
     plugins: [react()],
@@ -19,21 +38,10 @@ export default defineConfig({
     },
     resolve: {
         // Subpath imports (@monority/ui/button, ...) resolve to the built package
-        // entries, mirroring the public import contract. Multi-word entries whose
-        // dist filename differs are mapped explicitly.
+        // entries, mirroring the public import contract. Aliases are derived directly
+        // from package.json exports so all multi-word and camelCase dist targets match.
         alias: [
-            {
-                find: '@monority/ui/alert-dialog',
-                replacement: path.resolve(__dirname, '../../packages/ui/dist/alertDialog.js'),
-            },
-            {
-                find: '@monority/ui/pre-code',
-                replacement: path.resolve(__dirname, '../../packages/ui/dist/preCode.js'),
-            },
-            {
-                find: /^@monority\/ui\/([\w-]+)$/,
-                replacement: path.resolve(__dirname, '../../packages/ui/dist/$1.js'),
-            },
+            ...subpathAliases,
             {
                 find: '@monority/ui',
                 replacement: path.resolve(__dirname, '../../packages/ui/dist/index.js'),

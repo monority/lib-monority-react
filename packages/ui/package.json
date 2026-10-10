@@ -62,6 +62,12 @@
             "import": "./dist/badge.js",
             "default": "./dist/badge.js"
         },
+        "./badge-delta": {
+            "types": "./dist/badgeDelta.d.ts",
+            "monority-source": "./src/components/feedback/badge-delta/index.ts",
+            "import": "./dist/badgeDelta.js",
+            "default": "./dist/badgeDelta.js"
+        },
         "./card": {
             "types": "./dist/card.d.ts",
             "monority-source": "./src/components/display/card/index.ts",
@@ -152,11 +158,23 @@
             "import": "./dist/slider.js",
             "default": "./dist/slider.js"
         },
+        "./rating": {
+            "types": "./dist/rating.d.ts",
+            "monority-source": "./src/components/forms/rating/index.ts",
+            "import": "./dist/rating.js",
+            "default": "./dist/rating.js"
+        },
         "./number-input": {
             "types": "./dist/numberInput.d.ts",
             "monority-source": "./src/components/forms/number-input/index.ts",
             "import": "./dist/numberInput.js",
             "default": "./dist/numberInput.js"
+        },
+        "./input-otp": {
+            "types": "./dist/inputOtp.d.ts",
+            "monority-source": "./src/components/forms/input-otp/index.ts",
+            "import": "./dist/inputOtp.js",
+            "default": "./dist/inputOtp.js"
         },
         "./password-input": {
             "types": "./dist/passwordInput.d.ts",
@@ -217,6 +235,12 @@
             "monority-source": "./src/components/data/data-table/index.ts",
             "import": "./dist/dataTable.js",
             "default": "./dist/dataTable.js"
+        },
+        "./timeline": {
+            "types": "./dist/timeline.d.ts",
+            "monority-source": "./src/components/data/timeline/index.ts",
+            "import": "./dist/timeline.js",
+            "default": "./dist/timeline.js"
         },
         "./empty-state": {
             "types": "./dist/emptyState.d.ts",
@@ -385,6 +409,12 @@
             "monority-source": "./src/components/overlays/drawer/index.ts",
             "import": "./dist/drawer.js",
             "default": "./dist/drawer.js"
+        },
+        "./sheet": {
+            "types": "./dist/sheet.d.ts",
+            "monority-source": "./src/components/overlays/sheet/index.ts",
+            "import": "./dist/sheet.js",
+            "default": "./dist/sheet.js"
         },
         "./grid": {
             "types": "./dist/grid.d.ts",

@@ -14,18 +14,24 @@ Croissance stricte : proposition sans ecriture, regle derriere chaque valeur neu
 contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
-## Chantier en cours — Refonte et Composantisation de apps/web
+## Chantier terminé — Refonte et Composantisation de apps/web (PR #14 fusionnée)
 
-Branche `feat/web-redesign-and-componentization`.
+Branche `feat/web-redesign-and-componentization`. PR #14 mergee dans `main`.
 Plan d'action : `plan-web-redesign-and-componentization.md`.
+- Phase 1 a 5 terminees avec succes. Note finale atteinte : 10/10.
+
+## Chantier en cours — Nouveaux Composants Wave 1
+
+Branche `feat/new-components-wave-1`.
+Plan d'action : `plan-nouveaux-composants.md`.
 
 ### Objectif
-Eliminer toute duplication et balise HTML brute au profit de composants dedies, dogfooder a 100% `@monority/ui`, et restructurer le site (Docs, Showcase, Playground, Moodboard, Home) avec une architecture DRY, typée et maintenable (note cible 10/10).
+Enrichir le catalogue de `@monority/ui` avec 5 nouveaux composants indispensables, modernes et hautement demandés, en respectant à 100% l'architecture des couches CSS `@layer mr.components`, React 19 native ref, accessibilité WAI-ARIA et couverture de tests.
 
 ### Sequence d'execution
-- Phase 1 : Fondation et composants partages (HeroHeader, PreviewCanvas, CodeViewer, typage AppPage, AppHeader avec Topbar) — TERMINE (commit ac2660a)
-- Phase 2 : Refonte et composantisation de Docs (DocPropTable, DocTagList, DocExampleCard, modularisation DocPage et DocsLayout) — TERMINE (commit 555c335)
-- Phase 3 : Refonte et composantisation du Playground (PlaygroundToolbar, PlaygroundControlField, migration CodeViewer/PreviewCanvas) — TERMINE (commit 968512c)
-- Phase 4 : Refonte et composantisation du Showcase (HeroHeader, PreviewCanvas, migration des 4 compositions vers les primitives @monority/ui) — TERMINE (commit d799a89)
-- Phase 5 : Modularisation du Moodboard (eclatement du fichier de 677 lignes) et nouvelle vitrine Home (composants interactifs 100% @monority/ui) — TERMINE (commit 43b3b28)
+- Phase 1 : Sheet (Overlays — volet lateral coulissant 4 cotes) — Termine
+- Phase 2 : InputOTP (Forms — saisie segmente de code 2FA/OTP avec collage fluide) — Termine
+- Phase 3 : Timeline (Data — fil chronologique semantique d'etapes et evenements) — Termine
+- Phase 4 : BadgeDelta (Feedback) et Rating (Forms — notation par etoiles) — Termine
+- Phase 5 : Integration complete dans la documentation, le playground et verification pnpm verify — Termine
 

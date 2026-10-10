@@ -18,3 +18,20 @@ export {
 export { Modal, type ModalProps } from './modal'
 export { Popover, type PopoverProps, type PopoverAlign, type PopoverSide } from './popover'
 export { Tooltip, type TooltipProps } from './tooltip'
+export {
+    Sheet,
+    SheetHeader,
+    SheetTitle,
+    SheetDescription,
+    SheetBody,
+    SheetFooter,
+    SheetClose,
+    type SheetProps,
+    type SheetSide,
+    type SheetHeaderProps,
+    type SheetTitleProps,
+    type SheetDescriptionProps,
+    type SheetBodyProps,
+    type SheetFooterProps,
+    type SheetCloseProps,
+} from './sheet'

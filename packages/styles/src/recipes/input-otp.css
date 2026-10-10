@@ -1,0 +1,106 @@
+/* Recette InputOTP dans la couche mr.components.
+ * Champ de saisie segmente pour codes One-Time Password, 2FA et codes de verification. */
+@layer mr.components {
+    :where(.mr-input-otp) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        cursor: text;
+        user-select: none;
+    }
+
+    :where(.mr-input-otp)[data-disabled] {
+        cursor: not-allowed;
+        opacity: var(--mr-state-disabled-mix);
+    }
+
+    :where(.mr-input-otp__native-input) {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        opacity: 0;
+        pointer-events: all;
+        cursor: text;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        clip-path: inset(0);
+    }
+
+    :where(.mr-input-otp__group) {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--mr-border-default);
+        border-radius: var(--mr-radius-md);
+        background-color: var(--mr-bg-field);
+        overflow: hidden;
+    }
+
+    :where(.mr-input-otp__slot) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-lg);
+        block-size: var(--mr-size-control-lg);
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-base);
+        font-weight: var(--mr-font-weight-semibold);
+        line-height: 1;
+        color: var(--mr-text-primary);
+        border-inline-end: 1px solid var(--mr-border-subtle);
+        background-color: transparent;
+        transition: border-color var(--mr-duration-state) ease, box-shadow var(--mr-duration-state)
+            ease;
+    }
+
+    :where(.mr-input-otp__slot):last-child {
+        border-inline-end: 0;
+    }
+
+    :where(.mr-input-otp__slot)[data-active] {
+        z-index: 2;
+        outline: 2px solid var(--mr-ring-focus);
+        outline-offset: -1px;
+    }
+
+    :where(.mr-input-otp__separator) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding-inline: var(--mr-space-1);
+        color: var(--mr-text-tertiary);
+        font-size: var(--mr-font-size-sm);
+        user-select: none;
+    }
+
+    :where(.mr-input-otp__caret) {
+        pointer-events: none;
+        position: absolute;
+        inset-inline: 0;
+        inset-block: 25%;
+        margin-inline: auto;
+        inline-size: 1px;
+        background-color: var(--mr-text-primary);
+        animation: mr-input-otp-blink var(--mr-duration-pulse) ease-in-out infinite;
+    }
+
+    @keyframes mr-input-otp-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-input-otp__caret) {
+            animation: none !important;
+            opacity: 1;
+        }
+    }
+}
