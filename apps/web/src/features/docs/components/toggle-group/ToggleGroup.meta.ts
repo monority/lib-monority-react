@@ -1,6 +1,6 @@
 export const toggleGroupMeta = {
     title: 'ToggleGroup',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/toggle-group',
     import: "import { ToggleGroup } from '@monority/ui/toggle-group'",
     category: 'actions',
