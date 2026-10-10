@@ -13,6 +13,7 @@ export default defineConfig({
         modal: 'src/components/overlays/modal/index.ts',
         alertDialog: 'src/components/overlays/alert-dialog/index.ts',
         drawer: 'src/components/overlays/drawer/index.ts',
+        sheet: 'src/components/overlays/sheet/index.ts',
         tooltip: 'src/components/overlays/tooltip/index.ts',
         commandPalette: 'src/components/overlays/command-palette/index.ts',
         contextMenu: 'src/components/overlays/context-menu/index.ts',

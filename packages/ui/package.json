@@ -386,6 +386,12 @@
             "import": "./dist/drawer.js",
             "default": "./dist/drawer.js"
         },
+        "./sheet": {
+            "types": "./dist/sheet.d.ts",
+            "monority-source": "./src/components/overlays/sheet/index.ts",
+            "import": "./dist/sheet.js",
+            "default": "./dist/sheet.js"
+        },
         "./grid": {
             "types": "./dist/grid.d.ts",
             "monority-source": "./src/components/layout/grid/index.ts",

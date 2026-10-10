@@ -60,6 +60,7 @@
 @import './recipes/modal.css';
 @import './recipes/alert-dialog.css';
 @import './recipes/drawer.css';
+@import './recipes/sheet.css';
 @import './recipes/popover.css';
 @import './recipes/tooltip.css';
 @import './recipes/hover-card.css';

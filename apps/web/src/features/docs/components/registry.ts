@@ -241,6 +241,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     { category: 'overlays', label: 'Modal', path: '/docs/modal', slug: 'modal', status: 'stable' },
     {
         category: 'overlays',
+        label: 'Sheet',
+        path: '/docs/sheet',
+        slug: 'sheet',
+        status: 'stable',
+    },
+    {
+        category: 'overlays',
         label: 'Popover',
         path: '/docs/popover',
         slug: 'popover',
