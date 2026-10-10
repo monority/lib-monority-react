@@ -1,0 +1,64 @@
+/* Recette Rating dans la couche mr.components.
+ * Composant de notation et evaluation par etoiles interactif ou statique. */
+@layer mr.components {
+    :where(.mr-rating) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    :where(.mr-rating)[data-disabled] {
+        opacity: var(--mr-state-disabled-mix);
+        cursor: not-allowed;
+    }
+
+    :where(.mr-rating__item) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        color: var(--mr-text-tertiary);
+        transition: color var(--mr-duration-state) ease, transform var(--mr-duration-state) ease;
+        outline: none;
+        border-radius: var(--mr-radius-sm);
+    }
+
+    :where(.mr-rating)[data-readonly] :where(.mr-rating__item) {
+        cursor: default;
+    }
+
+    :where(.mr-rating__item):focus-visible {
+        outline: 2px solid var(--mr-ring-focus);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-rating__item)[data-active] {
+        color: var(--mr-warning-solid);
+    }
+
+    :where(.mr-rating__item)[data-hover] {
+        color: color-mix(in oklch, var(--mr-warning-solid) 80%, transparent);
+    }
+
+    :where(.mr-rating)[data-size='sm'] :where(.mr-rating__icon) {
+        inline-size: var(--mr-space-3);
+        block-size: var(--mr-space-3);
+    }
+
+    :where(.mr-rating)[data-size='md'] :where(.mr-rating__icon) {
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-rating)[data-size='lg'] :where(.mr-rating__icon) {
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+    }
+}

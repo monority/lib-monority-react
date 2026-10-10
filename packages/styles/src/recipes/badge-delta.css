@@ -1,0 +1,72 @@
+/* Recette BadgeDelta dans la couche mr.components.
+ * Indicateur compact de variation / delta directionnel pour tableaux de bord et KPIs. */
+@layer mr.components {
+    :where(.mr-badge-delta) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-1);
+        border-radius: var(--mr-radius-full);
+        font-family: var(--mr-font-family-base);
+        font-weight: var(--mr-font-weight-medium);
+        line-height: 1;
+        white-space: nowrap;
+        box-sizing: border-box;
+        border: 1px solid transparent;
+    }
+
+    :where(.mr-badge-delta)[data-size='sm'] {
+        padding-inline: var(--mr-space-1);
+        padding-block: 2px;
+        font-size: var(--mr-font-size-xs);
+    }
+
+    :where(.mr-badge-delta)[data-size='md'] {
+        padding-inline: var(--mr-space-2);
+        padding-block: var(--mr-space-1);
+        font-size: var(--mr-font-size-xs);
+    }
+
+    :where(.mr-badge-delta)[data-size='lg'] {
+        padding-inline: var(--mr-space-3);
+        padding-block: var(--mr-space-1);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    /* Variantes de delta avec couleurs semantiques */
+    :where(.mr-badge-delta)[data-type='increase'] {
+        background-color: color-mix(in oklch, var(--mr-success-solid) 15%, transparent);
+        color: var(--mr-success-solid);
+        border-color: color-mix(in oklch, var(--mr-success-solid) 30%, transparent);
+    }
+
+    :where(.mr-badge-delta)[data-type='moderate-increase'] {
+        background-color: color-mix(in oklch, var(--mr-success-solid) 10%, transparent);
+        color: var(--mr-success-solid);
+        border-color: color-mix(in oklch, var(--mr-success-solid) 20%, transparent);
+    }
+
+    :where(.mr-badge-delta)[data-type='decrease'] {
+        background-color: color-mix(in oklch, var(--mr-danger-solid) 15%, transparent);
+        color: var(--mr-danger-solid);
+        border-color: color-mix(in oklch, var(--mr-danger-solid) 30%, transparent);
+    }
+
+    :where(.mr-badge-delta)[data-type='moderate-decrease'] {
+        background-color: color-mix(in oklch, var(--mr-danger-solid) 10%, transparent);
+        color: var(--mr-danger-solid);
+        border-color: color-mix(in oklch, var(--mr-danger-solid) 20%, transparent);
+    }
+
+    :where(.mr-badge-delta)[data-type='unchanged'] {
+        background-color: color-mix(in oklch, var(--mr-border-default) 30%, transparent);
+        color: var(--mr-text-secondary);
+        border-color: var(--mr-border-default);
+    }
+
+    :where(.mr-badge-delta__icon) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+}

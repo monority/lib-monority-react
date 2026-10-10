@@ -18,6 +18,7 @@
 @import './recipes/switch.css';
 @import './recipes/radio-group.css';
 @import './recipes/slider.css';
+@import './recipes/rating.css';
 @import './recipes/number-input.css';
 @import './recipes/input-otp.css';
 @import './recipes/date-picker.css';
@@ -30,6 +31,7 @@
 @import './recipes/toggle.css';
 @import './recipes/toggle-group.css';
 @import './recipes/badge.css';
+@import './recipes/badge-delta.css';
 @import './recipes/banner.css';
 @import './recipes/callout.css';
 @import './recipes/inline-alert.css';

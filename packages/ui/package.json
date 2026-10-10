@@ -62,6 +62,12 @@
             "import": "./dist/badge.js",
             "default": "./dist/badge.js"
         },
+        "./badge-delta": {
+            "types": "./dist/badgeDelta.d.ts",
+            "monority-source": "./src/components/feedback/badge-delta/index.ts",
+            "import": "./dist/badgeDelta.js",
+            "default": "./dist/badgeDelta.js"
+        },
         "./card": {
             "types": "./dist/card.d.ts",
             "monority-source": "./src/components/display/card/index.ts",
@@ -151,6 +157,12 @@
             "monority-source": "./src/components/forms/slider/index.ts",
             "import": "./dist/slider.js",
             "default": "./dist/slider.js"
+        },
+        "./rating": {
+            "types": "./dist/rating.d.ts",
+            "monority-source": "./src/components/forms/rating/index.ts",
+            "import": "./dist/rating.js",
+            "default": "./dist/rating.js"
         },
         "./number-input": {
             "types": "./dist/numberInput.d.ts",

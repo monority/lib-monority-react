@@ -133,6 +133,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     },
     { category: 'forms', label: 'Select', path: '/docs/select', slug: 'select', status: 'stable' },
     { category: 'forms', label: 'Slider', path: '/docs/slider', slug: 'slider', status: 'stable' },
+    { category: 'forms', label: 'Rating', path: '/docs/rating', slug: 'rating', status: 'stable' },
     { category: 'forms', label: 'Switch', path: '/docs/switch', slug: 'switch', status: 'stable' },
     {
         category: 'forms',
@@ -151,6 +152,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     { category: 'feedback', label: 'Badge', path: '/docs/badge', slug: 'badge', status: 'stable' },
+    {
+        category: 'feedback',
+        label: 'BadgeDelta',
+        path: '/docs/badge-delta',
+        slug: 'badge-delta',
+        status: 'stable',
+    },
     {
         category: 'feedback',
         label: 'Banner',

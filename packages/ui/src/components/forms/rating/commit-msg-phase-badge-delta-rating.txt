@@ -1,0 +1,15 @@
+feat(ui): ajouter les composants BadgeDelta et Rating (phase 4)
+
+- Creation de la recette CSS packages/styles/src/recipes/badge-delta.css dans @layer mr.components
+  - Gestion des 5 types de delta (increase, moderate-increase, decrease, moderate-decrease, unchanged)
+  - Alignement sur les tokens semantiques et tailles sm, md, lg
+- Creation du composant React 19 BadgeDelta dans packages/ui/src/components/feedback/badge-delta/
+  - Fleches directionnelles SVG integrees et inversion visuelle optionnelle (isIncreasePositive=false)
+- Creation de la recette CSS packages/styles/src/recipes/rating.css dans @layer mr.components
+  - Gestion des etats survol, actif, desactive et tailles sm, md, lg
+- Creation du composant React 19 Rating dans packages/ui/src/components/forms/rating/
+  - Mode interactif controle/incontrole et mode statique readOnly
+  - Accessibilite complete avec motif WAI-ARIA radiogroup et navigation par fleches
+- Tests unitaires Vitest pour BadgeDelta et Rating (9 tests au total)
+- Exports dans packages/ui (tsup, package.json, feedback/index.ts, forms/index.ts)
+- Pages de documentation et enregistrement dans le registre de documentation

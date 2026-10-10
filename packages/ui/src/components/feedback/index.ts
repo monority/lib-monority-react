@@ -11,6 +11,12 @@ export {
     type BadgeVariant,
 } from './badge'
 export {
+    BadgeDelta,
+    type BadgeDeltaProps,
+    type BadgeDeltaType,
+    type BadgeDeltaSize,
+} from './badge-delta'
+export {
     Banner,
     type BannerActionsProps,
     type BannerCloseProps,
