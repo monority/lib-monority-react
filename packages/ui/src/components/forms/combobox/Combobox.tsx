@@ -202,6 +202,12 @@ export function Combobox({
                             setQuery('')
                             setOpen(true)
                         }}
+                        onClick={() => {
+                            if (!open) {
+                                setQuery('')
+                                setOpen(true)
+                            }
+                        }}
                         onKeyDown={handleKeyDown}
                         aria-label={typeof label === 'string' ? label : undefined}
                         {...props}

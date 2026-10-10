@@ -15,10 +15,10 @@ contraste calcule, validation humaine, tokens et recette dans mr.components.
 Button en premier (B1 a B6).
 
 ## Reprise
-Sauvegarde : git push -u origin feat/docs-parity-missing-components
-Commit de session : 27bae0f (plage 8f192b0..27bae0f)
+Sauvegarde : git push -u origin feat/polish-select-combobox
+Commit de session : 84ed715 (plage 0414722..84ed715)
 Etat :
-- Etape 1 terminee : parite 75/75 composants documentes atteinte
-- Pages ajoutees : ButtonLink, CopyButton, IconButton, NumberInput, PasswordInput
-- Controles de qualite : pnpm verify vert (8 portes), 94 tests web verts
-- Prochaine etape : Pousser la branche, ouvrir la PR, puis engager l'Etape 2 (polissage formulaires et navigation)
+- Environnement local nettoye (workspace unique C:/Dev/Projects/lib-monority-react sur main)
+- Lot 1 termine : polissage visuel et ergonomique de Select et Combobox
+- Controles de qualite : pnpm verify vert (8 portes, 1313 tests UI, 94 tests web)
+- Prochaine etape : Pousser la branche et enchainer sur le Lot 2 (DatePicker et DateRangePicker)

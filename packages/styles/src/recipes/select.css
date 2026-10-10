@@ -138,6 +138,12 @@
         }
     }
 
+    /* Chevron lors du focus sur le select */
+    :where(.mr-select-wrapper:has(:where(.mr-select:focus-visible)))::after,
+    :where(.mr-select-wrapper:has(:where(.mr-select:focus)))::after {
+        border-color: var(--mr-text-primary);
+    }
+
     /* Etat invalide : bordure de statut danger */
     :where(.mr-select)[aria-invalid='true'] {
         border-color: var(--mr-danger-solid);
