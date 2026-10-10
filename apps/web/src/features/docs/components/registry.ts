@@ -48,7 +48,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'ToggleGroup',
         path: '/docs/toggle-group',
         slug: 'toggle-group',
-        status: 'draft',
+        status: 'stable',
     },
 
     // Forms
@@ -237,14 +237,14 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Drawer',
         path: '/docs/drawer',
         slug: 'drawer',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'overlays',
         label: 'DropdownMenu',
         path: '/docs/dropdown-menu',
         slug: 'dropdown-menu',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'overlays',
@@ -266,7 +266,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Popover',
         path: '/docs/popover',
         slug: 'popover',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'overlays',
@@ -320,6 +320,20 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'stable' },
+    {
+        category: 'navigation',
+        label: 'SegmentedControl',
+        path: '/docs/segmented-control',
+        slug: 'segmented-control',
+        status: 'stable',
+    },
+    {
+        category: 'navigation',
+        label: 'Stepper',
+        path: '/docs/stepper',
+        slug: 'stepper',
+        status: 'stable',
+    },
     {
         category: 'navigation',
         label: 'Topbar',

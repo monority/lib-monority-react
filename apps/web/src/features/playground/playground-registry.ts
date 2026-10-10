@@ -28,7 +28,13 @@ import { toastPlayground } from './adapters/toast.adapter'
 import { togglePlayground } from './adapters/toggle.adapter'
 import { tooltipPlayground } from './adapters/tooltip.adapter'
 import { badgeDeltaPlayground } from './adapters/badge-delta.adapter'
+import { drawerPlayground } from './adapters/drawer.adapter'
+import { dropdownMenuPlayground } from './adapters/dropdown-menu.adapter'
 import { inputOtpPlayground } from './adapters/input-otp.adapter'
+import { popoverPlayground } from './adapters/popover.adapter'
+import { segmentedControlPlayground } from './adapters/segmented-control.adapter'
+import { stepperPlayground } from './adapters/stepper.adapter'
+import { toggleGroupPlayground } from './adapters/toggle-group.adapter'
 
 /**
  * Single source of truth for the Playground.
@@ -66,6 +72,12 @@ export const playgroundRegistry: PlaygroundDefinition[] = [
     timelinePlayground,
     badgeDeltaPlayground,
     ratingPlayground,
+    popoverPlayground,
+    drawerPlayground,
+    dropdownMenuPlayground,
+    toggleGroupPlayground,
+    segmentedControlPlayground,
+    stepperPlayground,
 ]
 
 export function getPlaygroundDefinition(slug: string): PlaygroundDefinition {

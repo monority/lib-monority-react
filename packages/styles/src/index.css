@@ -85,3 +85,5 @@
 @import './recipes/data-table.css';
 @import './recipes/timeline.css';
 @import './recipes/infinite-scroll.css';
+@import './recipes/segmented-control.css';
+@import './recipes/stepper.css';
