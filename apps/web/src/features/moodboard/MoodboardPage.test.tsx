@@ -1,4 +1,4 @@
-import { screen, within, fireEvent } from '@testing-library/react'
+import { screen, within, fireEvent, act } from '@testing-library/react'
 import { MoodboardPage } from './MoodboardPage'
 import { renderWithProviders } from '@/shared/test/test-utils'
 
@@ -161,7 +161,9 @@ describe('MoodboardPage', () => {
                 name: 'Violet',
             })
         )
-        fireEvent.click(screen.getByTestId('moodboard-copy'))
+        await act(async () => {
+            fireEvent.click(screen.getByTestId('moodboard-copy'))
+        })
 
         expect(writeText).toHaveBeenCalled()
         const copiedJson = JSON.parse(String(writeText.mock.calls[0]?.[0]))

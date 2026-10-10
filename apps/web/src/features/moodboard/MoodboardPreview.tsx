@@ -19,6 +19,10 @@ import {
 } from '@monority/ui'
 import { MiniBarChart, type ChartDayItem } from './components/MiniBarChart'
 import { TokenSwatchMatrix } from './components/TokenSwatchMatrix'
+import { SegmentedControl } from '@monority/ui/segmented-control'
+import { Stepper } from '@monority/ui/stepper'
+import { Rating } from '@monority/ui/rating'
+import { BadgeDelta } from '@monority/ui/badge-delta'
 
 export interface PanelState {
     tab: string
@@ -317,6 +321,101 @@ export function MoodboardPreview({ state, onState }: MoodboardPreviewProps) {
                             <Progress label="Deploy" value={72} showValue tone="neutral" />
                             <Progress label="Migrations" value={45} showValue tone="warning" />
                             <Progress label="Tests" value={98} showValue tone="success" />
+                        </div>
+                    </Card>
+                </div>
+
+                {/* Advanced system primitives */}
+                <div className="moodboard-preview__grid">
+                    <Card className="moodboard-card" padding="md">
+                        <span className="moodboard-kicker">SEQUENCE & CONTROLS</span>
+                        <div
+                            style={{
+                                display: 'grid',
+                                gap: 'var(--mr-space-3)',
+                                marginTop: 'var(--mr-space-2)',
+                            }}
+                        >
+                            <SegmentedControl
+                                size="sm"
+                                defaultValue="preview"
+                                options={[
+                                    { value: 'preview', label: 'Preview' },
+                                    { value: 'staging', label: 'Staging' },
+                                    { value: 'production', label: 'Production' },
+                                ]}
+                            />
+                            <Stepper
+                                activeStep={1}
+                                steps={[
+                                    { title: 'Validation', description: 'Tests unitaires' },
+                                    { title: 'Deploiement', description: 'Propagation edge' },
+                                    { title: 'Surveillance', description: 'Observabilite active' },
+                                ]}
+                            />
+                        </div>
+                    </Card>
+
+                    <Card className="moodboard-card" padding="md">
+                        <span className="moodboard-kicker">RATINGS & PERFORMANCE</span>
+                        <div
+                            style={{
+                                display: 'grid',
+                                gap: 'var(--mr-space-3)',
+                                marginTop: 'var(--mr-space-2)',
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontSize: 'var(--mr-text-sm)',
+                                        color: 'var(--mr-fg-muted)',
+                                    }}
+                                >
+                                    Satisfaction equipe
+                                </span>
+                                <Rating value={5} readOnly size="sm" />
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontSize: 'var(--mr-text-sm)',
+                                        color: 'var(--mr-fg-muted)',
+                                    }}
+                                >
+                                    Efficacite reseau
+                                </span>
+                                <BadgeDelta deltaType="moderate-increase">+28.4%</BadgeDelta>
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontSize: 'var(--mr-text-sm)',
+                                        color: 'var(--mr-fg-muted)',
+                                    }}
+                                >
+                                    Temps d execution
+                                </span>
+                                <BadgeDelta deltaType="moderate-decrease">-42 ms</BadgeDelta>
+                            </div>
                         </div>
                     </Card>
                 </div>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Outlet, useLocation, Link } from 'react-router-dom'
+import { Input } from '@monority/ui/input'
+import { Badge } from '@monority/ui/badge'
 import { docsComponentRegistry } from './components/registry'
 
 interface DocsLayoutProps {
@@ -148,9 +150,10 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                 <span className="docs-kicker">Monority UI</span>
                 <h2>Docs</h2>
             </div>
-            <input
+            <Input
                 className="docs-search"
                 type="search"
+                size="sm"
                 value={query}
                 onChange={(event) => onQueryChange(event.target.value)}
                 onKeyDown={(event) => {
@@ -177,9 +180,14 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                     className={`docs-nav-link ${pathname === introductionItem.path ? 'active' : ''}`}
                 >
                     <span>{introductionItem.label}</span>
-                    <span className="docs-status" data-status={introductionItem.status}>
+                    <Badge
+                        size="sm"
+                        variant={introductionItem.status === 'stable' ? 'success' : 'default'}
+                        data-status={introductionItem.status}
+                        className="docs-status"
+                    >
                         {introductionItem.status}
-                    </span>
+                    </Badge>
                 </Link>
 
                 <Link
@@ -187,9 +195,14 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                     className={`docs-nav-link ${pathname === installationItem.path ? 'active' : ''}`}
                 >
                     <span>{installationItem.label}</span>
-                    <span className="docs-status" data-status={installationItem.status}>
+                    <Badge
+                        size="sm"
+                        variant={installationItem.status === 'stable' ? 'success' : 'default'}
+                        data-status={installationItem.status}
+                        className="docs-status"
+                    >
                         {installationItem.status}
-                    </span>
+                    </Badge>
                 </Link>
 
                 {Object.entries(groupedItems).map(([category, categoryItems]) => (
@@ -202,9 +215,14 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                                 className={`docs-nav-link ${pathname === item.path ? 'active' : ''}`}
                             >
                                 <span>{item.label}</span>
-                                <span className="docs-status" data-status={item.status}>
+                                <Badge
+                                    size="sm"
+                                    variant={item.status === 'stable' ? 'success' : 'default'}
+                                    data-status={item.status}
+                                    className="docs-status"
+                                >
                                     {item.status}
-                                </span>
+                                </Badge>
                             </Link>
                         ))}
                     </section>

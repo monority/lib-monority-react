@@ -65,23 +65,6 @@ export const appRoutes: RouteObject[] = [
     },
 
     {
-        path: '/harness',
-        lazy: async () => {
-            const { HarnessPage } = await import('@/features/harness/HarnessPage')
-            return { Component: HarnessPage }
-        },
-    },
-    {
-        path: '/harness/:component',
-        // Lazy comme la doc : le harness est un bac a sable de developpement,
-        // il ne doit pas peser dans le chunk d entree de production.
-        lazy: async () => {
-            const { HarnessPage } = await import('@/features/harness/HarnessPage')
-            return { Component: HarnessPage }
-        },
-    },
-
-    {
         path: '/moodboard',
         element: <MoodboardPage />,
     },
