@@ -1,0 +1,12 @@
+feat(ui): ajouter le composant Timeline (phase 3)
+
+- Creation de la recette CSS packages/styles/src/recipes/timeline.css dans @layer mr.components
+  - Disposition verticale et horizontale avec ligne de raccordement continue
+  - Points de statut colores (default, primary, success, warning, danger, in-progress pulse)
+  - Alignement strict sur les tokens de design --mr-* et support de prefers-reduced-motion
+- Creation du composant React 19 Timeline dans packages/ui/src/components/data/timeline/
+  - API declarativo-simplifiee via la prop items et API composee (Timeline.Item, Timeline.Point, Timeline.Content, Timeline.Date, Timeline.Title, Timeline.Description)
+  - Balisage semantique accessible avec <ol>, <li> et <time>
+- Tests unitaires Vitest exhaustifs (3 tests reussis)
+- Exports dans packages/ui (tsup, package.json, data/index.ts)
+- Page de documentation dediee et enregistrement dans le registre de documentation

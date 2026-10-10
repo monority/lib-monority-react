@@ -224,6 +224,12 @@
             "import": "./dist/dataTable.js",
             "default": "./dist/dataTable.js"
         },
+        "./timeline": {
+            "types": "./dist/timeline.d.ts",
+            "monority-source": "./src/components/data/timeline/index.ts",
+            "import": "./dist/timeline.js",
+            "default": "./dist/timeline.js"
+        },
         "./empty-state": {
             "types": "./dist/emptyState.d.ts",
             "monority-source": "./src/components/feedback/empty-state/index.ts",

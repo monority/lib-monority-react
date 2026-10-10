@@ -34,6 +34,7 @@ export default defineConfig({
         select: 'src/components/forms/select/index.ts',
         dataList: 'src/components/data/data-list/index.ts',
         dataTable: 'src/components/data/data-table/index.ts',
+        timeline: 'src/components/data/timeline/index.ts',
         tabs: 'src/components/navigation/tabs/index.ts',
         navigationMenu: 'src/components/navigation/navigation-menu/index.ts',
         menubar: 'src/components/navigation/menubar/index.ts',

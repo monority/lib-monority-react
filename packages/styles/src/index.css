@@ -81,4 +81,5 @@
 @import './recipes/metric-grid.css';
 @import './recipes/table.css';
 @import './recipes/data-table.css';
+@import './recipes/timeline.css';
 @import './recipes/infinite-scroll.css';

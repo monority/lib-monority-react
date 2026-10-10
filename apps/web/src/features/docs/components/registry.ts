@@ -381,6 +381,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'data-table',
         status: 'draft',
     },
+    {
+        category: 'data',
+        label: 'Timeline',
+        path: '/docs/timeline',
+        slug: 'timeline',
+        status: 'stable',
+    },
 
     // Typography
     { category: 'typography', label: 'Kbd', path: '/docs/kbd', slug: 'kbd', status: 'draft' },
