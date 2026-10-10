@@ -7,6 +7,8 @@ import { docsComponentRegistry } from './components/registry'
 import { DocPageWithToc } from './components/DocPageWithToc'
 import { AppHeader } from '@/shared/layouts/AppHeader'
 
+import { HeroHeader } from '@/shared/components/HeroHeader'
+
 const docModules: Record<string, LazyComponent> = {}
 
 type LazyComponent = React.LazyExoticComponent<ComponentType>
@@ -33,10 +35,7 @@ function getDocComponent(slug: string) {
 function LoadingFallback() {
     return (
         <div className="docs-page">
-            <div className="docs-hero">
-                <span className="docs-kicker">Component</span>
-                <h1>Loading...</h1>
-            </div>
+            <HeroHeader kicker="Component" title="Loading..." />
         </div>
     )
 }
@@ -61,18 +60,16 @@ export function DocsPage() {
                     </Suspense>
                 ) : (
                     <div className="docs-page">
-                        <div className="docs-hero">
-                            <span className="docs-kicker">Component</span>
-                            <h1>Not Found</h1>
-                            <p className="docs-description">
-                                No documentation found for this component.
-                            </p>
-                            <p>
+                        <HeroHeader
+                            kicker="Component"
+                            title="Not Found"
+                            description="No documentation found for this component."
+                            actions={
                                 <Link to="/docs" className="docs-text-link">
                                     Back to the component list
                                 </Link>
-                            </p>
-                        </div>
+                            }
+                        />
                     </div>
                 )}
             </DocsLayout>
