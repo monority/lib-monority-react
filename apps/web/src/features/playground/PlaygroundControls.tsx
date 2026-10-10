@@ -1,8 +1,5 @@
 import type { ControlDefinition, PlaygroundProps } from './playground-types'
-import { ControlBoolean } from './controls/ControlBoolean'
-import { ControlNumber } from './controls/ControlNumber'
-import { ControlSelect } from './controls/ControlSelect'
-import { ControlText } from './controls/ControlText'
+import { PlaygroundControlField } from './PlaygroundControlField'
 
 interface PlaygroundControlsProps {
     slug: string
@@ -28,65 +25,15 @@ export function PlaygroundControls({
                 </button>
             </div>
             <div className="pg-controls__grid">
-                {controls.map((control) => {
-                    const id = `pg-${slug}-${control.name}`
-                    const label = control.label ?? control.name
-                    const current = values[control.name]
-
-                    if (control.type === 'select') {
-                        return (
-                            <ControlSelect
-                                key={control.name}
-                                id={id}
-                                label={label}
-                                value={
-                                    typeof current === 'string'
-                                        ? current
-                                        : (control.options[0] ?? '')
-                                }
-                                options={control.options}
-                                onChange={(value) => onChange(control.name, value)}
-                            />
-                        )
-                    }
-
-                    if (control.type === 'boolean') {
-                        return (
-                            <ControlBoolean
-                                key={control.name}
-                                id={id}
-                                label={label}
-                                checked={current === true}
-                                onChange={(value) => onChange(control.name, value)}
-                            />
-                        )
-                    }
-
-                    if (control.type === 'number') {
-                        return (
-                            <ControlNumber
-                                key={control.name}
-                                id={id}
-                                label={label}
-                                value={typeof current === 'number' ? current : 0}
-                                min={control.min}
-                                max={control.max}
-                                onChange={(value) => onChange(control.name, value)}
-                            />
-                        )
-                    }
-
-                    return (
-                        <ControlText
-                            key={control.name}
-                            id={id}
-                            label={label}
-                            value={typeof current === 'string' ? current : ''}
-                            placeholder={control.placeholder}
-                            onChange={(value) => onChange(control.name, value)}
-                        />
-                    )
-                })}
+                {controls.map((control) => (
+                    <PlaygroundControlField
+                        key={control.name}
+                        slug={slug}
+                        control={control}
+                        value={values[control.name]}
+                        onChange={(value) => onChange(control.name, value)}
+                    />
+                ))}
             </div>
         </section>
     )
