@@ -1,6 +1,7 @@
 import { Badge } from '@monority/ui/badge'
 import { Button } from '@monority/ui/button'
 import { Card } from '@monority/ui/card'
+import { Grid } from '@monority/ui/grid'
 
 const plans = [
     {
@@ -34,20 +35,28 @@ const plans = [
 
 export function PricingComposition() {
     return (
-        <div className="sc-pricing">
+        <Grid columns={3} className="sc-pricing">
             {plans.map((plan) => (
                 <Card key={plan.name} padding="lg">
-                    <div className="sc-pricing__top">
-                        <strong>{plan.name}</strong>
-                        {plan.badge && <Badge variant={plan.badgeVariant}>{plan.badge}</Badge>}
-                    </div>
-                    <p className="sc-pricing__price">{plan.price}</p>
-                    <p className="sc-pricing__detail">{plan.detail}</p>
-                    <Button variant={plan.variant} fullWidth>
-                        {plan.cta}
-                    </Button>
+                    <Card.Header>
+                        <div className="sc-pricing__top">
+                            <Card.Title>{plan.name}</Card.Title>
+                            {plan.badge && <Badge variant={plan.badgeVariant}>{plan.badge}</Badge>}
+                        </div>
+                    </Card.Header>
+                    <Card.Content>
+                        <p className="sc-pricing__price">{plan.price}</p>
+                        <Card.Description className="sc-pricing__detail">
+                            {plan.detail}
+                        </Card.Description>
+                    </Card.Content>
+                    <Card.Footer>
+                        <Button variant={plan.variant} fullWidth>
+                            {plan.cta}
+                        </Button>
+                    </Card.Footer>
                 </Card>
             ))}
-        </div>
+        </Grid>
     )
 }

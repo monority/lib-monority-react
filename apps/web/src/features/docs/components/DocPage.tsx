@@ -1,6 +1,10 @@
-import { useCallback, useState } from 'react'
 import type { ReactNode } from 'react'
-import { DocsCodeBlock } from './DocsCodeBlock'
+import { HeroHeader } from '@/shared/components/HeroHeader'
+import { PreviewCanvas } from '@/shared/components/PreviewCanvas'
+import { CodeViewer } from '@/shared/components/CodeViewer'
+import { DocPropTable } from './DocPropTable'
+import { DocTagList } from './DocTagList'
+import { DocExampleCard } from './DocExampleCard'
 
 export interface PropRow {
     name: string
@@ -29,45 +33,6 @@ export interface DocPageData {
     examples?: DocExample[]
 }
 
-function CopyButton({ text }: { text: string }) {
-    const [copied, setCopied] = useState(false)
-
-    const copy = useCallback(() => {
-        navigator.clipboard.writeText(text).then(() => {
-            setCopied(true)
-            setTimeout(() => setCopied(false), 1500)
-        })
-    }, [text])
-
-    return (
-        <button type="button" className="docs-copy-btn" onClick={copy} aria-label="Copy code">
-            {copied ? 'Copied!' : 'Copy'}
-        </button>
-    )
-}
-
-function HighlightedCode({ code }: { code: string }) {
-    return <DocsCodeBlock className="docs-code-pre">{code}</DocsCodeBlock>
-}
-
-function ExampleCard({ example }: { example: DocExample }) {
-    return (
-        <div className="docs-example-group">
-            <h3>{example.title}</h3>
-            <div className="docs-example-content">{example.content}</div>
-            {example.code ? (
-                <div className="docs-code-area">
-                    <div className="docs-code-header">
-                        <span>{example.title.toLowerCase().replace(/\s+/g, '-')}.tsx</span>
-                        <CopyButton text={example.code} />
-                    </div>
-                    <HighlightedCode code={example.code} />
-                </div>
-            ) : null}
-        </div>
-    )
-}
-
 export function DocPage({ doc }: { doc: DocPageData }) {
     const Preview = doc.preview
     const fullCode = doc.importCode
@@ -77,104 +42,39 @@ export function DocPage({ doc }: { doc: DocPageData }) {
 
     return (
         <div className="docs-page">
-            <header className="docs-hero">
-                <span className="docs-kicker">Component</span>
-                <h1>{doc.title}</h1>
-                <p className="docs-description">{doc.description}</p>
-            </header>
+            <HeroHeader kicker="Component" title={doc.title} description={doc.description} />
 
-            {
-                <div className="docs-preview-card">
-                    <div className="docs-preview-area">
-                        <div className="docs-preview-header">
-                            <span className="docs-preview-label">{previewLabel}</span>
-                        </div>
-                        <div className="docs-preview-content">
-                            <Preview />
-                        </div>
+            <div className="docs-preview-stack">
+                <PreviewCanvas label={previewLabel} padding="none">
+                    <div className="docs-preview-content">
+                        <Preview />
                     </div>
-                    {fullCode ? (
-                        <div className="docs-code-area">
-                            <div className="docs-code-header">
-                                <span>index.tsx</span>
-                                <CopyButton text={fullCode} />
-                            </div>
-                            <HighlightedCode code={fullCode} />
-                        </div>
-                    ) : null}
-                </div>
-            }
+                </PreviewCanvas>
+                {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
+            </div>
 
             {doc.examples && doc.examples.length > 0 && (
                 <section className="docs-section">
                     <h2>Examples</h2>
                     <div className="docs-examples-list">
                         {doc.examples.map((example) => (
-                            <ExampleCard key={example.title} example={example} />
+                            <DocExampleCard key={example.title} example={example} />
                         ))}
                     </div>
                 </section>
             )}
 
-            {doc.props && doc.props.length > 0 && (
-                <section className="docs-section">
-                    <h2>API Reference</h2>
-                    <div className="docs-table-wrapper">
-                        <table className="docs-table">
-                            <thead>
-                                <tr>
-                                    <th>Prop</th>
-                                    <th>Type</th>
-                                    <th>Default</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {doc.props.map((prop) => (
-                                    <tr key={prop.name}>
-                                        <td className="docs-prop-name">{prop.name}</td>
-                                        <td className="docs-prop-type">
-                                            <code>{prop.type}</code>
-                                        </td>
-                                        <td className="docs-prop-default">
-                                            <code>{prop.defaultValue}</code>
-                                        </td>
-                                        <td className="docs-prop-desc">{prop.description}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            )}
+            {doc.props && doc.props.length > 0 && <DocPropTable props={doc.props} />}
 
             {(doc.cssHooks || doc.tokens) && (
                 <section className="docs-section">
                     <h2>Styling</h2>
                     <div className="docs-grid">
                         {doc.cssHooks && doc.cssHooks.length > 0 && (
-                            <div className="docs-card">
-                                <h3>CSS Hooks</h3>
-                                <div className="docs-tag-list">
-                                    {doc.cssHooks.map((hook) => (
-                                        <span key={hook} className="docs-tag">
-                                            <code>{hook}</code>
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
+                            <DocTagList title="CSS Hooks" tags={doc.cssHooks} />
                         )}
                         {doc.tokens && doc.tokens.length > 0 && (
-                            <div className="docs-card">
-                                <h3>Tokens</h3>
-                                <div className="docs-tag-list">
-                                    {doc.tokens.map((token) => (
-                                        <span key={token} className="docs-tag">
-                                            <code>{token}</code>
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
+                            <DocTagList title="Tokens" tags={doc.tokens} />
                         )}
                     </div>
                 </section>

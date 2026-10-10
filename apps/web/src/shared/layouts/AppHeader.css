@@ -66,7 +66,9 @@
         var(--mr-duration-fast) var(--mr-ease-standard);
 }
 
-.app-header__nav a:hover {
+.app-header__nav a:hover,
+.app-header__nav a.app-header__link--active,
+.app-header__nav a[aria-current='page'] {
     color: var(--mr-fg-base);
     background: var(--mr-bg-subtle);
 }

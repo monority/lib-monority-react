@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Select } from '@monority/ui/select'
 import { Link, useSearchParams } from 'react-router-dom'
 import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { HeroHeader } from '@/shared/components/HeroHeader'
 import { getPlaygroundDefinition, playgroundRegistry } from './playground-registry'
 import type { PlaygroundProps } from './playground-types'
 import { PlaygroundCode } from './PlaygroundCode'
@@ -59,14 +60,11 @@ export function PlaygroundPage() {
 
     return (
         <div className="pg-layout">
-            <header className="pg-header">
-                <h1>Playground</h1>
-                <p>
-                    Select one of the {playgroundRegistry.length} stable components, tweak its
-                    public props, and copy the generated usage. APIs shown here match{' '}
-                    <code>@monority/ui</code> exactly.
-                </p>
-            </header>
+            <HeroHeader
+                kicker="Interactive"
+                title="Playground"
+                description={`Select one of the ${playgroundRegistry.length} stable components, tweak its public props, and copy the generated usage. APIs shown here match @monority/ui exactly.`}
+            />
 
             <div className="pg-selector">
                 <Select

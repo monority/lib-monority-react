@@ -6,6 +6,7 @@ import { Progress } from '@monority/ui/progress'
 import { Section } from '@monority/ui/section'
 import { Skeleton } from '@monority/ui/skeleton'
 import { Spinner } from '@monority/ui/spinner'
+import { Stack } from '@monority/ui/stack'
 import { Tooltip } from '@monority/ui/tooltip'
 
 const activity = [
@@ -17,7 +18,7 @@ const activity = [
 export function ActivityComposition() {
     return (
         <Section title="Project overview" variant="bordered" spacing="md">
-            <div className="sc-activity">
+            <Stack gap="md">
                 {activity.map((item) => (
                     <Card key={item.title} padding="md">
                         <div className="sc-activity__row">
@@ -55,7 +56,7 @@ export function ActivityComposition() {
                         <Spinner size="sm" tone="muted" />
                     </div>
                 </Card>
-            </div>
+            </Stack>
         </Section>
     )
 }

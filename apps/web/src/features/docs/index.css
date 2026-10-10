@@ -219,6 +219,13 @@
     box-shadow: var(--mr-elevation-surface);
 }
 
+.docs-preview-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-3);
+    margin-block-end: var(--mr-space-6);
+}
+
 .docs-preview-card {
     overflow: hidden;
     margin-block-end: var(--mr-space-6);

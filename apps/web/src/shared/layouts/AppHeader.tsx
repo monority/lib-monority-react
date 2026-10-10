@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
 
@@ -22,9 +22,17 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                 </Link>
                 <nav className="app-header__nav" aria-label="Navigation principale">
                     {headerLinks.map((link) => (
-                        <Link key={link.to} to={link.to}>
+                        <NavLink
+                            key={link.to}
+                            to={link.to}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'app-header__link app-header__link--active'
+                                    : 'app-header__link'
+                            }
+                        >
                             {link.label}
-                        </Link>
+                        </NavLink>
                     ))}
                 </nav>
                 <div className="app-header__controls">
