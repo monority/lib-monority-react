@@ -4,6 +4,7 @@ import { Button } from '@monority/ui/button'
 import { Callout } from '@monority/ui/callout'
 import { Card } from '@monority/ui/card'
 import { Modal } from '@monority/ui/modal'
+import { Stack } from '@monority/ui/stack'
 
 export function FeedbackComposition() {
     const [open, setOpen] = useState(false)
@@ -11,7 +12,7 @@ export function FeedbackComposition() {
     const { pushToast } = useToast()
 
     return (
-        <div className="sc-feedback">
+        <Stack gap="md">
             <Callout
                 tone="info"
                 title="Deploy scheduled"
@@ -41,29 +42,31 @@ export function FeedbackComposition() {
                 </div>
             </Card>
             <Modal open={open} title="Publish release 0.4.1?" onClose={() => setOpen(false)}>
-                <p style={{ margin: 0, lineHeight: 1.6 }}>
-                    Publishing makes the new components visible in the docs and the changelog.
-                </p>
-                <div className="sc-form__actions">
-                    <Button variant="secondary" onClick={() => setOpen(false)}>
-                        Keep editing
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setOpen(false)
-                            setConfirmed(true)
-                            pushToast({
-                                title: 'Release confirmed',
-                                description:
-                                    'The changelog is now visible to every workspace member.',
-                                tone: 'success',
-                            })
-                        }}
-                    >
-                        Publish
-                    </Button>
-                </div>
+                <Stack gap="md">
+                    <p style={{ margin: 0, lineHeight: 'var(--mr-leading-relaxed)' }}>
+                        Publishing makes the new components visible in the docs and the changelog.
+                    </p>
+                    <div className="sc-form__actions">
+                        <Button variant="secondary" onClick={() => setOpen(false)}>
+                            Keep editing
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setOpen(false)
+                                setConfirmed(true)
+                                pushToast({
+                                    title: 'Release confirmed',
+                                    description:
+                                        'The changelog is now visible to every workspace member.',
+                                    tone: 'success',
+                                })
+                            }}
+                        >
+                            Publish now
+                        </Button>
+                    </div>
+                </Stack>
             </Modal>
-        </div>
+        </Stack>
     )
 }

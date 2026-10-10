@@ -1,4 +1,5 @@
 import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { HeroHeader } from '@/shared/components/HeroHeader'
 import { ShowcaseSection } from './ShowcaseSection'
 import { ActivityComposition } from './sections/ActivityComposition'
 import { FeedbackComposition } from './sections/FeedbackComposition'
@@ -14,14 +15,11 @@ export function ShowcasePage() {
 
     return (
         <div className="sc-layout">
-            <header className="sc-intro">
-                <h1>Showcase</h1>
-                <p>
-                    What can you build with this library? Four curated compositions, built
-                    exclusively with stable components. No isolated grids, no fake components, no
-                    draft APIs.
-                </p>
-            </header>
+            <HeroHeader
+                kicker="Compositions"
+                title="Showcase"
+                description="What can you build with this library? Four curated compositions, built exclusively with stable components. No isolated grids, no fake components, no draft APIs."
+            />
 
             <ShowcaseSection
                 eyebrow="settings"

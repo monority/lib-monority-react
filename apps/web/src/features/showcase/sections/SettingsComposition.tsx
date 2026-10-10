@@ -5,6 +5,7 @@ import { Checkbox } from '@monority/ui/checkbox'
 import { Input } from '@monority/ui/input'
 import { Section } from '@monority/ui/section'
 import { Slider } from '@monority/ui/slider'
+import { Stack } from '@monority/ui/stack'
 import { Switch } from '@monority/ui/switch'
 import { Textarea } from '@monority/ui/textarea'
 
@@ -13,7 +14,7 @@ export function SettingsComposition() {
 
     return (
         <Section title="Workspace settings" variant="card" spacing="md">
-            <div className="sc-form">
+            <Stack gap="md">
                 <Input
                     label="Workspace name"
                     placeholder="Design system docs"
@@ -58,7 +59,7 @@ export function SettingsComposition() {
                     <Button variant="secondary">Cancel</Button>
                     <Button onClick={() => setSaved(true)}>Save changes</Button>
                 </div>
-            </div>
+            </Stack>
         </Section>
     )
 }

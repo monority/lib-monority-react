@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { PreviewCanvas } from '@/shared/components/PreviewCanvas'
 
 interface ShowcaseSectionProps {
     eyebrow: string
@@ -39,7 +40,9 @@ export function ShowcaseSection({
                     )}
                 </div>
             </div>
-            <div className="sc-section__canvas">{children}</div>
+            <PreviewCanvas padding="md">
+                {children}
+            </PreviewCanvas>
         </section>
     )
 }
