@@ -29,9 +29,9 @@ Plan d'action : `plan-nouveaux-composants.md`.
 Enrichir le catalogue de `@monority/ui` avec 5 nouveaux composants indispensables, modernes et hautement demandés, en respectant à 100% l'architecture des couches CSS `@layer mr.components`, React 19 native ref, accessibilité WAI-ARIA et couverture de tests.
 
 ### Sequence d'execution
-- Phase 1 : Sheet (Overlays — volet lateral coulissant 4 cotes)
-- Phase 2 : InputOTP (Forms — saisie segmente de code 2FA/OTP avec collage fluide)
-- Phase 3 : Timeline (Data — fil chronologique semantique d'etapes et evenements)
-- Phase 4 : BadgeDelta (Feedback) et Rating (Forms — notation par etoiles)
-- Phase 5 : Integration complete dans la documentation, le playground et verification pnpm verify
+- Phase 1 : Sheet (Overlays — volet lateral coulissant 4 cotes) — Termine
+- Phase 2 : InputOTP (Forms — saisie segmente de code 2FA/OTP avec collage fluide) — Termine
+- Phase 3 : Timeline (Data — fil chronologique semantique d'etapes et evenements) — Termine
+- Phase 4 : BadgeDelta (Feedback) et Rating (Forms — notation par etoiles) — Termine
+- Phase 5 : Integration complete dans la documentation, le playground et verification pnpm verify — Termine
 

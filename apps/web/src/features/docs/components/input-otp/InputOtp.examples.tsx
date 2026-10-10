@@ -17,7 +17,7 @@ export function InputOtpBasicExample() {
                 onComplete={(code) => setCompletedCode(code)}
             />
             {completedCode ? (
-                <Callout variant="success" title="Code valide">
+                <Callout tone="success" title="Code valide">
                     Code 2FA confirme avec succes : {completedCode}
                 </Callout>
             ) : null}
