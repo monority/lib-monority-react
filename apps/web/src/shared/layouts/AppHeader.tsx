@@ -42,4 +42,3 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
         </header>
     )
 }
-

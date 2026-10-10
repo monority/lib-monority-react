@@ -40,9 +40,7 @@ export function ShowcaseSection({
                     )}
                 </div>
             </div>
-            <PreviewCanvas padding="md">
-                {children}
-            </PreviewCanvas>
+            <PreviewCanvas padding="md">{children}</PreviewCanvas>
         </section>
     )
 }

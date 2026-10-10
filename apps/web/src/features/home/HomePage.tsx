@@ -1,28 +1,38 @@
 import { Link } from 'react-router-dom'
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { HomeHero } from './components/HomeHero'
+import { HomeFeatures } from './components/HomeFeatures'
+import { HomeLiveTokens } from './components/HomeLiveTokens'
+import { HomeShowcaseGrid } from './components/HomeShowcaseGrid'
+import './home.css'
 
 export function HomePage() {
+    usePageSeo({
+        title: 'Home',
+        description:
+            'Monority UI — A React 19 component system built around calm tokens, accessible primitives, and CSS @layer architecture.',
+    })
+
     return (
         <div className="home-page">
-            <AppHeader homeNav />
+            <AppHeader />
 
-            <main className="home-main">
-                <div className="home-hero">
-                    <p className="home-kicker">React UI library</p>
-                    <h1 className="home-title">Monority</h1>
-                    <p className="home-subtitle">
-                        A component system for precise product interfaces, built around calm tokens,
-                        accessible primitives, and documentation that shows the material clearly.
-                    </p>
-                    <div className="home-actions">
-                        <Link className="home-link home-link--primary" to="/docs">
-                            Open docs
-                        </Link>
-                        <Link className="home-link" to="/showcase">
-                            View components
-                        </Link>
+            <main className="home-container" id="main-content">
+                <HomeHero />
+                <HomeLiveTokens />
+                <HomeFeatures />
+                <HomeShowcaseGrid />
+
+                <footer className="home-footer" role="contentinfo">
+                    <span>Monority UI — MIT License</span>
+                    <div style={{ display: 'flex', gap: 'var(--mr-space-4)' }}>
+                        <Link to="/docs">Docs</Link>
+                        <Link to="/showcase">Showcase</Link>
+                        <Link to="/playground">Playground</Link>
+                        <Link to="/moodboard">Design Studio</Link>
                     </div>
-                </div>
+                </footer>
             </main>
         </div>
     )

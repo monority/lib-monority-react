@@ -33,14 +33,7 @@ export function PlaygroundControlField({
     }
 
     if (control.type === 'boolean') {
-        return (
-            <ControlBoolean
-                id={id}
-                label={label}
-                checked={value === true}
-                onChange={onChange}
-            />
-        )
+        return <ControlBoolean id={id} label={label} checked={value === true} onChange={onChange} />
     }
 
     if (control.type === 'number') {
