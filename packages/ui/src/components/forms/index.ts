@@ -53,6 +53,16 @@ export { FileUpload, type FileUploadProps, type FileUploadSize } from './file-up
 export { FormSection, type FormSectionProps } from './form-section'
 export { Input, type InputProps } from './input'
 export {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+    InputOTPSeparator,
+    type InputOTPProps,
+    type InputOTPGroupProps,
+    type InputOTPSlotProps,
+    type InputOTPSeparatorProps,
+} from './input-otp'
+export {
     NumberInput,
     type NumberInputProps,
     type NumberInputSize,

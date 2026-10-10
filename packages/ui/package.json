@@ -158,6 +158,12 @@
             "import": "./dist/numberInput.js",
             "default": "./dist/numberInput.js"
         },
+        "./input-otp": {
+            "types": "./dist/inputOtp.d.ts",
+            "monority-source": "./src/components/forms/input-otp/index.ts",
+            "import": "./dist/inputOtp.js",
+            "default": "./dist/inputOtp.js"
+        },
         "./password-input": {
             "types": "./dist/passwordInput.d.ts",
             "monority-source": "./src/components/forms/password-input/index.ts",

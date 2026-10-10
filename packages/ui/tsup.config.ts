@@ -29,6 +29,7 @@ export default defineConfig({
         'radio-group': 'src/components/forms/radio-group/index.ts',
         slider: 'src/components/forms/slider/index.ts',
         numberInput: 'src/components/forms/number-input/index.ts',
+        inputOtp: 'src/components/forms/input-otp/index.ts',
         passwordInput: 'src/components/forms/password-input/index.ts',
         select: 'src/components/forms/select/index.ts',
         dataList: 'src/components/data/data-list/index.ts',

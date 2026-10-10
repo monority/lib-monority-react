@@ -1,0 +1,12 @@
+feat(ui): ajouter le composant InputOTP (phase 2)
+
+- Creation de la recette CSS packages/styles/src/recipes/input-otp.css dans @layer mr.components
+  - Disposition segmentee, groupe de slots et curseur de saisie anime (--mr-duration-pulse)
+  - Alignement sur les tokens de design --mr-* (typographie mono, tailles de controle, focus ring)
+- Creation du composant React 19 InputOTP dans packages/ui/src/components/forms/input-otp/
+  - Support de la disposition par defaut et de la composition fine (InputOTP.Group, InputOTP.Slot, InputOTP.Separator)
+  - Gestion transparente du collage (onPaste), filtrage par motif (pattern) et rappel a completion (onComplete)
+  - Saisie accessible via champ sous-jacent inputMode="numeric" et autoComplete="one-time-code"
+- Tests unitaires Vitest exhaustifs (8 tests reussis)
+- Exports dans packages/ui (tsup, package.json, forms/index.ts)
+- Page de documentation dediee et enregistrement dans le registre de documentation

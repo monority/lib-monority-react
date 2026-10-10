@@ -105,6 +105,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     { category: 'forms', label: 'Input', path: '/docs/input', slug: 'input', status: 'stable' },
     {
         category: 'forms',
+        label: 'InputOTP',
+        path: '/docs/input-otp',
+        slug: 'input-otp',
+        status: 'stable',
+    },
+    {
+        category: 'forms',
         label: 'NumberInput',
         path: '/docs/number-input',
         slug: 'number-input',
