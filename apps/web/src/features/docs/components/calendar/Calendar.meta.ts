@@ -1,8 +1,8 @@
 export const calendarMeta = {
     title: 'Calendar',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/calendar',
-    import: "import { Calendar } from '@monority/ui/calendar'",
+    import: "import { Calendar } from '@monority/ui'",
     category: 'forms',
     anatomy: ['root', 'month', 'header', 'nav-btn', 'day-names', 'week', 'day'],
     accessibility: [

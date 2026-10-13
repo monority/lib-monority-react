@@ -1,6 +1,6 @@
 export const resizableMeta = {
     title: 'Resizable',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/resizable',
     import: "import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@monority/ui'",
     category: 'layout',
