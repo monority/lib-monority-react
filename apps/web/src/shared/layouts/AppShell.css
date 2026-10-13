@@ -25,35 +25,3 @@
 .app-skip-link:focus-visible {
     top: 0.75rem;
 }
-
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: var(--mr-z-elevated);
-    border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
-    background: color-mix(in srgb, var(--mr-bg-canvas) 88%, transparent);
-    backdrop-filter: blur(var(--mr-blur-md));
-}
-
-.app-header__inner {
-    min-block-size: var(--mr-control-size-lg);
-    padding-block: 0;
-}
-
-.brand {
-    color: var(--mr-fg-strong);
-    font-weight: var(--mr-font-weight-semibold);
-    font-size: var(--mr-text-sm);
-    letter-spacing: -0.01em;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.brand:hover {
-    color: var(--mr-fg-strong);
-}
-
-.app-header__controls {
-    gap: var(--mr-space-2);
-    margin-left: auto;
-}

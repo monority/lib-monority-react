@@ -51,9 +51,9 @@ export function DocsPage() {
             <AppHeader />
             <DocsLayout>
                 {!slug ? (
-                    <Introduction />
+                    <DocPageWithToc key="introduction" DocComponent={Introduction} />
                 ) : slug === 'installation' ? (
-                    <Installation />
+                    <DocPageWithToc key="installation" DocComponent={Installation} />
                 ) : DocComponent ? (
                     <Suspense fallback={<LoadingFallback />}>
                         <DocPageWithToc key={slug} DocComponent={DocComponent} />

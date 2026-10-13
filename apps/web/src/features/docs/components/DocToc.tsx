@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 interface HeadingInfo {
     id: string
@@ -46,14 +47,19 @@ function collectHeadings(): HeadingInfo[] {
 export function DocToc() {
     const [headings, setHeadings] = useState<HeadingInfo[]>([])
     const [activeId, setActiveId] = useState<string>('')
+    const location = useLocation()
 
     useEffect(() => {
-        const collected = collectHeadings()
-        setHeadings(collected)
-        if (collected.length > 0) {
-            setActiveId(collected[0]!.id)
-        }
-    }, [])
+        // Collect headings on mount and whenever location.pathname changes
+        const timer = setTimeout(() => {
+            const collected = collectHeadings()
+            setHeadings(collected)
+            if (collected.length > 0) {
+                setActiveId(collected[0]!.id)
+            }
+        }, 20)
+        return () => clearTimeout(timer)
+    }, [location.pathname])
 
     useEffect(() => {
         if (headings.length === 0) return

@@ -34,10 +34,20 @@ export function HeroHeader({
 
     return (
         <PageHeader ref={ref} className={classNames}>
-            {kicker && <p className="hero-header__kicker">{kicker}</p>}
-            <h1 className="hero-header__title">{title}</h1>
-            {description && <p className="hero-header__description">{description}</p>}
-            {actions && <div className="hero-header__actions">{actions}</div>}
+            {kicker && (
+                <PageHeader.Kicker className="hero-header__kicker">{kicker}</PageHeader.Kicker>
+            )}
+            <PageHeader.Title as="h1" className="hero-header__title">
+                {title}
+            </PageHeader.Title>
+            {description && (
+                <PageHeader.Description className="hero-header__description">
+                    {description}
+                </PageHeader.Description>
+            )}
+            {actions && (
+                <PageHeader.Actions className="hero-header__actions">{actions}</PageHeader.Actions>
+            )}
         </PageHeader>
     )
 }
