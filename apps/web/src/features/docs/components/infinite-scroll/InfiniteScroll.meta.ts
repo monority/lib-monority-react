@@ -1,8 +1,8 @@
 export const infiniteScrollMeta = {
     title: 'InfiniteScroll',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/infinite-scroll',
-    import: "import { InfiniteScroll } from '@monority/ui/infinite-scroll'",
+    import: "import { InfiniteScroll } from '@monority/ui'",
     category: 'experimental',
     anatomy: ['root', 'sentinel', 'loader', 'end', 'error', 'empty'],
     accessibility: [

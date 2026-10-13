@@ -1,9 +1,12 @@
 export const formSectionMeta = {
     title: 'FormSection',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/form-section',
     import: "import { FormSection } from '@monority/ui'",
     category: 'forms',
-    anatomy: ['root'],
-    accessibility: ['See component source'],
+    anatomy: ['root', 'header', 'title', 'description', 'content'],
+    accessibility: [
+        'Semantic sectioning or fieldset for grouped controls',
+        'Clear heading association for form sub-groups',
+    ],
 }

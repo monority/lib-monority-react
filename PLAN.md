@@ -28,19 +28,27 @@ Plan d'action : `plan-nouveaux-composants.md`.
 
 ## Chantier terminé — Restructuration Documentation, Harmonisation Bordures et Moodboard Studio
 
-Branche `feat/cleanup-and-redesign-docs-moodboard`.
+Branche `feat/cleanup-and-redesign-docs-moodboard`. PR #18 fusionnee dans `main` (commit c2accd8).
 Plan d'action et memoire : `PROJECT_CONTEXT.md` et artéfact `plan-refactor-moodboard-tokens-grid.md`.
+- Phase 1 a 8 terminees avec succes.
+
+## Chantier terminé — Stabilisation et Certification des 41 Composants Draft vers Stable
+
+Branche `feat/stabilize-draft-components`.
+Plan d'action : artéfact `plan-stabilisation-composants-draft.md`.
 
 ### Objectif
-Restructurer apps/web (suppression des sections perimees, 100% composants sur Home, synchronisation dynamique DocToc), adoucir les bordures de controle (ADR-026), et refondre integralement le Design Studio Moodboard en un dashboard operationnel 100% composants, reactif en temps reel sur les 8 axes de tokens et structure en grille de modules applicatifs concrets.
+Auditer et certifier l'ensemble des 41 composants au statut draft dans registry.ts et .meta.ts, harmoniser leurs imports canoniques (@monority/ui), enrichir leurs contrats d'accessibilite et porter le catalogue a 100% stable (83 composants stables sur 83).
 
 ### Sequence d'execution
-- Phase 1 : Suppression de showcase et playground, refonte de Home en 100% composants Monority UI — Termine
-- Phase 2 : Generalisation de DocPageWithToc et synchronisation automatique de la table des matieres DocToc — Termine
-- Phase 3 : Harmonisation globale des bordures de formulaires sur les 7 themes CSS (ADR-026) — Termine
-- Phase 4 : Refonte du Moodboard en architecture 100% composants avec SidebarLayout sticky — Termine
-- Phase 5 : Moteur de tokens dynamique live (Corner Radius, Spacing Scale, Layout Density, Accent, Theme) — Termine
-- Phase 6 : Harmonisation et animation du graphique de telemetrie SVG avec scrubber interactif — Termine
-- Phase 7 : Integration de 10 modules applicatifs concrets en grille 2 colonnes optimisee — Termine
-- Phase 8 : Qualification globale pnpm verify et validation du bundle pnpm --filter @monority/ui test:dist — 100% au vert
+- Lot 1 : Primitives Layout et Typographie (12 composants) — Valide et commite (4865dc3)
+- Lot 2 : Feedback et Affichage Visuel (6 composants) — Valide et commite (5b24ab2)
+- Lot 3 : Navigation et Presentation de Donnees (11 composants) — Valide et commite (151b75f)
+- Lot 4 : Formulaires et Overlays Complexes (12 composants) — Valide et commite (fd9284c)
+
+## Reprise
+Dernier commit vert : fd9284c sur feat/stabilize-draft-components.
+Catalogue certifie a 100% stable (83/83 composants). pnpm verify et test:dist au vert.
+Prochaine action : ouvrir la PR vers main ou enchainer sur la Wave 2 de nouveaux composants.
+
 

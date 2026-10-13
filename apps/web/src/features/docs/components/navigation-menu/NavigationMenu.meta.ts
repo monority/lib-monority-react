@@ -1,6 +1,6 @@
 export const navigationMenuMeta = {
     title: 'NavigationMenu',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/navigation-menu',
     import: "import { NavigationMenu } from '@monority/ui'",
     category: 'navigation',
@@ -15,5 +15,9 @@ export const navigationMenuMeta = {
         'sub-item',
         'indicator',
     ],
-    accessibility: ['See component source'],
+    accessibility: [
+        'WAI-ARIA navigation menu pattern with roving focus',
+        'Trigger buttons have aria-expanded and aria-controls',
+        'Full arrow key, Tab, and Escape keyboard navigation',
+    ],
 }

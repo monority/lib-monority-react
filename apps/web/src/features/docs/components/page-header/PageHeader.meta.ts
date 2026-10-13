@@ -1,9 +1,13 @@
 export const pageHeaderMeta = {
     title: 'PageHeader',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/page-header',
-    import: "import { PageHeader } from '@monority/ui/page-header'",
+    import: "import { PageHeader } from '@monority/ui'",
     category: 'layout',
     anatomy: ['root', 'main', 'eyebrow', 'title', 'description', 'meta', 'actions'],
-    accessibility: ['semantic header', 'single page h1', 'actions after title'],
+    accessibility: [
+        'Semantic header landmark',
+        'Single page h1 heading',
+        'Actions positioned after title in tab order',
+    ],
 }

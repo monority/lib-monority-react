@@ -1,8 +1,8 @@
 export const carouselMeta = {
     title: 'Carousel',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/carousel',
-    import: "import { Carousel } from '@monority/ui/carousel'",
+    import: "import { Carousel } from '@monority/ui'",
     category: 'display',
     anatomy: ['root', 'viewport', 'track', 'slide', 'arrow (prev/next)', 'dots', 'dot'],
     accessibility: [

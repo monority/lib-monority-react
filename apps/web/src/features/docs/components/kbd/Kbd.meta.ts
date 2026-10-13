@@ -1,6 +1,6 @@
 export const kbdMeta = {
     title: 'Kbd',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/kbd',
     import: "import { Kbd } from '@monority/ui'",
     category: 'typography',

@@ -50,35 +50,31 @@ Derniere mise a jour : 2026-10-13.
 
 ---
 
-## 4. Etat Actuel du Projet (Branche feat/cleanup-and-redesign-docs-moodboard)
+## 4. Etat Actuel du Projet (Branche feat/stabilize-draft-components)
 
-Branche active : feat/cleanup-and-redesign-docs-moodboard
-Statut Git : Synchronisee avec origin/feat/cleanup-and-redesign-docs-moodboard.
-Dernier commit : 0b4a7d5 refactor(moodboard): componentize modules, harmonize card spacing, sync header theme, and neutralize primary accent
+Branche active : feat/stabilize-draft-components
+Statut Git : 4 commits atomiques validant les 4 lots de stabilisation.
+Dernier commit : fd9284c feat(components): stabiliser les formulaires et overlays complexes (Lot 4)
 
 Realisations majeures de ce chantier :
-- Restructuration du site de documentation apps/web :
-  - Suppression des sections perimees showcase et playground.
-  - Refonte de la page d'accueil HomePage en 100% composants Monority UI, suppression de home.css.
-  - Generalisation de DocPageWithToc pour l'ensemble des pages de documentation et synchronisation dynamique de la table des matieres DocToc lors des transitions de route.
-- Harmonisation globale des bordures de controle (ADR-026) :
-  - Ajustement des contrastes de bordures sur input, textarea, select, switch et checkbox pour alleger le rendu visuel sur l'ensemble des 7 themes sans rompre le seuil d'accessibilite 3:1.
-- Refonte complete de la page Moodboard Design Studio et Harmonisation Accent (modele shadcn/ui) :
-  - Architecture 100% composants utilisant SidebarLayout officiel avec panneau lateral sticky persistant au defilement.
-  - Decouplage Theme & Accent : l'axe Theme regroupe l'atmosphere (Light, Dark, Slate, OLED, Ocean, Night) et l'axe Accent definit la teinte d'accent (Neutral, Cyan, Blue, Violet, Indigo, Green, Amber, Orange, Red, Rose) des composants.
-  - Neutralisation de l'accent primaire : en mode clair fond noir oklch(0.22 0 0) et texte blanc oklch(0.985 0 0) ; en mode sombre fond blanc oklch(0.955 0 0) et texte sombre oklch(0.17 0 215) ; en mode OLED fond blanc oklch(0.955 0 0) et texte noir absolu oklch(0 0 0).
-  - Synchronisation bidirectionnelle du theme entre l'en-tete global ThemeToggle et le studio Moodboard sans desynchronisation.
-  - Elimination complete du code mort componentColor et assainissement automatique du stockage local.
-  - Grille responsive a 2 colonnes integrant 10 modules operationnels concrets entierement composantises (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
-  - Espacements et aereation amelioree : introduction des tokens d'espacement semantiques --mr-space-7 (28px) et --mr-space-8 (32px), propriete gap sur Grid, echelle de padding xl sur Card.
-- Validation technique :
-  - pnpm verify : 100% succes (108 suites / 1357 tests packages/ui, 15 suites / 86 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
+- Certification et stabilisation a 100% du catalogue de composants :
+  - 83 composants au total dans la bibliotheque, desormais 83 composants au statut stable (0 composant draft restant).
+  - Lot 1 (Primitives Fondamentales Layout et Typographie — 12 composants) : Kbd, PreCode, Text, Title, AspectRatio, Container, Divider, Grid, PageHeader, ScrollArea, Stack, Toolbar.
+  - Lot 2 (Feedback et Affichage Visuel — 6 composants) : AsyncStateNotice, Banner, EmptyState, InlineAlert, Collapsible, Carousel.
+  - Lot 3 (Navigation et Donnees — 11 composants) : Pagination, SidebarLayout, Topbar, FilterBar, NavigationMenu, Menubar, DataList, StatCard, MetricGrid, Table, DataTable.
+  - Lot 4 (Formulaires et Overlays Complexes — 12 composants) : Field, FormSection, Calendar, DatePicker, DateRangePicker, Combobox, FileUpload, CommandPalette, ContextMenu, HoverCard, Resizable, InfiniteScroll.
+- Harmonisation documentaire et accessibilite :
+  - Alignement des imports publics canoniques : import { Component } from '@monority/ui'.
+  - Enrichissement systematique des notes d'accessibilite et anatomie (roles ARIA, balisage semantique natif, gestion du focus clavier).
+- Validation technique ininterrompue :
+  - pnpm verify : 100% succes (108 suites / 1357 tests packages/ui, 15 suites / 86 tests apps/web, Playwright contrastes, Stylelint, Biome format).
   - pnpm --filter @monority/ui test:dist : 100% succes.
 
 ---
 
 ## 5. Prochaines Etapes pour Reprendre le Travail
 
-- Option 1 : Ouvrir une Pull Request pour fusionner feat/cleanup-and-redesign-docs-moodboard vers main.
-- Option 2 : Phase 3 de suppression des anciens tokens JSON et du package archive packages/tokens.
-- Option 3 : Lancer la Wave 2 de nouveaux composants ou enrichir les composants existants.
+- Etape 1 : Ouvrir une Pull Request pour fusionner feat/stabilize-draft-components vers main.
+- Etape 2 : Lancer la Wave 2 de nouveaux composants (TreeView, Toaster sonner-style, ColorPicker).
+- Etape 3 : Audit global d'accessibilite automatise (axe-core integre aux tests Playwright).
+
