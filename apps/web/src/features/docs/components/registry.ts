@@ -149,7 +149,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'AsyncStateNotice',
         path: '/docs/async-state-notice',
         slug: 'async-state-notice',
-        status: 'draft',
+        status: 'stable',
     },
     { category: 'feedback', label: 'Badge', path: '/docs/badge', slug: 'badge', status: 'stable' },
     {
@@ -164,7 +164,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Banner',
         path: '/docs/banner',
         slug: 'banner',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
@@ -178,14 +178,14 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'EmptyState',
         path: '/docs/empty-state',
         slug: 'empty-state',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
         label: 'InlineAlert',
         path: '/docs/inline-alert',
         slug: 'inline-alert',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'feedback',
@@ -363,14 +363,14 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Carousel',
         path: '/docs/carousel',
         slug: 'carousel',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'display',
         label: 'Collapsible',
         path: '/docs/collapsible',
         slug: 'collapsible',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'display',
