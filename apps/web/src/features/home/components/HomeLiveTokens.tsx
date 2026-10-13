@@ -1,5 +1,17 @@
 import { useState, type CSSProperties } from 'react'
-import { Badge, Button, Card, Input, Progress, Stack, ToggleGroup } from '@monority/ui'
+import {
+    Badge,
+    Button,
+    Card,
+    Grid,
+    Input,
+    Progress,
+    Section,
+    Stack,
+    Text,
+    Title,
+    ToggleGroup,
+} from '@monority/ui'
 
 const ACCENTS = [
     { value: 'neutral', label: 'Neutral', hue: '0', chroma: '0' },
@@ -39,51 +51,73 @@ export function HomeLiveTokens() {
     }
 
     return (
-        <section aria-labelledby="home-tokens-title">
-            <h2 id="home-tokens-title" className="home-section-title">
-                Live Design Tokens
-            </h2>
-            <p className="home-section-desc">
-                Tweak system parameters in real time. Notice how every control, surface, and
-                feedback state inherits changes coherently.
-            </p>
+        <Section aria-labelledby="home-tokens-title" spacing="lg">
+            <Stack gap="xs" style={{ marginBottom: 'var(--mr-space-5)' }}>
+                <Title id="home-tokens-title" size="lg">
+                    Live Design Tokens
+                </Title>
+                <Text tone="muted" size="md">
+                    Tweak system parameters in real time. Notice how every control, surface, and
+                    feedback state inherits changes coherently.
+                </Text>
+            </Stack>
 
-            <div className="home-tokens-demo">
-                <div className="home-tokens-controls">
-                    <Card padding="md">
-                        <Stack gap="md">
-                            <div>
-                                <span className="hero-header__kicker">Accent Palette</span>
-                                <ToggleGroup
-                                    value={accent}
-                                    onValueChange={(val) => {
-                                        const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
-                                        if (v) setAccent(v)
-                                    }}
-                                    items={ACCENTS.map((a) => ({ value: a.value, label: a.label }))}
-                                    aria-label="Accent switcher"
-                                />
-                            </div>
+            <Grid columns={2}>
+                <Card padding="md">
+                    <Stack gap="md">
+                        <div>
+                            <Text
+                                tone="muted"
+                                size="sm"
+                                style={{
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.06em',
+                                    fontWeight: 600,
+                                    marginBottom: 'var(--mr-space-2)',
+                                    display: 'block',
+                                }}
+                            >
+                                Accent Palette
+                            </Text>
+                            <ToggleGroup
+                                value={accent}
+                                onValueChange={(val) => {
+                                    const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
+                                    if (v) setAccent(v)
+                                }}
+                                items={ACCENTS.map((a) => ({ value: a.value, label: a.label }))}
+                                aria-label="Accent switcher"
+                            />
+                        </div>
 
-                            <div>
-                                <span className="hero-header__kicker">
-                                    Geometry (Corner Radius)
-                                </span>
-                                <ToggleGroup
-                                    value={radius}
-                                    onValueChange={(val) => {
-                                        const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
-                                        if (v) setRadius(v)
-                                    }}
-                                    items={RADII.map((r) => ({ value: r.value, label: r.label }))}
-                                    aria-label="Radius switcher"
-                                />
-                            </div>
-                        </Stack>
-                    </Card>
-                </div>
+                        <div>
+                            <Text
+                                tone="muted"
+                                size="sm"
+                                style={{
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.06em',
+                                    fontWeight: 600,
+                                    marginBottom: 'var(--mr-space-2)',
+                                    display: 'block',
+                                }}
+                            >
+                                Geometry (Corner Radius)
+                            </Text>
+                            <ToggleGroup
+                                value={radius}
+                                onValueChange={(val) => {
+                                    const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
+                                    if (v) setRadius(v)
+                                }}
+                                items={RADII.map((r) => ({ value: r.value, label: r.label }))}
+                                aria-label="Radius switcher"
+                            />
+                        </div>
+                    </Stack>
+                </Card>
 
-                <div className="home-tokens-preview" style={customVars as CSSProperties}>
+                <Card padding="md" style={customVars as CSSProperties}>
                     <Stack gap="md">
                         <div
                             style={{
@@ -92,14 +126,9 @@ export function HomeLiveTokens() {
                                 alignItems: 'center',
                             }}
                         >
-                            <strong
-                                style={{
-                                    fontSize: 'var(--mr-text-md)',
-                                    color: 'var(--mr-fg-strong)',
-                                }}
-                            >
+                            <Title size="sm" as="h3">
                                 Live Component Preview
-                            </strong>
+                            </Title>
                             <Badge variant="primary">Active Theme</Badge>
                         </div>
 
@@ -125,8 +154,8 @@ export function HomeLiveTokens() {
                             </Button>
                         </div>
                     </Stack>
-                </div>
-            </div>
-        </section>
+                </Card>
+            </Grid>
+        </Section>
     )
 }

@@ -8,7 +8,7 @@ import { DocPropTable } from './DocPropTable'
 import { DocTagList } from './DocTagList'
 import { DocExampleCard } from './DocExampleCard'
 
-export interface PropRow {
+export interface PropRow extends Record<string, unknown> {
     name: string
     type: string
     defaultValue: string

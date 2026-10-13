@@ -2,7 +2,7 @@ import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
 import type { TableProps } from './Table.types'
 
-export function Table({
+export function Table<T extends Record<string, unknown> = Record<string, unknown>>({
     ref,
     columns = [],
     rows = [],
@@ -11,7 +11,7 @@ export function Table({
     className,
     tableClassName,
     ...props
-}: TableProps) {
+}: TableProps<T>) {
     if (rows.length === 0) {
         return (
             <div ref={ref} className={cn('mr-table', className)} {...props}>
@@ -46,8 +46,8 @@ export function Table({
                             {columns.map((col) => (
                                 <td key={col.key} className={cn('mr-table__td', col.className)}>
                                     {col.render
-                                        ? col.render(row[col.key], row)
-                                        : String(row[col.key] ?? '')}
+                                        ? col.render((row as Record<string, unknown>)[col.key], row)
+                                        : String((row as Record<string, unknown>)[col.key] ?? '')}
                                 </td>
                             ))}
                         </tr>

@@ -1,9 +1,10 @@
 import { ButtonLink } from '@monority/ui/button-link'
+import { Section } from '@monority/ui/section'
 import { HeroHeader } from '@/shared/components/HeroHeader'
 
 export function HomeHero() {
     return (
-        <section className="home-hero-section" aria-label="Introduction Monority UI">
+        <Section spacing="lg" aria-label="Introduction Monority UI">
             <HeroHeader
                 kicker="React 19 Component Library"
                 title="Monority UI"
@@ -13,17 +14,17 @@ export function HomeHero() {
                 actions={
                     <>
                         <ButtonLink href="/docs" variant="primary" size="md">
-                            Documentation (75 Components)
+                            Documentation (84 Composants)
                         </ButtonLink>
-                        <ButtonLink href="/showcase" variant="secondary" size="md">
-                            Showcase Compositions
+                        <ButtonLink href="/moodboard" variant="secondary" size="md">
+                            Design Studio
                         </ButtonLink>
-                        <ButtonLink href="/playground" variant="ghost" size="md">
-                            Interactive Playground
+                        <ButtonLink href="/docs/installation" variant="ghost" size="md">
+                            Installation
                         </ButtonLink>
                     </>
                 }
             />
-        </section>
+        </Section>
     )
 }

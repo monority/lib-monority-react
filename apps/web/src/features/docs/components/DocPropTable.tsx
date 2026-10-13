@@ -1,38 +1,47 @@
+import { Table, type Column } from '@monority/ui/table'
 import type { PropRow } from './DocPage'
 
 export interface DocPropTableProps {
     props: PropRow[]
 }
 
+const propColumns: Column<PropRow>[] = [
+    {
+        key: 'name',
+        label: 'Prop',
+        render: (_val, row) => <span className="docs-prop-name">{row.name}</span>,
+    },
+    {
+        key: 'type',
+        label: 'Type',
+        render: (_val, row) => (
+            <span className="docs-prop-type">
+                <code>{row.type}</code>
+            </span>
+        ),
+    },
+    {
+        key: 'defaultValue',
+        label: 'Default',
+        render: (_val, row) => (
+            <span className="docs-prop-default">
+                <code>{row.defaultValue}</code>
+            </span>
+        ),
+    },
+    {
+        key: 'description',
+        label: 'Description',
+        render: (_val, row) => <span className="docs-prop-desc">{row.description}</span>,
+    },
+]
+
 export function DocPropTable({ props }: DocPropTableProps) {
     if (props.length === 0) return null
 
     return (
         <div className="docs-table-wrapper">
-            <table className="docs-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Prop</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Default</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.map((prop) => (
-                        <tr key={prop.name}>
-                            <td className="docs-prop-name">{prop.name}</td>
-                            <td className="docs-prop-type">
-                                <code>{prop.type}</code>
-                            </td>
-                            <td className="docs-prop-default">
-                                <code>{prop.defaultValue}</code>
-                            </td>
-                            <td className="docs-prop-desc">{prop.description}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table<PropRow> columns={propColumns} rows={props} getRowId={(row) => row.name} />
         </div>
     )
 }
