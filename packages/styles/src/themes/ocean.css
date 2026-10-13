@@ -27,8 +27,8 @@
         /* Texte desactive : ratio 3.49:1 sur canevas */
         --mr-text-disabled: oklch(0.525 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordures : luminosite 0.48 pour des bordures nettement visibles en theme Ocean */
-        --mr-border-control: oklch(0.48 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.38 pour des bordures de controle douces et marines en theme Ocean */
+        --mr-border-control: oklch(0.38 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.4 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 

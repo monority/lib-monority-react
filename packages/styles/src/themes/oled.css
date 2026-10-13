@@ -19,8 +19,8 @@
         /* Texte desactive : luminosite 0.498 reproduit le ratio de 3.46:1 sur le canevas */
         --mr-text-disabled: oklch(0.498 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordures : luminosite 0.46 pour une bordure nettement visible sur canevas OLED */
-        --mr-border-control: oklch(0.46 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.35 pour une bordure de controle discrete et estompee sur noir OLED */
+        --mr-border-control: oklch(0.35 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.38 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.28 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 

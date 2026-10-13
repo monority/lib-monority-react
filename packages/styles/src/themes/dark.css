@@ -17,8 +17,8 @@
         /* Texte desactive : luminosite 0.52 reproduit le ratio de 3.47:1 sur son canevas */
         --mr-text-disabled: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordures : luminosite 0.48 pour des bordures nettement visibles en mode sombre */
-        --mr-border-control: oklch(0.48 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.38 pour des bordures de controle feutrees et douces en mode sombre */
+        --mr-border-control: oklch(0.38 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.4 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.32 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 

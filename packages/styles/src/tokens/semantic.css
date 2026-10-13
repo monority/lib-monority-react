@@ -22,9 +22,9 @@
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Bordures :
-         * border-control : luminosite 0.75 calculee pour assurer un ratio discret de 1.95:1 sur le canevas clair
+         * border-control : luminosite 0.77 pour une bordure de controle feutree et discrete
          * (ADR-026 : bordure discrete au repos, accessibilite garantie par l'anneau de focus a 4.8:1 et le theme contraste). */
-        --mr-border-control: oklch(0.75 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-control: oklch(0.77 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
