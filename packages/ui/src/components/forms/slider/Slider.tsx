@@ -89,6 +89,8 @@ export function Slider({
                     <div className="mr-slider__row">
                         <div
                             className="mr-slider-range-container"
+                            data-size={size}
+                            data-tone={resolvedTone}
                             style={{
                                 ...style,
                                 ['--mr-slider-lower' as string]: `${lowerPercent}%`,

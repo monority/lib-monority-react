@@ -256,6 +256,10 @@
         align-items: center;
     }
 
+    :where(.mr-slider-range-container[data-size='sm']) {
+        block-size: var(--mr-space-5);
+    }
+
     :where(.mr-slider--range) {
         position: absolute;
         inset: 0;

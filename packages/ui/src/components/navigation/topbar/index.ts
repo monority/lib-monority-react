@@ -1,2 +1,12 @@
 export { Topbar } from './Topbar'
-export type { TopbarProps } from './Topbar.types'
+export type {
+    TopbarActionsProps,
+    TopbarBrandMarkProps,
+    TopbarBrandProps,
+    TopbarLinkProps,
+    TopbarMetaProps,
+    TopbarNavProps,
+    TopbarProps,
+    TopbarStatusProps,
+    TopbarStatusTone,
+} from './Topbar.types'
