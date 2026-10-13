@@ -11,7 +11,7 @@ import {
     Switch,
     Text,
     Textarea,
-    Title,
+    Toolbar,
 } from '@monority/ui'
 
 export function MoodboardDeploymentModule() {
@@ -34,25 +34,15 @@ export function MoodboardDeploymentModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Deployment Trigger
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Configure target environment and rollout criteria
-                        </Text>
-                    </div>
-                    <Badge variant="default" size="sm">
-                        Ready
-                    </Badge>
+                <div>
+                    <Card.Title>Deployment Trigger</Card.Title>
+                    <Card.Description>
+                        Configure target environment and rollout criteria
+                    </Card.Description>
                 </div>
+                <Badge variant="default" size="sm">
+                    Ready
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -61,11 +51,11 @@ export function MoodboardDeploymentModule() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
-                <Stack gap="sm">
-                    <Grid columns={2}>
+                <Stack gap="md">
+                    <Grid columns={2} gap="md">
                         <Input
                             id="moodboard-workspace"
                             label="Workspace"
@@ -95,7 +85,7 @@ export function MoodboardDeploymentModule() {
                         size="sm"
                     />
 
-                    <Grid columns={2}>
+                    <Grid columns={2} gap="md">
                         <Checkbox
                             id="moodboard-signed"
                             label="Signed builds only"
@@ -114,37 +104,32 @@ export function MoodboardDeploymentModule() {
                         />
                     </Grid>
                 </Stack>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            loading={isTriggering}
-                            onClick={handleTrigger}
-                        >
-                            Rollout Canary
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                            Validate Spec
-                        </Button>
-                    </div>
-                    {lastTriggered && (
-                        <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                            Queued at {lastTriggered}
-                        </Text>
-                    )}
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        loading={isTriggering}
+                        onClick={handleTrigger}
+                    >
+                        Rollout Canary
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                        Validate Spec
+                    </Button>
+                </Toolbar>
+                {lastTriggered ? (
+                    <Text tone="muted" size="sm">
+                        Queued at {lastTriggered}
+                    </Text>
+                ) : (
+                    <Text tone="muted" size="sm">
+                        Automated checks passing
+                    </Text>
+                )}
+            </Card.Footer>
         </Card>
     )
 }

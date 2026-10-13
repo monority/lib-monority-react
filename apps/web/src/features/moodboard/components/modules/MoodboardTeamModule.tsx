@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Avatar, Badge, Button, Card, Select, Stack, Text, Title } from '@monority/ui'
+import { Avatar, Badge, Button, Card, Select, Stack, Text, Toolbar } from '@monority/ui'
 
 interface Member {
     name: string
@@ -46,25 +46,15 @@ export function MoodboardTeamModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Team & Permissions
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Workspace members and role-based security privileges
-                        </Text>
-                    </div>
-                    <Badge variant="default" size="sm">
-                        {members.length} Members
-                    </Badge>
+                <div>
+                    <Card.Title>Team & Permissions</Card.Title>
+                    <Card.Description>
+                        Workspace members and role-based security privileges
+                    </Card.Description>
                 </div>
+                <Badge variant="default" size="sm">
+                    {members.length} Members
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -73,7 +63,7 @@ export function MoodboardTeamModule() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
                 <Stack gap="sm">
@@ -138,30 +128,21 @@ export function MoodboardTeamModule() {
                         </div>
                     ))}
                 </Stack>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="primary" size="sm">
-                            Invite Member
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                            Audit Policy
-                        </Button>
-                    </div>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        SSO & SAML active
-                    </Text>
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button variant="primary" size="sm">
+                        Invite Member
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                        Audit Policy
+                    </Button>
+                </Toolbar>
+                <Text tone="muted" size="sm">
+                    SSO & SAML active
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }

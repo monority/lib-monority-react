@@ -65,6 +65,12 @@ describe('Card', () => {
         expect(card?.getAttribute('data-padding')).toBe('sm')
     })
 
+    it('renders with padding="xl"', () => {
+        const view = render(<Card padding="xl">Content</Card>)
+        const card = view.querySelector('div')
+        expect(card?.getAttribute('data-padding')).toBe('xl')
+    })
+
     it('passes className to the root', () => {
         const view = render(<Card className="custom">Content</Card>)
         const card = view.querySelector('div')

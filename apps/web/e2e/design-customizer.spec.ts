@@ -7,7 +7,6 @@ const configurations = [
         theme: 'dark',
         brand: 'monority',
         accent: 'cyan',
-        componentColor: 'theme',
         chartPalette: 'default',
         radius: 'default',
         spacing: 'default',
@@ -18,7 +17,6 @@ const configurations = [
         theme: 'light',
         brand: 'monority',
         accent: 'violet',
-        componentColor: 'neutral',
         chartPalette: 'ocean',
         radius: 'rounded',
         spacing: 'dense',
@@ -29,7 +27,6 @@ const configurations = [
         theme: 'oled',
         brand: 'monority',
         accent: 'green',
-        componentColor: 'soft',
         chartPalette: 'spectrum',
         radius: 'sharp',
         spacing: 'airy',
@@ -40,7 +37,6 @@ const configurations = [
         theme: 'ocean',
         brand: 'monority',
         accent: 'orange',
-        componentColor: 'inverse',
         chartPalette: 'warm',
         radius: 'compact',
         spacing: 'default',
@@ -51,7 +47,6 @@ const configurations = [
         theme: 'night',
         brand: 'studio',
         accent: 'blue',
-        componentColor: 'theme',
         chartPalette: 'ocean',
         radius: 'rounded',
         spacing: 'comfortable',
@@ -86,10 +81,6 @@ test.describe('Phase 6 — canonical Design Studio', () => {
             const scope = page.getByTestId('moodboard-preview-scope')
             await expect(scope).toHaveAttribute('data-design-theme', config.theme)
             await expect(scope).toHaveAttribute('data-design-accent', config.accent)
-            await expect(scope).toHaveAttribute(
-                'data-design-component-color',
-                config.componentColor
-            )
             await expect(scope).toHaveAttribute('data-design-chart-palette', config.chartPalette)
             await expect(scope).toHaveAttribute('data-design-radius', config.radius)
             await expect(scope).toHaveAttribute('data-design-spacing', config.spacing)
@@ -130,24 +121,19 @@ test.describe('Phase 6 — canonical Design Studio', () => {
             (element) => getComputedStyle(element).backgroundColor
         )
 
-        /* Change accent, radius, component color */
+        /* Change accent and radius via select controls */
         await page
             .getByRole('group', { name: 'Accent axis' })
-            .getByRole('button', { name: 'Violet' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('violet')
         await page
             .getByRole('group', { name: 'Radius axis' })
-            .getByRole('button', { name: 'Rounded' })
-            .click()
-        await page
-            .getByRole('group', { name: 'Component color axis' })
-            .getByRole('button', { name: 'Neutral' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('rounded')
 
         /* Preview scope attributes updated */
         await expect(scope).toHaveAttribute('data-design-accent', 'violet')
         await expect(scope).toHaveAttribute('data-design-radius', 'rounded')
-        await expect(scope).toHaveAttribute('data-design-component-color', 'neutral')
 
         /* Button color changed */
         const updatedBg = await primary.evaluate(
@@ -161,126 +147,62 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         expect(stored).toContain('rounded')
     })
 
-    test('accent axis and component color axis never paint the same surface', async ({ page }) => {
+    test('neutral accent resolves black in light mode and white in dark and oled', async ({
+        page,
+    }) => {
         await page.goto('/moodboard')
-        /* Must run after goto: addStyleTag does not survive a navigation, and a
-           running background-color transition would be read as a third colour. */
-        await page.addStyleTag({ content: '*,*::before,*::after{transition:none!important}' })
         const primary = page.getByRole('button', { name: 'Deploy' }).first()
-        const accentGroup = page.getByRole('group', { name: 'Accent axis' })
-        const componentGroup = page.getByRole('group', { name: 'Component color axis' })
 
-        /* Resolve --mr-accent to a real rgb()/oklch() value to compare against. */
-        const resolveAccent = () =>
-            page.evaluate(() => {
-                const scope = document.querySelector('[data-testid="moodboard-preview-scope"]')!
-                const probe = document.createElement('div')
-                probe.style.background = 'var(--mr-accent)'
-                scope.appendChild(probe)
-                const value = getComputedStyle(probe).backgroundColor
-                probe.remove()
-                return value
-            })
-
-        for (const role of ['Theme', 'Neutral', 'Soft', 'Inverse'] as const) {
-            await componentGroup.getByRole('button', { name: role, exact: true }).click()
-            for (const accent of ['Cyan', 'Blue', 'Violet', 'Green', 'Rose'] as const) {
-                await accentGroup.getByRole('button', { name: accent, exact: true }).click()
-                const fill = await primary.evaluate(
-                    (element) => getComputedStyle(element).backgroundColor
-                )
-                const accentColor = await resolveAccent()
-                if (role === 'Theme') {
-                    expect(fill, `role=${role} accent=${accent}`).toBe(accentColor)
-                } else {
-                    expect(
-                        fill,
-                        `role=${role} accent=${accent} must differ from the accent`
-                    ).not.toBe(accentColor)
-                }
-            }
-        }
-    })
-
-    test('accent axis stays visible when the component role is hue free', async ({ page }) => {
-        await page.goto('/moodboard')
-        await page
-            .getByRole('group', { name: 'Component color axis' })
-            .getByRole('button', { name: 'Neutral', exact: true })
-            .click()
-        /* --mr-accent-text consumer that is not a selected table row
-           (a pressed row is painted with --mr-text-primary instead). */
-        const activeNavLink = page.locator('.moodboard-compact-nav a.is-active')
-        const accentGroup = page.getByRole('group', { name: 'Accent axis' })
-
-        await accentGroup.getByRole('button', { name: 'Cyan', exact: true }).click()
-        const cyan = await activeNavLink.evaluate((element) => getComputedStyle(element).color)
-        await accentGroup.getByRole('button', { name: 'Rose', exact: true }).click()
-        const rose = await activeNavLink.evaluate((element) => getComputedStyle(element).color)
-
-        expect(cyan).not.toBe(rose)
-    })
-
-    test('le Design Studio ne repeint pas le chrome de l application', async ({ page }) => {
-        await page.goto('/showcase')
-
-        const readRoot = () =>
-            page.evaluate(() => {
-                const cs = getComputedStyle(document.documentElement)
-                return {
-                    accent: document.documentElement.dataset.brandAccent ?? null,
-                    hue: cs.getPropertyValue('--mr-brand-hue').trim(),
-                    theme: document.documentElement.dataset.theme,
-                }
-            })
-
-        const before = await readRoot()
-
-        await page.goto('/moodboard')
+        /* Set neutral accent and light theme */
         await page
             .getByRole('group', { name: 'Accent axis' })
-            .getByRole('button', { name: 'Violet' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('neutral')
         await page
             .getByRole('group', { name: 'Theme axis' })
-            .getByRole('button', { name: 'Ocean' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('light')
 
-        /* The studio scopes its own axes to its preview. */
-        await expect(page.getByTestId('moodboard-preview-scope')).toHaveAttribute(
-            'data-design-accent',
-            'violet'
-        )
-        await expect(page.getByTestId('moodboard-preview-scope')).toHaveAttribute(
-            'data-design-theme',
-            'ocean'
-        )
+        const lightColor = await primary.evaluate((element) => {
+            const cs = getComputedStyle(element)
+            return { bg: cs.backgroundColor, text: cs.color }
+        })
+        /* In light mode, primary button is dark charcoal/black with light text */
+        expect(lightColor.bg).toMatch(/oklch\(0\.22|rgb\(48,\s*48,\s*48\)|rgb\(56,\s*56,\s*56\)/)
 
-        await page.goto('/showcase')
-        const after = await readRoot()
-        expect(after).toEqual(before)
+        /* Set dark theme */
+        await page
+            .getByRole('group', { name: 'Theme axis' })
+            .getByRole('combobox')
+            .selectOption('dark')
+
+        const darkColor = await primary.evaluate((element) => {
+            const cs = getComputedStyle(element)
+            return { bg: cs.backgroundColor, text: cs.color }
+        })
+        /* In dark mode, primary button is white with dark text */
+        expect(darkColor.bg).toMatch(
+            /oklch\(0\.955|rgb\(242,\s*242,\s*242\)|rgb\(244,\s*244,\s*244\)/
+        )
     })
 
     test('theme change affects preview surfaces', async ({ page }) => {
         await page.goto('/moodboard')
         const scope = page.getByTestId('moodboard-preview-scope')
-        const canvas = page.locator('.moodboard-preview-scope')
 
         /* Get initial background */
-        const initialBg = await canvas.evaluate(
+        const initialBg = await scope.evaluate(
             (element) => getComputedStyle(element).backgroundColor
         )
 
         /* Switch to light */
         await page
             .getByRole('group', { name: 'Theme axis' })
-            .getByRole('button', { name: 'Light' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('light')
         await expect(scope).toHaveAttribute('data-design-theme', 'light')
 
-        const lightBg = await canvas.evaluate(
-            (element) => getComputedStyle(element).backgroundColor
-        )
+        const lightBg = await scope.evaluate((element) => getComputedStyle(element).backgroundColor)
         expect(lightBg).not.toBe(initialBg)
     })
 
@@ -293,8 +215,8 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         )
         await page
             .getByRole('group', { name: 'Spacing axis' })
-            .getByRole('button', { name: 'Dense' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('dense')
         const denseSpacing = await scope.evaluate((element) =>
             getComputedStyle(element).getPropertyValue('--mr-spacing-4').trim()
         )
@@ -313,8 +235,8 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         )
         await page
             .getByRole('group', { name: 'Chart palette axis' })
-            .getByRole('button', { name: 'Ocean' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('ocean')
         const oceanChart2 = await root.evaluate((element) =>
             getComputedStyle(element).getPropertyValue('--mr-chart-2').trim()
         )
@@ -329,12 +251,12 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         /* Change some axes */
         await page
             .getByRole('group', { name: 'Accent axis' })
-            .getByRole('button', { name: 'Violet' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('violet')
         await page
             .getByRole('group', { name: 'Radius axis' })
-            .getByRole('button', { name: 'Rounded' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('rounded')
         await expect(scope).toHaveAttribute('data-design-accent', 'violet')
         await expect(scope).toHaveAttribute('data-design-radius', 'rounded')
 
@@ -351,12 +273,12 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         await page.goto('/moodboard')
         await page
             .getByRole('group', { name: 'Accent axis' })
-            .getByRole('button', { name: 'Violet' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('violet')
         await page
             .getByRole('group', { name: 'Theme axis' })
-            .getByRole('button', { name: 'Light' })
-            .click()
+            .getByRole('combobox')
+            .selectOption('light')
 
         await page.reload()
         const scope = page.getByTestId('moodboard-preview-scope')
@@ -371,19 +293,5 @@ test.describe('Phase 6 — canonical Design Studio', () => {
         expect(
             await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
         ).toBe(true)
-    })
-
-    test('keyboard navigation works in customizer', async ({ page }) => {
-        await page.goto('/moodboard')
-        const accentGroup = page.getByRole('group', { name: 'Accent axis' })
-
-        /* Tab into accent group */
-        await page.keyboard.press('Tab')
-        await page.keyboard.press('Tab')
-        await page.keyboard.press('Tab')
-
-        /* Arrow keys should move focus within ToggleGroup */
-        const cyanButton = accentGroup.getByRole('button', { name: 'Cyan' })
-        await expect(cyanButton).toBeVisible()
     })
 })

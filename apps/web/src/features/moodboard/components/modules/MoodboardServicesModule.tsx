@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Table, Text, Title, type Column } from '@monority/ui'
+import { Badge, Button, Card, Table, Text, type Column } from '@monority/ui'
 
 interface ServiceRow extends Record<string, unknown> {
     id: string
@@ -100,65 +100,38 @@ export function MoodboardServicesModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            SERVICE HEALTH
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Distributed services cluster status and edge latencies
-                        </Text>
-                    </div>
-                    <Badge variant="success" size="sm">
-                        4 / 4 Active
-                    </Badge>
+                <div>
+                    <Card.Title>SERVICE HEALTH</Card.Title>
+                    <Card.Description>
+                        Distributed services cluster status and edge latencies
+                    </Card.Description>
                 </div>
+                <Badge variant="success" size="sm">
+                    4 / 4 Active
+                </Badge>
             </Card.Header>
 
-            <Card.Content
-                style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
-                }}
-            >
+            <Card.Content style={{ flex: 1 }}>
                 <Table<ServiceRow>
                     columns={serviceColumns}
                     rows={services}
                     getRowId={(row) => row.id}
                 />
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        loading={isRebalancing}
-                        onClick={handleRebalance}
-                    >
-                        Rebalance Cluster
-                    </Button>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        All EU proxies nominal
-                    </Text>
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    loading={isRebalancing}
+                    onClick={handleRebalance}
+                >
+                    Rebalance Cluster
+                </Button>
+                <Text tone="muted" size="sm">
+                    All EU proxies nominal
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }

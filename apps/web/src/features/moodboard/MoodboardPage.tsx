@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
     DEFAULT_DESIGN_CONFIG,
     DesignProvider,
@@ -6,7 +6,10 @@ import {
     designConfigToJSON,
     resolveDesignConfig,
     sanitizeDesignConfig,
+    useTheme,
     type DesignConfig,
+    type ResolvedThemeName,
+    type ThemeNameType,
 } from '@monority/ui'
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
 import { AppHeader } from '@/shared/layouts/AppHeader'
@@ -21,6 +24,8 @@ export function MoodboardPage() {
             'Monority UI design system — one interface, one configuration, one live preview.',
     })
 
+    const { resolvedTheme, setTheme } = useTheme()
+
     const [config, setConfig] = useState<DesignConfig>(() => {
         if (typeof window === 'undefined') return DEFAULT_DESIGN_CONFIG
         try {
@@ -32,12 +37,27 @@ export function MoodboardPage() {
     })
 
     const [copied, setCopied] = useState(false)
+    const lastResolvedThemeRef = useRef(resolvedTheme)
+
+    /* Sync top header ThemeToggle changes into Studio config */
+    useEffect(() => {
+        if (lastResolvedThemeRef.current !== resolvedTheme) {
+            lastResolvedThemeRef.current = resolvedTheme
+            setConfig((prev) => ({ ...prev, theme: resolvedTheme }))
+        }
+    }, [resolvedTheme])
 
     const updateConfig = <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => {
+        if (key === 'theme' && typeof value === 'string') {
+            lastResolvedThemeRef.current = value as ResolvedThemeName
+            setTheme(value as ThemeNameType)
+        }
         setConfig((current) => ({ ...current, [key]: value }))
     }
 
     const handleReset = () => {
+        lastResolvedThemeRef.current = DEFAULT_DESIGN_CONFIG.theme
+        setTheme(DEFAULT_DESIGN_CONFIG.theme as ThemeNameType)
         setConfig(DEFAULT_DESIGN_CONFIG)
     }
 
@@ -101,7 +121,6 @@ export function MoodboardPage() {
                         data-testid="moodboard-preview-scope"
                         data-design-theme={config.theme}
                         data-design-accent={config.accent}
-                        data-design-component-color={config.componentColor}
                         data-design-chart-palette={config.chartPalette}
                         data-design-radius={config.radius}
                         data-design-spacing={config.spacing}

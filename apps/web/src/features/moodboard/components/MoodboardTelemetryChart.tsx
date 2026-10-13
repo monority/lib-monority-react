@@ -6,7 +6,6 @@ import {
     Card,
     SegmentedControl,
     Text,
-    Title,
     type BadgeDeltaType,
 } from '@monority/ui'
 
@@ -233,7 +232,7 @@ export function MoodboardTelemetryChart() {
         const svgX = (mouseX / rect.width) * 800
 
         let closestIdx = 0
-        let minDiff = Infinity
+        let minDiff = Number.POSITIVE_INFINITY
         dataset.points.forEach((pt, i) => {
             const diff = Math.abs(pt.x - svgX)
             if (diff < minDiff) {
@@ -252,7 +251,7 @@ export function MoodboardTelemetryChart() {
     const tooltipY = Math.max(22, activePoint.ingressY - 14)
 
     return (
-        <Card padding="md" data-testid="moodboard-chart">
+        <Card padding="lg" data-testid="moodboard-chart">
             <Card.Header>
                 <div
                     style={{
@@ -271,9 +270,7 @@ export function MoodboardTelemetryChart() {
                                 gap: 'var(--mr-space-2)',
                             }}
                         >
-                            <Title as="h3" size="sm">
-                                Network Throughput & Edge Telemetry
-                            </Title>
+                            <Card.Title>Network Throughput & Edge Telemetry</Card.Title>
                             <Badge variant="success" size="sm">
                                 <span
                                     style={{
@@ -295,9 +292,9 @@ export function MoodboardTelemetryChart() {
                                 </span>
                             </Badge>
                         </div>
-                        <Text tone="muted" size="sm">
+                        <Card.Description>
                             Bidirectional packet stream across 14 regional edge points of presence
-                        </Text>
+                        </Card.Description>
                     </div>
 
                     <div

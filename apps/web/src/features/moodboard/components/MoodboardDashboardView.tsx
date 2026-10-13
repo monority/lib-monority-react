@@ -26,7 +26,10 @@ export function MoodboardDashboardView() {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
+                        role="img"
+                        aria-label="Monority logo"
                     >
+                        <title>Monority logo</title>
                         <polygon points="12 2 2 7 12 12 22 7 12 2" />
                         <polyline points="2 17 12 22 22 17" />
                         <polyline points="2 12 12 17 22 12" />
@@ -50,7 +53,7 @@ export function MoodboardDashboardView() {
             </Topbar>
 
             {/* Page Header */}
-            <PageHeader role="group" aria-label="Page header">
+            <PageHeader aria-label="Page header">
                 <PageHeader.Kicker>INFRASTRUCTURE / CONTROL PLANE</PageHeader.Kicker>
                 <PageHeader.Title as="h2">Release control</PageHeader.Title>
                 <PageHeader.Description>
@@ -67,22 +70,42 @@ export function MoodboardDashboardView() {
             </PageHeader>
 
             {/* Executive KPIs */}
-            <Grid columns={4}>
-                <StatCard label="REQUESTS / MIN" value="14,820" description="+12.4% vs last hour" />
+            <Grid columns={4} gap="lg">
+                <StatCard
+                    label="REQUESTS / MIN"
+                    value="14,820"
+                    trend="+12.4%"
+                    trendTone="success"
+                    description="vs last hour"
+                />
                 <StatCard
                     label="SERVICE AVAILABILITY"
                     value="99.99%"
+                    trend="+0.02%"
+                    trendTone="success"
                     description="Error budget healthy"
                 />
-                <StatCard label="P95 LATENCY" value="18 ms" description="-3 ms vs baseline" />
-                <StatCard label="HEALTHY NODES" value="98.4%" description="64 / 65 active pods" />
+                <StatCard
+                    label="P95 LATENCY"
+                    value="18 ms"
+                    trend="-3 ms"
+                    trendTone="success"
+                    description="vs baseline"
+                />
+                <StatCard
+                    label="HEALTHY NODES"
+                    value="98.4%"
+                    trend="64/65"
+                    trendTone="neutral"
+                    description="active pods"
+                />
             </Grid>
 
             {/* Full-width High-resolution Animated & Interactive Telemetry Chart */}
             <MoodboardTelemetryChart />
 
             {/* Harmonized 2-Column Grid of 10 Homogeneous Operational & Everyday Web App Modules */}
-            <Grid columns={2}>
+            <Grid columns={2} gap="lg">
                 <MoodboardServicesModule />
                 <MoodboardDeploymentModule />
                 <MoodboardPipelineModule />

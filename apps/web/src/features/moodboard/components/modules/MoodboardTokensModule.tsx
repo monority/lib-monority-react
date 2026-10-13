@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import { Badge, Button, Card, ColorSwatch, Grid, InputOTP, Stack, Text, Title } from '@monority/ui'
+import {
+    Badge,
+    Button,
+    Card,
+    ColorSwatch,
+    Field,
+    Grid,
+    InputOTP,
+    Stack,
+    Text,
+    Toolbar,
+} from '@monority/ui'
 
 const surfaceSwatches = [
     { color: 'var(--mr-bg-canvas)', label: 'Canvas' },
@@ -14,25 +25,15 @@ export function MoodboardTokensModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Design Tokens & Primitives
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Direct validation of active theme tokens, buttons and variants
-                        </Text>
-                    </div>
-                    <Badge variant="primary" size="sm">
-                        Dynamic
-                    </Badge>
+                <div>
+                    <Card.Title>Design Tokens & Primitives</Card.Title>
+                    <Card.Description>
+                        Direct validation of active theme tokens, buttons and variants
+                    </Card.Description>
                 </div>
+                <Badge variant="primary" size="sm">
+                    Dynamic
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -41,19 +42,12 @@ export function MoodboardTokensModule() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
-                <Stack gap="sm">
+                <Stack gap="md">
                     {/* Action button variants */}
-                    <div
-                        style={{
-                            display: 'flex',
-                            gap: 'var(--mr-space-2)',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <Toolbar>
                         <Button variant="primary" size="sm">
                             primary
                         </Button>
@@ -66,7 +60,7 @@ export function MoodboardTokensModule() {
                         <Button variant="ghost" size="sm">
                             ghost
                         </Button>
-                    </div>
+                    </Toolbar>
 
                     {/* Badge variants */}
                     <div
@@ -84,20 +78,8 @@ export function MoodboardTokensModule() {
                     </div>
 
                     {/* 2FA OTP & Color Swatches */}
-                    <Grid columns={2}>
-                        <div>
-                            <Text
-                                size="sm"
-                                tone="muted"
-                                style={{
-                                    fontWeight: 600,
-                                    fontSize: '0.6875rem',
-                                    display: 'block',
-                                    marginBottom: 'var(--mr-space-1)',
-                                }}
-                            >
-                                2FA CODE
-                            </Text>
+                    <Grid columns={2} gap="md">
+                        <Field label="2FA Authentication Code" hint="6-digit TOTP token">
                             <InputOTP value={otpValue} onChange={setOtpValue} maxLength={6}>
                                 <InputOTP.Group>
                                     <InputOTP.Slot index={0} />
@@ -111,26 +93,15 @@ export function MoodboardTokensModule() {
                                     <InputOTP.Slot index={5} />
                                 </InputOTP.Group>
                             </InputOTP>
-                        </div>
+                        </Field>
 
-                        <div>
-                            <Text
-                                size="sm"
-                                tone="muted"
-                                style={{
-                                    fontWeight: 600,
-                                    fontSize: '0.6875rem',
-                                    display: 'block',
-                                    marginBottom: 'var(--mr-space-1)',
-                                }}
-                            >
-                                PALETTE TOKENS
-                            </Text>
+                        <Field label="Active Theme Swatches" hint="Resolved CSS variables">
                             <div
                                 style={{
                                     display: 'flex',
                                     gap: 'var(--mr-space-2)',
                                     flexWrap: 'wrap',
+                                    paddingTop: 'var(--mr-space-1)',
                                 }}
                             >
                                 {surfaceSwatches.map((s) => (
@@ -142,33 +113,24 @@ export function MoodboardTokensModule() {
                                     />
                                 ))}
                             </div>
-                        </div>
+                        </Field>
                     </Grid>
                 </Stack>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="secondary" size="sm">
-                            Inspect Tokens
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                            Copy Tokens
-                        </Button>
-                    </div>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        CSS variables synced
-                    </Text>
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button variant="secondary" size="sm">
+                        Inspect Tokens
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                        Copy Tokens
+                    </Button>
+                </Toolbar>
+                <Text tone="muted" size="sm">
+                    CSS variables synced
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }

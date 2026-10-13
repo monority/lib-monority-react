@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Progress, Rating, Slider, Stack, Text, Title } from '@monority/ui'
+import { Badge, Button, Card, Progress, Rating, Slider, Stack, Text, Toolbar } from '@monority/ui'
 
 export function MoodboardQuotasModule() {
     const [cpuThreshold, setCpuThreshold] = useState(68)
@@ -8,25 +8,15 @@ export function MoodboardQuotasModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Resource Quotas & Capacity
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Current monthly infrastructure consumption and scaling limits
-                        </Text>
-                    </div>
-                    <Badge variant="primary" size="sm">
-                        Enterprise Tier
-                    </Badge>
+                <div>
+                    <Card.Title>Resource Quotas & Capacity</Card.Title>
+                    <Card.Description>
+                        Current monthly infrastructure consumption and scaling limits
+                    </Card.Description>
                 </div>
+                <Badge variant="primary" size="sm">
+                    Enterprise Tier
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -35,7 +25,7 @@ export function MoodboardQuotasModule() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
                 <Stack gap="sm">
@@ -84,30 +74,21 @@ export function MoodboardQuotasModule() {
                         />
                     </div>
                 </Stack>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="primary" size="sm">
-                            Upgrade Quota
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                            Invoices
-                        </Button>
-                    </div>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        Burst quota active
-                    </Text>
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button variant="primary" size="sm">
+                        Upgrade Quota
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                        Invoices
+                    </Button>
+                </Toolbar>
+                <Text tone="muted" size="sm">
+                    Burst quota active
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }

@@ -83,6 +83,8 @@
         --mr-space-4: 1rem;
         --mr-space-5: 1.25rem;
         --mr-space-6: 1.5rem;
+        --mr-space-7: 1.75rem;
+        --mr-space-8: 2rem;
 
         /* Tailles de controle : N fois 0.25rem (grille de 4px).
          * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)

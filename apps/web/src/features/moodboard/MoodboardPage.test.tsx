@@ -4,6 +4,8 @@ import { renderWithProviders } from '@/shared/test/test-utils'
 
 beforeEach(() => {
     localStorage.clear()
+    document.documentElement.dataset.theme = 'dark'
+    document.documentElement.dataset.themeChoice = 'dark'
 })
 
 describe('MoodboardPage', () => {
@@ -218,7 +220,18 @@ describe('MoodboardPage', () => {
         expect(scope).toHaveAttribute('data-design-theme', 'oled')
         expect(scope).toHaveAttribute('data-design-accent', 'rose')
         expect(scope).toHaveAttribute('data-design-radius', 'pill')
-        expect(scope).toHaveAttribute('data-design-component-color', 'theme')
+    })
+
+    it('syncs preview theme when header ThemeToggle is clicked', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
+
+        const toggle = screen.getByRole('button', { name: /thème/i })
+        fireEvent.click(toggle)
+
+        expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
 
     it('recovers from a corrupt stored config', () => {

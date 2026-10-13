@@ -1,31 +1,57 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Stack, Switch, Text, Title } from '@monority/ui'
+import { Badge, Button, Card, DataList, InlineAlert, Switch, Text, Toolbar } from '@monority/ui'
 
 export function MoodboardPaymentModule() {
     const [autoRenew, setAutoRenew] = useState(true)
 
-    return (
-        <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <Card.Header>
+    const paymentDetails = [
+        {
+            label: 'Payment Method',
+            value: 'Visa •••• 4242',
+            render: () => (
                 <div
                     style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
+                        alignItems: 'center',
+                        gap: 'var(--mr-space-2)',
                     }}
                 >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Payment & Subscription
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Manage billing card, invoice receipt, and plan tier
-                        </Text>
-                    </div>
-                    <Badge variant="primary" size="sm">
-                        Pro Tier
+                    <span
+                        style={{
+                            fontFamily: 'var(--mr-font-family-mono)',
+                            fontWeight: 600,
+                        }}
+                    >
+                        Visa •••• 4242
+                    </span>
+                    <Badge variant="success" size="sm">
+                        Verified
                     </Badge>
                 </div>
+            ),
+        },
+        {
+            label: 'Card Expiry',
+            value: '08/2028',
+        },
+        {
+            label: 'Next Billing',
+            value: '$49.00 / month (renews Nov 1, 2026)',
+        },
+    ]
+
+    return (
+        <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <Card.Header>
+                <div>
+                    <Card.Title>Payment & Subscription</Card.Title>
+                    <Card.Description>
+                        Manage billing card, invoice receipt, and plan tier
+                    </Card.Description>
+                </div>
+                <Badge variant="primary" size="sm">
+                    Pro Tier
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -33,122 +59,54 @@ export function MoodboardPaymentModule() {
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
-                <Stack gap="sm">
-                    {/* Visual credit card strip */}
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: 'var(--mr-space-3)',
-                            borderRadius: 'var(--mr-radius-md)',
-                            border: '1px solid var(--mr-border-subtle)',
-                            background: 'var(--mr-bg-sunken)',
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 'var(--mr-space-3)',
-                            }}
-                        >
-                            <div
-                                style={{
-                                    width: 38,
-                                    height: 26,
-                                    borderRadius: 'var(--mr-radius-sm)',
-                                    background: 'var(--mr-accent-solid)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'var(--mr-bg-canvas)',
-                                    fontFamily: 'var(--mr-font-family-mono)',
-                                    fontWeight: 700,
-                                    fontSize: '0.625rem',
-                                    letterSpacing: '0.05em',
-                                }}
-                            >
-                                VISA
-                            </div>
-                            <div>
-                                <Text
-                                    size="sm"
-                                    style={{
-                                        fontWeight: 600,
-                                        fontFamily: 'var(--mr-font-family-mono)',
-                                    }}
-                                >
-                                    •••• •••• •••• 4242
-                                </Text>
-                                <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                                    Expires 08/28 · Default
-                                </Text>
-                            </div>
-                        </div>
-                        <Badge variant="success" size="sm">
-                            Verified
-                        </Badge>
-                    </div>
-
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            padding: 'var(--mr-space-1) 0',
-                        }}
-                    >
-                        <div>
-                            <Text size="sm" style={{ fontWeight: 600, display: 'block' }}>
-                                Next billing: $49.00
-                            </Text>
-                            <Text
-                                tone="muted"
-                                size="sm"
-                                style={{ fontSize: '0.75rem', display: 'block' }}
-                            >
-                                Renews automatically on Nov 1, 2026
-                            </Text>
-                        </div>
-                        <Switch
-                            id="moodboard-autorenew"
-                            label="Auto-renew"
-                            checked={autoRenew}
-                            onChange={(e) => setAutoRenew(e.target.checked)}
-                            tone="accent"
-                            size="sm"
-                        />
-                    </div>
-                </Stack>
+                <DataList items={paymentDetails} />
 
                 <div
                     style={{
                         display: 'flex',
-                        alignItems: 'center',
                         justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
+                        alignItems: 'center',
                     }}
                 >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="secondary" size="sm">
-                            Update Card
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                            Invoices
-                        </Button>
+                    <div>
+                        <Text size="sm" style={{ fontWeight: 600, display: 'block' }}>
+                            Auto-Renew Subscription
+                        </Text>
+                        <Text tone="muted" size="sm">
+                            Automatically process upcoming billing cycle
+                        </Text>
                     </div>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        256-bit SSL encrypted
-                    </Text>
+                    <Switch
+                        id="moodboard-autorenew"
+                        label="Auto-renew"
+                        checked={autoRenew}
+                        onChange={(e) => setAutoRenew(e.target.checked)}
+                        tone="accent"
+                        size="sm"
+                    />
                 </div>
+
+                <InlineAlert tone="info" title="Payment Protection">
+                    Transactions are encrypted end-to-end with TLS 1.3 security.
+                </InlineAlert>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button variant="secondary" size="sm">
+                        Update Card
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                        Invoices
+                    </Button>
+                </Toolbar>
+                <Text tone="muted" size="sm">
+                    256-bit SSL encrypted
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }

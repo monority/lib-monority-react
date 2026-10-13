@@ -42,6 +42,11 @@ describe('Grid', () => {
         expect(view.querySelector('div')?.getAttribute('data-columns')).toBe('3')
     })
 
+    it('applies custom gap', () => {
+        const view = render(<Grid gap="lg" />)
+        expect(view.querySelector('div')?.getAttribute('data-gap')).toBe('lg')
+    })
+
     it('forwards ref', () => {
         const ref = createRef<HTMLDivElement>()
         render(<Grid ref={ref} />)

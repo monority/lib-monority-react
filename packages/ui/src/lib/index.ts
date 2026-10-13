@@ -12,7 +12,6 @@ export type {
     AccentPreset,
     BrandPreset,
     ChartPalettePreset,
-    ComponentColorPreset,
     DesignConfig,
     LayoutDensityPreset,
     RadiusPreset,

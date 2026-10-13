@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Checkbox, Stack, Text, Title } from '@monority/ui'
+import { Badge, Button, Card, Checkbox, Stack, Text, Toolbar } from '@monority/ui'
 
 interface TaskItem {
     id: string
@@ -51,25 +51,15 @@ export function MoodboardTasksModule() {
     return (
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <div>
-                        <Title as="h3" size="sm">
-                            Tasks & Sprint Backlog
-                        </Title>
-                        <Text tone="muted" size="sm">
-                            Interactive checklist for active sprint deliverables
-                        </Text>
-                    </div>
-                    <Badge variant="primary" size="sm">
-                        {doneCount} / {tasks.length} Done
-                    </Badge>
+                <div>
+                    <Card.Title>Tasks & Sprint Backlog</Card.Title>
+                    <Card.Description>
+                        Interactive checklist for active sprint deliverables
+                    </Card.Description>
                 </div>
+                <Badge variant="primary" size="sm">
+                    {doneCount} / {tasks.length} Done
+                </Badge>
             </Card.Header>
 
             <Card.Content
@@ -78,7 +68,7 @@ export function MoodboardTasksModule() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: 'var(--mr-space-3)',
+                    gap: 'var(--mr-space-4)',
                 }}
             >
                 <Stack gap="xs">
@@ -120,35 +110,26 @@ export function MoodboardTasksModule() {
                         </div>
                     ))}
                 </Stack>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'var(--mr-space-2)',
-                        paddingTop: 'var(--mr-space-2)',
-                        borderTop: '1px solid var(--mr-border-subtle)',
-                    }}
-                >
-                    <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="secondary" size="sm">
-                            Add Task
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            disabled={doneCount === 0}
-                            onClick={handleClearDone}
-                        >
-                            Clear Done
-                        </Button>
-                    </div>
-                    <Text tone="muted" size="sm" style={{ fontSize: '0.75rem' }}>
-                        Sprint 14 in progress
-                    </Text>
-                </div>
             </Card.Content>
+
+            <Card.Footer>
+                <Toolbar>
+                    <Button variant="secondary" size="sm">
+                        Add Task
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        disabled={doneCount === 0}
+                        onClick={handleClearDone}
+                    >
+                        Clear Done
+                    </Button>
+                </Toolbar>
+                <Text tone="muted" size="sm">
+                    Sprint 14 in progress
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }
