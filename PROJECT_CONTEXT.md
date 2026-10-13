@@ -20,7 +20,6 @@ Derniere mise a jour : 2026-10-13.
 - Monorepo Packages :
   - packages/ui (@monority/ui) : catalogue de composants React 19, primitives Radix, hooks et providers. Seul package publie sur npm.
   - packages/styles (@monority/styles) : CSS source, couches @layer, tokens, themes et recettes BEM.
-  - packages/tokens (@monority/tokens) : definitions de tokens (ancien generateur archive).
   - apps/web (@monority/web) : documentation, design studio moodboard, tests e2e Playwright.
   - tooling/ : scripts de verification de contraste, generateurs et regles stylelint.
 
