@@ -18,6 +18,10 @@
         border-inline-end: 1px solid var(--mr-border-subtle);
         background-color: var(--mr-bg-surface);
         overflow-y: auto;
+        position: sticky;
+        top: var(--app-header-height, 3.5rem);
+        max-height: calc(100dvh - var(--app-header-height, 3.5rem));
+        align-self: flex-start;
         transition: inline-size var(--mr-duration-panel) ease, opacity var(--mr-duration-panel) ease;
     }
 

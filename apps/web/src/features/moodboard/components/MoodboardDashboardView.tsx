@@ -1,10 +1,14 @@
 import { Button, Grid, PageHeader, Stack, StatCard, Topbar } from '@monority/ui'
 import { MoodboardTelemetryChart } from './MoodboardTelemetryChart'
 import {
+    MoodboardActivityModule,
+    MoodboardChatModule,
     MoodboardDeploymentModule,
+    MoodboardPaymentModule,
     MoodboardPipelineModule,
     MoodboardQuotasModule,
     MoodboardServicesModule,
+    MoodboardTasksModule,
     MoodboardTeamModule,
     MoodboardTokensModule,
 } from './modules'
@@ -77,12 +81,16 @@ export function MoodboardDashboardView() {
             {/* Full-width High-resolution Animated & Interactive Telemetry Chart */}
             <MoodboardTelemetryChart />
 
-            {/* Harmonized 2-Column Grid of 6 Homogeneous Operational Modules */}
+            {/* Harmonized 2-Column Grid of 10 Homogeneous Operational & Everyday Web App Modules */}
             <Grid columns={2}>
                 <MoodboardServicesModule />
                 <MoodboardDeploymentModule />
                 <MoodboardPipelineModule />
+                <MoodboardActivityModule />
                 <MoodboardTeamModule />
+                <MoodboardTasksModule />
+                <MoodboardPaymentModule />
+                <MoodboardChatModule />
                 <MoodboardQuotasModule />
                 <MoodboardTokensModule />
             </Grid>

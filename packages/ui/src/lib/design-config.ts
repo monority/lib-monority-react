@@ -211,19 +211,38 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
     const accent = accentColors[config.accent] ?? accentColors[fallback.accent]
     /* `theme` is the accent-linked role: an unknown role inherits the accent. */
     const role = componentRoles[config.componentColor] ?? componentRoles.theme
+    const radiusValues: Record<RadiusPreset, [string, string, string, string]> = {
+        sharp: ['0px', '2px', '4px', '6px'],
+        compact: ['2px', '4px', '6px', '8px'],
+        default: ['4px', '6px', '10px', '12px'],
+        rounded: ['6px', '10px', '16px', '20px'],
+        pill: ['10px', '16px', '9999px', '9999px'],
+    }
+
+    const spacingFactors: Record<SpacingPreset, number> = {
+        dense: 0.75,
+        default: 1,
+        comfortable: 1.125,
+        airy: 1.25,
+    }
+
     const radius = radiusValues[config.radius] ?? radiusValues[fallback.radius]
     const factor = spacingFactors[config.spacing] ?? spacingFactors[fallback.spacing]
-    const spacing = Object.fromEntries(
-        Object.entries(spacingBase).map(([key, value]) => [
-            `--mr-spacing-${key}`,
-            `${Number((value * factor).toFixed(2))}px`,
-        ])
-    )
+
+    const spacing: Record<string, string> = {}
+    Object.entries(spacingBase).forEach(([key, value]) => {
+        const pxVal = `${Number((value * factor).toFixed(2))}px`
+        spacing[`--mr-spacing-${key}`] = pxVal
+        spacing[`--mr-space-${key}`] = pxVal
+    })
+
     const charts = (chartColors[config.chartPalette] ?? chartColors[fallback.chartPalette]).map(
         (hue) => `oklch(0.72 0.12 ${hue})`
     )
     const densityGap =
         config.density === 'spacious' ? '20px' : config.density === 'compact' ? '10px' : '16px'
+    const densityScale =
+        config.density === 'compact' ? 0.88 : config.density === 'spacious' ? 1.15 : 1
 
     return {
         themeDensity: config.density === 'compact' ? 'compact' : 'comfortable',
@@ -252,8 +271,26 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
             '--mr-radius-control': radius[1],
             '--mr-radius-card': radius[2],
             '--mr-radius-overlay': radius[3],
+            '--mr-radius-sm': radius[0],
+            '--mr-radius-md': radius[1],
+            '--mr-radius-lg': radius[2],
+            '--mr-radius-full': config.radius === 'sharp' ? '0px' : '9999px',
+            '--mr-ref-radius-scale':
+                config.radius === 'sharp'
+                    ? '0'
+                    : config.radius === 'compact'
+                      ? '0.67'
+                      : config.radius === 'rounded'
+                        ? '1.6'
+                        : config.radius === 'pill'
+                          ? '2'
+                          : '1',
+            '--mr-size-control-sm': `${Math.round(28 * densityScale)}px`,
+            '--mr-size-control-md': `${Math.round(32 * densityScale)}px`,
+            '--mr-size-control-lg': `${Math.round(40 * densityScale)}px`,
             '--mr-section-gap': densityGap,
             '--mr-grid-gap': densityGap,
+            '--mr-stack-gap': densityGap,
             ...spacing,
         } as CSSProperties,
     }

@@ -442,7 +442,7 @@ export function MoodboardTelemetryChart() {
                                 <stop
                                     offset="0%"
                                     stopColor="var(--mr-chart-1)"
-                                    stopOpacity="0.45"
+                                    stopOpacity="0.24"
                                 />
                                 <stop
                                     offset="100%"
@@ -454,7 +454,7 @@ export function MoodboardTelemetryChart() {
                                 <stop
                                     offset="0%"
                                     stopColor="var(--mr-chart-2)"
-                                    stopOpacity="0.30"
+                                    stopOpacity="0.12"
                                 />
                                 <stop
                                     offset="100%"
@@ -465,20 +465,21 @@ export function MoodboardTelemetryChart() {
                         </defs>
 
                         {/* Horizontal Grid lines and Y labels */}
-                        <g opacity="0.7">
+                        <g>
                             <line
                                 x1="40"
                                 y1="35"
                                 x2="790"
                                 y2="35"
                                 stroke="var(--mr-border-subtle)"
-                                strokeDasharray="4 4"
+                                strokeOpacity="0.3"
+                                strokeWidth="1"
                             />
                             <text
                                 x="35"
-                                y="38"
+                                y="39"
                                 textAnchor="end"
-                                fontSize="11"
+                                fontSize="10"
                                 fill="var(--mr-text-tertiary)"
                                 fontFamily="var(--mr-font-family-mono)"
                             >
@@ -491,13 +492,14 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="80"
                                 stroke="var(--mr-border-subtle)"
-                                strokeDasharray="4 4"
+                                strokeOpacity="0.3"
+                                strokeWidth="1"
                             />
                             <text
                                 x="35"
-                                y="83"
+                                y="84"
                                 textAnchor="end"
-                                fontSize="11"
+                                fontSize="10"
                                 fill="var(--mr-text-tertiary)"
                                 fontFamily="var(--mr-font-family-mono)"
                             >
@@ -510,13 +512,14 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="125"
                                 stroke="var(--mr-border-subtle)"
-                                strokeDasharray="4 4"
+                                strokeOpacity="0.3"
+                                strokeWidth="1"
                             />
                             <text
                                 x="35"
-                                y="128"
+                                y="129"
                                 textAnchor="end"
-                                fontSize="11"
+                                fontSize="10"
                                 fill="var(--mr-text-tertiary)"
                                 fontFamily="var(--mr-font-family-mono)"
                             >
@@ -529,12 +532,14 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="170"
                                 stroke="var(--mr-border-subtle)"
+                                strokeOpacity="0.6"
+                                strokeWidth="1"
                             />
                             <text
                                 x="35"
-                                y="173"
+                                y="174"
                                 textAnchor="end"
-                                fontSize="11"
+                                fontSize="10"
                                 fill="var(--mr-text-tertiary)"
                                 fontFamily="var(--mr-font-family-mono)"
                             >
@@ -555,7 +560,7 @@ export function MoodboardTelemetryChart() {
                                 d={egressCurve}
                                 fill="none"
                                 stroke="var(--mr-chart-2)"
-                                strokeWidth="2"
+                                strokeWidth="1.75"
                                 strokeDasharray="4 3"
                                 style={{ transition: 'd 0.35s ease' }}
                             />
@@ -574,7 +579,7 @@ export function MoodboardTelemetryChart() {
                                 d={ingressCurve}
                                 fill="none"
                                 stroke="var(--mr-chart-1)"
-                                strokeWidth="2.5"
+                                strokeWidth="2"
                                 style={{ transition: 'd 0.35s ease' }}
                             />
                         )}
@@ -586,62 +591,63 @@ export function MoodboardTelemetryChart() {
                             x2={activePoint.x}
                             y2="170"
                             stroke="var(--mr-border-default)"
+                            strokeOpacity="0.5"
                             strokeDasharray="3 3"
                         />
                         {/* Egress Marker dot */}
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.egressY}
-                            r="6"
+                            r="5"
                             fill="var(--mr-chart-2)"
                             fillOpacity="0.25"
                         />
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.egressY}
-                            r="3.5"
+                            r="3"
                             fill="var(--mr-chart-2)"
                             stroke="var(--mr-bg-surface)"
-                            strokeWidth="2"
+                            strokeWidth="1.5"
                         />
                         {/* Ingress Marker dot */}
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
-                            r="8"
+                            r="7"
                             fill="var(--mr-chart-1)"
                             fillOpacity="0.25"
                         />
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
-                            r="4.5"
+                            r="4"
                             fill="var(--mr-chart-1)"
                             stroke="var(--mr-bg-surface)"
                             strokeWidth="2"
                         />
 
                         {/* Interactive Tooltip Pin */}
-                        <g transform={`translate(${tooltipX - 85}, ${tooltipY - 26})`}>
+                        <g transform={`translate(${tooltipX - 75}, ${tooltipY - 24})`}>
                             <rect
                                 x="0"
                                 y="0"
-                                width="170"
-                                height="25"
-                                rx="5"
+                                width="150"
+                                height="22"
+                                rx="4"
                                 fill="var(--mr-bg-surface)"
                                 stroke="var(--mr-border-subtle)"
                             />
                             <text
-                                x="85"
-                                y="16"
+                                x="75"
+                                y="15"
                                 textAnchor="middle"
-                                fontSize="11"
+                                fontSize="10"
                                 fontWeight="600"
                                 fill="var(--mr-text-primary)"
                                 fontFamily="var(--mr-font-family-mono)"
                             >
-                                {activePoint.time} — {activePoint.ingress} GB/s
+                                {activePoint.time} · {activePoint.ingress} GB/s
                             </text>
                         </g>
 
