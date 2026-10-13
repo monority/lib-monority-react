@@ -43,8 +43,8 @@
 
 .docs-sidebar {
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: var(--app-header-height, 3.5rem);
+    height: calc(100vh - var(--app-header-height, 3.5rem));
     padding: var(--mr-space-4) var(--mr-space-3);
     border-inline-end: 1px solid var(--mr-border-subtle);
     background: var(--mr-bg-canvas);
@@ -74,19 +74,24 @@
 
 .docs-search {
     width: 100%;
-    height: 2rem;
     margin-bottom: var(--mr-space-3);
+}
+
+.docs-search .mr-input {
+    width: 100%;
+    height: 2rem;
+    min-height: 2rem;
     padding-inline: var(--mr-space-3);
     border: 1px solid var(--mr-border-default);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
+    background-color: var(--mr-bg-surface);
     color: var(--mr-text-primary);
     font-size: 0.8125rem;
     outline: none;
     transition: border-color var(--mr-duration-state) ease;
 }
 
-.docs-search:focus {
+.docs-search .mr-input:focus {
     border-color: var(--mr-accent-solid);
     outline: 2px solid var(--mr-accent-subtle);
 }
@@ -624,7 +629,7 @@
 
 .docs-page-toc {
     position: sticky;
-    top: 2rem;
+    top: calc(var(--app-header-height, 3.5rem) + 1.5rem);
 }
 
 .docs-toc {
@@ -727,7 +732,7 @@ button.docs-text-link {
         align-items: center;
         gap: var(--mr-space-2);
         position: sticky;
-        top: 3.25rem;
+        top: var(--app-header-height, 3.5rem);
         z-index: 10;
         min-height: 2.75rem;
         padding: var(--mr-space-2) var(--mr-space-3);

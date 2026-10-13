@@ -14,17 +14,29 @@ function generateId(text: string): string {
 }
 
 function collectHeadings(): HeadingInfo[] {
-    const elements = document.querySelectorAll<HTMLHeadingElement>('.docs-page h2, .docs-page h3')
+    // Cibler uniquement les vraies sections de la page de documentation.
+    // Exclure formellement tout element present dans une previsualisation de composant.
+    const sections = document.querySelectorAll<HTMLElement>('.docs-page .docs-section-card')
     const headings: HeadingInfo[] = []
 
-    for (const el of elements) {
-        if (!el.id) {
-            el.id = generateId(el.textContent || '')
-        }
+    for (const section of sections) {
+        const titleEl = section.querySelector<HTMLHeadingElement>('.docs-section-card__title')
+        if (!titleEl) continue
+
+        // Extraire uniquement le titre propre sans le hash d'ancrage "#"
+        const anchorSpan = titleEl.querySelector('.docs-section-card__anchor > span')
+        const rawText = anchorSpan?.textContent || titleEl.textContent || ''
+        const cleanText = rawText.replace(/#+$/, '').trim()
+        if (!cleanText) continue
+
+        // L'ID cible priorise l'ID de la section semantique
+        const targetId = section.id || titleEl.id || generateId(cleanText)
+        if (!section.id) section.id = targetId
+
         headings.push({
-            id: el.id,
-            text: el.textContent || '',
-            level: el.tagName === 'H2' ? 2 : 3,
+            id: targetId,
+            text: cleanText,
+            level: 2,
         })
     }
 
@@ -43,12 +55,10 @@ export function DocToc() {
         }
     }, [])
 
-    // Section-boundary active detection
-    // Each heading is active when scrollY + OFFSET falls within [heading.offsetTop, nextHeading.offsetTop)
     useEffect(() => {
         if (headings.length === 0) return
 
-        const HEADING_OFFSET = 120
+        const HEADER_OFFSET = 100
 
         function updateActive() {
             let current = headings[0]!.id
@@ -58,8 +68,7 @@ export function DocToc() {
                 if (!el) continue
 
                 const rect = el.getBoundingClientRect()
-
-                if (rect.top <= HEADING_OFFSET) {
+                if (rect.top <= HEADER_OFFSET) {
                     current = headings[i]!.id
                 } else {
                     break
@@ -81,7 +90,8 @@ export function DocToc() {
     const handleClick = useCallback((id: string) => {
         const el = document.getElementById(id)
         if (el) {
-            const y = el.getBoundingClientRect().top + window.scrollY - 16
+            // Decalage pour tenir compte du header sticky (3.5rem = 56px + 20px de marge)
+            const y = el.getBoundingClientRect().top + window.scrollY - 76
             window.scrollTo({ top: y, behavior: 'smooth' })
         }
     }, [])
