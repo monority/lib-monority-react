@@ -1,2 +1,8 @@
 export { PageHeader } from './PageHeader'
-export type { PageHeaderProps } from './PageHeader.types'
+export type {
+    PageHeaderActionsProps,
+    PageHeaderDescriptionProps,
+    PageHeaderKickerProps,
+    PageHeaderProps,
+    PageHeaderTitleProps,
+} from './PageHeader.types'

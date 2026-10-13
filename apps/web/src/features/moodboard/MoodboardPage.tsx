@@ -10,6 +10,7 @@ import {
 } from '@monority/ui'
 import { usePageSeo } from '@/shared/seo/usePageSeo'
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { MoodboardLayout } from './components/MoodboardLayout'
 import { MoodboardSidebar } from './MoodboardSidebar'
 import { MoodboardPreview, type PanelState } from './MoodboardPreview'
 import './moodboard.css'
@@ -85,7 +86,7 @@ export function MoodboardPage() {
         <>
             <AppHeader />
             <DesignProvider config={config} className="moodboard-design-root">
-                <div className="moodboard-page" data-testid="moodboard-page">
+                <MoodboardLayout>
                     <MoodboardSidebar
                         config={config}
                         onConfig={updateConfig}
@@ -110,7 +111,7 @@ export function MoodboardPage() {
                     >
                         <MoodboardPreview state={state} onState={updateState} />
                     </ThemeScope>
-                </div>
+                </MoodboardLayout>
             </DesignProvider>
         </>
     )

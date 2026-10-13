@@ -1,8 +1,9 @@
-import { Button } from '@monority/ui/button'
-import { DESIGN_PRESETS, designConfigToJSON, type DesignConfig } from '@monority/ui'
+import { DESIGN_PRESETS, type DesignConfig } from '@monority/ui'
 import { DesignAxisField } from './components/DesignAxisField'
+import { MoodboardSidebarHeader } from './components/MoodboardSidebarHeader'
+import { MoodboardTokenDetails } from './components/MoodboardTokenDetails'
 
-interface MoodboardSidebarProps {
+export interface MoodboardSidebarProps {
     config: DesignConfig
     onConfig: <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => void
     onReset: () => void
@@ -58,25 +59,7 @@ export function MoodboardSidebar({
 
     return (
         <aside className="moodboard-sidebar" aria-label="Design configuration">
-            <div className="moodboard-sidebar__header">
-                <div className="moodboard-sidebar__title">
-                    <span className="moodboard-kicker">MONORITY UI</span>
-                    <strong>Design Studio</strong>
-                </div>
-                <div className="moodboard-sidebar__actions">
-                    <Button variant="ghost" size="sm" onClick={onCopy} data-testid="moodboard-copy">
-                        {copied ? 'Copied' : 'Copy'}
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={onReset}
-                        data-testid="moodboard-reset"
-                    >
-                        Reset
-                    </Button>
-                </div>
-            </div>
+            <MoodboardSidebarHeader onCopy={onCopy} onReset={onReset} copied={copied} />
 
             <div className="moodboard-sidebar__axes">
                 {AXIS_DEFINITIONS.map((axis) => (
@@ -91,10 +74,7 @@ export function MoodboardSidebar({
                 ))}
             </div>
 
-            <details className="moodboard-sidebar__tokens">
-                <summary className="moodboard-kicker">Token Details</summary>
-                <pre className="moodboard-sidebar__json">{designConfigToJSON(config)}</pre>
-            </details>
+            <MoodboardTokenDetails config={config} />
         </aside>
     )
 }
