@@ -24,14 +24,8 @@ describe('AppHeader', () => {
             '/moodboard'
         )
         expect(within(nav).getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/docs')
-        expect(within(nav).getByRole('link', { name: 'Showcase' })).toHaveAttribute(
-            'href',
-            '/showcase'
-        )
-        expect(within(nav).getByRole('link', { name: 'Playground' })).toHaveAttribute(
-            'href',
-            '/playground'
-        )
+        expect(within(nav).queryByRole('link', { name: 'Showcase' })).toBeNull()
+        expect(within(nav).queryByRole('link', { name: 'Playground' })).toBeNull()
     })
 
     it('expose un seul bouton de bascule Light/Dark, sans sélecteur d accent', () => {

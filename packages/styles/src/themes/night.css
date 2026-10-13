@@ -28,8 +28,8 @@
         /* Texte desactive : ratio 3.48:1 sur canevas */
         --mr-text-disabled: oklch(0.548 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
-        /* Bordures : luminosite 0.49 pour des bordures nettement visibles en theme Tokyo Night */
-        --mr-border-control: oklch(0.49 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        /* Bordures : luminosite 0.41 pour des bordures de controle douces et integrees en theme Tokyo Night */
+        --mr-border-control: oklch(0.41 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.42 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.33 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 

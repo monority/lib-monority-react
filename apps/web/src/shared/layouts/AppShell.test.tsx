@@ -9,7 +9,7 @@ describe('AppShell', () => {
             <AppShell>
                 <div>Content</div>
             </AppShell>,
-            { initialEntries: ['/showcase'] }
+            { initialEntries: ['/docs'] }
         )
 
         expect(screen.getByText('Content')).toBeInTheDocument()
@@ -34,7 +34,7 @@ describe('AppShell', () => {
             <AppShell>
                 <div>Content</div>
             </AppShell>,
-            { initialEntries: ['/playground'] }
+            { initialEntries: ['/moodboard'] }
         )
 
         expect(screen.getByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute(

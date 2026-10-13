@@ -1,21 +1,79 @@
+import { useState } from 'react'
 import { Slider } from '@monority/ui/slider'
 
 export function SliderBasicExample() {
-    return <Slider label="Volume" />
+    return <Slider label="Volume" defaultValue={50} />
 }
 
-export function SliderWithRangeExample() {
-    return <Slider label="Price range" min={0} max={1000} step={50} defaultValue={500} />
+export function SliderSizesExample() {
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <Slider label="Compact (sm)" size="sm" defaultValue={30} />
+            <Slider label="Standard (md)" size="md" defaultValue={50} />
+            <Slider label="Confort (lg)" size="lg" defaultValue={75} />
+        </div>
+    )
+}
+
+export function SliderTonesExample() {
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <Slider label="Neutre" tone="neutral" defaultValue={40} />
+            <Slider label="Accent (marque)" tone="accent" defaultValue={65} />
+            <Slider label="Alerte (danger)" tone="danger" defaultValue={85} />
+        </div>
+    )
+}
+
+export function SliderDualRangeExample() {
+    return (
+        <Slider
+            label="Fourchette de prix"
+            hint="Sélectionnez un budget minimum et maximum en euros"
+            range
+            min={0}
+            max={500}
+            step={10}
+            defaultValue={[100, 350]}
+        />
+    )
+}
+
+export function SliderWithStepsExample() {
+    return (
+        <Slider
+            label="Niveau de qualité"
+            hint="Incrémentation par palier de 25%"
+            min={0}
+            max={100}
+            step={25}
+            defaultValue={50}
+        />
+    )
 }
 
 export function SliderDisabledExample() {
-    return <Slider label="Volume" disabled />
+    return <Slider label="Sortie audio verrouillée" disabled defaultValue={60} />
 }
 
 export function SliderWithErrorExample() {
-    return <Slider label="Volume" error="Value must be between 0 and 100" />
+    return (
+        <Slider
+            label="Fréquence"
+            defaultValue={95}
+            error="La valeur dépasse le seuil critique autorisé"
+        />
+    )
 }
 
-export function SliderWithoutValueExample() {
-    return <Slider label="Brightness" showValue={false} />
+export function SliderControlledExample() {
+    const [val, setVal] = useState(42)
+    return (
+        <Slider
+            label="Luminosité dynamique"
+            value={val}
+            onValueChange={setVal}
+            hint={`Valeur active dans l'état : ${val}%`}
+        />
+    )
 }

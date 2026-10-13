@@ -330,10 +330,10 @@
         border-color: var(--mr-accent-solid);
     }
 
-    /* Jour selectionne (ton neutral defaut ADR-020 : noir en clair, blanc en sombre) */
+    /* Jour selectionne (suit le controle accent, repli neutral defaut ADR-020) */
     :where(.mr-datepicker__day[data-selected='true']) {
-        background-color: var(--mr-bg-inverse);
-        color: var(--mr-text-on-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
         font-weight: var(--mr-font-weight-medium);
         border-color: transparent;
     }

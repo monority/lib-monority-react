@@ -86,7 +86,7 @@
         block-size: var(--mr-space-2);
         aspect-ratio: 1;
         border-radius: 50%;
-        background-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
         opacity: 0;
         transform: scale(0.4);
         transition: opacity var(--mr-duration-state), transform var(--mr-duration-state),
@@ -119,10 +119,10 @@
         line-height: 1.35;
     }
 
-    /* Etat selectionne par defaut (ton neutre ADR-020) */
+    /* Etat selectionne par defaut (suit le controle accent, repli neutre ADR-020) */
     :where(.mr-radio[data-checked]) :where(.mr-radio__control),
     :where(.mr-radio__input:checked) + :where(.mr-radio__control) {
-        border-color: var(--mr-bg-inverse);
+        border-color: var(--mr-control-accent, var(--mr-bg-inverse));
     }
 
     :where(.mr-radio[data-checked]) :where(.mr-radio__dot),

@@ -22,9 +22,9 @@
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Bordures :
-         * border-control : luminosite 0.75 calculee pour assurer un ratio discret de 1.95:1 sur le canevas clair
+         * border-control : luminosite 0.77 pour une bordure de controle feutree et discrete
          * (ADR-026 : bordure discrete au repos, accessibilite garantie par l'anneau de focus a 4.8:1 et le theme contraste). */
-        --mr-border-control: oklch(0.75 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-border-control: oklch(0.77 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-default: oklch(0.8 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
@@ -83,6 +83,8 @@
         --mr-space-4: 1rem;
         --mr-space-5: 1.25rem;
         --mr-space-6: 1.5rem;
+        --mr-space-7: 1.75rem;
+        --mr-space-8: 2rem;
 
         /* Tailles de controle : N fois 0.25rem (grille de 4px).
          * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)
@@ -188,5 +190,21 @@
 
         /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
         --mr-focus-ring: var(--mr-accent-solid);
+
+        /* Controles interactifs / Boutons et saisies lies a l'accent */
+        --mr-control-accent: var(--mr-accent-solid);
+        --mr-control-on-accent: var(--mr-bg-canvas);
+        --mr-control-accent-hover: color-mix(
+            in oklch,
+            var(--mr-control-accent),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+        --mr-control-accent-active: color-mix(
+            in oklch,
+            var(--mr-control-accent),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
+        --mr-control-accent-border: transparent;
+        --mr-control-accent-subtle: var(--mr-accent-subtle);
     }
 }

@@ -52,7 +52,7 @@
     :where(.mr-progress__bar) {
         block-size: 100%;
         border-radius: var(--mr-radius-full);
-        background-color: var(--mr-text-primary);
+        background-color: var(--mr-control-accent, var(--mr-text-primary));
         transition: inline-size var(--mr-duration-state) ease;
     }
 

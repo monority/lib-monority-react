@@ -170,4 +170,19 @@ describe('Slider', () => {
         })
         expect(onValueChange).toHaveBeenCalledWith([30, 80])
     })
+
+    it('supports size variants sm, md, lg', () => {
+        const viewSm = render(<Slider size="sm" />)
+        expect(viewSm.querySelector('input')?.getAttribute('data-size')).toBe('sm')
+
+        const viewLg = render(<Slider size="lg" />)
+        expect(viewLg.querySelector('input')?.getAttribute('data-size')).toBe('lg')
+    })
+
+    it('passes data-size and data-tone to range container in range mode', () => {
+        const view = render(<Slider range size="sm" tone="accent" />)
+        const container = view.querySelector('.mr-slider-range-container')
+        expect(container?.getAttribute('data-size')).toBe('sm')
+        expect(container?.getAttribute('data-tone')).toBe('accent')
+    })
 })

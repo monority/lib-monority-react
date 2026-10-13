@@ -7,7 +7,6 @@ Goal: scalable, clean, publishable React UI monorepo. Same spirit as shadcn/radi
 - `@monority/ui`: public npm package. React components, hooks, providers, typed exports.
 - `@monority/web`: docs/showcase app. Demonstrates components for users.
 - `@monority/styles`: CSS source of truth. Tokens, layers, recipes, utilities, themes.
-- `@monority/tokens`: design-token source and generated outputs.
 - `@monority/generators`: component/docs/test scaffolding.
 
 Core rule: `ui` consumes `styles`; `web` consumes `ui`; docs never become source of component logic.

@@ -6,7 +6,7 @@
         display: grid;
         box-sizing: border-box;
         width: 100%;
-        gap: var(--mr-space-4);
+        gap: var(--mr-grid-gap, var(--mr-space-4));
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -32,6 +32,27 @@
 
     :where(.mr-grid)[data-columns='auto-fill'] {
         grid-template-columns: repeat(auto-fill, minmax(calc(var(--mr-size-container-sm) / 2), 1fr));
+    }
+
+    /* Ecarts explicites */
+    :where(.mr-grid)[data-gap='xs'] {
+        gap: var(--mr-space-1);
+    }
+
+    :where(.mr-grid)[data-gap='sm'] {
+        gap: var(--mr-space-2);
+    }
+
+    :where(.mr-grid)[data-gap='md'] {
+        gap: var(--mr-space-4);
+    }
+
+    :where(.mr-grid)[data-gap='lg'] {
+        gap: var(--mr-space-6);
+    }
+
+    :where(.mr-grid)[data-gap='xl'] {
+        gap: var(--mr-space-8);
     }
 
     /* Densite compacte */

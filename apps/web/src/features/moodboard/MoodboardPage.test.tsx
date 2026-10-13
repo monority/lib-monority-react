@@ -4,6 +4,8 @@ import { renderWithProviders } from '@/shared/test/test-utils'
 
 beforeEach(() => {
     localStorage.clear()
+    document.documentElement.dataset.theme = 'dark'
+    document.documentElement.dataset.themeChoice = 'dark'
 })
 
 describe('MoodboardPage', () => {
@@ -20,13 +22,11 @@ describe('MoodboardPage', () => {
 
         /* Config axes present */
         expect(screen.getByRole('group', { name: 'Theme axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Brand axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Accent axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Component color axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Chart palette axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Radius axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Spacing axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Layout density axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Chart palette axis' })).toBeInTheDocument()
     })
 
     it('renders the shared app header above the studio', () => {
@@ -79,22 +79,34 @@ describe('MoodboardPage', () => {
         expect(screen.getByText('Tests')).toBeInTheDocument()
     })
 
-    it('changing accent axis updates preview scope attribute', () => {
+    it('changing theme axis updates preview scope attribute', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
+
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
+        )
+        expect(scope).toHaveAttribute('data-design-theme', 'ocean')
+    })
+
+    it('changing accent axis updates preview scope and resolves dynamic brand hue', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-accent', 'neutral')
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'cyan' } }
         )
-        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
 
         /* Verify the resolved CSS variable changes on DesignProvider root */
         const root = screen.getByTestId('moodboard-page').parentElement!
-        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('295')
+        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('200')
     })
 
     it('changing radius axis updates preview scope attribute', () => {
@@ -103,24 +115,11 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
-                name: 'Rounded',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
+            { target: { value: 'rounded' } }
         )
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
-    })
-
-    it('changing theme axis updates preview scope data-design-theme', () => {
-        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
-
-        const scope = screen.getByTestId('moodboard-preview-scope')
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('button', {
-                name: 'Light',
-            })
-        )
-        expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
 
     it('reset button restores default configuration', () => {
@@ -129,23 +128,27 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
 
         /* Change some axes */
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
-                name: 'Rounded',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'cyan' } }
+        )
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
+            { target: { value: 'rounded' } }
         )
 
-        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+        expect(scope).toHaveAttribute('data-design-theme', 'ocean')
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
 
         /* Reset */
         fireEvent.click(screen.getByTestId('moodboard-reset'))
 
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
         expect(scope).toHaveAttribute('data-design-accent', 'neutral')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
     })
@@ -156,10 +159,9 @@ describe('MoodboardPage', () => {
 
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
         await act(async () => {
             fireEvent.click(screen.getByTestId('moodboard-copy'))
@@ -167,21 +169,20 @@ describe('MoodboardPage', () => {
 
         expect(writeText).toHaveBeenCalled()
         const copiedJson = JSON.parse(String(writeText.mock.calls[0]?.[0]))
-        expect(copiedJson.accent).toBe('violet')
+        expect(copiedJson.theme).toBe('ocean')
     })
 
     it('persists configuration to localStorage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
 
         const stored = localStorage.getItem('monority-design-config')
         expect(stored).toBeTruthy()
-        expect(JSON.parse(stored!).accent).toBe('violet')
+        expect(JSON.parse(stored!).theme).toBe('ocean')
     })
 
     it('sidebar token details are collapsible', () => {
@@ -219,7 +220,18 @@ describe('MoodboardPage', () => {
         expect(scope).toHaveAttribute('data-design-theme', 'oled')
         expect(scope).toHaveAttribute('data-design-accent', 'rose')
         expect(scope).toHaveAttribute('data-design-radius', 'pill')
-        expect(scope).toHaveAttribute('data-design-component-color', 'theme')
+    })
+
+    it('syncs preview theme when header ThemeToggle is clicked', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
+
+        const toggle = screen.getByRole('button', { name: /thème/i })
+        fireEvent.click(toggle)
+
+        expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
 
     it('recovers from a corrupt stored config', () => {

@@ -50,9 +50,8 @@
     }
 
     :where(.mr-carousel__arrow) {
-        position: absolute;
-        inset-block-start: 50%;
-        transform: translateY(-50%);
+        grid-area: viewport;
+        align-self: center;
         z-index: 10;
         display: inline-flex;
         align-items: center;
@@ -60,28 +59,48 @@
         inline-size: var(--mr-size-control-md);
         block-size: var(--mr-size-control-md);
         padding: 0;
-        border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-full);
-        background-color: var(--mr-bg-surface);
-        color: var(--mr-text-primary);
+        border: 0;
+        border-radius: var(--mr-radius-md);
+        background: transparent;
+        color: var(--mr-text-secondary);
         cursor: pointer;
-        font-family: inherit;
-        font-size: var(--mr-font-size-md);
         line-height: 1;
         transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
     }
 
-    :where(.mr-carousel__arrow):first-of-type {
-        inset-inline-start: var(--mr-space-2);
+    :where(.mr-carousel__arrow):first-of-type,
+    :where(.mr-carousel__arrow[data-direction='prev']) {
+        justify-self: start;
+        margin-inline-start: var(--mr-space-2);
     }
 
-    :where(.mr-carousel__arrow):last-of-type {
-        inset-inline-end: var(--mr-space-2);
+    :where(.mr-carousel__arrow):last-of-type,
+    :where(.mr-carousel__arrow[data-direction='next']) {
+        justify-self: end;
+        margin-inline-end: var(--mr-space-2);
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:first-of-type),
+    :where(.mr-carousel)[data-orientation='vertical']
+        :where(.mr-carousel__arrow[data-direction='prev']) {
+        align-self: start;
+        justify-self: center;
+        margin-block-start: var(--mr-space-2);
+        margin-inline-start: 0;
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:last-of-type),
+    :where(.mr-carousel)[data-orientation='vertical']
+        :where(.mr-carousel__arrow[data-direction='next']) {
+        align-self: end;
+        justify-self: center;
+        margin-block-end: var(--mr-space-2);
+        margin-inline-end: 0;
     }
 
     :where(.mr-carousel__arrow):hover:not(:disabled) {
-        background-color: var(--mr-bg-raised);
-        border-color: var(--mr-border-default);
+        background-color: var(--mr-bg-sunken);
+        color: var(--mr-text-primary);
     }
 
     :where(.mr-carousel__arrow):focus-visible {
@@ -92,7 +111,7 @@
     :where(.mr-carousel__arrow):disabled {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
-        opacity: 0.5;
+        opacity: 0.3;
     }
 
     :where(.mr-carousel__dots) {

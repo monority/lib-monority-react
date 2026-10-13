@@ -1,8 +1,5 @@
-import { AppLayout } from '@/shared/layouts/AppLayout'
 import { MoodboardPage } from '@/features/moodboard/MoodboardPage'
 import { NotFoundPage } from '@/shared/NotFoundPage'
-import { PlaygroundPage } from '@/features/playground/PlaygroundPage'
-import { ShowcasePage } from '@/features/showcase/ShowcasePage'
 import { HomePage } from '@/features/home/HomePage'
 import type { RouteObject } from 'react-router-dom'
 
@@ -21,21 +18,9 @@ const appRouteDefinitions: AppRouteDefinition[] = [
         includeInPrimaryNavigation: true,
     },
     {
-        key: 'playground',
-        label: 'Playground',
-        path: '/playground',
-        includeInPrimaryNavigation: true,
-    },
-    {
         key: 'docs',
         label: 'Docs',
         path: '/docs/*',
-        includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'showcase',
-        label: 'Showcase',
-        path: '/showcase',
         includeInPrimaryNavigation: true,
     },
     {
@@ -52,18 +37,10 @@ const appRouteDefinitions: AppRouteDefinition[] = [
 ]
 
 export const appRoutes: RouteObject[] = [
-    // Home — standalone (design unique, pas de AppShell)
+    // Home — standalone
     { index: true, element: <HomePage /> },
 
-    // App pages — wrapper par AppShell/AppLayout
-    {
-        element: <AppLayout />,
-        children: [
-            { path: 'playground', element: <PlaygroundPage /> },
-            { path: 'showcase', element: <ShowcasePage /> },
-        ],
-    },
-
+    // Design Studio / Moodboard
     {
         path: '/moodboard',
         element: <MoodboardPage />,
@@ -94,16 +71,6 @@ export const homeSectionNavigationItems = [
     { label: 'Why', href: '#why' },
     { label: 'Tokens', href: '#tokens' },
     { label: 'Proof', href: '#proof' },
-    { label: 'Notes', href: '#proof-notes' },
-    { label: 'Parcours', href: '#entry-points' },
-    { label: 'Patterns', href: '#patterns' },
-    { label: 'Examples', href: '#examples' },
-    { label: 'Prod', href: '#production-readiness' },
-    { label: 'Checklist', href: '#checklist' },
-    { label: 'Workflow', href: '#workflow' },
-    { label: 'Explore', href: '#explore' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Roadmap', href: '#roadmap' },
     { label: 'Start', href: '#cta' },
     { label: 'Footer', href: '#footer' },
 ]

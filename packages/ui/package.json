@@ -386,6 +386,12 @@
             "import": "./dist/avatar.js",
             "default": "./dist/avatar.js"
         },
+        "./color-swatch": {
+            "types": "./dist/colorSwatch.d.ts",
+            "monority-source": "./src/components/display/color-swatch/index.ts",
+            "import": "./dist/colorSwatch.js",
+            "default": "./dist/colorSwatch.js"
+        },
         "./metric-grid": {
             "types": "./dist/metricGrid.d.ts",
             "monority-source": "./src/components/data/metric-grid/index.ts",

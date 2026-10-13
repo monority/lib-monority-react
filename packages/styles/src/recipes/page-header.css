@@ -1,18 +1,53 @@
 /* Recette PageHeader dans la couche mr.components (spec v4).
- * En-tete de page regroupant fil d'Ariane, titre, description et actions. */
+ * En-tete de page regroupant fil d'Ariane/kicker, titre, description et actions. */
 @layer mr.components {
     :where(.mr-page-header) {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        width: 100%;
-        gap: var(--mr-space-3);
+        inline-size: 100%;
+        gap: var(--mr-space-2);
         padding-block-end: var(--mr-space-4);
+    }
+
+    :where(.mr-page-header__kicker) {
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        letter-spacing: var(--mr-tracking-label);
+        text-transform: uppercase;
+        color: var(--mr-text-secondary);
+    }
+
+    :where(.mr-page-header__title) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xl);
+        font-weight: var(--mr-font-weight-semibold);
+        letter-spacing: var(--mr-tracking-h1);
+        color: var(--mr-text-primary);
+        line-height: var(--mr-line-height-xl);
+    }
+
+    :where(.mr-page-header__description) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: var(--mr-line-height-md);
+    }
+
+    :where(.mr-page-header__actions) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        flex-wrap: wrap;
+        margin-block-start: var(--mr-space-1);
     }
 
     /* Densite compacte */
     :where([data-density='compact'] .mr-page-header, .mr-page-header[data-density='compact']) {
-        gap: var(--mr-space-2);
+        gap: var(--mr-space-1);
         padding-block-end: var(--mr-space-3);
     }
 }

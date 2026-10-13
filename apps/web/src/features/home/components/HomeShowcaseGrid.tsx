@@ -1,15 +1,27 @@
-import { Callout, Card, Grid, MetricGrid, StatCard } from '@monority/ui'
+import {
+    Callout,
+    Card,
+    Grid,
+    MetricGrid,
+    Section,
+    Stack,
+    StatCard,
+    Text,
+    Title,
+} from '@monority/ui'
 
 export function HomeShowcaseGrid() {
     return (
-        <section aria-labelledby="home-showcase-title">
-            <h2 id="home-showcase-title" className="home-section-title">
-                Component Ecosystem
-            </h2>
-            <p className="home-section-desc">
-                From high-density operational telemetry dashboards to calm, accessible configuration
-                forms.
-            </p>
+        <Section aria-labelledby="home-showcase-title" spacing="lg">
+            <Stack gap="xs" style={{ marginBottom: 'var(--mr-space-5)' }}>
+                <Title id="home-showcase-title" size="lg">
+                    Component Ecosystem
+                </Title>
+                <Text tone="muted" size="md">
+                    From high-density operational telemetry dashboards to calm, accessible
+                    configuration forms.
+                </Text>
+            </Stack>
 
             <Grid columns={2}>
                 <Card padding="md">
@@ -47,25 +59,19 @@ export function HomeShowcaseGrid() {
                         <Card.Description>Callout and status feedback</Card.Description>
                     </Card.Header>
                     <Card.Content>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: 'var(--mr-space-3)',
-                            }}
-                        >
+                        <Stack gap="sm">
                             <Callout tone="success" title="All systems operational">
-                                75 components tested and passing across the verification matrix.
+                                84 components tested and passing across the verification matrix.
                             </Callout>
                             <StatCard
                                 label="PRODUCTION BUNDLE"
                                 value="Tree-shakable"
                                 description="Modular entrypoints and zero unnecessary side-effects."
                             />
-                        </div>
+                        </Stack>
                     </Card.Content>
                 </Card>
             </Grid>
-        </section>
+        </Section>
     )
 }

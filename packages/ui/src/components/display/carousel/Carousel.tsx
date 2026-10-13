@@ -114,18 +114,76 @@ export function Carousel({
                         onClick={prev}
                         disabled={!loop && current === 0}
                         className="mr-carousel__arrow"
+                        data-direction="prev"
                         aria-label="Previous slide"
                     >
-                        ‹
+                        {orientation === 'vertical' ? (
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="18 15 12 9 6 15" />
+                            </svg>
+                        ) : (
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                        )}
                     </button>
                     <button
                         type="button"
                         onClick={next}
                         disabled={!loop && current === total - 1}
                         className="mr-carousel__arrow"
+                        data-direction="next"
                         aria-label="Next slide"
                     >
-                        ›
+                        {orientation === 'vertical' ? (
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        ) : (
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        )}
                     </button>
                 </>
             )}

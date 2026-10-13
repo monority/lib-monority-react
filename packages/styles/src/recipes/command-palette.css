@@ -102,7 +102,7 @@
 
     :where(.mr-command__item.is-active),
     :where(.mr-command__item:hover) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
         color: var(--mr-text-primary);
     }
 

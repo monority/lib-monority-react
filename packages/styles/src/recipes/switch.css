@@ -120,16 +120,16 @@
         transform: translateX(-100%);
     }
 
-    /* Etat coche neutre par defaut (ADR-020 : noir en clair, blanc en sombre) */
+    /* Etat coche par defaut : suit le controle accent (--mr-control-accent, repli neutre ADR-020) */
     :where(.mr-switch[data-checked]) :where(.mr-switch__control),
     :where(.mr-switch__input:checked) + :where(.mr-switch__control) {
-        background-color: var(--mr-bg-inverse);
-        border-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        border-color: var(--mr-control-accent, var(--mr-bg-inverse));
     }
 
     :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
     :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
-        background-color: var(--mr-text-on-inverse);
+        background-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
         border-color: transparent;
         box-shadow: none;
     }

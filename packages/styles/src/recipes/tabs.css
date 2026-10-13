@@ -59,6 +59,7 @@
     /* Survol */
     :where(.mr-tabs__tab:hover:not(:disabled)):not([data-disabled='true']) {
         color: var(--mr-text-primary);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
     }
 
     /* Focus */

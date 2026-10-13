@@ -195,14 +195,14 @@ Conséquences : Les contrôles atteignent leurs dimensions nominales à la racin
 
 ### ADR-026 : bordure de contrôle discrète au repos et accessibilité garantie par le focus et le thème contrasté
 Statut : Acceptée.
-Contexte : À un ratio de contraste de 3,01:1 au repos (L=0,635 en clair, L=0,51 en sombre), les bordures de contrôle (Input et Button secondaire) sont perçues visuellement comme trop marquées (« trop blanches » en sombre et trop lourdes en clair) par rapport aux standards de design modernes.
+Contexte : À un ratio de contraste de 3,01:1 au repos (L=0,635 en clair, L=0,51 en sombre), les bordures de contrôle (Input, Select, Textarea et Button secondaire) sont perçues visuellement comme trop marquées (« trop blanches » en sombre et trop lourdes en clair) par rapport aux standards de design modernes.
 Décision :
-1. Les bordures de contrôle au repos (`--mr-border-control`) adoptent un ratio discret calibré entre 1,8:1 et 2,0:1 (L=0,75 en clair donnant 1,95:1 ; L=0,40 en sombre donnant 1,88:1 sur les canevas respectifs).
-2. L'accessibilité visuelle est assurée par l'anneau de focus neutre (outline 1px à 4,8:1 sur canevas), par le survol (ratio >= 2,4:1) et par le futur thème contrasté (`high-contrast`) qui rétablira un ratio de bordure au repos >= 3,0:1.
+1. Les bordures de contrôle au repos (`--mr-border-control`) adoptent un ratio discret et feutré calibré entre 1,8:1 et 1,95:1 (L=0,77 en clair donnant 1,82:1 ; L=0,38 en sombre, ocean et slate donnant 1,88:1 à 1,91:1 ; L=0,41 en night donnant 1,93:1 ; L=0,35 en oled donnant 1,86:1 sur les canevas respectifs).
+2. L'accessibilité visuelle est assurée par l'anneau de focus neutre (outline 1px à 4,8:1 sur canevas), par le survol (ratio >= 2,3:1) et par le thème contrasté (`high-contrast`) qui rétablit un ratio de bordure au repos >= 3,0:1.
 Alternatives écartées :
 - Conserver le seuil 3,0:1 au repos (rendu visuel jugé trop lourd et inadapté au produit).
 - Différencier le fond de l'input par rapport au canevas (exigerait l'introduction prématurée d'un nouveau token de surface).
-Conséquences : Les bordures de saisie et de bouton secondaire s'intègrent de manière subtile et épurée. Le seuil de test automatisé dans `test-contrast.js` est ajusté à 1,8:1 pour les bordures de contrôle au repos et 2,0:1 au survol.
+Conséquences : Les bordures de saisie et de bouton secondaire s'intègrent de manière subtile et épurée. Le seuil de test automatisé dans `test-contrast.js` est maintenu à 1,8:1 pour les bordures de contrôle au repos et 2,0:1 au survol.
 
 ### ADR-027 : calibrage de la luminosité du texte secondaire sur surface pour WCAG AA dans les thèmes sombres
 Statut : Acceptée.

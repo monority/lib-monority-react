@@ -46,4 +46,48 @@ describe('Topbar', () => {
         render(<Topbar ref={ref} />)
         expect(ref.current?.tagName).toBe('HEADER')
     })
+
+    it('renders composable brand, navigation, link and actions', () => {
+        const view = render(
+            <Topbar>
+                <Topbar.Brand>
+                    <Topbar.BrandMark>M</Topbar.BrandMark>
+                    <span>My App</span>
+                </Topbar.Brand>
+                <Topbar.Nav aria-label="Menu principal">
+                    <Topbar.Link href="/home" active>
+                        Accueil
+                    </Topbar.Link>
+                    <Topbar.Link href="/about">À propos</Topbar.Link>
+                </Topbar.Nav>
+                <Topbar.Status tone="success">En ligne</Topbar.Status>
+                <Topbar.Actions>
+                    <button type="button">Action</button>
+                </Topbar.Actions>
+            </Topbar>
+        )
+
+        const brand = view.querySelector('.mr-topbar__brand')
+        expect(brand).not.toBeNull()
+        expect(brand?.textContent).toContain('My App')
+
+        const brandMark = view.querySelector('.mr-topbar__brand-mark')
+        expect(brandMark?.textContent).toBe('M')
+
+        const nav = view.querySelector('nav.mr-topbar__navigation')
+        expect(nav?.getAttribute('aria-label')).toBe('Menu principal')
+
+        const links = view.querySelectorAll('a.mr-topbar__link')
+        expect(links.length).toBe(2)
+        expect(links[0]?.getAttribute('aria-current')).toBe('page')
+        expect(links[0]?.getAttribute('data-active')).toBe('true')
+        expect(links[1]?.getAttribute('aria-current')).toBeNull()
+
+        const status = view.querySelector('.mr-topbar__status')
+        expect(status?.getAttribute('data-tone')).toBe('success')
+        expect(status?.textContent).toContain('En ligne')
+
+        const actions = view.querySelector('.mr-topbar__actions')
+        expect(actions?.querySelector('button')).not.toBeNull()
+    })
 })

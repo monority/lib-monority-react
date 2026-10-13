@@ -1,10 +1,14 @@
 import { Badge } from '@monority/ui/badge'
 import { Card } from '@monority/ui/card'
 import { Grid } from '@monority/ui/grid'
+import { Section } from '@monority/ui/section'
+import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
+import { Title } from '@monority/ui/title'
 
 const features = [
     {
-        title: '75 Stable Primitives',
+        title: '84 Stable Primitives',
         badge: 'Production-ready',
         badgeVariant: 'success' as const,
         description:
@@ -35,19 +39,29 @@ const features = [
 
 export function HomeFeatures() {
     return (
-        <section aria-labelledby="home-features-title">
-            <h2 id="home-features-title" className="home-section-title">
-                Architectural Foundation
-            </h2>
-            <p className="home-section-desc">
-                Built to serve as dependable infrastructure for modern design systems and production
-                web applications.
-            </p>
+        <Section aria-labelledby="home-features-title" spacing="lg">
+            <Stack gap="xs" style={{ marginBottom: 'var(--mr-space-5)' }}>
+                <Title id="home-features-title" size="lg">
+                    Architectural Foundation
+                </Title>
+                <Text tone="muted" size="md">
+                    Built to serve as dependable infrastructure for modern design systems and
+                    production web applications.
+                </Text>
+            </Stack>
             <Grid columns={2}>
                 {features.map((feat) => (
-                    <Card key={feat.title} padding="lg" className="home-feature-card">
+                    <Card key={feat.title} padding="lg">
                         <Card.Header>
-                            <div className="home-feature-header">
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    gap: 'var(--mr-space-2)',
+                                    marginBottom: 'var(--mr-space-2)',
+                                }}
+                            >
                                 <Card.Title>{feat.title}</Card.Title>
                                 <Badge variant={feat.badgeVariant}>{feat.badge}</Badge>
                             </div>
@@ -58,6 +72,6 @@ export function HomeFeatures() {
                     </Card>
                 ))}
             </Grid>
-        </section>
+        </Section>
     )
 }

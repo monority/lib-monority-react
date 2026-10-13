@@ -12,9 +12,6 @@ export type AccentPreset =
     | 'orange'
     | 'red'
     | 'rose'
-/** Roles, not hues. Only `theme` follows the accent axis, so the two axes can
- *  never resolve to the same colour. */
-export type ComponentColorPreset = 'theme' | 'neutral' | 'soft' | 'inverse'
 export type ChartPalettePreset = 'default' | 'ocean' | 'spectrum' | 'warm'
 export type RadiusPreset = 'sharp' | 'compact' | 'default' | 'rounded' | 'pill'
 export type SpacingPreset = 'dense' | 'default' | 'comfortable' | 'airy'
@@ -25,7 +22,6 @@ export interface DesignConfig {
     theme: ResolvedThemeName
     brand: BrandPreset
     accent: AccentPreset
-    componentColor: ComponentColorPreset
     chartPalette: ChartPalettePreset
     radius: RadiusPreset
     spacing: SpacingPreset
@@ -36,7 +32,6 @@ export const DEFAULT_DESIGN_CONFIG: DesignConfig = {
     theme: 'dark',
     brand: 'monority',
     accent: 'neutral',
-    componentColor: 'theme',
     chartPalette: 'default',
     radius: 'default',
     spacing: 'default',
@@ -65,12 +60,6 @@ export const DESIGN_PRESETS = {
         { value: 'orange', label: 'Orange' },
         { value: 'red', label: 'Red' },
         { value: 'rose', label: 'Rose' },
-    ],
-    componentColors: [
-        { value: 'theme', label: 'Theme' },
-        { value: 'neutral', label: 'Neutral' },
-        { value: 'soft', label: 'Soft' },
-        { value: 'inverse', label: 'Inverse' },
     ],
     chartPalettes: [
         { value: 'default', label: 'Default' },
@@ -125,39 +114,6 @@ interface ComponentRole {
     border: string
 }
 
-/* No hue literals: a role is expressed with theme tokens only, so it keeps the
-   same meaning in every theme and never collides with an accent preset. */
-const componentRoles: Record<ComponentColorPreset, ComponentRole> = {
-    theme: {
-        fill: 'var(--mr-accent-solid)',
-        label: 'var(--mr-bg-canvas)',
-        hover: 'color-mix(in oklch, var(--mr-accent-solid), var(--mr-text-primary) var(--mr-state-hover-mix))',
-        active: 'color-mix(in oklch, var(--mr-accent-solid), var(--mr-text-primary) var(--mr-state-active-mix))',
-        border: 'transparent',
-    },
-    neutral: {
-        fill: 'var(--mr-text-primary)',
-        label: 'var(--mr-bg-canvas)',
-        hover: 'color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) var(--mr-state-hover-mix))',
-        active: 'color-mix(in oklch, var(--mr-text-primary), var(--mr-bg-canvas) var(--mr-state-active-mix))',
-        border: 'transparent',
-    },
-    soft: {
-        fill: 'var(--mr-accent-subtle)',
-        label: 'var(--mr-accent-text)',
-        hover: 'color-mix(in oklch, var(--mr-accent-subtle), var(--mr-accent-solid) var(--mr-state-hover-mix))',
-        active: 'color-mix(in oklch, var(--mr-accent-subtle), var(--mr-accent-solid) var(--mr-state-active-mix))',
-        border: 'var(--mr-accent-border)',
-    },
-    inverse: {
-        fill: 'var(--mr-bg-canvas)',
-        label: 'var(--mr-text-primary)',
-        hover: 'color-mix(in oklch, var(--mr-bg-canvas), var(--mr-text-primary) var(--mr-state-hover-mix))',
-        active: 'color-mix(in oklch, var(--mr-bg-canvas), var(--mr-text-primary) var(--mr-state-active-mix))',
-        border: 'var(--mr-border-control)',
-    },
-}
-
 const chartColors: Record<ChartPalettePreset, [number, number, number, number, number]> = {
     default: [200, 150, 75, 25, 255],
     ocean: [200, 230, 195, 160, 320],
@@ -200,7 +156,6 @@ export interface ResolvedDesignConfig {
     style: CSSProperties
     themeDensity: 'comfortable' | 'compact'
     accent: { hue: number; chroma: number }
-    componentColor: string
     chartColors: string[]
 }
 
@@ -209,40 +164,118 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
      hand-written config). An unknown value must degrade to the default axis, never throw. */
     const fallback = DEFAULT_DESIGN_CONFIG
     const accent = accentColors[config.accent] ?? accentColors[fallback.accent]
-    /* `theme` is the accent-linked role: an unknown role inherits the accent. */
-    const role = componentRoles[config.componentColor] ?? componentRoles.theme
+
     const radius = radiusValues[config.radius] ?? radiusValues[fallback.radius]
     const factor = spacingFactors[config.spacing] ?? spacingFactors[fallback.spacing]
-    const spacing = Object.fromEntries(
-        Object.entries(spacingBase).map(([key, value]) => [
-            `--mr-spacing-${key}`,
-            `${Number((value * factor).toFixed(2))}px`,
-        ])
-    )
+
+    const spacing: Record<string, string> = {}
+    Object.entries(spacingBase).forEach(([key, value]) => {
+        const pxVal = `${Number((value * factor).toFixed(2))}px`
+        spacing[`--mr-spacing-${key}`] = pxVal
+        spacing[`--mr-space-${key}`] = pxVal
+    })
+
     const charts = (chartColors[config.chartPalette] ?? chartColors[fallback.chartPalette]).map(
         (hue) => `oklch(0.72 0.12 ${hue})`
     )
     const densityGap =
         config.density === 'spacious' ? '20px' : config.density === 'compact' ? '10px' : '16px'
+    const densityScale =
+        config.density === 'compact' ? 0.88 : config.density === 'spacious' ? 1.15 : 1
+
+    const isDark =
+        config.theme === 'dark' ||
+        config.theme === 'oled' ||
+        config.theme === 'night' ||
+        config.theme === 'slate' ||
+        config.theme === 'ocean'
+    const isOled = config.theme === 'oled'
+    const isHighContrast = config.theme === 'high-contrast'
+    const isTinted =
+        config.theme === 'slate' || config.theme === 'ocean' || config.theme === 'night'
+
+    let accentLightness: number
+    if (accent.chroma === 0) {
+        accentLightness = isDark ? 0.955 : isHighContrast ? 0.38 : 0.22
+    } else if (isTinted) {
+        accentLightness = 0.635
+    } else if (isHighContrast) {
+        accentLightness = 0.38
+    } else if (isDark) {
+        accentLightness = 0.65
+    } else {
+        accentLightness = 0.5
+    }
+
+    const effectiveChroma = Number((accent.chroma * 0.7).toFixed(4))
+    const accentSolid = `oklch(${accentLightness} ${effectiveChroma} ${accent.hue})`
+
+    /* Primary interactive control colors derived from accent:
+     * Neutral accent (chroma === 0):
+     * - Light: black background oklch(0.22 0 0), white text oklch(0.985 0 0)
+     * - Dark: white background oklch(0.955 0 0), dark canvas text oklch(0.17 0 0)
+     * - OLED: white background oklch(0.955 0 0), pure black text oklch(0 0 0)
+     * - High-contrast: strict binary contrast
+     * Chromatic accent (chroma > 0):
+     * - Fill: accentSolid
+     * - Text: pure white oklch(0.985 0 0) for WCAG AA contrast across light and dark
+     */
+    let controlAccent: string
+    let controlOnAccent: string
+    let controlHover: string
+    let controlActive: string
+
+    if (accent.chroma === 0) {
+        if (isDark) {
+            controlAccent = 'oklch(0.955 0 0)'
+            controlOnAccent = isOled ? 'oklch(0 0 0)' : 'var(--mr-bg-canvas)'
+            controlHover = 'oklch(0.88 0 0)'
+            controlActive = 'oklch(0.98 0 0)'
+        } else if (isHighContrast) {
+            controlAccent = 'oklch(0 0 0)'
+            controlOnAccent = 'oklch(1 0 0)'
+            controlHover = 'oklch(0.2 0 0)'
+            controlActive = 'oklch(0 0 0)'
+        } else {
+            controlAccent = 'oklch(0.22 0 0)'
+            controlOnAccent = 'oklch(0.985 0 0)'
+            controlHover = 'oklch(0.32 0 0)'
+            controlActive = 'oklch(0.15 0 0)'
+        }
+    } else {
+        controlAccent = accentSolid
+        controlOnAccent = 'oklch(0.985 0 0)'
+        if (isDark) {
+            controlHover = 'color-mix(in oklch, var(--mr-control-accent), white 12%)'
+            controlActive = 'color-mix(in oklch, var(--mr-control-accent), white 24%)'
+        } else {
+            controlHover = 'color-mix(in oklch, var(--mr-control-accent), black 12%)'
+            controlActive = 'color-mix(in oklch, var(--mr-control-accent), black 24%)'
+        }
+    }
 
     return {
         themeDensity: config.density === 'compact' ? 'compact' : 'comfortable',
         accent,
-        componentColor: role.fill,
         chartColors: charts,
         style: {
             '--mr-brand-hue': String(accent.hue),
             '--mr-brand-chroma': String(accent.chroma),
             '--mr-ref-brand-hue': String(accent.hue),
             '--mr-ref-brand-chroma': String(accent.chroma),
+            '--mr-ref-accent-lightness': String(accentLightness),
+            '--mr-accent-solid': accentSolid,
+            '--mr-accent-subtle': `color-mix(in oklch, ${accentSolid} 14%, var(--mr-bg-canvas))`,
+            '--mr-accent-border': `color-mix(in oklch, ${accentSolid} 30%, var(--mr-border-default))`,
+            '--mr-accent-text': accentSolid,
+            '--mr-focus-ring': accentSolid,
             '--mr-accent': 'var(--mr-accent-solid)',
-            '--mr-control-accent': role.fill,
-            '--mr-control-accent-hover': role.hover,
-            '--mr-control-accent-active': role.active,
-            '--mr-control-on-accent': role.label,
-            '--mr-control-accent-border': role.border,
-            '--mr-control-accent-subtle':
-                'color-mix(in srgb, var(--mr-control-accent) 18%, transparent)',
+            '--mr-control-accent': controlAccent,
+            '--mr-control-accent-hover': controlHover,
+            '--mr-control-accent-active': controlActive,
+            '--mr-control-on-accent': controlOnAccent,
+            '--mr-control-accent-border': 'transparent',
+            '--mr-control-accent-subtle': `color-mix(in oklch, ${accentSolid} 14%, var(--mr-bg-canvas))`,
             '--mr-chart-1': charts[0],
             '--mr-chart-2': charts[1],
             '--mr-chart-3': charts[2],
@@ -252,8 +285,26 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
             '--mr-radius-control': radius[1],
             '--mr-radius-card': radius[2],
             '--mr-radius-overlay': radius[3],
+            '--mr-radius-sm': radius[0],
+            '--mr-radius-md': radius[1],
+            '--mr-radius-lg': radius[2],
+            '--mr-radius-full': config.radius === 'sharp' ? '0px' : '9999px',
+            '--mr-ref-radius-scale':
+                config.radius === 'sharp'
+                    ? '0'
+                    : config.radius === 'compact'
+                      ? '0.67'
+                      : config.radius === 'rounded'
+                        ? '1.6'
+                        : config.radius === 'pill'
+                          ? '2'
+                          : '1',
+            '--mr-size-control-sm': `${Math.round(28 * densityScale)}px`,
+            '--mr-size-control-md': `${Math.round(32 * densityScale)}px`,
+            '--mr-size-control-lg': `${Math.round(40 * densityScale)}px`,
             '--mr-section-gap': densityGap,
             '--mr-grid-gap': densityGap,
+            '--mr-stack-gap': densityGap,
             ...spacing,
         } as CSSProperties,
     }
@@ -295,16 +346,11 @@ const axisValues = {
     theme: themeValues,
     brand: DESIGN_PRESETS.brands.map((item) => item.value),
     accent: DESIGN_PRESETS.accents.map((item) => item.value),
-    componentColor: DESIGN_PRESETS.componentColors.map((item) => item.value),
     chartPalette: DESIGN_PRESETS.chartPalettes.map((item) => item.value),
     radius: DESIGN_PRESETS.radii.map((item) => item.value),
     spacing: DESIGN_PRESETS.spacings.map((item) => item.value),
     density: DESIGN_PRESETS.densities.map((item) => item.value),
 } as const satisfies Record<keyof DesignConfig, readonly string[]>
-
-/** `componentColor` was a hue picker before it became a role axis. The retired hues
- *  meant "colour the components", which is now what the `theme` role does. */
-const retiredComponentColorValues = ['cyan', 'blue', 'violet']
 
 /**
  * Coerce anything (localStorage, JSON payloads, hand-written configs) into a valid
@@ -323,13 +369,6 @@ export function sanitizeDesignConfig(input: unknown): DesignConfig {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any -- checked against the axis allow-list above
             ;(config as any)[axis] = value
         }
-    }
-
-    if (
-        typeof source.componentColor === 'string' &&
-        retiredComponentColorValues.includes(source.componentColor)
-    ) {
-        config.componentColor = DEFAULT_DESIGN_CONFIG.componentColor
     }
 
     return config

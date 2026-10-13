@@ -2,11 +2,13 @@ import type { ReactNode } from 'react'
 import { HeroHeader } from '@/shared/components/HeroHeader'
 import { PreviewCanvas } from '@/shared/components/PreviewCanvas'
 import { CodeViewer } from '@/shared/components/CodeViewer'
+import { DocContainer } from './DocContainer'
+import { DocSection } from './DocSection'
 import { DocPropTable } from './DocPropTable'
 import { DocTagList } from './DocTagList'
 import { DocExampleCard } from './DocExampleCard'
 
-export interface PropRow {
+export interface PropRow extends Record<string, unknown> {
     name: string
     type: string
     defaultValue: string
@@ -41,34 +43,54 @@ export function DocPage({ doc }: { doc: DocPageData }) {
     const previewLabel = doc.previewLabel ?? `${doc.title.toLowerCase().replace(/\s+/g, '-')}.tsx`
 
     return (
-        <div className="docs-page">
+        <DocContainer className="docs-page">
             <HeroHeader kicker="Component" title={doc.title} description={doc.description} />
 
-            <div className="docs-preview-stack">
-                <PreviewCanvas label={previewLabel} padding="none">
-                    <div className="docs-preview-content">
-                        <Preview />
-                    </div>
-                </PreviewCanvas>
-                {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
-            </div>
+            <DocSection
+                id="overview"
+                title="Aperçu"
+                description="Démonstration interactive et code d'intégration."
+            >
+                <div className="docs-preview-stack">
+                    <PreviewCanvas label={previewLabel} padding="none">
+                        <div className="docs-preview-content">
+                            <Preview />
+                        </div>
+                    </PreviewCanvas>
+                    {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
+                </div>
+            </DocSection>
 
             {doc.examples && doc.examples.length > 0 && (
-                <section className="docs-section">
-                    <h2>Examples</h2>
+                <DocSection
+                    id="examples"
+                    title="Exemples"
+                    description="Variantes et modes d'usage fréquents."
+                >
                     <div className="docs-examples-list">
                         {doc.examples.map((example) => (
                             <DocExampleCard key={example.title} example={example} />
                         ))}
                     </div>
-                </section>
+                </DocSection>
             )}
 
-            {doc.props && doc.props.length > 0 && <DocPropTable props={doc.props} />}
+            {doc.props && doc.props.length > 0 && (
+                <DocSection
+                    id="api"
+                    title="Propriétés & API"
+                    description="Contrat d'interface et typage TypeScript des options acceptées."
+                >
+                    <DocPropTable props={doc.props} />
+                </DocSection>
+            )}
 
             {(doc.cssHooks || doc.tokens) && (
-                <section className="docs-section">
-                    <h2>Styling</h2>
+                <DocSection
+                    id="styling"
+                    title="Personnalisation & Tokens"
+                    description="Classes CSS documentées et variables de conception associées."
+                >
                     <div className="docs-grid">
                         {doc.cssHooks && doc.cssHooks.length > 0 && (
                             <DocTagList title="CSS Hooks" tags={doc.cssHooks} />
@@ -77,19 +99,22 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                             <DocTagList title="Tokens" tags={doc.tokens} />
                         )}
                     </div>
-                </section>
+                </DocSection>
             )}
 
             {doc.a11y && doc.a11y.length > 0 && (
-                <section className="docs-section">
-                    <h2>Accessibility</h2>
+                <DocSection
+                    id="accessibility"
+                    title="Accessibilité & Clavier"
+                    description="Comportements WAI-ARIA, navigation au clavier et gestion du focus."
+                >
                     <ul className="docs-list">
                         {doc.a11y.map((item) => (
                             <li key={item}>{item}</li>
                         ))}
                     </ul>
-                </section>
+                </DocSection>
             )}
-        </div>
+        </DocContainer>
     )
 }

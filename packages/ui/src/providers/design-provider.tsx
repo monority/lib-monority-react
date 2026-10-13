@@ -18,7 +18,6 @@ export function DesignProvider({ config, children, className, id }: DesignProvid
             data-design-theme={config.theme}
             data-brand={config.brand}
             data-design-accent={config.accent}
-            data-design-component-color={config.componentColor}
             data-design-chart-palette={config.chartPalette}
             data-design-radius={config.radius}
             data-design-spacing={config.spacing}

@@ -22,3 +22,9 @@ export {
 } from './card'
 export { Carousel, type CarouselProps } from './carousel'
 export { Collapsible, type CollapsibleProps } from './collapsible'
+export {
+    ColorSwatch,
+    type ColorSwatchProps,
+    type ColorSwatchShape,
+    type ColorSwatchSize,
+} from './color-swatch'

@@ -1,29 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
+    DEFAULT_DESIGN_CONFIG,
     DesignProvider,
     ThemeScope,
-    DEFAULT_DESIGN_CONFIG,
+    designConfigToJSON,
     resolveDesignConfig,
     sanitizeDesignConfig,
-    designConfigToJSON,
+    useTheme,
     type DesignConfig,
+    type ResolvedThemeName,
+    type ThemeNameType,
 } from '@monority/ui'
-import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { SidebarLayout } from '@monority/ui/sidebar-layout'
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { MoodboardPreview } from './MoodboardPreview'
 import { MoodboardSidebar } from './MoodboardSidebar'
-import { MoodboardPreview, type PanelState } from './MoodboardPreview'
-import './moodboard.css'
-
-type DensityName = 'comfortable' | 'compact'
-
-const initialState: PanelState = {
-    tab: 'overview',
-    workspace: 'monority-prod',
-    region: 'eu-west-1',
-    checked: true,
-    notifications: false,
-    selectedRow: 'edge-router',
-}
 
 export function MoodboardPage() {
     usePageSeo({
@@ -31,6 +23,8 @@ export function MoodboardPage() {
         description:
             'Monority UI design system — one interface, one configuration, one live preview.',
     })
+
+    const { resolvedTheme, setTheme } = useTheme()
 
     const [config, setConfig] = useState<DesignConfig>(() => {
         if (typeof window === 'undefined') return DEFAULT_DESIGN_CONFIG
@@ -42,19 +36,29 @@ export function MoodboardPage() {
         }
     })
 
-    const [state, setState] = useState<PanelState>(initialState)
     const [copied, setCopied] = useState(false)
+    const lastResolvedThemeRef = useRef(resolvedTheme)
 
-    const updateState = (next: Partial<PanelState>) =>
-        setState((current) => ({ ...current, ...next }))
+    /* Sync top header ThemeToggle changes into Studio config */
+    useEffect(() => {
+        if (lastResolvedThemeRef.current !== resolvedTheme) {
+            lastResolvedThemeRef.current = resolvedTheme
+            setConfig((prev) => ({ ...prev, theme: resolvedTheme }))
+        }
+    }, [resolvedTheme])
 
     const updateConfig = <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => {
+        if (key === 'theme' && typeof value === 'string') {
+            lastResolvedThemeRef.current = value as ResolvedThemeName
+            setTheme(value as ThemeNameType)
+        }
         setConfig((current) => ({ ...current, [key]: value }))
     }
 
     const handleReset = () => {
+        lastResolvedThemeRef.current = DEFAULT_DESIGN_CONFIG.theme
+        setTheme(DEFAULT_DESIGN_CONFIG.theme as ThemeNameType)
         setConfig(DEFAULT_DESIGN_CONFIG)
-        setState(initialState)
     }
 
     const handleCopy = async () => {
@@ -78,40 +82,54 @@ export function MoodboardPage() {
         return () => clearTimeout(timer)
     }, [copied])
 
-    const density: DensityName = config.density === 'compact' ? 'compact' : 'comfortable'
+    const density = config.density === 'compact' ? 'compact' : 'comfortable'
     const resolved = resolveDesignConfig(config)
 
     return (
-        <>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <AppHeader />
-            <DesignProvider config={config} className="moodboard-design-root">
-                <div className="moodboard-page" data-testid="moodboard-page">
-                    <MoodboardSidebar
-                        config={config}
-                        onConfig={updateConfig}
-                        onReset={handleReset}
-                        onCopy={handleCopy}
-                        copied={copied}
-                    />
+            <DesignProvider config={config}>
+                <SidebarLayout
+                    sidebarWidth="lg"
+                    style={{
+                        flex: 1,
+                        minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))',
+                    }}
+                    data-testid="moodboard-page"
+                    sidebar={
+                        <MoodboardSidebar
+                            config={config}
+                            onConfig={updateConfig}
+                            onReset={handleReset}
+                            onCopy={handleCopy}
+                            copied={copied}
+                        />
+                    }
+                >
                     <ThemeScope
                         theme={config.theme}
                         density={density}
                         brand={config.brand === 'studio' ? 'studio' : undefined}
-                        className="moodboard-preview-scope"
-                        style={resolved.style}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'minmax(0, 1fr)',
+                            minInlineSize: 0,
+                            backgroundColor: 'var(--mr-bg-canvas)',
+                            color: 'var(--mr-text-primary)',
+                            ...resolved.style,
+                        }}
                         data-testid="moodboard-preview-scope"
                         data-design-theme={config.theme}
                         data-design-accent={config.accent}
-                        data-design-component-color={config.componentColor}
                         data-design-chart-palette={config.chartPalette}
                         data-design-radius={config.radius}
                         data-design-spacing={config.spacing}
                         data-design-density={config.density}
                     >
-                        <MoodboardPreview state={state} onState={updateState} />
+                        <MoodboardPreview />
                     </ThemeScope>
-                </div>
+                </SidebarLayout>
             </DesignProvider>
-        </>
+        </div>
     )
 }

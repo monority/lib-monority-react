@@ -4,7 +4,6 @@ import type {
     CardDescriptionProps,
     CardFooterProps,
     CardHeaderProps,
-    CardPadding,
     CardProps,
     CardTitleProps,
 } from './Card.types'

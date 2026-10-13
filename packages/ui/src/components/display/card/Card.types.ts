@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
-export type CardPadding = 'sm' | 'md' | 'lg'
+export type CardPadding = 'sm' | 'md' | 'lg' | 'xl'
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
     ref?: Ref<HTMLDivElement>

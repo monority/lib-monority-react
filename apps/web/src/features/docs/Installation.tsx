@@ -4,23 +4,29 @@ import { CodeViewer } from '@/shared/components/CodeViewer'
 import { Card } from '@monority/ui/card'
 import { Stack } from '@monority/ui/stack'
 import { Stepper } from '@monority/ui/stepper'
+import { DocContainer } from './components/DocContainer'
+import { DocSection } from './components/DocSection'
 
 export function Installation() {
     return (
-        <div className="docs-page">
+        <DocContainer className="docs-page">
             <HeroHeader
                 kicker="Getting Started"
                 title="Installation"
                 description="Set up Monority UI in your project, load the shared styles, and start composing product-ready screens with the component system."
             />
 
-            <section className="docs-section">
+            <DocSection
+                id="steps"
+                title="Guide pas à pas"
+                description="Intégrez la bibliothèque dans votre projet en trois étapes simples."
+            >
                 <Stepper orientation="vertical" activeStep={0}>
                     <Stepper.Step
                         title="1. Installer le package"
-                        description="Choisissez votre gestionnaire de paquets prefere."
+                        description="Choisissez votre gestionnaire de paquets préféré."
                     >
-                        <Stack gap="sm" style={{ marginTop: '0.75rem' }}>
+                        <Stack gap="sm" className="docs-step-stack">
                             <CodeViewer
                                 code="pnpm add @monority/ui"
                                 language="bash"
@@ -40,9 +46,9 @@ export function Installation() {
                     </Stepper.Step>
                     <Stepper.Step
                         title="2. Importer la fondation CSS"
-                        description="Chargez la feuille de styles principale a l entree de votre application."
+                        description="Chargez la feuille de styles principale à l'entrée de votre application."
                     >
-                        <div style={{ marginTop: '0.75rem' }}>
+                        <div className="docs-step-content">
                             <CodeViewer
                                 code={`// main.tsx ou entrypoint\nimport '@monority/ui/styles.css'`}
                                 filename="main.tsx"
@@ -51,45 +57,44 @@ export function Installation() {
                     </Stepper.Step>
                     <Stepper.Step
                         title="3. Composer vos interfaces"
-                        description="Importez directement depuis le point d entree principal ou via des sous-chemins optimises."
+                        description="Importez directement depuis le point d'entrée principal ou via des sous-chemins optimisés."
                     >
-                        <div style={{ marginTop: '0.75rem' }}>
+                        <div className="docs-step-content">
                             <CodeViewer
-                                code={`// Point d entree principal\nimport { Button, Modal, Tooltip } from '@monority/ui'\n\n// Sous-chemins dedies pour tree-shaking optimal\nimport { Button } from '@monority/ui/button'\nimport { Sheet } from '@monority/ui/sheet'`}
+                                code={`// Point d'entrée principal\nimport { Button, Modal, Tooltip } from '@monority/ui'\n\n// Sous-chemins dédiés pour tree-shaking optimal\nimport { Button } from '@monority/ui/button'\nimport { Sheet } from '@monority/ui/sheet'`}
                                 filename="App.tsx"
                             />
                         </div>
                     </Stepper.Step>
                 </Stepper>
-            </section>
+            </DocSection>
 
-            <section className="docs-section">
-                <h2>Prérequis</h2>
+            <DocSection
+                id="prerequisites"
+                title="Prérequis"
+                description="Configuration d'exécution recommandée."
+            >
                 <Card padding="md">
-                    <ul className="docs-list" style={{ margin: 0 }}>
+                    <ul className="docs-list">
                         <li>React 19 ou version ultérieure</li>
                         <li>React DOM 19 ou version ultérieure</li>
                         <li>TypeScript 5.7+ pour une prise en charge complète des types</li>
                     </ul>
                 </Card>
-            </section>
+            </DocSection>
 
-            <section className="docs-section">
-                <h2>Prochaines étapes</h2>
+            <DocSection
+                id="next-steps"
+                title="Prochaines étapes"
+                description="Explorez l'écosystème et commencez à concevoir."
+            >
                 <Card padding="md">
-                    <ul className="docs-list" style={{ margin: 0 }}>
+                    <ul className="docs-list">
                         <li>
                             Consultez la{' '}
                             <Link to="/docs" className="docs-text-link">
                                 documentation des composants
                             </Link>
-                        </li>
-                        <li>
-                            Explorez le{' '}
-                            <Link to="/showcase" className="docs-text-link">
-                                Showcase
-                            </Link>{' '}
-                            pour voir des compositions réelles
                         </li>
                         <li>
                             Testez vos combinaisons de tokens dans le{' '}
@@ -99,7 +104,7 @@ export function Installation() {
                         </li>
                     </ul>
                 </Card>
-            </section>
-        </div>
+            </DocSection>
+        </DocContainer>
     )
 }
