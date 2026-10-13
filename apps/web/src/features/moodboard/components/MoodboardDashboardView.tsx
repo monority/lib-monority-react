@@ -19,6 +19,7 @@ import {
     Topbar,
     type Column,
 } from '@monority/ui'
+import { MoodboardTelemetryChart } from './MoodboardTelemetryChart'
 
 interface ServiceRow extends Record<string, unknown> {
     id: string
@@ -163,56 +164,8 @@ export function MoodboardDashboardView() {
                 <StatCard label="HEALTHY NODES" value="98.4%" description="64 / 65 active pods" />
             </Grid>
 
-            {/* Real-time telemetry sparkline card */}
-            <Card padding="md" data-testid="moodboard-chart">
-                <Card.Header>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <div>
-                            <Title as="h3" size="sm">
-                                Network Throughput
-                            </Title>
-                            <Text tone="muted" size="sm">
-                                Egress packet telemetry over the last 60 seconds
-                            </Text>
-                        </div>
-                        <Badge variant="primary" size="sm">
-                            Live Feed
-                        </Badge>
-                    </div>
-                </Card.Header>
-                <Card.Content>
-                    <div
-                        style={{
-                            height: '4rem',
-                            display: 'flex',
-                            alignItems: 'flex-end',
-                            gap: 'var(--mr-space-1)',
-                            paddingTop: 'var(--mr-space-2)',
-                        }}
-                    >
-                        {[
-                            35, 48, 42, 60, 55, 72, 68, 85, 78, 92, 88, 95, 82, 79, 88, 94, 91, 99,
-                        ].map((height, idx) => (
-                            <div
-                                key={idx}
-                                style={{
-                                    flex: 1,
-                                    height: `${height}%`,
-                                    backgroundColor: 'var(--mr-accent-solid)',
-                                    borderRadius: 'var(--mr-radius-xs)',
-                                    opacity: 0.3 + (idx / 18) * 0.7,
-                                }}
-                            />
-                        ))}
-                    </div>
-                </Card.Content>
-            </Card>
+            {/* High-resolution SVG Telemetry Chart */}
+            <MoodboardTelemetryChart />
 
             {/* Main 2-column Operational Workspace */}
             <Grid columns={2}>

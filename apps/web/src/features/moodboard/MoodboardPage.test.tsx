@@ -85,10 +85,9 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-accent', 'neutral')
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'violet' } }
         )
         expect(scope).toHaveAttribute('data-design-accent', 'violet')
 
@@ -103,10 +102,9 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
-                name: 'Rounded',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
+            { target: { value: 'rounded' } }
         )
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
     })
@@ -115,10 +113,9 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('button', {
-                name: 'Light',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'light' } }
         )
         expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
@@ -129,15 +126,13 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
 
         /* Change some axes */
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'violet' } }
         )
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('button', {
-                name: 'Rounded',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
+            { target: { value: 'rounded' } }
         )
 
         expect(scope).toHaveAttribute('data-design-accent', 'violet')
@@ -156,10 +151,9 @@ describe('MoodboardPage', () => {
 
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'violet' } }
         )
         await act(async () => {
             fireEvent.click(screen.getByTestId('moodboard-copy'))
@@ -173,10 +167,9 @@ describe('MoodboardPage', () => {
     it('persists configuration to localStorage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        fireEvent.click(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('button', {
-                name: 'Violet',
-            })
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'violet' } }
         )
 
         const stored = localStorage.getItem('monority-design-config')

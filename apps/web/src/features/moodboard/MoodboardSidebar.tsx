@@ -30,7 +30,12 @@ export function MoodboardSidebar({
             gap="lg"
             role="region"
             aria-label="Design configuration"
-            style={{ padding: 'var(--mr-space-4)' }}
+            style={{
+                padding: 'var(--mr-space-4)',
+                boxSizing: 'border-box',
+                maxWidth: '100%',
+                overflowX: 'hidden',
+            }}
         >
             <Stack gap="xs">
                 <Text

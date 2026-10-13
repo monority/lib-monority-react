@@ -1,4 +1,5 @@
-import { DESIGN_PRESETS, Stack, Text, ToggleGroup, type DesignConfig } from '@monority/ui'
+import type { ChangeEvent } from 'react'
+import { DESIGN_PRESETS, Select, Stack, type DesignConfig } from '@monority/ui'
 
 interface AxisDefinition {
     key: keyof DesignConfig
@@ -64,36 +65,23 @@ export interface MoodboardSidebarControlsProps {
 }
 
 export function MoodboardSidebarControls({ config, onConfig }: MoodboardSidebarControlsProps) {
-    const handleChange = (key: keyof DesignConfig) => (val: string | string[]) => {
-        const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
-        if (!v) return
-        onConfig(key, v as DesignConfig[typeof key])
+    const handleSelectChange = (key: keyof DesignConfig) => (e: ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value
+        if (!val) return
+        onConfig(key, val as DesignConfig[typeof key])
     }
 
     return (
-        <Stack gap="md">
+        <Stack gap="sm">
             {AXES.map((axis) => (
-                <div key={axis.key}>
-                    <Text
-                        tone="muted"
+                <div key={axis.key} role="group" aria-label={axis.ariaLabel}>
+                    <Select
                         size="sm"
-                        style={{
-                            fontWeight: 600,
-                            letterSpacing: '0.04em',
-                            textTransform: 'uppercase',
-                            fontSize: '0.6875rem',
-                            marginBottom: 'var(--mr-space-1)',
-                            display: 'block',
-                        }}
-                    >
-                        {axis.label}
-                    </Text>
-                    <ToggleGroup
-                        size="sm"
-                        value={config[axis.key]}
-                        onValueChange={handleChange(axis.key)}
-                        items={axis.items.map((i) => ({ value: i.value, label: i.label }))}
+                        label={axis.label}
                         aria-label={axis.ariaLabel}
+                        value={config[axis.key]}
+                        onChange={handleSelectChange(axis.key)}
+                        options={axis.items.map((i) => ({ value: i.value, label: i.label }))}
                     />
                 </div>
             ))}
