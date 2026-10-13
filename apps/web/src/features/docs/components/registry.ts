@@ -419,16 +419,22 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
     },
 
     // Typography
-    { category: 'typography', label: 'Kbd', path: '/docs/kbd', slug: 'kbd', status: 'draft' },
+    { category: 'typography', label: 'Kbd', path: '/docs/kbd', slug: 'kbd', status: 'stable' },
     {
         category: 'typography',
         label: 'PreCode',
         path: '/docs/pre-code',
         slug: 'pre-code',
-        status: 'draft',
+        status: 'stable',
     },
-    { category: 'typography', label: 'Text', path: '/docs/text', slug: 'text', status: 'draft' },
-    { category: 'typography', label: 'Title', path: '/docs/title', slug: 'title', status: 'draft' },
+    { category: 'typography', label: 'Text', path: '/docs/text', slug: 'text', status: 'stable' },
+    {
+        category: 'typography',
+        label: 'Title',
+        path: '/docs/title',
+        slug: 'title',
+        status: 'stable',
+    },
 
     // Layout
     {
@@ -436,29 +442,29 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'AspectRatio',
         path: '/docs/aspect-ratio',
         slug: 'aspect-ratio',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'layout',
         label: 'Container',
         path: '/docs/container',
         slug: 'container',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'layout',
         label: 'Divider',
         path: '/docs/divider',
         slug: 'divider',
-        status: 'draft',
+        status: 'stable',
     },
-    { category: 'layout', label: 'Grid', path: '/docs/grid', slug: 'grid', status: 'draft' },
+    { category: 'layout', label: 'Grid', path: '/docs/grid', slug: 'grid', status: 'stable' },
     {
         category: 'layout',
         label: 'PageHeader',
         path: '/docs/page-header',
         slug: 'page-header',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'layout',
@@ -479,7 +485,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'ScrollArea',
         path: '/docs/scroll-area',
         slug: 'scroll-area',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'layout',
@@ -488,13 +494,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         slug: 'separator',
         status: 'stable',
     },
-    { category: 'layout', label: 'Stack', path: '/docs/stack', slug: 'stack', status: 'draft' },
+    { category: 'layout', label: 'Stack', path: '/docs/stack', slug: 'stack', status: 'stable' },
     {
         category: 'layout',
         label: 'Toolbar',
         path: '/docs/toolbar',
         slug: 'toolbar',
-        status: 'draft',
+        status: 'stable',
     },
 
     // Experimental

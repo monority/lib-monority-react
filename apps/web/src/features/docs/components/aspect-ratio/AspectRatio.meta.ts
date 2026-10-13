@@ -1,9 +1,11 @@
 export const aspectRatioMeta = {
     title: 'AspectRatio',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/aspect-ratio',
     import: "import { AspectRatio } from '@monority/ui'",
     category: 'layout',
     anatomy: ['root', 'content'],
-    accessibility: ['See component source'],
+    accessibility: [
+        'Maintains fixed container proportions without obstructing accessible children.',
+    ],
 }
