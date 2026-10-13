@@ -54,8 +54,8 @@ Derniere mise a jour : 2026-10-13.
 ## 4. Etat Actuel du Projet (Branche feat/cleanup-and-redesign-docs-moodboard)
 
 Branche active : feat/cleanup-and-redesign-docs-moodboard
-Statut Git : 14 commits en avance sur origin/feat/cleanup-and-redesign-docs-moodboard.
-Dernier commit : 0a5f13b refactor(moodboard): activate radius and spacing tokens, make sidebar sticky, harmonize chart aesthetics, and add concrete web app modules
+Statut Git : Synchronisee avec origin/feat/cleanup-and-redesign-docs-moodboard.
+Dernier commit : 0b4a7d5 refactor(moodboard): componentize modules, harmonize card spacing, sync header theme, and neutralize primary accent
 
 Realisations majeures de ce chantier :
 - Restructuration du site de documentation apps/web :
@@ -67,21 +67,19 @@ Realisations majeures de ce chantier :
 - Refonte complete de la page Moodboard Design Studio et Harmonisation Accent (modele shadcn/ui) :
   - Architecture 100% composants utilisant SidebarLayout officiel avec panneau lateral sticky persistant au defilement.
   - Decouplage Theme & Accent : l'axe Theme regroupe l'atmosphere (Light, Dark, Slate, OLED, Ocean, Night) et l'axe Accent definit la teinte d'accent (Neutral, Cyan, Blue, Violet, Indigo, Green, Amber, Orange, Red, Rose) des composants.
-  - Fusion Accent & Component Colors : l'accent pilote directement les styles de controle (--mr-control-accent, --mr-control-on-accent) sans dichotomie superflue.
-  - Resolution adaptative de luminosite d'accent : calcul dynamique de --mr-ref-accent-lightness et --mr-accent-solid dans packages/ui/src/lib/design-config.ts assurant un contraste WCAG AA superieur a 5.0:1 pour les 10 teintes d'accent sur les 7 themes (elimination du blanchiment en mode sombre et de l'ecrasement en mode clair).
-  - Harmonisation du positionnement des accents selon le modele shadcn/ui :
-    - Elements primaires / affirmatifs en accent solid : bouton primaire, case a cocher active, interrupteur actif, radio bouton selectionne, curseur slider et barre de progression.
-    - Survol discret en accent subtil (--mr-accent-subtle) : boutons ghost, elements dropdown-menu, options combobox, items context-menu, elements menubar, items command-palette, boutons pagination et onglets tabs.
-    - Surfaces neutres preservees : cartes, en-tetes, panneaux et boutons secondaires conservent leurs fonds neutres purs.
-  - Organisation en grille responsive homogene a 2 colonnes integrant 10 modules concrets de web apps (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
+  - Neutralisation de l'accent primaire : en mode clair fond noir oklch(0.22 0 0) et texte blanc oklch(0.985 0 0) ; en mode sombre fond blanc oklch(0.955 0 0) et texte sombre oklch(0.17 0 215) ; en mode OLED fond blanc oklch(0.955 0 0) et texte noir absolu oklch(0 0 0).
+  - Synchronisation bidirectionnelle du theme entre l'en-tete global ThemeToggle et le studio Moodboard sans desynchronisation.
+  - Elimination complete du code mort componentColor et assainissement automatique du stockage local.
+  - Grille responsive a 2 colonnes integrant 10 modules operationnels concrets entierement composantises (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
+  - Espacements et aereation amelioree : introduction des tokens d'espacement semantiques --mr-space-7 (28px) et --mr-space-8 (32px), propriete gap sur Grid, echelle de padding xl sur Card.
 - Validation technique :
-  - pnpm verify : 100% succes (108 suites / 1360 tests packages/ui, 15 suites / 85 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
+  - pnpm verify : 100% succes (108 suites / 1357 tests packages/ui, 15 suites / 86 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
   - pnpm --filter @monority/ui test:dist : 100% succes.
 
 ---
 
 ## 5. Prochaines Etapes pour Reprendre le Travail
 
-- Option 1 : Pousser la branche de travail vers le depot distant via git push origin feat/cleanup-and-redesign-docs-moodboard et ouvrir une pull request vers main.
-- Option 2 : Inspecter le fichier docs/audit-hardening-prompt.md si un cycle d'audit et de consolidation approfondi est souhaite.
-- Option 3 : Lancer la Wave 2 de nouveaux composants ou enrichir les recettes de composants existants.
+- Option 1 : Ouvrir une Pull Request pour fusionner feat/cleanup-and-redesign-docs-moodboard vers main.
+- Option 2 : Phase 3 de suppression des anciens tokens JSON et du package archive packages/tokens.
+- Option 3 : Lancer la Wave 2 de nouveaux composants ou enrichir les composants existants.
