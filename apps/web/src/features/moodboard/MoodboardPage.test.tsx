@@ -20,6 +20,7 @@ describe('MoodboardPage', () => {
 
         /* Config axes present */
         expect(screen.getByRole('group', { name: 'Theme axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Accent axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Radius axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Spacing axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Layout density axis' })).toBeInTheDocument()
@@ -76,7 +77,7 @@ describe('MoodboardPage', () => {
         expect(screen.getByText('Tests')).toBeInTheDocument()
     })
 
-    it('changing theme axis updates preview scope and resolves dynamic theme accent', () => {
+    it('changing theme axis updates preview scope attribute', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
@@ -87,10 +88,23 @@ describe('MoodboardPage', () => {
             { target: { value: 'ocean' } }
         )
         expect(scope).toHaveAttribute('data-design-theme', 'ocean')
+    })
+
+    it('changing accent axis updates preview scope and resolves dynamic brand hue', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const scope = screen.getByTestId('moodboard-preview-scope')
+        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
+
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'cyan' } }
+        )
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
 
         /* Verify the resolved CSS variable changes on DesignProvider root */
         const root = screen.getByTestId('moodboard-page').parentElement!
-        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('195')
+        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('200')
     })
 
     it('changing radius axis updates preview scope attribute', () => {
@@ -117,17 +131,23 @@ describe('MoodboardPage', () => {
             { target: { value: 'ocean' } }
         )
         fireEvent.change(
+            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
+            { target: { value: 'cyan' } }
+        )
+        fireEvent.change(
             within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
             { target: { value: 'rounded' } }
         )
 
         expect(scope).toHaveAttribute('data-design-theme', 'ocean')
+        expect(scope).toHaveAttribute('data-design-accent', 'cyan')
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
 
         /* Reset */
         fireEvent.click(screen.getByTestId('moodboard-reset'))
 
         expect(scope).toHaveAttribute('data-design-theme', 'dark')
+        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
     })
 

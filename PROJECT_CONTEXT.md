@@ -66,12 +66,13 @@ Realisations majeures de ce chantier :
   - Ajustement des contrastes de bordures sur input, textarea, select, switch et checkbox pour alleger le rendu visuel sur l'ensemble des 7 themes sans rompre le seuil d'accessibilite 3:1.
 - Refonte complete de la page Moodboard Design Studio :
   - Architecture 100% composants utilisant SidebarLayout officiel avec panneau lateral sticky persistant au defilement.
-  - Fusion Theme & Accent : l'accent n'est plus un axe isole mais decoule nativement du theme actif (Ocean: turquoise marine H=195, Night: Tokyo violet H=290, Slate: indigo ardoise H=245, OLED/Dark/Light: neutre monochromatique pur).
-  - Barre laterale calibree sur 5 axes directeurs essentiels : Theme & Accent, Rayon de courbure (Corner Radius), Echelle d'espacement (Spacing Scale), Densite de layout et Palette de graphiques.
+  - Decouplage Theme & Accent : l'axe Theme regroupe l'atmosphere (Light, Dark, Slate, OLED, Ocean, Night) et l'axe Accent definit la couleur d'accent (Neutral, Cyan, Blue, Violet, Indigo, Green, Amber, Orange, Red, Rose) des composants.
+  - Fusion Accent & Component Colors : suppression du selecteur redondant de couleur composant, les composants suivent directement l'accent actif.
+  - Barre laterale calibree sur 6 axes directeurs essentiels : Theme, Accent, Rayon de courbure (Corner Radius), Echelle d'espacement (Spacing Scale), Densite de layout et Palette de graphiques.
   - Dynamisme d'accent etendu sur l'ensemble des modules : boutons d'action primaires, badges, interrupteurs, cases a cocher et jauges de progression adaptes en tone="accent", courbe principale du graphique de telemetrie SVG synchronisee sur --mr-accent-solid.
   - Organisation en grille responsive homogene a 2 colonnes integrant 10 modules concrets de web apps (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
 - Validation technique :
-  - pnpm verify : 100% succes (108 suites / 1360 tests packages/ui, 15 suites / 84 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
+  - pnpm verify : 100% succes (108 suites / 1360 tests packages/ui, 15 suites / 85 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
   - pnpm --filter @monority/ui test:dist : 100% succes.
 
 ---

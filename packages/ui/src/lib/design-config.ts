@@ -204,25 +204,11 @@ export interface ResolvedDesignConfig {
     chartColors: string[]
 }
 
-export const THEME_DEFAULT_ACCENTS: Record<ResolvedThemeName, { hue: number; chroma: number }> = {
-    light: { hue: 0, chroma: 0 },
-    dark: { hue: 0, chroma: 0 },
-    slate: { hue: 245, chroma: 0.14 },
-    oled: { hue: 0, chroma: 0 },
-    ocean: { hue: 195, chroma: 0.15 },
-    night: { hue: 290, chroma: 0.16 },
-    'high-contrast': { hue: 0, chroma: 0 },
-}
-
 export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig {
     /* Every axis is indexed by a value coming from outside (localStorage, JSON payload,
      hand-written config). An unknown value must degrade to the default axis, never throw. */
     const fallback = DEFAULT_DESIGN_CONFIG
-    const themeAccent = THEME_DEFAULT_ACCENTS[config.theme] ?? THEME_DEFAULT_ACCENTS[fallback.theme]
-    const accent =
-        config.accent && config.accent !== 'neutral' && accentColors[config.accent]
-            ? accentColors[config.accent]
-            : themeAccent
+    const accent = accentColors[config.accent] ?? accentColors[fallback.accent]
     /* `theme` is the accent-linked role: an unknown role inherits the accent. */
     const role = componentRoles[config.componentColor] ?? componentRoles.theme
 

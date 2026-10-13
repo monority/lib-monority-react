@@ -11,9 +11,15 @@ interface AxisDefinition {
 const AXES: readonly AxisDefinition[] = [
     {
         key: 'theme',
-        label: 'Theme & Accent',
+        label: 'Theme',
         ariaLabel: 'Theme axis',
         items: DESIGN_PRESETS.themes,
+    },
+    {
+        key: 'accent',
+        label: 'Accent',
+        ariaLabel: 'Accent axis',
+        items: DESIGN_PRESETS.accents,
     },
     {
         key: 'radius',
