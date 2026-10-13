@@ -179,30 +179,34 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                     to={introductionItem.path}
                     className={`docs-nav-link ${pathname === introductionItem.path ? 'active' : ''}`}
                 >
-                    <span>{introductionItem.label}</span>
-                    <Badge
-                        size="sm"
-                        variant={introductionItem.status === 'stable' ? 'success' : 'default'}
-                        data-status={introductionItem.status}
-                        className="docs-status"
-                    >
-                        {introductionItem.status}
-                    </Badge>
+                    <span className="docs-nav-label">{introductionItem.label}</span>
+                    {introductionItem.status !== 'stable' ? (
+                        <Badge
+                            size="sm"
+                            variant="default"
+                            data-status={introductionItem.status}
+                            className="docs-nav-badge"
+                        >
+                            {introductionItem.status}
+                        </Badge>
+                    ) : null}
                 </Link>
 
                 <Link
                     to={installationItem.path}
                     className={`docs-nav-link ${pathname === installationItem.path ? 'active' : ''}`}
                 >
-                    <span>{installationItem.label}</span>
-                    <Badge
-                        size="sm"
-                        variant={installationItem.status === 'stable' ? 'success' : 'default'}
-                        data-status={installationItem.status}
-                        className="docs-status"
-                    >
-                        {installationItem.status}
-                    </Badge>
+                    <span className="docs-nav-label">{installationItem.label}</span>
+                    {installationItem.status !== 'stable' ? (
+                        <Badge
+                            size="sm"
+                            variant="default"
+                            data-status={installationItem.status}
+                            className="docs-nav-badge"
+                        >
+                            {installationItem.status}
+                        </Badge>
+                    ) : null}
                 </Link>
 
                 {Object.entries(groupedItems).map(([category, categoryItems]) => (
@@ -214,15 +218,17 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                                 to={item.path}
                                 className={`docs-nav-link ${pathname === item.path ? 'active' : ''}`}
                             >
-                                <span>{item.label}</span>
-                                <Badge
-                                    size="sm"
-                                    variant={item.status === 'stable' ? 'success' : 'default'}
-                                    data-status={item.status}
-                                    className="docs-status"
-                                >
-                                    {item.status}
-                                </Badge>
+                                <span className="docs-nav-label">{item.label}</span>
+                                {item.status !== 'stable' ? (
+                                    <Badge
+                                        size="sm"
+                                        variant="default"
+                                        data-status={item.status}
+                                        className="docs-nav-badge"
+                                    >
+                                        {item.status}
+                                    </Badge>
+                                ) : null}
                             </Link>
                         ))}
                     </section>

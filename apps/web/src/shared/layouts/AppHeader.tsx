@@ -4,8 +4,6 @@ import './AppHeader.css'
 
 const headerLinks = [
     { label: 'Docs', to: '/docs' },
-    { label: 'Showcase', to: '/showcase' },
-    { label: 'Playground', to: '/playground' },
     { label: 'Moodboard', to: '/moodboard' },
 ]
 

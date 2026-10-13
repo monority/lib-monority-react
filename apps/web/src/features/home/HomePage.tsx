@@ -28,8 +28,6 @@ export function HomePage() {
                     <span>Monority UI — MIT License</span>
                     <div style={{ display: 'flex', gap: 'var(--mr-space-4)' }}>
                         <Link to="/docs">Docs</Link>
-                        <Link to="/showcase">Showcase</Link>
-                        <Link to="/playground">Playground</Link>
                         <Link to="/moodboard">Design Studio</Link>
                     </div>
                 </footer>
