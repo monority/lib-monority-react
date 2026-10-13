@@ -20,13 +20,10 @@ describe('MoodboardPage', () => {
 
         /* Config axes present */
         expect(screen.getByRole('group', { name: 'Theme axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Brand axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Accent axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Component color axis' })).toBeInTheDocument()
-        expect(screen.getByRole('group', { name: 'Chart palette axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Radius axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Spacing axis' })).toBeInTheDocument()
         expect(screen.getByRole('group', { name: 'Layout density axis' })).toBeInTheDocument()
+        expect(screen.getByRole('group', { name: 'Chart palette axis' })).toBeInTheDocument()
     })
 
     it('renders the shared app header above the studio', () => {
@@ -79,21 +76,21 @@ describe('MoodboardPage', () => {
         expect(screen.getByText('Tests')).toBeInTheDocument()
     })
 
-    it('changing accent axis updates preview scope attribute', () => {
+    it('changing theme axis updates preview scope and resolves dynamic theme accent', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
-        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
 
         fireEvent.change(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
-            { target: { value: 'violet' } }
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
-        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+        expect(scope).toHaveAttribute('data-design-theme', 'ocean')
 
         /* Verify the resolved CSS variable changes on DesignProvider root */
         const root = screen.getByTestId('moodboard-page').parentElement!
-        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('295')
+        expect(root.style.getPropertyValue('--mr-brand-hue')).toBe('195')
     })
 
     it('changing radius axis updates preview scope attribute', () => {
@@ -109,17 +106,6 @@ describe('MoodboardPage', () => {
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
     })
 
-    it('changing theme axis updates preview scope data-design-theme', () => {
-        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
-
-        const scope = screen.getByTestId('moodboard-preview-scope')
-        fireEvent.change(
-            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
-            { target: { value: 'light' } }
-        )
-        expect(scope).toHaveAttribute('data-design-theme', 'light')
-    })
-
     it('reset button restores default configuration', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
@@ -127,21 +113,21 @@ describe('MoodboardPage', () => {
 
         /* Change some axes */
         fireEvent.change(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
-            { target: { value: 'violet' } }
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
         fireEvent.change(
             within(screen.getByRole('group', { name: 'Radius axis' })).getByRole('combobox'),
             { target: { value: 'rounded' } }
         )
 
-        expect(scope).toHaveAttribute('data-design-accent', 'violet')
+        expect(scope).toHaveAttribute('data-design-theme', 'ocean')
         expect(scope).toHaveAttribute('data-design-radius', 'rounded')
 
         /* Reset */
         fireEvent.click(screen.getByTestId('moodboard-reset'))
 
-        expect(scope).toHaveAttribute('data-design-accent', 'neutral')
+        expect(scope).toHaveAttribute('data-design-theme', 'dark')
         expect(scope).toHaveAttribute('data-design-radius', 'default')
     })
 
@@ -152,8 +138,8 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         fireEvent.change(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
-            { target: { value: 'violet' } }
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
         await act(async () => {
             fireEvent.click(screen.getByTestId('moodboard-copy'))
@@ -161,20 +147,20 @@ describe('MoodboardPage', () => {
 
         expect(writeText).toHaveBeenCalled()
         const copiedJson = JSON.parse(String(writeText.mock.calls[0]?.[0]))
-        expect(copiedJson.accent).toBe('violet')
+        expect(copiedJson.theme).toBe('ocean')
     })
 
     it('persists configuration to localStorage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         fireEvent.change(
-            within(screen.getByRole('group', { name: 'Accent axis' })).getByRole('combobox'),
-            { target: { value: 'violet' } }
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
         )
 
         const stored = localStorage.getItem('monority-design-config')
         expect(stored).toBeTruthy()
-        expect(JSON.parse(stored!).accent).toBe('violet')
+        expect(JSON.parse(stored!).theme).toBe('ocean')
     })
 
     it('sidebar token details are collapsible', () => {

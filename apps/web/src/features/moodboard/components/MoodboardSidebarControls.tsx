@@ -11,33 +11,9 @@ interface AxisDefinition {
 const AXES: readonly AxisDefinition[] = [
     {
         key: 'theme',
-        label: 'Theme',
+        label: 'Theme & Accent',
         ariaLabel: 'Theme axis',
         items: DESIGN_PRESETS.themes,
-    },
-    {
-        key: 'brand',
-        label: 'Brand',
-        ariaLabel: 'Brand axis',
-        items: DESIGN_PRESETS.brands,
-    },
-    {
-        key: 'accent',
-        label: 'Accent',
-        ariaLabel: 'Accent axis',
-        items: DESIGN_PRESETS.accents,
-    },
-    {
-        key: 'componentColor',
-        label: 'Component Color',
-        ariaLabel: 'Component color axis',
-        items: DESIGN_PRESETS.componentColors,
-    },
-    {
-        key: 'chartPalette',
-        label: 'Chart Palette',
-        ariaLabel: 'Chart palette axis',
-        items: DESIGN_PRESETS.chartPalettes,
     },
     {
         key: 'radius',
@@ -56,6 +32,12 @@ const AXES: readonly AxisDefinition[] = [
         label: 'Layout Density',
         ariaLabel: 'Layout density axis',
         items: DESIGN_PRESETS.densities,
+    },
+    {
+        key: 'chartPalette',
+        label: 'Chart Palette',
+        ariaLabel: 'Chart palette axis',
+        items: DESIGN_PRESETS.chartPalettes,
     },
 ]
 

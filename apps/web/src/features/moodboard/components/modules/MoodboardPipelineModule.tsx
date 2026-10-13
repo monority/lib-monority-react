@@ -53,7 +53,7 @@ export function MoodboardPipelineModule() {
                         label="Edge rollout"
                         value={rolloutPercent}
                         showValue
-                        tone={rolloutPercent === 100 ? 'success' : 'neutral'}
+                        tone={rolloutPercent === 100 ? 'success' : 'accent'}
                     />
 
                     <Callout tone="info" title="Canary analysis active">
@@ -73,7 +73,7 @@ export function MoodboardPipelineModule() {
                 >
                     <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
                         <Button
-                            variant="secondary"
+                            variant="primary"
                             size="sm"
                             loading={isAdvancing}
                             onClick={handleAdvance}

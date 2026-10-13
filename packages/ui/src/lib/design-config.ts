@@ -204,27 +204,27 @@ export interface ResolvedDesignConfig {
     chartColors: string[]
 }
 
+export const THEME_DEFAULT_ACCENTS: Record<ResolvedThemeName, { hue: number; chroma: number }> = {
+    light: { hue: 0, chroma: 0 },
+    dark: { hue: 0, chroma: 0 },
+    slate: { hue: 245, chroma: 0.14 },
+    oled: { hue: 0, chroma: 0 },
+    ocean: { hue: 195, chroma: 0.15 },
+    night: { hue: 290, chroma: 0.16 },
+    'high-contrast': { hue: 0, chroma: 0 },
+}
+
 export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig {
     /* Every axis is indexed by a value coming from outside (localStorage, JSON payload,
      hand-written config). An unknown value must degrade to the default axis, never throw. */
     const fallback = DEFAULT_DESIGN_CONFIG
-    const accent = accentColors[config.accent] ?? accentColors[fallback.accent]
+    const themeAccent = THEME_DEFAULT_ACCENTS[config.theme] ?? THEME_DEFAULT_ACCENTS[fallback.theme]
+    const accent =
+        config.accent && config.accent !== 'neutral' && accentColors[config.accent]
+            ? accentColors[config.accent]
+            : themeAccent
     /* `theme` is the accent-linked role: an unknown role inherits the accent. */
     const role = componentRoles[config.componentColor] ?? componentRoles.theme
-    const radiusValues: Record<RadiusPreset, [string, string, string, string]> = {
-        sharp: ['0px', '2px', '4px', '6px'],
-        compact: ['2px', '4px', '6px', '8px'],
-        default: ['4px', '6px', '10px', '12px'],
-        rounded: ['6px', '10px', '16px', '20px'],
-        pill: ['10px', '16px', '9999px', '9999px'],
-    }
-
-    const spacingFactors: Record<SpacingPreset, number> = {
-        dense: 0.75,
-        default: 1,
-        comfortable: 1.125,
-        airy: 1.25,
-    }
 
     const radius = radiusValues[config.radius] ?? radiusValues[fallback.radius]
     const factor = spacingFactors[config.spacing] ?? spacingFactors[fallback.spacing]

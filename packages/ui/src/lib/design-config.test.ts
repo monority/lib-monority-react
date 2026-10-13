@@ -35,6 +35,20 @@ describe('design configuration', () => {
         expect(DESIGN_PRESETS.chartPalettes).toHaveLength(4)
     })
 
+    it('adopts native theme accents when accent is neutral or follows theme', () => {
+        const ocean = resolveDesignConfig({ ...DEFAULT_DESIGN_CONFIG, theme: 'ocean' })
+        expect(ocean.accent).toEqual({ hue: 195, chroma: 0.15 })
+        expect(ocean.style['--mr-ref-brand-hue']).toBe('195')
+
+        const night = resolveDesignConfig({ ...DEFAULT_DESIGN_CONFIG, theme: 'night' })
+        expect(night.accent).toEqual({ hue: 290, chroma: 0.16 })
+        expect(night.style['--mr-ref-brand-hue']).toBe('290')
+
+        const slate = resolveDesignConfig({ ...DEFAULT_DESIGN_CONFIG, theme: 'slate' })
+        expect(slate.accent).toEqual({ hue: 245, chroma: 0.14 })
+        expect(slate.style['--mr-ref-brand-hue']).toBe('245')
+    })
+
     it('composes accent, component, radius, spacing and chart axes independently', () => {
         const resolved = resolveDesignConfig({
             theme: 'light',

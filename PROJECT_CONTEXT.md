@@ -66,21 +66,12 @@ Realisations majeures de ce chantier :
   - Ajustement des contrastes de bordures sur input, textarea, select, switch et checkbox pour alleger le rendu visuel sur l'ensemble des 7 themes sans rompre le seuil d'accessibilite 3:1.
 - Refonte complete de la page Moodboard Design Studio :
   - Architecture 100% composants utilisant SidebarLayout officiel avec panneau lateral sticky persistant au defilement.
-  - Moteur de configuration de design live reactif sur 8 axes : Theme, Mode sombre/clair, Contraste, Accent, Couleur composant, Rayon de courbure (Corner Radius), Echelle d'espacement (Spacing Scale), Densite de layout et Palette de graphiques.
-  - Graphique de telemetrie SVG anime avec courbes lissees, scrubber interactif et lignes de grille x/y adoucies.
-  - Organisation en grille responsive homogene a 2 colonnes integrant 10 modules concrets de web apps :
-    - Services edge (monitoring, badge de statut, metriques)
-    - Formulaire de deploiement (champs texte, selecteur d'environnement, switch)
-    - Pipeline canary (stepper d'etapes de livraison)
-    - Showcase tokens et boutons (variantes, etats, delta badges)
-    - Facturation et paiement (carte bancaire Visa, switch auto-renouvellement, boutons de plan)
-    - Centre de notifications et activite recente (pastilles non lues, liste horodatee)
-    - Gestionnaire de tâches de sprint (checklist interactive avec cases a cocher et priorites)
-    - Discussion d'equipe et support instantane (avatars, statuts en ligne, bulles et saisie)
-    - Quotas et ressources cloud (jauges de progression, slider CPU)
-    - Acces d'equipe et permissions RBAC (table de membres, roles et badges)
+  - Fusion Theme & Accent : l'accent n'est plus un axe isole mais decoule nativement du theme actif (Ocean: turquoise marine H=195, Night: Tokyo violet H=290, Slate: indigo ardoise H=245, OLED/Dark/Light: neutre monochromatique pur).
+  - Barre laterale calibree sur 5 axes directeurs essentiels : Theme & Accent, Rayon de courbure (Corner Radius), Echelle d'espacement (Spacing Scale), Densite de layout et Palette de graphiques.
+  - Dynamisme d'accent etendu sur l'ensemble des modules : boutons d'action primaires, badges, interrupteurs, cases a cocher et jauges de progression adaptes en tone="accent", courbe principale du graphique de telemetrie SVG synchronisee sur --mr-accent-solid.
+  - Organisation en grille responsive homogene a 2 colonnes integrant 10 modules concrets de web apps (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
 - Validation technique :
-  - pnpm verify : 100% succes (108 suites / 1359 tests packages/ui, 15 suites / 85 tests apps/web, Playwright tests de contraste OLED/Light/Slate/Ocean, Biome format, Stylelint).
+  - pnpm verify : 100% succes (108 suites / 1360 tests packages/ui, 15 suites / 84 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).
   - pnpm --filter @monority/ui test:dist : 100% succes.
 
 ---

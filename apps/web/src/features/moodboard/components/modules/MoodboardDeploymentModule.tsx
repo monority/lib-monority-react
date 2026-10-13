@@ -101,6 +101,7 @@ export function MoodboardDeploymentModule() {
                             label="Signed builds only"
                             checked={signedOnly}
                             onChange={(e) => setSignedOnly(e.target.checked)}
+                            tone="accent"
                             size="sm"
                         />
                         <Switch
@@ -108,6 +109,7 @@ export function MoodboardDeploymentModule() {
                             label="Notifications"
                             checked={notifications}
                             onChange={(e) => setNotifications(e.target.checked)}
+                            tone="accent"
                             size="sm"
                         />
                     </Grid>
@@ -125,7 +127,7 @@ export function MoodboardDeploymentModule() {
                 >
                     <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
                         <Button
-                            variant="secondary"
+                            variant="primary"
                             size="sm"
                             loading={isTriggering}
                             onClick={handleTrigger}

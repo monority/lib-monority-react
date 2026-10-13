@@ -104,7 +104,7 @@ export function MoodboardChatModule() {
                                         ? 'var(--mr-accent-solid)'
                                         : 'var(--mr-bg-sunken)',
                                     color: msg.isSelf
-                                        ? 'var(--mr-text-on-accent, #fff)'
+                                        ? 'var(--mr-bg-canvas)'
                                         : 'var(--mr-text-primary)',
                                     border: msg.isSelf
                                         ? 'none'

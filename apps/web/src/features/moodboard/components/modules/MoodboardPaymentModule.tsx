@@ -66,7 +66,7 @@ export function MoodboardPaymentModule() {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    color: 'var(--mr-text-on-accent, #fff)',
+                                    color: 'var(--mr-bg-canvas)',
                                     fontFamily: 'var(--mr-font-family-mono)',
                                     fontWeight: 700,
                                     fontSize: '0.625rem',
@@ -120,6 +120,7 @@ export function MoodboardPaymentModule() {
                             label="Auto-renew"
                             checked={autoRenew}
                             onChange={(e) => setAutoRenew(e.target.checked)}
+                            tone="accent"
                             size="sm"
                         />
                     </div>

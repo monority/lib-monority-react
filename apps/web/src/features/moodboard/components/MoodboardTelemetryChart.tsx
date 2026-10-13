@@ -322,7 +322,7 @@ export function MoodboardTelemetryChart() {
                                     width: 8,
                                     height: 8,
                                     borderRadius: '50%',
-                                    backgroundColor: 'var(--mr-chart-1)',
+                                    backgroundColor: 'var(--mr-accent-solid)',
                                     display: 'inline-block',
                                 }}
                             />
@@ -441,12 +441,12 @@ export function MoodboardTelemetryChart() {
                             <linearGradient id="mr-chart-grad-ingress" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="0%"
-                                    stopColor="var(--mr-chart-1)"
-                                    stopOpacity="0.24"
+                                    stopColor="var(--mr-accent-solid)"
+                                    stopOpacity="0.25"
                                 />
                                 <stop
                                     offset="100%"
-                                    stopColor="var(--mr-chart-1)"
+                                    stopColor="var(--mr-accent-solid)"
                                     stopOpacity="0.0"
                                 />
                             </linearGradient>
@@ -578,7 +578,7 @@ export function MoodboardTelemetryChart() {
                             <path
                                 d={ingressCurve}
                                 fill="none"
-                                stroke="var(--mr-chart-1)"
+                                stroke="var(--mr-accent-solid)"
                                 strokeWidth="2"
                                 style={{ transition: 'd 0.35s ease' }}
                             />
@@ -615,14 +615,14 @@ export function MoodboardTelemetryChart() {
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
                             r="7"
-                            fill="var(--mr-chart-1)"
+                            fill="var(--mr-accent-solid)"
                             fillOpacity="0.25"
                         />
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
                             r="4"
-                            fill="var(--mr-chart-1)"
+                            fill="var(--mr-accent-solid)"
                             stroke="var(--mr-bg-surface)"
                             strokeWidth="2"
                         />

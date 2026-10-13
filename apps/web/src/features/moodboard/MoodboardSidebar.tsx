@@ -58,7 +58,7 @@ export function MoodboardSidebar({
                 </Text>
             </Stack>
 
-            <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
+            <Stack direction="horizontal" gap="sm">
                 <Button
                     variant="secondary"
                     size="sm"
@@ -77,7 +77,7 @@ export function MoodboardSidebar({
                 >
                     {copied ? 'Copied!' : 'Copy JSON'}
                 </Button>
-            </div>
+            </Stack>
 
             <Separator />
 

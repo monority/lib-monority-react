@@ -98,6 +98,7 @@ export function MoodboardTasksModule() {
                                 label={task.text}
                                 checked={task.done}
                                 onChange={() => handleToggle(task.id)}
+                                tone="accent"
                                 size="sm"
                                 style={{
                                     textDecoration: task.done ? 'line-through' : 'none',

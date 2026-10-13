@@ -51,7 +51,7 @@ export function MoodboardQuotasModule() {
                         label="Bandwidth Allocation (7.8 / 10 TB)"
                         value={78}
                         showValue
-                        tone="neutral"
+                        tone="accent"
                     />
 
                     <Progress label="Worker Memory Headroom" value={82} showValue tone="warning" />
@@ -96,7 +96,7 @@ export function MoodboardQuotasModule() {
                     }}
                 >
                     <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="secondary" size="sm">
+                        <Button variant="primary" size="sm">
                             Upgrade Quota
                         </Button>
                         <Button variant="ghost" size="sm">

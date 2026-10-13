@@ -150,7 +150,7 @@ export function MoodboardTeamModule() {
                     }}
                 >
                     <div style={{ display: 'flex', gap: 'var(--mr-space-2)' }}>
-                        <Button variant="secondary" size="sm">
+                        <Button variant="primary" size="sm">
                             Invite Member
                         </Button>
                         <Button variant="ghost" size="sm">
