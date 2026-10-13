@@ -58,7 +58,7 @@ export function MoodboardSidebar({
     }
 
     return (
-        <aside className="moodboard-sidebar" aria-label="Design configuration">
+        <div className="moodboard-sidebar" role="region" aria-label="Design configuration">
             <MoodboardSidebarHeader onCopy={onCopy} onReset={onReset} copied={copied} />
 
             <div className="moodboard-sidebar__axes">
@@ -75,6 +75,6 @@ export function MoodboardSidebar({
             </div>
 
             <MoodboardTokenDetails config={config} />
-        </aside>
+        </div>
     )
 }

@@ -6,48 +6,20 @@
 /* === Page shell === */
 
 .moodboard-page {
-    /* Config rail width. */
-    --moodboard-rail: 17rem;
-    /* Global app header height (AppHeader, sticky). Mirrors
-       .app-header__inner min-block-size so the rail sticks below it. */
-    --moodboard-header-h: calc(var(--mr-control-size-lg) + var(--mr-space-2));
-
-    display: grid;
-    grid-template-columns: minmax(0, var(--moodboard-rail)) minmax(0, 1fr);
-    align-items: start;
-    min-block-size: 100vh;
-    min-block-size: 100dvh;
-    /* `clip` (not `hidden`) — `hidden` would turn the page into a scrollport
-       and silently kill vertical `position: sticky` for the rail below. */
-    overflow-x: clip;
-    background: var(--mr-bg-canvas);
-    color: var(--mr-text-primary);
+    min-block-size: calc(100dvh - var(--app-header-height, 3.5rem));
 }
 
 .moodboard-design-root {
     display: contents;
 }
 
-/* === Config rail (sticky, inline-start) === */
-
-/* /moodboard is a standalone route (app-routes.tsx): no AppShell, but the
-   shared AppHeader sits above the page. The rail sticks below that header
-   and scrolls internally. */
 .moodboard-sidebar {
-    position: sticky;
-    z-index: var(--mr-z-sticky);
-    top: var(--moodboard-header-h);
-    align-self: start;
-    display: grid;
-    gap: var(--mr-spacing-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-4);
+    padding: var(--mr-space-4);
     inline-size: 100%;
-    min-inline-size: 0;
-    max-block-size: calc(100dvh - var(--moodboard-header-h) - var(--mr-spacing-4));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: var(--mr-spacing-4) var(--mr-spacing-4) var(--mr-spacing-5);
-    border-inline-end: var(--mr-border-width) solid var(--mr-border-subtle);
-    background: var(--mr-bg-surface);
+    box-sizing: border-box;
 }
 
 .moodboard-sidebar__header {
@@ -428,32 +400,10 @@
 /* === Responsive === */
 
 /* Rail narrows before it collapses. */
-@media (max-width: 1280px) {
-    .moodboard-page {
-        --moodboard-rail: 15rem;
-    }
-}
-
-/* Below the sidebar-layout/topbar breakpoint the rail cannot stay sticky:
-   eight axes would eat the whole viewport. Fall back to a static panel. */
 @media (max-width: 900px) {
-    .moodboard-page {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .moodboard-sidebar {
-        position: static;
-        max-block-size: none;
-        overflow-y: visible;
-        padding-inline: 0;
-        border-inline-end: 0;
-        border-block-end: var(--mr-border-width) solid var(--mr-border-subtle);
-        padding-block-end: var(--mr-spacing-4);
-    }
-
     .moodboard-sidebar__axes {
         grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
-        gap: var(--mr-spacing-3) var(--mr-spacing-4);
+        gap: var(--mr-space-3) var(--mr-space-4);
     }
 
     .moodboard-preview__grid {
