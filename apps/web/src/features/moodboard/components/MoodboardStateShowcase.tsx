@@ -1,37 +1,39 @@
-import { Callout } from '@monority/ui/callout'
-import { Card } from '@monority/ui/card'
-import { Progress } from '@monority/ui/progress'
-import { Stack } from '@monority/ui/stack'
-import { StatCard } from '@monority/ui/stat-card'
+import { Callout, Card, Grid, Progress, Stack, StatCard, Text } from '@monority/ui'
 
 export function MoodboardStateShowcase() {
     return (
-        <Card className="moodboard-card" padding="md">
+        <Card padding="md">
             <Card.Header>
-                <span className="moodboard-kicker">DATA STATES</span>
+                <Text size="sm" tone="muted">
+                    DATA STATES
+                </Text>
             </Card.Header>
             <Card.Content>
                 <Stack gap="md">
-                    <div className="moodboard-data-grid">
-                        <StatCard
-                            label="LOADING"
-                            value="—"
-                            description="Waiting for the next release"
-                        />
+                    <Grid columns={2}>
+                        <div style={{ gridColumn: '1 / -1' }}>
+                            <StatCard
+                                label="LOADING"
+                                value="—"
+                                description="Waiting for the next release"
+                            />
+                        </div>
                         <Callout tone="info" title="No incidents">
                             All regions are inside the error budget.
                         </Callout>
                         <Callout tone="warning" title="Review required">
                             One deploy is waiting for approval.
                         </Callout>
-                    </div>
+                    </Grid>
 
-                    <span className="moodboard-kicker">PROGRESS</span>
-                    <div className="moodboard-progress-group">
+                    <Text size="sm" tone="muted">
+                        PROGRESS
+                    </Text>
+                    <Stack gap="sm">
                         <Progress label="Deploy" value={72} showValue tone="neutral" />
                         <Progress label="Migrations" value={45} showValue tone="warning" />
                         <Progress label="Tests" value={98} showValue tone="success" />
-                    </div>
+                    </Stack>
                 </Stack>
             </Card.Content>
         </Card>

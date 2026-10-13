@@ -1,16 +1,22 @@
-import { BadgeDelta } from '@monority/ui/badge-delta'
-import { Card } from '@monority/ui/card'
-import { Rating } from '@monority/ui/rating'
-import { SegmentedControl } from '@monority/ui/segmented-control'
-import { Stack } from '@monority/ui/stack'
-import { Stepper } from '@monority/ui/stepper'
+import {
+    BadgeDelta,
+    Card,
+    Grid,
+    Rating,
+    SegmentedControl,
+    Stack,
+    Stepper,
+    Text,
+} from '@monority/ui'
 
 export function MoodboardAdvancedControls() {
     return (
-        <div className="moodboard-preview__grid">
-            <Card className="moodboard-card" padding="md">
+        <Grid columns={2}>
+            <Card padding="md">
                 <Card.Header>
-                    <span className="moodboard-kicker">SEQUENCE & CONTROLS</span>
+                    <Text size="sm" tone="muted">
+                        SEQUENCE & CONTROLS
+                    </Text>
                 </Card.Header>
                 <Card.Content>
                     <Stack gap="md">
@@ -35,66 +41,35 @@ export function MoodboardAdvancedControls() {
                 </Card.Content>
             </Card>
 
-            <Card className="moodboard-card" padding="md">
+            <Card padding="md">
                 <Card.Header>
-                    <span className="moodboard-kicker">RATINGS & PERFORMANCE</span>
+                    <Text size="sm" tone="muted">
+                        RATINGS & PERFORMANCE
+                    </Text>
                 </Card.Header>
                 <Card.Content>
                     <Stack gap="md">
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    fontSize: 'var(--mr-text-sm)',
-                                    color: 'var(--mr-fg-muted)',
-                                }}
-                            >
+                        <Stack direction="horizontal" justify="between" align="center">
+                            <Text size="sm" tone="muted">
                                 Satisfaction equipe
-                            </span>
+                            </Text>
                             <Rating value={5} readOnly size="sm" />
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    fontSize: 'var(--mr-text-sm)',
-                                    color: 'var(--mr-fg-muted)',
-                                }}
-                            >
+                        </Stack>
+                        <Stack direction="horizontal" justify="between" align="center">
+                            <Text size="sm" tone="muted">
                                 Efficacite reseau
-                            </span>
+                            </Text>
                             <BadgeDelta deltaType="moderate-increase">+28.4%</BadgeDelta>
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    fontSize: 'var(--mr-text-sm)',
-                                    color: 'var(--mr-fg-muted)',
-                                }}
-                            >
+                        </Stack>
+                        <Stack direction="horizontal" justify="between" align="center">
+                            <Text size="sm" tone="muted">
                                 Temps d execution
-                            </span>
+                            </Text>
                             <BadgeDelta deltaType="moderate-decrease">-42 ms</BadgeDelta>
-                        </div>
+                        </Stack>
                     </Stack>
                 </Card.Content>
             </Card>
-        </div>
+        </Grid>
     )
 }

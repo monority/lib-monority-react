@@ -1,12 +1,16 @@
-import { Card } from '@monority/ui/card'
-import { Checkbox } from '@monority/ui/checkbox'
-import { Grid } from '@monority/ui/grid'
-import { Input } from '@monority/ui/input'
-import { Select } from '@monority/ui/select'
-import { Stack } from '@monority/ui/stack'
-import { Switch } from '@monority/ui/switch'
-import { Tabs } from '@monority/ui/tabs'
-import { Textarea } from '@monority/ui/textarea'
+import {
+    Card,
+    Checkbox,
+    Grid,
+    Input,
+    Select,
+    Stack,
+    Switch,
+    Tabs,
+    Text,
+    Textarea,
+    Title,
+} from '@monority/ui'
 
 export interface MoodboardControlSurfaceProps {
     tab: string
@@ -40,23 +44,34 @@ export function MoodboardControlSurface({
     onNotificationsChange,
 }: MoodboardControlSurfaceProps) {
     return (
-        <Card className="moodboard-card" padding="md">
-            <Card.Header className="moodboard-card__topline">
-                <div>
-                    <span className="moodboard-kicker">CONTROL SURFACE</span>
-                    <h3>Component language</h3>
-                </div>
-                <Tabs
-                    size="sm"
-                    value={tab}
-                    onChange={onTabChange}
-                    items={tabItems}
-                    aria-label="Preview sections"
-                />
+        <Card padding="md">
+            <Card.Header>
+                <Stack
+                    direction="horizontal"
+                    justify="between"
+                    align="center"
+                    style={{ width: '100%' }}
+                >
+                    <Stack gap="xs">
+                        <Text size="sm" tone="muted">
+                            CONTROL SURFACE
+                        </Text>
+                        <Title as="h3" size="md">
+                            Component language
+                        </Title>
+                    </Stack>
+                    <Tabs
+                        size="sm"
+                        value={tab}
+                        onChange={onTabChange}
+                        items={tabItems}
+                        aria-label="Preview sections"
+                    />
+                </Stack>
             </Card.Header>
             <Card.Content>
                 <Stack gap="md">
-                    <Grid columns={2} className="moodboard-form-grid">
+                    <Grid columns={2}>
                         <Input
                             id="moodboard-workspace"
                             label="Workspace"
@@ -83,7 +98,7 @@ export function MoodboardControlSurface({
                         rows={2}
                         size="sm"
                     />
-                    <Stack direction="horizontal" gap="md" className="moodboard-form-row">
+                    <Grid columns={2}>
                         <Checkbox
                             id="moodboard-signed"
                             label="Signed builds only"
@@ -98,7 +113,7 @@ export function MoodboardControlSurface({
                             onChange={(event) => onNotificationsChange(event.target.checked)}
                             size="sm"
                         />
-                    </Stack>
+                    </Grid>
                     <Checkbox
                         id="moodboard-validation"
                         label="Require owner approval"

@@ -373,6 +373,13 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         status: 'draft',
     },
     {
+        category: 'display',
+        label: 'ColorSwatch',
+        path: '/docs/color-swatch',
+        slug: 'color-swatch',
+        status: 'stable',
+    },
+    {
         category: 'data',
         label: 'MetricGrid',
         path: '/docs/metric-grid',

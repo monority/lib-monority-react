@@ -1,6 +1,4 @@
-import { Badge } from '@monority/ui/badge'
-import { Card } from '@monority/ui/card'
-import { Table, type Column } from '@monority/ui/table'
+import { Badge, Card, Stack, Table, Text, type Column } from '@monority/ui'
 
 export interface MoodboardServiceHealthProps {
     selectedRow: string
@@ -11,7 +9,7 @@ const tableColumns: Column[] = [
     { key: 'service', label: 'Service' },
     { key: 'region', label: 'Region' },
     { key: 'status', label: 'Status' },
-    { key: 'latency', label: 'Latency', className: 'moodboard-table__number' },
+    { key: 'latency', label: 'Latency' },
 ]
 
 const tableRows = [
@@ -29,10 +27,16 @@ const badgeForStatus = (status: string) => {
 
 export function MoodboardServiceHealth({ selectedRow, onSelectRow }: MoodboardServiceHealthProps) {
     return (
-        <Card className="moodboard-card" padding="md">
-            <Card.Header className="moodboard-card__topline">
-                <span className="moodboard-kicker">SERVICE HEALTH</span>
-                <span className="moodboard-mono">{tableRows.length} NODES</span>
+        <Card padding="md">
+            <Card.Header>
+                <Stack direction="horizontal" justify="between" align="center">
+                    <Text size="sm" tone="muted">
+                        SERVICE HEALTH
+                    </Text>
+                    <Text size="sm" tone="muted">
+                        {tableRows.length} NODES
+                    </Text>
+                </Stack>
             </Card.Header>
             <Card.Content>
                 <Table
@@ -47,10 +51,25 @@ export function MoodboardServiceHealth({ selectedRow, onSelectRow }: MoodboardSe
                                     ...column,
                                     render: (value) => (
                                         <button
-                                            className="moodboard-row-button"
                                             type="button"
                                             onClick={() => onSelectRow(String(value))}
                                             aria-pressed={selectedRow === String(value)}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                padding: 0,
+                                                font: 'inherit',
+                                                color:
+                                                    selectedRow === String(value)
+                                                        ? 'var(--mr-text-primary)'
+                                                        : 'var(--mr-accent)',
+                                                cursor: 'pointer',
+                                                textDecoration:
+                                                    selectedRow === String(value)
+                                                        ? 'underline'
+                                                        : 'none',
+                                                textUnderlineOffset: 'var(--mr-space-1)',
+                                            }}
                                         >
                                             {String(value)}
                                             {String(value) === selectedRow ? ' ·' : ''}
@@ -60,7 +79,6 @@ export function MoodboardServiceHealth({ selectedRow, onSelectRow }: MoodboardSe
                               : column
                     )}
                     rows={tableRows}
-                    tableClassName="moodboard-table"
                 />
             </Card.Content>
         </Card>

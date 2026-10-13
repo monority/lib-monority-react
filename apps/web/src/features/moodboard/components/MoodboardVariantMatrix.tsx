@@ -1,7 +1,4 @@
-import { Badge } from '@monority/ui/badge'
-import { Button } from '@monority/ui/button'
-import { Card } from '@monority/ui/card'
-import { Stack } from '@monority/ui/stack'
+import { Badge, Button, Card, Stack, Text } from '@monority/ui'
 
 const buttonVariants = ['primary', 'secondary', 'ghost', 'danger'] as const
 const badgeVariants = ['default', 'primary', 'success', 'warning', 'danger'] as const
@@ -9,13 +6,20 @@ const buttonSizes = ['sm', 'md', 'lg'] as const
 
 export function MoodboardVariantMatrix() {
     return (
-        <Card className="moodboard-card" padding="md">
+        <Card padding="md">
             <Card.Header>
-                <span className="moodboard-kicker">BUTTON VARIANTS</span>
+                <Text size="sm" tone="muted">
+                    BUTTON VARIANTS
+                </Text>
             </Card.Header>
             <Card.Content>
                 <Stack gap="md">
-                    <div className="moodboard-button-row">
+                    <Stack
+                        direction="horizontal"
+                        gap="xs"
+                        align="center"
+                        style={{ flexWrap: 'wrap' }}
+                    >
                         {buttonVariants.map((variant) => (
                             <Button key={variant} variant={variant} size="sm">
                                 {variant}
@@ -27,25 +31,39 @@ export function MoodboardVariantMatrix() {
                         <Button size="sm" loading>
                             loading
                         </Button>
-                    </div>
+                    </Stack>
 
-                    <span className="moodboard-kicker">BADGE VARIANTS</span>
-                    <div className="moodboard-badge-row">
+                    <Text size="sm" tone="muted">
+                        BADGE VARIANTS
+                    </Text>
+                    <Stack
+                        direction="horizontal"
+                        gap="xs"
+                        align="center"
+                        style={{ flexWrap: 'wrap' }}
+                    >
                         {badgeVariants.map((variant) => (
                             <Badge key={variant} variant={variant}>
                                 {variant}
                             </Badge>
                         ))}
-                    </div>
+                    </Stack>
 
-                    <span className="moodboard-kicker">SIZE LADDER</span>
-                    <div className="moodboard-size-row">
+                    <Text size="sm" tone="muted">
+                        SIZE LADDER
+                    </Text>
+                    <Stack
+                        direction="horizontal"
+                        gap="xs"
+                        align="center"
+                        style={{ flexWrap: 'wrap' }}
+                    >
                         {buttonSizes.map((size) => (
                             <Button key={size} size={size}>
                                 Button {size}
                             </Button>
                         ))}
-                    </div>
+                    </Stack>
                 </Stack>
             </Card.Content>
         </Card>

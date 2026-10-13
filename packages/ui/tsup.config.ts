@@ -68,6 +68,7 @@ export default defineConfig({
         accordion: 'src/components/display/accordion/index.ts',
         aspectRatio: 'src/components/layout/aspect-ratio/index.ts',
         avatar: 'src/components/display/avatar/index.ts',
+        colorSwatch: 'src/components/display/color-swatch/index.ts',
         metricGrid: 'src/components/data/metric-grid/index.ts',
         statCard: 'src/components/data/stat-card/index.ts',
         table: 'src/components/data/table/index.ts',

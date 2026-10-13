@@ -1,4 +1,4 @@
-import { Button } from '@monority/ui/button'
+import { Button, Stack, Text } from '@monority/ui'
 
 export interface MoodboardSidebarHeaderProps {
     onCopy: () => void
@@ -8,12 +8,16 @@ export interface MoodboardSidebarHeaderProps {
 
 export function MoodboardSidebarHeader({ onCopy, onReset, copied }: MoodboardSidebarHeaderProps) {
     return (
-        <header className="moodboard-sidebar__header">
-            <div className="moodboard-sidebar__title">
-                <span className="moodboard-kicker">MONORITY UI</span>
-                <strong>Design Studio</strong>
-            </div>
-            <div className="moodboard-sidebar__actions">
+        <Stack direction="horizontal" justify="between" align="center" gap="xs">
+            <Stack gap="xs">
+                <Text size="sm" tone="muted">
+                    MONORITY UI
+                </Text>
+                <Text size="md" tone="strong">
+                    Design Studio
+                </Text>
+            </Stack>
+            <Stack direction="horizontal" gap="xs">
                 <Button variant="ghost" size="sm" onClick={onCopy} data-testid="moodboard-copy">
                     {copied ? 'Copied' : 'Copy'}
                 </Button>
@@ -25,7 +29,7 @@ export function MoodboardSidebarHeader({ onCopy, onReset, copied }: MoodboardSid
                 >
                     Reset
                 </Button>
-            </div>
-        </header>
+            </Stack>
+        </Stack>
     )
 }

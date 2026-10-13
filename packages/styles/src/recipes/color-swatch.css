@@ -1,0 +1,68 @@
+/* Recette ColorSwatch dans la couche mr.components.
+ * Visualiseur d'échantillon chromatique ou de jeton design. */
+@layer mr.components {
+    :where(.mr-color-swatch) {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--mr-space-2);
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    :where(.mr-color-swatch__preview) {
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid var(--mr-border-default);
+        flex-shrink: 0;
+    }
+
+    /* Tailles */
+    :where(.mr-color-swatch)[data-size='sm'] :where(.mr-color-swatch__preview) {
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-color-swatch)[data-size='md'] :where(.mr-color-swatch__preview),
+    :where(.mr-color-swatch):not([data-size]) :where(.mr-color-swatch__preview) {
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+    }
+
+    :where(.mr-color-swatch)[data-size='lg'] :where(.mr-color-swatch__preview) {
+        inline-size: var(--mr-size-control-md);
+        block-size: var(--mr-size-control-md);
+    }
+
+    /* Formes */
+    :where(.mr-color-swatch)[data-shape='square'] :where(.mr-color-swatch__preview) {
+        border-radius: 0;
+    }
+
+    :where(.mr-color-swatch)[data-shape='rounded'] :where(.mr-color-swatch__preview),
+    :where(.mr-color-swatch):not([data-shape]) :where(.mr-color-swatch__preview) {
+        border-radius: var(--mr-radius-sm);
+    }
+
+    :where(.mr-color-swatch)[data-shape='circle'] :where(.mr-color-swatch__preview) {
+        border-radius: var(--mr-radius-full);
+    }
+
+    :where(.mr-color-swatch__content) {
+        display: inline-flex;
+        flex-direction: column;
+        line-height: var(--mr-line-height-sm);
+    }
+
+    :where(.mr-color-swatch__label) {
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-color-swatch__value) {
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+    }
+}

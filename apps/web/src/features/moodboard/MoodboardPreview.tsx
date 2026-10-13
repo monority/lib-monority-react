@@ -1,3 +1,4 @@
+import { Container, Grid, Stack } from '@monority/ui'
 import { MoodboardAdvancedControls } from './components/MoodboardAdvancedControls'
 import { MoodboardControlSurface } from './components/MoodboardControlSurface'
 import { MoodboardMetricOverview } from './components/MoodboardMetricOverview'
@@ -25,42 +26,44 @@ interface MoodboardPreviewProps {
 
 export function MoodboardPreview({ state, onState }: MoodboardPreviewProps) {
     return (
-        <div className="moodboard-preview" data-testid="moodboard-preview">
+        <Stack gap="lg" data-testid="moodboard-preview">
             <MoodboardTopbar />
 
-            <div className="moodboard-preview__body">
-                <MoodboardPageHeader />
-                <MoodboardMetricOverview />
+            <Container size="xl" style={{ paddingBottom: 'var(--mr-space-8)' }}>
+                <Stack gap="lg">
+                    <MoodboardPageHeader />
+                    <MoodboardMetricOverview />
 
-                <div className="moodboard-preview__grid">
-                    <MoodboardThroughputCard />
-                    <MoodboardServiceHealth
-                        selectedRow={state.selectedRow}
-                        onSelectRow={(service) => onState({ selectedRow: service })}
+                    <Grid columns={2}>
+                        <MoodboardThroughputCard />
+                        <MoodboardServiceHealth
+                            selectedRow={state.selectedRow}
+                            onSelectRow={(service) => onState({ selectedRow: service })}
+                        />
+                    </Grid>
+
+                    <MoodboardControlSurface
+                        tab={state.tab}
+                        workspace={state.workspace}
+                        region={state.region}
+                        checked={state.checked}
+                        notifications={state.notifications}
+                        onTabChange={(tab) => onState({ tab })}
+                        onWorkspaceChange={(workspace) => onState({ workspace })}
+                        onRegionChange={(region) => onState({ region })}
+                        onCheckedChange={(checked) => onState({ checked })}
+                        onNotificationsChange={(notifications) => onState({ notifications })}
                     />
-                </div>
 
-                <MoodboardControlSurface
-                    tab={state.tab}
-                    workspace={state.workspace}
-                    region={state.region}
-                    checked={state.checked}
-                    notifications={state.notifications}
-                    onTabChange={(tab) => onState({ tab })}
-                    onWorkspaceChange={(workspace) => onState({ workspace })}
-                    onRegionChange={(region) => onState({ region })}
-                    onCheckedChange={(checked) => onState({ checked })}
-                    onNotificationsChange={(notifications) => onState({ notifications })}
-                />
+                    <Grid columns={2}>
+                        <MoodboardVariantMatrix />
+                        <MoodboardStateShowcase />
+                    </Grid>
 
-                <div className="moodboard-preview__grid">
-                    <MoodboardVariantMatrix />
-                    <MoodboardStateShowcase />
-                </div>
-
-                <MoodboardAdvancedControls />
-                <MoodboardTokenMatrixCard />
-            </div>
-        </div>
+                    <MoodboardAdvancedControls />
+                    <MoodboardTokenMatrixCard />
+                </Stack>
+            </Container>
+        </Stack>
     )
 }

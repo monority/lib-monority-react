@@ -1,4 +1,4 @@
-import { designConfigToJSON, type DesignConfig } from '@monority/ui'
+import { PreCode, Text, designConfigToJSON, type DesignConfig } from '@monority/ui'
 
 export interface MoodboardTokenDetailsProps {
     config: DesignConfig
@@ -6,9 +6,22 @@ export interface MoodboardTokenDetailsProps {
 
 export function MoodboardTokenDetails({ config }: MoodboardTokenDetailsProps) {
     return (
-        <details className="moodboard-sidebar__tokens">
-            <summary className="moodboard-kicker">Token Details</summary>
-            <pre className="moodboard-sidebar__json">{designConfigToJSON(config)}</pre>
+        <details
+            style={{
+                borderTop: '1px solid var(--mr-border-subtle)',
+                paddingTop: 'var(--mr-space-3)',
+            }}
+        >
+            <summary style={{ cursor: 'pointer', listStyle: 'none' }}>
+                <Text size="sm" tone="muted" as="span">
+                    Token Details
+                </Text>
+            </summary>
+            <div style={{ marginTop: 'var(--mr-space-2)' }}>
+                <PreCode size="sm" copyable copyValue={designConfigToJSON(config)}>
+                    {designConfigToJSON(config)}
+                </PreCode>
+            </div>
         </details>
     )
 }

@@ -1,11 +1,13 @@
-import { Card } from '@monority/ui/card'
+import { Card, Text } from '@monority/ui'
 import { TokenSwatchMatrix } from './TokenSwatchMatrix'
 
 export function MoodboardTokenMatrixCard() {
     return (
-        <Card className="moodboard-card" padding="md">
+        <Card padding="md">
             <Card.Header>
-                <span className="moodboard-kicker">TOKEN MATRIX</span>
+                <Text size="sm" tone="muted">
+                    TOKEN MATRIX
+                </Text>
             </Card.Header>
             <Card.Content>
                 <TokenSwatchMatrix />

@@ -1,4 +1,4 @@
-import { Card } from '@monority/ui/card'
+import { Card, Stack, Text } from '@monority/ui'
 import { MiniBarChart, type ChartDayItem } from './MiniBarChart'
 
 const chartData: ChartDayItem[] = [
@@ -13,10 +13,16 @@ const chartData: ChartDayItem[] = [
 
 export function MoodboardThroughputCard() {
     return (
-        <Card className="moodboard-card" padding="md">
-            <Card.Header className="moodboard-card__topline">
-                <span className="moodboard-kicker">THROUGHPUT</span>
-                <span className="moodboard-mono">7-DAY TREND</span>
+        <Card padding="md">
+            <Card.Header>
+                <Stack direction="horizontal" justify="between" align="center">
+                    <Text size="sm" tone="muted">
+                        THROUGHPUT
+                    </Text>
+                    <Text size="sm" tone="muted">
+                        7-DAY TREND
+                    </Text>
+                </Stack>
             </Card.Header>
             <Card.Content>
                 <MiniBarChart data={chartData} />

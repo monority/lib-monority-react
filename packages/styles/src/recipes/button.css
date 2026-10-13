@@ -96,8 +96,9 @@
     /* Variante primary (action principale neutre) : repos */
     :where(.mr-btn)[data-variant='primary'],
     :where(.mr-btn):not([data-variant]) {
-        background-color: var(--mr-bg-inverse);
-        color: var(--mr-text-on-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
+        border-color: var(--mr-control-accent-border, transparent);
     }
 
     /* Variante secondary (action avec bordure de controle) : repos
@@ -170,10 +171,13 @@
         :where(.mr-btn):not([data-variant]):hover:where(
                 :not(:disabled, [aria-disabled='true'], [data-loading])
             ) {
-            background-color: color-mix(
-                in oklch,
-                var(--mr-bg-inverse),
-                var(--mr-bg-canvas) var(--mr-state-hover-mix)
+            background-color: var(
+                --mr-control-accent-hover,
+                color-mix(
+                    in oklch,
+                    var(--mr-bg-inverse),
+                    var(--mr-bg-canvas) var(--mr-state-hover-mix)
+                )
             );
         }
 
@@ -224,10 +228,13 @@
     :where(.mr-btn):not([data-variant]):active:where(
             :not(:disabled, [aria-disabled='true'], [data-loading])
         ) {
-        background-color: color-mix(
-            in oklch,
-            var(--mr-bg-inverse),
-            var(--mr-bg-canvas) var(--mr-state-active-mix)
+        background-color: var(
+            --mr-control-accent-active,
+            color-mix(
+                in oklch,
+                var(--mr-bg-inverse),
+                var(--mr-bg-canvas) var(--mr-state-active-mix)
+            )
         );
     }
 

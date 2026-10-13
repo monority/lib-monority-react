@@ -1,4 +1,4 @@
-import { DESIGN_PRESETS, type DesignConfig } from '@monority/ui'
+import { DESIGN_PRESETS, Stack, type DesignConfig } from '@monority/ui'
 import { DesignAxisField } from './components/DesignAxisField'
 import { MoodboardSidebarHeader } from './components/MoodboardSidebarHeader'
 import { MoodboardTokenDetails } from './components/MoodboardTokenDetails'
@@ -58,10 +58,15 @@ export function MoodboardSidebar({
     }
 
     return (
-        <div className="moodboard-sidebar" role="region" aria-label="Design configuration">
+        <Stack
+            gap="md"
+            role="region"
+            aria-label="Design configuration"
+            style={{ padding: 'var(--mr-space-4)' }}
+        >
             <MoodboardSidebarHeader onCopy={onCopy} onReset={onReset} copied={copied} />
 
-            <div className="moodboard-sidebar__axes">
+            <Stack gap="sm">
                 {AXIS_DEFINITIONS.map((axis) => (
                     <DesignAxisField
                         key={axis.key}
@@ -72,9 +77,9 @@ export function MoodboardSidebar({
                         items={axis.items as { value: string; label: string }[]}
                     />
                 ))}
-            </div>
+            </Stack>
 
             <MoodboardTokenDetails config={config} />
-        </div>
+        </Stack>
     )
 }

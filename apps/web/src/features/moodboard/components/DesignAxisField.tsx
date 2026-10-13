@@ -1,4 +1,4 @@
-import { ToggleGroup } from '@monority/ui'
+import { Stack, Text, ToggleGroup } from '@monority/ui'
 
 export interface DesignAxisFieldProps {
     label: string
@@ -16,14 +16,18 @@ export function DesignAxisField({
     ariaLabel,
 }: DesignAxisFieldProps) {
     return (
-        <div className="moodboard-axis">
-            <span className="moodboard-kicker">{label}</span>
+        <Stack gap="xs">
+            <Text size="sm" tone="muted">
+                {label}
+            </Text>
             <ToggleGroup
                 value={value}
                 onValueChange={onChange}
                 items={items}
+                size="sm"
+                style={{ flexWrap: 'wrap', width: '100%' }}
                 aria-label={ariaLabel ?? `${label} axis`}
             />
-        </div>
+        </Stack>
     )
 }

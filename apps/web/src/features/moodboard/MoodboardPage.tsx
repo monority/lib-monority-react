@@ -13,7 +13,6 @@ import { usePageSeo } from '@/shared/seo/usePageSeo'
 import { AppHeader } from '@/shared/layouts/AppHeader'
 import { MoodboardSidebar } from './MoodboardSidebar'
 import { MoodboardPreview, type PanelState } from './MoodboardPreview'
-import './moodboard.css'
 
 type DensityName = 'comfortable' | 'compact'
 
@@ -85,10 +84,10 @@ export function MoodboardPage() {
     return (
         <>
             <AppHeader />
-            <DesignProvider config={config} className="moodboard-design-root">
+            <DesignProvider config={config}>
                 <SidebarLayout
                     sidebarWidth="lg"
-                    className="moodboard-page"
+                    style={{ minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))' }}
                     data-testid="moodboard-page"
                     sidebar={
                         <MoodboardSidebar
@@ -104,8 +103,14 @@ export function MoodboardPage() {
                         theme={config.theme}
                         density={density}
                         brand={config.brand === 'studio' ? 'studio' : undefined}
-                        className="moodboard-preview-scope"
-                        style={resolved.style}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'minmax(0, 1fr)',
+                            minInlineSize: 0,
+                            backgroundColor: 'var(--mr-bg-canvas)',
+                            color: 'var(--mr-text-primary)',
+                            ...resolved.style,
+                        }}
                         data-testid="moodboard-preview-scope"
                         data-design-theme={config.theme}
                         data-design-accent={config.accent}
