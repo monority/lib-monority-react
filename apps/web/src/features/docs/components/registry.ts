@@ -289,35 +289,35 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'FilterBar',
         path: '/docs/filter-bar',
         slug: 'filter-bar',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'navigation',
         label: 'Menubar',
         path: '/docs/menubar',
         slug: 'menubar',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'navigation',
         label: 'NavigationMenu',
         path: '/docs/navigation-menu',
         slug: 'navigation-menu',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'navigation',
         label: 'Pagination',
         path: '/docs/pagination',
         slug: 'pagination',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'navigation',
         label: 'SidebarLayout',
         path: '/docs/sidebar-layout',
         slug: 'sidebar-layout',
-        status: 'draft',
+        status: 'stable',
     },
     { category: 'navigation', label: 'Tabs', path: '/docs/tabs', slug: 'tabs', status: 'stable' },
     {
@@ -339,7 +339,7 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'Topbar',
         path: '/docs/topbar',
         slug: 'topbar',
-        status: 'draft',
+        status: 'stable',
     },
 
     // Display
@@ -384,16 +384,16 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'MetricGrid',
         path: '/docs/metric-grid',
         slug: 'metric-grid',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'data',
         label: 'StatCard',
         path: '/docs/stat-card',
         slug: 'stat-card',
-        status: 'draft',
+        status: 'stable',
     },
-    { category: 'data', label: 'Table', path: '/docs/table', slug: 'table', status: 'draft' },
+    { category: 'data', label: 'Table', path: '/docs/table', slug: 'table', status: 'stable' },
 
     // Data Display
     {
@@ -401,14 +401,14 @@ export const docsComponentRegistry: DocsComponentRegistryItem[] = [
         label: 'DataList',
         path: '/docs/data-list',
         slug: 'data-list',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'data',
         label: 'DataTable',
         path: '/docs/data-table',
         slug: 'data-table',
-        status: 'draft',
+        status: 'stable',
     },
     {
         category: 'data',

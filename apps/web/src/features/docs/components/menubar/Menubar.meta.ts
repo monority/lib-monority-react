@@ -1,6 +1,6 @@
 export const menubarMeta = {
     title: 'Menubar',
-    status: 'draft',
+    status: 'stable',
     package: '@monority/ui/menubar',
     import: "import { Menubar } from '@monority/ui'",
     category: 'navigation',
@@ -15,5 +15,9 @@ export const menubarMeta = {
         'shortcut',
         'separator',
     ],
-    accessibility: ['See component source'],
+    accessibility: [
+        'role="menubar" with menuitem triggers',
+        'Arrow keys traverse top-level menus and submenus',
+        'Keyboard shortcuts announced with aria-keyshortcuts',
+    ],
 }
