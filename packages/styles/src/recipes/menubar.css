@@ -37,7 +37,7 @@
 
     :where(.mr-menubar__trigger:hover:not(:disabled)),
     :where(.mr-menubar__menu-wrapper[data-active='true']) > :where(.mr-menubar__trigger) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
     }
 
     :where(.mr-menubar__trigger:focus-visible) {
@@ -82,7 +82,7 @@
     }
 
     :where(.mr-menubar__item:hover:not(:disabled)) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
     }
 
     :where(.mr-menubar__item:focus-visible) {

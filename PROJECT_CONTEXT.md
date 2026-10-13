@@ -64,12 +64,15 @@ Realisations majeures de ce chantier :
   - Generalisation de DocPageWithToc pour l'ensemble des pages de documentation et synchronisation dynamique de la table des matieres DocToc lors des transitions de route.
 - Harmonisation globale des bordures de controle (ADR-026) :
   - Ajustement des contrastes de bordures sur input, textarea, select, switch et checkbox pour alleger le rendu visuel sur l'ensemble des 7 themes sans rompre le seuil d'accessibilite 3:1.
-- Refonte complete de la page Moodboard Design Studio :
+- Refonte complete de la page Moodboard Design Studio et Harmonisation Accent (modele shadcn/ui) :
   - Architecture 100% composants utilisant SidebarLayout officiel avec panneau lateral sticky persistant au defilement.
-  - Decouplage Theme & Accent : l'axe Theme regroupe l'atmosphere (Light, Dark, Slate, OLED, Ocean, Night) et l'axe Accent definit la couleur d'accent (Neutral, Cyan, Blue, Violet, Indigo, Green, Amber, Orange, Red, Rose) des composants.
-  - Fusion Accent & Component Colors : suppression du selecteur redondant de couleur composant, les composants suivent directement l'accent actif.
-  - Barre laterale calibree sur 6 axes directeurs essentiels : Theme, Accent, Rayon de courbure (Corner Radius), Echelle d'espacement (Spacing Scale), Densite de layout et Palette de graphiques.
-  - Dynamisme d'accent etendu sur l'ensemble des modules : boutons d'action primaires, badges, interrupteurs, cases a cocher et jauges de progression adaptes en tone="accent", courbe principale du graphique de telemetrie SVG synchronisee sur --mr-accent-solid.
+  - Decouplage Theme & Accent : l'axe Theme regroupe l'atmosphere (Light, Dark, Slate, OLED, Ocean, Night) et l'axe Accent definit la teinte d'accent (Neutral, Cyan, Blue, Violet, Indigo, Green, Amber, Orange, Red, Rose) des composants.
+  - Fusion Accent & Component Colors : l'accent pilote directement les styles de controle (--mr-control-accent, --mr-control-on-accent) sans dichotomie superflue.
+  - Resolution adaptative de luminosite d'accent : calcul dynamique de --mr-ref-accent-lightness et --mr-accent-solid dans packages/ui/src/lib/design-config.ts assurant un contraste WCAG AA superieur a 5.0:1 pour les 10 teintes d'accent sur les 7 themes (elimination du blanchiment en mode sombre et de l'ecrasement en mode clair).
+  - Harmonisation du positionnement des accents selon le modele shadcn/ui :
+    - Elements primaires / affirmatifs en accent solid : bouton primaire, case a cocher active, interrupteur actif, radio bouton selectionne, curseur slider et barre de progression.
+    - Survol discret en accent subtil (--mr-accent-subtle) : boutons ghost, elements dropdown-menu, options combobox, items context-menu, elements menubar, items command-palette, boutons pagination et onglets tabs.
+    - Surfaces neutres preservees : cartes, en-tetes, panneaux et boutons secondaires conservent leurs fonds neutres purs.
   - Organisation en grille responsive homogene a 2 colonnes integrant 10 modules concrets de web apps (Services, Deploiement, Pipeline, Activite, Equipe, Tâches, Paiement, Chat, Quotas, Tokens).
 - Validation technique :
   - pnpm verify : 100% succes (108 suites / 1360 tests packages/ui, 15 suites / 85 tests apps/web, tests de contrastes Playwright, Biome format, Stylelint).

@@ -95,29 +95,31 @@
         block-size: var(--mr-space-5);
     }
 
-    /* Etat coche neutre par defaut (ADR-020 : noir en clair, blanc en sombre) */
+    /* Etat coche par defaut : suit le controle accent (--mr-control-accent, repli neutre ADR-020) */
     :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control),
     :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control) {
-        background-color: var(--mr-bg-inverse);
-        border-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        border-color: var(--mr-control-accent, var(--mr-bg-inverse));
     }
 
     :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control)::after,
     :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control)::after {
         opacity: 1;
+        border-inline-end-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
+        border-block-end-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
     }
 
-    /* Etat indetermine neutre par defaut (tiret horizontal) */
+    /* Etat indetermine par defaut (tiret horizontal) */
     :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control) {
-        background-color: var(--mr-bg-inverse);
-        border-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        border-color: var(--mr-control-accent, var(--mr-bg-inverse));
     }
 
     :where(.mr-checkbox[data-indeterminate]) :where(.mr-checkbox__control)::after {
         inline-size: 60%;
         block-size: 0;
         border-inline-end: 0;
-        border-block-end: 2px solid var(--mr-text-on-inverse);
+        border-block-end: 2px solid var(--mr-control-on-accent, var(--mr-text-on-inverse));
         transform: none;
         opacity: 1;
     }

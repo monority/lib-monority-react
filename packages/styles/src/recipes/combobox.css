@@ -271,14 +271,14 @@
 
     @media (hover: hover) {
         :where(.mr-combobox__item):hover {
-            background-color: var(--mr-bg-sunken);
+            background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
             color: var(--mr-text-primary);
         }
     }
 
     :where(.mr-combobox__item[data-active='true']),
     :where(.mr-combobox__item.is-active) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
         color: var(--mr-text-primary);
     }
 

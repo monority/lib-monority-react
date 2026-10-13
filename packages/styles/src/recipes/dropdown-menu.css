@@ -93,11 +93,11 @@
 
     :where(.mr-dropdown__item:hover:not(:disabled)),
     :where(.mr-dropdown__item:focus:not(:disabled)) {
-        background-color: color-mix(
-            in oklch,
-            var(--mr-bg-inverse) var(--mr-state-hover-mix),
-            transparent
+        background-color: var(
+            --mr-accent-subtle,
+            color-mix(in oklch, var(--mr-bg-inverse) var(--mr-state-hover-mix), transparent)
         );
+        color: var(--mr-text-primary);
         outline: none;
     }
 

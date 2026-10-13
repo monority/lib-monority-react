@@ -230,6 +230,32 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
     const densityScale =
         config.density === 'compact' ? 0.88 : config.density === 'spacious' ? 1.15 : 1
 
+    const isDark =
+        config.theme === 'dark' ||
+        config.theme === 'oled' ||
+        config.theme === 'night' ||
+        config.theme === 'slate' ||
+        config.theme === 'ocean'
+    const isHighContrast = config.theme === 'high-contrast'
+    const isTinted =
+        config.theme === 'slate' || config.theme === 'ocean' || config.theme === 'night'
+
+    let accentLightness: number
+    if (accent.chroma === 0) {
+        accentLightness = isDark ? 0.955 : isHighContrast ? 0.38 : 0.22
+    } else if (isTinted) {
+        accentLightness = 0.635
+    } else if (isHighContrast) {
+        accentLightness = 0.38
+    } else if (isDark) {
+        accentLightness = 0.65
+    } else {
+        accentLightness = 0.5
+    }
+
+    const effectiveChroma = Number((accent.chroma * 0.7).toFixed(4))
+    const accentSolid = `oklch(${accentLightness} ${effectiveChroma} ${accent.hue})`
+
     return {
         themeDensity: config.density === 'compact' ? 'compact' : 'comfortable',
         accent,
@@ -240,6 +266,12 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
             '--mr-brand-chroma': String(accent.chroma),
             '--mr-ref-brand-hue': String(accent.hue),
             '--mr-ref-brand-chroma': String(accent.chroma),
+            '--mr-ref-accent-lightness': String(accentLightness),
+            '--mr-accent-solid': accentSolid,
+            '--mr-accent-subtle': `color-mix(in oklch, ${accentSolid} 14%, var(--mr-bg-canvas))`,
+            '--mr-accent-border': `color-mix(in oklch, ${accentSolid} 30%, var(--mr-border-default))`,
+            '--mr-accent-text': accentSolid,
+            '--mr-focus-ring': accentSolid,
             '--mr-accent': 'var(--mr-accent-solid)',
             '--mr-control-accent': role.fill,
             '--mr-control-accent-hover': role.hover,
@@ -247,7 +279,9 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
             '--mr-control-on-accent': role.label,
             '--mr-control-accent-border': role.border,
             '--mr-control-accent-subtle':
-                'color-mix(in srgb, var(--mr-control-accent) 18%, transparent)',
+                role.fill === 'var(--mr-accent-solid)'
+                    ? `color-mix(in oklch, ${accentSolid} 14%, var(--mr-bg-canvas))`
+                    : 'color-mix(in oklch, var(--mr-control-accent) 14%, var(--mr-bg-canvas))',
             '--mr-chart-1': charts[0],
             '--mr-chart-2': charts[1],
             '--mr-chart-3': charts[2],

@@ -47,7 +47,7 @@
     }
 
     :where(.mr-pagination__btn:hover:not(:disabled)) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
         color: var(--mr-text-primary);
     }
 

@@ -27,7 +27,7 @@
 
     /* Curseur interactif natif de type range */
     :where(.mr-slider) {
-        --mr-slider-fill: var(--mr-bg-inverse);
+        --mr-slider-fill: var(--mr-control-accent, var(--mr-bg-inverse));
         -webkit-appearance: none;
         appearance: none;
         box-sizing: border-box;
@@ -84,7 +84,7 @@
         width: var(--mr-space-4);
         height: var(--mr-space-4);
         border-radius: 50%;
-        background-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
         border: 2px solid var(--mr-bg-canvas);
         box-shadow: 0 0 0 1px var(--mr-border-control);
         cursor: pointer;
@@ -99,7 +99,7 @@
         width: var(--mr-space-4);
         height: var(--mr-space-4);
         border-radius: 50%;
-        background-color: var(--mr-bg-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
         border: 2px solid var(--mr-bg-canvas);
         box-shadow: 0 0 0 1px var(--mr-border-control);
         cursor: pointer;

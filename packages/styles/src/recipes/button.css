@@ -203,10 +203,13 @@
         :where(.mr-btn)[data-variant='subtle']:hover:where(
                 :not(:disabled, [aria-disabled='true'], [data-loading])
             ) {
-            background-color: color-mix(
-                in oklch,
-                var(--mr-bg-canvas),
-                var(--mr-text-primary) var(--mr-state-hover-mix)
+            background-color: var(
+                --mr-accent-subtle,
+                color-mix(
+                    in oklch,
+                    var(--mr-bg-canvas),
+                    var(--mr-text-primary) var(--mr-state-hover-mix)
+                )
             );
         }
 

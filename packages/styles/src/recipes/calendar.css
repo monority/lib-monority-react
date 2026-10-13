@@ -203,11 +203,11 @@
         border-color: var(--mr-border-control);
     }
 
-    /* Jour selectionne (ton neutral defaut ADR-020) */
+    /* Jour selectionne (suit le controle accent, repli neutral defaut ADR-020) */
     :where(.mr-calendar__day[data-selected='true']),
     :where(.mr-calendar__day--selected) {
-        background-color: var(--mr-bg-inverse);
-        color: var(--mr-text-on-inverse);
+        background-color: var(--mr-control-accent, var(--mr-bg-inverse));
+        color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
         font-weight: var(--mr-font-weight-medium);
         border-color: transparent;
     }
