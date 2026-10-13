@@ -3,6 +3,7 @@ import type { HTMLAttributes, ReactNode, Ref } from 'react'
 export interface DocSectionProps extends HTMLAttributes<HTMLElement> {
     ref?: Ref<HTMLElement>
     id?: string
+    kicker?: string
     title: string
     description?: string
     action?: ReactNode
@@ -12,6 +13,7 @@ export interface DocSectionProps extends HTMLAttributes<HTMLElement> {
 export function DocSection({
     ref,
     id,
+    kicker,
     title,
     description,
     action,
@@ -29,10 +31,14 @@ export function DocSection({
         >
             <div className="docs-section-card__header">
                 <div className="docs-section-card__title-group">
+                    {kicker && <span className="docs-kicker">{kicker}</span>}
                     <h2 id={id ? `${id}-heading` : undefined} className="docs-section-card__title">
                         {id ? (
                             <a href={`#${id}`} className="docs-section-card__anchor">
-                                {title}
+                                <span>{title}</span>
+                                <span className="docs-section-card__hash" aria-hidden="true">
+                                    #
+                                </span>
                             </a>
                         ) : (
                             title
