@@ -1,29 +1,18 @@
 import { useEffect, useState } from 'react'
 import {
+    DEFAULT_DESIGN_CONFIG,
     DesignProvider,
     ThemeScope,
-    DEFAULT_DESIGN_CONFIG,
+    designConfigToJSON,
     resolveDesignConfig,
     sanitizeDesignConfig,
-    designConfigToJSON,
     type DesignConfig,
 } from '@monority/ui'
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
-import { usePageSeo } from '@/shared/seo/usePageSeo'
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { MoodboardPreview } from './MoodboardPreview'
 import { MoodboardSidebar } from './MoodboardSidebar'
-import { MoodboardPreview, type PanelState } from './MoodboardPreview'
-
-type DensityName = 'comfortable' | 'compact'
-
-const initialState: PanelState = {
-    tab: 'overview',
-    workspace: 'monority-prod',
-    region: 'eu-west-1',
-    checked: true,
-    notifications: false,
-    selectedRow: 'edge-router',
-}
 
 export function MoodboardPage() {
     usePageSeo({
@@ -42,11 +31,7 @@ export function MoodboardPage() {
         }
     })
 
-    const [state, setState] = useState<PanelState>(initialState)
     const [copied, setCopied] = useState(false)
-
-    const updateState = (next: Partial<PanelState>) =>
-        setState((current) => ({ ...current, ...next }))
 
     const updateConfig = <K extends keyof DesignConfig>(key: K, value: DesignConfig[K]) => {
         setConfig((current) => ({ ...current, [key]: value }))
@@ -54,7 +39,6 @@ export function MoodboardPage() {
 
     const handleReset = () => {
         setConfig(DEFAULT_DESIGN_CONFIG)
-        setState(initialState)
     }
 
     const handleCopy = async () => {
@@ -78,16 +62,19 @@ export function MoodboardPage() {
         return () => clearTimeout(timer)
     }, [copied])
 
-    const density: DensityName = config.density === 'compact' ? 'compact' : 'comfortable'
+    const density = config.density === 'compact' ? 'compact' : 'comfortable'
     const resolved = resolveDesignConfig(config)
 
     return (
-        <>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <AppHeader />
             <DesignProvider config={config}>
                 <SidebarLayout
                     sidebarWidth="lg"
-                    style={{ minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))' }}
+                    style={{
+                        flex: 1,
+                        minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))',
+                    }}
                     data-testid="moodboard-page"
                     sidebar={
                         <MoodboardSidebar
@@ -120,10 +107,10 @@ export function MoodboardPage() {
                         data-design-spacing={config.spacing}
                         data-design-density={config.density}
                     >
-                        <MoodboardPreview state={state} onState={updateState} />
+                        <MoodboardPreview />
                     </ThemeScope>
                 </SidebarLayout>
             </DesignProvider>
-        </>
+        </div>
     )
 }
