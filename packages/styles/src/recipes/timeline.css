@@ -37,8 +37,8 @@
     :where(.mr-timeline[data-orientation='vertical'] .mr-timeline__item:not(:last-child))::before {
         content: '';
         position: absolute;
-        inset-inline-start: calc(var(--mr-space-2) - 1px);
-        inset-block-start: var(--mr-space-3);
+        inset-inline-start: calc(var(--mr-space-3) / 2 - 1px);
+        inset-block-start: calc(var(--mr-space-1) + var(--mr-space-3) / 2);
         inline-size: 2px;
         block-size: 100%;
         background-color: var(--mr-border-default);
@@ -48,6 +48,18 @@
         flex-direction: column;
         gap: var(--mr-space-2);
         min-inline-size: 0;
+    }
+
+    :where(
+            .mr-timeline[data-orientation='horizontal'] .mr-timeline__item:not(:last-child)
+        )::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: calc(var(--mr-space-3) / 2);
+        inset-block-start: calc(var(--mr-space-1) + var(--mr-space-3) / 2 - 1px);
+        inline-size: calc(100% + var(--mr-space-6));
+        block-size: 2px;
+        background-color: var(--mr-border-default);
     }
 
     :where(.mr-timeline__point) {

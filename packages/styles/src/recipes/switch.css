@@ -78,13 +78,13 @@
     /* Pouce circulaire coulissant */
     :where(.mr-switch__thumb) {
         display: block;
+        flex-shrink: 0;
         box-sizing: border-box;
-        block-size: 100%;
-        aspect-ratio: 1;
-        border-radius: 50%;
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+        border-radius: var(--mr-radius-full);
         background-color: var(--mr-switch-thumb-off);
-        border: 1px solid var(--mr-border-control);
-        box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 15%, transparent);
+        box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 20%, transparent);
         transform: translateX(0);
         transition: transform var(--mr-duration-state), background-color var(--mr-duration-state),
             border-color var(--mr-duration-state), box-shadow var(--mr-duration-state);
@@ -94,6 +94,11 @@
     :where(.mr-switch[data-size='sm']) :where(.mr-switch__control) {
         inline-size: calc(var(--mr-space-5) + var(--mr-space-4));
         block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-switch[data-size='sm']) :where(.mr-switch__thumb) {
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
     }
 
     :where(.mr-switch[data-size='sm']) {
@@ -106,10 +111,31 @@
         block-size: var(--mr-size-control-sm);
     }
 
+    :where(.mr-switch[data-size='lg']) :where(.mr-switch__thumb) {
+        inline-size: var(--mr-space-6);
+        block-size: var(--mr-space-6);
+    }
+
     /* Deplacement du pouce a l'etat coche */
     :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
     :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
-        transform: translateX(100%);
+        transform: translateX(var(--mr-space-5));
+    }
+
+    :where(.mr-switch[data-size='sm'][data-checked]) :where(.mr-switch__thumb),
+    :where(.mr-switch[data-size='sm'])
+        :where(.mr-switch__input:checked)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(var(--mr-space-4));
+    }
+
+    :where(.mr-switch[data-size='lg'][data-checked]) :where(.mr-switch__thumb),
+    :where(.mr-switch[data-size='lg'])
+        :where(.mr-switch__input:checked)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(var(--mr-space-6));
     }
 
     /* Support RTL : deplacement inverse */
@@ -117,7 +143,23 @@
     :where([dir='rtl'] .mr-switch__input:checked)
         + :where(.mr-switch__control)
         :where(.mr-switch__thumb) {
-        transform: translateX(-100%);
+        transform: translateX(calc(-1 * var(--mr-space-5)));
+    }
+
+    :where([dir='rtl'] .mr-switch[data-size='sm'][data-checked]) :where(.mr-switch__thumb),
+    :where([dir='rtl'] .mr-switch[data-size='sm'])
+        :where(.mr-switch__input:checked)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(calc(-1 * var(--mr-space-4)));
+    }
+
+    :where([dir='rtl'] .mr-switch[data-size='lg'][data-checked]) :where(.mr-switch__thumb),
+    :where([dir='rtl'] .mr-switch[data-size='lg'])
+        :where(.mr-switch__input:checked)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(calc(-1 * var(--mr-space-6)));
     }
 
     /* Etat coche par defaut : suit le controle accent (--mr-control-accent, repli neutre ADR-020) */
@@ -130,8 +172,7 @@
     :where(.mr-switch[data-checked]) :where(.mr-switch__thumb),
     :where(.mr-switch__input:checked) + :where(.mr-switch__control) :where(.mr-switch__thumb) {
         background-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
-        border-color: transparent;
-        box-shadow: none;
+        box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 25%, transparent);
     }
 
     /* Ton neutre explicite */

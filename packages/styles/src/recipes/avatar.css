@@ -27,13 +27,15 @@
         border: 1px solid var(--mr-border-subtle);
         user-select: none;
         vertical-align: middle;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     /* Taille sm : 24px */
     :where(.mr-avatar)[data-size='sm'] {
         inline-size: var(--mr-space-6);
         block-size: var(--mr-space-6);
-        font-size: var(--mr-font-size-sm);
+        font-size: var(--mr-font-size-xs);
     }
 
     /* Taille md (defaut) : 32px */
@@ -59,8 +61,12 @@
     }
 
     :where(.mr-avatar__initials) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         font-weight: var(--mr-font-weight-medium);
         line-height: 1;
+        white-space: nowrap;
         text-transform: uppercase;
     }
 
