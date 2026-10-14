@@ -45,6 +45,17 @@
         outline-offset: -2px;
     }
 
+    @keyframes mr-menubar-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
     :where(.mr-menubar__menu) {
         position: absolute;
         inset-block-start: 100%;
@@ -60,6 +71,8 @@
         display: flex;
         flex-direction: column;
         gap: 1px;
+        animation: mr-menubar-enter var(--mr-duration-state) ease;
+        transform-origin: top;
     }
 
     :where(.mr-menubar__item) {
@@ -111,5 +124,11 @@
         font-size: var(--mr-font-size-xs);
         color: var(--mr-text-tertiary);
         font-family: var(--mr-font-family-mono);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-menubar__menu) {
+            animation: none;
+        }
     }
 }
