@@ -256,4 +256,20 @@ describe('MoodboardPage', () => {
         expect(screen.getByText('Catalogue exhaustif des composants')).toBeInTheDocument()
         expect(screen.getByText('Overlays & Dialogues')).toBeInTheDocument()
     })
+
+    it('catalog view displays interactive async simulation controls and enriched components', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        const catalogTab = screen.getByRole('tab', { name: /catalogue complet/i })
+        fireEvent.click(catalogTab)
+
+        expect(screen.getByText('Simuler requêtes réseau asynchrones')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Déclencher Toast animé' })).toBeInTheDocument()
+        expect(screen.getByLabelText('Cluster cible (asynchrone)')).toBeInTheDocument()
+        expect(screen.getByLabelText('Zone de disponibilité')).toBeInTheDocument()
+
+        /* Déclencher le Toast animé */
+        fireEvent.click(screen.getByRole('button', { name: 'Déclencher Toast animé' }))
+        expect(screen.getByText('Notification temps réel')).toBeInTheDocument()
+    })
 })

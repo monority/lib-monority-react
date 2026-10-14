@@ -12,11 +12,21 @@
         padding: var(--mr-space-4);
     }
 
+    @keyframes mr-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
     :where(.mr-alert-dialog__backdrop-surface) {
         position: fixed;
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
+        animation: mr-fade-in var(--mr-duration-state) ease;
     }
 
     @keyframes mr-alert-dialog-enter {
@@ -91,7 +101,8 @@
 
     @media (prefers-reduced-motion: reduce) {
         :where(.mr-alert-dialog),
-        :where(.mr-alert-dialog__panel) {
+        :where(.mr-alert-dialog__panel),
+        :where(.mr-alert-dialog__backdrop-surface) {
             animation: none;
         }
     }

@@ -36,7 +36,7 @@
         white-space: nowrap;
         flex-shrink: 0;
         transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
-            border-color var(--mr-duration-state);
+            border-color var(--mr-duration-state), transform var(--mr-duration-state);
     }
 
     /* Taille sm : 28px (WCAG 2.5.8 >= 24px) */
@@ -329,9 +329,20 @@
         );
     }
 
+    /* Retour tactile actif */
+    :where(.mr-btn):active:where(:not(:disabled, [aria-disabled='true'], [data-loading])) {
+        transform: scale(0.98);
+    }
+
     /* Focus visible */
     :where(.mr-btn):focus-visible {
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-btn):active {
+            transform: none;
+        }
     }
 }

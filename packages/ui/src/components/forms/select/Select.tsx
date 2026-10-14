@@ -2,6 +2,7 @@ import type { MouseEvent } from 'react'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
+import { Spinner } from '@/components/feedback/spinner/Spinner'
 import type { SelectProps } from './Select.types'
 
 export function Select({
@@ -14,6 +15,7 @@ export function Select({
     className,
     invalid = false,
     disabled = false,
+    loading = false,
     required = false,
     children,
     options,
@@ -56,6 +58,7 @@ export function Select({
                     className="mr-select-wrapper"
                     data-size={resolvedSize}
                     data-disabled={disabled ? true : undefined}
+                    data-loading={loading ? true : undefined}
                     data-invalid={isInvalid ? true : undefined}
                     data-multiple={props.multiple ? true : undefined}
                 >
@@ -63,6 +66,8 @@ export function Select({
                         as="select"
                         ref={ref}
                         className="mr-select"
+                        disabled={disabled || loading}
+                        aria-busy={loading ? 'true' : undefined}
                         onMouseDown={handleMouseDown}
                         {...props}
                     >
@@ -80,6 +85,11 @@ export function Select({
                             : null}
                         {children}
                     </InputBase>
+                    {loading ? (
+                        <span className="mr-select__spinner" aria-hidden="true">
+                            <Spinner size="sm" />
+                        </span>
+                    ) : null}
                 </span>
             </Field>
         </FormControl>

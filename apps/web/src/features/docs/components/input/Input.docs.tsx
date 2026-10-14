@@ -1,6 +1,7 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     InputBasicExample,
+    InputClearableExample,
     InputFamilySizesExample,
     InputNumberExample,
     InputPasswordExample,
@@ -10,7 +11,7 @@ import {
 const docData: DocPageData = {
     title: 'Input',
     description:
-        'Form field primitive with label, hint, error, required, and disabled state hooks. Includes search, number and password variants.',
+        'Form field primitive with label, hint, error, required, and disabled state hooks. Includes search, number, password, and clearable variants.',
     importCode: "import { Input } from '@monority/ui/input'",
     usageCode: `<Input
   label="Email"
@@ -20,6 +21,7 @@ const docData: DocPageData = {
     preview: () => <InputBasicExample />,
     examples: [
         { title: 'Search', content: <InputSearchExample /> },
+        { title: 'Clearable', content: <InputClearableExample /> },
         { title: 'Number', content: <InputNumberExample /> },
         { title: 'Password', content: <InputPasswordExample /> },
         { title: 'Control sizes', content: <InputFamilySizesExample /> },
@@ -111,10 +113,30 @@ const docData: DocPageData = {
             description:
                 'Uncontrolled initial value. Use instead of `value` for a controlled-less form field.',
         },
+        {
+            name: 'clearable',
+            type: `boolean`,
+            defaultValue: `'false'`,
+            description:
+                "Affiche un bouton d'effacement rapide lorsque le champ contient une valeur.",
+        },
+        {
+            name: 'clearAriaLabel',
+            type: `string`,
+            defaultValue: `'Effacer le texte'`,
+            description: "Libellé accessible (aria-label) pour le bouton d'effacement.",
+        },
+        {
+            name: 'onClear',
+            type: `() => void`,
+            defaultValue: `'-'`,
+            description: "Rappel déclenché lors du clic sur le bouton d'effacement.",
+        },
     ],
     cssHooks: [
         '.mr-input',
         '.mr-input-base',
+        '.mr-input__clear',
         '[data-size]',
         '[data-tone]',
         '[data-invalid]',

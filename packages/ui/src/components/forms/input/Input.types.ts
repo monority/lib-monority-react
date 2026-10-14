@@ -20,4 +20,7 @@ export interface InputProps
     iconLeading?: ReactNode
     iconTrailing?: ReactNode
     showPasswordToggle?: boolean
+    clearable?: boolean
+    clearAriaLabel?: string
+    onClear?: () => void
 }

@@ -28,4 +28,8 @@ export interface ComboboxProps
     placeholder?: string
     emptyLabel?: string
     invalid?: boolean
+    loading?: boolean
+    clearable?: boolean
+    clearAriaLabel?: string
+    onClear?: () => void
 }

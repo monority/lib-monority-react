@@ -67,7 +67,13 @@
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-sm);
         background-color: var(--mr-bg-sunken);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            transform var(--mr-duration-state);
+    }
+
+    /* Effet tactile a l'appui */
+    :where(.mr-checkbox:active:not([data-disabled='true'])) :where(.mr-checkbox__control) {
+        transform: scale(0.92);
     }
 
     /* Glyphe de coche (via pseudo-element, couleur neutre par defaut) */
@@ -79,9 +85,9 @@
         block-size: 70%;
         border-inline-end: 2px solid var(--mr-text-on-inverse);
         border-block-end: 2px solid var(--mr-text-on-inverse);
-        transform: translateY(-10%) rotate(45deg);
+        transform: translateY(-10%) rotate(45deg) scale(0.6);
         opacity: 0;
-        transition: opacity var(--mr-duration-state);
+        transition: opacity var(--mr-duration-state), transform var(--mr-duration-state);
     }
 
     /* Taille sm : typographie 12px, boite 16px */
@@ -105,6 +111,7 @@
     :where(.mr-checkbox[data-checked]) :where(.mr-checkbox__control)::after,
     :where(.mr-checkbox__input:checked) + :where(.mr-checkbox__control)::after {
         opacity: 1;
+        transform: translateY(-10%) rotate(45deg) scale(1);
         border-inline-end-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
         border-block-end-color: var(--mr-control-on-accent, var(--mr-text-on-inverse));
     }
@@ -302,5 +309,16 @@
         line-height: inherit;
         color: inherit;
         cursor: pointer;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-checkbox__control),
+        :where(.mr-checkbox__control)::after {
+            transition: none;
+        }
+
+        :where(.mr-checkbox:active:not([data-disabled='true'])) :where(.mr-checkbox__control) {
+            transform: none;
+        }
     }
 }

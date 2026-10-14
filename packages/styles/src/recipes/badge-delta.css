@@ -13,6 +13,8 @@
         white-space: nowrap;
         box-sizing: border-box;
         border: 1px solid transparent;
+        transition: background-color var(--mr-duration-state) ease, color var(--mr-duration-state)
+            ease, border-color var(--mr-duration-state) ease;
     }
 
     :where(.mr-badge-delta)[data-size='sm'] {
@@ -69,5 +71,11 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-badge-delta) {
+            transition: none;
+        }
     }
 }

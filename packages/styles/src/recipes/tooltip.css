@@ -10,11 +10,12 @@
         position: absolute;
         bottom: 100%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) translateY(var(--mr-space-1));
         margin-block-end: var(--mr-space-1);
         opacity: 0;
         pointer-events: none;
-        transition: opacity var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms);
+        transition: opacity var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms), transform
+            var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms);
         z-index: 50;
         background-color: var(--mr-bg-inverse);
         color: var(--mr-text-on-inverse);
@@ -33,6 +34,7 @@
         top: 100%;
         margin-block-end: 0;
         margin-block-start: var(--mr-space-1);
+        transform: translateX(-50%) translateY(calc(-1 * var(--mr-space-1)));
     }
 
     :where(.mr-tooltip[data-side='left']) :where(.mr-tooltip__content) {
@@ -40,7 +42,7 @@
         left: auto;
         right: 100%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) translateX(var(--mr-space-1));
         margin-block-end: 0;
         margin-inline-end: var(--mr-space-1);
     }
@@ -49,7 +51,7 @@
         bottom: auto;
         left: 100%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) translateX(calc(-1 * var(--mr-space-1)));
         margin-block-end: 0;
         margin-inline-start: var(--mr-space-1);
     }
@@ -88,5 +90,21 @@
     :where(.mr-tooltip:focus-within:not([data-hidden])) :where(.mr-tooltip__content) {
         opacity: 1;
         pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    :where(.mr-tooltip[data-side='left']:hover:not([data-hidden])) :where(.mr-tooltip__content),
+    :where(.mr-tooltip[data-side='left']:focus-within:not([data-hidden]))
+        :where(.mr-tooltip__content),
+    :where(.mr-tooltip[data-side='right']:hover:not([data-hidden])) :where(.mr-tooltip__content),
+    :where(.mr-tooltip[data-side='right']:focus-within:not([data-hidden]))
+        :where(.mr-tooltip__content) {
+        transform: translateY(-50%) translateX(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-tooltip__content) {
+            transition: none;
+        }
     }
 }

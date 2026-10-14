@@ -4,6 +4,8 @@ import {
     AlertDialog,
     AspectRatio,
     AsyncStateNotice,
+    Badge,
+    BadgeDelta,
     Banner,
     Breadcrumb,
     Button,
@@ -11,6 +13,7 @@ import {
     Calendar,
     Card,
     Carousel,
+    Checkbox,
     Collapsible,
     Combobox,
     CommandPalette,
@@ -29,6 +32,7 @@ import {
     Grid,
     HoverCard,
     IconButton,
+    Input,
     Kbd,
     Menubar,
     MetricGrid,
@@ -43,11 +47,15 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
     Section,
+    SegmentedControl,
+    Select,
     Sheet,
     Skeleton,
     Spinner,
     Stack,
     Stepper,
+    Switch,
+    Tabs,
     Text,
     Title,
     Toast,
@@ -63,8 +71,18 @@ export function MoodboardCatalogView() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [isSheetOpen, setIsSheetOpen] = useState(false)
     const [isCmdOpen, setIsCmdOpen] = useState(false)
+    const [showDynamicToast, setShowDynamicToast] = useState(false)
+
+    /* États pour la démonstration asynchrone et micro-interactions */
+    const [isAsyncLoading, setIsAsyncLoading] = useState(false)
+    const [autoFailover, setAutoFailover] = useState(true)
+    const [hardwareEncrypt, setHardwareEncrypt] = useState(true)
+    const [selectVal, setSelectVal] = useState('fra-01')
+    const [segmentedVal, setSegmentedVal] = useState('all')
+    const [catalogSubTab, setCatalogSubTab] = useState('active')
 
     /* États pour les formulaires et navigations */
+    const [clusterName, setClusterName] = useState('production-fra-01')
     const [stepperStep, setStepperStep] = useState(1)
     const [currentPage, setCurrentPage] = useState(2)
     const [radioSelection, setRadioSelection] = useState('canary')
@@ -87,6 +105,51 @@ export function MoodboardCatalogView() {
                 </Banner.Description>
             </Banner>
 
+            {/* Barre de contrôle interactif des animations et états asynchrones */}
+            <Card style={{ background: 'var(--mr-bg-sunken)' }}>
+                <Card.Content>
+                    <Stack
+                        direction="horizontal"
+                        gap="lg"
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                        }}
+                    >
+                        <Stack
+                            direction="horizontal"
+                            gap="md"
+                            style={{ alignItems: 'center', flexWrap: 'wrap' }}
+                        >
+                            <Switch
+                                label="Simuler requêtes réseau asynchrones"
+                                checked={isAsyncLoading}
+                                onChange={(e) => setIsAsyncLoading(e.target.checked)}
+                                hint="Active les spinners intégrés et curseurs d'attente (Select & Combobox)"
+                            />
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                onClick={() => setShowDynamicToast(true)}
+                            >
+                                Déclencher Toast animé
+                            </Button>
+                        </Stack>
+                        <SegmentedControl
+                            value={segmentedVal}
+                            onChange={setSegmentedVal}
+                            options={[
+                                { value: 'all', label: 'Toutes les vues' },
+                                { value: 'async', label: 'Focus asynchrone' },
+                                { value: 'motion', label: 'Focus micro-interactions' },
+                            ]}
+                            size="sm"
+                        />
+                    </Stack>
+                </Card.Content>
+            </Card>
+
             {/* Grille 2 colonnes des catégories */}
             <Grid columns={2} gap="lg">
                 {/* 1. Overlays, Dialogues & Menus contextuels */}
@@ -104,6 +167,16 @@ export function MoodboardCatalogView() {
                     </Card.Header>
                     <Card.Content>
                         <Stack gap="md">
+                            {showDynamicToast && (
+                                <Toast tone="info" onClose={() => setShowDynamicToast(false)}>
+                                    <Toast.Title>Notification temps réel</Toast.Title>
+                                    <Toast.Description>
+                                        Animation d’entrée fluide avec translation verticale et
+                                        opacité progressive.
+                                    </Toast.Description>
+                                </Toast>
+                            )}
+
                             <Stack direction="horizontal" gap="sm" style={{ flexWrap: 'wrap' }}>
                                 <Button
                                     size="sm"
@@ -286,6 +359,17 @@ export function MoodboardCatalogView() {
                                 ]}
                             />
 
+                            <Tabs
+                                value={catalogSubTab}
+                                onChange={setCatalogSubTab}
+                                items={[
+                                    { value: 'active', label: 'Charges actives' },
+                                    { value: 'canary', label: 'Canary rollout' },
+                                    { value: 'standby', label: 'En attente' },
+                                ]}
+                                size="sm"
+                            />
+
                             <Stepper
                                 activeStep={stepperStep}
                                 steps={[
@@ -389,12 +473,57 @@ export function MoodboardCatalogView() {
                                 Saisie avancée & Sélecteurs temporels
                             </Title>
                             <Text tone="muted" size="sm">
-                                Calendrier, sélecteurs de dates, radio-groupes, nombres et fichiers.
+                                Calendrier, sélecteurs asynchrones, radio-groupes, nombres et
+                                fichiers.
                             </Text>
                         </Stack>
                     </Card.Header>
                     <Card.Content>
                         <Stack gap="md">
+                            <Grid columns={2} gap="md">
+                                <Select
+                                    label="Cluster cible (asynchrone)"
+                                    value={selectVal}
+                                    onChange={(e) => setSelectVal(e.target.value)}
+                                    loading={isAsyncLoading}
+                                    hint="Supporte l'état asynchrone avec spinner intégré"
+                                >
+                                    <option value="fra-01">Frankfurt Core 01 (EU)</option>
+                                    <option value="cdg-02">Paris Datacenter 02 (EU)</option>
+                                    <option value="ams-01">Amsterdam Ring 01 (EU)</option>
+                                </Select>
+
+                                <Combobox
+                                    label="Zone de disponibilité"
+                                    value={comboboxVal}
+                                    onChange={setComboboxVal}
+                                    items={[
+                                        { value: 'fra1', label: 'Frankfurt 1 (fra1)' },
+                                        { value: 'cdg1', label: 'Paris Charles de Gaulle (cdg1)' },
+                                        { value: 'ams1', label: 'Amsterdam (ams1)' },
+                                        { value: 'lhr1', label: 'London Heathrow (lhr1)' },
+                                    ]}
+                                    clearable
+                                    loading={isAsyncLoading}
+                                    hint="Filtrable, effaçable (clearable) et réactif au réseau"
+                                />
+                            </Grid>
+
+                            <Grid columns={2} gap="md">
+                                <Switch
+                                    label="Failover automatique"
+                                    checked={autoFailover}
+                                    onChange={(e) => setAutoFailover(e.target.checked)}
+                                    hint="Micro-interaction tactile :active avec transition douce"
+                                />
+                                <Checkbox
+                                    label="Chiffrement matériel AES-256"
+                                    checked={hardwareEncrypt}
+                                    onChange={(e) => setHardwareEncrypt(e.target.checked)}
+                                    hint="Transition d’échelle sur la coche et compression tactile"
+                                />
+                            </Grid>
+
                             <RadioGroup
                                 label="Stratégie de déploiement"
                                 value={radioSelection}
@@ -410,7 +539,15 @@ export function MoodboardCatalogView() {
                                 title="Dimensionnement & Sécurité"
                                 description="Nombre de répliques et clé de signature des sondes"
                             >
-                                <Grid columns={2} gap="md">
+                                <Grid columns={3} gap="md">
+                                    <Input
+                                        label="Nom du cluster"
+                                        value={clusterName}
+                                        onChange={(e) => setClusterName(e.target.value)}
+                                        clearable
+                                        hint="Effacement rapide (clearable)"
+                                    />
+
                                     <NumberInput
                                         label="Répliques actives"
                                         min={1}
@@ -428,19 +565,6 @@ export function MoodboardCatalogView() {
                                     />
                                 </Grid>
                             </FormSection>
-
-                            <Combobox
-                                label="Zone de disponibilité"
-                                value={comboboxVal}
-                                onChange={setComboboxVal}
-                                items={[
-                                    { value: 'fra1', label: 'Frankfurt 1 (fra1)' },
-                                    { value: 'cdg1', label: 'Paris Charles de Gaulle (cdg1)' },
-                                    { value: 'ams1', label: 'Amsterdam (ams1)' },
-                                    { value: 'lhr1', label: 'London Heathrow (lhr1)' },
-                                ]}
-                                hint="Recherche filtrable avec autocomplétion"
-                            />
 
                             <DatePicker
                                 label="Date de gel des versions"
@@ -479,6 +603,46 @@ export function MoodboardCatalogView() {
                     </Card.Header>
                     <Card.Content>
                         <Stack gap="md">
+                            <Stack
+                                direction="horizontal"
+                                gap="sm"
+                                style={{ flexWrap: 'wrap', alignItems: 'center' }}
+                            >
+                                <Badge tone="neutral" size="sm">
+                                    Neutre
+                                </Badge>
+                                <Badge tone="info" size="sm">
+                                    Info
+                                </Badge>
+                                <Badge tone="success" size="sm">
+                                    Succès
+                                </Badge>
+                                <Badge tone="warning" size="sm">
+                                    Avertissement
+                                </Badge>
+                                <Badge tone="danger" size="sm">
+                                    Erreur
+                                </Badge>
+                                <BadgeDelta deltaType="increase" size="sm">
+                                    +14.2%
+                                </BadgeDelta>
+                                <BadgeDelta deltaType="decrease" size="sm">
+                                    -2.8%
+                                </BadgeDelta>
+                            </Stack>
+
+                            <Stack direction="horizontal" gap="sm" style={{ flexWrap: 'wrap' }}>
+                                <Button size="sm" variant="primary" loading={isAsyncLoading}>
+                                    Action primaire
+                                </Button>
+                                <Button size="sm" variant="secondary" loading={isAsyncLoading}>
+                                    Action secondaire
+                                </Button>
+                                <Button size="sm" variant="danger" loading={isAsyncLoading}>
+                                    Action critique
+                                </Button>
+                            </Stack>
+
                             <Stack direction="horizontal" gap="md" style={{ alignItems: 'center' }}>
                                 <Toggle
                                     pressed={toggleState}
@@ -610,6 +774,12 @@ export function MoodboardCatalogView() {
                                         title: 'Garanties SLA et temps de rétablissement',
                                         content:
                                             'Engagement de disponibilité de 99.99% avec RTO < 5 minutes et RPO < 1 seconde.',
+                                    },
+                                    {
+                                        value: 'sec-3',
+                                        title: 'Dépliage fluide CSS Grid & Accélération matérielle',
+                                        content:
+                                            'Animation fluide basée sur grid-template-rows: 0fr -> 1fr sans recalcul de hauteur JavaScript. Conforme prefers-reduced-motion.',
                                     },
                                 ]}
                             />

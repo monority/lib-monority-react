@@ -12,12 +12,22 @@
         padding: var(--mr-space-4);
     }
 
+    @keyframes mr-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
     /* Voile d'arriere-plan */
     :where(.mr-modal__backdrop) {
         position: fixed;
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
+        animation: mr-fade-in var(--mr-duration-state) ease;
     }
 
     @keyframes mr-modal-enter {
@@ -108,5 +118,12 @@
         align-items: center;
         justify-content: flex-end;
         gap: var(--mr-space-3);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-modal__panel),
+        :where(.mr-modal__backdrop) {
+            animation: none;
+        }
     }
 }

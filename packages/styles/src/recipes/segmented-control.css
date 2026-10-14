@@ -52,8 +52,13 @@
         cursor: pointer;
         white-space: nowrap;
         transition: color var(--mr-duration-state) ease, background-color var(--mr-duration-state)
-            ease, box-shadow var(--mr-duration-state) ease;
+            ease, box-shadow var(--mr-duration-state) ease, transform var(--mr-duration-state) ease;
         outline: none;
+    }
+
+    /* Effet tactile a l'appui */
+    :where(.mr-segmented-control__item:active:not([disabled])) {
+        transform: scale(0.96);
     }
 
     :where(.mr-segmented-control[data-size='sm']) :where(.mr-segmented-control__item) {
@@ -86,5 +91,15 @@
     :where(.mr-segmented-control[data-disabled='true']) :where(.mr-segmented-control__item) {
         opacity: var(--mr-opacity-disabled);
         cursor: not-allowed;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-segmented-control__item) {
+            transition: none;
+        }
+
+        :where(.mr-segmented-control__item:active:not([disabled])) {
+            transform: none;
+        }
     }
 }

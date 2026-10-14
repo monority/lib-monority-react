@@ -19,6 +19,7 @@ export interface SelectProps
     error?: ReactNode
     className?: string
     invalid?: boolean
+    loading?: boolean
     children?: ReactNode
     options?: SelectOption[]
     placeholder?: string

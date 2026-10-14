@@ -46,9 +46,14 @@ Auditer et certifier l'ensemble des 41 composants au statut draft dans registry.
 - Lot 3 : Navigation et Presentation de Donnees (11 composants) — Valide et commite (151b75f)
 - Lot 4 : Formulaires et Overlays Complexes (12 composants) — Valide et commite (fd9284c)
 
-## Reprise
-Dernier commit vert : 81b7505 sur feat/stabilize-draft-components.
-Catalogue certifie a 100% stable (83/83 composants). Alignements Timeline, Badge, Avatar et Switch finalises. Preset pill retire. pnpm verify et test:dist au vert.
-Prochaine action : ouvrir et fusionner la PR vers main ou enchainer sur les micro-interactions et optimisations OLED.
+## Chantier terminé — Micro-animations, Vitrine Moodboard et Nettoyage
+
+Branche `feat/showcase-enrichment-and-animations`.
+- Pack 1 : Overlays et Accordion (Toast entrée/sortie, backdrops Modal, AlertDialog, Drawer, Sheet, dépliage fluide CSS Grid Accordion).
+- Pack 2 : Menus flottants (DropdownMenu, ContextMenu, Popover, HoverCard, Tooltip, Menubar, NavigationMenu harmonisés avec translation et micro-échelle).
+- Pack 3 : Indicateurs et Retours tactiles (Switch, Checkbox, RadioGroup, Tabs, SegmentedControl, coches et rails animés).
+- Enrichissement Moodboard Studio (MoodboardCatalogView.tsx et MoodboardDeploymentModule.tsx) avec contrôles de simulation asynchrone, états loading sur Select et Combobox, boutons clearable, badges et déclenchement Toast.
+- Nettoyage et vérification de la fondation CSS : pnpm verify (typecheck, format, lint:css, test:rendered, build, test) et test:dist 100% verts.
+
 
 

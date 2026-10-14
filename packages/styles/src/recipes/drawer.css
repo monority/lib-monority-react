@@ -27,11 +27,21 @@
         justify-content: flex-end;
     }
 
+    @keyframes mr-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
     :where(.mr-drawer__backdrop-surface) {
         position: fixed;
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
+        animation: mr-fade-in var(--mr-duration-panel) ease;
     }
 
     @keyframes mr-drawer-enter-right {
@@ -164,5 +174,13 @@
         font-size: var(--mr-font-size-base);
         line-height: var(--mr-line-height-lg);
         color: var(--mr-text-primary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-drawer),
+        :where(.mr-drawer__panel),
+        :where(.mr-drawer__backdrop-surface) {
+            animation: none;
+        }
     }
 }

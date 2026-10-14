@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
@@ -36,6 +36,17 @@ const EyeOffIcon = () => (
     </svg>
 )
 
+const ClearIcon = () => (
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+            d="M5 5L15 15M15 5L5 15"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+        />
+    </svg>
+)
+
 export function Input({
     ref,
     tone,
@@ -53,9 +64,24 @@ export function Input({
     iconLeading,
     iconTrailing,
     showPasswordToggle = false,
+    clearable = false,
+    clearAriaLabel = 'Effacer le texte',
+    onClear,
+    value,
+    defaultValue,
+    onChange,
     ...props
 }: InputProps) {
+    const inputRef = useRef<HTMLInputElement>(null)
     const [showPassword, setShowPassword] = useState(false)
+    const isControlled = value !== undefined
+    const [internalHasValue, setInternalHasValue] = useState(
+        Boolean(defaultValue && String(defaultValue).length > 0)
+    )
+    const hasValue = isControlled
+        ? Boolean(value !== null && value !== undefined && String(value).length > 0)
+        : internalHasValue
+
     const resolvedTone = tone ?? 'neutral'
     const resolvedSize = density ?? 'md'
     const isInvalid = invalid || Boolean(error)
@@ -63,15 +89,58 @@ export function Input({
     const isPasswordMode = type === 'password'
     const effectiveType = isPasswordMode ? (showPassword ? 'text' : 'password') : type
 
+    const showClear = Boolean(clearable) && hasValue && !disabled && !props.readOnly
     const hasLeadingIcon = Boolean(iconLeading)
     const hasTrailingToggle = isPasswordMode && showPasswordToggle
-    const hasTrailingIcon = Boolean(iconTrailing) || hasTrailingToggle
-    const needsWrapper = hasLeadingIcon || hasTrailingIcon
+    const hasTrailingIcon = Boolean(iconTrailing) || hasTrailingToggle || showClear
+    const needsWrapper = hasLeadingIcon || hasTrailingIcon || Boolean(clearable)
+
+    const handleRef = useCallback(
+        (node: HTMLInputElement | null) => {
+            inputRef.current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as { current: HTMLInputElement | null }).current = node
+            }
+        },
+        [ref]
+    )
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!isControlled) {
+            setInternalHasValue(e.target.value.length > 0)
+        }
+        onChange?.(e)
+    }
+
+    const handleClear = () => {
+        if (inputRef.current) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set
+            if (nativeInputValueSetter) {
+                nativeInputValueSetter.call(inputRef.current, '')
+            } else {
+                inputRef.current.value = ''
+            }
+            const inputEvent = new Event('input', { bubbles: true })
+            inputRef.current.dispatchEvent(inputEvent)
+            const changeEvent = new Event('change', { bubbles: true })
+            inputRef.current.dispatchEvent(changeEvent)
+            inputRef.current.focus()
+        }
+        if (!isControlled) {
+            setInternalHasValue(false)
+        }
+        onClear?.()
+    }
 
     const inputControl = (
         <InputBase
             as="input"
-            ref={ref}
+            ref={handleRef}
             type={effectiveType}
             className={cn('mr-input', inputClassName)}
             data-size={resolvedSize}
@@ -80,6 +149,9 @@ export function Input({
             disabled={disabled}
             required={required}
             invalid={isInvalid}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={handleInputChange}
             {...props}
         />
     )
@@ -124,6 +196,18 @@ export function Input({
                                 disabled={disabled}
                             >
                                 {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                            </button>
+                        ) : showClear ? (
+                            <button
+                                type="button"
+                                className="mr-input__clear"
+                                aria-label={clearAriaLabel}
+                                onClick={handleClear}
+                                onMouseDown={(e) => e.preventDefault()}
+                                tabIndex={-1}
+                                disabled={disabled}
+                            >
+                                <ClearIcon />
                             </button>
                         ) : hasTrailingIcon ? (
                             <span

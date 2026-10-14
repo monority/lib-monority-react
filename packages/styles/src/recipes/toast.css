@@ -2,6 +2,17 @@
  * Notification ephemere ou confirmation d'action flottante.
  * Carte moderne sur-elevee neutre avec icone de statut coloree. */
 @layer mr.components {
+    @keyframes mr-toast-enter {
+        from {
+            opacity: 0;
+            transform: translateY(var(--mr-space-2)) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
     :where(.mr-toast) {
         position: relative;
         box-sizing: border-box;
@@ -20,6 +31,7 @@
         font-family: var(--mr-font-family-sans);
         color: var(--mr-text-primary);
         overflow: hidden;
+        animation: mr-toast-enter var(--mr-duration-panel) ease;
     }
 
     /* Icone de statut coloree selon le ton */
@@ -134,5 +146,11 @@
 
     :where(.mr-toast-viewport) > * {
         pointer-events: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-toast) {
+            animation: none;
+        }
     }
 }

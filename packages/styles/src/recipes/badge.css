@@ -18,6 +18,8 @@
         gap: calc(var(--mr-space-1) + 1px);
         background-color: var(--mr-bg-sunken);
         color: var(--mr-text-secondary);
+        transition: background-color var(--mr-duration-state) ease, color var(--mr-duration-state)
+            ease, border-color var(--mr-duration-state) ease;
     }
 
     /* Tailles : sm par defaut (22px), md (26px) */
@@ -86,5 +88,11 @@
         background-color: var(--mr-info-subtle);
         color: var(--mr-info-text);
         border-color: var(--mr-info-border);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-badge) {
+            transition: none;
+        }
     }
 }

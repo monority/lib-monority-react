@@ -72,7 +72,13 @@
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
         background-color: color-mix(in oklch, var(--mr-bg-sunken), var(--mr-text-primary) 8%);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            transform var(--mr-duration-state);
+    }
+
+    /* Effet tactile a l'appui */
+    :where(.mr-switch:active:not([data-disabled='true'])) :where(.mr-switch__control) {
+        transform: scale(0.96);
     }
 
     /* Pouce circulaire coulissant */
@@ -355,5 +361,16 @@
             var(--mr-danger-solid),
             var(--mr-bg-canvas) var(--mr-state-disabled-mix)
         );
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-switch__control),
+        :where(.mr-switch__thumb) {
+            transition: none;
+        }
+
+        :where(.mr-switch:active:not([data-disabled='true'])) :where(.mr-switch__control) {
+            transform: none;
+        }
     }
 }

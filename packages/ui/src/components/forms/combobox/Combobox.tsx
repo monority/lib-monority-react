@@ -5,9 +5,21 @@ import { OVERLAY_OFFSET } from '@/lib/constants'
 import { Field } from '@/components/forms/field/Field'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
+import { Spinner } from '@/components/feedback/spinner/Spinner'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import type { ComboboxProps, ComboboxItem } from './Combobox.types'
 import type { ComboboxTone, ComboboxSize } from './Combobox.types'
+
+const ClearIcon = () => (
+    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+            d="M5 5L15 15M15 5L5 15"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+        />
+    </svg>
+)
 
 export function Combobox({
     ref,
@@ -27,6 +39,10 @@ export function Combobox({
     invalid = false,
     disabled = false,
     required = false,
+    loading = false,
+    clearable = false,
+    clearAriaLabel = 'Effacer la sélection',
+    onClear,
     ...props
 }: ComboboxProps) {
     const generatedId = useId()
@@ -45,6 +61,20 @@ export function Combobox({
 
     const selectedValue = isControlled ? value : internalValue
     const portalTarget = usePortalTarget()
+
+    const hasValue = Boolean(selectedValue && selectedValue.length > 0) || query.length > 0
+    const showClear = Boolean(clearable) && hasValue && !disabled && !props.readOnly && !loading
+
+    function handleClear(e: React.MouseEvent) {
+        e.stopPropagation()
+        setQuery('')
+        if (!isControlled) setInternalValue('')
+        onChange?.('')
+        setOpen(false)
+        setActiveIndex(0)
+        onClear?.()
+        inputRef.current?.focus()
+    }
 
     const resolvedTone: ComboboxTone = tone ?? 'neutral'
     const resolvedSize: ComboboxSize = size ?? 'md'
@@ -170,6 +200,8 @@ export function Combobox({
                     data-tone={resolvedTone}
                     data-size={resolvedSize}
                     data-open={open ? true : undefined}
+                    data-loading={loading ? true : undefined}
+                    data-has-clear={showClear ? true : undefined}
                     data-invalid={isInvalid ? true : undefined}
                     data-disabled={disabled ? true : undefined}
                     data-required={required ? true : undefined}
@@ -182,6 +214,8 @@ export function Combobox({
                         className="mr-combobox__input"
                         data-invalid={isInvalid ? true : undefined}
                         data-disabled={disabled ? true : undefined}
+                        data-has-clear={showClear ? true : undefined}
+                        aria-busy={loading ? 'true' : undefined}
                         aria-expanded={open}
                         aria-controls={`${inputId}-list`}
                         aria-activedescendant={
@@ -212,6 +246,24 @@ export function Combobox({
                         aria-label={typeof label === 'string' ? label : undefined}
                         {...props}
                     />
+                    {showClear ? (
+                        <button
+                            type="button"
+                            className="mr-combobox__clear"
+                            aria-label={clearAriaLabel}
+                            onClick={handleClear}
+                            onMouseDown={(e) => e.preventDefault()}
+                            tabIndex={-1}
+                            disabled={disabled}
+                        >
+                            <ClearIcon />
+                        </button>
+                    ) : null}
+                    {loading ? (
+                        <span className="mr-combobox__spinner" aria-hidden="true">
+                            <Spinner size="sm" />
+                        </span>
+                    ) : null}
                     {open && portalTarget
                         ? createPortal(
                               <div

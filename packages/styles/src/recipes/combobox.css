@@ -63,6 +63,88 @@
         border-color: var(--mr-text-primary);
     }
 
+    /* Indicateur de chargement asynchrone */
+    :where(.mr-combobox)[data-loading]::after {
+        display: none;
+    }
+
+    :where(.mr-combobox__spinner) {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--mr-space-4);
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-text-secondary);
+        pointer-events: none;
+        line-height: 1;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-combobox)[data-size='sm'] :where(.mr-combobox__spinner) {
+        inset-inline-end: var(--mr-space-3);
+    }
+
+    :where(.mr-combobox)[data-size='lg'] :where(.mr-combobox__spinner) {
+        inset-inline-end: var(--mr-space-5);
+    }
+
+    /* Bouton d'effacement rapide */
+    :where(.mr-combobox__clear) {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: calc(var(--mr-space-4) + var(--mr-space-4));
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        line-height: 1;
+        border-radius: var(--mr-radius-md);
+        transition: color var(--mr-duration-state);
+        box-sizing: border-box;
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-combobox)[data-size='sm'] :where(.mr-combobox__clear) {
+        inset-inline-end: calc(var(--mr-space-3) + var(--mr-space-4));
+        inline-size: var(--mr-space-4);
+        block-size: var(--mr-space-4);
+    }
+
+    :where(.mr-combobox)[data-size='lg'] :where(.mr-combobox__clear) {
+        inset-inline-end: calc(var(--mr-space-5) + var(--mr-space-5));
+        inline-size: var(--mr-space-5);
+        block-size: var(--mr-space-5);
+    }
+
+    :where(.mr-combobox__clear:hover) {
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-combobox__clear:focus-visible) {
+        color: var(--mr-text-primary);
+        outline: 1px solid var(--mr-text-secondary);
+        outline-offset: 2px;
+    }
+
+    :where(.mr-combobox__clear:disabled) {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+    }
+
+    :where(.mr-combobox__clear) > svg {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
     /* Champ de saisie combobox */
     :where(.mr-combobox__input) {
         display: block;
@@ -110,6 +192,37 @@
         min-block-size: var(--mr-size-control-lg);
         padding-inline-start: var(--mr-space-5);
         padding-inline-end: calc(var(--mr-space-5) + var(--mr-space-5) + var(--mr-space-2));
+    }
+
+    /* Ajustement du padding lateral avec bouton d'effacement */
+    :where(.mr-combobox)[data-has-clear] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-has-clear] {
+        padding-inline-end: calc(
+            var(--mr-space-4) +
+            var(--mr-space-4) +
+            var(--mr-space-4) +
+            var(--mr-space-2)
+        );
+    }
+
+    :where(.mr-combobox)[data-size='sm'][data-has-clear] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-size='sm'][data-has-clear] {
+        padding-inline-end: calc(
+            var(--mr-space-3) +
+            var(--mr-space-4) +
+            var(--mr-space-4) +
+            var(--mr-space-2)
+        );
+    }
+
+    :where(.mr-combobox)[data-size='lg'][data-has-clear] :where(.mr-combobox__input),
+    :where(.mr-combobox__input)[data-size='lg'][data-has-clear] {
+        padding-inline-end: calc(
+            var(--mr-space-5) +
+            var(--mr-space-5) +
+            var(--mr-space-5) +
+            var(--mr-space-2)
+        );
     }
 
     /* Placeholder */

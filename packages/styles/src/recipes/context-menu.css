@@ -33,11 +33,11 @@
     @keyframes mr-context-menu-enter {
         from {
             opacity: 0;
-            transform: scale(0.96);
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
         }
         to {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
     }
 
@@ -110,5 +110,11 @@
     :where(.mr-context-menu__item:disabled) {
         color: var(--mr-text-disabled);
         cursor: not-allowed;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-context-menu__content) {
+            animation: none;
+        }
     }
 }

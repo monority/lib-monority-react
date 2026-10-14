@@ -55,6 +55,33 @@
         block-size: calc(var(--mr-space-2) + 2px);
     }
 
+    /* Indicateur de chargement asynchrone */
+    :where(.mr-select-wrapper)[data-loading]::after {
+        display: none;
+    }
+
+    :where(.mr-select__spinner) {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--mr-space-4);
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mr-text-secondary);
+        pointer-events: none;
+        line-height: 1;
+        box-sizing: border-box;
+    }
+
+    :where(.mr-select-wrapper)[data-size='sm'] :where(.mr-select__spinner) {
+        inset-inline-end: var(--mr-space-3);
+    }
+
+    :where(.mr-select-wrapper)[data-size='lg'] :where(.mr-select__spinner) {
+        inset-inline-end: var(--mr-space-5);
+    }
+
     /* Element natif select */
     :where(.mr-select) {
         appearance: none;

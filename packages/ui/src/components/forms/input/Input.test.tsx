@@ -204,4 +204,70 @@ describe('Input', () => {
         })
         expect(input.type).toBe('password')
     })
+
+    it('renders clear button when clearable is true and defaultValue is present', () => {
+        const view = render(<Input id="clear-test" clearable defaultValue="Hello" />)
+        const clearBtn = view.querySelector('.mr-input__clear')
+        const input = view.querySelector('input')
+        expect(clearBtn).toBeTruthy()
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Effacer le texte')
+        expect(input?.hasAttribute('data-has-trailing-icon')).toBe(true)
+        expect(view.querySelector('.mr-input__wrapper')).toBeTruthy()
+    })
+
+    it('does not render clear button when clearable is true but value is empty', () => {
+        const view = render(<Input id="clear-empty" clearable defaultValue="" />)
+        expect(view.querySelector('.mr-input__clear')).toBeNull()
+        const input = view.querySelector('input')
+        expect(input?.hasAttribute('data-has-trailing-icon')).toBe(false)
+    })
+
+    it('does not render clear button when clearable is false even if value is present', () => {
+        const view = render(<Input id="no-clear" defaultValue="Hello" />)
+        expect(view.querySelector('.mr-input__clear')).toBeNull()
+    })
+
+    it('resets value, calls onClear and onChange, and focuses input when clicked', () => {
+        const onClear = vi.fn()
+        const onChange = vi.fn()
+        const view = render(
+            <Input
+                id="clear-action"
+                clearable
+                defaultValue="Some text"
+                onClear={onClear}
+                onChange={onChange}
+            />
+        )
+        const input = view.querySelector('input') as HTMLInputElement
+        const clearBtn = view.querySelector('.mr-input__clear') as HTMLButtonElement
+
+        expect(input.value).toBe('Some text')
+
+        act(() => {
+            clearBtn.click()
+        })
+
+        expect(input.value).toBe('')
+        expect(onClear).toHaveBeenCalledTimes(1)
+        expect(onChange).toHaveBeenCalledTimes(1)
+        expect(document.activeElement).toBe(input)
+        expect(view.querySelector('.mr-input__clear')).toBeNull()
+    })
+
+    it('respects custom clearAriaLabel prop', () => {
+        const view = render(
+            <Input clearable defaultValue="test" clearAriaLabel="Clear current search" />
+        )
+        const clearBtn = view.querySelector('.mr-input__clear')
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Clear current search')
+    })
+
+    it('does not render clear button when input is disabled or readOnly', () => {
+        const viewDisabled = render(<Input clearable defaultValue="test" disabled />)
+        expect(viewDisabled.querySelector('.mr-input__clear')).toBeNull()
+
+        const viewReadOnly = render(<Input clearable defaultValue="test" readOnly />)
+        expect(viewReadOnly.querySelector('.mr-input__clear')).toBeNull()
+    })
 })
