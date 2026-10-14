@@ -92,7 +92,9 @@ export function ProgressRealisticServerExample() {
     const timersRef = useRef<number[]>([])
 
     const clearTimers = () => {
-        timersRef.current.forEach((id) => window.clearTimeout(id))
+        for (const id of timersRef.current) {
+            window.clearTimeout(id)
+        }
         timersRef.current = []
     }
 

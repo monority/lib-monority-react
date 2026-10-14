@@ -7,16 +7,16 @@ import { Select } from '@monority/ui/select'
 export function FilterBarBasicExample() {
     return (
         <FilterBar>
-            <div className="mr-filter-bar__main">
-                <div className="mr-filter-bar__chips">
-                    <span className="mr-filter-bar__chip">Status: Live</span>
-                    <span className="mr-filter-bar__chip">Plan: Pro</span>
-                    <span className="mr-filter-bar__chip">Owner: Design</span>
-                </div>
-            </div>
-            <div className="mr-filter-bar__meta">
+            <FilterBar.Main>
+                <FilterBar.Chips>
+                    <FilterBar.Chip active>Status: Live</FilterBar.Chip>
+                    <FilterBar.Chip>Plan: Pro</FilterBar.Chip>
+                    <FilterBar.Chip>Owner: Design</FilterBar.Chip>
+                </FilterBar.Chips>
+            </FilterBar.Main>
+            <FilterBar.Meta>
                 <span>24 results</span>
-            </div>
+            </FilterBar.Meta>
         </FilterBar>
     )
 }
@@ -24,10 +24,10 @@ export function FilterBarBasicExample() {
 export function FilterBarWithControlsExample() {
     return (
         <FilterBar>
-            <div className="mr-filter-bar__main">
-                <div className="mr-filter-bar__leading">
+            <FilterBar.Main>
+                <FilterBar.Leading>
                     <Input placeholder="Search components..." />
-                </div>
+                </FilterBar.Leading>
                 <Select aria-label="Status filter" defaultValue="all">
                     <option value="all">All statuses</option>
                     <option value="stable">Stable</option>
@@ -43,10 +43,10 @@ export function FilterBarWithControlsExample() {
                 <Button variant="secondary" size="sm">
                     Apply
                 </Button>
-            </div>
-            <div className="mr-filter-bar__meta">
+            </FilterBar.Main>
+            <FilterBar.Meta>
                 <span>Showing 18 of 64</span>
-            </div>
+            </FilterBar.Meta>
         </FilterBar>
     )
 }
@@ -54,19 +54,19 @@ export function FilterBarWithControlsExample() {
 export function FilterBarWithResetExample() {
     return (
         <FilterBar>
-            <div className="mr-filter-bar__main">
-                <div className="mr-filter-bar__chips">
+            <FilterBar.Main>
+                <FilterBar.Chips>
                     <Badge>3 active</Badge>
-                    <span className="mr-filter-bar__chip">Category: Analytics</span>
-                    <span className="mr-filter-bar__chip">Region: Europe</span>
-                    <span className="mr-filter-bar__chip">Updated: 30 days</span>
-                </div>
-            </div>
-            <div className="mr-filter-bar__meta">
+                    <FilterBar.Chip active>Category: Analytics</FilterBar.Chip>
+                    <FilterBar.Chip>Region: Europe</FilterBar.Chip>
+                    <FilterBar.Chip>Updated: 30 days</FilterBar.Chip>
+                </FilterBar.Chips>
+            </FilterBar.Main>
+            <FilterBar.Meta>
                 <Button variant="ghost" size="sm">
                     Reset
                 </Button>
-            </div>
+            </FilterBar.Meta>
         </FilterBar>
     )
 }

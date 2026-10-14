@@ -64,6 +64,7 @@ const docData: DocPageData = {
         '.mr-collapsible__label',
         '.mr-collapsible__icon',
         '.mr-collapsible__panel',
+        '.mr-collapsible__body',
         '.mr-collapsible__content',
         '[data-open]',
         '[data-state]',
@@ -80,6 +81,7 @@ const docData: DocPageData = {
         'The trigger button exposes aria-expanded and aria-controls.',
         'The panel uses role="region", aria-hidden, and is labelled by the trigger.',
         'Keyboard access works with Enter and Space through the native button.',
+        'Fluid expansion is animated using CSS Grid (grid-template-rows: 0fr -> 1fr) with zero residual height when closed.',
     ],
 }
 
