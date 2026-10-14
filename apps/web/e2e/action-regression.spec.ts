@@ -98,3 +98,40 @@ test('progress strié et animé applique le dégradé linéaire et l’animation
     expect(style.backgroundImage).toContain('linear-gradient')
     expect(style.animationName).toBe('mr-progress-stripes')
 })
+
+test('echelle z-index canonique est definie sur root et appliquee aux overlays', async ({
+    page,
+}) => {
+    await page.goto('/docs/modal')
+
+    const rootZIndexTokens = await page.evaluate(() => {
+        const rootStyle = getComputedStyle(document.documentElement)
+        return {
+            base: rootStyle.getPropertyValue('--mr-z-base').trim(),
+            sticky: rootStyle.getPropertyValue('--mr-z-sticky').trim(),
+            header: rootStyle.getPropertyValue('--mr-z-header').trim(),
+            navOpen: rootStyle.getPropertyValue('--mr-z-nav-open').trim(),
+            overlay: rootStyle.getPropertyValue('--mr-z-overlay').trim(),
+            popover: rootStyle.getPropertyValue('--mr-z-popover').trim(),
+            tooltip: rootStyle.getPropertyValue('--mr-z-tooltip').trim(),
+            toast: rootStyle.getPropertyValue('--mr-z-toast').trim(),
+        }
+    })
+
+    expect(rootZIndexTokens.base).toBe('1')
+    expect(rootZIndexTokens.sticky).toBe('10')
+    expect(rootZIndexTokens.header).toBe('40')
+    expect(rootZIndexTokens.navOpen).toBe('60')
+    expect(rootZIndexTokens.overlay).toBe('100')
+    expect(rootZIndexTokens.popover).toBe('200')
+    expect(rootZIndexTokens.tooltip).toBe('300')
+    expect(rootZIndexTokens.toast).toBe('1300')
+
+    const trigger = page.getByRole('button', { name: 'Ouvrir la modale' }).first()
+    if (await trigger.isVisible()) {
+        await trigger.click()
+        const modal = page.locator('.mr-modal').first()
+        await expect(modal).toBeVisible()
+        await expect(modal).toHaveCSS('z-index', '100')
+    }
+})

@@ -16,7 +16,7 @@
         pointer-events: none;
         transition: opacity var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms), transform
             var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms);
-        z-index: 50;
+        z-index: var(--mr-z-tooltip);
         background-color: var(--mr-bg-inverse);
         color: var(--mr-text-on-inverse);
         border-radius: var(--mr-radius-sm);
@@ -84,6 +84,11 @@
     :where(.mr-tooltip[data-arrow='true'][data-side='right']) :where(.mr-tooltip__content)::after {
         left: calc(-1 * var(--mr-space-1) / 2);
         top: calc(50% - var(--mr-space-1) / 2);
+    }
+
+    :where(.mr-tooltip:hover:not([data-hidden])),
+    :where(.mr-tooltip:focus-within:not([data-hidden])) {
+        z-index: var(--mr-z-tooltip);
     }
 
     :where(.mr-tooltip:hover:not([data-hidden])) :where(.mr-tooltip__content),

@@ -11,12 +11,12 @@
         background-color: var(--mr-bg-surface);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
-        z-index: 10;
+        z-index: var(--mr-z-sticky);
     }
 
     :where(.mr-menubar)[data-open],
     :where(.mr-menubar:has([data-active='true'])) {
-        z-index: 60;
+        z-index: var(--mr-z-nav-open);
     }
 
     :where(.mr-menubar__menu-wrapper) {
@@ -25,7 +25,7 @@
     }
 
     :where(.mr-menubar__menu-wrapper)[data-active='true'] {
-        z-index: 61;
+        z-index: var(--mr-z-base);
     }
 
     :where(.mr-menubar__trigger) {
@@ -71,7 +71,7 @@
         position: absolute;
         inset-block-start: 100%;
         inset-inline-start: 0;
-        z-index: 62;
+        z-index: var(--mr-z-popover);
         min-inline-size: calc(var(--mr-space-6) * 5);
         margin-block-start: var(--mr-space-1);
         padding: var(--mr-space-1);

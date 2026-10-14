@@ -52,7 +52,7 @@
     :where(.mr-carousel__arrow) {
         grid-area: viewport;
         align-self: center;
-        z-index: 10;
+        z-index: var(--mr-z-sticky);
         display: inline-flex;
         align-items: center;
         justify-content: center;

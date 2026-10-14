@@ -69,7 +69,7 @@ const docData: DocPageData = {
         '[data-value]',
     ],
     tokens: [
-        '--mr-z-overlay',
+        '--mr-z-popover',
         '--mr-radius-md',
         '--mr-radius-sm',
         '--mr-bg-surface-elevated',

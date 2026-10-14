@@ -101,7 +101,7 @@ const docData: DocPageData = {
         '--mr-fg-strong',
         '--mr-focus-width',
         '--mr-focus-offset',
-        '--mr-z-overlay',
+        '--mr-z-sticky',
         '--mr-duration-fast',
     ],
     a11y: [

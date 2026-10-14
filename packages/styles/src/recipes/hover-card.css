@@ -12,7 +12,7 @@
 
     :where(.mr-hovercard__content) {
         position: fixed;
-        z-index: 50;
+        z-index: var(--mr-z-popover);
         box-sizing: border-box;
         width: max-content;
         max-width: calc(var(--mr-size-container-sm) - var(--mr-space-6) * 2);

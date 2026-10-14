@@ -6,12 +6,12 @@
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        z-index: 10;
+        z-index: var(--mr-z-sticky);
     }
 
     :where(.mr-nav-menu)[data-open],
     :where(.mr-nav-menu:has([data-active='true'])) {
-        z-index: 60;
+        z-index: var(--mr-z-nav-open);
     }
 
     :where(.mr-nav-menu__list) {
@@ -28,7 +28,7 @@
     }
 
     :where(.mr-nav-menu__item)[data-active='true'] {
-        z-index: 61;
+        z-index: var(--mr-z-base);
     }
 
     :where(.mr-nav-menu__trigger),
@@ -88,7 +88,7 @@
         position: absolute;
         inset-block-start: 100%;
         inset-inline-start: 0;
-        z-index: 50;
+        z-index: var(--mr-z-popover);
         min-inline-size: calc(var(--mr-space-6) * 7);
         margin-block-start: var(--mr-space-1);
         padding: var(--mr-space-2);

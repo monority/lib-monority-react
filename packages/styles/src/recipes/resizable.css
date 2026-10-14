@@ -68,14 +68,14 @@
     :where(.mr-resizable__handle:focus-visible) {
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: 1px;
-        z-index: 1;
+        z-index: var(--mr-z-base);
     }
 
     :where(.mr-resizable__handle-indicator) {
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1;
+        z-index: var(--mr-z-base);
         color: var(--mr-text-secondary);
         pointer-events: none;
         border-radius: var(--mr-radius-sm);

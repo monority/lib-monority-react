@@ -319,7 +319,7 @@
 
     /* ─── Liste deroulante flottante (Popover) ─────────────────── */
     :where(.mr-combobox__list) {
-        z-index: 50;
+        z-index: var(--mr-z-popover);
         box-sizing: border-box;
         padding: var(--mr-space-1);
         background-color: var(--mr-bg-raised);
