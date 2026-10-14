@@ -6,6 +6,12 @@
         display: flex;
         align-items: center;
         box-sizing: border-box;
+        z-index: 10;
+    }
+
+    :where(.mr-nav-menu)[data-open],
+    :where(.mr-nav-menu:has([data-active='true'])) {
+        z-index: 60;
     }
 
     :where(.mr-nav-menu__list) {
@@ -19,6 +25,10 @@
         position: relative;
         display: inline-flex;
         align-items: center;
+    }
+
+    :where(.mr-nav-menu__item)[data-active='true'] {
+        z-index: 61;
     }
 
     :where(.mr-nav-menu__trigger),
