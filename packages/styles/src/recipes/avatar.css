@@ -27,13 +27,15 @@
         border: 1px solid var(--mr-border-subtle);
         user-select: none;
         vertical-align: middle;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     /* Taille sm : 24px */
     :where(.mr-avatar)[data-size='sm'] {
         inline-size: var(--mr-space-6);
         block-size: var(--mr-space-6);
-        font-size: var(--mr-font-size-sm);
+        font-size: var(--mr-font-size-xs);
     }
 
     /* Taille md (defaut) : 32px */
@@ -59,9 +61,25 @@
     }
 
     :where(.mr-avatar__initials) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: 100%;
+        padding: 2px;
         font-weight: var(--mr-font-weight-medium);
         line-height: 1;
+        white-space: nowrap;
         text-transform: uppercase;
+    }
+
+    :where(.mr-avatar)[data-size='md'] :where(.mr-avatar__initials) {
+        padding: calc(var(--mr-space-1) - 1px);
+    }
+
+    :where(.mr-avatar)[data-size='lg'] :where(.mr-avatar__initials) {
+        padding: var(--mr-space-1);
     }
 
     :where(.mr-avatar__status) {

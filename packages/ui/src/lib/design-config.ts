@@ -13,7 +13,7 @@ export type AccentPreset =
     | 'red'
     | 'rose'
 export type ChartPalettePreset = 'default' | 'ocean' | 'spectrum' | 'warm'
-export type RadiusPreset = 'sharp' | 'compact' | 'default' | 'rounded' | 'pill'
+export type RadiusPreset = 'sharp' | 'compact' | 'default' | 'rounded'
 export type SpacingPreset = 'dense' | 'default' | 'comfortable' | 'airy'
 export type LayoutDensityPreset = 'compact' | 'default' | 'spacious'
 export type BrandPreset = 'monority' | 'studio'
@@ -72,7 +72,6 @@ export const DESIGN_PRESETS = {
         { value: 'compact', label: 'Compact' },
         { value: 'default', label: 'Default' },
         { value: 'rounded', label: 'Rounded' },
-        { value: 'pill', label: 'Pill' },
     ],
     spacings: [
         { value: 'dense', label: 'Dense' },
@@ -126,7 +125,6 @@ const radiusValues: Record<RadiusPreset, [string, string, string, string]> = {
     compact: ['2px', '4px', '6px', '8px'],
     default: ['4px', '6px', '10px', '12px'],
     rounded: ['6px', '10px', '16px', '20px'],
-    pill: ['10px', '16px', '9999px', '9999px'],
 }
 
 const spacingFactors: Record<SpacingPreset, number> = {
@@ -288,7 +286,7 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
             '--mr-radius-sm': radius[0],
             '--mr-radius-md': radius[1],
             '--mr-radius-lg': radius[2],
-            '--mr-radius-full': config.radius === 'sharp' ? '0px' : '9999px',
+            '--mr-radius-full': '9999px',
             '--mr-ref-radius-scale':
                 config.radius === 'sharp'
                     ? '0'
@@ -296,9 +294,7 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
                       ? '0.67'
                       : config.radius === 'rounded'
                         ? '1.6'
-                        : config.radius === 'pill'
-                          ? '2'
-                          : '1',
+                        : '1',
             '--mr-size-control-sm': `${Math.round(28 * densityScale)}px`,
             '--mr-size-control-md': `${Math.round(32 * densityScale)}px`,
             '--mr-size-control-lg': `${Math.round(40 * densityScale)}px`,

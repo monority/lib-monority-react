@@ -168,7 +168,7 @@ describe('sanitizeDesignConfig', () => {
         const config = {
             ...DEFAULT_DESIGN_CONFIG,
             accent: 'rose' as AccentPreset,
-            radius: 'pill' as const,
+            radius: 'compact' as const,
         }
         expect(sanitizeDesignConfig(config)).toEqual(config)
     })
@@ -186,7 +186,11 @@ describe('sanitizeDesignConfig', () => {
         expect(result).toEqual(DEFAULT_DESIGN_CONFIG)
     })
 
-    it('repairs a partially valid config axis by axis', () => {
+    it('repairs a partially valid config axis by axis and discards removed pill preset', () => {
+        expect(sanitizeDesignConfig({ accent: 'violet', radius: 'pill' })).toEqual({
+            ...DEFAULT_DESIGN_CONFIG,
+            accent: 'violet',
+        })
         expect(sanitizeDesignConfig({ accent: 'violet', radius: 'nope' })).toEqual({
             ...DEFAULT_DESIGN_CONFIG,
             accent: 'violet',

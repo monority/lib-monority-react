@@ -21,12 +21,13 @@
 
     :where(.mr-timeline__item) {
         position: relative;
-        display: flex;
         box-sizing: border-box;
     }
 
     :where(.mr-timeline[data-orientation='vertical'] .mr-timeline__item) {
-        gap: var(--mr-space-4);
+        display: grid;
+        grid-template-columns: var(--mr-space-3) 1fr;
+        column-gap: var(--mr-space-4);
         padding-block-end: var(--mr-space-6);
     }
 
@@ -37,17 +38,32 @@
     :where(.mr-timeline[data-orientation='vertical'] .mr-timeline__item:not(:last-child))::before {
         content: '';
         position: absolute;
-        inset-inline-start: calc(var(--mr-space-2) - 1px);
-        inset-block-start: var(--mr-space-3);
+        inset-inline-start: calc(var(--mr-space-3) / 2);
+        transform: translateX(-50%);
+        inset-block-start: calc(var(--mr-space-1) + var(--mr-space-3) / 2);
         inline-size: 2px;
         block-size: 100%;
         background-color: var(--mr-border-default);
     }
 
     :where(.mr-timeline[data-orientation='horizontal'] .mr-timeline__item) {
+        display: flex;
         flex-direction: column;
         gap: var(--mr-space-2);
         min-inline-size: 0;
+    }
+
+    :where(
+            .mr-timeline[data-orientation='horizontal'] .mr-timeline__item:not(:last-child)
+        )::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: calc(var(--mr-space-3) / 2);
+        inset-block-start: calc(var(--mr-space-1) + var(--mr-space-3) / 2);
+        transform: translateY(-50%);
+        inline-size: calc(100% + var(--mr-space-6));
+        block-size: 2px;
+        background-color: var(--mr-border-default);
     }
 
     :where(.mr-timeline__point) {
@@ -56,6 +72,8 @@
         flex-shrink: 0;
         inline-size: var(--mr-space-3);
         block-size: var(--mr-space-3);
+        justify-self: center;
+        align-self: start;
         border-radius: var(--mr-radius-full);
         margin-block-start: var(--mr-space-1);
         border: 2px solid var(--mr-border-strong);
@@ -106,11 +124,13 @@
         gap: var(--mr-space-1);
         flex: 1 1 auto;
         min-inline-size: 0;
+        grid-column: 2;
     }
 
     :where(.mr-timeline__date) {
         font-family: var(--mr-font-family-base);
         font-size: var(--mr-font-size-xs);
+        font-variant-numeric: tabular-nums;
         color: var(--mr-text-tertiary);
         line-height: var(--mr-line-height-normal);
     }
