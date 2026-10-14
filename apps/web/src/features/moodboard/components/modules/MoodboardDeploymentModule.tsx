@@ -62,6 +62,7 @@ export function MoodboardDeploymentModule() {
                             value={workspace}
                             onChange={(e) => setWorkspace(e.target.value)}
                             size="sm"
+                            clearable
                         />
                         <Select
                             id="moodboard-region"
@@ -69,6 +70,7 @@ export function MoodboardDeploymentModule() {
                             value={region}
                             onChange={(e) => setRegion(e.target.value)}
                             size="sm"
+                            loading={isTriggering}
                         >
                             <option value="eu-west-1">EU West (Ireland)</option>
                             <option value="us-east-1">US East (Virginia)</option>
