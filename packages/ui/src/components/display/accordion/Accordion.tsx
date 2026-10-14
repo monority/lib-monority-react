@@ -148,7 +148,9 @@ export function Accordion({
                             className="mr-accordion__panel"
                             hidden={!isOpen}
                         >
-                            <div className="mr-accordion__content">{item.content}</div>
+                            <div className="mr-accordion__content">
+                                <div className="mr-accordion__body">{item.content}</div>
+                            </div>
                         </div>
                     </div>
                 )

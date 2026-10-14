@@ -478,6 +478,10 @@
     margin-bottom: 0;
 }
 
+.docs-example-group:has(.mr-menubar, .mr-dropdown, .mr-popover, .mr-select, .mr-combobox) {
+    overflow: visible;
+}
+
 .docs-example-group > h3 {
     margin: 0;
     padding: var(--mr-space-2) var(--mr-space-3);

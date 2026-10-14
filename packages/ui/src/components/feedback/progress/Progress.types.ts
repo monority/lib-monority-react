@@ -11,6 +11,8 @@ export interface ProgressProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
     showValue?: boolean
     tone?: ProgressTone
     mode?: ProgressMode
+    striped?: boolean
+    animated?: boolean
     barClassName?: string
 }
 

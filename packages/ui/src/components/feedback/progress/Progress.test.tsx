@@ -115,4 +115,15 @@ describe('Progress', () => {
         expect(view.querySelector('.mr-progress__value')?.textContent).toBe('75%')
         expect(view.querySelector('.mr-progress__track')).not.toBeNull()
     })
+
+    it('supports striped and animated variants', () => {
+        const view = render(<Progress value={80} striped animated />)
+        const rootEl = view.querySelector('.mr-progress')
+        const barEl = view.querySelector('.mr-progress__bar')
+
+        expect(rootEl?.hasAttribute('data-striped')).toBe(true)
+        expect(rootEl?.hasAttribute('data-animated')).toBe(true)
+        expect(barEl?.className).toContain('mr-progress__bar--striped')
+        expect(barEl?.className).toContain('mr-progress__bar--animated')
+    })
 })
