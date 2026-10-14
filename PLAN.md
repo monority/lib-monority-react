@@ -47,8 +47,8 @@ Auditer et certifier l'ensemble des 41 composants au statut draft dans registry.
 - Lot 4 : Formulaires et Overlays Complexes (12 composants) — Valide et commite (fd9284c)
 
 ## Reprise
-Dernier commit vert : fd9284c sur feat/stabilize-draft-components.
-Catalogue certifie a 100% stable (83/83 composants). pnpm verify et test:dist au vert.
-Prochaine action : ouvrir la PR vers main ou enchainer sur la Wave 2 de nouveaux composants.
+Dernier commit vert : 81b7505 sur feat/stabilize-draft-components.
+Catalogue certifie a 100% stable (83/83 composants). Alignements Timeline, Badge, Avatar et Switch finalises. Preset pill retire. pnpm verify et test:dist au vert.
+Prochaine action : ouvrir et fusionner la PR vers main ou enchainer sur les micro-interactions et optimisations OLED.
 
 
