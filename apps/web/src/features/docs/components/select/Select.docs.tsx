@@ -3,6 +3,7 @@ import {
     SelectBasicExample,
     SelectDisabledExample,
     SelectInvalidExample,
+    SelectLoadingExample,
     SelectRequiredExample,
     SelectSizesExample,
     SelectWithHintExample,
@@ -21,6 +22,7 @@ const docData: DocPageData = {
     preview: () => <SelectBasicExample />,
     examples: [
         { title: 'With hint', content: <SelectWithHintExample /> },
+        { title: 'Loading state', content: <SelectLoadingExample /> },
         { title: 'Invalid state', content: <SelectInvalidExample /> },
         { title: 'Disabled', content: <SelectDisabledExample /> },
         { title: 'Required', content: <SelectRequiredExample /> },
@@ -67,6 +69,13 @@ const docData: DocPageData = {
             description: 'Required field indicator',
         },
         { name: 'disabled', type: `boolean`, defaultValue: 'false', description: 'Disabled state' },
+        {
+            name: 'loading',
+            type: `boolean`,
+            defaultValue: 'false',
+            description:
+                'Indicateur de chargement asynchrone qui remplace le chevron par un spinner et active aria-busy.',
+        },
         { name: 'invalid', type: `boolean`, defaultValue: 'false', description: 'Invalid state' },
         {
             name: 'children',
@@ -84,8 +93,10 @@ const docData: DocPageData = {
     cssHooks: [
         '.mr-select-wrapper',
         '.mr-select',
+        '.mr-select__spinner',
         '[data-size]',
         '[data-disabled]',
+        '[data-loading]',
         '[data-invalid]',
         '[data-tone]',
     ],

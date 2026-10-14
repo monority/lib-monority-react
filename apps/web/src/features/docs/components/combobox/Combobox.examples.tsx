@@ -85,3 +85,31 @@ export function ComboboxSizesExample() {
         </div>
     )
 }
+
+export function ComboboxAsyncAndClearableExample() {
+    const [value, setValue] = useState('react')
+    const items = [
+        { value: 'react', label: 'React' },
+        { value: 'vue', label: 'Vue' },
+        { value: 'svelte', label: 'Svelte' },
+    ]
+    return (
+        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
+            <Combobox
+                label="Effacement rapide (clearable)"
+                items={items}
+                value={value}
+                onChange={setValue}
+                clearable
+                hint="Le bouton d'effacement apparaît dès qu'un élément est sélectionné ou saisi."
+            />
+            <Combobox
+                label="Chargement asynchrone des options"
+                items={[]}
+                loading
+                placeholder="Chargement des services..."
+                hint="Le chevron est remplacé par un indicateur d'activité discret et le champ est en aria-busy."
+            />
+        </div>
+    )
+}

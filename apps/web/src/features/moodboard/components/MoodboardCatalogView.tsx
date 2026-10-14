@@ -449,7 +449,8 @@ export function MoodboardCatalogView() {
                                     { value: 'ams1', label: 'Amsterdam (ams1)' },
                                     { value: 'lhr1', label: 'London Heathrow (lhr1)' },
                                 ]}
-                                hint="Recherche filtrable avec autocomplétion"
+                                clearable
+                                hint="Recherche filtrable avec autocomplétion et effacement rapide"
                             />
 
                             <DatePicker

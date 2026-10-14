@@ -1,6 +1,7 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ComboboxBasicExample,
+    ComboboxAsyncAndClearableExample,
     ComboboxWithDescriptionsExample,
     ComboboxDisabledExample,
     ComboboxWithErrorExample,
@@ -28,6 +29,7 @@ const items = [
     preview: () => <ComboboxBasicExample />,
     examples: [
         { title: 'With descriptions', content: <ComboboxWithDescriptionsExample /> },
+        { title: 'Async loading & clearable', content: <ComboboxAsyncAndClearableExample /> },
         { title: 'Disabled', content: <ComboboxDisabledExample /> },
         { title: 'Error state', content: <ComboboxWithErrorExample /> },
         { title: 'Sizes', content: <ComboboxSizesExample /> },
@@ -78,15 +80,45 @@ const items = [
             defaultValue: 'false',
             description: 'Required field indicator.',
         },
+        {
+            name: 'loading',
+            type: `boolean`,
+            defaultValue: 'false',
+            description:
+                'Indicateur de chargement asynchrone qui remplace le chevron par un spinner et active aria-busy.',
+        },
+        {
+            name: 'clearable',
+            type: `boolean`,
+            defaultValue: 'false',
+            description:
+                "Affiche un bouton d'effacement rapide lorsque le champ contient une sélection ou une saisie.",
+        },
+        {
+            name: 'clearAriaLabel',
+            type: `string`,
+            defaultValue: `'Effacer la sélection'`,
+            description: "Libellé accessible (aria-label) pour le bouton d'effacement.",
+        },
+        {
+            name: 'onClear',
+            type: `() => void`,
+            defaultValue: `'-'`,
+            description: "Rappel déclenché lors du clic sur le bouton d'effacement.",
+        },
     ],
     cssHooks: [
         '.mr-combobox',
         '.mr-combobox__input',
+        '.mr-combobox__clear',
+        '.mr-combobox__spinner',
         '.mr-combobox__list',
         '.mr-combobox__item',
         '[data-tone]',
         '[data-size]',
         '[data-disabled]',
+        '[data-loading]',
+        '[data-has-clear]',
         '[data-invalid]',
         '[data-open]',
         '[data-selected]',

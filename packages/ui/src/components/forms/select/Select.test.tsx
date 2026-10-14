@@ -153,4 +153,32 @@ describe('Select', () => {
         expect(select?.children[1]?.textContent).toBe('Admin')
         expect((select?.children[2] as HTMLOptionElement)?.disabled).toBe(true)
     })
+
+    it('renders spinner and sets aria-busy and disabled when loading', () => {
+        const view = render(
+            <Select label="Country" loading options={[{ value: 'fr', label: 'France' }]} />
+        )
+        const wrapper = view.querySelector('.mr-select-wrapper')
+        const select = view.querySelector('select')
+        const spinner = view.querySelector('.mr-select__spinner')
+
+        expect(wrapper?.getAttribute('data-loading')).toBe('true')
+        expect(spinner).toBeTruthy()
+        expect(spinner?.querySelector('.mr-spinner')).toBeTruthy()
+        expect(select?.getAttribute('aria-busy')).toBe('true')
+        expect(select?.disabled).toBe(true)
+    })
+
+    it('does not render spinner when loading is false', () => {
+        const view = render(
+            <Select label="Country" loading={false} options={[{ value: 'fr', label: 'France' }]} />
+        )
+        const wrapper = view.querySelector('.mr-select-wrapper')
+        const select = view.querySelector('select')
+
+        expect(wrapper?.getAttribute('data-loading')).toBeNull()
+        expect(view.querySelector('.mr-select__spinner')).toBeNull()
+        expect(select?.getAttribute('aria-busy')).toBeNull()
+        expect(select?.disabled).toBe(false)
+    })
 })

@@ -24,6 +24,17 @@ export function SelectWithHintExample() {
     )
 }
 
+export function SelectLoadingExample() {
+    return (
+        <Select
+            label="Région de déploiement"
+            loading
+            options={[{ value: 'eu-west', label: 'Europe (Paris)' }]}
+            hint="Le chevron est remplacé par un indicateur de chargement discret."
+        />
+    )
+}
+
 export function SelectInvalidExample() {
     return (
         <Select label="Category" error="Please select a category">

@@ -1,7 +1,7 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import { Combobox } from './Combobox'
 
@@ -185,5 +185,115 @@ describe('Combobox', () => {
         // Portal renders to document.body
         const empty = document.querySelector('.mr-combobox__empty')
         expect(empty?.textContent).toBe('No results')
+    })
+
+    it('renders spinner and sets aria-busy when loading', () => {
+        const view = render(<Combobox label="Country" items={sampleItems} loading />)
+        const wrapper = view.querySelector('.mr-combobox')
+        const input = view.querySelector('input')
+        const spinner = view.querySelector('.mr-combobox__spinner')
+
+        expect(wrapper?.getAttribute('data-loading')).toBe('true')
+        expect(spinner).toBeTruthy()
+        expect(spinner?.querySelector('.mr-spinner')).toBeTruthy()
+        expect(input?.getAttribute('aria-busy')).toBe('true')
+    })
+
+    it('does not render spinner when loading is false', () => {
+        const view = render(<Combobox label="Country" items={sampleItems} loading={false} />)
+        const wrapper = view.querySelector('.mr-combobox')
+        const input = view.querySelector('input')
+
+        expect(wrapper?.getAttribute('data-loading')).toBeNull()
+        expect(view.querySelector('.mr-combobox__spinner')).toBeNull()
+        expect(input?.getAttribute('aria-busy')).toBeNull()
+    })
+
+    it('renders clear button when clearable is true and defaultValue is present', () => {
+        const view = render(
+            <Combobox label="Country" items={sampleItems} clearable defaultValue="fr" />
+        )
+        const clearBtn = view.querySelector('.mr-combobox__clear')
+        const wrapper = view.querySelector('.mr-combobox')
+        const input = view.querySelector('input')
+
+        expect(clearBtn).toBeTruthy()
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Effacer la sélection')
+        expect(wrapper?.getAttribute('data-has-clear')).toBe('true')
+        expect(input?.getAttribute('data-has-clear')).toBe('true')
+    })
+
+    it('does not render clear button when clearable is true but value is empty', () => {
+        const view = render(
+            <Combobox label="Country" items={sampleItems} clearable defaultValue="" />
+        )
+        expect(view.querySelector('.mr-combobox__clear')).toBeNull()
+        const wrapper = view.querySelector('.mr-combobox')
+        expect(wrapper?.getAttribute('data-has-clear')).toBeNull()
+    })
+
+    it('does not render clear button when clearable is false even if value is present', () => {
+        const view = render(<Combobox label="Country" items={sampleItems} defaultValue="fr" />)
+        expect(view.querySelector('.mr-combobox__clear')).toBeNull()
+    })
+
+    it('does not render clear button when disabled, readOnly, or loading', () => {
+        const viewDisabled = render(
+            <Combobox label="Country" items={sampleItems} clearable defaultValue="fr" disabled />
+        )
+        expect(viewDisabled.querySelector('.mr-combobox__clear')).toBeNull()
+
+        const viewReadOnly = render(
+            <Combobox label="Country" items={sampleItems} clearable defaultValue="fr" readOnly />
+        )
+        expect(viewReadOnly.querySelector('.mr-combobox__clear')).toBeNull()
+
+        const viewLoading = render(
+            <Combobox label="Country" items={sampleItems} clearable defaultValue="fr" loading />
+        )
+        expect(viewLoading.querySelector('.mr-combobox__clear')).toBeNull()
+    })
+
+    it('clears value, calls onClear and onChange, and focuses input when clear button is clicked', () => {
+        const onClear = vi.fn()
+        const onChange = vi.fn()
+        const view = render(
+            <Combobox
+                label="Country"
+                items={sampleItems}
+                clearable
+                defaultValue="fr"
+                onClear={onClear}
+                onChange={onChange}
+            />
+        )
+        const input = view.querySelector('input') as HTMLInputElement
+        const clearBtn = view.querySelector('.mr-combobox__clear') as HTMLButtonElement
+
+        expect(input.value).toBe('France')
+
+        act(() => {
+            clearBtn.click()
+        })
+
+        expect(input.value).toBe('')
+        expect(onChange).toHaveBeenCalledWith('')
+        expect(onClear).toHaveBeenCalledTimes(1)
+        expect(document.activeElement).toBe(input)
+        expect(view.querySelector('.mr-combobox__clear')).toBeNull()
+    })
+
+    it('respects custom clearAriaLabel prop', () => {
+        const view = render(
+            <Combobox
+                label="Country"
+                items={sampleItems}
+                clearable
+                defaultValue="fr"
+                clearAriaLabel="Réinitialiser le pays"
+            />
+        )
+        const clearBtn = view.querySelector('.mr-combobox__clear')
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Réinitialiser le pays')
     })
 })
