@@ -61,7 +61,7 @@
     }
 
     :where(.mr-input-otp__slot)[data-active] {
-        z-index: 2;
+        z-index: var(--mr-z-base);
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: -1px;
     }

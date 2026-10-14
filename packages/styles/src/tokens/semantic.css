@@ -152,6 +152,26 @@
         --mr-tracking-display: -0.02em;
         --mr-tracking-h1: -0.01em;
         --mr-tracking-label: 0.05em;
+
+        /* Empilement (z-index) :
+         * z-base : 1 pour les elements locaux en surimpression (curseurs, poignees, pastilles).
+         * z-sticky : 10 pour les elements adheroires au flux (carrousel, menus fermes).
+         * z-header : 40 pour la barre superieure permanente (topbar).
+         * z-nav-open : 60 pour les menus de navigation deployes au-dessus du bandeau.
+         * z-overlay / z-modal : 100 pour les voiles et fenetres modales (modal, alert-dialog, drawer, sheet).
+         * z-popover / z-dropdown : 200 pour les surfaces flottantes contextualisees (popover, dropdown, combobox, datepicker, context-menu, hovercard).
+         * z-tooltip : 300 pour les infobulles de survol fugaces.
+         * z-toast : 1300 pour le port d'ancrage des alertes de notification systeme. */
+        --mr-z-base: 1;
+        --mr-z-sticky: 10;
+        --mr-z-header: 40;
+        --mr-z-nav-open: 60;
+        --mr-z-overlay: 100;
+        --mr-z-modal: var(--mr-z-overlay);
+        --mr-z-popover: 200;
+        --mr-z-dropdown: var(--mr-z-popover);
+        --mr-z-tooltip: 300;
+        --mr-z-toast: 1300;
     }
 
     /* Neutralisation et adoucissement du mouvement sous mouvement reduit (ADR-021).

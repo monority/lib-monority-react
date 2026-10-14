@@ -12,8 +12,12 @@
         border-block-end: 1px solid var(--mr-border-subtle);
         position: sticky;
         inset-block-start: 0;
-        z-index: 40;
+        z-index: var(--mr-z-header);
         gap: var(--mr-space-4);
+    }
+
+    :where(.mr-topbar:has([data-open])) {
+        z-index: var(--mr-z-nav-open);
     }
 
     :where(.mr-topbar__brand) {
