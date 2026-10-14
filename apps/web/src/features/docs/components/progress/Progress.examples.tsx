@@ -70,3 +70,110 @@ export function ProgressAnimatedExample() {
 
     return <Progress value={value} label="Packaging release" />
 }
+
+export function ProgressStripedExample() {
+    return (
+        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
+            <Progress value={65} striped label="Stries statiques (striped)" />
+            <Progress
+                value={85}
+                striped
+                animated
+                tone="accent"
+                label="Stries animées en flux continu (striped + animated)"
+            />
+        </div>
+    )
+}
+
+export function ProgressRealisticServerExample() {
+    const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle')
+    const [progress, setProgress] = useState(0)
+    const timersRef = useRef<number[]>([])
+
+    const clearTimers = () => {
+        timersRef.current.forEach((id) => window.clearTimeout(id))
+        timersRef.current = []
+    }
+
+    const startRealisticOperation = () => {
+        clearTimers()
+        setStatus('running')
+
+        /* 1. Règle d'or : Démarrage instantané (0ms) à 20% pour valider l'action utilisateur */
+        setProgress(20)
+
+        /* 2. Montée rapide */
+        const t1 = window.setTimeout(() => setProgress(45), 250)
+        const t2 = window.setTimeout(() => setProgress(72), 550)
+        const t3 = window.setTimeout(() => setProgress(84), 900)
+
+        /* 3. Stagnation vers 85-88% pendant l'attente serveur, les stries maintiennent la perception d'activité */
+        const t4 = window.setTimeout(() => setProgress(86), 1400)
+        const t5 = window.setTimeout(() => setProgress(88), 1900)
+
+        /* 4. Téléportation finale de 88% à 100% au tout dernier moment à la réponse du serveur */
+        const t6 = window.setTimeout(() => {
+            setProgress(100)
+            setStatus('done')
+        }, 2600)
+
+        timersRef.current = [t1, t2, t3, t4, t5, t6]
+    }
+
+    const reset = () => {
+        clearTimers()
+        setStatus('idle')
+        setProgress(0)
+    }
+
+    useEffect(() => {
+        return () => clearTimers()
+    }, [])
+
+    return (
+        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
+            <Progress
+                value={progress}
+                label={
+                    status === 'idle'
+                        ? 'Prêt pour déploiement'
+                        : status === 'running'
+                          ? 'Synchronisation des conteneurs en cours...'
+                          : 'Déploiement achevé avec succès'
+                }
+                tone={status === 'done' ? 'success' : 'accent'}
+                striped={status === 'running'}
+                animated={status === 'running'}
+            />
+            <div style={{ display: 'flex', gap: 'var(--mr-space-2)', alignItems: 'center' }}>
+                <button
+                    type="button"
+                    onClick={startRealisticOperation}
+                    disabled={status === 'running'}
+                    className="mr-btn"
+                    data-variant="primary"
+                    data-size="sm"
+                >
+                    <span className="mr-btn__label">
+                        {status === 'running'
+                            ? 'Opération en cours...'
+                            : 'Lancer déploiement réaliste'}
+                    </span>
+                </button>
+                {status !== 'idle' && (
+                    <button
+                        type="button"
+                        onClick={reset}
+                        disabled={status === 'running'}
+                        className="mr-btn"
+                        data-variant="ghost"
+                        data-size="sm"
+                    >
+                        <span className="mr-btn__label">Réinitialiser</span>
+                    </button>
+                )}
+            </div>
+        </div>
+    )
+}

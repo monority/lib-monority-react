@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.preview-canvas:has(.mr-menubar, .mr-dropdown, .mr-popover, .mr-select, .mr-combobox) {
+    overflow: visible;
+}
+
 .preview-canvas__header {
     display: flex;
     align-items: center;

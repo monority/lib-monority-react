@@ -42,6 +42,7 @@ import {
     Pagination,
     PasswordInput,
     Popover,
+    Progress,
     RadioGroup,
     ResizableHandle,
     ResizablePanel,
@@ -81,6 +82,31 @@ export function MoodboardCatalogView() {
     const [segmentedVal, setSegmentedVal] = useState('all')
     const [catalogSubTab, setCatalogSubTab] = useState('active')
 
+    /* États pour la simulation de ProgressBar réaliste */
+    const [realisticProgress, setRealisticProgress] = useState(65)
+    const [isProgressRunning, setIsProgressRunning] = useState(false)
+    const [progressStatus, setProgressStatus] = useState<'idle' | 'running' | 'done'>('idle')
+
+    const triggerRealisticProgress = () => {
+        setIsProgressRunning(true)
+        setProgressStatus('running')
+        /* 1. Démarrage instantané (0ms) à 18% */
+        setRealisticProgress(18)
+
+        setTimeout(() => setRealisticProgress(48), 250)
+        setTimeout(() => setRealisticProgress(74), 550)
+        setTimeout(() => setRealisticProgress(84), 900)
+        setTimeout(() => setRealisticProgress(86), 1400)
+        setTimeout(() => setRealisticProgress(88), 1900)
+
+        /* 2. Téléportation finale de 88% à 100% à la réponse */
+        setTimeout(() => {
+            setRealisticProgress(100)
+            setIsProgressRunning(false)
+            setProgressStatus('done')
+        }, 2500)
+    }
+
     /* États pour les formulaires et navigations */
     const [clusterName, setClusterName] = useState('production-fra-01')
     const [stepperStep, setStepperStep] = useState(1)
@@ -92,6 +118,8 @@ export function MoodboardCatalogView() {
     const [toggleState, setToggleState] = useState(true)
     const [toggleGroupVal, setToggleGroupVal] = useState<string>('grid')
     const [dateValue, setDateValue] = useState<Date | null>(new Date('2026-10-14'))
+    const [filterSearch, setFilterSearch] = useState('')
+    const [activeFilterChip, setActiveFilterChip] = useState<'all' | 'eu' | 'prod'>('all')
 
     return (
         <Stack gap="xl">
@@ -445,15 +473,52 @@ export function MoodboardCatalogView() {
                             />
 
                             <FilterBar>
-                                <Button size="sm" variant="secondary">
-                                    Statut : Tous
-                                </Button>
-                                <Button size="sm" variant="ghost">
-                                    Région : Europe
-                                </Button>
-                                <Button size="sm" variant="ghost">
-                                    Environnement : Prod
-                                </Button>
+                                <FilterBar.Main>
+                                    <FilterBar.Leading>
+                                        <Input
+                                            size="sm"
+                                            placeholder="Filtrer clusters..."
+                                            value={filterSearch}
+                                            onChange={(e) => setFilterSearch(e.target.value)}
+                                            clearable
+                                        />
+                                    </FilterBar.Leading>
+                                    <FilterBar.Chips>
+                                        <FilterBar.Chip
+                                            active={activeFilterChip === 'all'}
+                                            onClick={() => setActiveFilterChip('all')}
+                                        >
+                                            Statut : Tous
+                                        </FilterBar.Chip>
+                                        <FilterBar.Chip
+                                            active={activeFilterChip === 'eu'}
+                                            onClick={() => setActiveFilterChip('eu')}
+                                        >
+                                            Région : Europe
+                                        </FilterBar.Chip>
+                                        <FilterBar.Chip
+                                            active={activeFilterChip === 'prod'}
+                                            onClick={() => setActiveFilterChip('prod')}
+                                        >
+                                            Environnement : Prod
+                                        </FilterBar.Chip>
+                                    </FilterBar.Chips>
+                                </FilterBar.Main>
+                                <FilterBar.Meta>
+                                    <Text size="sm" tone="muted">
+                                        18 clusters actifs
+                                    </Text>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => {
+                                            setActiveFilterChip('all')
+                                            setFilterSearch('')
+                                        }}
+                                    >
+                                        Réinitialiser
+                                    </Button>
+                                </FilterBar.Meta>
                             </FilterBar>
 
                             <Pagination
@@ -699,6 +764,42 @@ export function MoodboardCatalogView() {
                                 <Text size="sm" tone="muted">
                                     Synchronisation active
                                 </Text>
+                            </Stack>
+
+                            <Stack gap="xs">
+                                <Progress
+                                    value={realisticProgress}
+                                    label={
+                                        progressStatus === 'running'
+                                            ? 'Déploiement en cours (stries actives en stagnation)...'
+                                            : progressStatus === 'done'
+                                              ? 'Déploiement achevé (téléporté à 100%)'
+                                              : 'Flux réaliste de chargement'
+                                    }
+                                    tone={progressStatus === 'done' ? 'success' : 'accent'}
+                                    striped={isProgressRunning || isAsyncLoading}
+                                    animated={isProgressRunning || isAsyncLoading}
+                                />
+                                <Stack
+                                    direction="horizontal"
+                                    gap="sm"
+                                    style={{ alignItems: 'center', flexWrap: 'wrap' }}
+                                >
+                                    <Button
+                                        size="sm"
+                                        variant="secondary"
+                                        onClick={triggerRealisticProgress}
+                                        disabled={isProgressRunning}
+                                    >
+                                        {isProgressRunning
+                                            ? 'Opération en cours...'
+                                            : 'Simuler progression réaliste'}
+                                    </Button>
+                                    <Text size="sm" tone="muted">
+                                        Démarrage instantané, stagnation à 85% avec stries, bond à
+                                        100%.
+                                    </Text>
+                                </Stack>
                             </Stack>
 
                             <AsyncStateNotice

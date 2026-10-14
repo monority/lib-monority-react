@@ -59,7 +59,9 @@ export function Collapsible({
                 aria-hidden={!isOpen}
                 data-state={state}
             >
-                <div className="mr-collapsible__content">{children}</div>
+                <div className="mr-collapsible__content">
+                    <div className="mr-collapsible__body">{children}</div>
+                </div>
             </div>
         </div>
     )

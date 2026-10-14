@@ -1,8 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ProgressAnimatedExample,
-    ProgressBasicExample,
     ProgressIndeterminateExample,
+    ProgressRealisticServerExample,
+    ProgressStripedExample,
     ProgressTonesExample,
     ProgressValuesExample,
     ProgressWithoutValueExample,
@@ -11,16 +12,21 @@ import {
 const docData: DocPageData = {
     title: 'Progress',
     description:
-        'Progress indicator for uploads, migrations, and task completion with determinate and indeterminate modes.',
+        'Progress indicator for uploads, migrations, and task completion with determinate, indeterminate, and animated striped modes.',
     importCode: "import { Progress } from '@monority/ui/progress'",
     usageCode: `<Progress value={68} label="Release migration" />`,
-    preview: () => <ProgressBasicExample />,
+    preview: () => <ProgressRealisticServerExample />,
     examples: [
-        { title: 'Animated', content: <ProgressAnimatedExample /> },
-        { title: 'Values', content: <ProgressValuesExample /> },
-        { title: 'Tones', content: <ProgressTonesExample /> },
-        { title: 'Without value', content: <ProgressWithoutValueExample /> },
-        { title: 'Indeterminate', content: <ProgressIndeterminateExample /> },
+        {
+            title: 'Flux asynchrone réaliste (Règle d’or)',
+            content: <ProgressRealisticServerExample />,
+        },
+        { title: 'Stries et animation continue', content: <ProgressStripedExample /> },
+        { title: 'Animation cyclique', content: <ProgressAnimatedExample /> },
+        { title: 'Valeurs et échelons', content: <ProgressValuesExample /> },
+        { title: 'Tonalités', content: <ProgressTonesExample /> },
+        { title: 'Sans affichage de valeur', content: <ProgressWithoutValueExample /> },
+        { title: 'Mode indéterminé', content: <ProgressIndeterminateExample /> },
     ],
     props: [
         {
@@ -38,8 +44,8 @@ const docData: DocPageData = {
         },
         {
             name: 'tone',
-            type: `'neutral' | 'success' | 'warning' | 'danger'`,
-            defaultValue: '-',
+            type: `'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'info'`,
+            defaultValue: "'neutral'",
             description: 'Progress bar tone.',
         },
         {
@@ -47,6 +53,18 @@ const docData: DocPageData = {
             type: `'determinate' | 'indeterminate'`,
             defaultValue: "'determinate'",
             description: 'Display mode. Indeterminate shows an animated bar.',
+        },
+        {
+            name: 'striped',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Apply diagonal subtle stripes on the bar.',
+        },
+        {
+            name: 'animated',
+            type: `boolean`,
+            defaultValue: 'false',
+            description: 'Continuously animate stripes to preserve activity perception.',
         },
         {
             name: 'barClassName',
@@ -62,8 +80,12 @@ const docData: DocPageData = {
         '.mr-progress__bar',
         '.mr-progress__label',
         '.mr-progress__bar--indeterminate',
+        '.mr-progress__bar--striped',
+        '.mr-progress__bar--animated',
         '[data-tone]',
         '[data-mode]',
+        '[data-striped]',
+        '[data-animated]',
     ],
     tokens: [
         '--mr-accent',

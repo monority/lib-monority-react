@@ -48,4 +48,32 @@ describe('FilterBar', () => {
         render(<FilterBar ref={ref} />)
         expect(ref.current?.tagName).toBe('DIV')
     })
+
+    it('renders compound subcomponents with correct classes and attributes', () => {
+        const view = render(
+            <FilterBar>
+                <FilterBar.Main>
+                    <FilterBar.Leading>
+                        <input placeholder="Search" />
+                    </FilterBar.Leading>
+                    <FilterBar.Chips>
+                        <FilterBar.Chip active>Active</FilterBar.Chip>
+                        <FilterBar.Chip>Inactive</FilterBar.Chip>
+                    </FilterBar.Chips>
+                </FilterBar.Main>
+                <FilterBar.Meta>
+                    <span>10 results</span>
+                </FilterBar.Meta>
+            </FilterBar>
+        )
+
+        expect(view.querySelector('.mr-filter-bar__main')).toBeTruthy()
+        expect(view.querySelector('.mr-filter-bar__leading')).toBeTruthy()
+        expect(view.querySelector('.mr-filter-bar__chips')).toBeTruthy()
+        expect(view.querySelector('.mr-filter-bar__meta')?.textContent).toBe('10 results')
+
+        const activeChip = view.querySelector('.mr-filter-bar__chip[data-active="true"]')
+        expect(activeChip).toBeTruthy()
+        expect(activeChip?.getAttribute('aria-pressed')).toBe('true')
+    })
 })

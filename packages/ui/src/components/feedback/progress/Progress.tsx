@@ -58,6 +58,8 @@ export function Progress({
     showValue = true,
     tone = 'neutral',
     mode = 'determinate',
+    striped = false,
+    animated = false,
     className,
     barClassName,
     ref,
@@ -74,6 +76,8 @@ export function Progress({
             className={cn('mr-progress', className)}
             data-tone={tone}
             data-mode={mode}
+            data-striped={striped ? '' : undefined}
+            data-animated={animated ? '' : undefined}
             data-value={isIndeterminate ? undefined : safeValue}
             {...props}
         >
@@ -98,6 +102,8 @@ export function Progress({
                     className={cn(
                         'mr-progress__bar',
                         isIndeterminate && 'mr-progress__bar--indeterminate',
+                        striped && 'mr-progress__bar--striped',
+                        animated && 'mr-progress__bar--animated',
                         barClassName
                     )}
                     style={isIndeterminate ? undefined : { inlineSize: `${percentage}%` }}

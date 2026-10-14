@@ -48,6 +48,8 @@ export function Menubar({ ref, items, defaultActive, className, ...props }: Menu
             }}
             role="menubar"
             className={cn('mr-menubar', className)}
+            data-open={activeMenu !== null ? true : undefined}
+            data-has-active={activeMenu !== null ? true : undefined}
             {...props}
         >
             {items.map((menu) => {

@@ -2,6 +2,7 @@
  * Barre de menus d'application de bureau avec menus déroulants et raccourcis. */
 @layer mr.components {
     :where(.mr-menubar) {
+        position: relative;
         display: flex;
         align-items: center;
         box-sizing: border-box;
@@ -10,11 +11,21 @@
         background-color: var(--mr-bg-surface);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
+        z-index: 10;
+    }
+
+    :where(.mr-menubar)[data-open],
+    :where(.mr-menubar:has([data-active='true'])) {
+        z-index: 60;
     }
 
     :where(.mr-menubar__menu-wrapper) {
         position: relative;
         display: inline-flex;
+    }
+
+    :where(.mr-menubar__menu-wrapper)[data-active='true'] {
+        z-index: 61;
     }
 
     :where(.mr-menubar__trigger) {
@@ -60,7 +71,7 @@
         position: absolute;
         inset-block-start: 100%;
         inset-inline-start: 0;
-        z-index: 50;
+        z-index: 62;
         min-inline-size: calc(var(--mr-space-6) * 5);
         margin-block-start: var(--mr-space-1);
         padding: var(--mr-space-1);

@@ -13,6 +13,15 @@
         }
     }
 
+    @keyframes mr-progress-stripes {
+        from {
+            background-position: var(--mr-space-4) 0;
+        }
+        to {
+            background-position: 0 0;
+        }
+    }
+
     :where(.mr-progress) {
         display: flex;
         flex-direction: column;
@@ -62,6 +71,35 @@
         position: absolute;
         inset-block: 0;
         animation: mr-progress-indeterminate var(--mr-duration-loop) ease-in-out infinite;
+    }
+
+    /* Stries de progression */
+    :where(.mr-progress)[data-striped] :where(.mr-progress__bar),
+    :where(.mr-progress__bar--striped) {
+        background-image: linear-gradient(
+            45deg,
+            color-mix(in oklch, var(--mr-bg-canvas) 20%, transparent) 25%,
+            transparent 25%,
+            transparent 50%,
+            color-mix(in oklch, var(--mr-bg-canvas) 20%, transparent) 50%,
+            color-mix(in oklch, var(--mr-bg-canvas) 20%, transparent) 75%,
+            transparent 75%,
+            transparent
+        );
+        background-size: var(--mr-space-4) var(--mr-space-4);
+    }
+
+    /* Animation continue des stries */
+    :where(.mr-progress)[data-animated] :where(.mr-progress__bar),
+    :where(.mr-progress__bar--animated) {
+        animation: mr-progress-stripes var(--mr-duration-loop) linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-progress)[data-animated] :where(.mr-progress__bar),
+        :where(.mr-progress__bar--animated) {
+            animation: none;
+        }
     }
 
     /* Tons */

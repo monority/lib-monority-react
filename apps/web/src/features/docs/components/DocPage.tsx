@@ -53,7 +53,7 @@ export function DocPage({ doc }: { doc: DocPageData }) {
             >
                 <div className="docs-preview-stack">
                     <PreviewCanvas label={previewLabel} padding="none">
-                        <div className="docs-preview-content">
+                        <div className="docs-preview-area docs-preview-content">
                             <Preview />
                         </div>
                     </PreviewCanvas>
