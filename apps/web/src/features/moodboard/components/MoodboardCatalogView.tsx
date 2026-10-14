@@ -29,6 +29,7 @@ import {
     Grid,
     HoverCard,
     IconButton,
+    Input,
     Kbd,
     Menubar,
     MetricGrid,
@@ -65,6 +66,7 @@ export function MoodboardCatalogView() {
     const [isCmdOpen, setIsCmdOpen] = useState(false)
 
     /* États pour les formulaires et navigations */
+    const [clusterName, setClusterName] = useState('production-fra-01')
     const [stepperStep, setStepperStep] = useState(1)
     const [currentPage, setCurrentPage] = useState(2)
     const [radioSelection, setRadioSelection] = useState('canary')
@@ -410,7 +412,15 @@ export function MoodboardCatalogView() {
                                 title="Dimensionnement & Sécurité"
                                 description="Nombre de répliques et clé de signature des sondes"
                             >
-                                <Grid columns={2} gap="md">
+                                <Grid columns={3} gap="md">
+                                    <Input
+                                        label="Nom du cluster"
+                                        value={clusterName}
+                                        onChange={(e) => setClusterName(e.target.value)}
+                                        clearable
+                                        hint="Effacement rapide (clearable)"
+                                    />
+
                                     <NumberInput
                                         label="Répliques actives"
                                         min={1}

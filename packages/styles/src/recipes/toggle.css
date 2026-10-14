@@ -28,7 +28,7 @@
         white-space: nowrap;
         flex-shrink: 0;
         transition: background-color var(--mr-duration-state), color var(--mr-duration-state),
-            border-color var(--mr-duration-state);
+            border-color var(--mr-duration-state), transform var(--mr-duration-state);
     }
 
     /* Tailles */
@@ -142,5 +142,16 @@
         color: var(--mr-text-disabled);
         border-color: var(--mr-border-subtle);
         opacity: 0.5;
+    }
+
+    /* Retour tactile actif */
+    :where(.mr-toggle):active:where(:not(:disabled, [aria-disabled='true'])) {
+        transform: scale(0.98);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-toggle):active {
+            transform: none;
+        }
     }
 }

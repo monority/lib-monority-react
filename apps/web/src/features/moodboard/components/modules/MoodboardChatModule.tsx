@@ -129,6 +129,7 @@ export function MoodboardChatModule() {
                             if (e.key === 'Enter') handleSend()
                         }}
                         size="sm"
+                        clearable
                         style={{ flex: 1 }}
                     />
                     <Button

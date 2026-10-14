@@ -14,6 +14,18 @@ export function InputSearchExample() {
     )
 }
 
+export function InputClearableExample() {
+    return (
+        <Input
+            label="Recherche rapide"
+            placeholder="Tapez un mot-clé..."
+            defaultValue="Design System"
+            clearable
+            hint="Le bouton d'effacement apparaît dès que le champ est non vide."
+        />
+    )
+}
+
 export function InputNumberExample() {
     return <NumberInput label="Quantity" min={0} max={100} step={1} />
 }

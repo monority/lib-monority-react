@@ -102,7 +102,7 @@
     }
 
     /* Bouton interactif de revelation / masquage du mot de passe */
-    :where(.mr-password-input__toggle) {
+    :where(.mr-password-input__toggle, .mr-input__clear) {
         position: absolute;
         inset-block-start: 50%;
         transform: translateY(-50%);
@@ -121,22 +121,22 @@
         box-sizing: border-box;
     }
 
-    :where(.mr-password-input__toggle):hover {
+    :where(.mr-password-input__toggle:hover, .mr-input__clear:hover) {
         color: var(--mr-text-primary);
     }
 
-    :where(.mr-password-input__toggle):focus-visible {
+    :where(.mr-password-input__toggle:focus-visible, .mr-input__clear:focus-visible) {
         color: var(--mr-text-primary);
         outline: 1px solid var(--mr-text-secondary);
         outline-offset: 2px;
     }
 
-    :where(.mr-password-input__toggle):disabled {
+    :where(.mr-password-input__toggle:disabled, .mr-input__clear:disabled) {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
     }
 
-    :where(.mr-input__icon, .mr-password-input__toggle) > svg {
+    :where(.mr-input__icon, .mr-password-input__toggle, .mr-input__clear) > svg {
         inline-size: 100%;
         block-size: 100%;
     }
@@ -149,7 +149,7 @@
     }
 
     :where(.mr-input__wrapper, .mr-password-input__wrapper)
-        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle, .mr-input__clear) {
         inset-inline-end: var(--mr-space-4);
         inline-size: var(--mr-space-4);
         block-size: var(--mr-space-4);
@@ -163,7 +163,7 @@
     }
 
     :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='sm']
-        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle, .mr-input__clear) {
         inset-inline-end: var(--mr-space-3);
         inline-size: var(--mr-space-4);
         block-size: var(--mr-space-4);
@@ -177,7 +177,7 @@
     }
 
     :where(.mr-input__wrapper, .mr-password-input__wrapper)[data-size='lg']
-        :where(.mr-input__icon--trailing, .mr-password-input__toggle) {
+        :where(.mr-input__icon--trailing, .mr-password-input__toggle, .mr-input__clear) {
         inset-inline-end: var(--mr-space-5);
         inline-size: var(--mr-space-5);
         block-size: var(--mr-space-5);
