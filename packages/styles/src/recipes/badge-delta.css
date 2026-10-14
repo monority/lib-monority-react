@@ -8,6 +8,7 @@
         border-radius: var(--mr-radius-full);
         font-family: var(--mr-font-family-base);
         font-weight: var(--mr-font-weight-medium);
+        font-variant-numeric: tabular-nums;
         line-height: 1;
         white-space: nowrap;
         box-sizing: border-box;
