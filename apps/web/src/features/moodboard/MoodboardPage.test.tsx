@@ -216,10 +216,10 @@ describe('MoodboardPage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const scope = screen.getByTestId('moodboard-preview-scope')
-        /* Valid axes are restored, the retired hue falls back instead of crashing. */
+        /* Valid axes are restored, retired values (like pill radius) fall back instead of crashing. */
         expect(scope).toHaveAttribute('data-design-theme', 'oled')
         expect(scope).toHaveAttribute('data-design-accent', 'rose')
-        expect(scope).toHaveAttribute('data-design-radius', 'pill')
+        expect(scope).toHaveAttribute('data-design-radius', 'default')
     })
 
     it('syncs preview theme when header ThemeToggle is clicked', () => {

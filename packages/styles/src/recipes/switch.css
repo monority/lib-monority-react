@@ -107,8 +107,8 @@
 
     /* Taille lg : piste 52px x 28px, pouce 24px */
     :where(.mr-switch[data-size='lg']) :where(.mr-switch__control) {
-        inline-size: calc(var(--mr-size-control-sm) + var(--mr-space-6));
-        block-size: var(--mr-size-control-sm);
+        inline-size: calc(var(--mr-space-6) + var(--mr-space-1) + var(--mr-space-6));
+        block-size: calc(var(--mr-space-6) + var(--mr-space-1));
     }
 
     :where(.mr-switch[data-size='lg']) :where(.mr-switch__thumb) {

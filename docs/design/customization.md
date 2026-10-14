@@ -30,7 +30,7 @@ const config: DesignConfig = {
 - `brand` : `monority`, `studio`.
 - `accent` : `neutral` (défaut), cyan, blue, violet, indigo, green, amber, orange, red, rose. `neutral` = chroma 0 (noir en clair, blanc en sombre/oled). Une teinte chromatique colore directement les contrôles primaires et indicateurs.
 - `chartPalette` : default, ocean, spectrum, warm.
-- `radius` : sharp, compact, default, rounded, pill.
+- `radius` : sharp, compact, default, rounded.
 - `spacing` : dense, default, comfortable, airy.
 - `density` : compact, default, spacious.
 
