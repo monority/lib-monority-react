@@ -20,16 +20,18 @@
         color: var(--mr-text-secondary);
     }
 
-    /* Tailles : sm par defaut (20px), md (24px) */
+    /* Tailles : sm par defaut (22px), md (26px) */
     :where(.mr-badge),
     :where(.mr-badge)[data-size='sm'] {
-        block-size: var(--mr-space-5);
+        min-block-size: calc(var(--mr-space-5) + 2px);
+        padding-block: 2px;
         padding-inline: var(--mr-space-2);
-        font-size: var(--mr-font-size-sm);
+        font-size: var(--mr-font-size-xs);
     }
 
     :where(.mr-badge)[data-size='md'] {
-        block-size: var(--mr-space-6);
+        min-block-size: calc(var(--mr-space-6) + 2px);
+        padding-block: 2px;
         padding-inline: calc(var(--mr-space-2) + 2px);
         font-size: var(--mr-font-size-sm);
     }

@@ -64,10 +64,22 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: 100%;
+        padding: 2px;
         font-weight: var(--mr-font-weight-medium);
         line-height: 1;
         white-space: nowrap;
         text-transform: uppercase;
+    }
+
+    :where(.mr-avatar)[data-size='md'] :where(.mr-avatar__initials) {
+        padding: calc(var(--mr-space-1) - 1px);
+    }
+
+    :where(.mr-avatar)[data-size='lg'] :where(.mr-avatar__initials) {
+        padding: var(--mr-space-1);
     }
 
     :where(.mr-avatar__status) {
