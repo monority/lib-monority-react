@@ -244,4 +244,16 @@ describe('MoodboardPage', () => {
             'neutral'
         )
     })
+
+    it('switches between dashboard and full component catalog views via tabs', () => {
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        expect(screen.getByText('Release control')).toBeInTheDocument()
+
+        const catalogTab = screen.getByRole('tab', { name: /catalogue complet/i })
+        fireEvent.click(catalogTab)
+
+        expect(screen.getByText('Catalogue exhaustif des composants')).toBeInTheDocument()
+        expect(screen.getByText('Overlays & Dialogues')).toBeInTheDocument()
+    })
 })
