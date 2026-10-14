@@ -70,7 +70,13 @@
         border: 1px solid var(--mr-border-control);
         border-radius: 50%;
         background-color: var(--mr-bg-sunken);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            transform var(--mr-duration-state);
+    }
+
+    /* Effet tactile a l'appui */
+    :where(.mr-radio:active:not([data-disabled='true'])) :where(.mr-radio__control) {
+        transform: scale(0.92);
     }
 
     :where(.mr-radio-group[data-size='lg']) :where(.mr-radio__control) {
@@ -263,5 +269,16 @@
     :where(.mr-radio[data-disabled]) :where(.mr-radio__dot),
     :where(.mr-radio:has(:where(.mr-radio__input:disabled))) :where(.mr-radio__dot) {
         background-color: var(--mr-text-disabled);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-radio__control),
+        :where(.mr-radio__dot) {
+            transition: none;
+        }
+
+        :where(.mr-radio:active:not([data-disabled='true'])) :where(.mr-radio__control) {
+            transform: none;
+        }
     }
 }
