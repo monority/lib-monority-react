@@ -269,4 +269,17 @@ describe('NavigationMenu', () => {
         const menu = view.querySelector('[role="menu"]')
         expect(menu).toBeTruthy()
     })
+
+    it('sets data-open attribute on nav element when an item is active', () => {
+        const view = render(<NavigationMenu items={itemsWithSubItems} />)
+        const nav = view.querySelector('nav')
+        expect(nav?.getAttribute('data-open')).toBeNull()
+
+        const productsItem = view.querySelectorAll('.mr-nav-menu__item')[1]
+        act(() => {
+            productsItem.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }))
+        })
+
+        expect(nav?.getAttribute('data-open')).toBe('true')
+    })
 })

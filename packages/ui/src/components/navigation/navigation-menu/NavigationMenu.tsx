@@ -66,6 +66,7 @@ export function NavigationMenu({
             ref={ref}
             className={cn('mr-nav-menu', className)}
             aria-label="Main navigation"
+            data-open={Boolean(value) || undefined}
             onMouseLeave={handleMouseLeave}
             {...props}
         >
