@@ -72,6 +72,7 @@ const docData: DocPageData = {
         '.mr-accordion__label',
         '.mr-accordion__icon',
         '.mr-accordion__panel',
+        '.mr-accordion__body',
         '.mr-accordion__content',
         '[data-open]',
     ],
@@ -90,6 +91,7 @@ const docData: DocPageData = {
         'Triggers use a roving tabindex.',
         'ArrowUp / ArrowDown move between triggers (wrapping); Home / End jump to first / last.',
         'Disabled items are skipped by keyboard navigation and cannot be toggled.',
+        'Fluid animation is driven by CSS Grid (grid-template-rows: 0fr -> 1fr) with zero residual height when closed.',
     ],
 }
 

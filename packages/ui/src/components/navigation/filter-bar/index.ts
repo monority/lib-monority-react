@@ -1,4 +1,11 @@
-export { FilterBar } from './FilterBar'
+export {
+    FilterBar,
+    FilterBarMain,
+    FilterBarLeading,
+    FilterBarChips,
+    FilterBarChip,
+    FilterBarMeta,
+} from './FilterBar'
 export type {
     FilterBarProps,
     FilterBarMainProps,

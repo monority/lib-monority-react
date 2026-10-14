@@ -1,5 +1,18 @@
 export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './breadcrumb'
-export { FilterBar, type FilterBarProps } from './filter-bar'
+export {
+    FilterBar,
+    FilterBarMain,
+    FilterBarLeading,
+    FilterBarChips,
+    FilterBarChip,
+    FilterBarMeta,
+    type FilterBarProps,
+    type FilterBarMainProps,
+    type FilterBarLeadingProps,
+    type FilterBarChipsProps,
+    type FilterBarChipProps,
+    type FilterBarMetaProps,
+} from './filter-bar'
 export { Menubar, type MenubarProps, type MenubarMenu, type MenuItem } from './menubar'
 export {
     NavigationMenu,

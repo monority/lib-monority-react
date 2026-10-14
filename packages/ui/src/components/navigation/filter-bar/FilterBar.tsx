@@ -22,7 +22,7 @@ export function FilterBar({ ref, className, role = 'group', children, ...props }
     )
 }
 
-function FilterBarMain({ ref, className, children, ...props }: FilterBarMainProps) {
+export function FilterBarMain({ ref, className, children, ...props }: FilterBarMainProps) {
     return (
         <div ref={ref} className={cn('mr-filter-bar__main', className)} {...props}>
             {children}
@@ -30,7 +30,7 @@ function FilterBarMain({ ref, className, children, ...props }: FilterBarMainProp
     )
 }
 
-function FilterBarLeading({ ref, className, children, ...props }: FilterBarLeadingProps) {
+export function FilterBarLeading({ ref, className, children, ...props }: FilterBarLeadingProps) {
     return (
         <div ref={ref} className={cn('mr-filter-bar__leading', className)} {...props}>
             {children}
@@ -38,7 +38,7 @@ function FilterBarLeading({ ref, className, children, ...props }: FilterBarLeadi
     )
 }
 
-function FilterBarChips({ ref, className, children, ...props }: FilterBarChipsProps) {
+export function FilterBarChips({ ref, className, children, ...props }: FilterBarChipsProps) {
     return (
         <div ref={ref} className={cn('mr-filter-bar__chips', className)} {...props}>
             {children}
@@ -46,7 +46,7 @@ function FilterBarChips({ ref, className, children, ...props }: FilterBarChipsPr
     )
 }
 
-function FilterBarChip({
+export function FilterBarChip({
     ref,
     active = false,
     className,
@@ -68,7 +68,7 @@ function FilterBarChip({
     )
 }
 
-function FilterBarMeta({ ref, className, children, ...props }: FilterBarMetaProps) {
+export function FilterBarMeta({ ref, className, children, ...props }: FilterBarMetaProps) {
     return (
         <div ref={ref} className={cn('mr-filter-bar__meta', className)} {...props}>
             {children}
