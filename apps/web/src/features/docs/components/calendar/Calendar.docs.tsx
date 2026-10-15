@@ -1,5 +1,6 @@
 import {
     CalendarBasicPreview,
+    CalendarPickersExample,
     CalendarMinMaxExample,
     CalendarDisabledDatesExample,
     CalendarMultipleMonthsExample,
@@ -9,16 +10,67 @@ import { DocPage, type DocPageData } from '../DocPage'
 
 const docData: DocPageData = {
     title: 'Calendar',
-    description: 'A standalone date picker calendar grid with month navigation and day selection.',
+    description:
+        'A standalone date picker calendar grid with month navigation, month and year selectors, and day selection.',
     importCode: "import { Calendar } from '@monority/ui/calendar'",
     usageCode: '<Calendar onChange={(date) => console.log(date)} />',
     preview: () => <CalendarBasicPreview />,
     examples: [
-        { title: 'Basic', content: <CalendarBasicPreview /> },
-        { title: 'Min/Max Dates', content: <CalendarMinMaxExample /> },
-        { title: 'Disabled Dates', content: <CalendarDisabledDatesExample /> },
-        { title: 'Multiple Months', content: <CalendarMultipleMonthsExample /> },
-        { title: 'Controlled', content: <CalendarControlledExample /> },
+        {
+            title: 'Basic',
+            content: <CalendarBasicPreview />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} />
+  <Text.Small>Selected: {date ? date.toLocaleDateString() : 'none'}</Text.Small>
+</Stack>`,
+        },
+        {
+            title: 'Month & Year Selectors',
+            content: <CalendarPickersExample />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} showPickers />
+  <Text.Small>Selected: {date ? date.toLocaleDateString() : 'none'}</Text.Small>
+</Stack>`,
+        },
+        {
+            title: 'Min/Max Dates',
+            content: <CalendarMinMaxExample />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} minDate={minDate} maxDate={maxDate} />
+  <Text.Small>Only current month selectable</Text.Small>
+</Stack>`,
+        },
+        {
+            title: 'Disabled Dates',
+            content: <CalendarDisabledDatesExample />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} disabledDates={disabledWeekends} />
+  <Text.Small>Weekends are disabled</Text.Small>
+</Stack>`,
+        },
+        {
+            title: 'Multiple Months',
+            content: <CalendarMultipleMonthsExample />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} numberOfMonths={2} />
+  <Text.Small>Two months displayed side by side</Text.Small>
+</Stack>`,
+        },
+        {
+            title: 'Controlled',
+            content: <CalendarControlledExample />,
+            code: `<Stack gap="md">
+  <Calendar value={date} onChange={setDate} />
+  <Stack direction="horizontal" gap="sm">
+    <Button size="sm" variant="secondary" onClick={() => setDate(new Date())}>
+      Today
+    </Button>
+    <Button size="sm" variant="ghost" onClick={() => setDate(null)}>
+      Clear
+    </Button>
+  </Stack>
+</Stack>`,
+        },
     ],
     props: [
         {
@@ -38,6 +90,13 @@ const docData: DocPageData = {
             type: '(date: Date | null) => void',
             defaultValue: '-',
             description: 'Callback when a day is selected.',
+        },
+        {
+            name: 'showPickers',
+            type: 'boolean',
+            defaultValue: 'false',
+            description:
+                'Always display month and year selectors at the top. When false, clicking the month label toggles them.',
         },
         {
             name: 'minDate',
@@ -90,6 +149,10 @@ const docData: DocPageData = {
         '.mr-calendar__month',
         '.mr-calendar__header',
         '.mr-calendar__month-label',
+        '.mr-calendar__pickers',
+        '.mr-calendar__select',
+        '.mr-calendar__select--month',
+        '.mr-calendar__select--year',
         '.mr-calendar__nav-btn',
         '.mr-calendar__day-names',
         '.mr-calendar__day-name',
@@ -110,7 +173,6 @@ const docData: DocPageData = {
         '--mr-font-size-sm',
         '--mr-text-primary',
         '--mr-text-secondary',
-        '--mr-text-primary',
         '--mr-bg-canvas',
         '--mr-accent-solid',
         '--mr-accent-contrast',

@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode, Ref } from 'react'
+import type { HTMLAttributes, ImgHTMLAttributes, ReactNode, Ref } from 'react'
 
 export type AvatarSize = 'sm' | 'md' | 'lg'
 export type AvatarStatus = 'online' | 'offline'
@@ -14,5 +14,19 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
     /** Explicit fallback content rendered instead of the derived initials. */
     children?: ReactNode
     size?: AvatarSize
+    status?: AvatarStatus
+}
+
+export interface AvatarImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+    ref?: Ref<HTMLImageElement>
+}
+
+export interface AvatarFallbackProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}
+
+export interface AvatarStatusIndicatorProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
     status?: AvatarStatus
 }

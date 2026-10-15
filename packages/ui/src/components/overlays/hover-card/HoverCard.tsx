@@ -1,10 +1,25 @@
-import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
-import type { CSSProperties } from 'react'
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useId,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
-import type { HoverCardAlign, HoverCardProps, HoverCardSide } from './HoverCard.types'
+import type {
+    HoverCardAlign,
+    HoverCardContentProps,
+    HoverCardProps,
+    HoverCardSide,
+    HoverCardTriggerProps,
+} from './HoverCard.types'
 
 interface FloatingPosition {
     top: number
@@ -91,6 +106,115 @@ function calculatePosition(
             Math.max(ARROW_PADDING, content.height - ARROW_PADDING)
         ),
     }
+}
+
+interface HoverCardContextValue {
+    isOpen: boolean
+    setOpenState: (open: boolean) => void
+    triggerRef: React.MutableRefObject<HTMLSpanElement | null>
+    contentRef: React.MutableRefObject<HTMLDivElement | null>
+    instanceId: string
+    position: FloatingPosition
+    arrow: boolean
+    contentClassName?: string
+    portalTarget: HTMLElement | null
+    handleMouseEnter: () => void
+    handleMouseLeave: () => void
+}
+
+const HoverCardContext = createContext<HoverCardContextValue | null>(null)
+
+export function HoverCardTrigger({
+    ref,
+    children,
+    className,
+    onMouseEnter,
+    onMouseLeave,
+    ...props
+}: HoverCardTriggerProps) {
+    const ctx = useContext(HoverCardContext)
+
+    return (
+        <span
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as React.MutableRefObject<HTMLSpanElement | null>).current = node
+                if (ctx)
+                    (ctx.triggerRef as React.MutableRefObject<HTMLSpanElement | null>).current =
+                        node
+            }}
+            className={cn('mr-hovercard__trigger', className)}
+            onMouseEnter={(e) => {
+                onMouseEnter?.(e)
+                ctx?.handleMouseEnter()
+            }}
+            onMouseLeave={(e) => {
+                onMouseLeave?.(e)
+                ctx?.handleMouseLeave()
+            }}
+            {...props}
+        >
+            {children}
+        </span>
+    )
+}
+
+export function HoverCardContent({
+    ref,
+    children,
+    className,
+    arrow: explicitArrow,
+    onMouseEnter,
+    onMouseLeave,
+    style,
+    ...props
+}: HoverCardContentProps) {
+    const ctx = useContext(HoverCardContext)
+    if (!ctx || !ctx.isOpen || !ctx.portalTarget) return null
+
+    const showArrow = explicitArrow !== undefined ? explicitArrow : ctx.arrow
+    const { position, instanceId } = ctx
+
+    return createPortal(
+        <div
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+                ;(ctx.contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+            }}
+            id={`${instanceId}-content`}
+            className={cn('mr-hovercard__content', ctx.contentClassName, className)}
+            role="dialog"
+            aria-modal="false"
+            data-side={position.side}
+            style={
+                {
+                    top: `${position.top}px`,
+                    left: `${position.left}px`,
+                    '--mr-hovercard-arrow-left': position.arrowLeft
+                        ? `${position.arrowLeft}px`
+                        : undefined,
+                    '--mr-hovercard-arrow-top': position.arrowTop
+                        ? `${position.arrowTop}px`
+                        : undefined,
+                    ...style,
+                } as CSSProperties
+            }
+            onMouseEnter={(e) => {
+                onMouseEnter?.(e)
+                ctx.handleMouseEnter()
+            }}
+            onMouseLeave={(e) => {
+                onMouseLeave?.(e)
+                ctx.handleMouseLeave()
+            }}
+            {...props}
+        >
+            {showArrow && <div className="mr-hovercard__arrow" />}
+            {children}
+        </div>,
+        ctx.portalTarget
+    )
 }
 
 export function HoverCard({
@@ -184,55 +308,50 @@ export function HoverCard({
         }
     }, [isOpen, recalcPosition])
 
+    const contextValue: HoverCardContextValue = {
+        isOpen,
+        setOpenState,
+        triggerRef,
+        contentRef,
+        instanceId,
+        position,
+        arrow,
+        contentClassName,
+        portalTarget,
+        handleMouseEnter,
+        handleMouseLeave,
+    }
+
     return (
-        <div
-            ref={ref}
-            className={cn('mr-hovercard', className)}
-            data-open={isOpen ? true : undefined}
-            data-align={align}
-            data-side={side}
-            {...props}
-        >
-            <span
-                ref={triggerRef}
-                className="mr-hovercard__trigger"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+        <HoverCardContext.Provider value={contextValue}>
+            <div
+                ref={ref}
+                className={cn('mr-hovercard', className)}
+                data-open={isOpen ? true : undefined}
+                data-align={align}
+                data-side={side}
+                {...props}
             >
-                {children}
-            </span>
-            {isOpen && portalTarget
-                ? createPortal(
-                      <div
-                          ref={contentRef}
-                          id={`${instanceId}-content`}
-                          className={cn('mr-hovercard__content', contentClassName)}
-                          role="dialog"
-                          aria-modal="false"
-                          data-side={position.side}
-                          style={
-                              {
-                                  top: `${position.top}px`,
-                                  left: `${position.left}px`,
-                                  '--mr-hovercard-arrow-left': position.arrowLeft
-                                      ? `${position.arrowLeft}px`
-                                      : undefined,
-                                  '--mr-hovercard-arrow-top': position.arrowTop
-                                      ? `${position.arrowTop}px`
-                                      : undefined,
-                              } as CSSProperties
-                          }
-                          onMouseEnter={handleMouseEnter}
-                          onMouseLeave={handleMouseLeave}
-                      >
-                          {arrow && <div className="mr-hovercard__arrow" />}
-                          {content}
-                      </div>,
-                      portalTarget
-                  )
-                : null}
-        </div>
+                {content !== undefined ? (
+                    <>
+                        <HoverCardTrigger>{children}</HoverCardTrigger>
+                        <HoverCardContent>{content}</HoverCardContent>
+                    </>
+                ) : (
+                    children
+                )}
+            </div>
+        </HoverCardContext.Provider>
     )
 }
 
-export type { HoverCardProps } from './HoverCard.types'
+HoverCard.Trigger = HoverCardTrigger
+HoverCard.Content = HoverCardContent
+
+export type {
+    HoverCardProps,
+    HoverCardTriggerProps,
+    HoverCardContentProps,
+    HoverCardAlign,
+    HoverCardSide,
+} from './HoverCard.types'

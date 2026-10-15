@@ -8,11 +8,14 @@ import {
 
 const docData: DocPageData = {
     title: 'Avatar',
-    description: 'User or entity identity marker with image and initials fallback.',
+    description:
+        'User or entity identity marker with image, initials fallback, and status indicator.',
     importCode: "import { Avatar } from '@monority/ui/avatar'",
-    usageCode: `<Avatar size="sm" name="Alice B" />
-<Avatar size="md" name="Alice B" />
-<Avatar size="lg" name="Alice B" />`,
+    usageCode: `<Avatar size="md">
+  <Avatar.Image src="/avatars/user.jpg" alt="Alice B" />
+  <Avatar.Fallback>AB</Avatar.Fallback>
+  <Avatar.Status status="online" />
+</Avatar>`,
     preview: () => <AvatarBasicExample />,
     examples: [
         { title: 'Sizes', content: <AvatarSizesExample /> },
@@ -31,7 +34,7 @@ const docData: DocPageData = {
             type: `string`,
             defaultValue: '-',
             description:
-                'Image source URL. Falls back to children/initials when absent or on load error.',
+                'Image source URL (shorthand mode). Falls back to children/initials when absent or on load error.',
         },
         {
             name: 'alt',
@@ -44,16 +47,29 @@ const docData: DocPageData = {
             type: `string`,
             defaultValue: '-',
             description:
-                'Person name. Provides the accessible name (unless alt is set) and the initials fallback.',
+                'Person name (shorthand mode). Provides the accessible name (unless alt is set) and the initials fallback.',
+        },
+        {
+            name: 'status',
+            type: `'online' | 'offline'`,
+            defaultValue: '-',
+            description: 'Status indicator dot.',
         },
         {
             name: 'children',
             type: `ReactNode`,
             defaultValue: '-',
-            description: 'Explicit fallback content rendered instead of the derived initials.',
+            description: 'Explicit fallback content or compound subcomponents.',
         },
     ],
-    cssHooks: ['.mr-avatar', '[data-size]', '[data-status]'],
+    cssHooks: [
+        '.mr-avatar',
+        '.mr-avatar__img',
+        '.mr-avatar__initials',
+        '.mr-avatar__status',
+        '[data-size]',
+        '[data-status]',
+    ],
     tokens: [
         '--mr-radius-full',
         '--mr-accent-subtle',

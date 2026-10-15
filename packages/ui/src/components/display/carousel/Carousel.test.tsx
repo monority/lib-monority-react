@@ -234,4 +234,31 @@ describe('Carousel', () => {
         const firstSlide = view.querySelector('[role="group"]')
         expect(firstSlide?.getAttribute('aria-roledescription')).toBe('slide')
     })
+
+    it('supports compound subcomponents Content, Item, Previous, Next, Dots', () => {
+        const view = render(
+            <Carousel>
+                <Carousel.Content>
+                    <Carousel.Item>Slide A</Carousel.Item>
+                    <Carousel.Item>Slide B</Carousel.Item>
+                </Carousel.Content>
+                <Carousel.Previous />
+                <Carousel.Next />
+                <Carousel.Dots />
+            </Carousel>
+        )
+        const slidesRendered = view.querySelectorAll('.mr-carousel__slide')
+        expect(slidesRendered.length).toBe(2)
+        expect(slidesRendered[0]?.textContent).toBe('Slide A')
+
+        const nextArrow = view.querySelector('[aria-label="Next slide"]') as HTMLButtonElement
+        expect(nextArrow).not.toBeNull()
+
+        act(() => {
+            nextArrow.click()
+        })
+
+        const activeDot = view.querySelector('.mr-carousel__dot[data-active="true"]')
+        expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 2')
+    })
 })

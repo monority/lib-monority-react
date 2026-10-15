@@ -105,4 +105,28 @@ describe('Avatar', () => {
         expect(dot?.getAttribute('data-status')).toBe('online')
         expect(dot?.getAttribute('aria-hidden')).toBe('true')
     })
+
+    it('supports compound subcomponents Avatar.Image, Avatar.Fallback, and Avatar.Status', () => {
+        const view = render(
+            <Avatar size="lg">
+                <Avatar.Image src="compound.jpg" alt="Compound Avatar" />
+                <Avatar.Fallback>CA</Avatar.Fallback>
+                <Avatar.Status status="offline" />
+            </Avatar>
+        )
+        const img = view.querySelector('.mr-avatar__img')
+        const status = view.querySelector('.mr-avatar__status')
+        expect(img?.getAttribute('src')).toBe('compound.jpg')
+        expect(status?.getAttribute('data-status')).toBe('offline')
+    })
+
+    it('compound Avatar.Fallback renders when image is omitted or fails', () => {
+        const view = render(
+            <Avatar>
+                <Avatar.Fallback>FB</Avatar.Fallback>
+            </Avatar>
+        )
+        const fallback = view.querySelector('.mr-avatar__initials')
+        expect(fallback?.textContent).toBe('FB')
+    })
 })

@@ -189,4 +189,23 @@ describe('Collapsible', () => {
         expect(root?.getAttribute('data-open')).toBeNull()
         expect(root?.getAttribute('data-state')).toBe('closed')
     })
+
+    it('supports compound subcomponents Collapsible.Trigger and Collapsible.Content', () => {
+        const view = render(
+            <Collapsible defaultOpen>
+                <Collapsible.Trigger>Compound Title</Collapsible.Trigger>
+                <Collapsible.Content>Compound Body Content</Collapsible.Content>
+            </Collapsible>
+        )
+        const trigger = view.querySelector('.mr-collapsible__trigger') as HTMLButtonElement
+        const panel = view.querySelector('.mr-collapsible__panel') as HTMLElement
+
+        expect(trigger?.textContent).toContain('Compound Title')
+        expect(panel?.textContent).toContain('Compound Body Content')
+        expect(panel.getAttribute('aria-hidden')).toBe('false')
+
+        act(() => trigger.click())
+        expect(panel.getAttribute('aria-hidden')).toBe('true')
+        expect(trigger.getAttribute('aria-expanded')).toBe('false')
+    })
 })

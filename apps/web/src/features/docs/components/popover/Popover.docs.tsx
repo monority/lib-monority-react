@@ -10,11 +10,16 @@ const docData: DocPageData = {
     description:
         'A contextual floating panel for compact detail, quick edits, and supplementary actions.',
     importCode: "import { Popover } from '@monority/ui/popover'",
-    usageCode: `<Popover trigger={<Button>Inspect token</Button>}>
-  <Stack gap="xs">
-    <Text.Strong size="sm">Surface token</Text.Strong>
-    <Text tone="muted" size="sm">Use elevated surfaces for contextual panels.</Text>
-  </Stack>
+    usageCode: `<Popover>
+  <Popover.Trigger>
+    <Button>Inspect token</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Stack gap="xs">
+      <Text.Strong size="sm">Surface token</Text.Strong>
+      <Text tone="muted" size="sm">Use elevated surfaces for contextual panels.</Text>
+    </Stack>
+  </Popover.Content>
 </Popover>`,
     preview: () => <PopoverBasicExample />,
     examples: [
@@ -26,9 +31,14 @@ const docData: DocPageData = {
             name: 'trigger',
             type: `ReactNode`,
             defaultValue: '-',
-            description: 'Element that opens the popover.',
+            description: 'Element that opens the popover (shorthand mode).',
         },
-        { name: 'children', type: `ReactNode`, defaultValue: '-', description: 'Popover content.' },
+        {
+            name: 'children',
+            type: `ReactNode`,
+            defaultValue: '-',
+            description: 'Popover content or compound subcomponents.',
+        },
         { name: 'open', type: `boolean`, defaultValue: '-', description: 'Controlled open state.' },
         {
             name: 'defaultOpen',

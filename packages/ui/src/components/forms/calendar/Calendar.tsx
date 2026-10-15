@@ -1,6 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/cn'
-import type { CalendarProps } from './Calendar.types'
+import type {
+    CalendarGridProps,
+    CalendarHeaderProps,
+    CalendarNavButtonProps,
+    CalendarPickersProps,
+    CalendarProps,
+} from './Calendar.types'
 
 // ─── Date math utilities (no external deps) ───────────────────────────
 
@@ -166,6 +172,9 @@ export function Calendar({
         addMonths(viewDate, i)
     )
 
+    const [isPickerActive, setIsPickerActive] = useState(false)
+    const effectiveShowPickers = showPickers || isPickerActive
+
     const renderMonth = (monthDate: Date, monthIndex: number) => {
         const monthStart = startOfMonth(monthDate)
         const monthEnd = endOfMonth(monthDate)
@@ -224,7 +233,7 @@ export function Calendar({
                     >
                         <ChevronLeftIcon />
                     </button>
-                    {showPickers ? (
+                    {effectiveShowPickers ? (
                         <div className="mr-calendar__pickers">
                             <select
                                 className="mr-calendar__select mr-calendar__select--month"
@@ -266,9 +275,15 @@ export function Calendar({
                             </select>
                         </div>
                     ) : (
-                        <span className="mr-calendar__month-label">
+                        <button
+                            type="button"
+                            className="mr-calendar__month-label mr-calendar__month-label--interactive"
+                            onClick={() => setIsPickerActive(true)}
+                            aria-label="Select month and year"
+                            title="Click to select month and year"
+                        >
                             {formatMonthYear(monthDate, locale)}
-                        </span>
+                        </button>
                     )}
                     <button
                         type="button"
@@ -385,4 +400,63 @@ export function Calendar({
     )
 }
 
-export type { CalendarProps } from './Calendar.types'
+export function CalendarHeader({ ref, className, children, ...props }: CalendarHeaderProps) {
+    return (
+        <div ref={ref} className={cn('mr-calendar__header', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function CalendarPickers({ ref, className, children, ...props }: CalendarPickersProps) {
+    return (
+        <div ref={ref} className={cn('mr-calendar__pickers', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function CalendarNavButton({
+    ref,
+    direction = 'prev',
+    className,
+    children,
+    ...props
+}: CalendarNavButtonProps) {
+    return (
+        <button
+            ref={ref}
+            type="button"
+            className={cn(
+                'mr-calendar__nav-btn',
+                direction === 'prev' ? 'mr-calendar__nav-btn--prev' : 'mr-calendar__nav-btn--next',
+                className
+            )}
+            aria-label={direction === 'prev' ? 'Previous month' : 'Next month'}
+            {...props}
+        >
+            {children ?? (direction === 'prev' ? <ChevronLeftIcon /> : <ChevronRightIcon />)}
+        </button>
+    )
+}
+
+export function CalendarGrid({ ref, className, children, ...props }: CalendarGridProps) {
+    return (
+        <div ref={ref} className={cn('mr-calendar__grid', className)} role="grid" {...props}>
+            {children}
+        </div>
+    )
+}
+
+Calendar.Header = CalendarHeader
+Calendar.Pickers = CalendarPickers
+Calendar.NavButton = CalendarNavButton
+Calendar.Grid = CalendarGrid
+
+export type {
+    CalendarProps,
+    CalendarHeaderProps,
+    CalendarPickersProps,
+    CalendarNavButtonProps,
+    CalendarGridProps,
+} from './Calendar.types'

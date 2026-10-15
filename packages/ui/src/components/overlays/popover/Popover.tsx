@@ -1,9 +1,111 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
-import type { PopoverProps } from './Popover.types'
+import type {
+    PopoverAlign,
+    PopoverAnchorProps,
+    PopoverContentProps,
+    PopoverProps,
+    PopoverSide,
+    PopoverTriggerProps,
+} from './Popover.types'
+
+interface PopoverContextValue {
+    isOpen: boolean
+    setOpenState: (open: boolean) => void
+    triggerElementRef: React.MutableRefObject<Element | null>
+    contentRef: React.MutableRefObject<HTMLDivElement | null>
+    rootRef: React.RefObject<HTMLDivElement | null>
+    instanceId: string
+    align: PopoverAlign
+    side: PopoverSide
+    updatePosition: () => void
+    position: { top: number; left: number }
+    positioned: boolean
+    portalTarget: HTMLElement | null
+    contentClassName?: string
+}
+
+const PopoverContext = createContext<PopoverContextValue | null>(null)
+
+export function PopoverTrigger({
+    ref,
+    children,
+    className,
+    onClick,
+    ...props
+}: PopoverTriggerProps) {
+    const ctx = useContext(PopoverContext)
+    const isOpen = ctx?.isOpen ?? false
+    const instanceId = ctx?.instanceId ?? ''
+
+    return (
+        <button
+            ref={ref as React.Ref<HTMLButtonElement>}
+            type="button"
+            className={cn('mr-popover__trigger', className)}
+            aria-expanded={isOpen}
+            aria-controls={`${instanceId}-content`}
+            data-mr-popover-trigger="true"
+            onClick={(e) => {
+                onClick?.(e)
+                if (ctx) {
+                    ctx.triggerElementRef.current = e.currentTarget
+                    ctx.updatePosition()
+                    ctx.setOpenState(!isOpen)
+                }
+            }}
+            {...props}
+        >
+            {children}
+        </button>
+    )
+}
+
+export function PopoverAnchor({ ref, children, className, ...props }: PopoverAnchorProps) {
+    return (
+        <span
+            ref={ref as React.Ref<HTMLSpanElement>}
+            className={cn('mr-popover__anchor', className)}
+            data-mr-popover-trigger="true"
+            {...props}
+        >
+            {children}
+        </span>
+    )
+}
+
+export function PopoverContent({ ref, children, className, ...props }: PopoverContentProps) {
+    const ctx = useContext(PopoverContext)
+    if (!ctx || !ctx.isOpen || !ctx.portalTarget) return null
+
+    return createPortal(
+        <div
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+                ;(ctx.contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+            }}
+            id={`${ctx.instanceId}-content`}
+            className={cn('mr-popover__content', ctx.contentClassName, className)}
+            role="dialog"
+            aria-modal="false"
+            tabIndex={-1}
+            style={{
+                top: `${ctx.position.top}px`,
+                left: `${ctx.position.left}px`,
+                visibility: ctx.positioned ? undefined : 'hidden',
+            }}
+            {...props}
+        >
+            {children}
+        </div>,
+        ctx.portalTarget
+    )
+}
 
 export function Popover({
     ref,
@@ -27,8 +129,8 @@ export function Popover({
     const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-    // Never paint at the (0,0) initial position: hidden until measured.
     const [positioned, setPositioned] = useState(false)
+
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
             if (!isControlled) setInternalOpen(nextOpen)
@@ -36,6 +138,7 @@ export function Popover({
         },
         [isControlled, onOpenChange]
     )
+
     const updatePosition = useCallback(() => {
         const el =
             triggerElementRef.current ??
@@ -102,68 +205,78 @@ export function Popover({
         if (isOpen) contentRef.current?.focus()
     }, [isOpen])
 
+    const contextValue: PopoverContextValue = {
+        isOpen,
+        setOpenState,
+        triggerElementRef,
+        contentRef,
+        rootRef,
+        instanceId,
+        align,
+        side,
+        updatePosition,
+        position,
+        positioned,
+        portalTarget,
+        contentClassName,
+    }
+
     return (
-        <div
-            ref={ref}
-            className={cn('mr-popover', className)}
-            data-open={isOpen ? true : undefined}
-            data-align={align}
-            data-side={side}
-            {...props}
-        >
-            {typeof trigger === 'string' ? (
-                <button
-                    type="button"
-                    className="mr-popover__trigger"
-                    aria-expanded={isOpen}
-                    aria-controls={`${instanceId}-content`}
-                    onClick={(e) => {
-                        triggerElementRef.current = e.currentTarget
-                        updatePosition()
-                        setOpenState(!isOpen)
-                    }}
-                >
-                    {trigger}
-                </button>
-            ) : (
-                <span
-                    className="mr-popover__anchor"
-                    data-mr-popover-trigger="true"
-                    aria-expanded={isOpen}
-                    aria-controls={`${instanceId}-content`}
-                    onClick={(e) => {
-                        triggerElementRef.current =
-                            (e.target as HTMLElement).closest('button, a, [tabindex]') ??
-                            e.currentTarget
-                        updatePosition()
-                        setOpenState(!isOpen)
-                    }}
-                >
-                    {trigger}
-                </span>
-            )}
-            {isOpen && portalTarget
-                ? createPortal(
-                      <div
-                          ref={contentRef}
-                          id={`${instanceId}-content`}
-                          className={cn('mr-popover__content', contentClassName)}
-                          role="dialog"
-                          aria-modal="false"
-                          tabIndex={-1}
-                          style={{
-                              top: `${position.top}px`,
-                              left: `${position.left}px`,
-                              visibility: positioned ? undefined : 'hidden',
-                          }}
-                      >
-                          {children}
-                      </div>,
-                      portalTarget
-                  )
-                : null}
-        </div>
+        <PopoverContext.Provider value={contextValue}>
+            <div
+                ref={(node) => {
+                    if (typeof ref === 'function') ref(node)
+                    else if (ref)
+                        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+                    ;(rootRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+                }}
+                className={cn('mr-popover', className)}
+                data-open={isOpen ? true : undefined}
+                data-align={align}
+                data-side={side}
+                {...props}
+            >
+                {trigger !== undefined ? (
+                    <>
+                        {typeof trigger === 'string' ? (
+                            <PopoverTrigger>{trigger}</PopoverTrigger>
+                        ) : (
+                            <span
+                                className="mr-popover__anchor"
+                                data-mr-popover-trigger="true"
+                                aria-expanded={isOpen}
+                                aria-controls={`${instanceId}-content`}
+                                onClick={(e) => {
+                                    triggerElementRef.current =
+                                        (e.target as HTMLElement).closest(
+                                            'button, a, [tabindex]'
+                                        ) ?? e.currentTarget
+                                    updatePosition()
+                                    setOpenState(!isOpen)
+                                }}
+                            >
+                                {trigger}
+                            </span>
+                        )}
+                        <PopoverContent>{children}</PopoverContent>
+                    </>
+                ) : (
+                    children
+                )}
+            </div>
+        </PopoverContext.Provider>
     )
 }
 
-export type { PopoverProps } from './Popover.types'
+Popover.Trigger = PopoverTrigger
+Popover.Content = PopoverContent
+Popover.Anchor = PopoverAnchor
+
+export type {
+    PopoverProps,
+    PopoverTriggerProps,
+    PopoverContentProps,
+    PopoverAnchorProps,
+    PopoverAlign,
+    PopoverSide,
+} from './Popover.types'

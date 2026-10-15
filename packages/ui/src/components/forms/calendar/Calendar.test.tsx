@@ -232,4 +232,28 @@ describe('Calendar', () => {
         expect(monthSelect.value).toBe('4')
         expect(yearSelect.value).toBe('2025')
     })
+
+    it('activates pickers when clicking the month label and updates view date', () => {
+        const view = render(<Calendar value={new Date(2025, 4, 1)} />)
+        const labelBtn = view.querySelector(
+            '.mr-calendar__month-label--interactive'
+        ) as HTMLButtonElement
+        expect(labelBtn).not.toBeNull()
+
+        act(() => {
+            labelBtn.click()
+        })
+
+        const monthSelect = view.querySelector('.mr-calendar__select--month') as HTMLSelectElement
+        const yearSelect = view.querySelector('.mr-calendar__select--year') as HTMLSelectElement
+        expect(monthSelect).not.toBeNull()
+        expect(yearSelect).not.toBeNull()
+
+        act(() => {
+            monthSelect.value = '7' // August
+            monthSelect.dispatchEvent(new Event('change', { bubbles: true }))
+        })
+
+        expect(view.textContent).toContain('2025')
+    })
 })

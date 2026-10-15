@@ -1,9 +1,252 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+    Children,
+    cloneElement,
+    createContext,
+    isValidElement,
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import { cn } from '@/lib/cn'
-import type { CarouselProps } from './Carousel.types'
+import type {
+    CarouselButtonProps,
+    CarouselContentProps,
+    CarouselDotsProps,
+    CarouselItemProps,
+    CarouselProps,
+} from './Carousel.types'
+
+interface CarouselContextValue {
+    current: number
+    total: number
+    setTotal: (total: number) => void
+    goTo: (index: number) => void
+    next: () => void
+    prev: () => void
+    loop: boolean
+    orientation: 'horizontal' | 'vertical'
+    slideClassName?: string
+}
+
+const CarouselContext = createContext<CarouselContextValue | null>(null)
+
+export function CarouselContent({ ref, children, className, ...props }: CarouselContentProps) {
+    const ctx = useContext(CarouselContext)
+    const childArray = Children.toArray(children)
+    const count = childArray.length
+
+    useEffect(() => {
+        if (ctx) {
+            ctx.setTotal(count)
+        }
+    }, [ctx, count])
+
+    const current = ctx?.current ?? 0
+    const orientation = ctx?.orientation ?? 'horizontal'
+
+    return (
+        <div className="mr-carousel__viewport">
+            <div
+                ref={ref}
+                className={cn('mr-carousel__track', className)}
+                style={{
+                    transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${current * 100}%)`,
+                }}
+                {...props}
+            >
+                {childArray.map((child, index) => {
+                    const isVisible = index === current
+                    if (isValidElement(child)) {
+                        return cloneElement(child, {
+                            key: child.key ?? index,
+                            'aria-hidden': !isVisible,
+                            'aria-label': `Slide ${index + 1} of ${count}`,
+                            index,
+                        } as Record<string, unknown>)
+                    }
+                    return (
+                        <div
+                            key={index}
+                            role="group"
+                            aria-roledescription="slide"
+                            aria-label={`Slide ${index + 1} of ${count}`}
+                            aria-hidden={!isVisible}
+                            className={cn('mr-carousel__slide', ctx?.slideClassName)}
+                        >
+                            {child}
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
+export function CarouselItem({ ref, children, className, index, ...props }: CarouselItemProps) {
+    const ctx = useContext(CarouselContext)
+    const current = ctx?.current ?? 0
+    const isVisible = index !== undefined ? index === current : undefined
+
+    return (
+        <div
+            ref={ref}
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden={isVisible !== undefined ? !isVisible : undefined}
+            className={cn('mr-carousel__slide', ctx?.slideClassName, className)}
+            {...props}
+        >
+            {children}
+        </div>
+    )
+}
+
+export function CarouselPrevious({
+    ref,
+    className,
+    children,
+    onClick,
+    ...props
+}: CarouselButtonProps) {
+    const ctx = useContext(CarouselContext)
+    if (!ctx) return null
+    const { prev, loop, current, orientation } = ctx
+
+    return (
+        <button
+            ref={ref}
+            type="button"
+            onClick={(e) => {
+                onClick?.(e)
+                prev()
+            }}
+            disabled={!loop && current === 0}
+            className={cn('mr-carousel__arrow', className)}
+            data-direction="prev"
+            aria-label="Previous slide"
+            {...props}
+        >
+            {children ??
+                (orientation === 'vertical' ? (
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <polyline points="18 15 12 9 6 15" />
+                    </svg>
+                ) : (
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                ))}
+        </button>
+    )
+}
+
+export function CarouselNext({ ref, className, children, onClick, ...props }: CarouselButtonProps) {
+    const ctx = useContext(CarouselContext)
+    if (!ctx) return null
+    const { next, loop, current, total, orientation } = ctx
+
+    return (
+        <button
+            ref={ref}
+            type="button"
+            onClick={(e) => {
+                onClick?.(e)
+                next()
+            }}
+            disabled={!loop && current === total - 1}
+            className={cn('mr-carousel__arrow', className)}
+            data-direction="next"
+            aria-label="Next slide"
+            {...props}
+        >
+            {children ??
+                (orientation === 'vertical' ? (
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                ) : (
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                ))}
+        </button>
+    )
+}
+
+export function CarouselDots({ ref, className, ...props }: CarouselDotsProps) {
+    const ctx = useContext(CarouselContext)
+    if (!ctx || ctx.total <= 1) return null
+    const { total, current, goTo } = ctx
+
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-carousel__dots', className)}
+            role="tablist"
+            aria-label="Slides"
+            {...props}
+        >
+            {Array.from({ length: total }, (_, i) => (
+                <button
+                    key={i}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === current}
+                    aria-label={`Go to slide ${i + 1}`}
+                    onClick={() => goTo(i)}
+                    className="mr-carousel__dot"
+                    data-active={i === current ? 'true' : undefined}
+                />
+            ))}
+        </div>
+    )
+}
 
 export function Carousel({
     slides,
+    children,
     autoPlay = false,
     interval = 5000,
     showArrows = true,
@@ -17,12 +260,14 @@ export function Carousel({
 }: CarouselProps) {
     const [current, setCurrent] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
+    const [totalState, setTotalState] = useState(slides ? slides.length : 0)
     const touchStartX = useRef<number | null>(null)
     const touchStartY = useRef<number | null>(null)
-    const total = slides.length
+    const total = slides ? slides.length : totalState
 
     const goTo = useCallback(
         (index: number) => {
+            if (total <= 0) return
             if (loop) {
                 setCurrent(((index % total) + total) % total)
             } else {
@@ -69,143 +314,86 @@ export function Carousel({
         return () => clearInterval(id)
     }, [autoPlay, isPaused, interval, next, total])
 
-    if (total === 0) return null
+    if (slides && slides.length === 0) return null
+
+    const contextValue: CarouselContextValue = {
+        current,
+        total,
+        setTotal: setTotalState,
+        goTo,
+        next,
+        prev,
+        loop,
+        orientation,
+        slideClassName,
+    }
 
     return (
-        <div
-            ref={ref}
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Image carousel"
-            className={cn('mr-carousel', className)}
-            data-orientation={orientation}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            {...props}
-        >
-            <div className="mr-carousel__viewport">
-                <div
-                    className="mr-carousel__track"
-                    style={{
-                        transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${current * 100}%)`,
-                    }}
-                >
-                    {slides.map((slide, i) => (
-                        <div
-                            key={i}
-                            role="group"
-                            aria-roledescription="slide"
-                            aria-label={`Slide ${i + 1} of ${total}`}
-                            aria-hidden={i !== current}
-                            className={cn('mr-carousel__slide', slideClassName)}
-                        >
-                            {slide}
+        <CarouselContext.Provider value={contextValue}>
+            <div
+                ref={ref}
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Image carousel"
+                className={cn('mr-carousel', className)}
+                data-orientation={orientation}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                {...props}
+            >
+                {slides !== undefined ? (
+                    <>
+                        <div className="mr-carousel__viewport">
+                            <div
+                                className="mr-carousel__track"
+                                style={{
+                                    transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${current * 100}%)`,
+                                }}
+                            >
+                                {slides.map((slide, i) => (
+                                    <div
+                                        key={i}
+                                        role="group"
+                                        aria-roledescription="slide"
+                                        aria-label={`Slide ${i + 1} of ${total}`}
+                                        aria-hidden={i !== current}
+                                        className={cn('mr-carousel__slide', slideClassName)}
+                                    >
+                                        {slide}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    ))}
-                </div>
+
+                        {showArrows && total > 1 && (
+                            <>
+                                <CarouselPrevious />
+                                <CarouselNext />
+                            </>
+                        )}
+
+                        {showDots && total > 1 && <CarouselDots />}
+                    </>
+                ) : (
+                    children
+                )}
             </div>
-
-            {showArrows && total > 1 && (
-                <>
-                    <button
-                        type="button"
-                        onClick={prev}
-                        disabled={!loop && current === 0}
-                        className="mr-carousel__arrow"
-                        data-direction="prev"
-                        aria-label="Previous slide"
-                    >
-                        {orientation === 'vertical' ? (
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                            >
-                                <polyline points="18 15 12 9 6 15" />
-                            </svg>
-                        ) : (
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                            >
-                                <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                        )}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={next}
-                        disabled={!loop && current === total - 1}
-                        className="mr-carousel__arrow"
-                        data-direction="next"
-                        aria-label="Next slide"
-                    >
-                        {orientation === 'vertical' ? (
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                            >
-                                <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                        ) : (
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                            >
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        )}
-                    </button>
-                </>
-            )}
-
-            {showDots && total > 1 && (
-                <div className="mr-carousel__dots" role="tablist" aria-label="Slides">
-                    {slides.map((_, i) => (
-                        <button
-                            key={i}
-                            type="button"
-                            role="tab"
-                            aria-selected={i === current}
-                            aria-label={`Go to slide ${i + 1}`}
-                            onClick={() => goTo(i)}
-                            className="mr-carousel__dot"
-                            data-active={i === current ? 'true' : undefined}
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
+        </CarouselContext.Provider>
     )
 }
 
-export type { CarouselProps } from './Carousel.types'
+Carousel.Content = CarouselContent
+Carousel.Item = CarouselItem
+Carousel.Previous = CarouselPrevious
+Carousel.Next = CarouselNext
+Carousel.Dots = CarouselDots
+
+export type {
+    CarouselProps,
+    CarouselContentProps,
+    CarouselItemProps,
+    CarouselButtonProps,
+    CarouselDotsProps,
+} from './Carousel.types'

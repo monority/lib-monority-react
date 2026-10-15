@@ -1,7 +1,75 @@
-import { useCallback, useId, useState } from 'react'
-import { cloneElement, isValidElement } from 'react'
+import {
+    cloneElement,
+    createContext,
+    isValidElement,
+    useCallback,
+    useContext,
+    useId,
+    useState,
+} from 'react'
 import { cn } from '@/lib/cn'
-import type { TooltipProps } from './Tooltip.types'
+import type {
+    TooltipContentProps,
+    TooltipProps,
+    TooltipSide,
+    TooltipTriggerProps,
+} from './Tooltip.types'
+
+interface TooltipContextValue {
+    id: string
+    side: TooltipSide
+    arrow: boolean
+    dismissed: boolean
+}
+
+const TooltipContext = createContext<TooltipContextValue | null>(null)
+
+export function TooltipTrigger({
+    ref,
+    children,
+    className,
+    asChild: _asChild,
+    ...props
+}: TooltipTriggerProps) {
+    const ctx = useContext(TooltipContext)
+    const id = ctx?.id
+
+    if (isValidElement(children)) {
+        return cloneElement(children, {
+            ref,
+            'aria-describedby': id,
+            ...props,
+        } as Record<string, unknown>)
+    }
+
+    return (
+        <span
+            ref={ref as React.Ref<HTMLSpanElement>}
+            aria-describedby={id}
+            className={className}
+            {...props}
+        >
+            {children}
+        </span>
+    )
+}
+
+export function TooltipContent({ ref, children, className, ...props }: TooltipContentProps) {
+    const ctx = useContext(TooltipContext)
+    const id = ctx?.id
+
+    return (
+        <div
+            ref={ref}
+            id={id}
+            role="tooltip"
+            className={cn('mr-tooltip__content', className)}
+            {...props}
+        >
+            {children}
+        </div>
+    )
+}
 
 /**
  * Lightweight tooltip primitive.
@@ -43,30 +111,53 @@ export function Tooltip({
               } as React.CSSProperties)
             : style
 
+    const contextValue: TooltipContextValue = {
+        id: generatedId,
+        side,
+        arrow,
+        dismissed,
+    }
+
     return (
-        <div
-            ref={ref}
-            className={cn('mr-tooltip', className)}
-            data-side={side}
-            data-arrow={arrow ? true : undefined}
-            data-hidden={dismissed ? true : undefined}
-            style={tooltipStyle}
-            onKeyDown={handleKeyDown}
-            onMouseLeave={clearDismissal}
-            onFocusCapture={clearDismissal}
-            {...props}
-        >
-            {isValidElement(children)
-                ? cloneElement(children, { 'aria-describedby': generatedId } as Record<
-                      string,
-                      unknown
-                  >)
-                : children}
-            <div className="mr-tooltip__content" id={generatedId} role="tooltip">
-                {content}
+        <TooltipContext.Provider value={contextValue}>
+            <div
+                ref={ref}
+                className={cn('mr-tooltip', className)}
+                data-side={side}
+                data-arrow={arrow ? true : undefined}
+                data-hidden={dismissed ? true : undefined}
+                style={tooltipStyle}
+                onKeyDown={handleKeyDown}
+                onMouseLeave={clearDismissal}
+                onFocusCapture={clearDismissal}
+                {...props}
+            >
+                {content !== undefined ? (
+                    <>
+                        {isValidElement(children)
+                            ? cloneElement(children, { 'aria-describedby': generatedId } as Record<
+                                  string,
+                                  unknown
+                              >)
+                            : children}
+                        <div className="mr-tooltip__content" id={generatedId} role="tooltip">
+                            {content}
+                        </div>
+                    </>
+                ) : (
+                    children
+                )}
             </div>
-        </div>
+        </TooltipContext.Provider>
     )
 }
 
-export type { TooltipProps } from './Tooltip.types'
+Tooltip.Trigger = TooltipTrigger
+Tooltip.Content = TooltipContent
+
+export type {
+    TooltipProps,
+    TooltipTriggerProps,
+    TooltipContentProps,
+    TooltipSide,
+} from './Tooltip.types'

@@ -66,6 +66,20 @@
         text-transform: capitalize;
     }
 
+    :where(.mr-calendar__month-label--interactive) {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        border-radius: var(--mr-radius-sm);
+        transition: background-color var(--mr-duration-state);
+    }
+
+    :where(.mr-calendar__month-label--interactive:hover) {
+        background-color: var(--mr-bg-sunken);
+    }
+
     /* Selecteurs rapides de mois / annee */
     :where(.mr-calendar__pickers) {
         display: inline-flex;

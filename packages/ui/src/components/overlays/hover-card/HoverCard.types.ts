@@ -5,8 +5,8 @@ export type HoverCardSide = 'top' | 'bottom' | 'left' | 'right'
 
 export interface HoverCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
     ref?: Ref<HTMLDivElement>
-    children: ReactNode
-    content: ReactNode
+    children?: ReactNode
+    content?: ReactNode
     openDelay?: number
     closeDelay?: number
     side?: HoverCardSide
@@ -17,4 +17,15 @@ export interface HoverCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'co
     onOpenChange?: (open: boolean) => void
     arrow?: boolean
     contentClassName?: string
+}
+
+export interface HoverCardTriggerProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}
+
+export interface HoverCardContentProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+    arrow?: boolean
 }

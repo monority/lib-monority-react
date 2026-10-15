@@ -14,7 +14,30 @@ const demoSlides = [
 ]
 
 export function CarouselBasicExample() {
-    return <Carousel slides={demoSlides} />
+    return (
+        <Carousel>
+            <Carousel.Content>
+                <Carousel.Item>
+                    <Card padding="lg" style={{ textAlign: 'center' }}>
+                        Slide 1 — Welcome
+                    </Card>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <Card padding="lg" style={{ textAlign: 'center' }}>
+                        Slide 2 — Features
+                    </Card>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <Card padding="lg" style={{ textAlign: 'center' }}>
+                        Slide 3 — Get started
+                    </Card>
+                </Carousel.Item>
+            </Carousel.Content>
+            <Carousel.Previous />
+            <Carousel.Next />
+            <Carousel.Dots />
+        </Carousel>
+    )
 }
 
 export function CarouselAutoPlayExample() {

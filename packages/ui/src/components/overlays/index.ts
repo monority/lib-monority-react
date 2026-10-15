@@ -46,13 +46,36 @@ export {
 } from './dropdown-menu'
 export {
     HoverCard,
+    HoverCardTrigger,
+    HoverCardContent,
     type HoverCardProps,
+    type HoverCardTriggerProps,
+    type HoverCardContentProps,
     type HoverCardAlign,
     type HoverCardSide,
 } from './hover-card'
 export { Modal, type ModalProps } from './modal'
-export { Popover, type PopoverProps, type PopoverAlign, type PopoverSide } from './popover'
-export { Tooltip, type TooltipProps } from './tooltip'
+export {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverAnchor,
+    type PopoverProps,
+    type PopoverTriggerProps,
+    type PopoverContentProps,
+    type PopoverAnchorProps,
+    type PopoverAlign,
+    type PopoverSide,
+} from './popover'
+export {
+    Tooltip,
+    TooltipTrigger,
+    TooltipContent,
+    type TooltipProps,
+    type TooltipTriggerProps,
+    type TooltipContentProps,
+    type TooltipSide,
+} from './tooltip'
 export {
     Sheet,
     SheetHeader,

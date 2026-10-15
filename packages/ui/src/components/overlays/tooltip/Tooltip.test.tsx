@@ -156,4 +156,19 @@ describe('Tooltip', () => {
         expect(wrapper.getAttribute('data-arrow')).toBe('true')
         expect(wrapper.style.getPropertyValue('--mr-tooltip-delay')).toBe('200ms')
     })
+
+    it('supports compound subcomponents Tooltip.Trigger and Tooltip.Content', () => {
+        const view = render(
+            <Tooltip>
+                <Tooltip.Trigger>
+                    <button type="button">Action Button</button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>Compound description</Tooltip.Content>
+            </Tooltip>
+        )
+        const content = view.querySelector('.mr-tooltip__content')
+        const button = view.querySelector('button')
+        expect(content?.textContent).toBe('Compound description')
+        expect(button?.getAttribute('aria-describedby')).toBe(content?.getAttribute('id'))
+    })
 })

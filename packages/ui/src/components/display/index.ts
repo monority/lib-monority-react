@@ -9,9 +9,15 @@ export {
 } from './accordion'
 export {
     Avatar,
+    AvatarImage,
+    AvatarFallback,
+    AvatarStatusIndicator,
     type AvatarProps,
     type AvatarSize,
     type AvatarStatus,
+    type AvatarImageProps,
+    type AvatarFallbackProps,
+    type AvatarStatusIndicatorProps,
 } from './avatar'
 export {
     Card,
@@ -23,8 +29,27 @@ export {
     type CardProps,
     type CardTitleProps,
 } from './card'
-export { Carousel, type CarouselProps } from './carousel'
-export { Collapsible, type CollapsibleProps } from './collapsible'
+export {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselPrevious,
+    CarouselNext,
+    CarouselDots,
+    type CarouselProps,
+    type CarouselContentProps,
+    type CarouselItemProps,
+    type CarouselButtonProps,
+    type CarouselDotsProps,
+} from './carousel'
+export {
+    Collapsible,
+    CollapsibleTrigger,
+    CollapsibleContent,
+    type CollapsibleProps,
+    type CollapsibleTriggerProps,
+    type CollapsibleContentProps,
+} from './collapsible'
 export {
     ColorSwatch,
     type ColorSwatchProps,

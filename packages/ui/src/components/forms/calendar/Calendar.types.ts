@@ -1,4 +1,10 @@
-import type { HTMLAttributes, Ref } from 'react'
+import type {
+    ButtonHTMLAttributes,
+    HTMLAttributes,
+    ReactNode,
+    Ref,
+    SelectHTMLAttributes,
+} from 'react'
 
 export interface CalendarProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
@@ -14,4 +20,29 @@ export interface CalendarProps
     fixedWeeks?: boolean
     numberOfMonths?: number
     showPickers?: boolean
+    children?: ReactNode
+}
+
+export interface CalendarHeaderProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface CalendarPickersProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface CalendarNavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    ref?: Ref<HTMLButtonElement>
+    direction?: 'prev' | 'next'
+}
+
+export interface CalendarSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+    ref?: Ref<HTMLSelectElement>
+}
+
+export interface CalendarGridProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
 }

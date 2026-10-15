@@ -157,4 +157,21 @@ describe('HoverCard', () => {
         expect(portalContent).not.toBeNull()
         expect(container?.querySelector('.mr-hovercard__content')).toBeNull()
     })
+
+    it('supports compound subcomponents HoverCard.Trigger and HoverCard.Content', () => {
+        render(
+            <HoverCard defaultOpen openDelay={0}>
+                <HoverCard.Trigger>
+                    <span>Compound Trigger</span>
+                </HoverCard.Trigger>
+                <HoverCard.Content>
+                    <span>Compound Body</span>
+                </HoverCard.Content>
+            </HoverCard>
+        )
+        const trigger = container?.querySelector('.mr-hovercard__trigger')
+        expect(trigger?.textContent).toBe('Compound Trigger')
+        const portalContent = document.body.querySelector('.mr-hovercard__content')
+        expect(portalContent?.textContent).toContain('Compound Body')
+    })
 })

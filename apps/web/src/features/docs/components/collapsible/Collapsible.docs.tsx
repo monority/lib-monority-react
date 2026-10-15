@@ -11,8 +11,11 @@ const docData: DocPageData = {
     description:
         'Expandable panel for secondary details, migration notes, and inline product guidance.',
     importCode: "import { Collapsible } from '@monority/ui/collapsible'",
-    usageCode: `<Collapsible title="Release notes summary">
-  <p>This panel can reveal supporting context without taking over the page.</p>
+    usageCode: `<Collapsible defaultOpen>
+  <Collapsible.Trigger>Release notes summary</Collapsible.Trigger>
+  <Collapsible.Content>
+    <Text>This panel can reveal supporting context without taking over the page.</Text>
+  </Collapsible.Content>
 </Collapsible>`,
     preview: () => <CollapsibleBasicExample />,
     examples: [
@@ -25,13 +28,13 @@ const docData: DocPageData = {
             name: 'title',
             type: 'ReactNode',
             defaultValue: '-',
-            description: 'Trigger button content.',
+            description: 'Trigger button content (shorthand mode).',
         },
         {
             name: 'children',
             type: 'ReactNode',
             defaultValue: '-',
-            description: 'Collapsible panel content.',
+            description: 'Collapsible panel content or compound subcomponents.',
         },
         {
             name: 'defaultOpen',

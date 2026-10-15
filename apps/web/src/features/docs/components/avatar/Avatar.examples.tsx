@@ -1,26 +1,28 @@
 import { Avatar } from '@monority/ui/avatar'
+import { Stack } from '@monority/ui/stack'
 
 export function AvatarBasicExample() {
     return (
-        <Avatar name="Maya Chen" alt="Maya Chen">
-            MC
+        <Avatar size="lg">
+            <Avatar.Fallback>MC</Avatar.Fallback>
+            <Avatar.Status status="online" />
         </Avatar>
     )
 }
 
 export function AvatarSizesExample() {
     return (
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar size="sm" name="Alice B">
-                AB
+        <Stack direction="horizontal" gap="md" align="center">
+            <Avatar size="sm">
+                <Avatar.Fallback>AB</Avatar.Fallback>
             </Avatar>
-            <Avatar size="md" name="Alice B">
-                AB
+            <Avatar size="md">
+                <Avatar.Fallback>AB</Avatar.Fallback>
             </Avatar>
-            <Avatar size="lg" name="Alice B">
-                AB
+            <Avatar size="lg">
+                <Avatar.Fallback>AB</Avatar.Fallback>
             </Avatar>
-        </div>
+        </Stack>
     )
 }
 
@@ -32,18 +34,22 @@ export function AvatarWithImageExample() {
         )
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar size="md" src={placeholderAvatar} alt="Felix" />
-            <Avatar size="md" name="Noah Price" alt="Noah Price">
-                NP
+        <Stack direction="horizontal" gap="md" align="center">
+            <Avatar size="md">
+                <Avatar.Image src={placeholderAvatar} alt="Felix" />
+                <Avatar.Fallback>FX</Avatar.Fallback>
             </Avatar>
-        </div>
+            <Avatar size="md">
+                <Avatar.Fallback>NP</Avatar.Fallback>
+                <Avatar.Status status="online" />
+            </Avatar>
+        </Stack>
     )
 }
 
 export function AvatarGroupExample() {
     return (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Stack direction="horizontal" align="center">
             <Avatar size="sm" name="Alice Brown" alt="Alice Brown">
                 AB
             </Avatar>
@@ -56,6 +62,6 @@ export function AvatarGroupExample() {
             <Avatar size="sm" aria-label="3 more reviewers" style={{ marginLeft: '-0.5rem' }}>
                 +3
             </Avatar>
-        </div>
+        </Stack>
     )
 }

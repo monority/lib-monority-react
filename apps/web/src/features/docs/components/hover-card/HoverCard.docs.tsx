@@ -11,8 +11,16 @@ const docData: DocPageData = {
     description:
         'A hover-triggered detail card for previews, supporting metadata, and compact contextual information.',
     importCode: "import { HoverCard } from '@monority/ui'",
-    usageCode: `<HoverCard content={<div>Release note preview</div>}>
-  <Button>Preview note</Button>
+    usageCode: `<HoverCard>
+  <HoverCard.Trigger>
+    <Button>Preview note</Button>
+  </HoverCard.Trigger>
+  <HoverCard.Content>
+    <Stack gap="xs">
+      <Text.Strong size="sm">Release note</Text.Strong>
+      <Text.Muted size="sm">Hover cards provide compact supporting detail.</Text.Muted>
+    </Stack>
+  </HoverCard.Content>
 </HoverCard>`,
     preview: () => <HoverCardBasicExample />,
     examples: [
@@ -21,12 +29,17 @@ const docData: DocPageData = {
         { title: 'Controlled', content: <HoverCardControlledExample /> },
     ],
     props: [
-        { name: 'children', type: 'ReactNode', defaultValue: '-', description: 'Trigger element.' },
+        {
+            name: 'children',
+            type: 'ReactNode',
+            defaultValue: '-',
+            description: 'Trigger element or compound subcomponents.',
+        },
         {
             name: 'content',
             type: 'ReactNode',
             defaultValue: '-',
-            description: 'Card content rendered in portal.',
+            description: 'Card content rendered in portal (shorthand mode).',
         },
         {
             name: 'openDelay',

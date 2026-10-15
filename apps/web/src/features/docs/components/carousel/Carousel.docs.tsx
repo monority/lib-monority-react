@@ -11,15 +11,16 @@ const docData: DocPageData = {
     description:
         'Scrollable carousel with centered, transparent arrow controls and optional pagination dots.',
     importCode: "import { Carousel } from '@monority/ui/carousel'",
-    usageCode: `<Carousel
-  slides={[
-    <img key="0" src="/a.jpg" alt="A" />,
-    <img key="1" src="/b.jpg" alt="B" />,
-    <img key="2" src="/c.jpg" alt="C" />,
-  ]}
-  autoPlay
-  loop
-/>`,
+    usageCode: `<Carousel>
+  <Carousel.Content>
+    <Carousel.Item><Card padding="lg">Slide 1</Card></Carousel.Item>
+    <Carousel.Item><Card padding="lg">Slide 2</Card></Carousel.Item>
+    <Carousel.Item><Card padding="lg">Slide 3</Card></Carousel.Item>
+  </Carousel.Content>
+  <Carousel.Previous />
+  <Carousel.Next />
+  <Carousel.Dots />
+</Carousel>`,
     preview: () => <CarouselBasicExample />,
     examples: [
         { title: 'Auto-play', content: <CarouselAutoPlayExample /> },
@@ -34,7 +35,13 @@ const docData: DocPageData = {
             name: 'slides',
             type: 'ReactNode[]',
             defaultValue: '-',
-            description: 'Array of slide content elements.',
+            description: 'Array of slide content elements (shorthand mode).',
+        },
+        {
+            name: 'children',
+            type: 'ReactNode',
+            defaultValue: '-',
+            description: 'Compound subcomponents Carousel.Content, Carousel.Previous, etc.',
         },
         {
             name: 'autoPlay',
@@ -52,13 +59,13 @@ const docData: DocPageData = {
             name: 'showArrows',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Show prev/next navigation arrows.',
+            description: 'Show prev/next navigation arrows (shorthand mode).',
         },
         {
             name: 'showDots',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Show pagination dot indicators.',
+            description: 'Show pagination dot indicators (shorthand mode).',
         },
         {
             name: 'loop',
@@ -83,12 +90,10 @@ const docData: DocPageData = {
         '.mr-carousel',
         '.mr-carousel__viewport',
         '.mr-carousel__track',
-        '.mr-carousel__track--vertical',
         '.mr-carousel__slide',
         '.mr-carousel__arrow',
         '.mr-carousel__dots',
         '.mr-carousel__dot',
-        '.mr-carousel__dot--active',
         '[data-orientation]',
         '[data-active]',
     ],
