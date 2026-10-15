@@ -73,4 +73,31 @@ describe('Breadcrumb', () => {
         const listItems = view.querySelectorAll('.mr-breadcrumb__item')
         expect(listItems.length).toBe(0)
     })
+
+    it('renders with compound subcomponents', () => {
+        const view = render(
+            <Breadcrumb>
+                <Breadcrumb.List>
+                    <Breadcrumb.Item>
+                        <Breadcrumb.Link href="/">Home</Breadcrumb.Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Separator />
+                    <Breadcrumb.Item>
+                        <Breadcrumb.Page>Components</Breadcrumb.Page>
+                    </Breadcrumb.Item>
+                </Breadcrumb.List>
+            </Breadcrumb>
+        )
+
+        const link = view.querySelector('a.mr-breadcrumb__link')
+        expect(link?.textContent).toBe('Home')
+        expect(link?.getAttribute('href')).toBe('/')
+
+        const separator = view.querySelector('.mr-breadcrumb__separator')
+        expect(separator?.textContent).toBe('/')
+
+        const current = view.querySelector('.mr-breadcrumb__current')
+        expect(current?.textContent).toBe('Components')
+        expect(current?.getAttribute('aria-current')).toBe('page')
+    })
 })

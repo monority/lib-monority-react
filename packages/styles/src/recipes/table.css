@@ -67,4 +67,19 @@
     :where(.mr-table__cell--right) {
         text-align: end;
     }
+
+    :where(.mr-table__footer) {
+        border-block-start: 1px solid var(--mr-border-subtle);
+        background-color: var(--mr-bg-sunken);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.mr-table__caption) {
+        margin-block-start: var(--mr-space-2);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        color: var(--mr-text-secondary);
+        text-align: start;
+    }
 }

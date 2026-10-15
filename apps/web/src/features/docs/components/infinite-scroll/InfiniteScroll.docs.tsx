@@ -10,7 +10,12 @@ const docData: DocPageData = {
     description:
         'Infinite scroll container with IntersectionObserver-based loading, loader, end message, and error states.',
     importCode: "import { InfiniteScroll } from '@monority/ui/infinite-scroll'",
-    usageCode: `<InfiniteScroll onLoadMore={handleLoadMore} hasMore={hasMore}>
+    usageCode: `<InfiniteScroll
+  onLoadMore={handleLoadMore}
+  hasMore={hasMore}
+  loader={<span>Loading more...</span>}
+  endMessage={<span>All items loaded</span>}
+>
   {items.map((item) => (
     <div key={item}>{item}</div>
   ))}

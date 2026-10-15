@@ -77,12 +77,12 @@ const docData: DocPageData = {
     cssHooks: ['.mr-date-range-picker', '.mr-date-range-picker__separator', '.mr-datepicker'],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-control',
-        '--mr-fg-base',
-        '--mr-fg-muted',
+        '--mr-bg-surface',
+        '--mr-text-primary',
+        '--mr-text-secondary',
         '--mr-input-height',
         '--mr-input-radius',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
         '--mr-space-*',
     ],
     a11y: [

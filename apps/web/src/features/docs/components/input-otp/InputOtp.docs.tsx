@@ -10,7 +10,14 @@ const docData: DocPageData = {
     description:
         'Champ de saisie segmente pour codes One-Time Password, verification double facteur (2FA) et codes PIN avec support transparent du collage.',
     importCode: "import { InputOTP } from '@monority/ui'",
-    usageCode: `<InputOTP maxLength={6} value={code} onChange={setCode} onComplete={handleVerify} />`,
+    usageCode: `const [value, setValue] = useState('')
+
+<InputOTP
+  maxLength={6}
+  value={value}
+  onChange={setValue}
+  onComplete={(code) => console.log('Code 2FA complete:', code)}
+/>`,
     preview: () => <InputOtpBasicExample />,
     examples: [
         { title: 'Composition manuelle avec separateur', content: <InputOtpCompoundExample /> },

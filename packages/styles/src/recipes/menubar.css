@@ -25,7 +25,7 @@
     }
 
     :where(.mr-menubar__menu-wrapper)[data-active='true'] {
-        z-index: var(--mr-z-base);
+        z-index: var(--mr-z-popover);
     }
 
     :where(.mr-menubar__trigger) {
@@ -82,7 +82,7 @@
         display: flex;
         flex-direction: column;
         gap: 1px;
-        animation: mr-menubar-enter var(--mr-duration-state) ease;
+        animation: mr-menubar-enter var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1);
         transform-origin: top;
     }
 

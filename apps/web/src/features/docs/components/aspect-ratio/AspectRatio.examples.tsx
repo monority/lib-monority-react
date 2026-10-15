@@ -2,7 +2,7 @@ import { AspectRatio } from '@monority/ui/aspect-ratio'
 
 export function AspectRatioBasicExample() {
     return (
-        <AspectRatio style={{ background: 'var(--mr-bg-control)' }}>
+        <AspectRatio style={{ background: 'var(--mr-bg-surface)' }}>
             <span>16:9 content</span>
         </AspectRatio>
     )
@@ -10,7 +10,7 @@ export function AspectRatioBasicExample() {
 
 export function AspectRatioVideoExample() {
     return (
-        <AspectRatio style={{ background: 'var(--mr-bg-control)' }}>
+        <AspectRatio style={{ background: 'var(--mr-bg-surface)' }}>
             {/* CSP-safe stand-in for an embedded player: the ratio box is the demo. */}
             <div
                 style={{
@@ -18,8 +18,8 @@ export function AspectRatioVideoExample() {
                     height: '100%',
                     display: 'grid',
                     placeItems: 'center',
-                    color: 'var(--mr-fg-muted)',
-                    fontSize: 'var(--mr-text-sm)',
+                    color: 'var(--mr-text-secondary)',
+                    fontSize: 'var(--mr-font-size-sm)',
                 }}
             >
                 ▶ 16:9 video placeholder
@@ -30,7 +30,7 @@ export function AspectRatioVideoExample() {
 
 export function AspectRatioSquareExample() {
     return (
-        <AspectRatio ratio={1} style={{ background: 'var(--mr-bg-control)' }}>
+        <AspectRatio ratio={1} style={{ background: 'var(--mr-bg-surface)' }}>
             <span>1:1 square</span>
         </AspectRatio>
     )
@@ -38,7 +38,7 @@ export function AspectRatioSquareExample() {
 
 export function AspectRatioFourThreeExample() {
     return (
-        <AspectRatio ratio={4 / 3} style={{ background: 'var(--mr-bg-control)' }}>
+        <AspectRatio ratio={4 / 3} style={{ background: 'var(--mr-bg-surface)' }}>
             <span>4:3 content</span>
         </AspectRatio>
     )

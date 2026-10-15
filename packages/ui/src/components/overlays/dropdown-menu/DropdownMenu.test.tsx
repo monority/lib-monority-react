@@ -247,4 +247,34 @@ describe('DropdownMenu', () => {
         expect(document.body.querySelector('[data-testid="copy-icon"]')).not.toBeNull()
         expect(document.body.querySelector('.mr-dropdown__item-shortcut')?.textContent).toBe('⌘C')
     })
+
+    it('renders and operates with compound subcomponents', () => {
+        const onSelect = vi.fn()
+        render(
+            <DropdownMenu defaultOpen>
+                <DropdownMenu.Trigger>Menu</DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                    <DropdownMenu.Label>Options</DropdownMenu.Label>
+                    <DropdownMenu.Separator />
+                    <DropdownMenu.Item value="first" onSelect={onSelect}>
+                        First Action
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item value="delete" danger onSelect={onSelect}>
+                        Delete
+                    </DropdownMenu.Item>
+                </DropdownMenu.Content>
+            </DropdownMenu>
+        )
+
+        expect(document.body.querySelector('.mr-dropdown__label')?.textContent).toBe('Options')
+        expect(document.body.querySelector('.mr-dropdown__separator')).not.toBeNull()
+
+        const items = document.body.querySelectorAll('[role="menuitem"]')
+        expect(items).toHaveLength(2)
+
+        act(() => {
+            ;(items[0] as HTMLButtonElement).click()
+        })
+        expect(onSelect).toHaveBeenCalledWith('first')
+    })
 })

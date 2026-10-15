@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NumberInput } from '@monority/ui/number-input'
+import { Text } from '@monority/ui/text'
 
 export function NumberInputBasicPreview() {
     return <NumberInput label="Quantity" defaultValue={1} min={0} max={10} step={1} />
@@ -17,9 +18,7 @@ export function NumberInputControlledExample() {
                 min={1}
                 max={20}
             />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                Current value: {value ?? 'none'}
-            </span>
+            <Text.Small>Current value: {value ?? 'none'}</Text.Small>
         </div>
     )
 }

@@ -3,7 +3,25 @@ export { DataTable, type DataTableProps, type Sort, type SortDirection } from '.
 export type { Column as DataTableColumn } from './data-table'
 export { MetricGrid, type MetricGridItem, type MetricGridProps } from './metric-grid'
 export { StatCard, type StatCardProps, type StatCardTone } from './stat-card'
-export { Table, type Column, type TableProps } from './table'
+export {
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableRow,
+    TableHead,
+    TableCell,
+    TableCaption,
+    type Column,
+    type TableProps,
+    type TableHeaderProps,
+    type TableBodyProps,
+    type TableFooterProps,
+    type TableRowProps,
+    type TableHeadProps,
+    type TableCellProps,
+    type TableCaptionProps,
+} from './table'
 export {
     Timeline,
     TimelineItem,

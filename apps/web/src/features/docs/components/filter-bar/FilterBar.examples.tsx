@@ -8,11 +8,17 @@ export function FilterBarBasicExample() {
     return (
         <FilterBar>
             <FilterBar.Main>
-                <FilterBar.Chips>
-                    <FilterBar.Chip active>Status: Live</FilterBar.Chip>
-                    <FilterBar.Chip>Plan: Pro</FilterBar.Chip>
-                    <FilterBar.Chip>Owner: Design</FilterBar.Chip>
-                </FilterBar.Chips>
+                <FilterBar.Leading>
+                    <Input placeholder="Search components..." />
+                </FilterBar.Leading>
+                <Select aria-label="Status filter" defaultValue="all">
+                    <option value="all">All statuses</option>
+                    <option value="live">Live</option>
+                    <option value="draft">Draft</option>
+                </Select>
+                <Button size="sm" variant="secondary">
+                    Apply
+                </Button>
             </FilterBar.Main>
             <FilterBar.Meta>
                 <span>24 results</span>

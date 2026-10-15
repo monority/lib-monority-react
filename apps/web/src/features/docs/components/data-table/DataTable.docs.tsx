@@ -70,12 +70,12 @@ const docData: DocPageData = {
     ],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-bg-control',
-        '--mr-fg-base',
-        '--mr-fg-muted',
-        '--mr-accent',
+        '--mr-bg-surface',
+        '--mr-text-primary',
+        '--mr-text-secondary',
+        '--mr-accent-solid',
     ],
     a11y: [
         'Native <table> semantics.',

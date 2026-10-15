@@ -1,4 +1,5 @@
 import { Divider } from '@monority/ui/divider'
+import { Text } from '@monority/ui/text'
 
 export function DividerBasicExample() {
     return (
@@ -11,11 +12,9 @@ export function DividerBasicExample() {
 export function DividerWithLabelExample() {
     return (
         <div style={{ maxWidth: 360 }}>
-            <p style={{ margin: 0 }}>Sign in with SSO</p>
+            <Text>Sign in with SSO</Text>
             <Divider label="or" />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
-                Continue with email and password
-            </p>
+            <Text.Muted>Continue with email and password</Text.Muted>
         </div>
     )
 }
@@ -23,11 +22,11 @@ export function DividerWithLabelExample() {
 export function DividerVerticalExample() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', height: 40 }}>
-            <span>Overview</span>
+            <Text.Span>Overview</Text.Span>
             <Divider orientation="vertical" />
-            <span>Activity</span>
+            <Text.Span>Activity</Text.Span>
             <Divider orientation="vertical" />
-            <span>Settings</span>
+            <Text.Span>Settings</Text.Span>
         </div>
     )
 }

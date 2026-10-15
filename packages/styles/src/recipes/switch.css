@@ -92,8 +92,9 @@
         background-color: var(--mr-switch-thumb-off);
         box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 20%, transparent);
         transform: translateX(0);
-        transition: transform var(--mr-duration-state), background-color var(--mr-duration-state),
-            border-color var(--mr-duration-state), box-shadow var(--mr-duration-state);
+        transition: transform var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1),
+            background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            box-shadow var(--mr-duration-state);
     }
 
     /* Taille sm : piste 36px x 20px, pouce 16px */

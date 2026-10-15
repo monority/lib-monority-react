@@ -51,7 +51,7 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 title="Aperçu"
                 description="Démonstration interactive et code d'intégration."
             >
-                <div className="docs-preview-stack">
+                <div className="docs-preview-stack docs-preview-card">
                     <PreviewCanvas label={previewLabel} padding="none">
                         <div className="docs-preview-area docs-preview-content">
                             <Preview />

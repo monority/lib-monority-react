@@ -237,4 +237,37 @@ describe('Tabs', () => {
         expect(document.activeElement).toBe(tab)
         expect(tab.getAttribute('aria-selected')).toBe('true')
     })
+
+    it('renders with compound subcomponents and toggles content', () => {
+        const view = render(
+            <Tabs defaultValue="account">
+                <Tabs.List>
+                    <Tabs.Trigger value="account">Account</Tabs.Trigger>
+                    <Tabs.Trigger value="password">Password</Tabs.Trigger>
+                </Tabs.List>
+                <Tabs.Content value="account">Account Content</Tabs.Content>
+                <Tabs.Content value="password">Password Content</Tabs.Content>
+            </Tabs>
+        )
+
+        const tablist = view.querySelector('[role="tablist"]')
+        expect(tablist).not.toBeNull()
+
+        const tabs = view.querySelectorAll('[role="tab"]')
+        expect(tabs).toHaveLength(2)
+        expect(tabs[0].getAttribute('aria-selected')).toBe('true')
+        expect(tabs[1].getAttribute('aria-selected')).toBe('false')
+
+        expect(view.textContent).toContain('Account Content')
+        expect(view.textContent).not.toContain('Password Content')
+
+        act(() => {
+            ;(tabs[1] as HTMLButtonElement).click()
+        })
+
+        expect(tabs[0].getAttribute('aria-selected')).toBe('false')
+        expect(tabs[1].getAttribute('aria-selected')).toBe('true')
+        expect(view.textContent).not.toContain('Account Content')
+        expect(view.textContent).toContain('Password Content')
+    })
 })

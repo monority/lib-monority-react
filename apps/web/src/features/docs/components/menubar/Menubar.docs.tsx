@@ -33,9 +33,77 @@ const docData: DocPageData = {
 <Menubar items={items} />`,
     preview: () => <MenubarBasicExample />,
     examples: [
-        { title: 'With icons', content: <MenubarWithIconsExample /> },
-        { title: 'Danger variant', content: <MenubarDangerExample /> },
-        { title: 'Disabled items', content: <MenubarDisabledExample /> },
+        {
+            title: 'With icons',
+            content: <MenubarWithIconsExample />,
+            code: `const items = [
+  {
+    label: 'Create',
+    items: [
+      { label: 'New page', icon: <span>+</span>, shortcut: 'Ctrl+N' },
+      { label: 'New collection', icon: <span>#</span>, shortcut: 'Ctrl+Shift+N' },
+      { separator: true },
+      { label: 'Save draft', icon: <span>S</span>, shortcut: 'Ctrl+S' },
+    ],
+  },
+  {
+    label: 'History',
+    items: [
+      { label: 'Undo change', icon: <span>U</span>, shortcut: 'Ctrl+Z' },
+      { label: 'Restore revision', icon: <span>R</span>, shortcut: 'Ctrl+Y' },
+    ],
+  },
+]
+
+<Menubar items={items} />`,
+        },
+        {
+            title: 'Danger variant',
+            content: <MenubarDangerExample />,
+            code: `const items = [
+  {
+    label: 'Workspace',
+    items: [
+      { label: 'New dashboard', shortcut: 'Ctrl+N' },
+      { label: 'Open workspace', shortcut: 'Ctrl+O' },
+      { separator: true },
+      { label: 'Delete workspace', variant: 'danger' },
+    ],
+  },
+  {
+    label: 'Records',
+    items: [
+      { label: 'Purge archive', variant: 'danger', shortcut: 'Ctrl+Shift+Del' },
+    ],
+  },
+]
+
+<Menubar items={items} />`,
+        },
+        {
+            title: 'Disabled items',
+            content: <MenubarDisabledExample />,
+            code: `const items = [
+  {
+    label: 'Workspace',
+    items: [
+      { label: 'New dashboard', shortcut: 'Ctrl+N' },
+      { label: 'Open workspace', shortcut: 'Ctrl+O' },
+      { separator: true },
+      { label: 'Save view', shortcut: 'Ctrl+S', disabled: true },
+    ],
+  },
+  {
+    label: 'Share',
+    disabled: true,
+    items: [
+      { label: 'Invite reviewers', shortcut: 'Ctrl+I' },
+    ],
+  },
+]
+
+<Menubar items={items} />`,
+        },
     ],
     props: [
         {
@@ -71,19 +139,19 @@ const docData: DocPageData = {
         '--mr-space-4',
         '--mr-radius-sm',
         '--mr-radius-md',
-        '--mr-text-xs',
-        '--mr-text-sm',
-        '--mr-fg-muted',
-        '--mr-fg-base',
+        '--mr-font-size-xs',
+        '--mr-font-size-sm',
+        '--mr-text-secondary',
+        '--mr-text-primary',
         '--mr-danger',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-bg-accent-soft',
+        '--mr-accent-subtle',
         '--mr-border-subtle',
         '--mr-shadow-xs',
         '--mr-shadow-md',
         '--mr-z-dropdown',
-        '--mr-accent',
+        '--mr-accent-solid',
         '--mr-font-mono',
     ],
     a11y: [

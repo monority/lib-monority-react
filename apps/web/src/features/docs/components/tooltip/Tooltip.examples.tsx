@@ -1,4 +1,5 @@
 import { Button } from '@monority/ui/button'
+import { Text } from '@monority/ui/text'
 import { Tooltip } from '@monority/ui/tooltip'
 
 export function TooltipBasicExample() {
@@ -14,7 +15,7 @@ export function TooltipWithRichContentExample() {
         <Tooltip
             content={
                 <div>
-                    <strong>Token preview</strong>
+                    <Text.Strong>Token preview</Text.Strong>
                     <br />
                     Spacing values inherit from the core scale.
                 </div>

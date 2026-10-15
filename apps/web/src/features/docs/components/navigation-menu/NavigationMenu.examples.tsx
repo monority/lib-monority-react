@@ -3,8 +3,21 @@ import { NavigationMenu } from '@monority/ui/navigation-menu'
 export function NavigationMenuBasicExample() {
     const items = [
         { label: 'Overview', href: '/overview' },
-        { label: 'Components', href: '/components' },
-        { label: 'Tokens', href: '/tokens' },
+        {
+            label: 'Components',
+            items: [
+                {
+                    label: 'Inputs',
+                    href: '/components/inputs',
+                    description: 'Fields and validation patterns',
+                },
+                {
+                    label: 'Navigation',
+                    href: '/components/navigation',
+                    description: 'Menus, tabs, and shells',
+                },
+            ],
+        },
         { label: 'Changelog', href: '/changelog' },
     ]
 

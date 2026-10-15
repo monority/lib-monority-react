@@ -3,6 +3,7 @@ import {
     AlertDialogBasicExample,
     AlertDialogDefaultToneExample,
     AlertDialogCustomLabelsExample,
+    AlertDialogCompoundExample,
 } from './AlertDialog.examples'
 
 const docData: DocPageData = {
@@ -10,15 +11,25 @@ const docData: DocPageData = {
     description:
         'Confirmation dialog for destructive or high-consequence actions that need extra friction.',
     importCode: "import { AlertDialog } from '@monority/ui/alert-dialog'",
-    usageCode: `<AlertDialog
-  open={open}
-  title="Delete this release snapshot?"
-  description="This permanently removes the saved draft and its review history."
-  onConfirm={handleConfirm}
-  onCancel={handleCancel}
-/>`,
+    usageCode: `const [open, setOpen] = useState(false)
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)} variant="danger">
+      Delete release snapshot
+    </Button>
+    <AlertDialog
+      open={open}
+      title="Delete this release snapshot?"
+      description="This permanently removes the saved draft and its review history."
+      onConfirm={() => setOpen(false)}
+      onCancel={() => setOpen(false)}
+    />
+  </>
+)`,
     preview: () => <AlertDialogBasicExample />,
     examples: [
+        { title: 'Compound syntax', content: <AlertDialogCompoundExample /> },
         { title: 'Default tone', content: <AlertDialogDefaultToneExample /> },
         { title: 'Custom labels', content: <AlertDialogCustomLabelsExample /> },
     ],
@@ -77,7 +88,7 @@ const docData: DocPageData = {
         '[data-open]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-danger',
         '--mr-shadow-md',

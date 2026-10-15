@@ -70,8 +70,8 @@ const docData: DocPageData = {
         '[data-trend-tone]',
     ],
     tokens: [
-        '--mr-fg-base',
-        '--mr-fg-muted',
+        '--mr-text-primary',
+        '--mr-text-secondary',
         '--mr-text-*',
         '--mr-space-*',
         '--mr-success',

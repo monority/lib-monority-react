@@ -1,16 +1,17 @@
 import { Button } from '@monority/ui/button'
 import { PageHeader } from '@monority/ui/page-header'
+import { Text } from '@monority/ui/text'
 
 export function PageHeaderBasicExample() {
     return (
         <PageHeader>
-            <div className="mr-page-header__main">
-                <div className="mr-page-header__eyebrow">Workspace</div>
-                <h1 className="mr-page-header__title">Overview</h1>
-                <p className="mr-page-header__description">
+            <PageHeader.Main>
+                <PageHeader.Kicker>Workspace</PageHeader.Kicker>
+                <PageHeader.Title>Overview</PageHeader.Title>
+                <PageHeader.Description>
                     Product health, release status, and team activity in one working view.
-                </p>
-            </div>
+                </PageHeader.Description>
+            </PageHeader.Main>
         </PageHeader>
     )
 }
@@ -18,17 +19,21 @@ export function PageHeaderBasicExample() {
 export function PageHeaderWithTitleExample() {
     return (
         <PageHeader>
-            <div className="mr-page-header__main">
-                <div className="mr-page-header__eyebrow">Dashboard</div>
-                <h1 className="mr-page-header__title">Welcome back, Avery</h1>
-                <p className="mr-page-header__description">
+            <PageHeader.Main>
+                <PageHeader.Kicker>Dashboard</PageHeader.Kicker>
+                <PageHeader.Title>Welcome back, Avery</PageHeader.Title>
+                <PageHeader.Description>
                     Team pipeline stable, 4 items need review today.
-                </p>
-                <div className="mr-page-header__meta">
-                    <span>Updated 5 min ago</span>
-                    <span>3 active filters</span>
-                </div>
-            </div>
+                </PageHeader.Description>
+                <PageHeader.Meta>
+                    <Text size="sm" tone="muted">
+                        Updated 5 min ago
+                    </Text>
+                    <Text size="sm" tone="muted">
+                        3 active filters
+                    </Text>
+                </PageHeader.Meta>
+            </PageHeader.Main>
         </PageHeader>
     )
 }
@@ -36,21 +41,25 @@ export function PageHeaderWithTitleExample() {
 export function PageHeaderWithActionsExample() {
     return (
         <PageHeader>
-            <div className="mr-page-header__main">
-                <div className="mr-page-header__eyebrow">Projects</div>
-                <h1 className="mr-page-header__title">Projects</h1>
-                <p className="mr-page-header__description">
+            <PageHeader.Main>
+                <PageHeader.Kicker>Projects</PageHeader.Kicker>
+                <PageHeader.Title>Projects</PageHeader.Title>
+                <PageHeader.Description>
                     Track delivery, health, and ownership across active work.
-                </p>
-                <div className="mr-page-header__meta">
-                    <span>24 active</span>
-                    <span>6 at risk</span>
-                </div>
-            </div>
-            <div className="mr-page-header__actions">
+                </PageHeader.Description>
+                <PageHeader.Meta>
+                    <Text size="sm" tone="muted">
+                        24 active
+                    </Text>
+                    <Text size="sm" tone="muted">
+                        6 at risk
+                    </Text>
+                </PageHeader.Meta>
+            </PageHeader.Main>
+            <PageHeader.Actions>
                 <Button>New project</Button>
                 <Button variant="secondary">Export</Button>
-            </div>
+            </PageHeader.Actions>
         </PageHeader>
     )
 }

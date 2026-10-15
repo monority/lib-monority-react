@@ -5,19 +5,23 @@
 .app-header {
     position: sticky;
     top: 0;
-    z-index: 40;
+    z-index: var(--mr-z-header);
     height: var(--app-header-height);
     min-height: var(--app-header-height);
     border-block-end: 1px solid var(--mr-border-subtle);
-    background: color-mix(in srgb, var(--mr-bg-canvas) 85%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in oklch, var(--mr-bg-canvas) 85%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: inset 0 1px 0 0 color-mix(in oklch, var(--mr-bg-raised) 70%, transparent);
+    transition: background-color var(--mr-duration-state) ease, border-color
+        var(--mr-duration-state) ease;
 }
 
 .app-header--home {
     border-block-end: 0;
     background: transparent;
     backdrop-filter: none;
+    box-shadow: none;
 }
 
 .app-header__inner {
@@ -25,7 +29,7 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    max-width: 80rem;
+    max-width: 84rem;
     margin-inline: auto;
     padding-inline: var(--mr-space-5);
     gap: var(--mr-space-4);
@@ -40,29 +44,44 @@
 .app-header__brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
+    gap: 0.5rem;
     color: var(--mr-text-primary);
     text-decoration: none;
     line-height: 1;
+    user-select: none;
+}
+
+.app-header__logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mr-accent-solid);
+    transition: transform var(--mr-duration-state) ease;
+}
+
+.app-header__brand:hover .app-header__logo-mark {
+    transform: rotate(15deg);
 }
 
 .app-header__logo-text {
     font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: var(--mr-font-weight-semibold);
+    letter-spacing: var(--mr-tracking-h1);
+    color: var(--mr-text-primary);
 }
 
 .app-header__logo-badge {
     display: inline-flex;
     align-items: center;
     padding: 0.125rem 0.375rem;
-    border-radius: var(--mr-radius-xs);
-    background: var(--mr-accent-subtle);
-    color: var(--mr-accent-solid);
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    border-radius: var(--mr-radius-sm);
+    background: var(--mr-bg-sunken);
+    border: 1px solid var(--mr-border-subtle);
+    color: var(--mr-text-secondary);
+    font-size: var(--mr-font-size-xs);
+    font-family: var(--mr-font-family-mono);
+    font-weight: var(--mr-font-weight-medium);
+    line-height: 1;
 }
 
 .app-header--home .app-header__brand {
@@ -81,7 +100,7 @@
     padding: 0.375rem 0.625rem;
     border-radius: var(--mr-radius-sm);
     color: var(--mr-text-secondary);
-    font-size: 0.8125rem;
+    font-size: var(--mr-font-size-sm);
     font-weight: var(--mr-font-weight-medium);
     text-decoration: none;
     transition: color var(--mr-duration-state) ease, background-color var(--mr-duration-state) ease;
@@ -95,11 +114,76 @@
 .app-header__nav a.app-header__link--active,
 .app-header__nav a[aria-current='page'] {
     color: var(--mr-text-primary);
-    font-weight: 600;
-    background: var(--mr-bg-surface);
+    font-weight: var(--mr-font-weight-semibold);
+    background: var(--mr-bg-raised);
+    box-shadow: inset 0 0 0 1px var(--mr-border-subtle);
 }
 
-/* Theme control */
+/* Center search trigger */
+.app-header__center {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    max-width: 24rem;
+}
+
+.app-header__search-trigger {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: var(--mr-size-control-sm);
+    padding-inline: var(--mr-space-3);
+    border: 1px solid var(--mr-border-control);
+    border-radius: var(--mr-radius-md);
+    background: var(--mr-bg-sunken);
+    color: var(--mr-text-secondary);
+    font-size: var(--mr-font-size-xs);
+    font-family: var(--mr-font-family-sans);
+    cursor: pointer;
+    gap: var(--mr-space-2);
+    transition: border-color var(--mr-duration-state) ease, background-color
+        var(--mr-duration-state) ease, color var(--mr-duration-state) ease;
+}
+
+.app-header__search-trigger:hover {
+    border-color: var(--mr-border-default);
+    background: var(--mr-bg-surface);
+    color: var(--mr-text-primary);
+}
+
+.app-header__search-trigger:focus-visible {
+    outline: 2px solid var(--mr-focus-ring);
+    outline-offset: 1px;
+}
+
+.app-header__search-icon {
+    flex-shrink: 0;
+    color: var(--mr-text-secondary);
+}
+
+.app-header__search-placeholder {
+    flex: 1 1 auto;
+    text-align: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-header__search-shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--mr-radius-sm);
+    background: var(--mr-bg-raised);
+    border: 1px solid var(--mr-border-subtle);
+    color: var(--mr-text-secondary);
+    font-size: 0.625rem;
+    font-family: var(--mr-font-family-mono);
+    line-height: 1;
+}
+
+/* Controls */
 .app-header__controls {
     display: flex;
     flex-shrink: 0;
@@ -111,6 +195,42 @@
     white-space: nowrap;
 }
 
+.app-header__github {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--mr-size-control-sm);
+    height: var(--mr-size-control-sm);
+    border-radius: var(--mr-radius-sm);
+    color: var(--mr-text-secondary);
+    border: 1px solid var(--mr-border-control);
+    background: transparent;
+    text-decoration: none;
+    transition: color var(--mr-duration-state) ease, background-color var(--mr-duration-state) ease,
+        border-color var(--mr-duration-state) ease;
+}
+
+.app-header__github:hover {
+    color: var(--mr-text-primary);
+    background: var(--mr-bg-surface);
+    border-color: var(--mr-border-default);
+}
+
+.app-header__github:focus-visible {
+    outline: 2px solid var(--mr-focus-ring);
+    outline-offset: 1px;
+}
+
+@media (max-width: 768px) {
+    .app-header__center {
+        max-width: 14rem;
+    }
+
+    .app-header__search-placeholder {
+        display: none;
+    }
+}
+
 @media (max-width: 640px) {
     .app-header__start {
         gap: var(--mr-space-3);
@@ -119,10 +239,17 @@
     .app-header__inner {
         padding-inline: var(--mr-space-3);
     }
+
+    .app-header__center {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .app-header__nav a {
+    .app-header__nav a,
+    .app-header__logo-mark,
+    .app-header__search-trigger,
+    .app-header__github {
         transition: none;
     }
 }

@@ -69,4 +69,35 @@ describe('Table', () => {
         render(<Table ref={ref} columns={columns} rows={rows} />)
         expect(ref.current?.className).toContain('mr-table')
     })
+
+    it('renders with compound subcomponents', () => {
+        const view = render(
+            <Table>
+                <Table.Caption>Recent Invoices</Table.Caption>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.Head>Invoice</Table.Head>
+                        <Table.Head>Amount</Table.Head>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Cell>INV001</Table.Cell>
+                        <Table.Cell>$250.00</Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+                <Table.Footer>
+                    <Table.Row>
+                        <Table.Cell>Total</Table.Cell>
+                        <Table.Cell>$250.00</Table.Cell>
+                    </Table.Row>
+                </Table.Footer>
+            </Table>
+        )
+
+        expect(view.querySelector('caption')?.textContent).toBe('Recent Invoices')
+        expect(view.querySelector('thead th')?.textContent).toBe('Invoice')
+        expect(view.querySelector('tbody td')?.textContent).toBe('INV001')
+        expect(view.querySelector('tfoot td')?.textContent).toBe('Total')
+    })
 })

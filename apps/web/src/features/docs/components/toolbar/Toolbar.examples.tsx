@@ -1,12 +1,12 @@
 import { Toolbar } from '@monority/ui/toolbar'
 import { Button } from '@monority/ui/button'
+import { Text } from '@monority/ui/text'
+import { Separator } from '@monority/ui/separator'
 
 export function ToolbarBasicExample() {
     return (
         <Toolbar>
-            <span style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
-                3 selected
-            </span>
+            <Text.Small>3 selected</Text.Small>
             <Button size="sm">Apply changes</Button>
         </Toolbar>
     )
@@ -35,7 +35,7 @@ export function ToolbarWithDividerExample() {
             <Button size="sm" variant="ghost">
                 Italic
             </Button>
-            <div style={{ width: 1, height: 20, background: 'var(--mr-border-subtle)' }} />
+            <Separator orientation="vertical" style={{ height: 20 }} />
             <Button size="sm" variant="ghost">
                 Align left
             </Button>

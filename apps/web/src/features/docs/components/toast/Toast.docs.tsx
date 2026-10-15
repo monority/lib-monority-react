@@ -46,7 +46,7 @@ import { useToast } from '@monority/ui'`,
         '.mr-toast-viewport',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-shadow-sm',
         '--mr-radius-md',

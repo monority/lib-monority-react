@@ -48,8 +48,8 @@ const docData: DocPageData = {
     ],
     cssHooks: ['.mr-metric-grid', '[data-direction]'],
     tokens: [
-        '--mr-fg-base',
-        '--mr-fg-muted',
+        '--mr-text-primary',
+        '--mr-text-secondary',
         '--mr-text-*',
         '--mr-space-*',
         '--mr-success',

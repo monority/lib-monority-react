@@ -45,7 +45,13 @@ const docData: DocPageData = {
         '.mr-breadcrumb__current',
         '.mr-breadcrumb__separator',
     ],
-    tokens: ['--mr-fg-muted', '--mr-fg-base', '--mr-text-sm', '--mr-space-*', '--mr-radius-sm'],
+    tokens: [
+        '--mr-text-secondary',
+        '--mr-text-primary',
+        '--mr-font-size-sm',
+        '--mr-space-*',
+        '--mr-radius-sm',
+    ],
     a11y: [
         'Renders as <nav> with aria-label="Breadcrumb".',
         'Last item uses aria-current="page".',

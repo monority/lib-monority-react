@@ -1,30 +1,19 @@
 import { Button } from '@monority/ui/button'
+import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
 import { Popover } from '@monority/ui/popover'
+import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
 
 export function PopoverBasicExample() {
     return (
         <Popover trigger={<Button>Inspect token</Button>}>
-            <div style={{ display: 'grid', gap: '0.5rem' }}>
-                <div
-                    style={{
-                        color: 'var(--mr-fg-strong)',
-                        fontSize: 'var(--mr-text-sm)',
-                        fontWeight: 600,
-                    }}
-                >
-                    Surface token
-                </div>
-                <div
-                    style={{
-                        color: 'var(--mr-fg-muted)',
-                        fontSize: 'var(--mr-text-sm)',
-                        lineHeight: 1.5,
-                    }}
-                >
+            <Stack gap="xs">
+                <Text.Strong size="sm">Surface token</Text.Strong>
+                <Text tone="muted" size="sm">
                     Use elevated surfaces for contextual panels, menus, and transient editing flows.
-                </div>
-            </div>
+                </Text>
+            </Stack>
         </Popover>
     )
 }
@@ -32,24 +21,13 @@ export function PopoverBasicExample() {
 export function PopoverWithFormExample() {
     return (
         <Popover trigger={<Button variant="secondary">Quick edit</Button>}>
-            <div
-                style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: 220 }}
-            >
-                <div
-                    style={{
-                        color: 'var(--mr-fg-strong)',
-                        fontSize: 'var(--mr-text-sm)',
-                        fontWeight: 600,
-                    }}
-                >
-                    Rename view
-                </div>
-                <label style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
-                    Name
-                    <Input style={{ marginTop: '0.375rem' }} placeholder="Quarterly health" />
-                </label>
+            <Stack gap="sm" style={{ minWidth: 220 }}>
+                <Text.Strong size="sm">Rename view</Text.Strong>
+                <Field label="Name">
+                    <Input placeholder="Quarterly health" />
+                </Field>
                 <Button size="sm">Save</Button>
-            </div>
+            </Stack>
         </Popover>
     )
 }
@@ -58,19 +36,19 @@ export function PopoverAlignmentExample() {
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <Popover trigger={<Button>Start</Button>} align="start">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <Text tone="muted" size="sm">
                     Aligned to start edge.
-                </div>
+                </Text>
             </Popover>
             <Popover trigger={<Button>Center</Button>} align="center">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <Text tone="muted" size="sm">
                     Centered for compact callouts.
-                </div>
+                </Text>
             </Popover>
             <Popover trigger={<Button>End</Button>} align="end">
-                <div style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
+                <Text tone="muted" size="sm">
                     Aligned to end edge.
-                </div>
+                </Text>
             </Popover>
         </div>
     )

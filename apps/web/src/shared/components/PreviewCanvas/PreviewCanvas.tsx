@@ -25,13 +25,17 @@ export function PreviewCanvas({
     return (
         <div
             ref={ref}
-            className={`preview-canvas ${className}`.trim()}
+            className={`preview-canvas docs-preview-card ${className}`.trim()}
             role={ariaLabel ? 'region' : undefined}
             aria-label={ariaLabel}
         >
             {hasHeader && (
                 <div className="preview-canvas__header">
-                    {label ? <span className="preview-canvas__label">{label}</span> : <div />}
+                    {label ? (
+                        <span className="preview-canvas__label docs-preview-label">{label}</span>
+                    ) : (
+                        <div />
+                    )}
                     {actions && <div className="preview-canvas__actions">{actions}</div>}
                 </div>
             )}

@@ -52,4 +52,31 @@ describe('Text', () => {
         render(<Text ref={ref}>Content</Text>)
         expect(ref.current?.tagName).toBe('P')
     })
+
+    it('renders compound subcomponents correctly', () => {
+        const view = render(
+            <div>
+                <Text.Strong>Bold</Text.Strong>
+                <Text.Span>Inline</Text.Span>
+                <Text.Muted>Faded</Text.Muted>
+                <Text.Small>Tiny</Text.Small>
+                <Text.Code>npm test</Text.Code>
+            </div>
+        )
+
+        const strongEl = view.querySelector('strong.mr-text')
+        expect(strongEl?.textContent).toBe('Bold')
+        expect(strongEl?.getAttribute('data-tone')).toBe('strong')
+
+        const spanEl = view.querySelector('span.mr-text')
+        expect(spanEl?.textContent).toBe('Inline')
+
+        const smallEl = view.querySelector('small.mr-text')
+        expect(smallEl?.textContent).toBe('Tiny')
+        expect(smallEl?.getAttribute('data-tone')).toBe('muted')
+        expect(smallEl?.getAttribute('data-size')).toBe('sm')
+
+        const codeEl = view.querySelector('code.mr-text')
+        expect(codeEl?.textContent).toBe('npm test')
+    })
 })

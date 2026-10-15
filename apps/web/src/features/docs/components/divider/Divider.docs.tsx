@@ -30,7 +30,12 @@ const docData: DocPageData = {
         },
     ],
     cssHooks: ['.mr-divider', '.mr-divider__label', '[data-orientation="vertical"]'],
-    tokens: ['--mr-divider-color', '--mr-divider-label-bg', '--mr-fg-muted', '--mr-text-xs'],
+    tokens: [
+        '--mr-divider-color',
+        '--mr-divider-label-bg',
+        '--mr-text-secondary',
+        '--mr-font-size-xs',
+    ],
     a11y: [
         'Uses role="separator" with aria-orientation.',
         'Keep labels short and avoid using dividers as the only section label.',

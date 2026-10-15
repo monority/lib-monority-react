@@ -66,11 +66,11 @@ const rows = [
     cssHooks: ['.mr-table', '.mr-table__head', '.mr-table__th', '.mr-table__td', '.mr-table__tr'],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-bg-control',
-        '--mr-fg-base',
-        '--mr-fg-muted',
+        '--mr-bg-surface',
+        '--mr-text-primary',
+        '--mr-text-secondary',
     ],
     a11y: [
         'Native <table> semantics.',

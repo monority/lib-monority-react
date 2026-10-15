@@ -9,20 +9,6 @@ export function MenubarBasicExample() {
                 { label: 'Open workspace', shortcut: 'Ctrl+O' },
                 { label: '', separator: true },
                 { label: 'Save view', shortcut: 'Ctrl+S' },
-                { label: 'Duplicate view', shortcut: 'Ctrl+Shift+S' },
-                { label: '', separator: true },
-                { label: 'Close workspace' },
-            ],
-        },
-        {
-            label: 'Edit',
-            items: [
-                { label: 'Undo', shortcut: 'Ctrl+Z' },
-                { label: 'Redo', shortcut: 'Ctrl+Y' },
-                { label: '', separator: true },
-                { label: 'Rename section', shortcut: 'Ctrl+R' },
-                { label: 'Duplicate block', shortcut: 'Ctrl+D' },
-                { label: 'Archive selection', shortcut: 'Ctrl+Shift+A' },
             ],
         },
         {
@@ -30,18 +16,6 @@ export function MenubarBasicExample() {
             items: [
                 { label: 'Compact density', shortcut: 'Alt+1' },
                 { label: 'Comfortable density', shortcut: 'Alt+2' },
-                { label: 'Reset layout', shortcut: 'Ctrl+0' },
-                { label: '', separator: true },
-                { label: 'Toggle sidebar', shortcut: 'Ctrl+B' },
-            ],
-        },
-        {
-            label: 'Share',
-            items: [
-                { label: 'Copy link' },
-                { label: 'Invite reviewers', shortcut: 'Ctrl+I' },
-                { label: '', separator: true },
-                { label: 'Export snapshot' },
             ],
         },
     ]

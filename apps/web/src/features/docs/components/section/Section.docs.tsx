@@ -56,7 +56,7 @@ const docData: DocPageData = {
         '--mr-space-*',
         '--mr-border-subtle',
         '--mr-bg-surface-strong',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-shadow-xs',
         '--mr-radius-md',
         '--mr-text-lg',

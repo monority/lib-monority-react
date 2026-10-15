@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@monority/ui/button'
+import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
 import { Modal } from '@monority/ui/modal'
 
@@ -35,18 +36,12 @@ export function ModalWithFormExample() {
             <Button onClick={() => setOpen(true)}>Edit workspace</Button>
             <Modal open={open} title="Workspace settings" onClose={() => setOpen(false)}>
                 <div style={{ display: 'grid', gap: '1rem' }}>
-                    <label style={{ display: 'grid', gap: '0.375rem' }}>
-                        <span style={{ fontSize: '0.875rem', fontWeight: 560 }}>
-                            Workspace name
-                        </span>
+                    <Field label="Workspace name">
                         <Input placeholder="Design system docs" />
-                    </label>
-                    <label style={{ display: 'grid', gap: '0.375rem' }}>
-                        <span style={{ fontSize: '0.875rem', fontWeight: 560 }}>
-                            Reviewer group
-                        </span>
+                    </Field>
+                    <Field label="Reviewer group">
                         <Input placeholder="Core UI team" />
-                    </label>
+                    </Field>
                     <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
                         <Button variant="secondary" onClick={() => setOpen(false)}>
                             Cancel
@@ -68,7 +63,7 @@ export function ModalScrollableExample() {
             <Modal open={open} title="Pre-release checklist" onClose={() => setOpen(false)}>
                 <div style={{ display: 'grid', gap: '0.875rem', lineHeight: 1.6 }}>
                     {Array.from({ length: 10 }).map((_, i) => (
-                        <p key={i} style={{ margin: 0 }}>
+                        <p key={`step-${i + 1}`} style={{ margin: 0 }}>
                             Step {i + 1}: Validate examples, token usage, documentation copy, and
                             visual consistency before shipping the next component batch.
                         </p>

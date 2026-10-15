@@ -5,8 +5,11 @@ const docData: DocPageData = {
     title: 'Title',
     description: 'Polymorphic heading component for semantic page and panel hierarchy.',
     importCode: "import { Title } from '@monority/ui'",
-    usageCode: `<Title as="h1" size="display">Workspace settings</Title>
-<Title as="h2" size="lg">Billing overview</Title>`,
+    usageCode: `<Title as="h1" size="display">Release readiness</Title>
+<Title as="h2" size="lg">Review queue</Title>
+<Text as="p" tone="base">
+  Use titles to give product sections a clear hierarchy without changing semantic heading order.
+</Text>`,
     preview: () => <TitleBasicExample />,
     examples: [
         { title: 'Sizes', content: <TitleSizesExample /> },
@@ -28,7 +31,7 @@ const docData: DocPageData = {
         { name: 'children', type: 'ReactNode', defaultValue: '-', description: 'Heading content.' },
     ],
     cssHooks: ['.mr-title', '[data-size]'],
-    tokens: ['--mr-fg-strong', '--mr-text-lg', '--mr-text-xl', '--mr-text-2xl', '--mr-text-3xl'],
+    tokens: ['--mr-text-primary', '--mr-text-lg', '--mr-text-xl', '--mr-text-2xl', '--mr-text-3xl'],
     a11y: [
         'Choose `as` from document hierarchy, not visual size.',
         'Avoid skipping heading levels inside docs and application pages.',

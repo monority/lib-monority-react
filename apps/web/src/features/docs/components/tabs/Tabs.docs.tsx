@@ -5,6 +5,7 @@ import {
     TabsSizesExample,
     TabsDisabledExample,
     TabsFullWidthExample,
+    TabsCompoundExample,
 } from './Tabs.examples'
 
 const docData: DocPageData = {
@@ -12,20 +13,18 @@ const docData: DocPageData = {
     description:
         'A compact local navigation control for switching between adjacent views, filters, or content groups.',
     importCode: "import { Tabs } from '@monority/ui/tabs'",
-    usageCode: `import { useState } from 'react'
-
-const [value, setValue] = useState('overview')
-
-<Tabs
-    items={[
-        { value: 'overview', label: 'Overview' },
-        { value: 'activity', label: 'Activity' }
-    ]}
-    value={value}
-    onChange={setValue}
-/>`,
+    usageCode: `// Declarative Compound API
+<Tabs defaultValue="overview">
+    <Tabs.List>
+        <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+        <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
+    </Tabs.List>
+    <Tabs.Content value="overview">Overview panel...</Tabs.Content>
+    <Tabs.Content value="activity">Activity panel...</Tabs.Content>
+</Tabs>`,
     preview: () => <TabsBasicExample />,
     examples: [
+        { title: 'Compound syntax', content: <TabsCompoundExample /> },
         { title: 'Tones', content: <TabsTonesExample /> },
         { title: 'Sizes', content: <TabsSizesExample /> },
         { title: 'Disabled', content: <TabsDisabledExample /> },
@@ -99,12 +98,12 @@ const [value, setValue] = useState('overview')
     ],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-control',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-surface',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-fg-muted',
-        '--mr-fg-strong',
-        '--mr-accent',
+        '--mr-text-secondary',
+        '--mr-text-primary',
+        '--mr-accent-solid',
         '--mr-danger',
     ],
     a11y: [

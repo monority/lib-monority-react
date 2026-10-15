@@ -10,6 +10,8 @@ export interface PageHeaderKickerProps extends HTMLAttributes<HTMLSpanElement> {
     children?: ReactNode
 }
 
+export type PageHeaderEyebrowProps = PageHeaderKickerProps
+
 export interface PageHeaderTitleProps extends HTMLAttributes<HTMLHeadingElement> {
     ref?: Ref<HTMLHeadingElement>
     children?: ReactNode
@@ -22,6 +24,16 @@ export interface PageHeaderDescriptionProps extends HTMLAttributes<HTMLParagraph
 }
 
 export interface PageHeaderActionsProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface PageHeaderMainProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface PageHeaderMetaProps extends HTMLAttributes<HTMLDivElement> {
     ref?: Ref<HTMLDivElement>
     children?: ReactNode
 }

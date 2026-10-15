@@ -54,10 +54,10 @@ const docData: DocPageData = {
         '[data-tone]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-shadow-xs',
-        '--mr-accent',
+        '--mr-accent-solid',
         '--mr-success',
         '--mr-warning',
         '--mr-danger',

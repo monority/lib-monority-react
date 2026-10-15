@@ -1,13 +1,49 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useId,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
+import type { MutableRefObject } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { usePortalTarget } from '@/internal/use-portal-target'
-import type { DropdownMenuProps, DropdownMenuItem } from './DropdownMenu.types'
+import type {
+    DropdownAlign,
+    DropdownMenuItem,
+    DropdownMenuItemProps,
+    DropdownMenuLabelProps,
+    DropdownMenuProps,
+    DropdownMenuSeparatorProps,
+    DropdownMenuTriggerProps,
+    DropdownMenuContentProps,
+    DropdownSide,
+} from './DropdownMenu.types'
 
 function isActionableItem(item: DropdownMenuItem) {
     return item.type !== 'separator' && !item.disabled
 }
+
+interface DropdownMenuContextValue {
+    isOpen: boolean
+    setOpenState: (open: boolean) => void
+    triggerElementRef: MutableRefObject<Element | null>
+    contentRef: MutableRefObject<HTMLDivElement | null>
+    position: { top: number; left: number }
+    positioned: boolean
+    focusItem: (direction?: number, targetValue?: string) => void
+    updatePosition: () => void
+    align: DropdownAlign
+    side: DropdownSide
+    instanceId: string
+}
+
+const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null)
 
 export function DropdownMenu({
     ref,
@@ -20,6 +56,7 @@ export function DropdownMenu({
     side = 'bottom',
     className,
     contentClassName,
+    children,
     ...props
 }: DropdownMenuProps) {
     const instanceId = useId()
@@ -33,6 +70,7 @@ export function DropdownMenu({
     const portalTarget = usePortalTarget()
     // Never paint at the (0,0) initial position: hidden until measured.
     const [positioned, setPositioned] = useState(false)
+
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
             if (!isControlled) setInternalOpen(nextOpen)
@@ -40,7 +78,9 @@ export function DropdownMenu({
         },
         [isControlled, onOpenChange]
     )
+
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
+
     const updatePosition = useCallback(() => {
         const el =
             triggerElementRef.current ??
@@ -63,7 +103,8 @@ export function DropdownMenu({
         setPosition({ top, left })
         setPositioned(true)
     }, [align, side])
-    function focusItem(direction = 1, targetValue?: string) {
+
+    const focusItem = useCallback((direction = 1, targetValue?: string) => {
         const menuItems = contentRef.current?.querySelectorAll('[role="menuitem"]')
         if (!menuItems?.length) return
         if (targetValue) {
@@ -84,7 +125,8 @@ export function DropdownMenu({
                     : menuItems.length - 1
                 : (activeIndex + direction + menuItems.length) % menuItems.length
         ;(menuItems[nextIndex] as HTMLElement)?.focus()
-    }
+    }, [])
+
     useEffect(() => {
         if (!isOpen) {
             setPositioned(false)
@@ -123,144 +165,373 @@ export function DropdownMenu({
             window.removeEventListener('scroll', vc, true)
         }
     }, [isOpen, setOpenState, updatePosition])
+
     useEffect(() => {
-        if (isOpen) focusItem(1, actionableItems[0]?.value)
-    }, [actionableItems, isOpen])
+        if (isOpen && actionableItems.length > 0) {
+            focusItem(1, actionableItems[0]?.value)
+        }
+    }, [actionableItems, isOpen, focusItem])
+
+    const contextValue: DropdownMenuContextValue = {
+        isOpen,
+        setOpenState,
+        triggerElementRef,
+        contentRef,
+        position,
+        positioned,
+        focusItem,
+        updatePosition,
+        align,
+        side,
+        instanceId,
+    }
+
+    if (children) {
+        return (
+            <DropdownMenuContext.Provider value={contextValue}>
+                <div
+                    ref={(node) => {
+                        if (typeof ref === 'function') ref(node)
+                        else if (ref) (ref as { current: HTMLDivElement | null }).current = node
+                        rootRef.current = node
+                    }}
+                    className={cn('mr-dropdown', className)}
+                    data-open={isOpen ? true : undefined}
+                    data-align={align}
+                    data-side={side}
+                    {...props}
+                >
+                    {children}
+                </div>
+            </DropdownMenuContext.Provider>
+        )
+    }
+
+    return (
+        <DropdownMenuContext.Provider value={contextValue}>
+            <div
+                ref={(node) => {
+                    if (typeof ref === 'function') ref(node)
+                    else if (ref) (ref as { current: HTMLDivElement | null }).current = node
+                    rootRef.current = node
+                }}
+                className={cn('mr-dropdown', className)}
+                data-open={isOpen ? true : undefined}
+                data-align={align}
+                data-side={side}
+                {...props}
+            >
+                {typeof trigger === 'string' ? (
+                    <button
+                        type="button"
+                        className="mr-dropdown__trigger"
+                        data-mr-dropdown-trigger="true"
+                        aria-expanded={isOpen}
+                        aria-controls={`${instanceId}-content`}
+                        aria-haspopup="menu"
+                        onClick={(e) => {
+                            triggerElementRef.current = e.currentTarget
+                            updatePosition()
+                            setOpenState(!isOpen)
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                updatePosition()
+                                setOpenState(true)
+                            }
+                        }}
+                    >
+                        {trigger}
+                    </button>
+                ) : (
+                    <span
+                        className="mr-dropdown__anchor"
+                        data-mr-dropdown-trigger="true"
+                        aria-expanded={isOpen}
+                        aria-controls={`${instanceId}-content`}
+                        aria-haspopup="menu"
+                        onClick={(e) => {
+                            triggerElementRef.current =
+                                (e.target as HTMLElement).closest('button, a, [tabindex]') ??
+                                e.currentTarget
+                            updatePosition()
+                            setOpenState(!isOpen)
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                updatePosition()
+                                setOpenState(true)
+                            }
+                        }}
+                    >
+                        {trigger}
+                    </span>
+                )}
+                {isOpen && portalTarget
+                    ? createPortal(
+                          <div
+                              ref={contentRef}
+                              id={`${instanceId}-content`}
+                              className={cn('mr-dropdown__content', contentClassName)}
+                              role="menu"
+                              aria-orientation="vertical"
+                              style={{
+                                  top: `${position.top}px`,
+                                  left: `${position.left}px`,
+                                  visibility: positioned ? undefined : 'hidden',
+                              }}
+                              onKeyDown={(e) => {
+                                  if (e.key === 'ArrowDown') {
+                                      e.preventDefault()
+                                      focusItem(1)
+                                  }
+                                  if (e.key === 'ArrowUp') {
+                                      e.preventDefault()
+                                      focusItem(-1)
+                                  }
+                                  if (e.key === 'Home') {
+                                      e.preventDefault()
+                                      focusItem(1, actionableItems[0]?.value)
+                                  }
+                                  if (e.key === 'End') {
+                                      e.preventDefault()
+                                      focusItem(
+                                          -1,
+                                          actionableItems[actionableItems.length - 1]?.value
+                                      )
+                                  }
+                              }}
+                          >
+                              {items.map((item, index) =>
+                                  item.type === 'separator' ? (
+                                      <div
+                                          key={`${instanceId}-sep-${index}`}
+                                          className="mr-dropdown__separator"
+                                          role="separator"
+                                      />
+                                  ) : (
+                                      <button
+                                          key={item.value}
+                                          type="button"
+                                          role="menuitem"
+                                          data-value={item.value}
+                                          className={cn(
+                                              'mr-dropdown__item',
+                                              item.danger && 'is-danger'
+                                          )}
+                                          disabled={item.disabled}
+                                          onClick={() => {
+                                              item.onSelect?.(item.value)
+                                              setOpenState(false)
+                                          }}
+                                      >
+                                          {item.icon ? (
+                                              <span
+                                                  className="mr-dropdown__item-icon"
+                                                  aria-hidden="true"
+                                              >
+                                                  {item.icon}
+                                              </span>
+                                          ) : null}
+                                          <span className="mr-dropdown__item-label">
+                                              {item.label}
+                                          </span>
+                                          {item.shortcut ? (
+                                              <kbd className="mr-dropdown__item-shortcut">
+                                                  {item.shortcut}
+                                              </kbd>
+                                          ) : null}
+                                      </button>
+                                  )
+                              )}
+                          </div>,
+                          portalTarget
+                      )
+                    : null}
+            </div>
+        </DropdownMenuContext.Provider>
+    )
+}
+
+function DropdownMenuTrigger({
+    ref,
+    className,
+    children,
+    onClick,
+    onKeyDown,
+    ...props
+}: DropdownMenuTriggerProps) {
+    const context = useContext(DropdownMenuContext)
+    return (
+        <button
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as { current: HTMLButtonElement | null }).current = node
+                if (context) context.triggerElementRef.current = node
+            }}
+            type="button"
+            className={cn('mr-dropdown__trigger', className)}
+            data-mr-dropdown-trigger="true"
+            aria-haspopup="menu"
+            aria-expanded={context?.isOpen}
+            onClick={(e) => {
+                onClick?.(e)
+                if (context) {
+                    context.updatePosition()
+                    context.setOpenState(!context.isOpen)
+                }
+            }}
+            onKeyDown={(e) => {
+                onKeyDown?.(e)
+                if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    if (context) {
+                        context.updatePosition()
+                        context.setOpenState(true)
+                    }
+                }
+            }}
+            {...props}
+        >
+            {children}
+        </button>
+    )
+}
+
+function DropdownMenuContent({
+    ref,
+    className,
+    children,
+    onKeyDown,
+    ...props
+}: DropdownMenuContentProps) {
+    const context = useContext(DropdownMenuContext)
+    const portalTarget = usePortalTarget()
+    if (!context?.isOpen || !portalTarget) return null
+
+    return createPortal(
+        <div
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as { current: HTMLDivElement | null }).current = node
+                if (context) context.contentRef.current = node
+            }}
+            role="menu"
+            aria-orientation="vertical"
+            className={cn('mr-dropdown__content', className)}
+            style={{
+                top: `${context.position.top}px`,
+                left: `${context.position.left}px`,
+                visibility: context.positioned ? undefined : 'hidden',
+            }}
+            onKeyDown={(e) => {
+                onKeyDown?.(e)
+                if (e.defaultPrevented) return
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault()
+                    context.focusItem(1)
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    context.focusItem(-1)
+                }
+            }}
+            {...props}
+        >
+            {children}
+        </div>,
+        portalTarget
+    )
+}
+
+function DropdownMenuItemComponent({
+    ref,
+    value,
+    danger = false,
+    icon,
+    shortcut,
+    onSelect,
+    disabled = false,
+    className,
+    children,
+    onClick,
+    ...props
+}: DropdownMenuItemProps) {
+    const context = useContext(DropdownMenuContext)
+    return (
+        <button
+            ref={ref}
+            type="button"
+            role="menuitem"
+            data-value={value}
+            disabled={disabled}
+            className={cn('mr-dropdown__item', danger && 'is-danger', className)}
+            onClick={(e) => {
+                onClick?.(e)
+                onSelect?.(value ?? '')
+                context?.setOpenState(false)
+            }}
+            {...props}
+        >
+            {icon ? (
+                <span className="mr-dropdown__item-icon" aria-hidden="true">
+                    {icon}
+                </span>
+            ) : null}
+            <span className="mr-dropdown__item-label">{children}</span>
+            {shortcut ? <kbd className="mr-dropdown__item-shortcut">{shortcut}</kbd> : null}
+        </button>
+    )
+}
+
+function DropdownMenuSeparator({ ref, className, ...props }: DropdownMenuSeparatorProps) {
     return (
         <div
             ref={ref}
-            className={cn('mr-dropdown', className)}
-            data-open={isOpen ? true : undefined}
-            data-align={align}
-            data-side={side}
+            role="separator"
+            className={cn('mr-dropdown__separator', className)}
             {...props}
-        >
-            {typeof trigger === 'string' ? (
-                <button
-                    type="button"
-                    className="mr-dropdown__trigger"
-                    data-mr-dropdown-trigger="true"
-                    aria-expanded={isOpen}
-                    aria-controls={`${instanceId}-content`}
-                    aria-haspopup="menu"
-                    onClick={(e) => {
-                        triggerElementRef.current = e.currentTarget
-                        updatePosition()
-                        setOpenState(!isOpen)
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault()
-                            updatePosition()
-                            setOpenState(true)
-                        }
-                    }}
-                >
-                    {trigger}
-                </button>
-            ) : (
-                <span
-                    className="mr-dropdown__anchor"
-                    data-mr-dropdown-trigger="true"
-                    aria-expanded={isOpen}
-                    aria-controls={`${instanceId}-content`}
-                    aria-haspopup="menu"
-                    onClick={(e) => {
-                        triggerElementRef.current =
-                            (e.target as HTMLElement).closest('button, a, [tabindex]') ??
-                            e.currentTarget
-                        updatePosition()
-                        setOpenState(!isOpen)
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault()
-                            updatePosition()
-                            setOpenState(true)
-                        }
-                    }}
-                >
-                    {trigger}
-                </span>
-            )}
-            {isOpen && portalTarget
-                ? createPortal(
-                      <div
-                          ref={contentRef}
-                          id={`${instanceId}-content`}
-                          className={cn('mr-dropdown__content', contentClassName)}
-                          role="menu"
-                          aria-orientation="vertical"
-                          style={{
-                              top: `${position.top}px`,
-                              left: `${position.left}px`,
-                              visibility: positioned ? undefined : 'hidden',
-                          }}
-                          onKeyDown={(e) => {
-                              if (e.key === 'ArrowDown') {
-                                  e.preventDefault()
-                                  focusItem(1)
-                              }
-                              if (e.key === 'ArrowUp') {
-                                  e.preventDefault()
-                                  focusItem(-1)
-                              }
-                              if (e.key === 'Home') {
-                                  e.preventDefault()
-                                  focusItem(1, actionableItems[0]?.value)
-                              }
-                              if (e.key === 'End') {
-                                  e.preventDefault()
-                                  focusItem(-1, actionableItems[actionableItems.length - 1]?.value)
-                              }
-                          }}
-                      >
-                          {items.map((item, index) =>
-                              item.type === 'separator' ? (
-                                  <div
-                                      key={`${instanceId}-sep-${index}`}
-                                      className="mr-dropdown__separator"
-                                      role="separator"
-                                  />
-                              ) : (
-                                  <button
-                                      key={item.value}
-                                      type="button"
-                                      role="menuitem"
-                                      data-value={item.value}
-                                      className={cn(
-                                          'mr-dropdown__item',
-                                          item.danger && 'is-danger'
-                                      )}
-                                      disabled={item.disabled}
-                                      onClick={() => {
-                                          item.onSelect?.(item.value)
-                                          setOpenState(false)
-                                      }}
-                                  >
-                                      {item.icon ? (
-                                          <span
-                                              className="mr-dropdown__item-icon"
-                                              aria-hidden="true"
-                                          >
-                                              {item.icon}
-                                          </span>
-                                      ) : null}
-                                      <span className="mr-dropdown__item-label">{item.label}</span>
-                                      {item.shortcut ? (
-                                          <kbd className="mr-dropdown__item-shortcut">
-                                              {item.shortcut}
-                                          </kbd>
-                                      ) : null}
-                                  </button>
-                              )
-                          )}
-                      </div>,
-                      portalTarget
-                  )
-                : null}
+        />
+    )
+}
+
+function DropdownMenuLabel({ ref, className, children, ...props }: DropdownMenuLabelProps) {
+    return (
+        <div ref={ref} className={cn('mr-dropdown__label', className)} {...props}>
+            {children}
         </div>
     )
 }
 
-export type { DropdownMenuProps, DropdownMenuItem } from './DropdownMenu.types'
+DropdownMenuTrigger.displayName = 'DropdownMenu.Trigger'
+DropdownMenuContent.displayName = 'DropdownMenu.Content'
+DropdownMenuItemComponent.displayName = 'DropdownMenu.Item'
+DropdownMenuSeparator.displayName = 'DropdownMenu.Separator'
+DropdownMenuLabel.displayName = 'DropdownMenu.Label'
+
+DropdownMenu.Trigger = DropdownMenuTrigger
+DropdownMenu.Content = DropdownMenuContent
+DropdownMenu.Item = DropdownMenuItemComponent
+DropdownMenu.Separator = DropdownMenuSeparator
+DropdownMenu.Label = DropdownMenuLabel
+
+export {
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItemComponent as DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuLabel,
+}
+
+export type {
+    DropdownMenuProps,
+    DropdownMenuItem as DropdownMenuItemData,
+    DropdownAlign,
+    DropdownSide,
+    DropdownMenuTriggerProps,
+    DropdownMenuContentProps,
+    DropdownMenuItemProps,
+    DropdownMenuSeparatorProps,
+    DropdownMenuLabelProps,
+} from './DropdownMenu.types'

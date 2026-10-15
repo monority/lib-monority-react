@@ -68,3 +68,48 @@ export function TabsFullWidthExample() {
 
     return <Tabs items={items} value={value} onChange={setValue} fullWidth />
 }
+
+export function TabsCompoundExample() {
+    return (
+        <Tabs defaultValue="account">
+            <Tabs.List>
+                <Tabs.Trigger value="account">Account</Tabs.Trigger>
+                <Tabs.Trigger value="notifications">Notifications</Tabs.Trigger>
+                <Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+            </Tabs.List>
+            <Tabs.Content value="account">
+                <div
+                    style={{
+                        padding: '0.75rem 0',
+                        color: 'var(--mr-text-secondary)',
+                        fontSize: 'var(--mr-font-size-sm)',
+                    }}
+                >
+                    Manage your account profile, email addresses, and connected social accounts.
+                </div>
+            </Tabs.Content>
+            <Tabs.Content value="notifications">
+                <div
+                    style={{
+                        padding: '0.75rem 0',
+                        color: 'var(--mr-text-secondary)',
+                        fontSize: 'var(--mr-font-size-sm)',
+                    }}
+                >
+                    Configure alert thresholds, daily digest frequency, and desktop push alerts.
+                </div>
+            </Tabs.Content>
+            <Tabs.Content value="billing">
+                <div
+                    style={{
+                        padding: '0.75rem 0',
+                        color: 'var(--mr-text-secondary)',
+                        fontSize: 'var(--mr-font-size-sm)',
+                    }}
+                >
+                    Review your enterprise plan tier, invoices history, and active seats allocation.
+                </div>
+            </Tabs.Content>
+        </Tabs>
+    )
+}

@@ -4,7 +4,8 @@ import { useFormControl } from '@/primitives/form-control'
 
 // ─── Field (composite) ───────────────────────────────────────────────────────
 
-export interface FieldProps {
+export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
     label?: ReactNode
     hint?: ReactNode
     error?: ReactNode
@@ -18,6 +19,7 @@ export interface FieldProps {
 }
 
 export function Field({
+    ref,
     label,
     hint,
     error,
@@ -28,6 +30,7 @@ export function Field({
     errorId,
     className,
     children,
+    ...props
 }: FieldProps) {
     const ctx = useFormControl()
     const resolvedHtmlFor = htmlFor ?? ctx.inputId
@@ -39,10 +42,12 @@ export function Field({
 
     return (
         <div
+            ref={ref}
             className={cn('mr-field', className)}
             data-has-hint={hasHint ? true : undefined}
             data-has-error={hasError ? true : undefined}
             data-required={resolvedRequired ? true : undefined}
+            {...props}
         >
             {label != null ? (
                 <FieldLabel
@@ -217,3 +222,13 @@ export function FieldTitle({
         </Tag>
     )
 }
+
+Field.Label = FieldLabel
+Field.Content = FieldContent
+Field.Description = FieldDescription
+Field.Error = FieldError
+Field.Group = FieldGroup
+Field.Legend = FieldLegend
+Field.Separator = FieldSeparator
+Field.Set = FieldSet
+Field.Title = FieldTitle

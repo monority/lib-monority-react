@@ -79,6 +79,8 @@ Card.Description = CardDescription
 Card.Content = CardContent
 Card.Footer = CardFooter
 
+export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
+
 export type {
     CardContentProps,
     CardDescriptionProps,

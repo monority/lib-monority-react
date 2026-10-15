@@ -1,13 +1,12 @@
 import { Separator } from '@monority/ui/separator'
+import { Text } from '@monority/ui/text'
 
 export function SeparatorBasicExample() {
     return (
         <div style={{ maxWidth: 360 }}>
-            <p style={{ margin: 0 }}>Account details</p>
+            <Text>Account details</Text>
             <Separator />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
-                Billing contact and invoice defaults
-            </p>
+            <Text.Muted>Billing contact and invoice defaults</Text.Muted>
         </div>
     )
 }
@@ -15,11 +14,11 @@ export function SeparatorBasicExample() {
 export function SeparatorVerticalExample() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', height: 40 }}>
-            <span>Open</span>
+            <Text.Span>Open</Text.Span>
             <Separator orientation="vertical" />
-            <span>Assigned</span>
+            <Text.Span>Assigned</Text.Span>
             <Separator orientation="vertical" />
-            <span>Due today</span>
+            <Text.Span>Due today</Text.Span>
         </div>
     )
 }
@@ -27,11 +26,11 @@ export function SeparatorVerticalExample() {
 export function SeparatorDecorativeExample() {
     return (
         <div style={{ maxWidth: 360 }}>
-            <p style={{ margin: 0 }}>Visual grouping only</p>
+            <Text>Visual grouping only</Text>
             <Separator decorative />
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <Text.Muted>
                 Use decorative separators when nearby headings already describe the structure.
-            </p>
+            </Text.Muted>
         </div>
     )
 }

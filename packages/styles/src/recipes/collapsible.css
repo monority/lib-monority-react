@@ -112,6 +112,15 @@
         border-block-start: 1px solid var(--mr-border-subtle);
         color: var(--mr-text-primary);
         font-size: var(--mr-font-size-md);
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--mr-space-1)));
+        transition: opacity var(--mr-duration-panel) ease, transform var(--mr-duration-panel)
+            cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__body) {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     /* Tailles */
@@ -148,8 +157,10 @@
         :where(.mr-collapsible),
         :where(.mr-collapsible__trigger),
         :where(.mr-collapsible__icon),
-        :where(.mr-collapsible__panel) {
+        :where(.mr-collapsible__panel),
+        :where(.mr-collapsible__body) {
             transition: none;
+            transform: none;
         }
     }
 }

@@ -38,8 +38,8 @@ const docData: DocPageData = {
     cssHooks: ['.mr-badge', '[data-variant]'],
     tokens: [
         '--mr-radius-xs',
-        '--mr-text-xs',
-        '--mr-bg-accent-soft',
+        '--mr-font-size-xs',
+        '--mr-accent-subtle',
         '--mr-success-soft',
         '--mr-warning-soft',
         '--mr-danger-soft',

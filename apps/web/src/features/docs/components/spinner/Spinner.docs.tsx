@@ -36,8 +36,8 @@ const docData: DocPageData = {
     ],
     cssHooks: ['.mr-spinner', '.mr-spinner__ring', '[data-size]', '[data-tone]'],
     tokens: [
-        '--mr-accent',
-        '--mr-fg-muted',
+        '--mr-accent-solid',
+        '--mr-text-secondary',
         '--mr-spinner-size-sm',
         '--mr-spinner-size-md',
         '--mr-spinner-size-lg',

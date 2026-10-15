@@ -109,7 +109,7 @@ const docData: DocPageData = {
     ],
     tokens: [
         '--mr-bg-input',
-        '--mr-fg-base',
+        '--mr-text-primary',
         '--mr-border-base',
         '--mr-radius-md',
         '--mr-space-2',

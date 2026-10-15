@@ -47,12 +47,12 @@ const docData: DocPageData = {
     cssHooks: ['.mr-datepicker', '[data-tone]', '[data-size]', '[data-disabled]', '[data-invalid]'],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-control',
-        '--mr-fg-base',
-        '--mr-fg-muted',
+        '--mr-bg-surface',
+        '--mr-text-primary',
+        '--mr-text-secondary',
         '--mr-input-height',
         '--mr-radius-md',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
     ],
     a11y: [
         'Native form element semantics.',

@@ -61,7 +61,7 @@ const docData: DocPageData = {
         '.mr-data-list__value',
         '[data-columns]',
     ],
-    tokens: ['--mr-border-subtle', '--mr-bg-surface-elevated', '--mr-fg-muted', '--mr-fg-strong'],
+    tokens: ['--mr-border-subtle', '--mr-bg-raised', '--mr-text-secondary', '--mr-text-primary'],
     a11y: ['Uses native definition list semantics.', 'Keep labels concise and values scannable.'],
 }
 

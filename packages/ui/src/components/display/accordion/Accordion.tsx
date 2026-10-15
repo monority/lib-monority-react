@@ -1,14 +1,32 @@
-import { useCallback, useId, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import type { AccordionItem, AccordionProps } from './Accordion.types'
+import type {
+    AccordionContentProps,
+    AccordionItemData,
+    AccordionItemProps,
+    AccordionProps,
+    AccordionSize,
+    AccordionTriggerProps,
+} from './Accordion.types'
 
-/**
- * Accordion with WAI-ARIA APG keyboard behavior:
- * - triggers form a roving tabindex
- * - ArrowUp / ArrowDown move focus between enabled triggers (wrapping)
- * - Home / End jump to the first / last enabled trigger
- * - Enter / Space toggle the focused trigger (native button behavior)
- */
+interface AccordionContextValue {
+    openValues: string[]
+    toggle: (value: string) => void
+    collapsible: boolean
+    size: AccordionSize
+}
+
+interface AccordionItemContextValue {
+    value: string
+    isOpen: boolean
+    isDisabled: boolean
+    triggerId: string
+    panelId: string
+}
+
+const AccordionContext = createContext<AccordionContextValue | null>(null)
+const AccordionItemContext = createContext<AccordionItemContextValue | null>(null)
+
 export function Accordion({
     items = [],
     defaultValue,
@@ -20,6 +38,7 @@ export function Accordion({
     size = 'md',
     className,
     ref,
+    children,
     ...props
 }: AccordionProps) {
     const [internalValue, setInternalValue] = useState<string[]>(() => {
@@ -106,9 +125,31 @@ export function Accordion({
         [openValues, allowMultiple, isControlled, onChange, onValueChange]
     )
 
+    const contextValue: AccordionContextValue = {
+        openValues,
+        toggle,
+        collapsible,
+        size,
+    }
+
+    if (children) {
+        return (
+            <AccordionContext.Provider value={contextValue}>
+                <div
+                    ref={ref}
+                    className={cn('mr-accordion', className)}
+                    data-size={size}
+                    {...props}
+                >
+                    {children}
+                </div>
+            </AccordionContext.Provider>
+        )
+    }
+
     return (
         <div ref={ref} className={cn('mr-accordion', className)} data-size={size} {...props}>
-            {items.map((item: AccordionItem, index: number) => {
+            {items.map((item: AccordionItemData, index: number) => {
                 const isOpen = openValues.includes(item.value)
                 const panelId = `${generatedId}-panel-${item.value}`
                 const triggerId = `${generatedId}-trigger-${item.value}`
@@ -159,4 +200,114 @@ export function Accordion({
     )
 }
 
-export type { AccordionItem, AccordionProps, AccordionSize } from './Accordion.types'
+function AccordionItem({
+    ref,
+    value,
+    disabled = false,
+    className,
+    children,
+    ...props
+}: AccordionItemProps) {
+    const context = useContext(AccordionContext)
+    const generatedId = useId()
+    const triggerId = `${generatedId}-trigger-${value}`
+    const panelId = `${generatedId}-panel-${value}`
+    const isOpen = context ? context.openValues.includes(value) : false
+
+    const itemContextValue: AccordionItemContextValue = {
+        value,
+        isOpen,
+        isDisabled: disabled,
+        triggerId,
+        panelId,
+    }
+
+    return (
+        <AccordionItemContext.Provider value={itemContextValue}>
+            <div
+                ref={ref}
+                className={cn('mr-accordion__item', className)}
+                data-open={isOpen ? true : undefined}
+                data-disabled={disabled ? true : undefined}
+                {...props}
+            >
+                {children}
+            </div>
+        </AccordionItemContext.Provider>
+    )
+}
+
+function AccordionTrigger({ ref, className, children, onClick, ...props }: AccordionTriggerProps) {
+    const accordionContext = useContext(AccordionContext)
+    const itemContext = useContext(AccordionItemContext)
+
+    const isOpen = itemContext?.isOpen ?? false
+    const isDisabled = itemContext?.isDisabled ?? false
+    const triggerId = itemContext?.triggerId
+    const panelId = itemContext?.panelId
+    const value = itemContext?.value ?? ''
+
+    return (
+        <button
+            ref={ref}
+            id={triggerId}
+            type="button"
+            className={cn('mr-accordion__trigger', className)}
+            disabled={isDisabled}
+            aria-expanded={isOpen}
+            aria-controls={panelId}
+            onClick={(e) => {
+                onClick?.(e)
+                if (isDisabled || !accordionContext) return
+                if (accordionContext.collapsible || !isOpen) {
+                    accordionContext.toggle(value)
+                }
+            }}
+            {...props}
+        >
+            <span className="mr-accordion__label">{children}</span>
+            <span className="mr-accordion__icon" aria-hidden="true" />
+        </button>
+    )
+}
+
+function AccordionContent({ ref, className, children, ...props }: AccordionContentProps) {
+    const itemContext = useContext(AccordionItemContext)
+    const isOpen = itemContext?.isOpen ?? false
+    const triggerId = itemContext?.triggerId
+    const panelId = itemContext?.panelId
+
+    return (
+        <div
+            ref={ref}
+            id={panelId}
+            role="region"
+            aria-labelledby={triggerId}
+            className={cn('mr-accordion__panel', className)}
+            hidden={!isOpen}
+            {...props}
+        >
+            <div className="mr-accordion__content">
+                <div className="mr-accordion__body">{children}</div>
+            </div>
+        </div>
+    )
+}
+
+AccordionItem.displayName = 'Accordion.Item'
+AccordionTrigger.displayName = 'Accordion.Trigger'
+AccordionContent.displayName = 'Accordion.Content'
+
+Accordion.Item = AccordionItem
+Accordion.Trigger = AccordionTrigger
+Accordion.Content = AccordionContent
+
+export { AccordionItem, AccordionTrigger, AccordionContent }
+export type {
+    AccordionProps,
+    AccordionItemData,
+    AccordionSize,
+    AccordionItemProps,
+    AccordionTriggerProps,
+    AccordionContentProps,
+} from './Accordion.types'

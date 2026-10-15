@@ -20,7 +20,7 @@ export function CodeViewer({
 }: CodeViewerProps) {
     return (
         <div ref={ref} className={`code-viewer ${className}`.trim()}>
-            <div className="code-viewer__header">
+            <div className="code-viewer__header docs-code-header">
                 <span className="code-viewer__filename">{filename ?? `${language}.snippet`}</span>
                 <CopyButton
                     value={code}
@@ -29,6 +29,7 @@ export function CodeViewer({
                     label="Copy"
                     copiedLabel="Copied!"
                     aria-label="Copy code"
+                    className="docs-copy-btn"
                 />
             </div>
             <div className="code-viewer__body">

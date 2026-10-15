@@ -4,6 +4,8 @@ import type {
     PageHeaderActionsProps,
     PageHeaderDescriptionProps,
     PageHeaderKickerProps,
+    PageHeaderMainProps,
+    PageHeaderMetaProps,
     PageHeaderProps,
     PageHeaderTitleProps,
 } from './PageHeader.types'
@@ -44,6 +46,14 @@ function PageHeaderDescription({ ref, className, children, ...props }: PageHeade
     )
 }
 
+function PageHeaderMain({ ref, className, children, ...props }: PageHeaderMainProps) {
+    return (
+        <div ref={ref} className={cn('mr-page-header__main', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
 function PageHeaderActions({ ref, className, children, ...props }: PageHeaderActionsProps) {
     return (
         <div ref={ref} className={cn('mr-page-header__actions', className)} {...props}>
@@ -52,15 +62,40 @@ function PageHeaderActions({ ref, className, children, ...props }: PageHeaderAct
     )
 }
 
+function PageHeaderMeta({ ref, className, children, ...props }: PageHeaderMetaProps) {
+    return (
+        <div ref={ref} className={cn('mr-page-header__meta', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+PageHeader.Main = PageHeaderMain
 PageHeader.Kicker = PageHeaderKicker
+PageHeader.Eyebrow = PageHeaderKicker
 PageHeader.Title = PageHeaderTitle
 PageHeader.Description = PageHeaderDescription
 PageHeader.Actions = PageHeaderActions
+PageHeader.Meta = PageHeaderMeta
+
+const PageHeaderEyebrow = PageHeaderKicker
+
+export {
+    PageHeaderKicker,
+    PageHeaderEyebrow,
+    PageHeaderTitle,
+    PageHeaderDescription,
+    PageHeaderActions,
+    PageHeaderMain,
+    PageHeaderMeta,
+}
 
 export type {
     PageHeaderActionsProps,
     PageHeaderDescriptionProps,
     PageHeaderKickerProps,
+    PageHeaderMainProps,
+    PageHeaderMetaProps,
     PageHeaderProps,
     PageHeaderTitleProps,
 } from './PageHeader.types'

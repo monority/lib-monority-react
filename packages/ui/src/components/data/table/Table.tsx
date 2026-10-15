@@ -1,6 +1,16 @@
 import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
-import type { TableProps } from './Table.types'
+import type {
+    Column,
+    TableBodyProps,
+    TableCaptionProps,
+    TableCellProps,
+    TableFooterProps,
+    TableHeaderProps,
+    TableHeadProps,
+    TableProps,
+    TableRowProps,
+} from './Table.types'
 
 export function Table<T extends Record<string, unknown> = Record<string, unknown>>({
     ref,
@@ -10,8 +20,17 @@ export function Table<T extends Record<string, unknown> = Record<string, unknown
     emptyState,
     className,
     tableClassName,
+    children,
     ...props
 }: TableProps<T>) {
+    if (children) {
+        return (
+            <div ref={ref} className={cn('mr-table', className)} {...props}>
+                <table className={cn('mr-table__table', tableClassName)}>{children}</table>
+            </div>
+        )
+    }
+
     if (rows.length === 0) {
         return (
             <div ref={ref} className={cn('mr-table', className)} {...props}>
@@ -58,4 +77,88 @@ export function Table<T extends Record<string, unknown> = Record<string, unknown
     )
 }
 
-export type { TableProps, Column } from './Table.types'
+function TableHeader({ ref, className, children, ...props }: TableHeaderProps) {
+    return (
+        <thead ref={ref} className={cn('mr-table__head', className)} {...props}>
+            {children}
+        </thead>
+    )
+}
+
+function TableBody({ ref, className, children, ...props }: TableBodyProps) {
+    return (
+        <tbody ref={ref} className={cn('mr-table__body', className)} {...props}>
+            {children}
+        </tbody>
+    )
+}
+
+function TableFooter({ ref, className, children, ...props }: TableFooterProps) {
+    return (
+        <tfoot ref={ref} className={cn('mr-table__footer', className)} {...props}>
+            {children}
+        </tfoot>
+    )
+}
+
+function TableRow({ ref, className, children, ...props }: TableRowProps) {
+    return (
+        <tr ref={ref} className={cn('mr-table__tr', className)} {...props}>
+            {children}
+        </tr>
+    )
+}
+
+function TableHead({ ref, className, children, ...props }: TableHeadProps) {
+    return (
+        <th ref={ref} scope="col" className={cn('mr-table__th', className)} {...props}>
+            {children}
+        </th>
+    )
+}
+
+function TableCell({ ref, className, children, ...props }: TableCellProps) {
+    return (
+        <td ref={ref} className={cn('mr-table__td', className)} {...props}>
+            {children}
+        </td>
+    )
+}
+
+function TableCaption({ ref, className, children, ...props }: TableCaptionProps) {
+    return (
+        <caption ref={ref} className={cn('mr-table__caption', className)} {...props}>
+            {children}
+        </caption>
+    )
+}
+
+TableHeader.displayName = 'Table.Header'
+TableBody.displayName = 'Table.Body'
+TableFooter.displayName = 'Table.Footer'
+TableRow.displayName = 'Table.Row'
+TableHead.displayName = 'Table.Head'
+TableCell.displayName = 'Table.Cell'
+TableCaption.displayName = 'Table.Caption'
+
+Table.Header = TableHeader
+Table.Body = TableBody
+Table.Footer = TableFooter
+Table.Row = TableRow
+Table.Head = TableHead
+Table.Cell = TableCell
+Table.Caption = TableCaption
+
+export { TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption }
+
+export type {
+    TableProps,
+    Column,
+    TableHeaderProps,
+    TableBodyProps,
+    TableFooterProps,
+    TableRowProps,
+    TableHeadProps,
+    TableCellProps,
+    TableCaptionProps,
+} from './Table.types'

@@ -1,6 +1,14 @@
-import { useMemo } from 'react'
+import { useMemo, type Ref } from 'react'
 import { cn } from '@/lib/cn'
-import type { PaginationProps } from './Pagination.types'
+import type {
+    PaginationContentProps,
+    PaginationEllipsisProps,
+    PaginationItemProps,
+    PaginationLinkProps,
+    PaginationNextProps,
+    PaginationPreviousProps,
+    PaginationProps,
+} from './Pagination.types'
 
 function buildPages(current: number, total: number): (number | 'ellipsis')[] {
     const resolvedTotal = Math.max(1, total)
@@ -29,9 +37,23 @@ export function Pagination({
     totalPages = 1,
     onPageChange,
     className,
+    children,
     ...props
 }: PaginationProps) {
     const pages = useMemo(() => buildPages(page, totalPages), [page, totalPages])
+
+    if (children) {
+        return (
+            <nav
+                ref={ref}
+                className={cn('mr-pagination', className)}
+                aria-label="Pagination"
+                {...props}
+            >
+                {children}
+            </nav>
+        )
+    }
 
     return (
         <nav
@@ -98,4 +120,138 @@ export function Pagination({
     )
 }
 
-export type { PaginationProps } from './Pagination.types'
+function PaginationContent({ ref, className, children, ...props }: PaginationContentProps) {
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-pagination__pages', className)}
+            role="list"
+            aria-label="Page list"
+            {...props}
+        >
+            {children}
+        </div>
+    )
+}
+
+function PaginationItem({ ref, className, children, ...props }: PaginationItemProps) {
+    return (
+        <div ref={ref} className={cn('mr-pagination__slot', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+function PaginationLink({
+    ref,
+    isActive = false,
+    className,
+    children,
+    ...props
+}: PaginationLinkProps) {
+    return (
+        <a
+            ref={ref}
+            className={cn(
+                'mr-pagination__btn mr-pagination__btn--page',
+                isActive && 'mr-pagination__btn--active',
+                className
+            )}
+            data-variant="page"
+            data-active={isActive ? 'true' : undefined}
+            aria-current={isActive ? 'page' : undefined}
+            {...props}
+        >
+            {children}
+        </a>
+    )
+}
+
+function PaginationPrevious({ ref, className, children, ...props }: PaginationPreviousProps) {
+    return (
+        <a
+            ref={ref}
+            className={cn('mr-pagination__btn mr-pagination__btn--nav', className)}
+            data-variant="nav"
+            aria-label="Previous page"
+            {...props}
+        >
+            {children ?? (
+                <>
+                    <span aria-hidden="true">←</span>
+                    <span>Previous</span>
+                </>
+            )}
+        </a>
+    )
+}
+
+function PaginationNext({ ref, className, children, ...props }: PaginationNextProps) {
+    return (
+        <a
+            ref={ref}
+            className={cn('mr-pagination__btn mr-pagination__btn--nav', className)}
+            data-variant="nav"
+            aria-label="Next page"
+            {...props}
+        >
+            {children ?? (
+                <>
+                    <span>Next</span>
+                    <span aria-hidden="true">→</span>
+                </>
+            )}
+        </a>
+    )
+}
+
+function PaginationEllipsis({
+    ref,
+    className,
+    children = '...',
+    ...props
+}: PaginationEllipsisProps) {
+    return (
+        <span
+            ref={ref}
+            className={cn('mr-pagination__ellipsis', className)}
+            aria-hidden="true"
+            {...props}
+        >
+            {children}
+        </span>
+    )
+}
+
+PaginationContent.displayName = 'Pagination.Content'
+PaginationItem.displayName = 'Pagination.Item'
+PaginationLink.displayName = 'Pagination.Link'
+PaginationPrevious.displayName = 'Pagination.Previous'
+PaginationNext.displayName = 'Pagination.Next'
+PaginationEllipsis.displayName = 'Pagination.Ellipsis'
+
+Pagination.Content = PaginationContent
+Pagination.Item = PaginationItem
+Pagination.Link = PaginationLink
+Pagination.Previous = PaginationPrevious
+Pagination.Next = PaginationNext
+Pagination.Ellipsis = PaginationEllipsis
+
+export {
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationPrevious,
+    PaginationNext,
+    PaginationEllipsis,
+}
+
+export type {
+    PaginationProps,
+    PaginationContentProps,
+    PaginationItemProps,
+    PaginationLinkProps,
+    PaginationPreviousProps,
+    PaginationNextProps,
+    PaginationEllipsisProps,
+} from './Pagination.types'

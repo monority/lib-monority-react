@@ -1,4 +1,11 @@
-export { Card } from './Card'
+export {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter,
+} from './Card'
 export type {
     CardContentProps,
     CardDescriptionProps,

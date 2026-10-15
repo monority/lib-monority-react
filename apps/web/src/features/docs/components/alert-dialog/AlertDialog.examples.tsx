@@ -60,3 +60,29 @@ export function AlertDialogCustomLabelsExample() {
         </>
     )
 }
+
+export function AlertDialogCompoundExample() {
+    const [open, setOpen] = useState(false)
+
+    return (
+        <>
+            <Button onClick={() => setOpen(true)} variant="secondary">
+                Archive project (Compound)
+            </Button>
+            <AlertDialog open={open} onCancel={() => setOpen(false)}>
+                <AlertDialog.Header>
+                    <AlertDialog.Title>Archive this repository?</AlertDialog.Title>
+                    <AlertDialog.Description>
+                        Archiving will mark this repository as read-only for all collaborators.
+                    </AlertDialog.Description>
+                </AlertDialog.Header>
+                <AlertDialog.Footer>
+                    <AlertDialog.Cancel onClick={() => setOpen(false)}>Cancel</AlertDialog.Cancel>
+                    <AlertDialog.Confirm onClick={() => setOpen(false)}>
+                        Archive
+                    </AlertDialog.Confirm>
+                </AlertDialog.Footer>
+            </AlertDialog>
+        </>
+    )
+}

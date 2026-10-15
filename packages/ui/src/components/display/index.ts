@@ -1,6 +1,9 @@
 export {
     Accordion,
-    type AccordionItem,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+    type AccordionItemData,
     type AccordionProps,
     type AccordionSize,
 } from './accordion'

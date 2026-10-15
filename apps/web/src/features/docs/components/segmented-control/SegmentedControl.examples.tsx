@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { SegmentedControl } from '@monority/ui/segmented-control'
 import { Card } from '@monority/ui/card'
 import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
 
 const viewOptions = [
     { value: 'grid', label: 'Vue Grille' },
@@ -58,7 +59,7 @@ export function SegmentedControlCompoundExample() {
     return (
         <Card padding="md">
             <Stack gap="md">
-                <strong>Mode d affichage du document</strong>
+                <Text.Strong>Mode d affichage du document</Text.Strong>
                 <SegmentedControl defaultValue="preview" fullWidth>
                     <SegmentedControl.Item value="edit">Edition</SegmentedControl.Item>
                     <SegmentedControl.Item value="preview">Apercu direct</SegmentedControl.Item>

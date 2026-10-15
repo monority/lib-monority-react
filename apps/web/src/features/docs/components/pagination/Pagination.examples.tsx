@@ -24,3 +24,32 @@ export function PaginationManyPagesExample() {
 
     return <Pagination page={page} totalPages={50} onPageChange={setPage} />
 }
+
+export function PaginationCompoundExample() {
+    return (
+        <Pagination>
+            <Pagination.Content>
+                <Pagination.Item>
+                    <Pagination.Previous href="#prev" />
+                </Pagination.Item>
+                <Pagination.Item>
+                    <Pagination.Link href="#1">1</Pagination.Link>
+                </Pagination.Item>
+                <Pagination.Item>
+                    <Pagination.Link href="#2" isActive>
+                        2
+                    </Pagination.Link>
+                </Pagination.Item>
+                <Pagination.Item>
+                    <Pagination.Link href="#3">3</Pagination.Link>
+                </Pagination.Item>
+                <Pagination.Item>
+                    <Pagination.Ellipsis />
+                </Pagination.Item>
+                <Pagination.Item>
+                    <Pagination.Next href="#next" />
+                </Pagination.Item>
+            </Pagination.Content>
+        </Pagination>
+    )
+}

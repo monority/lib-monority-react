@@ -103,4 +103,37 @@ describe('Pagination', () => {
         const ellipsis = view.querySelector('.mr-pagination__ellipsis')
         expect(ellipsis).not.toBeNull()
     })
+
+    it('renders compound pagination with subcomponents', () => {
+        const view = render(
+            <Pagination>
+                <Pagination.Content>
+                    <Pagination.Item>
+                        <Pagination.Previous href="#prev" />
+                    </Pagination.Item>
+                    <Pagination.Item>
+                        <Pagination.Link href="#1" isActive>
+                            1
+                        </Pagination.Link>
+                    </Pagination.Item>
+                    <Pagination.Item>
+                        <Pagination.Link href="#2">2</Pagination.Link>
+                    </Pagination.Item>
+                    <Pagination.Item>
+                        <Pagination.Ellipsis />
+                    </Pagination.Item>
+                    <Pagination.Item>
+                        <Pagination.Next href="#next" />
+                    </Pagination.Item>
+                </Pagination.Content>
+            </Pagination>
+        )
+
+        expect(view.querySelector('nav.mr-pagination')).not.toBeNull()
+        expect(view.querySelector('.mr-pagination__pages')).not.toBeNull()
+        const activeLink = view.querySelector('a.mr-pagination__btn--active')
+        expect(activeLink?.textContent?.trim()).toBe('1')
+        expect(activeLink?.getAttribute('aria-current')).toBe('page')
+        expect(view.querySelector('.mr-pagination__ellipsis')?.textContent?.trim()).toBe('...')
+    })
 })

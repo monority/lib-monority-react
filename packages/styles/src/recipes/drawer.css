@@ -97,17 +97,17 @@
         gap: var(--mr-space-4);
         overflow-y: auto;
         outline: none;
-        transition: transform var(--mr-duration-panel) ease;
+        transition: transform var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-drawer__panel)[data-side='right'] {
         border-inline-start: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-right var(--mr-duration-panel) ease;
+        animation: mr-drawer-enter-right var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-drawer__panel)[data-side='left'] {
         border-inline-end: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-left var(--mr-duration-panel) ease;
+        animation: mr-drawer-enter-left var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-drawer__panel)[data-side='top'] {
@@ -115,7 +115,7 @@
         block-size: auto;
         max-block-size: calc(var(--mr-size-container-sm) - var(--mr-space-6));
         border-block-end: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-top var(--mr-duration-panel) ease;
+        animation: mr-drawer-enter-top var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-drawer__panel)[data-side='bottom'] {
@@ -123,7 +123,7 @@
         block-size: auto;
         max-block-size: calc(var(--mr-size-container-sm) - var(--mr-space-6));
         border-block-start: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-bottom var(--mr-duration-panel) ease;
+        animation: mr-drawer-enter-bottom var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-drawer__panel)[data-side='right'][data-closing] {
@@ -163,6 +163,15 @@
         color: var(--mr-text-primary);
     }
 
+    :where(.mr-drawer__description) {
+        margin: 0;
+        margin-block-start: var(--mr-space-1);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        line-height: var(--mr-line-height-md);
+        color: var(--mr-text-secondary);
+    }
+
     :where(.mr-drawer__close) {
         flex-shrink: 0;
     }
@@ -174,6 +183,14 @@
         font-size: var(--mr-font-size-base);
         line-height: var(--mr-line-height-lg);
         color: var(--mr-text-primary);
+    }
+
+    :where(.mr-drawer__footer) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--mr-space-3);
+        margin-block-start: var(--mr-space-4);
     }
 
     @media (prefers-reduced-motion: reduce) {

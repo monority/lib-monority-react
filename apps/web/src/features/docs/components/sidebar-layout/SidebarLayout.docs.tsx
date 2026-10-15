@@ -10,8 +10,21 @@ const docData: DocPageData = {
     description:
         'Two-column app-shell layout with framed sidebar rail, optional header, and readable content panel.',
     importCode: "import { SidebarLayout } from '@monority/ui'",
-    usageCode: `<SidebarLayout sidebar={<nav>...</nav>}>
-  <main>Main content</main>
+    usageCode: `<SidebarLayout
+  sidebar={
+    <nav aria-label="Project navigation">
+      <div>Workspace</div>
+      <div>Overview</div>
+      <div>Releases</div>
+      <div>Settings</div>
+    </nav>
+  }
+  header={<Text.Strong>Project shell</Text.Strong>}
+>
+  <div>
+    <h3>Main area</h3>
+    <p>Sidebar stays contextual, content stays readable.</p>
+  </div>
 </SidebarLayout>`,
     preview: () => <SidebarLayoutBasicExample />,
     examples: [

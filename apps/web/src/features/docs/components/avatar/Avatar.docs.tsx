@@ -56,10 +56,10 @@ const docData: DocPageData = {
     cssHooks: ['.mr-avatar', '[data-size]', '[data-status]'],
     tokens: [
         '--mr-radius-full',
-        '--mr-bg-accent-soft',
+        '--mr-accent-subtle',
         '--mr-border-subtle',
-        '--mr-fg-strong',
-        '--mr-text-xs',
+        '--mr-text-primary',
+        '--mr-font-size-xs',
     ],
     a11y: [
         'Provide alt text or aria-label when the avatar identifies a person.',

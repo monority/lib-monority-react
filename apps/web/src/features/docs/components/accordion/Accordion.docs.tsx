@@ -4,6 +4,7 @@ import {
     AccordionWithItemsExample,
     AccordionMultipleExample,
     AccordionCollapsibleExample,
+    AccordionCompoundExample,
 } from './Accordion.examples'
 
 const docData: DocPageData = {
@@ -11,12 +12,18 @@ const docData: DocPageData = {
     description:
         'Grouped expandable sections for FAQs, release notes, and dense supporting content.',
     importCode: "import { Accordion } from '@monority/ui/accordion'",
-    usageCode: `<Accordion items={[
-  { value: 'tokens', title: 'What changed?', content: <p>Updated surfaces and rhythm.</p> },
-  { value: 'migration', title: 'How do I migrate?', content: <p>Update shared shells first.</p> },
-]} />`,
+    usageCode: `// Declarative Compound API
+<Accordion defaultValue="item-1">
+  <Accordion.Item value="item-1">
+    <Accordion.Trigger>Is it accessible?</Accordion.Trigger>
+    <Accordion.Content>
+      Yes. It adheres to the WAI-ARIA design pattern with roving tabindex.
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion>`,
     preview: () => <AccordionBasicExample />,
     examples: [
+        { title: 'Compound syntax', content: <AccordionCompoundExample /> },
         { title: 'With items', content: <AccordionWithItemsExample /> },
         { title: 'Multiple open', content: <AccordionMultipleExample /> },
         { title: 'Collapsible', content: <AccordionCollapsibleExample /> },
@@ -77,9 +84,9 @@ const docData: DocPageData = {
         '[data-open]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-bg-accent-soft',
+        '--mr-accent-subtle',
         '--mr-border-subtle',
         '--mr-shadow-xs',
         '--mr-radius-md',

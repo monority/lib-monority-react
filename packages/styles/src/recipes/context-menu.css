@@ -26,7 +26,7 @@
         flex-direction: column;
         gap: 1px;
         outline: none;
-        animation: mr-context-menu-enter var(--mr-duration-state) ease;
+        animation: mr-context-menu-enter var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1);
         transform-origin: top left;
     }
 
@@ -45,6 +45,15 @@
         height: 1px;
         margin-block: var(--mr-space-1);
         background-color: var(--mr-border-subtle);
+    }
+
+    :where(.mr-context-menu__label) {
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-3);
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-tertiary, var(--mr-text-secondary));
     }
 
     :where(.mr-context-menu__item) {

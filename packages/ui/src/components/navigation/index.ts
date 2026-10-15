@@ -1,4 +1,13 @@
-export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './breadcrumb'
+export {
+    Breadcrumb,
+    BreadcrumbList,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+    type BreadcrumbProps,
+    type BreadcrumbItemData,
+} from './breadcrumb'
 export {
     FilterBar,
     FilterBarMain,
@@ -20,10 +29,33 @@ export {
     type NavigationItem,
     type NavigationSubItem,
 } from './navigation-menu'
-export { Pagination, type PaginationProps } from './pagination'
+export {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationPrevious,
+    PaginationNext,
+    PaginationEllipsis,
+    type PaginationProps,
+    type PaginationContentProps,
+    type PaginationItemProps,
+    type PaginationLinkProps,
+    type PaginationPreviousProps,
+    type PaginationNextProps,
+    type PaginationEllipsisProps,
+} from './pagination'
 export { SidebarLayout, type SidebarLayoutProps, type SidebarWidth } from './sidebar-layout'
-export { Tabs, type TabsProps, type TabsTone, type TabsSize } from './tabs'
-export type { TabItem } from './tabs'
+export {
+    Tabs,
+    TabsList,
+    TabsTrigger,
+    TabsContent,
+    type TabsProps,
+    type TabsTone,
+    type TabsSize,
+    type TabItem,
+} from './tabs'
 export {
     SegmentedControl,
     SegmentedControlItem,

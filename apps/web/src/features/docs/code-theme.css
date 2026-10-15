@@ -5,7 +5,7 @@
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
     padding: 0;
-    color: var(--docs-code-fg, var(--mr-fg-base));
+    color: var(--docs-code-fg, var(--mr-text-primary));
     background: transparent;
 }
 
@@ -41,12 +41,12 @@
 
 /* Attribute names read as structure, not alarms: keep them quiet. */
 .mr-pre-code code .hljs-attr {
-    color: var(--docs-code-attr, var(--mr-fg-muted));
+    color: var(--docs-code-attr, var(--mr-text-secondary));
 }
 
 /* Tag brackets (`<`, `/>`) — children (name/attr) carry their own colors. */
 .mr-pre-code code .hljs-tag {
-    color: var(--docs-code-tag, var(--mr-fg-muted));
+    color: var(--docs-code-tag, var(--mr-text-secondary));
 }
 
 .mr-pre-code code .hljs-tag .hljs-name,
@@ -62,12 +62,12 @@
 }
 
 .mr-pre-code code .hljs-comment {
-    color: var(--docs-code-comment, var(--mr-fg-muted));
+    color: var(--docs-code-comment, var(--mr-text-secondary));
     font-style: italic;
 }
 
 .mr-pre-code code .hljs-params {
-    color: var(--docs-code-param, var(--mr-fg-base));
+    color: var(--docs-code-param, var(--mr-text-primary));
 }
 
 .mr-pre-code code .hljs-meta,
@@ -76,7 +76,7 @@
 }
 
 .mr-pre-code code .hljs-variable {
-    color: var(--docs-code-fg, var(--mr-fg-base));
+    color: var(--docs-code-fg, var(--mr-text-primary));
 }
 
 .mr-pre-code code .hljs-property,
@@ -86,7 +86,7 @@
 
 .mr-pre-code code .hljs-punctuation,
 .mr-pre-code code .hljs-operator {
-    color: var(--docs-code-muted, var(--mr-fg-muted));
+    color: var(--docs-code-muted, var(--mr-text-secondary));
 }
 
 .mr-pre-code code .hljs-deletion {

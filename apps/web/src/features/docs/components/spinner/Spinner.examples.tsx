@@ -1,4 +1,5 @@
 import { Spinner } from '@monority/ui/spinner'
+import { Text } from '@monority/ui/text'
 
 export function SpinnerBasicExample() {
     return <Spinner />
@@ -21,7 +22,7 @@ export function SpinnerTonesExample() {
             <Spinner tone="muted" />
             <div
                 style={{
-                    background: 'var(--mr-fg-base)',
+                    background: 'var(--mr-bg-inverse)',
                     padding: 'var(--mr-space-3)',
                     borderRadius: 'var(--mr-radius-md)',
                 }}
@@ -36,9 +37,7 @@ export function SpinnerWithTextExample() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-3)' }}>
             <Spinner size="sm" />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                Publishing updated component docs
-            </span>
+            <Text.Small>Publishing updated component docs</Text.Small>
         </div>
     )
 }

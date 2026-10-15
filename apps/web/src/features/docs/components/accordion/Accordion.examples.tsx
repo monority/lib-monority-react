@@ -136,3 +136,40 @@ export function AccordionCollapsibleExample() {
         />
     )
 }
+
+export function AccordionCompoundExample() {
+    return (
+        <Accordion defaultValue="item-1">
+            <Accordion.Item value="item-1">
+                <Accordion.Trigger>Is it accessible?</Accordion.Trigger>
+                <Accordion.Content>
+                    <p
+                        style={{
+                            margin: 0,
+                            color: 'var(--mr-text-secondary)',
+                            fontSize: 'var(--mr-font-size-sm)',
+                        }}
+                    >
+                        Yes. It adheres to the WAI-ARIA design pattern with roving tabindex and
+                        keyboard navigation.
+                    </p>
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item value="item-2">
+                <Accordion.Trigger>Is it styled with CSS layers?</Accordion.Trigger>
+                <Accordion.Content>
+                    <p
+                        style={{
+                            margin: 0,
+                            color: 'var(--mr-text-secondary)',
+                            fontSize: 'var(--mr-font-size-sm)',
+                        }}
+                    >
+                        Yes. It uses the mr.components cascade layer with zero specificity
+                        collisions.
+                    </p>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
+    )
+}

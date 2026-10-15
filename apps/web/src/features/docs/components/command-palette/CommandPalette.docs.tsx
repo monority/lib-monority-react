@@ -10,14 +10,29 @@ const docData: DocPageData = {
     description:
         'Keyboard-first action palette for jumping, searching, and triggering common product tasks.',
     importCode: "import { CommandPalette } from '@monority/ui'",
-    usageCode: `<CommandPalette
-  open={open}
-  onClose={() => setOpen(false)}
-  items={[
-    { value: 'components', label: 'Open components index' },
-    { value: 'tokens', label: 'Inspect design tokens' },
-  ]}
-/>`,
+    usageCode: `const [open, setOpen] = useState(false)
+
+const items = [
+  {
+    value: 'components',
+    label: 'Open components index',
+    description: 'Jump to the full component catalog and recent additions.',
+    onSelect: () => setOpen(false),
+  },
+  {
+    value: 'tokens',
+    label: 'Inspect design tokens',
+    description: 'Browse surface, spacing, and typography foundations.',
+    onSelect: () => setOpen(false),
+  },
+]
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Open command palette</Button>
+    <CommandPalette open={open} onClose={() => setOpen(false)} items={items} />
+  </>
+)`,
     preview: () => <CommandPaletteBasicExample />,
     examples: [
         { title: 'With groups', content: <CommandPaletteWithGroupsExample /> },
@@ -64,9 +79,9 @@ const docData: DocPageData = {
         '[data-open]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface',
-        '--mr-bg-control',
+        '--mr-bg-surface',
         '--mr-border-subtle',
         '--mr-border-strong',
         '--mr-radius-md',

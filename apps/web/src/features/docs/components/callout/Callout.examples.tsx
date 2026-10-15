@@ -1,4 +1,6 @@
 import { Callout } from '@monority/ui/callout'
+import { Kbd } from '@monority/ui/kbd'
+import { Text } from '@monority/ui/text'
 
 export function CalloutBasicExample() {
     return <Callout>API keys created before May 1 will rotate automatically this weekend.</Callout>
@@ -29,12 +31,12 @@ export function CalloutTonesExample() {
 export function CalloutWithChildrenExample() {
     return (
         <Callout title="Tip" tone="info">
-            <p>
-                You can use <strong>keyboard shortcuts</strong> to navigate faster.
-            </p>
-            <p style={{ marginTop: '0.5rem' }}>
-                Press <code>Ctrl+K</code> to open the command palette.
-            </p>
+            <Text>
+                You can use <Text.Strong>keyboard shortcuts</Text.Strong> to navigate faster.
+            </Text>
+            <Text style={{ marginTop: '0.5rem' }}>
+                Press <Kbd>Ctrl+K</Kbd> to open the command palette.
+            </Text>
         </Callout>
     )
 }

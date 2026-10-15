@@ -20,7 +20,7 @@ const docData: DocPageData = {
     cssHooks: ['.mr-async-state-notice', '[data-state]'],
     tokens: [
         '--mr-danger-text',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
         '--mr-space-1',
         '--mr-space-2',
         '--mr-duration-enter',

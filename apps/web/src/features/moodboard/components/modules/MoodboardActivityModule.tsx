@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Text, Timeline, Toolbar } from '@monority/ui'
+import { Badge, Button, Card, Text, Timeline, Title, Toolbar } from '@monority/ui'
 
 interface ActivityItem {
     id: string
@@ -54,7 +54,9 @@ export function MoodboardActivityModule() {
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Card.Header>
                 <div>
-                    <Card.Title>Activity & Notifications</Card.Title>
+                    <Title as="h3" size="sm" className="mr-card__title">
+                        Activity & Notifications
+                    </Title>
                     <Card.Description>
                         Real-time workspace events and automated triggers
                     </Card.Description>

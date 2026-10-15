@@ -52,9 +52,9 @@ const docData: DocPageData = {
         '--mr-success',
         '--mr-warning',
         '--mr-danger',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
     ],
     a11y: [
         'Renders a static section: add role="alert" yourself for time-sensitive messages.',

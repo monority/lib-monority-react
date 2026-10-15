@@ -129,6 +129,15 @@
         border-block-start: 1px solid var(--mr-border-subtle);
         font-size: var(--mr-font-size-md);
         color: var(--mr-text-primary);
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--mr-space-1)));
+        transition: opacity var(--mr-duration-panel) ease, transform var(--mr-duration-panel)
+            cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    :where(.mr-accordion__item)[data-open] :where(.mr-accordion__body) {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     /* Tailles */
@@ -164,8 +173,10 @@
     @media (prefers-reduced-motion: reduce) {
         :where(.mr-accordion__trigger),
         :where(.mr-accordion__icon),
-        :where(.mr-accordion__panel) {
+        :where(.mr-accordion__panel),
+        :where(.mr-accordion__body) {
             transition: none;
+            transform: none;
         }
     }
 }

@@ -186,4 +186,33 @@ describe('Modal', () => {
         )
         expect(document.body.querySelector('.mr-modal__footer')?.textContent).toBe('Action')
     })
+
+    it('renders compound subcomponents directly', () => {
+        const onClose = vi.fn()
+        render(
+            <Modal open onClose={onClose}>
+                <Modal.Header>
+                    <Modal.Title>Compound Title</Modal.Title>
+                    <Modal.Description>Compound Description</Modal.Description>
+                    <Modal.Close onClose={onClose}>Dismiss</Modal.Close>
+                </Modal.Header>
+                <Modal.Body>Body content</Modal.Body>
+                <Modal.Footer>
+                    <button type="button">Confirm</button>
+                </Modal.Footer>
+            </Modal>
+        )
+
+        expect(document.body.querySelector('.mr-modal__title')?.textContent).toBe('Compound Title')
+        expect(document.body.querySelector('.mr-modal__description')?.textContent).toBe(
+            'Compound Description'
+        )
+        expect(document.body.querySelector('.mr-modal__body')?.textContent).toBe('Body content')
+        expect(document.body.querySelector('.mr-modal__footer button')?.textContent).toBe('Confirm')
+
+        act(() => {
+            document.body.querySelector<HTMLButtonElement>('.mr-modal__close')?.click()
+        })
+        expect(onClose).toHaveBeenCalledTimes(1)
+    })
 })

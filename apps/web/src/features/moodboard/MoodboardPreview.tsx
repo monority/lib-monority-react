@@ -7,7 +7,11 @@ export function MoodboardPreview() {
     const [activeTab, setActiveTab] = useState('dashboard')
 
     return (
-        <div data-testid="moodboard-preview" style={{ width: '100%' }}>
+        <section
+            data-testid="moodboard-preview"
+            aria-label="Aperçu du Studio"
+            style={{ width: '100%' }}
+        >
             <Container size="xl" style={{ paddingBlock: 'var(--mr-space-6) var(--mr-space-8)' }}>
                 <Stack gap="lg">
                     <Tabs
@@ -33,6 +37,6 @@ export function MoodboardPreview() {
                     )}
                 </Stack>
             </Container>
-        </div>
+        </section>
     )
 }

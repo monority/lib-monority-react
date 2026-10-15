@@ -60,9 +60,9 @@ const docData: DocPageData = {
     ],
     cssHooks: ['.mr-toggle', '[data-state]', '[data-variant]', '[data-size]'],
     tokens: [
-        '--mr-bg-accent-soft',
-        '--mr-fg-accent',
-        '--mr-fg-muted',
+        '--mr-accent-subtle',
+        '--mr-accent-text',
+        '--mr-text-secondary',
         '--mr-border-subtle',
         '--mr-border-strong',
         '--mr-border-accent',

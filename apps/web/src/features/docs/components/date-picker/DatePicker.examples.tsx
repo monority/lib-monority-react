@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { DatePicker } from '@monority/ui/date-picker'
+import { Text } from '@monority/ui/text'
 
 export function DatePickerBasicExample() {
     return <DatePicker label="Date" />
@@ -41,15 +42,9 @@ export function DatePickerControlledExample() {
                 onChange={(d) => setDate(d)}
             />
             {date && (
-                <p
-                    style={{
-                        marginTop: '0.5rem',
-                        fontSize: '0.875rem',
-                        color: 'var(--mr-fg-muted)',
-                    }}
-                >
+                <Text.Muted size="sm" style={{ display: 'block', marginTop: '0.5rem' }}>
                     Selected: {date.toLocaleDateString()}
-                </p>
+                </Text.Muted>
             )}
         </div>
     )

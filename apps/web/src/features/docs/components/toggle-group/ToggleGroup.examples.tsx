@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ToggleGroup } from '@monority/ui/toggle-group'
+import { Text } from '@monority/ui/text'
 
 const formatItems = [
     { value: 'bold', label: 'Bold' },
@@ -29,9 +30,7 @@ export function ToggleGroupSinglePreview() {
                 value={value}
                 onValueChange={(next) => setValue(next as string)}
             />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                Status: {value || 'all'}
-            </span>
+            <Text.Small>Status: {value || 'all'}</Text.Small>
         </div>
     )
 }
@@ -46,9 +45,7 @@ export function ToggleGroupMultipleExample() {
                 value={value}
                 onValueChange={(next) => setValue(next as string[])}
             />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                Formatting: {value.length > 0 ? value.join(', ') : 'none'}
-            </span>
+            <Text.Small>Formatting: {value.length > 0 ? value.join(', ') : 'none'}</Text.Small>
         </div>
     )
 }
@@ -62,9 +59,7 @@ export function ToggleGroupDisabledExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
             <ToggleGroup items={itemsWithDisabled} type="single" />
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                List view is unavailable for this dataset
-            </span>
+            <Text.Small>List view is unavailable for this dataset</Text.Small>
         </div>
     )
 }
@@ -77,29 +72,15 @@ export function ToggleGroupVariantsExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
             <div>
-                <span
-                    style={{
-                        fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
-                        display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
-                    }}
-                >
+                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
                     Default
-                </span>
+                </Text.Small>
                 <ToggleGroup items={alignItems} variant="default" />
             </div>
             <div>
-                <span
-                    style={{
-                        fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
-                        display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
-                    }}
-                >
+                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
                     Outline
-                </span>
+                </Text.Small>
                 <ToggleGroup items={alignItems} variant="outline" />
             </div>
         </div>
@@ -110,42 +91,21 @@ export function ToggleGroupSizesExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
             <div>
-                <span
-                    style={{
-                        fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
-                        display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
-                    }}
-                >
+                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
                     Small
-                </span>
+                </Text.Small>
                 <ToggleGroup items={alignItems} size="sm" />
             </div>
             <div>
-                <span
-                    style={{
-                        fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
-                        display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
-                    }}
-                >
+                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
                     Medium
-                </span>
+                </Text.Small>
                 <ToggleGroup items={alignItems} size="md" />
             </div>
             <div>
-                <span
-                    style={{
-                        fontSize: 'var(--mr-text-sm)',
-                        color: 'var(--mr-fg-muted)',
-                        display: 'block',
-                        marginBottom: 'var(--mr-space-2)',
-                    }}
-                >
+                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
                     Large
-                </span>
+                </Text.Small>
                 <ToggleGroup items={alignItems} size="lg" />
             </div>
         </div>

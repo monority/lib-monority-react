@@ -1,2 +1,15 @@
-export { Accordion } from './Accordion'
-export type { AccordionProps, AccordionItem, AccordionSize } from './Accordion.types'
+export {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from './Accordion'
+
+export type {
+    AccordionProps,
+    AccordionItemData,
+    AccordionSize,
+    AccordionItemProps,
+    AccordionTriggerProps,
+    AccordionContentProps,
+} from './Accordion.types'

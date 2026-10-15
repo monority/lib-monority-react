@@ -1,6 +1,7 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ProgressAnimatedExample,
+    ProgressBasicExample,
     ProgressIndeterminateExample,
     ProgressRealisticServerExample,
     ProgressStripedExample,
@@ -15,11 +16,22 @@ const docData: DocPageData = {
         'Progress indicator for uploads, migrations, and task completion with determinate, indeterminate, and animated striped modes.',
     importCode: "import { Progress } from '@monority/ui/progress'",
     usageCode: `<Progress value={68} label="Release migration" />`,
-    preview: () => <ProgressRealisticServerExample />,
+    preview: () => <ProgressBasicExample />,
     examples: [
         {
             title: 'Flux asynchrone réaliste (Règle d’or)',
             content: <ProgressRealisticServerExample />,
+            code: `// 1. Démarrage instantané pour valider l'action utilisateur
+// 2. Montée rapide puis décélération vers 85%
+// 3. Stagnation vers 85-88% en attente serveur (stries animées)
+// 4. Téléportation directe de 88% à 100% au tout dernier moment
+<Progress
+  value={progress}
+  label={status === 'done' ? 'Déploiement achevé avec succès' : 'Synchronisation en cours...'}
+  tone={status === 'done' ? 'success' : 'accent'}
+  striped={status === 'running'}
+  animated={status === 'running'}
+/>`,
         },
         { title: 'Stries et animation continue', content: <ProgressStripedExample /> },
         { title: 'Animation cyclique', content: <ProgressAnimatedExample /> },
@@ -88,11 +100,11 @@ const docData: DocPageData = {
         '[data-animated]',
     ],
     tokens: [
-        '--mr-accent',
+        '--mr-accent-solid',
         '--mr-success',
         '--mr-warning',
         '--mr-danger',
-        '--mr-bg-control',
+        '--mr-bg-surface',
         '--mr-border-subtle',
         '--mr-radius-full',
         '--mr-duration-base',

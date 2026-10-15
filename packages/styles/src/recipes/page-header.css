@@ -10,6 +10,32 @@
         padding-block-end: var(--mr-space-4);
     }
 
+    :where(.mr-page-header:has(> .mr-page-header__main)) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: var(--mr-space-3);
+    }
+
+    :where(.mr-page-header__main) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+        min-inline-size: 0;
+        flex: 1 1 0%;
+    }
+
+    :where(.mr-page-header__meta) {
+        display: flex;
+        align-items: center;
+        gap: var(--mr-space-3);
+        flex-wrap: wrap;
+        margin-block-start: var(--mr-space-1);
+        color: var(--mr-text-secondary);
+        font-size: var(--mr-font-size-xs);
+    }
+
     :where(.mr-page-header__kicker) {
         font-family: var(--mr-font-family-mono);
         font-size: var(--mr-font-size-xs);

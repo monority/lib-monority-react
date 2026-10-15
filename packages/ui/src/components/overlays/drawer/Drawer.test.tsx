@@ -153,4 +153,35 @@ describe('Drawer', () => {
         const backdrop = document.body.querySelector('.mr-drawer__backdrop')
         expect(backdrop?.className).toContain('custom')
     })
+
+    it('renders compound subcomponents directly', () => {
+        const onClose = vi.fn()
+        render(
+            <Drawer open onClose={onClose}>
+                <Drawer.Header>
+                    <Drawer.Title>Compound Drawer</Drawer.Title>
+                    <Drawer.Description>Compound Details</Drawer.Description>
+                    <Drawer.Close onClose={onClose}>Dismiss</Drawer.Close>
+                </Drawer.Header>
+                <Drawer.Body>Body text</Drawer.Body>
+                <Drawer.Footer>
+                    <button type="button">Action</button>
+                </Drawer.Footer>
+            </Drawer>
+        )
+
+        expect(document.body.querySelector('.mr-drawer__title')?.textContent).toBe(
+            'Compound Drawer'
+        )
+        expect(document.body.querySelector('.mr-drawer__description')?.textContent).toBe(
+            'Compound Details'
+        )
+        expect(document.body.querySelector('.mr-drawer__body')?.textContent).toBe('Body text')
+        expect(document.body.querySelector('.mr-drawer__footer button')?.textContent).toBe('Action')
+
+        act(() => {
+            document.body.querySelector<HTMLButtonElement>('.mr-drawer__close')?.click()
+        })
+        expect(onClose).toHaveBeenCalledTimes(1)
+    })
 })

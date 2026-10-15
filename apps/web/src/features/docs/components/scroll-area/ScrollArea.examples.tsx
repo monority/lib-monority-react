@@ -1,9 +1,10 @@
 import { ScrollArea } from '@monority/ui/scroll-area'
+import { Text } from '@monority/ui/text'
 
 const longText = Array.from({ length: 30 }, (_, i) => (
-    <p key={i} style={{ margin: '0.5rem 0', color: 'var(--mr-fg-muted)' }}>
+    <Text.Muted key={i} style={{ margin: '0.5rem 0', display: 'block' }}>
         Activity {i + 1} - Preview deployment completed for the documentation workspace.
-    </p>
+    </Text.Muted>
 ))
 
 const wideContent = (
@@ -14,7 +15,7 @@ const wideContent = (
                 style={{
                     minWidth: '120px',
                     padding: '1rem',
-                    background: 'var(--mr-bg-control)',
+                    background: 'var(--mr-bg-surface)',
                     borderRadius: 'var(--mr-radius-md)',
                     textAlign: 'center',
                 }}

@@ -1,15 +1,4 @@
-import {
-    Field,
-    FieldContent,
-    FieldDescription,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-    FieldLegend,
-    FieldSeparator,
-    FieldSet,
-    FieldTitle,
-} from '@monority/ui/field'
+import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
 
 export function FieldBasicExample() {
@@ -54,44 +43,46 @@ export function FieldStandaloneExample() {
 
 export function FieldCompositionExample() {
     return (
-        <div className="mr-field">
-            <FieldLabel htmlFor="composed-input" required>
+        <Field>
+            <Field.Label htmlFor="composed-input" required>
                 Billing email
-            </FieldLabel>
-            <FieldContent>
+            </Field.Label>
+            <Field.Content>
                 <Input id="composed-input" type="email" defaultValue="billing@" aria-invalid />
-            </FieldContent>
-            <FieldDescription>Invoices and tax receipts are sent to this address.</FieldDescription>
-            <FieldError>Enter a complete email address.</FieldError>
-        </div>
+            </Field.Content>
+            <Field.Description>
+                Invoices and tax receipts are sent to this address.
+            </Field.Description>
+            <Field.Error>Enter a complete email address.</Field.Error>
+        </Field>
     )
 }
 
 export function FieldGroupExample() {
     return (
-        <FieldGroup direction="row">
+        <Field.Group direction="row">
             <Field label="First name" className="flex-1">
                 <Input defaultValue="Maya" />
             </Field>
             <Field label="Last name" className="flex-1">
                 <Input defaultValue="Chen" />
             </Field>
-        </FieldGroup>
+        </Field.Group>
     )
 }
 
 export function FieldSetExample() {
     return (
-        <FieldSet>
-            <FieldLegend required>Billing address</FieldLegend>
-            <FieldTitle>Company details</FieldTitle>
+        <Field.Set>
+            <Field.Legend required>Billing address</Field.Legend>
+            <Field.Title>Company details</Field.Title>
             <Field label="Street">
                 <Input defaultValue="24 Rue Lafayette" />
             </Field>
-            <FieldSeparator />
+            <Field.Separator />
             <Field label="City">
                 <Input defaultValue="Paris" />
             </Field>
-        </FieldSet>
+        </Field.Set>
     )
 }

@@ -70,7 +70,7 @@ const docData: DocPageData = {
         '[data-state]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
         '--mr-border-subtle',
         '--mr-border-strong',

@@ -24,8 +24,41 @@ const docData: DocPageData = {
 </FilterBar>`,
     preview: () => <FilterBarBasicExample />,
     examples: [
-        { title: 'With controls', content: <FilterBarWithControlsExample /> },
-        { title: 'With reset', content: <FilterBarWithResetExample /> },
+        {
+            title: 'With controls',
+            content: <FilterBarWithControlsExample />,
+            code: `<FilterBar>
+  <FilterBar.Main>
+    <FilterBar.Leading>
+      <Input placeholder="Search components..." />
+    </FilterBar.Leading>
+    <Select aria-label="Status filter" defaultValue="all">
+      <option value="all">All statuses</option>
+      <option value="stable">Stable</option>
+      <option value="beta">Beta</option>
+      <option value="deprecated">Deprecated</option>
+    </Select>
+    <Select aria-label="Platform filter" defaultValue="all">
+      <option value="all">All platforms</option>
+      <option value="web">Web</option>
+      <option value="mobile">Mobile</option>
+    </Select>
+  </FilterBar.Main>
+</FilterBar>`,
+        },
+        {
+            title: 'With reset',
+            content: <FilterBarWithResetExample />,
+            code: `<FilterBar>
+  <FilterBar.Main>
+    <FilterBar.Leading>
+      <Input value="filtered query" />
+    </FilterBar.Leading>
+    <Button size="sm" variant="ghost">Reset all</Button>
+  </FilterBar.Main>
+  <FilterBar.Meta>3 active filters</FilterBar.Meta>
+</FilterBar>`,
+        },
     ],
     props: [
         {
@@ -79,8 +112,8 @@ const docData: DocPageData = {
     tokens: [
         '--mr-space-*',
         '--mr-border-subtle',
-        '--mr-bg-surface-elevated',
-        '--mr-bg-control',
+        '--mr-bg-raised',
+        '--mr-bg-surface',
         '--mr-accent-subtle',
         '--mr-accent-text',
     ],

@@ -6,13 +6,22 @@ const docData: DocPageData = {
     description:
         'Focused dialog surface for short decision flows, confirmation, and compact editing tasks.',
     importCode: "import { Modal } from '@monority/ui/modal'",
-    usageCode: `import { useState } from 'react'
+    usageCode: `const [open, setOpen] = useState(false)
 
-const [open, setOpen] = useState(false)
-
-<Modal open={open} title="Approve release notes" onClose={() => setOpen(false)}>
-  <p>Review the final summary before publishing.</p>
-</Modal>`,
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Open review dialog</Button>
+    <Modal open={open} title="Approve release notes" onClose={() => setOpen(false)}>
+      <p>Review the final release summary before publishing it to the docs home.</p>
+      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+        <Button variant="secondary" onClick={() => setOpen(false)}>
+          Keep editing
+        </Button>
+        <Button onClick={() => setOpen(false)}>Publish</Button>
+      </div>
+    </Modal>
+  </>
+)`,
     preview: () => <ModalBasicExample />,
     examples: [
         { title: 'With form', content: <ModalWithFormExample /> },
@@ -52,7 +61,7 @@ const [open, setOpen] = useState(false)
     ],
     tokens: [
         '--mr-z-overlay',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-shadow-md',
         '--mr-radius-md',

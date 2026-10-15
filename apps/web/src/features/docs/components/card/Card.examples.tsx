@@ -1,14 +1,20 @@
+import { Badge } from '@monority/ui/badge'
 import { Card } from '@monority/ui/card'
+import { Text } from '@monority/ui/text'
 
 export function CardBasicExample() {
     return (
         <Card padding="lg">
-            <div className="mr-card__header">
-                <strong className="mr-card__title">Project health</strong>
-                <span>Live</span>
-            </div>
-            <p className="mr-card__description">Stable release candidate, no blocking issues.</p>
-            <div className="mr-card__footer">Updated 5 minutes ago</div>
+            <Card.Header>
+                <Card.Title>Project health</Card.Title>
+                <Badge variant="default">Live</Badge>
+            </Card.Header>
+            <Card.Description>Stable release candidate, no blocking issues.</Card.Description>
+            <Card.Footer>
+                <Text tone="muted" size="sm">
+                    Updated 5 minutes ago
+                </Text>
+            </Card.Footer>
         </Card>
     )
 }
@@ -17,13 +23,16 @@ export function CardPaddingExample() {
     return (
         <div style={{ display: 'flex', gap: 'var(--mr-space-5)', flexWrap: 'wrap' }}>
             <Card padding="sm" style={{ flex: '1 1 10rem' }}>
-                Compact
+                <Card.Title>Compact</Card.Title>
+                <Card.Description>Padding sm</Card.Description>
             </Card>
             <Card padding="md" style={{ flex: '1 1 10rem' }}>
-                Default
+                <Card.Title>Default</Card.Title>
+                <Card.Description>Padding md</Card.Description>
             </Card>
             <Card padding="lg" style={{ flex: '1 1 10rem' }}>
-                Spacious
+                <Card.Title>Spacious</Card.Title>
+                <Card.Description>Padding lg</Card.Description>
             </Card>
         </div>
     )
@@ -33,10 +42,12 @@ export function CardInteractiveExample() {
     return (
         <div style={{ display: 'flex', gap: 'var(--mr-space-5)', flexWrap: 'wrap' }}>
             <Card padding="md" interactive style={{ flex: '1 1 12rem' }}>
-                Deployment summary
+                <Card.Title>Deployment summary</Card.Title>
+                <Card.Description>Interactive clickable card</Card.Description>
             </Card>
             <Card padding="md" style={{ flex: '1 1 12rem' }}>
-                Static notes
+                <Card.Title>Static notes</Card.Title>
+                <Card.Description>Static view only</Card.Description>
             </Card>
         </div>
     )

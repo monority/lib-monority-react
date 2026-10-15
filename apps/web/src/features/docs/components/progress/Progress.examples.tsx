@@ -1,5 +1,6 @@
+import { Button } from '@monority/ui/button'
 import { Progress } from '@monority/ui/progress'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export function ProgressBasicExample() {
     return <Progress value={68} label="Release migration" />
@@ -91,12 +92,12 @@ export function ProgressRealisticServerExample() {
     const [progress, setProgress] = useState(0)
     const timersRef = useRef<number[]>([])
 
-    const clearTimers = () => {
+    const clearTimers = useCallback(() => {
         for (const id of timersRef.current) {
             window.clearTimeout(id)
         }
         timersRef.current = []
-    }
+    }, [])
 
     const startRealisticOperation = () => {
         clearTimers()
@@ -131,7 +132,7 @@ export function ProgressRealisticServerExample() {
 
     useEffect(() => {
         return () => clearTimers()
-    }, [])
+    }, [clearTimers])
 
     return (
         <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
@@ -149,31 +150,23 @@ export function ProgressRealisticServerExample() {
                 animated={status === 'running'}
             />
             <div style={{ display: 'flex', gap: 'var(--mr-space-2)', alignItems: 'center' }}>
-                <button
-                    type="button"
+                <Button
                     onClick={startRealisticOperation}
                     disabled={status === 'running'}
-                    className="mr-btn"
-                    data-variant="primary"
-                    data-size="sm"
+                    variant="primary"
+                    size="sm"
                 >
-                    <span className="mr-btn__label">
-                        {status === 'running'
-                            ? 'Opération en cours...'
-                            : 'Lancer déploiement réaliste'}
-                    </span>
-                </button>
+                    {status === 'running' ? 'Opération en cours...' : 'Lancer déploiement réaliste'}
+                </Button>
                 {status !== 'idle' && (
-                    <button
-                        type="button"
+                    <Button
                         onClick={reset}
                         disabled={status === 'running'}
-                        className="mr-btn"
-                        data-variant="ghost"
-                        data-size="sm"
+                        variant="ghost"
+                        size="sm"
                     >
-                        <span className="mr-btn__label">Réinitialiser</span>
-                    </button>
+                        Réinitialiser
+                    </Button>
                 )}
             </div>
         </div>

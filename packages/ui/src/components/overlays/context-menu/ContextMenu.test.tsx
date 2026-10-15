@@ -280,4 +280,34 @@ describe('ContextMenu', () => {
         const menuItems = document.body.querySelectorAll('[role="menuitem"]')
         expect(document.activeElement).toBe(menuItems[menuItems.length - 1])
     })
+
+    it('renders and operates with compound subcomponents', () => {
+        const onSelect = vi.fn()
+        render(
+            <ContextMenu defaultOpen>
+                <ContextMenu.Trigger>Zone</ContextMenu.Trigger>
+                <ContextMenu.Content>
+                    <ContextMenu.Label>Actions</ContextMenu.Label>
+                    <ContextMenu.Separator />
+                    <ContextMenu.Item value="edit" onSelect={onSelect}>
+                        Edit
+                    </ContextMenu.Item>
+                    <ContextMenu.Item value="delete" danger onSelect={onSelect}>
+                        Delete
+                    </ContextMenu.Item>
+                </ContextMenu.Content>
+            </ContextMenu>
+        )
+
+        expect(document.body.querySelector('.mr-context-menu__label')?.textContent).toBe('Actions')
+        expect(document.body.querySelector('.mr-context-menu__separator')).not.toBeNull()
+
+        const items = document.body.querySelectorAll('[role="menuitem"]')
+        expect(items).toHaveLength(2)
+
+        act(() => {
+            ;(items[0] as HTMLButtonElement).click()
+        })
+        expect(onSelect).toHaveBeenCalledWith('edit')
+    })
 })

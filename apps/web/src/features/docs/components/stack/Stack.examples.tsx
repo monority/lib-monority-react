@@ -1,12 +1,11 @@
 import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
 
 export function StackBasicExample() {
     return (
         <Stack data-surface="true">
-            <strong>Review checklist</strong>
-            <span style={{ color: 'var(--mr-fg-muted)' }}>
-                Spacing, tone, contrast, interaction.
-            </span>
+            <Text.Strong>Review checklist</Text.Strong>
+            <Text.Span tone="muted">Spacing, tone, contrast, interaction.</Text.Span>
         </Stack>
     )
 }

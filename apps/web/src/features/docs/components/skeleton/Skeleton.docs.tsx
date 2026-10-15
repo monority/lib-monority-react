@@ -21,7 +21,7 @@ const docData: DocPageData = {
     cssHooks: ['.mr-skeleton', '[data-size]'],
     tokens: [
         '--mr-bg-surface-strong',
-        '--mr-bg-control',
+        '--mr-bg-surface',
         '--mr-radius-sm',
         '--mr-duration-loop',
         '--mr-ease-in-out',

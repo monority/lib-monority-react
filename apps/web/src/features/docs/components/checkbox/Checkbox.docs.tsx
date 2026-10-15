@@ -101,12 +101,12 @@ const docData: DocPageData = {
         '[data-indeterminate]',
     ],
     tokens: [
-        '--mr-accent',
+        '--mr-accent-solid',
         '--mr-accent-contrast',
         '--mr-border-subtle',
-        '--mr-bg-control',
-        '--mr-fg-base',
-        '--mr-text-sm',
+        '--mr-bg-surface',
+        '--mr-text-primary',
+        '--mr-font-size-sm',
         '--mr-checkbox-size',
     ],
     a11y: [

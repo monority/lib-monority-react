@@ -1,4 +1,5 @@
 import { StatCard } from '@monority/ui/stat-card'
+import { Text } from '@monority/ui/text'
 
 export function StatCardBasicExample() {
     return (
@@ -63,11 +64,7 @@ export function StatCardWithFooterExample() {
             label="Open reviews"
             value="46"
             description="Pull requests waiting for owner approval."
-            footer={
-                <span style={{ fontSize: 'var(--mr-text-xs)', color: 'var(--mr-fg-muted)' }}>
-                    Updated 5 minutes ago
-                </span>
-            }
+            footer={<Text.Small>Updated 5 minutes ago</Text.Small>}
         />
     )
 }

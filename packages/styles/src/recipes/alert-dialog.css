@@ -57,7 +57,7 @@
         flex-direction: column;
         gap: var(--mr-space-4);
         outline: none;
-        animation: mr-alert-dialog-enter var(--mr-duration-panel) ease;
+        animation: mr-alert-dialog-enter var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     :where(.mr-alert-dialog)[data-tone='danger'] {
@@ -91,7 +91,8 @@
         color: var(--mr-text-secondary);
     }
 
-    :where(.mr-alert-dialog__actions) {
+    :where(.mr-alert-dialog__actions),
+    :where(.mr-alert-dialog__footer) {
         display: flex;
         align-items: center;
         justify-content: flex-end;

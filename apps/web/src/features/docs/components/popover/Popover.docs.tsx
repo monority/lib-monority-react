@@ -9,12 +9,12 @@ const docData: DocPageData = {
     title: 'Popover',
     description:
         'A contextual floating panel for compact detail, quick edits, and supplementary actions.',
-    importCode: "import { Popover } from '@monority/ui'",
+    importCode: "import { Popover } from '@monority/ui/popover'",
     usageCode: `<Popover trigger={<Button>Inspect token</Button>}>
-  <div>
-    <strong>Surface token</strong>
-    <p>Use elevated surfaces for contextual panels.</p>
-  </div>
+  <Stack gap="xs">
+    <Text.Strong size="sm">Surface token</Text.Strong>
+    <Text tone="muted" size="sm">Use elevated surfaces for contextual panels.</Text>
+  </Stack>
 </Popover>`,
     preview: () => <PopoverBasicExample />,
     examples: [
@@ -65,10 +65,10 @@ const docData: DocPageData = {
         '[data-side]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-shadow-md',
         '--mr-radius-md',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
         '--mr-space-*',
         '--mr-border-subtle',
     ],

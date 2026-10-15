@@ -88,48 +88,50 @@ export function MoodboardPage() {
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <AppHeader />
-            <DesignProvider config={config}>
-                <SidebarLayout
-                    sidebarWidth="lg"
-                    style={{
-                        flex: 1,
-                        minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))',
-                    }}
-                    data-testid="moodboard-page"
-                    sidebar={
-                        <MoodboardSidebar
-                            config={config}
-                            onConfig={updateConfig}
-                            onReset={handleReset}
-                            onCopy={handleCopy}
-                            copied={copied}
-                        />
-                    }
-                >
-                    <ThemeScope
-                        theme={config.theme}
-                        density={density}
-                        brand={config.brand === 'studio' ? 'studio' : undefined}
+            <main id="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <DesignProvider config={config}>
+                    <SidebarLayout
+                        sidebarWidth="lg"
                         style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'minmax(0, 1fr)',
-                            minInlineSize: 0,
-                            backgroundColor: 'var(--mr-bg-canvas)',
-                            color: 'var(--mr-text-primary)',
-                            ...resolved.style,
+                            flex: 1,
+                            minBlockSize: 'calc(100dvh - var(--app-header-height, 3.5rem))',
                         }}
-                        data-testid="moodboard-preview-scope"
-                        data-design-theme={config.theme}
-                        data-design-accent={config.accent}
-                        data-design-chart-palette={config.chartPalette}
-                        data-design-radius={config.radius}
-                        data-design-spacing={config.spacing}
-                        data-design-density={config.density}
+                        data-testid="moodboard-page"
+                        sidebar={
+                            <MoodboardSidebar
+                                config={config}
+                                onConfig={updateConfig}
+                                onReset={handleReset}
+                                onCopy={handleCopy}
+                                copied={copied}
+                            />
+                        }
                     >
-                        <MoodboardPreview />
-                    </ThemeScope>
-                </SidebarLayout>
-            </DesignProvider>
+                        <ThemeScope
+                            theme={config.theme}
+                            density={density}
+                            brand={config.brand === 'studio' ? 'studio' : undefined}
+                            style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'minmax(0, 1fr)',
+                                minInlineSize: 0,
+                                backgroundColor: 'var(--mr-bg-canvas)',
+                                color: 'var(--mr-text-primary)',
+                                ...resolved.style,
+                            }}
+                            data-testid="moodboard-preview-scope"
+                            data-design-theme={config.theme}
+                            data-design-accent={config.accent}
+                            data-design-chart-palette={config.chartPalette}
+                            data-design-radius={config.radius}
+                            data-design-spacing={config.spacing}
+                            data-design-density={config.density}
+                        >
+                            <MoodboardPreview />
+                        </ThemeScope>
+                    </SidebarLayout>
+                </DesignProvider>
+            </main>
         </div>
     )
 }

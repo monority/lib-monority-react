@@ -26,9 +26,67 @@ const docData: DocPageData = {
 <NavigationMenu items={items} />`,
     preview: () => <NavigationMenuBasicExample />,
     examples: [
-        { title: 'With sub-items', content: <NavigationMenuWithSubItemsExample /> },
-        { title: 'With icons', content: <NavigationMenuWithIconsExample /> },
-        { title: 'Disabled items', content: <NavigationMenuDisabledExample /> },
+        {
+            title: 'With sub-items',
+            content: <NavigationMenuWithSubItemsExample />,
+            code: `const items = [
+  { label: 'Overview', href: '/overview' },
+  {
+    label: 'Components',
+    items: [
+      { label: 'Inputs', href: '/components/inputs', description: 'Fields, validation, and entry patterns.' },
+      { label: 'Navigation', href: '/components/navigation', description: 'Menus, tabs, pagination, and shells.' },
+      { label: 'Feedback', href: '/components/feedback', description: 'Banners, callouts, toasts, and empty states.' },
+    ],
+  },
+  {
+    label: 'Resources',
+    items: [
+      { label: 'Guidelines', href: '/guidelines', description: 'Layout, spacing, and content hierarchy rules.' },
+      { label: 'Examples', href: '/examples', description: 'Reference compositions for product surfaces.' },
+    ],
+  },
+  { label: 'Changelog', href: '/changelog' },
+]
+
+<NavigationMenu items={items} />`,
+        },
+        {
+            title: 'With icons',
+            content: <NavigationMenuWithIconsExample />,
+            code: `const items = [
+  { label: 'Library', href: '/library', icon: <span>L</span> },
+  { label: 'Themes', href: '/themes', icon: <span>T</span> },
+  {
+    label: 'Settings',
+    icon: <span>S</span>,
+    items: [
+      { label: 'Brand', href: '/settings/brand', icon: <span>B</span>, description: 'Logos, color roles, and typography.' },
+      { label: 'Publishing', href: '/settings/publishing', icon: <span>P</span>, description: 'Release flow, versions, and package visibility.' },
+    ],
+  },
+]
+
+<NavigationMenu items={items} />`,
+        },
+        {
+            title: 'Disabled items',
+            content: <NavigationMenuDisabledExample />,
+            code: `const items = [
+  { label: 'Overview', href: '/overview' },
+  { label: 'Beta', href: '/beta', disabled: true },
+  {
+    label: 'Labs',
+    disabled: true,
+    items: [
+      { label: 'Experimental grid', href: '/labs/grid', description: 'Coming soon.' },
+    ],
+  },
+  { label: 'Pricing', href: '/pricing' },
+]
+
+<NavigationMenu items={items} />`,
+        },
     ],
     props: [
         {
@@ -84,18 +142,18 @@ const docData: DocPageData = {
         '--mr-radius-sm',
         '--mr-radius-md',
         '--mr-radius-full',
-        '--mr-text-xs',
-        '--mr-text-sm',
-        '--mr-fg-muted',
-        '--mr-fg-base',
-        '--mr-bg-surface-elevated',
+        '--mr-font-size-xs',
+        '--mr-font-size-sm',
+        '--mr-text-secondary',
+        '--mr-text-primary',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-bg-accent-soft',
+        '--mr-accent-subtle',
         '--mr-border-subtle',
         '--mr-shadow-xs',
         '--mr-shadow-md',
         '--mr-z-dropdown',
-        '--mr-accent',
+        '--mr-accent-solid',
     ],
     a11y: [
         'Root uses role="navigation" with aria-label="Main navigation".',

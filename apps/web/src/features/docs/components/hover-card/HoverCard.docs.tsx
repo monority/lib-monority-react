@@ -94,11 +94,11 @@ const docData: DocPageData = {
         '[data-align]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-shadow-md',
         '--mr-radius-md',
-        '--mr-text-sm',
+        '--mr-font-size-sm',
     ],
     a11y: [
         'Opens on hover with configurable delay.',

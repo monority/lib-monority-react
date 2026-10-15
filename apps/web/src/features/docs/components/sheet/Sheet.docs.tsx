@@ -5,10 +5,37 @@ const docData: DocPageData = {
     title: 'Sheet',
     description:
         "Volet coulissant ancrable sur les 4 cotes de l'ecran pour les flux secondaires denses, formulaires d'edition ou panneaux d'inspection.",
-    importCode: "import { Sheet } from '@monority/ui'",
-    usageCode: `<Sheet open={open} title="Edition du profil" side="right" onClose={() => setOpen(false)}>
-  <p>Contenu et champs de formulaire...</p>
-</Sheet>`,
+    importCode: "import { Sheet } from '@monority/ui/sheet'",
+    usageCode: `const [open, setOpen] = useState(false)
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Ouvrir le volet d'edition</Button>
+    <Sheet
+      open={open}
+      title="Edition du profil"
+      description="Modifiez vos informations d'utilisateur puis enregistrez."
+      onClose={() => setOpen(false)}
+      footer={
+        <>
+          <Button variant="ghost" onClick={() => setOpen(false)}>Annuler</Button>
+          <Button variant="primary" onClick={() => setOpen(false)}>Enregistrer</Button>
+        </>
+      }
+    >
+      <Stack gap="md">
+        <label>
+          <span>Nom complet</span>
+          <Input defaultValue="Alexandre Martin" />
+        </label>
+        <label>
+          <span>Adresse courriel</span>
+          <Input defaultValue="alexandre@monority.dev" type="email" />
+        </label>
+      </Stack>
+    </Sheet>
+  </>
+)`,
     preview: () => <SheetBasicExample />,
     examples: [
         { title: 'Ancrage sur les 4 cotes (Sides)', content: <SheetSidesExample /> },

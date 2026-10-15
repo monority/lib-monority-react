@@ -74,7 +74,12 @@ const docData: DocPageData = {
         '[data-dragging]',
         '[data-active]',
     ],
-    tokens: ['--mr-bg-surface', '--mr-bg-surface-strong', '--mr-border-subtle', '--mr-fg-muted'],
+    tokens: [
+        '--mr-bg-surface',
+        '--mr-bg-surface-strong',
+        '--mr-border-subtle',
+        '--mr-text-secondary',
+    ],
     a11y: [
         'Handles use role="separator" with aria-orientation matching the group direction.',
         'Handles are keyboard-focusable (tabIndex=0) and respond to arrow keys.',

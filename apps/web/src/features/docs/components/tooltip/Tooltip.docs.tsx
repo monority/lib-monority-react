@@ -24,8 +24,8 @@ const docData: DocPageData = {
     cssHooks: ['.mr-tooltip', '.mr-tooltip__trigger', '.mr-tooltip__content', '[data-hidden]'],
     tokens: [
         '--mr-bg-surface-strong',
-        '--mr-fg-strong',
-        '--mr-text-xs',
+        '--mr-text-primary',
+        '--mr-font-size-xs',
         '--mr-radius-sm',
         '--mr-shadow-sm',
     ],

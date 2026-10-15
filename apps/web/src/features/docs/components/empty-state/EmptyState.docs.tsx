@@ -63,10 +63,10 @@ const docData: DocPageData = {
     ],
     tokens: [
         '--mr-border-subtle',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-bg-surface-strong',
-        '--mr-fg-strong',
-        '--mr-fg-muted',
+        '--mr-text-primary',
+        '--mr-text-secondary',
     ],
     a11y: [
         'Use a clear heading for the empty state message.',

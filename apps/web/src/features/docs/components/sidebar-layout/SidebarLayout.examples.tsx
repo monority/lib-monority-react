@@ -1,31 +1,30 @@
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
+import { Text } from '@monority/ui/text'
 
 export function SidebarLayoutBasicExample() {
     return (
         <SidebarLayout
             sidebar={
                 <nav aria-label="Project navigation">
-                    <div
-                        style={{
-                            fontSize: '0.75rem',
-                            color: 'var(--mr-fg-muted)',
-                            marginBottom: '0.75rem',
-                        }}
-                    >
+                    <Text.Small style={{ display: 'block', marginBottom: '0.75rem' }}>
                         Workspace
-                    </div>
-                    <div style={{ fontWeight: 650 }}>Overview</div>
-                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-fg-muted)' }}>Releases</div>
-                    <div style={{ marginTop: '0.5rem', color: 'var(--mr-fg-muted)' }}>Settings</div>
+                    </Text.Small>
+                    <Text.Strong style={{ display: 'block' }}>Overview</Text.Strong>
+                    <Text.Muted style={{ display: 'block', marginTop: '0.5rem' }}>
+                        Releases
+                    </Text.Muted>
+                    <Text.Muted style={{ display: 'block', marginTop: '0.5rem' }}>
+                        Settings
+                    </Text.Muted>
                 </nav>
             }
-            header={<strong>Project shell</strong>}
+            header={<Text.Strong>Project shell</Text.Strong>}
         >
             <div>
                 <h3 style={{ margin: 0 }}>Main area</h3>
-                <p style={{ margin: '0.5rem 0 0', color: 'var(--mr-fg-muted)' }}>
+                <Text.Muted style={{ display: 'block', margin: '0.5rem 0 0' }}>
                     Sidebar stays contextual, content stays readable.
-                </p>
+                </Text.Muted>
             </div>
         </SidebarLayout>
     )
@@ -36,27 +35,29 @@ export function SidebarLayoutWithContentExample() {
         <SidebarLayout
             sidebar={
                 <nav aria-label="Dashboard navigation">
-                    <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Navigation</div>
-                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
+                    <Text.Strong style={{ display: 'block', marginBottom: '0.5rem' }}>
+                        Navigation
+                    </Text.Strong>
+                    <Text.Muted size="sm" style={{ display: 'block' }}>
                         Dashboard
-                    </div>
-                    <div style={{ fontSize: '0.875rem', color: 'var(--mr-fg-muted)' }}>
+                    </Text.Muted>
+                    <Text.Muted size="sm" style={{ display: 'block' }}>
                         Settings
-                    </div>
+                    </Text.Muted>
                 </nav>
             }
             header={
                 <>
-                    <strong>Analytics workspace</strong>
-                    <span style={{ color: 'var(--mr-fg-muted)', fontSize: 'var(--mr-text-sm)' }}>
-                        Updated 5 min ago
-                    </span>
+                    <Text.Strong>Analytics workspace</Text.Strong>
+                    <Text.Muted size="sm">Updated 5 min ago</Text.Muted>
                 </>
             }
         >
             <main>
                 <h2 style={{ margin: 0 }}>Main content</h2>
-                <p style={{ color: 'var(--mr-fg-muted)' }}>Page content goes here.</p>
+                <Text.Muted style={{ display: 'block', marginTop: '0.5rem' }}>
+                    Page content goes here.
+                </Text.Muted>
             </main>
         </SidebarLayout>
     )

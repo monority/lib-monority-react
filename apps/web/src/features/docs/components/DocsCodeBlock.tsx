@@ -29,7 +29,11 @@ export function DocsCodeBlock({ children, className, language = 'tsx' }: DocsCod
     }, [children])
 
     return (
-        <PreCode className={className} codeRef={ref} language={language}>
+        <PreCode
+            className={className ? `${className} docs-code-pre` : 'docs-code-pre'}
+            codeRef={ref}
+            language={language}
+        >
             {children}
         </PreCode>
     )

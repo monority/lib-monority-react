@@ -28,7 +28,7 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-primary);
         outline: none;
-        animation: mr-popover-enter var(--mr-duration-state) ease;
+        animation: mr-popover-enter var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1);
         transform-origin: top;
     }
 

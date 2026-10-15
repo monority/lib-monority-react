@@ -1,4 +1,17 @@
-import { Button, Grid, PageHeader, Stack, StatCard, Topbar } from '@monority/ui'
+import { useState } from 'react'
+import {
+    Badge,
+    Button,
+    Drawer,
+    Grid,
+    InlineAlert,
+    Modal,
+    PageHeader,
+    Stack,
+    StatCard,
+    Toast,
+    Topbar,
+} from '@monority/ui'
 import { MoodboardTelemetryChart } from './MoodboardTelemetryChart'
 import {
     MoodboardActivityModule,
@@ -14,6 +27,20 @@ import {
 } from './modules'
 
 export function MoodboardDashboardView() {
+    const [isDeployModalOpen, setIsDeployModalOpen] = useState(false)
+    const [isInspectDrawerOpen, setIsInspectDrawerOpen] = useState(false)
+    const [isDeploying, setIsDeploying] = useState(false)
+    const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+    const handleConfirmDeploy = () => {
+        setIsDeploying(true)
+        setTimeout(() => {
+            setIsDeploying(false)
+            setIsDeployModalOpen(false)
+            setToastMessage('Déploiement v1.4.2 amorcé avec succès sur 24 nœuds périphériques.')
+        }, 700)
+    }
+
     return (
         <Stack gap="xl">
             {/* Topbar */}
@@ -46,7 +73,13 @@ export function MoodboardDashboardView() {
                 </Topbar.Nav>
                 <Topbar.Status tone="success">Operational</Topbar.Status>
                 <Topbar.Actions>
-                    <Button variant="ghost" size="sm">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() =>
+                            setToastMessage('Panneau de configuration du cluster opérationnel.')
+                        }
+                    >
                         Settings
                     </Button>
                 </Topbar.Actions>
@@ -60,10 +93,10 @@ export function MoodboardDashboardView() {
                     One system for shipping observable changes across every environment.
                 </PageHeader.Description>
                 <PageHeader.Actions>
-                    <Button variant="primary" size="sm">
+                    <Button variant="primary" size="sm" onClick={() => setIsDeployModalOpen(true)}>
                         Deploy
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" onClick={() => setIsInspectDrawerOpen(true)}>
                         Inspect
                     </Button>
                 </PageHeader.Actions>
@@ -117,6 +150,162 @@ export function MoodboardDashboardView() {
                 <MoodboardQuotasModule />
                 <MoodboardTokensModule />
             </Grid>
+
+            {/* Simulated Production Overlays */}
+            <Modal
+                open={isDeployModalOpen}
+                title="Deploy Release v1.4.2"
+                description="Ship target build to 24 edge nodes across all global regions."
+                onClose={() => setIsDeployModalOpen(false)}
+                footer={
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            gap: 'var(--mr-space-3)',
+                        }}
+                    >
+                        <Button variant="ghost" onClick={() => setIsDeployModalOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button
+                            variant="primary"
+                            loading={isDeploying}
+                            onClick={handleConfirmDeploy}
+                        >
+                            Confirm Deployment
+                        </Button>
+                    </div>
+                }
+            >
+                <Stack gap="md">
+                    <InlineAlert tone="info">
+                        All 14 pre-flight integration tests and security scans passed.
+                    </InlineAlert>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: 'var(--mr-space-3)',
+                        }}
+                    >
+                        <div>
+                            <span
+                                style={{
+                                    fontSize: 'var(--mr-font-size-xs)',
+                                    color: 'var(--mr-text-secondary)',
+                                }}
+                            >
+                                TARGET CLUSTER
+                            </span>
+                            <div
+                                style={{
+                                    fontWeight: 'var(--mr-font-weight-medium)',
+                                    fontSize: 'var(--mr-font-size-sm)',
+                                }}
+                            >
+                                production-edge-fleet
+                            </div>
+                        </div>
+                        <div>
+                            <span
+                                style={{
+                                    fontSize: 'var(--mr-font-size-xs)',
+                                    color: 'var(--mr-text-secondary)',
+                                }}
+                            >
+                                COMMIT SHA
+                            </span>
+                            <div
+                                style={{
+                                    fontFamily: 'var(--mr-font-family-mono)',
+                                    fontSize: 'var(--mr-font-size-sm)',
+                                }}
+                            >
+                                4fa91ce2 (main)
+                            </div>
+                        </div>
+                    </div>
+                </Stack>
+            </Modal>
+
+            <Drawer
+                open={isInspectDrawerOpen}
+                side="right"
+                title="Node Diagnostics & Telemetry"
+                onClose={() => setIsInspectDrawerOpen(false)}
+            >
+                <Stack gap="lg" style={{ paddingBlock: 'var(--mr-space-4)' }}>
+                    <InlineAlert tone="success">
+                        All 64 operational nodes reporting latency within SLA (&lt; 25ms).
+                    </InlineAlert>
+                    <Stack gap="sm">
+                        <div
+                            style={{
+                                fontSize: 'var(--mr-font-size-xs)',
+                                color: 'var(--mr-text-secondary)',
+                                fontWeight: 600,
+                                letterSpacing: '0.05em',
+                            }}
+                        >
+                            CLUSTER WORKLOAD
+                        </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <span>CPU Allocation</span>
+                            <Badge tone="success">42% utilized</Badge>
+                        </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <span>Memory Footprint</span>
+                            <Badge tone="success">1.8 GB / 4.0 GB</Badge>
+                        </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <span>Active WebSockets</span>
+                            <span style={{ fontFamily: 'var(--mr-font-family-mono)' }}>
+                                14,820 live
+                            </span>
+                        </div>
+                    </Stack>
+                    <Button variant="secondary" onClick={() => setIsInspectDrawerOpen(false)}>
+                        Fermer l'inspecteur
+                    </Button>
+                </Stack>
+            </Drawer>
+
+            {toastMessage ? (
+                <div
+                    style={{
+                        position: 'fixed',
+                        bottom: 'var(--mr-space-6)',
+                        right: 'var(--mr-space-6)',
+                        zIndex: 'var(--mr-z-toast)',
+                    }}
+                >
+                    <Toast
+                        tone="success"
+                        title="Action système"
+                        description={toastMessage}
+                        onClose={() => setToastMessage(null)}
+                    />
+                </div>
+            ) : null}
         </Stack>
     )
 }

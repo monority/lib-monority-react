@@ -109,4 +109,41 @@ describe('AlertDialog', () => {
         const backdrop = document.body.querySelector('.mr-alert-dialog__backdrop')
         expect(backdrop?.className).toContain('custom-class')
     })
+
+    it('renders with compound subcomponents', () => {
+        const onCancel = vi.fn()
+        const onConfirm = vi.fn()
+        render(
+            <AlertDialog open>
+                <AlertDialog.Header>
+                    <AlertDialog.Title>Compound Title</AlertDialog.Title>
+                    <AlertDialog.Description>Compound Description</AlertDialog.Description>
+                </AlertDialog.Header>
+                <AlertDialog.Footer>
+                    <AlertDialog.Cancel onClick={onCancel}>Annuler</AlertDialog.Cancel>
+                    <AlertDialog.Confirm onClick={onConfirm}>Confirmer</AlertDialog.Confirm>
+                </AlertDialog.Footer>
+            </AlertDialog>
+        )
+
+        expect(document.body.querySelector('.mr-alert-dialog__title')?.textContent).toBe(
+            'Compound Title'
+        )
+        expect(document.body.querySelector('.mr-alert-dialog__description')?.textContent).toBe(
+            'Compound Description'
+        )
+
+        const buttons = document.body.querySelectorAll<HTMLButtonElement>('button')
+        expect(buttons).toHaveLength(2)
+
+        act(() => {
+            buttons[0].click()
+        })
+        expect(onCancel).toHaveBeenCalledTimes(1)
+
+        act(() => {
+            buttons[1].click()
+        })
+        expect(onConfirm).toHaveBeenCalledTimes(1)
+    })
 })

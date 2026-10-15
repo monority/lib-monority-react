@@ -14,18 +14,7 @@ const docData: DocPageData = {
     title: 'Field',
     description:
         'Building block for form controls that pairs inputs with labels, hints, and error messaging.',
-    importCode: `import {
-  Field,
-  FieldLabel,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldTitle,
-} from '@monority/ui/field'
+    importCode: `import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'`,
     usageCode: `<Field label="Workspace name">
   <Input defaultValue="Monority" />
@@ -63,43 +52,43 @@ import { Input } from '@monority/ui/input'`,
         {
             title: 'Composition',
             content: <FieldCompositionExample />,
-            code: `<div className="mr-field">
-  <FieldLabel htmlFor="composed-input" required>
+            code: `<Field>
+  <Field.Label htmlFor="composed-input" required>
     Billing email
-  </FieldLabel>
-  <FieldContent>
+  </Field.Label>
+  <Field.Content>
     <Input id="composed-input" type="email" defaultValue="billing@" aria-invalid />
-  </FieldContent>
-  <FieldDescription>Invoices and tax receipts are sent to this address.</FieldDescription>
-  <FieldError>Enter a complete email address.</FieldError>
-</div>`,
+  </Field.Content>
+  <Field.Description>Invoices and tax receipts are sent to this address.</Field.Description>
+  <Field.Error>Enter a complete email address.</Field.Error>
+</Field>`,
         },
         {
             title: 'Group',
             content: <FieldGroupExample />,
-            code: `<FieldGroup direction="row">
+            code: `<Field.Group direction="row">
   <Field label="First name">
     <Input defaultValue="Maya" />
   </Field>
   <Field label="Last name">
     <Input defaultValue="Chen" />
   </Field>
-</FieldGroup>`,
+</Field.Group>`,
         },
         {
             title: 'Fieldset',
             content: <FieldSetExample />,
-            code: `<FieldSet>
-  <FieldLegend required>Billing address</FieldLegend>
-  <FieldTitle>Company details</FieldTitle>
+            code: `<Field.Set>
+  <Field.Legend required>Billing address</Field.Legend>
+  <Field.Title>Company details</Field.Title>
   <Field label="Street">
     <Input defaultValue="24 Rue Lafayette" />
   </Field>
-  <FieldSeparator />
+  <Field.Separator />
   <Field label="City">
     <Input defaultValue="Paris" />
   </Field>
-</FieldSet>`,
+</Field.Set>`,
         },
     ],
     props: [
@@ -162,7 +151,13 @@ import { Input } from '@monority/ui/input'`,
         '[data-required]',
         '[data-invalid]',
     ],
-    tokens: ['--mr-fg-base', '--mr-fg-muted', '--mr-danger', '--mr-text-sm', '--mr-space-*'],
+    tokens: [
+        '--mr-text-primary',
+        '--mr-text-secondary',
+        '--mr-danger',
+        '--mr-font-size-sm',
+        '--mr-space-*',
+    ],
     a11y: [
         'Label forwards htmlFor to keep the control association explicit.',
         'Hint/error IDs feed aria-describedby.',

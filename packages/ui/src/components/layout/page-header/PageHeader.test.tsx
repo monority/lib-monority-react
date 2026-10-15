@@ -62,4 +62,24 @@ describe('PageHeader', () => {
         const actions = view.querySelector('.mr-page-header__actions')
         expect(actions?.querySelector('button')?.textContent).toBe('Deploy')
     })
+
+    it('renders composable main and meta layout blocks', () => {
+        const view = render(
+            <PageHeader>
+                <PageHeader.Main>
+                    <PageHeader.Eyebrow>Metrics</PageHeader.Eyebrow>
+                    <PageHeader.Title>Performance</PageHeader.Title>
+                    <PageHeader.Meta>
+                        <span>Realtime</span>
+                        <span>99.9% uptime</span>
+                    </PageHeader.Meta>
+                </PageHeader.Main>
+            </PageHeader>
+        )
+
+        expect(view.querySelector('.mr-page-header__main')).not.toBeNull()
+        expect(view.querySelector('.mr-page-header__kicker')?.textContent).toBe('Metrics')
+        expect(view.querySelector('.mr-page-header__title')?.textContent).toBe('Performance')
+        expect(view.querySelector('.mr-page-header__meta')?.textContent).toContain('99.9% uptime')
+    })
 })

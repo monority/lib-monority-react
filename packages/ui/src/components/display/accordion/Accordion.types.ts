@@ -1,6 +1,6 @@
-import type { HTMLAttributes, ReactNode, Ref } from 'react'
+import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from 'react'
 
-export interface AccordionItem {
+export interface AccordionItemData {
     value: string
     title: ReactNode
     content: ReactNode
@@ -12,7 +12,7 @@ export type AccordionSize = 'sm' | 'md' | 'lg'
 
 export interface AccordionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
     ref?: Ref<HTMLDivElement>
-    items?: AccordionItem[]
+    items?: AccordionItemData[]
     defaultValue?: string | string[]
     value?: string | string[]
     onChange?: (value: string | string[]) => void
@@ -20,4 +20,19 @@ export interface AccordionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
     allowMultiple?: boolean
     collapsible?: boolean
     size?: AccordionSize
+    children?: ReactNode
+}
+
+export interface AccordionItemProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    value: string
+    disabled?: boolean
+}
+
+export interface AccordionTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    ref?: Ref<HTMLButtonElement>
+}
+
+export interface AccordionContentProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
 }

@@ -6,9 +6,16 @@ const docData: DocPageData = {
     description:
         'Slide-in side panel for adjacent detail, editing, and page-level inspection without a full context switch.',
     importCode: "import { Drawer } from '@monority/ui'",
-    usageCode: `<Drawer open={open} title="Deployment details" side="right" onClose={() => setOpen(false)}>
-  <p>Keep the user anchored while showing secondary information.</p>
-</Drawer>`,
+    usageCode: `const [open, setOpen] = useState(false)
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Open details panel</Button>
+    <Drawer open={open} title="Deployment details" onClose={() => setOpen(false)}>
+      <p>Use a drawer when the user should stay anchored to the current page while inspecting or editing adjacent information.</p>
+    </Drawer>
+  </>
+)`,
     preview: () => <DrawerBasicExample />,
     examples: [
         { title: 'Different sides', content: <DrawerSidesExample /> },
@@ -40,7 +47,7 @@ const docData: DocPageData = {
         '[data-side]',
     ],
     tokens: [
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-shadow-md',
         '--mr-radius-md',

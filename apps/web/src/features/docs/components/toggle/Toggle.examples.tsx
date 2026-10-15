@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Toggle } from '@monority/ui/toggle'
+import { Text } from '@monority/ui/text'
 
 export function ToggleBasicPreview() {
     return <Toggle>Preview</Toggle>
@@ -38,9 +39,7 @@ export function ToggleControlledExample() {
             <Toggle pressed={pressed} onPressedChange={setPressed}>
                 Auto refresh
             </Toggle>
-            <span style={{ fontSize: 'var(--mr-text-sm)', color: 'var(--mr-fg-muted)' }}>
-                {pressed ? 'Updates every minute' : 'Manual refresh'}
-            </span>
+            <Text.Small>{pressed ? 'Updates every minute' : 'Manual refresh'}</Text.Small>
         </div>
     )
 }

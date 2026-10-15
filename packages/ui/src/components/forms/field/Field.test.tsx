@@ -95,6 +95,18 @@ describe('Field', () => {
         expect(view.querySelector('.mr-field__hint')).toBeNull()
         expect(view.querySelector('.mr-field__error')).toBeNull()
     })
+
+    it('exposes compound subcomponents on Field', () => {
+        expect(Field.Label).toBe(FieldLabel)
+        expect(Field.Content).toBe(FieldContent)
+        expect(Field.Description).toBe(FieldDescription)
+        expect(Field.Error).toBe(FieldError)
+        expect(Field.Group).toBe(FieldGroup)
+        expect(Field.Legend).toBe(FieldLegend)
+        expect(Field.Separator).toBe(FieldSeparator)
+        expect(Field.Set).toBe(FieldSet)
+        expect(Field.Title).toBe(FieldTitle)
+    })
 })
 
 describe('FieldLabel', () => {

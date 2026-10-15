@@ -5,10 +5,19 @@ const docData: DocPageData = {
     title: 'Card',
     description:
         'Surface primitive for grouping related content with consistent density and elevation.',
-    importCode: "import { Card } from '@monority/ui/card'",
-    usageCode: `<Card padding="lg" interactive>
-  <h3>Project health</h3>
-  <p>Stable release candidate.</p>
+    importCode:
+        "import { Card } from '@monority/ui/card'\nimport { Badge } from '@monority/ui/badge'\nimport { Text } from '@monority/ui/text'",
+    usageCode: `<Card padding="lg">
+  <Card.Header>
+    <Card.Title>Project health</Card.Title>
+    <Badge variant="default">Live</Badge>
+  </Card.Header>
+  <Card.Description>Stable release candidate, no blocking issues.</Card.Description>
+  <Card.Footer>
+    <Text tone="muted" size="sm">
+      Updated 5 minutes ago
+    </Text>
+  </Card.Footer>
 </Card>`,
     preview: () => <CardBasicExample />,
     examples: [
@@ -43,7 +52,7 @@ const docData: DocPageData = {
         '--mr-card-padding-md',
         '--mr-card-padding-lg',
         '--mr-bg-surface',
-        '--mr-bg-surface-elevated',
+        '--mr-bg-raised',
         '--mr-border-subtle',
         '--mr-elevation-surface',
         '--mr-elevation-raised',

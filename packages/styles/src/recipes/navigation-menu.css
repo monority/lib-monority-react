@@ -28,7 +28,7 @@
     }
 
     :where(.mr-nav-menu__item)[data-active='true'] {
-        z-index: var(--mr-z-base);
+        z-index: var(--mr-z-popover);
     }
 
     :where(.mr-nav-menu__trigger),

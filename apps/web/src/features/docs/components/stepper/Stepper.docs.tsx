@@ -10,14 +10,38 @@ const docData: DocPageData = {
     description:
         'Indicateur visuel d avancement pas a pas guidant l utilisateur a travers un flux sequentiel multi-etapes.',
     importCode: "import { Stepper } from '@monority/ui/stepper'",
-    usageCode: `<Stepper
-  activeStep={currentStep}
-  steps={[
-    { title: 'Panier', description: 'Articles et remises' },
-    { title: 'Livraison', description: 'Adresse et relais' },
-    { title: 'Paiement', description: 'Reglement securise' },
-  ]}
-/>`,
+    usageCode: `const [step, setStep] = useState(1)
+
+const steps = [
+  { title: 'Panier', description: 'Articles et remises' },
+  { title: 'Livraison', description: 'Adresse et relais' },
+  { title: 'Paiement', description: 'Carte bancaire ou virement' },
+  { title: 'Confirmation', description: 'Recu et suivi commande' },
+]
+
+return (
+  <Stack gap="lg">
+    <Stepper steps={steps} activeStep={step} />
+    <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <Button
+        size="sm"
+        variant="secondary"
+        disabled={step === 0}
+        onClick={() => setStep((s) => Math.max(0, s - 1))}
+      >
+        Precedent
+      </Button>
+      <Button
+        size="sm"
+        variant="primary"
+        disabled={step === steps.length - 1}
+        onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
+      >
+        Suivant
+      </Button>
+    </div>
+  </Stack>
+)`,
     preview: () => <StepperBasicExample />,
     examples: [
         { title: 'Disposition verticale', content: <StepperVerticalExample /> },

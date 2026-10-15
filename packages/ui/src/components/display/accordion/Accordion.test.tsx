@@ -241,4 +241,37 @@ describe('Accordion', () => {
         expect((panels[0] as HTMLElement).hidden).toBe(false)
         expect((panels[1] as HTMLElement).hidden).toBe(false)
     })
+
+    it('renders and toggles with compound subcomponents', () => {
+        const view = render(
+            <Accordion defaultValue="item-1">
+                <Accordion.Item value="item-1">
+                    <Accordion.Trigger>Title 1</Accordion.Trigger>
+                    <Accordion.Content>Content 1</Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item value="item-2">
+                    <Accordion.Trigger>Title 2</Accordion.Trigger>
+                    <Accordion.Content>Content 2</Accordion.Content>
+                </Accordion.Item>
+            </Accordion>
+        )
+
+        const items = view.querySelectorAll('.mr-accordion__item')
+        expect(items).toHaveLength(2)
+
+        const panels = view.querySelectorAll('.mr-accordion__panel')
+        expect((panels[0] as HTMLElement).hidden).toBe(false)
+        expect((panels[1] as HTMLElement).hidden).toBe(true)
+
+        const triggers = view.querySelectorAll(
+            '.mr-accordion__trigger'
+        ) as NodeListOf<HTMLButtonElement>
+
+        act(() => {
+            triggers[1].click()
+        })
+
+        expect((panels[0] as HTMLElement).hidden).toBe(true)
+        expect((panels[1] as HTMLElement).hidden).toBe(false)
+    })
 })

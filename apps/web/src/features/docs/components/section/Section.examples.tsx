@@ -1,12 +1,13 @@
 import { Section } from '@monority/ui/section'
+import { Text } from '@monority/ui/text'
 
 export function SectionBasicExample() {
     return (
         <Section title="Account activity" variant="card">
-            <p style={{ margin: 0, color: 'var(--mr-fg-muted)' }}>
+            <Text.Muted>
                 Sections group related content with a stable title, spacing rhythm, and optional
                 surface treatment.
-            </p>
+            </Text.Muted>
         </Section>
     )
 }

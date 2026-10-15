@@ -1,6 +1,6 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    PaginationBasicExample,
+    PaginationCompoundExample,
     PaginationInteractiveExample,
     PaginationFewPagesExample,
     PaginationManyPagesExample,
@@ -9,12 +9,21 @@ import {
 const docData: DocPageData = {
     title: 'Pagination',
     description:
-        'A compact page navigator with directional actions, condensed page ranges, and a stronger active state.',
+        'A compact page navigator with directional actions, condensed page ranges, and a stronger active state. Supports both shorthand (page/totalPages) and composable compound subcomponents.',
     importCode: "import { Pagination } from '@monority/ui'",
-    usageCode: `<Pagination page={1} totalPages={10} onPageChange={setPage} />`,
-    preview: () => <PaginationBasicExample />,
+    usageCode: `<Pagination>
+  <Pagination.Content>
+    <Pagination.Item><Pagination.Previous href="#prev" /></Pagination.Item>
+    <Pagination.Item><Pagination.Link href="#1" isActive>1</Pagination.Link></Pagination.Item>
+    <Pagination.Item><Pagination.Link href="#2">2</Pagination.Link></Pagination.Item>
+    <Pagination.Item><Pagination.Ellipsis /></Pagination.Item>
+    <Pagination.Item><Pagination.Next href="#next" /></Pagination.Item>
+  </Pagination.Content>
+</Pagination>`,
+    preview: () => <PaginationCompoundExample />,
     examples: [
-        { title: 'Interactive', content: <PaginationInteractiveExample /> },
+        { title: 'Compound subcomponents', content: <PaginationCompoundExample /> },
+        { title: 'Interactive (shorthand)', content: <PaginationInteractiveExample /> },
         { title: 'Few pages', content: <PaginationFewPagesExample /> },
         { title: 'Many pages', content: <PaginationManyPagesExample /> },
     ],
@@ -46,11 +55,11 @@ const docData: DocPageData = {
         '.mr-pagination__ellipsis',
     ],
     tokens: [
-        '--mr-accent',
+        '--mr-accent-solid',
         '--mr-border-subtle',
-        '--mr-bg-control',
-        '--mr-bg-surface-elevated',
-        '--mr-fg-muted',
+        '--mr-bg-surface',
+        '--mr-bg-raised',
+        '--mr-text-secondary',
     ],
     a11y: [
         'Uses nav semantics with an explicit pagination label.',

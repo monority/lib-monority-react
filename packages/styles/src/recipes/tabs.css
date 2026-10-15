@@ -1,6 +1,17 @@
 /* Recette Tabs dans la couche mr.components (spec v4).
  * Organisation du contenu en panneaux alternatifs avec rangée d'onglets et rail actif. */
 @layer mr.components {
+    :where(.mr-tabs-root) {
+        display: flex;
+        flex-direction: column;
+        inline-size: 100%;
+        gap: var(--mr-space-4);
+    }
+
+    :where(.mr-tabs__content) {
+        outline: none;
+    }
+
     :where(.mr-tabs) {
         display: flex;
         align-items: center;

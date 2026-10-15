@@ -22,17 +22,3 @@ body {
     background-color: var(--mr-bg-canvas);
     color: var(--mr-text-primary);
 }
-
-:root {
-    --mr-fg-base: var(--mr-text-primary);
-    --mr-fg-strong: var(--mr-text-primary);
-    --mr-fg-muted: var(--mr-text-secondary);
-    --mr-bg-subtle: var(--mr-bg-surface);
-    --mr-bg-control: var(--mr-bg-surface);
-    --mr-bg-surface-elevated: var(--mr-bg-raised);
-    --mr-bg-accent-soft: var(--mr-accent-subtle);
-    --mr-accent: var(--mr-accent-solid);
-    --mr-text-sm: var(--mr-font-size-md);
-    --mr-text-xs: var(--mr-font-size-sm);
-    --mr-text-2xs: var(--mr-font-size-xs);
-}

@@ -31,7 +31,7 @@
         font-family: var(--mr-font-family-sans);
         color: var(--mr-text-primary);
         overflow: hidden;
-        animation: mr-toast-enter var(--mr-duration-panel) ease;
+        animation: mr-toast-enter var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Icone de statut coloree selon le ton */
