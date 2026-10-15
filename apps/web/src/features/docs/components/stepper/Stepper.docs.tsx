@@ -22,7 +22,7 @@ const steps = [
 return (
   <Stack gap="lg">
     <Stepper steps={steps} activeStep={step} />
-    <div style={{ display: 'flex', gap: '0.5rem' }}>
+    <Stack direction="horizontal" gap="sm">
       <Button
         size="sm"
         variant="secondary"
@@ -39,20 +39,57 @@ return (
       >
         Suivant
       </Button>
-    </div>
+    </Stack>
   </Stack>
 )`,
     preview: () => <StepperBasicExample />,
     examples: [
-        { title: 'Disposition verticale', content: <StepperVerticalExample /> },
-        { title: 'Composition declarative (Stepper.Step)', content: <StepperCompoundExample /> },
+        {
+            title: 'Disposition verticale',
+            content: <StepperVerticalExample />,
+            code: `<Card padding="md">
+  <Stepper
+    orientation="vertical"
+    activeStep={1}
+    steps={[
+      { title: 'Creation du compte', description: 'Email verifie avec succes' },
+      { title: 'Configuration du profil', description: 'En cours de saisie' },
+      { title: 'Invitation de l equipe', description: 'Etape a venir' },
+    ]}
+  />
+</Card>`,
+        },
+        {
+            title: 'Composition declarative (Stepper.Step)',
+            content: <StepperCompoundExample />,
+            code: `<Stepper activeStep={1}>
+  <Stepper.Step>
+    <Stepper.Title>Cahier des charges</Stepper.Title>
+    <Stepper.Description>Approuve</Stepper.Description>
+  </Stepper.Step>
+  <Stepper.Step>
+    <Stepper.Title>Developpement</Stepper.Title>
+    <Stepper.Description>En cours de revue</Stepper.Description>
+  </Stepper.Step>
+  <Stepper.Step>
+    <Stepper.Title>Deploiement CDN</Stepper.Title>
+    <Stepper.Description>En attente</Stepper.Description>
+  </Stepper.Step>
+</Stepper>`,
+        },
     ],
     props: [
         {
-            name: 'steps',
-            type: 'StepperStepItem[]',
+            name: 'children',
+            type: 'ReactNode',
             defaultValue: '-',
-            description: 'Tableau des etapes avec title, description, icon.',
+            description: 'Compound subcomponents: Stepper.Step, Stepper.Title, Stepper.Description',
+        },
+        {
+            name: 'steps',
+            type: 'StepItemData[]',
+            defaultValue: '-',
+            description: 'Tableau des etapes avec title, description, status.',
         },
         {
             name: 'activeStep',
@@ -66,41 +103,34 @@ return (
             defaultValue: "'horizontal'",
             description: 'Orientation d alignement du stepper.',
         },
-        {
-            name: 'size',
-            type: "'sm' | 'md' | 'lg'",
-            defaultValue: "'md'",
-            description: 'Taille des pastilles et des libelles.',
-        },
     ],
     cssHooks: [
         '.mr-stepper',
-        '.mr-stepper__list',
-        '.mr-stepper__step',
+        '.mr-stepper__item',
         '.mr-stepper__indicator',
-        '.mr-stepper__index',
         '.mr-stepper__content',
         '.mr-stepper__title',
         '.mr-stepper__description',
-        '.mr-stepper__separator',
-        '[data-state="completed|current|upcoming"]',
+        '.mr-stepper__connector',
+        '[data-status="completed|active|upcoming"]',
         '[data-orientation="horizontal|vertical"]',
     ],
     tokens: [
-        '--mr-color-primary-base',
-        '--mr-bg-muted',
+        '--mr-accent-solid',
+        '--mr-bg-sunken',
         '--mr-bg-surface',
         '--mr-text-primary',
-        '--mr-text-muted',
+        '--mr-text-secondary',
         '--mr-border-default',
         '--mr-size-control-sm',
         '--mr-size-control-md',
         '--mr-size-control-lg',
     ],
     a11y: [
-        'Structure ordonnee native via liste numerotee <ol role="list">.',
-        'Etape active annoncee via aria-current="step".',
-        'Icone de coche visuelle decorative masquable pour les lecteurs d ecran.',
+        'Root uses role="list" on ordered list element ol.',
+        'Active step marks aria-current="step".',
+        'Indicators and connectors have aria-hidden="true".',
+        'Contrast meets WCAG AA standards across all status indicators.',
     ],
 }
 

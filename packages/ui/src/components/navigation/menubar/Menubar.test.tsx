@@ -88,8 +88,8 @@ const itemsWithIcons = [
     {
         label: 'File',
         items: [
-            { label: 'New', icon: <span data-icon="new">📄</span>, onClick: vi.fn() },
-            { label: 'Open', icon: <span data-icon="open">📂</span>, onClick: vi.fn() },
+            { label: 'New', icon: <span data-icon="new">N</span>, onClick: vi.fn() },
+            { label: 'Open', icon: <span data-icon="open">O</span>, onClick: vi.fn() },
         ],
     },
 ]
@@ -339,7 +339,7 @@ describe('Menubar', () => {
 
         const icon = view.querySelector('.mr-menubar__item-icon')
         expect(icon).toBeTruthy()
-        expect(icon?.textContent).toContain('📄')
+        expect(icon?.textContent).toContain('N')
     })
 
     it('toggles same menu on repeated click', () => {
@@ -369,5 +369,38 @@ describe('Menubar', () => {
         const activeWrapper = wrappers[0]
         expect(activeWrapper.getAttribute('data-active')).toBe('true')
         expect(wrappers[1].getAttribute('data-active')).toBeNull()
+    })
+
+    describe('compound components', () => {
+        it('renders and operates using compound subcomponents', () => {
+            const onSave = vi.fn()
+            const view = render(
+                <Menubar defaultActive="file">
+                    <Menubar.Menu value="file">
+                        <Menubar.Trigger>File</Menubar.Trigger>
+                        <Menubar.Content>
+                            <Menubar.Item shortcut="Ctrl+S" onClick={onSave}>
+                                Save
+                            </Menubar.Item>
+                            <Menubar.Separator />
+                            <Menubar.Item variant="danger">Delete</Menubar.Item>
+                        </Menubar.Content>
+                    </Menubar.Menu>
+                </Menubar>
+            )
+
+            const menu = view.querySelector('.mr-menubar__menu')
+            expect(menu).toBeTruthy()
+            const item = view.querySelector('.mr-menubar__item') as HTMLButtonElement
+            expect(item).toBeTruthy()
+            expect(item.textContent).toContain('Save')
+            expect(item.textContent).toContain('Ctrl+S')
+
+            act(() => {
+                item.click()
+            })
+            expect(onSave).toHaveBeenCalled()
+            expect(view.querySelector('.mr-menubar__menu')).toBeNull()
+        })
     })
 })

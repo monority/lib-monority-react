@@ -17,7 +17,7 @@ export function StepperBasicExample() {
     return (
         <Stack gap="lg">
             <Stepper steps={checkoutSteps} activeStep={step} />
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Stack direction="horizontal" gap="sm">
                 <Button
                     size="sm"
                     variant="secondary"
@@ -34,7 +34,7 @@ export function StepperBasicExample() {
                 >
                     Suivant
                 </Button>
-            </div>
+            </Stack>
         </Stack>
     )
 }
@@ -58,9 +58,18 @@ export function StepperVerticalExample() {
 export function StepperCompoundExample() {
     return (
         <Stepper activeStep={1}>
-            <Stepper.Step title="Cahier des charges" description="Approuve" />
-            <Stepper.Step title="Developpement" description="En cours de revue" />
-            <Stepper.Step title="Deploiement CDN" description="En attente" />
+            <Stepper.Step>
+                <Stepper.Title>Cahier des charges</Stepper.Title>
+                <Stepper.Description>Approuve</Stepper.Description>
+            </Stepper.Step>
+            <Stepper.Step>
+                <Stepper.Title>Developpement</Stepper.Title>
+                <Stepper.Description>En cours de revue</Stepper.Description>
+            </Stepper.Step>
+            <Stepper.Step>
+                <Stepper.Title>Deploiement CDN</Stepper.Title>
+                <Stepper.Description>En attente</Stepper.Description>
+            </Stepper.Step>
         </Stepper>
     )
 }

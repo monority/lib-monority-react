@@ -1,26 +1,27 @@
 import { Menubar } from '@monority/ui/menubar'
+import { Text } from '@monority/ui/text'
 
 export function MenubarBasicExample() {
-    const items = [
-        {
-            label: 'Workspace',
-            items: [
-                { label: 'New dashboard', shortcut: 'Ctrl+N' },
-                { label: 'Open workspace', shortcut: 'Ctrl+O' },
-                { label: '', separator: true },
-                { label: 'Save view', shortcut: 'Ctrl+S' },
-            ],
-        },
-        {
-            label: 'View',
-            items: [
-                { label: 'Compact density', shortcut: 'Alt+1' },
-                { label: 'Comfortable density', shortcut: 'Alt+2' },
-            ],
-        },
-    ]
-
-    return <Menubar items={items} />
+    return (
+        <Menubar>
+            <Menubar.Menu value="workspace">
+                <Menubar.Trigger>Workspace</Menubar.Trigger>
+                <Menubar.Content>
+                    <Menubar.Item shortcut="Ctrl+N">New dashboard</Menubar.Item>
+                    <Menubar.Item shortcut="Ctrl+O">Open workspace</Menubar.Item>
+                    <Menubar.Separator />
+                    <Menubar.Item shortcut="Ctrl+S">Save view</Menubar.Item>
+                </Menubar.Content>
+            </Menubar.Menu>
+            <Menubar.Menu value="view">
+                <Menubar.Trigger>View</Menubar.Trigger>
+                <Menubar.Content>
+                    <Menubar.Item shortcut="Alt+1">Compact density</Menubar.Item>
+                    <Menubar.Item shortcut="Alt+2">Comfortable density</Menubar.Item>
+                </Menubar.Content>
+            </Menubar.Menu>
+        </Menubar>
+    )
 }
 
 export function MenubarWithIconsExample() {
@@ -28,17 +29,21 @@ export function MenubarWithIconsExample() {
         {
             label: 'Create',
             items: [
-                { label: 'New page', icon: <span>+</span>, shortcut: 'Ctrl+N' },
-                { label: 'New collection', icon: <span>#</span>, shortcut: 'Ctrl+Shift+N' },
+                { label: 'New page', icon: <Text.Span>+</Text.Span>, shortcut: 'Ctrl+N' },
+                {
+                    label: 'New collection',
+                    icon: <Text.Span>#</Text.Span>,
+                    shortcut: 'Ctrl+Shift+N',
+                },
                 { label: '', separator: true },
-                { label: 'Save draft', icon: <span>S</span>, shortcut: 'Ctrl+S' },
+                { label: 'Save draft', icon: <Text.Span>S</Text.Span>, shortcut: 'Ctrl+S' },
             ],
         },
         {
             label: 'History',
             items: [
-                { label: 'Undo change', icon: <span>U</span>, shortcut: 'Ctrl+Z' },
-                { label: 'Restore revision', icon: <span>R</span>, shortcut: 'Ctrl+Y' },
+                { label: 'Undo change', icon: <Text.Span>U</Text.Span>, shortcut: 'Ctrl+Z' },
+                { label: 'Restore revision', icon: <Text.Span>R</Text.Span>, shortcut: 'Ctrl+Y' },
             ],
         },
     ]
@@ -60,7 +65,11 @@ export function MenubarDangerExample() {
         {
             label: 'Records',
             items: [
-                { label: 'Purge archive', variant: 'danger' as const, shortcut: 'Ctrl+Shift+Del' },
+                {
+                    label: 'Purge archive',
+                    variant: 'danger' as const,
+                    shortcut: 'Ctrl+Shift+Del',
+                },
             ],
         },
     ]

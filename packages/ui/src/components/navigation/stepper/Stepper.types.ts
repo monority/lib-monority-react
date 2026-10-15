@@ -26,3 +26,13 @@ export interface StepperStepProps extends Omit<HTMLAttributes<HTMLLIElement>, 't
     description?: ReactNode
     children?: ReactNode
 }
+
+export interface StepperTitleProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}
+
+export interface StepperDescriptionProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}

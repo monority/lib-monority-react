@@ -62,4 +62,24 @@ describe('Stepper', () => {
         expect(view.textContent?.includes('Compte')).toBe(true)
         expect(view.textContent?.includes('Profil')).toBe(true)
     })
+
+    it('supports Stepper.Title and Stepper.Description subcomponents', () => {
+        const view = render(
+            <Stepper activeStep={1}>
+                <Stepper.Step>
+                    <Stepper.Title>Panier</Stepper.Title>
+                    <Stepper.Description>Articles valides</Stepper.Description>
+                </Stepper.Step>
+                <Stepper.Step>
+                    <Stepper.Title>Paiement</Stepper.Title>
+                    <Stepper.Description>Carte bancaire</Stepper.Description>
+                </Stepper.Step>
+            </Stepper>
+        )
+
+        const title = view.querySelector('.mr-stepper__title')
+        const desc = view.querySelector('.mr-stepper__description')
+        expect(title?.textContent).toBe('Panier')
+        expect(desc?.textContent).toBe('Articles valides')
+    })
 })

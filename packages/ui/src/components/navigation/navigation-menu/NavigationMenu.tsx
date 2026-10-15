@@ -1,9 +1,229 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import type { NavigationMenuProps } from './NavigationMenu.types'
+import type {
+    NavigationItem,
+    NavigationMenuContentProps,
+    NavigationMenuItemProps,
+    NavigationMenuLinkProps,
+    NavigationMenuListProps,
+    NavigationMenuProps,
+    NavigationMenuTriggerProps,
+} from './NavigationMenu.types'
 
 function getItemValue(label: string): string {
     return label.toLowerCase().replace(/\s+/g, '-')
+}
+
+interface NavigationMenuContextValue {
+    activeValue: string
+    setActiveValue: (value: string) => void
+    updateIndicator: (el: HTMLElement | null) => void
+    indicatorStyle: { left: number; width: number }
+    indicatorRef: React.RefObject<HTMLDivElement | null>
+    handleItemMouseEnter: (val: string, el: HTMLElement | null) => void
+    handleItemMouseLeave: () => void
+}
+
+const NavigationMenuContext = createContext<NavigationMenuContextValue | null>(null)
+
+interface NavigationMenuItemContextValue {
+    value: string
+    isActive: boolean
+    disabled?: boolean
+}
+
+const NavigationMenuItemContext = createContext<NavigationMenuItemContextValue | null>(null)
+const NavigationMenuContentContext = createContext<boolean>(false)
+
+export function NavigationMenuList({
+    ref,
+    children,
+    className,
+    ...props
+}: NavigationMenuListProps) {
+    const menuCtx = useContext(NavigationMenuContext)
+
+    return (
+        <div ref={ref} className={cn('mr-nav-menu__list', className)} {...props}>
+            {children}
+            {menuCtx ? (
+                <div
+                    ref={menuCtx.indicatorRef}
+                    className="mr-nav-menu__indicator"
+                    style={{
+                        transform: `translateX(${menuCtx.indicatorStyle.left}px)`,
+                        width: `${menuCtx.indicatorStyle.width}px`,
+                        opacity: menuCtx.activeValue ? 1 : 0,
+                    }}
+                />
+            ) : null}
+        </div>
+    )
+}
+
+export function NavigationMenuItem({
+    ref,
+    value: customValue,
+    disabled,
+    children,
+    className,
+    onMouseOver,
+    ...props
+}: NavigationMenuItemProps) {
+    const generatedId = useId()
+    const value = customValue ?? generatedId
+    const menuCtx = useContext(NavigationMenuContext)
+    const isActive = menuCtx?.activeValue === value
+
+    return (
+        <NavigationMenuItemContext.Provider value={{ value, isActive, disabled }}>
+            <div
+                ref={ref}
+                className={cn(
+                    'mr-nav-menu__item',
+                    isActive && 'mr-nav-menu__item--active',
+                    disabled && 'mr-nav-menu__item--disabled',
+                    className
+                )}
+                data-active={isActive || undefined}
+                data-disabled={disabled || undefined}
+                onMouseOver={(e) => {
+                    const related = e.relatedTarget as Node | null
+                    const itemEl = e.currentTarget
+                    if (related && itemEl.contains(related)) return
+                    onMouseOver?.(e)
+                    if (disabled) return
+                    const trigger = itemEl.querySelector(
+                        '.mr-nav-menu__trigger, .mr-nav-menu__link'
+                    ) as HTMLElement | null
+                    menuCtx?.handleItemMouseEnter(value, trigger)
+                }}
+                {...props}
+            >
+                {children}
+            </div>
+        </NavigationMenuItemContext.Provider>
+    )
+}
+
+export function NavigationMenuTrigger({
+    ref,
+    icon,
+    children,
+    className,
+    ...props
+}: NavigationMenuTriggerProps) {
+    const itemCtx = useContext(NavigationMenuItemContext)
+    const isActive = itemCtx?.isActive ?? false
+    const disabled = itemCtx?.disabled ?? props.disabled
+
+    return (
+        <button
+            ref={ref}
+            type="button"
+            className={cn('mr-nav-menu__trigger', className)}
+            disabled={disabled}
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded={isActive}
+            {...props}
+        >
+            {icon ? <span className="mr-nav-menu__icon">{icon}</span> : null}
+            {children}
+            <svg
+                className="mr-nav-menu__chevron"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+            >
+                <path
+                    d="M3 4.5L6 7.5L9 4.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </svg>
+        </button>
+    )
+}
+
+export function NavigationMenuContent({
+    ref,
+    children,
+    className,
+    ...props
+}: NavigationMenuContentProps) {
+    const itemCtx = useContext(NavigationMenuItemContext)
+    const isActive = itemCtx?.isActive ?? false
+
+    if (!isActive) return null
+
+    return (
+        <NavigationMenuContentContext.Provider value={true}>
+            <div ref={ref} className={cn('mr-nav-menu__content', className)} role="menu" {...props}>
+                <div className="mr-nav-menu__sub-list">{children}</div>
+            </div>
+        </NavigationMenuContentContext.Provider>
+    )
+}
+
+export function NavigationMenuLink({
+    ref,
+    href = '#',
+    active,
+    disabled: customDisabled,
+    icon,
+    description,
+    children,
+    className,
+    ...props
+}: NavigationMenuLinkProps) {
+    const isInsideContent = useContext(NavigationMenuContentContext)
+    const itemCtx = useContext(NavigationMenuItemContext)
+    const disabled = customDisabled ?? itemCtx?.disabled
+
+    if (isInsideContent || description) {
+        return (
+            <a
+                ref={ref}
+                href={href}
+                className={cn('mr-nav-menu__sub-item', className)}
+                role="menuitem"
+                aria-disabled={disabled || undefined}
+                {...props}
+            >
+                {icon ? <span className="mr-nav-menu__sub-icon">{icon}</span> : null}
+                <div className="mr-nav-menu__sub-text">
+                    <span className="mr-nav-menu__sub-label">{children}</span>
+                    {description ? (
+                        <span className="mr-nav-menu__sub-desc">{description}</span>
+                    ) : null}
+                </div>
+            </a>
+        )
+    }
+
+    return (
+        <a
+            ref={ref}
+            href={href}
+            className={cn(
+                'mr-nav-menu__link',
+                disabled && 'mr-nav-menu__link--disabled',
+                active && 'mr-nav-menu__link--active',
+                className
+            )}
+            aria-disabled={disabled || undefined}
+            tabIndex={disabled ? -1 : 0}
+            {...props}
+        >
+            {icon ? <span className="mr-nav-menu__icon">{icon}</span> : null}
+            {children}
+        </a>
+    )
 }
 
 export function NavigationMenu({
@@ -13,23 +233,25 @@ export function NavigationMenu({
     value: controlledValue,
     onValueChange,
     className,
+    children,
+    onMouseLeave,
     ...props
 }: NavigationMenuProps) {
-    const [activeValue, setActiveValue] = useState(defaultValue ?? '')
-    const value = controlledValue ?? activeValue
+    const [internalActiveValue, setInternalActiveValue] = useState(defaultValue ?? '')
+    const activeValue = controlledValue ?? internalActiveValue
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
     const indicatorRef = useRef<HTMLDivElement>(null)
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
-    const setValue = useCallback(
+    const setActiveValue = useCallback(
         (v: string) => {
-            if (controlledValue === undefined) setActiveValue(v)
+            if (controlledValue === undefined) setInternalActiveValue(v)
             onValueChange?.(v)
         },
         [controlledValue, onValueChange]
     )
 
-    const updateIndicator = useCallback((el: HTMLButtonElement | null) => {
+    const updateIndicator = useCallback((el: HTMLElement | null) => {
         if (!el) return
         const rect = el.getBoundingClientRect()
         const parentRect = el.closest('.mr-nav-menu__list')?.getBoundingClientRect()
@@ -41,157 +263,112 @@ export function NavigationMenu({
         }
     }, [])
 
-    const handleMouseEnter = useCallback(
-        (itemValue: string, el: HTMLButtonElement | HTMLAnchorElement | null) => {
+    const handleItemMouseEnter = useCallback(
+        (itemValue: string, el: HTMLElement | null) => {
             clearTimeout(timeoutRef.current)
-            if (el) updateIndicator(el as HTMLButtonElement)
-            setValue(itemValue)
+            if (el) updateIndicator(el)
+            setActiveValue(itemValue)
         },
-        [setValue, updateIndicator]
+        [setActiveValue, updateIndicator]
     )
 
-    const handleMouseLeave = useCallback(() => {
+    const handleItemMouseLeave = useCallback(() => {
         timeoutRef.current = setTimeout(() => {
-            setValue('')
+            setActiveValue('')
             setIndicatorStyle({ left: 0, width: 0 })
         }, 150)
-    }, [setValue])
+    }, [setActiveValue])
 
     useEffect(() => {
         return () => clearTimeout(timeoutRef.current)
     }, [])
 
     return (
-        <nav
-            ref={ref}
-            className={cn('mr-nav-menu', className)}
-            aria-label="Main navigation"
-            data-open={Boolean(value) || undefined}
-            onMouseLeave={handleMouseLeave}
-            {...props}
+        <NavigationMenuContext.Provider
+            value={{
+                activeValue,
+                setActiveValue,
+                updateIndicator,
+                indicatorStyle,
+                indicatorRef,
+                handleItemMouseEnter,
+                handleItemMouseLeave,
+            }}
         >
-            <div className="mr-nav-menu__list">
-                {items.map((item) => {
-                    const itemValue = getItemValue(item.label)
-                    const hasSubItems = item.items && item.items.length > 0
-                    const isActive = value === itemValue
+            <nav
+                ref={ref}
+                className={cn('mr-nav-menu', className)}
+                aria-label="Main navigation"
+                data-open={Boolean(activeValue) || undefined}
+                onMouseLeave={(e) => {
+                    onMouseLeave?.(e)
+                    handleItemMouseLeave()
+                }}
+                {...props}
+            >
+                {children ??
+                    (items ? (
+                        <NavigationMenuList>
+                            {items.map((item: NavigationItem) => {
+                                const itemValue = getItemValue(item.label)
+                                const hasSubItems = item.items && item.items.length > 0
 
-                    return (
-                        <div
-                            key={itemValue}
-                            className={cn(
-                                'mr-nav-menu__item',
-                                isActive && 'mr-nav-menu__item--active',
-                                item.disabled && 'mr-nav-menu__item--disabled'
-                            )}
-                            data-active={isActive || undefined}
-                            data-disabled={item.disabled || undefined}
-                            onMouseOver={(e) => {
-                                // Only trigger when entering from outside this item
-                                const related = e.relatedTarget as Node | null
-                                const itemEl = e.currentTarget
-                                if (related && itemEl.contains(related)) return
-                                const trigger = itemEl.querySelector(
-                                    '.mr-nav-menu__trigger, .mr-nav-menu__link'
-                                ) as HTMLButtonElement | HTMLAnchorElement | null
-                                handleMouseEnter(itemValue, trigger)
-                            }}
-                        >
-                            {hasSubItems ? (
-                                <>
-                                    <button
-                                        type="button"
-                                        className="mr-nav-menu__trigger"
+                                return (
+                                    <NavigationMenuItem
+                                        key={itemValue}
+                                        value={itemValue}
                                         disabled={item.disabled}
-                                        role="menuitem"
-                                        aria-haspopup="true"
-                                        aria-expanded={isActive}
                                     >
-                                        {item.icon && (
-                                            <span className="mr-nav-menu__icon">{item.icon}</span>
+                                        {hasSubItems ? (
+                                            <>
+                                                <NavigationMenuTrigger icon={item.icon}>
+                                                    {item.label}
+                                                </NavigationMenuTrigger>
+                                                <NavigationMenuContent>
+                                                    {item.items!.map((sub) => (
+                                                        <NavigationMenuLink
+                                                            key={sub.label}
+                                                            href={sub.href || '#'}
+                                                            icon={sub.icon}
+                                                            description={sub.description}
+                                                        >
+                                                            {sub.label}
+                                                        </NavigationMenuLink>
+                                                    ))}
+                                                </NavigationMenuContent>
+                                            </>
+                                        ) : (
+                                            <NavigationMenuLink
+                                                href={item.href || '#'}
+                                                icon={item.icon}
+                                                disabled={item.disabled}
+                                            >
+                                                {item.label}
+                                            </NavigationMenuLink>
                                         )}
-                                        {item.label}
-                                        <svg
-                                            className="mr-nav-menu__chevron"
-                                            width="12"
-                                            height="12"
-                                            viewBox="0 0 12 12"
-                                            fill="none"
-                                            aria-hidden="true"
-                                        >
-                                            <path
-                                                d="M3 4.5L6 7.5L9 4.5"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </button>
-                                    {isActive && (
-                                        <div className="mr-nav-menu__content" role="menu">
-                                            <div className="mr-nav-menu__sub-list">
-                                                {item.items!.map((sub) => (
-                                                    <a
-                                                        key={sub.label}
-                                                        href={sub.href || '#'}
-                                                        className="mr-nav-menu__sub-item"
-                                                        role="menuitem"
-                                                    >
-                                                        {sub.icon && (
-                                                            <span className="mr-nav-menu__sub-icon">
-                                                                {sub.icon}
-                                                            </span>
-                                                        )}
-                                                        <div className="mr-nav-menu__sub-text">
-                                                            <span className="mr-nav-menu__sub-label">
-                                                                {sub.label}
-                                                            </span>
-                                                            {sub.description && (
-                                                                <span className="mr-nav-menu__sub-desc">
-                                                                    {sub.description}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                </>
-                            ) : (
-                                <a
-                                    href={item.href || '#'}
-                                    className={cn(
-                                        'mr-nav-menu__link',
-                                        item.disabled && 'mr-nav-menu__link--disabled'
-                                    )}
-                                    aria-disabled={item.disabled || undefined}
-                                    tabIndex={item.disabled ? -1 : 0}
-                                >
-                                    {item.icon && (
-                                        <span className="mr-nav-menu__icon">{item.icon}</span>
-                                    )}
-                                    {item.label}
-                                </a>
-                            )}
-                        </div>
-                    )
-                })}
-
-                {/* Indicator bar */}
-                <div
-                    ref={indicatorRef}
-                    className="mr-nav-menu__indicator"
-                    style={{
-                        transform: `translateX(${indicatorStyle.left}px)`,
-                        width: `${indicatorStyle.width}px`,
-                        opacity: value ? 1 : 0,
-                    }}
-                />
-            </div>
-        </nav>
+                                    </NavigationMenuItem>
+                                )
+                            })}
+                        </NavigationMenuList>
+                    ) : null)}
+            </nav>
+        </NavigationMenuContext.Provider>
     )
 }
 
-export type { NavigationMenuProps, NavigationItem, NavigationSubItem } from './NavigationMenu.types'
+NavigationMenu.List = NavigationMenuList
+NavigationMenu.Item = NavigationMenuItem
+NavigationMenu.Trigger = NavigationMenuTrigger
+NavigationMenu.Content = NavigationMenuContent
+NavigationMenu.Link = NavigationMenuLink
+
+export type {
+    NavigationMenuProps,
+    NavigationMenuListProps,
+    NavigationMenuItemProps,
+    NavigationMenuTriggerProps,
+    NavigationMenuContentProps,
+    NavigationMenuLinkProps,
+    NavigationItem,
+    NavigationSubItem,
+} from './NavigationMenu.types'

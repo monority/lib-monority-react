@@ -1,7 +1,9 @@
-export { Stepper, StepperStep } from './Stepper'
+export { Stepper, StepperStep, StepperTitle, StepperDescription } from './Stepper'
 export type {
     StepperProps,
     StepperStepProps,
+    StepperTitleProps,
+    StepperDescriptionProps,
     StepItemData,
     StepStatus,
     StepperOrientation,

@@ -3,9 +3,11 @@ import { cn } from '@/lib/cn'
 import type {
     StepItemData,
     StepStatus,
+    StepperDescriptionProps,
     StepperOrientation,
     StepperProps,
     StepperStepProps,
+    StepperTitleProps,
 } from './Stepper.types'
 
 function CheckIcon() {
@@ -23,6 +25,27 @@ function CheckIcon() {
         >
             <polyline points="20 6 9 17 4 12" />
         </svg>
+    )
+}
+
+export function StepperTitle({ ref, className, children, ...props }: StepperTitleProps) {
+    return (
+        <span ref={ref} className={cn('mr-stepper__title', className)} {...props}>
+            {children}
+        </span>
+    )
+}
+
+export function StepperDescription({
+    ref,
+    className,
+    children,
+    ...props
+}: StepperDescriptionProps) {
+    return (
+        <span ref={ref} className={cn('mr-stepper__description', className)} {...props}>
+            {children}
+        </span>
     )
 }
 
@@ -132,10 +155,14 @@ export function Stepper({
 }
 
 Stepper.Step = StepperStep
+Stepper.Title = StepperTitle
+Stepper.Description = StepperDescription
 
 export type {
     StepperProps,
     StepperStepProps,
+    StepperTitleProps,
+    StepperDescriptionProps,
     StepItemData,
     StepStatus,
     StepperOrientation,

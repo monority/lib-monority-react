@@ -57,8 +57,8 @@ const itemsWithSubItems = [
 ]
 
 const itemsWithIcons = [
-    { label: 'Dashboard', href: '/dashboard', icon: <span data-icon="dashboard">📊</span> },
-    { label: 'Settings', href: '/settings', icon: <span data-icon="settings">⚙️</span> },
+    { label: 'Dashboard', href: '/dashboard', icon: <span data-icon="dashboard">D</span> },
+    { label: 'Settings', href: '/settings', icon: <span data-icon="settings">S</span> },
 ]
 
 const itemsWithDisabled = [
@@ -143,8 +143,8 @@ describe('NavigationMenu', () => {
         const iconContainers = view.querySelectorAll('.mr-nav-menu__icon')
         expect(iconContainers.length).toBe(2)
         // The icon prop renders inside the icon container
-        expect(iconContainers[0].textContent).toContain('📊')
-        expect(iconContainers[1].textContent).toContain('⚙️')
+        expect(iconContainers[0].textContent).toContain('D')
+        expect(iconContainers[1].textContent).toContain('S')
     })
 
     it('renders disabled items with correct attributes', () => {
@@ -281,5 +281,40 @@ describe('NavigationMenu', () => {
         })
 
         expect(nav?.getAttribute('data-open')).toBe('true')
+    })
+
+    describe('compound components', () => {
+        it('renders using subcomponents composition', () => {
+            const view = render(
+                <NavigationMenu defaultValue="features">
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item value="home">
+                            <NavigationMenu.Link href="/">Home</NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item value="features">
+                            <NavigationMenu.Trigger>Features</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link
+                                    href="/analytics"
+                                    description="Real-time analytics"
+                                >
+                                    Analytics
+                                </NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>
+            )
+
+            const nav = screen.getByRole('navigation')
+            expect(nav).toBeTruthy()
+            expect(nav.getAttribute('data-open')).toBe('true')
+            const trigger = screen.getByRole('menuitem', { name: /features/i })
+            expect(trigger.getAttribute('aria-expanded')).toBe('true')
+            expect(view.querySelector('.mr-nav-menu__content')).toBeTruthy()
+            expect(view.querySelector('.mr-nav-menu__sub-desc')?.textContent).toBe(
+                'Real-time analytics'
+            )
+        })
     })
 })

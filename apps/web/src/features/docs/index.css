@@ -466,11 +466,41 @@
         .mr-popover,
         .mr-select,
         .mr-combobox
+    ),
+.docs-preview-card:has(
+        .mr-nav-menu,
+        .mr-menubar,
+        .mr-dropdown,
+        .mr-popover,
+        .mr-select,
+        .mr-combobox
+    ),
+.docs-preview-stack:has(
+        .mr-nav-menu,
+        .mr-menubar,
+        .mr-dropdown,
+        .mr-popover,
+        .mr-select,
+        .mr-combobox
     ) {
     overflow: visible;
 }
 
 .docs-example-group:has(
+        [data-open],
+        [data-active='true'],
+        .mr-nav-menu:hover,
+        .mr-nav-menu:focus-within,
+        .mr-menubar[data-open]
+    ),
+.docs-preview-card:has(
+        [data-open],
+        [data-active='true'],
+        .mr-nav-menu:hover,
+        .mr-nav-menu:focus-within,
+        .mr-menubar[data-open]
+    ),
+.docs-preview-stack:has(
         [data-open],
         [data-active='true'],
         .mr-nav-menu:hover,
@@ -496,6 +526,13 @@
 .docs-example-content {
     padding: var(--mr-space-5);
     background: var(--mr-bg-surface);
+}
+
+.docs-preview-content:has(.mr-nav-menu, .mr-menubar),
+.docs-example-content:has(.mr-nav-menu, .mr-menubar) {
+    min-block-size: 14rem;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .docs-table-wrapper {

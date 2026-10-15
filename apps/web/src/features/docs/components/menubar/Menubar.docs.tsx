@@ -10,27 +10,25 @@ const docData: DocPageData = {
     title: 'Menubar',
     description:
         'A compact application command bar for grouped actions, shortcuts, and destructive flows.',
-    importCode: "import { Menubar } from '@monority/ui'",
-    usageCode: `const items = [
-  {
-    label: 'Workspace',
-    items: [
-      { label: 'New dashboard', shortcut: 'Ctrl+N', onClick: () => {} },
-      { label: 'Open workspace', shortcut: 'Ctrl+O', onClick: () => {} },
-      { separator: true },
-      { label: 'Save view', shortcut: 'Ctrl+S', onClick: () => {} },
-    ],
-  },
-  {
-    label: 'View',
-    items: [
-      { label: 'Compact density', shortcut: 'Alt+1', onClick: () => {} },
-      { label: 'Comfortable density', shortcut: 'Alt+2', onClick: () => {} },
-    ],
-  },
-]
-
-<Menubar items={items} />`,
+    importCode: "import { Menubar } from '@monority/ui/menubar'",
+    usageCode: `<Menubar>
+  <Menubar.Menu value="workspace">
+    <Menubar.Trigger>Workspace</Menubar.Trigger>
+    <Menubar.Content>
+      <Menubar.Item shortcut="Ctrl+N">New dashboard</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+O">Open workspace</Menubar.Item>
+      <Menubar.Separator />
+      <Menubar.Item shortcut="Ctrl+S">Save view</Menubar.Item>
+    </Menubar.Content>
+  </Menubar.Menu>
+  <Menubar.Menu value="view">
+    <Menubar.Trigger>View</Menubar.Trigger>
+    <Menubar.Content>
+      <Menubar.Item shortcut="Alt+1">Compact density</Menubar.Item>
+      <Menubar.Item shortcut="Alt+2">Comfortable density</Menubar.Item>
+    </Menubar.Content>
+  </Menubar.Menu>
+</Menubar>`,
     preview: () => <MenubarBasicExample />,
     examples: [
         {
@@ -40,17 +38,17 @@ const docData: DocPageData = {
   {
     label: 'Create',
     items: [
-      { label: 'New page', icon: <span>+</span>, shortcut: 'Ctrl+N' },
-      { label: 'New collection', icon: <span>#</span>, shortcut: 'Ctrl+Shift+N' },
+      { label: 'New page', icon: <Text.Span>+</Text.Span>, shortcut: 'Ctrl+N' },
+      { label: 'New collection', icon: <Text.Span>#</Text.Span>, shortcut: 'Ctrl+Shift+N' },
       { separator: true },
-      { label: 'Save draft', icon: <span>S</span>, shortcut: 'Ctrl+S' },
+      { label: 'Save draft', icon: <Text.Span>S</Text.Span>, shortcut: 'Ctrl+S' },
     ],
   },
   {
     label: 'History',
     items: [
-      { label: 'Undo change', icon: <span>U</span>, shortcut: 'Ctrl+Z' },
-      { label: 'Restore revision', icon: <span>R</span>, shortcut: 'Ctrl+Y' },
+      { label: 'Undo change', icon: <Text.Span>U</Text.Span>, shortcut: 'Ctrl+Z' },
+      { label: 'Restore revision', icon: <Text.Span>R</Text.Span>, shortcut: 'Ctrl+Y' },
     ],
   },
 ]
@@ -91,6 +89,7 @@ const docData: DocPageData = {
       { label: 'Open workspace', shortcut: 'Ctrl+O' },
       { separator: true },
       { label: 'Save view', shortcut: 'Ctrl+S', disabled: true },
+      { label: 'Duplicate view', shortcut: 'Ctrl+Shift+S', disabled: true },
     ],
   },
   {
@@ -98,6 +97,14 @@ const docData: DocPageData = {
     disabled: true,
     items: [
       { label: 'Invite reviewers', shortcut: 'Ctrl+I' },
+      { label: 'Publish snapshot', shortcut: 'Ctrl+Shift+P' },
+    ],
+  },
+  {
+    label: 'View',
+    items: [
+      { label: 'Compact density', shortcut: 'Alt+1' },
+      { label: 'Comfortable density', shortcut: 'Alt+2' },
     ],
   },
 ]
@@ -107,16 +114,35 @@ const docData: DocPageData = {
     ],
     props: [
         {
+            name: 'children',
+            type: 'ReactNode',
+            defaultValue: '-',
+            description:
+                'Compound subcomponents: Menu, Trigger, Content, Item, Separator, Shortcut',
+        },
+        {
             name: 'items',
             type: 'MenubarMenu[]',
-            defaultValue: '[]',
-            description: 'Menu group definitions with dropdown items',
+            defaultValue: '-',
+            description: 'Optional shorthand menu group definitions with dropdown items',
         },
         {
             name: 'defaultActive',
             type: 'string',
             defaultValue: '-',
-            description: 'Initially open menu label',
+            description: 'Initially open menu label or value',
+        },
+        {
+            name: 'value',
+            type: 'string',
+            defaultValue: '-',
+            description: 'Controlled active menu value',
+        },
+        {
+            name: 'onValueChange',
+            type: '(value: string | null) => void',
+            defaultValue: '-',
+            description: 'Callback when active menu changes',
         },
     ],
     cssHooks: [
