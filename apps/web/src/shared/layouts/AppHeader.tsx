@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { CommandPalette, useTheme, ThemeName, type CommandItem } from '@monority/ui'
+import {
+    Badge,
+    CommandPalette,
+    Popover,
+    Separator,
+    Stack,
+    Text,
+    ThemeName,
+    type CommandItem,
+    useTheme,
+} from '@monority/ui'
 import { docsComponentRegistry } from '@/features/docs/components/registry'
 import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
@@ -18,6 +28,8 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
     const navigate = useNavigate()
     const { setTheme } = useTheme()
     const [searchOpen, setSearchOpen] = useState(false)
+    const [changelogOpen, setChangelogOpen] = useState(false)
+    const [showBanner, setShowBanner] = useState(true)
 
     useEffect(() => {
         function onKeyDown(e: KeyboardEvent) {
@@ -155,6 +167,32 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
     return (
         <>
             <header className={homeNav ? 'app-header app-header--home' : 'app-header'}>
+                {showBanner && (
+                    <div className="app-header__announcement">
+                        <div className="app-header__announcement-inner">
+                            <span className="app-header__announcement-badge">Vague 3</span>
+                            <span className="app-header__announcement-text">
+                                Calendar dynamique et architecture compound deployes (Calendar,
+                                Popover, HoverCard, Tooltip, Collapsible, Avatar, Carousel).
+                            </span>
+                            <button
+                                type="button"
+                                className="app-header__announcement-details-btn"
+                                onClick={() => setChangelogOpen(true)}
+                            >
+                                Voir le journal
+                            </button>
+                            <button
+                                type="button"
+                                className="app-header__announcement-close"
+                                onClick={() => setShowBanner(false)}
+                                aria-label="Fermer le journal des modifications temporaire"
+                            >
+                                &#10005;
+                            </button>
+                        </div>
+                    </div>
+                )}
                 <div className="app-header__inner">
                     <div className="app-header__start">
                         <Link className="app-header__brand" to="/" aria-label="Monority">
@@ -235,6 +273,81 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                     </div>
 
                     <div className="app-header__controls">
+                        <Popover
+                            open={changelogOpen}
+                            onOpenChange={setChangelogOpen}
+                            align="end"
+                            side="bottom"
+                        >
+                            <Popover.Trigger
+                                className="app-header__changes-btn"
+                                aria-label="Journal des derniers changements"
+                            >
+                                <span className="app-header__changes-dot" aria-hidden="true" />
+                                <span className="app-header__changes-title">Log</span>
+                                <span className="app-header__changes-tag">V3</span>
+                            </Popover.Trigger>
+                            <Popover.Content className="app-header__changes-popover">
+                                <Stack gap="sm">
+                                    <Stack direction="horizontal" justify="between" align="center">
+                                        <Text.Strong size="sm">
+                                            Journal des modifications
+                                        </Text.Strong>
+                                        <Badge tone="accent" size="sm">
+                                            Vague 3
+                                        </Badge>
+                                    </Stack>
+                                    <Separator />
+                                    <Stack
+                                        gap="xs"
+                                        style={{ maxHeight: '280px', overflowY: 'auto' }}
+                                    >
+                                        <Text.Small tone="strong">
+                                            Vague 3 — Overlays & Dynamique :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Calendar : sélection directe et interactive du
+                                            mois/année
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Calendar : sous-composants Header, Pickers, NavButton,
+                                            Grid
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Popover, HoverCard, Tooltip : architecture compound
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Collapsible : architecture compound
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Avatar : sous-composants Image, Fallback, Status
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Carousel : sous-composants Content, Item, Previous,
+                                            Next, Dots
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Documentation : 100% primitives, zéro balise HTML
+                                            brute
+                                        </Text.Small>
+                                        <Separator />
+                                        <Text.Small tone="strong">
+                                            Vague 2 — Menus & Navigation :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • NavigationMenu, Menubar et Stepper compound
+                                        </Text.Small>
+                                        <Separator />
+                                        <Text.Small tone="strong">
+                                            Vague 1 — Formulaires & Données :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Select, DropdownMenu, ContextMenu, Accordion compound
+                                        </Text.Small>
+                                    </Stack>
+                                </Stack>
+                            </Popover.Content>
+                        </Popover>
                         <ThemeToggle className="app-header__theme" />
                         <a
                             href="https://github.com/monority/lib-monority-react"

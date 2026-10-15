@@ -66,4 +66,13 @@ describe('AppHeader', () => {
         /* Every theme the picker offers must be nameable by the toggle. */
         expect(DESIGN_PRESETS.themes.map((t) => t.label)).toContain('Slate')
     })
+
+    it('affiche la section temporaire des changements et le déclencheur de log', () => {
+        renderHeader()
+
+        expect(screen.getByText(/Vague 3/i)).toBeInTheDocument()
+        expect(
+            screen.getByRole('button', { name: /journal des derniers changements/i })
+        ).toBeInTheDocument()
+    })
 })
