@@ -1,17 +1,14 @@
 import { Input } from '@monority/ui/input'
 import { NumberInput } from '@monority/ui/number-input'
 import { PasswordInput } from '@monority/ui/password-input'
+import { Stack } from '@monority/ui/stack'
 
 export function InputBasicExample() {
     return <Input label="Email" hint="Use your work email." placeholder="you@company.com" />
 }
 
 export function InputSearchExample() {
-    return (
-        <div style={{ position: 'relative' }}>
-            <Input label="Search" placeholder="Search..." type="search" />
-        </div>
-    )
+    return <Input label="Search" placeholder="Search..." type="search" />
 }
 
 export function InputClearableExample() {
@@ -36,22 +33,22 @@ export function InputPasswordExample() {
 
 export function InputFamilySizesExample() {
     return (
-        <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
-            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+        <Stack gap="md">
+            <Stack direction="horizontal" gap="sm">
                 <Input label="Input small" size="sm" />
                 <Input label="Input medium" size="md" />
                 <Input label="Input large" size="lg" />
-            </div>
-            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+            </Stack>
+            <Stack direction="horizontal" gap="sm">
                 <NumberInput label="Number small" size="sm" />
                 <NumberInput label="Number medium" size="md" />
                 <NumberInput label="Number large" size="lg" />
-            </div>
-            <div style={{ display: 'flex', gap: 'var(--mr-space-3)', flexWrap: 'wrap' }}>
+            </Stack>
+            <Stack direction="horizontal" gap="sm">
                 <PasswordInput label="Password small" size="sm" />
                 <PasswordInput label="Password medium" size="md" />
                 <PasswordInput label="Password large" size="lg" />
-            </div>
-        </div>
+            </Stack>
+        </Stack>
     )
 }

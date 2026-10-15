@@ -1,20 +1,21 @@
 import { Checkbox } from '@monority/ui/checkbox'
+import { Stack } from '@monority/ui/stack'
 
 export function CheckboxBasicExample() {
     return (
-        <>
+        <Stack gap="sm">
             <Checkbox label="Send weekly summary" />
             <Checkbox label="Include failed jobs" defaultChecked />
-        </>
+        </Stack>
     )
 }
 
 export function CheckboxDisabledExample() {
     return (
-        <>
+        <Stack gap="sm">
             <Checkbox label="Inherited from workspace" disabled />
             <Checkbox label="Required by policy" disabled defaultChecked />
-        </>
+        </Stack>
     )
 }
 

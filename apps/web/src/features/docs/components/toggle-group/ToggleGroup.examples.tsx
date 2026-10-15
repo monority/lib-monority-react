@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ToggleGroup } from '@monority/ui/toggle-group'
+import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 
 const formatItems = [
@@ -23,7 +24,7 @@ const viewItems = [
 export function ToggleGroupSinglePreview() {
     const [value, setValue] = useState<string>('')
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <Stack gap="sm">
             <ToggleGroup
                 items={alignItems}
                 type="single"
@@ -31,14 +32,14 @@ export function ToggleGroupSinglePreview() {
                 onValueChange={(next) => setValue(next as string)}
             />
             <Text.Small>Status: {value || 'all'}</Text.Small>
-        </div>
+        </Stack>
     )
 }
 
 export function ToggleGroupMultipleExample() {
     const [value, setValue] = useState<string[]>([])
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <Stack gap="sm">
             <ToggleGroup
                 items={formatItems}
                 type="multiple"
@@ -46,7 +47,7 @@ export function ToggleGroupMultipleExample() {
                 onValueChange={(next) => setValue(next as string[])}
             />
             <Text.Small>Formatting: {value.length > 0 ? value.join(', ') : 'none'}</Text.Small>
-        </div>
+        </Stack>
     )
 }
 
@@ -57,10 +58,10 @@ export function ToggleGroupDisabledExample() {
         { value: 'table', label: 'Table' },
     ]
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-3)' }}>
+        <Stack gap="sm">
             <ToggleGroup items={itemsWithDisabled} type="single" />
             <Text.Small>List view is unavailable for this dataset</Text.Small>
-        </div>
+        </Stack>
     )
 }
 
@@ -70,44 +71,63 @@ export function ToggleGroupVerticalExample() {
 
 export function ToggleGroupVariantsExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
-            <div>
-                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
-                    Default
-                </Text.Small>
+        <Stack gap="md">
+            <Stack gap="xs">
+                <Text.Small tone="muted">Default</Text.Small>
                 <ToggleGroup items={alignItems} variant="default" />
-            </div>
-            <div>
-                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
-                    Outline
-                </Text.Small>
+            </Stack>
+            <Stack gap="xs">
+                <Text.Small tone="muted">Outline</Text.Small>
                 <ToggleGroup items={alignItems} variant="outline" />
-            </div>
-        </div>
+            </Stack>
+        </Stack>
     )
 }
 
 export function ToggleGroupSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
-            <div>
-                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
-                    Small
-                </Text.Small>
+        <Stack gap="md">
+            <Stack gap="xs">
+                <Text.Small tone="muted">Small</Text.Small>
                 <ToggleGroup items={alignItems} size="sm" />
-            </div>
-            <div>
-                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
-                    Medium
-                </Text.Small>
+            </Stack>
+            <Stack gap="xs">
+                <Text.Small tone="muted">Medium</Text.Small>
                 <ToggleGroup items={alignItems} size="md" />
-            </div>
-            <div>
-                <Text.Small style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}>
-                    Large
-                </Text.Small>
+            </Stack>
+            <Stack gap="xs">
+                <Text.Small tone="muted">Large</Text.Small>
                 <ToggleGroup items={alignItems} size="lg" />
-            </div>
-        </div>
+            </Stack>
+        </Stack>
+    )
+}
+
+export function ToggleGroupTonesExample() {
+    return (
+        <Stack gap="md">
+            <Stack gap="xs">
+                <Text.Small tone="muted">Neutral</Text.Small>
+                <ToggleGroup items={alignItems} tone="neutral" />
+            </Stack>
+            <Stack gap="xs">
+                <Text.Small tone="muted">Accent</Text.Small>
+                <ToggleGroup items={alignItems} tone="accent" />
+            </Stack>
+        </Stack>
+    )
+}
+
+export function ToggleGroupCompoundExample() {
+    const [value, setValue] = useState('center')
+    return (
+        <Stack gap="xs">
+            <ToggleGroup type="single" value={value} onValueChange={(v) => setValue(v as string)}>
+                <ToggleGroup.Item value="left">Gauche</ToggleGroup.Item>
+                <ToggleGroup.Item value="center">Centre</ToggleGroup.Item>
+                <ToggleGroup.Item value="right">Droite</ToggleGroup.Item>
+            </ToggleGroup>
+            <Text.Small tone="muted">Alignement actif : {value}</Text.Small>
+        </Stack>
     )
 }

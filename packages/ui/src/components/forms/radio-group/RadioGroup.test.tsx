@@ -199,4 +199,40 @@ describe('RadioGroup', () => {
         )
         expect(view.querySelector('.mr-radio__description')?.textContent).toContain('Second line')
     })
+
+    it('supports declarative compound subcomponents RadioGroup.Item, Label and Description', () => {
+        let selected = ''
+        const view = render(
+            <RadioGroup
+                defaultValue="pro"
+                onChange={(v) => {
+                    selected = v
+                }}
+            >
+                <RadioGroup.Item value="free" id="r-free">
+                    <RadioGroup.Label>Free tier</RadioGroup.Label>
+                    <RadioGroup.Description>Community edition</RadioGroup.Description>
+                </RadioGroup.Item>
+                <RadioGroup.Item
+                    value="pro"
+                    id="r-pro"
+                    label="Pro tier"
+                    description="Professional plan"
+                />
+            </RadioGroup>
+        )
+
+        expect(view.querySelectorAll('.mr-radio')).toHaveLength(2)
+        const inputs = view.querySelectorAll('input[type="radio"]') as NodeListOf<HTMLInputElement>
+        expect(inputs[0].checked).toBe(false)
+        expect(inputs[1].checked).toBe(true)
+
+        expect(view.querySelector('.mr-radio__description')?.textContent).toBe('Community edition')
+
+        act(() => {
+            inputs[0].click()
+        })
+        expect(selected).toBe('free')
+        expect(inputs[0].checked).toBe(true)
+    })
 })

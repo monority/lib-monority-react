@@ -27,3 +27,23 @@ export interface RadioGroupProps
     invalid?: boolean
     name?: string
 }
+
+export interface RadioGroupItemProps extends HTMLAttributes<HTMLLabelElement> {
+    ref?: Ref<HTMLLabelElement>
+    value: string
+    label?: ReactNode
+    description?: ReactNode
+    disabled?: boolean
+    id?: string
+    children?: ReactNode
+}
+
+export interface RadioGroupLabelProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}
+
+export interface RadioGroupDescriptionProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+    children?: ReactNode
+}

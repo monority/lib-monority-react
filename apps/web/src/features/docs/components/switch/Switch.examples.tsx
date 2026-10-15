@@ -1,23 +1,24 @@
 import { Switch } from '@monority/ui/switch'
+import { Stack } from '@monority/ui/stack'
 import { useState } from 'react'
 
 export function SwitchBasicExample() {
     const [checked, setChecked] = useState(false)
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <Stack gap="sm">
             <Switch
                 label="Deployment alerts"
                 checked={checked}
                 onChange={() => setChecked(!checked)}
             />
             <Switch label="Managed by organization" disabled />
-        </div>
+        </Stack>
     )
 }
 
 export function SwitchSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <Stack gap="sm">
             <Switch
                 data-testid="switch-compact"
                 label="Compact row with a longer description"
@@ -27,17 +28,17 @@ export function SwitchSizesExample() {
             />
             <Switch data-testid="switch-medium" label="Settings form" size="md" defaultChecked />
             <Switch data-testid="switch-large" label="Touch target" size="lg" defaultChecked />
-        </div>
+        </Stack>
     )
 }
 
 export function SwitchTonesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <Stack gap="sm">
             <Switch label="Enable feature" tone="accent" defaultChecked />
             <Switch label="Show archived" tone="neutral" defaultChecked />
             <Switch label="Delete protection" tone="danger" defaultChecked />
-        </div>
+        </Stack>
     )
 }
 

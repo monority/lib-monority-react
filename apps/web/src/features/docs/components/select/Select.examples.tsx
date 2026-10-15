@@ -1,14 +1,15 @@
 import { Select } from '@monority/ui/select'
+import { Stack } from '@monority/ui/stack'
 
 export function SelectBasicExample() {
     return (
         <Select label="Country" data-testid="select-basic">
-            <option value="">Select an option...</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="long">
+            <Select.Option value="">Select an option...</Select.Option>
+            <Select.Option value="option1">Option 1</Select.Option>
+            <Select.Option value="option2">Option 2</Select.Option>
+            <Select.Option value="long">
                 A deliberately long country or region option that must stay clear of the chevron
-            </option>
+            </Select.Option>
         </Select>
     )
 }
@@ -16,10 +17,10 @@ export function SelectBasicExample() {
 export function SelectWithHintExample() {
     return (
         <Select label="Timezone" hint="Select your local timezone">
-            <option value="">Choose...</option>
-            <option value="utc">UTC</option>
-            <option value="est">EST</option>
-            <option value="pst">PST</option>
+            <Select.Option value="">Choose...</Select.Option>
+            <Select.Option value="utc">UTC</Select.Option>
+            <Select.Option value="est">EST</Select.Option>
+            <Select.Option value="pst">PST</Select.Option>
         </Select>
     )
 }
@@ -38,9 +39,9 @@ export function SelectLoadingExample() {
 export function SelectInvalidExample() {
     return (
         <Select label="Category" error="Please select a category">
-            <option value="">Select...</option>
-            <option value="a">Category A</option>
-            <option value="b">Category B</option>
+            <Select.Option value="">Select...</Select.Option>
+            <Select.Option value="a">Category A</Select.Option>
+            <Select.Option value="b">Category B</Select.Option>
         </Select>
     )
 }
@@ -48,7 +49,7 @@ export function SelectInvalidExample() {
 export function SelectDisabledExample() {
     return (
         <Select label="Disabled" disabled>
-            <option>Cannot interact</option>
+            <Select.Option>Cannot interact</Select.Option>
         </Select>
     )
 }
@@ -56,31 +57,40 @@ export function SelectDisabledExample() {
 export function SelectRequiredExample() {
     return (
         <Select label="Required field" required>
-            <option value="">Select...</option>
-            <option value="1">Option 1</option>
+            <Select.Option value="">Select...</Select.Option>
+            <Select.Option value="1">Option 1</Select.Option>
         </Select>
     )
 }
 
 export function SelectSizesExample() {
     return (
-        <div
-            style={{
-                display: 'flex',
-                gap: 'var(--mr-space-3)',
-                alignItems: 'start',
-                flexWrap: 'wrap',
-            }}
-        >
+        <Stack direction="horizontal" gap="sm" align="start">
             <Select label="Small" size="sm">
-                <option>Small</option>
+                <Select.Option>Small</Select.Option>
             </Select>
             <Select label="Medium" size="md">
-                <option>Medium</option>
+                <Select.Option>Medium</Select.Option>
             </Select>
             <Select label="Large" size="lg">
-                <option>Large</option>
+                <Select.Option>Large</Select.Option>
             </Select>
-        </div>
+        </Stack>
+    )
+}
+
+export function SelectGroupExample() {
+    return (
+        <Select label="Technologie frontend" defaultValue="react">
+            <Select.Group label="Ecosysteme React">
+                <Select.Option value="react">React 19</Select.Option>
+                <Select.Option value="next">Next.js</Select.Option>
+                <Select.Option value="remix">Remix</Select.Option>
+            </Select.Group>
+            <Select.Group label="Alternatives">
+                <Select.Option value="vue">Vue 3</Select.Option>
+                <Select.Option value="svelte">Svelte 5</Select.Option>
+            </Select.Group>
+        </Select>
     )
 }

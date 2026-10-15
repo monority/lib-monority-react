@@ -10,7 +10,15 @@ export {
     type CalendarNavButtonProps,
     type CalendarGridProps,
 } from './calendar'
-export { Checkbox } from './checkbox'
+export {
+    Checkbox,
+    CheckboxControl,
+    CheckboxLabel,
+    type CheckboxProps,
+    type CheckboxTone,
+    type CheckboxSize,
+} from './checkbox'
+
 export {
     Combobox,
     type ComboboxItem,
@@ -80,9 +88,44 @@ export {
     type NumberInputTone,
 } from './number-input'
 export { PasswordInput, type PasswordInputProps, type PasswordInputSize } from './password-input'
-export { RadioGroup } from './radio-group'
+export {
+    RadioGroup,
+    RadioGroupItem,
+    RadioGroupLabel,
+    RadioGroupDescription,
+    type RadioGroupProps,
+    type RadioItem,
+    type RadioGroupItemProps,
+    type RadioGroupLabelProps,
+    type RadioGroupDescriptionProps,
+    type RadioGroupSize,
+    type RadioGroupTone,
+} from './radio-group'
 export { Rating, type RatingProps, type RatingSize } from './rating'
-export { Select, type SelectProps, type SelectTone, type SelectSize } from './select'
-export { Slider, type SliderProps, type SliderSize, type SliderTone } from './slider'
-export { Switch } from './switch'
+export {
+    Select,
+    type SelectProps,
+    type SelectOptionProps,
+    type SelectGroupProps,
+    type SelectTone,
+    type SelectSize,
+    type SelectOption,
+} from './select'
+export {
+    Slider,
+    SliderTrack,
+    SliderRange,
+    SliderThumb,
+    type SliderProps,
+    type SliderSize,
+    type SliderTone,
+} from './slider'
+export {
+    Switch,
+    SwitchThumb,
+    SwitchControl,
+    type SwitchProps,
+    type SwitchTone,
+    type SwitchSize,
+} from './switch'
 export { Textarea, type TextareaProps, type TextareaTone, type TextareaSize } from './textarea'

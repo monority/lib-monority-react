@@ -75,3 +75,22 @@ export function RadioGroupFieldsetExample() {
         />
     )
 }
+
+export function RadioGroupCompoundExample() {
+    return (
+        <RadioGroup defaultValue="pro" label="Souscription annuelle">
+            <RadioGroup.Item value="starter" id="r-starter">
+                <RadioGroup.Label>Starter</RadioGroup.Label>
+                <RadioGroup.Description>Pour projets personnels</RadioGroup.Description>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="pro" id="r-pro">
+                <RadioGroup.Label>Pro</RadioGroup.Label>
+                <RadioGroup.Description>Pour equipes et scale-ups</RadioGroup.Description>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="enterprise" id="r-enterprise">
+                <RadioGroup.Label>Entreprise</RadioGroup.Label>
+                <RadioGroup.Description>SLA dedie et audit de securite</RadioGroup.Description>
+            </RadioGroup.Item>
+        </RadioGroup>
+    )
+}

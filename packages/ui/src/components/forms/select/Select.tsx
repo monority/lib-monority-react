@@ -3,7 +3,29 @@ import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
 import { Spinner } from '@/components/feedback/spinner/Spinner'
-import type { SelectProps } from './Select.types'
+import type {
+    SelectGroupProps,
+    SelectOptionProps,
+    SelectProps,
+    SelectSize,
+    SelectTone,
+} from './Select.types'
+
+export function SelectOption({ ref, children, ...props }: SelectOptionProps) {
+    return (
+        <option ref={ref} {...props}>
+            {children}
+        </option>
+    )
+}
+
+export function SelectGroup({ ref, children, ...props }: SelectGroupProps) {
+    return (
+        <optgroup ref={ref} {...props}>
+            {children}
+        </optgroup>
+    )
+}
 
 export function Select({
     tone,
@@ -96,4 +118,14 @@ export function Select({
     )
 }
 
-export type { SelectProps, SelectTone, SelectSize, SelectOption } from './Select.types'
+Select.Option = SelectOption
+Select.Group = SelectGroup
+
+export type {
+    SelectProps,
+    SelectOptionProps,
+    SelectGroupProps,
+    SelectTone,
+    SelectSize,
+    SelectOption as SelectOptionData,
+} from './Select.types'

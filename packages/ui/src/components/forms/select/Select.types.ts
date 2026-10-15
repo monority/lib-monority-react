@@ -24,3 +24,13 @@ export interface SelectProps
     options?: SelectOption[]
     placeholder?: string
 }
+
+export interface SelectOptionProps extends React.OptionHTMLAttributes<HTMLOptionElement> {
+    ref?: Ref<HTMLOptionElement>
+    children?: ReactNode
+}
+
+export interface SelectGroupProps extends React.OptgroupHTMLAttributes<HTMLOptGroupElement> {
+    ref?: Ref<HTMLOptGroupElement>
+    children?: ReactNode
+}

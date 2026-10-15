@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Slider } from '@monority/ui/slider'
+import { Stack } from '@monority/ui/stack'
 
 export function SliderBasicExample() {
     return <Slider label="Volume" defaultValue={50} />
@@ -7,21 +8,21 @@ export function SliderBasicExample() {
 
 export function SliderSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <Stack gap="md">
             <Slider label="Compact (sm)" size="sm" defaultValue={30} />
             <Slider label="Standard (md)" size="md" defaultValue={50} />
             <Slider label="Confort (lg)" size="lg" defaultValue={75} />
-        </div>
+        </Stack>
     )
 }
 
 export function SliderTonesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <Stack gap="md">
             <Slider label="Neutre" tone="neutral" defaultValue={40} />
             <Slider label="Accent (marque)" tone="accent" defaultValue={65} />
             <Slider label="Alerte (danger)" tone="danger" defaultValue={85} />
-        </div>
+        </Stack>
     )
 }
 

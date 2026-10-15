@@ -1,2 +1,2 @@
-export { Slider } from './Slider'
+export { Slider, SliderTrack, SliderRange, SliderThumb } from './Slider'
 export type { SliderProps, SliderSize, SliderTone } from './Slider.types'

@@ -181,4 +181,23 @@ describe('Select', () => {
         expect(select?.getAttribute('aria-busy')).toBeNull()
         expect(select?.disabled).toBe(false)
     })
+
+    it('supports declarative compound Select.Option and Select.Group', () => {
+        const view = render(
+            <Select label="Framework" defaultValue="react">
+                <Select.Group label="Modern">
+                    <Select.Option value="react">React</Select.Option>
+                    <Select.Option value="vue">Vue</Select.Option>
+                </Select.Group>
+                <Select.Group label="Other">
+                    <Select.Option value="svelte">Svelte</Select.Option>
+                </Select.Group>
+            </Select>
+        )
+
+        expect(view.querySelectorAll('optgroup')).toHaveLength(2)
+        expect(view.querySelectorAll('option')).toHaveLength(3)
+        const select = view.querySelector('select') as HTMLSelectElement
+        expect(select.value).toBe('react')
+    })
 })

@@ -207,4 +207,37 @@ export function Slider({
     )
 }
 
+export function SliderTrack({
+    ref,
+    className,
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> }) {
+    return (
+        <div ref={ref} className={cn('mr-slider__track', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function SliderRange({
+    ref,
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> }) {
+    return <div ref={ref} className={cn('mr-slider__range', className)} {...props} />
+}
+
+export function SliderThumb({
+    ref,
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> }) {
+    return <div ref={ref} className={cn('mr-slider__thumb', className)} {...props} />
+}
+
+Slider.Track = SliderTrack
+Slider.Range = SliderRange
+Slider.Thumb = SliderThumb
+
 export type { SliderProps, SliderSize, SliderTone } from './Slider.types'

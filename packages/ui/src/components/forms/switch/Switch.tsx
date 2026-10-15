@@ -109,4 +109,33 @@ export function Switch({ ref, ...props }: SwitchProps) {
     )
 }
 
+export function SwitchThumb({
+    ref,
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLSpanElement> & { ref?: React.Ref<HTMLSpanElement> }) {
+    return <span ref={ref} className={cn('mr-switch__thumb', className)} {...props} />
+}
+
+export function SwitchControl({
+    ref,
+    className,
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLSpanElement> & { ref?: React.Ref<HTMLSpanElement> }) {
+    return (
+        <span
+            ref={ref}
+            className={cn('mr-switch__control', className)}
+            aria-hidden="true"
+            {...props}
+        >
+            {children ?? <SwitchThumb />}
+        </span>
+    )
+}
+
+Switch.Thumb = SwitchThumb
+Switch.Control = SwitchControl
+
 export type { SwitchProps, SwitchSize, SwitchTone } from './Switch.types'

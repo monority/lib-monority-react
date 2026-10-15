@@ -110,4 +110,38 @@ export function Checkbox(props: CheckboxProps) {
     )
 }
 
+export function CheckboxControl({
+    ref,
+    className,
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLSpanElement> & { ref?: React.Ref<HTMLSpanElement> }) {
+    return (
+        <span
+            ref={ref}
+            className={cn('mr-checkbox__control', className)}
+            aria-hidden="true"
+            {...props}
+        >
+            {children}
+        </span>
+    )
+}
+
+export function CheckboxLabel({
+    ref,
+    className,
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLSpanElement> & { ref?: React.Ref<HTMLSpanElement> }) {
+    return (
+        <span ref={ref} className={cn('mr-checkbox__label', className)} {...props}>
+            {children}
+        </span>
+    )
+}
+
+Checkbox.Control = CheckboxControl
+Checkbox.Label = CheckboxLabel
+
 export type { CheckboxProps, CheckboxSize, CheckboxTone } from './Checkbox.types'
