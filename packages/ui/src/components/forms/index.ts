@@ -69,7 +69,23 @@ export {
     type FileTriggerProps,
 } from './file-upload'
 export { FileUpload, type FileUploadProps, type FileUploadSize } from './file-upload'
-export { FormSection, type FormSectionProps } from './form-section'
+export {
+    FormSection,
+    FormSectionHeader,
+    FormSectionTitle,
+    FormSectionDescription,
+    FormSectionMeta,
+    FormSectionBody,
+    FormSectionFooter,
+    FormSectionActions,
+    type FormSectionProps,
+    type FormSectionHeaderProps,
+    type FormSectionTitleProps,
+    type FormSectionDescriptionProps,
+    type FormSectionMetaProps,
+    type FormSectionBodyProps,
+    type FormSectionFooterProps,
+} from './form-section'
 export { Input, type InputProps } from './input'
 export {
     InputOTP,

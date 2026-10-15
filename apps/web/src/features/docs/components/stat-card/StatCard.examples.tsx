@@ -1,3 +1,4 @@
+import { Grid } from '@monority/ui/grid'
 import { StatCard } from '@monority/ui/stat-card'
 import { Text } from '@monority/ui/text'
 
@@ -15,13 +16,7 @@ export function StatCardBasicExample() {
 
 export function StatCardTonesExample() {
     return (
-        <div
-            style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: 'var(--mr-space-5)',
-            }}
-        >
+        <Grid columns="auto-fit" gap="md">
             <StatCard
                 label="Pipeline"
                 value="$842k"
@@ -41,7 +36,7 @@ export function StatCardTonesExample() {
                 trendTone="warning"
             />
             <StatCard label="Failed jobs" value="17" trend="+3 in 24h" trendTone="danger" />
-        </div>
+        </Grid>
     )
 }
 
@@ -53,7 +48,7 @@ export function StatCardWithIconExample() {
             trend="+72 this week"
             trendTone="success"
             description="Billable seats with activity in the current cycle."
-            icon={<span aria-hidden="true">AS</span>}
+            icon={<Text.Span aria-hidden="true">AS</Text.Span>}
         />
     )
 }
@@ -71,20 +66,14 @@ export function StatCardWithFooterExample() {
 
 export function StatCardLongTextExample() {
     return (
-        <div
-            style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
-                gap: 'var(--mr-space-5)',
-            }}
-        >
+        <Grid columns="auto-fit" gap="md">
             <StatCard
                 data-testid="stat-card-long-title"
                 label="Quarterly recognized revenue"
                 value="$1,234,567.89"
                 trend="+23.5% vs previous quarter"
                 trendTone="success"
-                icon={<span>QR</span>}
+                icon={<Text.Span>QR</Text.Span>}
             />
             <StatCard
                 label="Backlog items requiring product decision"
@@ -93,6 +82,28 @@ export function StatCardLongTextExample() {
                 trend="+118 added this month"
                 trendTone="warning"
             />
-        </div>
+        </Grid>
+    )
+}
+
+export function StatCardCompoundExample() {
+    return (
+        <StatCard>
+            <StatCard.Header>
+                <StatCard.Label>Cloud Spend</StatCard.Label>
+                <StatCard.HeaderEnd>
+                    <StatCard.Trend tone="danger">+24%</StatCard.Trend>
+                </StatCard.HeaderEnd>
+            </StatCard.Header>
+            <StatCard.Metric>
+                <StatCard.Value>$4,820</StatCard.Value>
+            </StatCard.Metric>
+            <StatCard.Description>
+                Actual infrastructure compute for the current cycle
+            </StatCard.Description>
+            <StatCard.Footer>
+                <Text.Small tone="muted">Refreshed automatically</Text.Small>
+            </StatCard.Footer>
+        </StatCard>
     )
 }

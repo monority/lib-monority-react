@@ -41,4 +41,13 @@ describe('MetricGrid', () => {
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-metric-grid')
     })
+
+    it('renders children directly', () => {
+        const view = render(
+            <MetricGrid>
+                <div data-testid="custom-child">Child Metric</div>
+            </MetricGrid>
+        )
+        expect(view.querySelector('[data-testid="custom-child"]')?.textContent).toBe('Child Metric')
+    })
 })

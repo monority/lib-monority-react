@@ -68,4 +68,32 @@ describe('StatCard', () => {
         render(<StatCard ref={ref} label="Test" value="0" />)
         expect(ref.current?.className).toContain('mr-stat-card')
     })
+
+    it('supports declarative compound composition', () => {
+        const view = render(
+            <StatCard>
+                <StatCard.Header>
+                    <StatCard.Label>Active Users</StatCard.Label>
+                    <StatCard.HeaderEnd>
+                        <StatCard.Trend tone="success">+15%</StatCard.Trend>
+                    </StatCard.HeaderEnd>
+                </StatCard.Header>
+                <StatCard.Metric>
+                    <StatCard.Value>1,420</StatCard.Value>
+                </StatCard.Metric>
+                <StatCard.Description>Monthly active subscribers</StatCard.Description>
+                <StatCard.Footer>Live synced</StatCard.Footer>
+            </StatCard>
+        )
+        expect(view.querySelector('.mr-stat-card__label')?.textContent).toBe('Active Users')
+        expect(view.querySelector('.mr-stat-card__value')?.textContent).toBe('1,420')
+        expect(view.querySelector('.mr-stat-card__trend')?.textContent).toContain('+15%')
+        expect(view.querySelector('.mr-stat-card__trend')?.getAttribute('data-trend-tone')).toBe(
+            'success'
+        )
+        expect(view.querySelector('.mr-stat-card__description')?.textContent).toBe(
+            'Monthly active subscribers'
+        )
+        expect(view.querySelector('.mr-stat-card__footer')?.textContent).toBe('Live synced')
+    })
 })

@@ -3,6 +3,7 @@ import {
     FormSectionBasicExample,
     FormSectionWithoutActionsExample,
     FormSectionWithMetaExample,
+    FormSectionCompoundExample,
 } from './FormSection.examples'
 
 const docData: DocPageData = {
@@ -24,6 +25,27 @@ const docData: DocPageData = {
 </FormSection>`,
     preview: () => <FormSectionBasicExample />,
     examples: [
+        {
+            title: 'Compound composition',
+            content: <FormSectionCompoundExample />,
+            code: `<FormSection>
+  <FormSection.Header>
+    <FormSection.Title>Security credentials</FormSection.Title>
+    <FormSection.Description>Configure multi-factor tokens and session expiration limits.</FormSection.Description>
+    <FormSection.Meta>
+      <Badge variant="default">Encrypted</Badge>
+    </FormSection.Meta>
+  </FormSection.Header>
+  <FormSection.Body>
+    <Input label="Session timeout (hours)" defaultValue="24" />
+    <Input label="Allowed IP ranges" placeholder="10.0.0.0/8" />
+  </FormSection.Body>
+  <FormSection.Footer>
+    <Button variant="secondary">Reset</Button>
+    <Button>Save policy</Button>
+  </FormSection.Footer>
+</FormSection>`,
+        },
         {
             title: 'Without actions',
             content: <FormSectionWithoutActionsExample />,

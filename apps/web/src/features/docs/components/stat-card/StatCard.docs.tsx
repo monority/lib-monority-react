@@ -5,6 +5,7 @@ import {
     StatCardWithIconExample,
     StatCardWithFooterExample,
     StatCardLongTextExample,
+    StatCardCompoundExample,
 } from './StatCard.examples'
 
 const docData: DocPageData = {
@@ -15,6 +16,25 @@ const docData: DocPageData = {
     preview: () => <StatCardBasicExample />,
     examples: [
         {
+            title: 'Compound composition',
+            content: <StatCardCompoundExample />,
+            code: `<StatCard>
+  <StatCard.Header>
+    <StatCard.Label>Cloud Spend</StatCard.Label>
+    <StatCard.HeaderEnd>
+      <StatCard.Trend tone="danger">+24%</StatCard.Trend>
+    </StatCard.HeaderEnd>
+  </StatCard.Header>
+  <StatCard.Metric>
+    <StatCard.Value>$4,820</StatCard.Value>
+  </StatCard.Metric>
+  <StatCard.Description>Actual infrastructure compute for the current cycle</StatCard.Description>
+  <StatCard.Footer>
+    <Text.Small tone="muted">Refreshed automatically</Text.Small>
+  </StatCard.Footer>
+</StatCard>`,
+        },
+        {
             title: 'Trend tones',
             content: <StatCardTonesExample />,
             code: `<StatCard label="Pipeline" value="$842k" trend="+14 qualified deals" trendTone="success" />
@@ -24,17 +44,17 @@ const docData: DocPageData = {
         {
             title: 'With icon',
             content: <StatCardWithIconExample />,
-            code: `<StatCard label="Active seats" value="1,284" trend="+72 this week" trendTone="success" icon={<UsersIcon />} />`,
+            code: `<StatCard label="Active seats" value="1,284" trend="+72 this week" trendTone="success" icon={<Text.Span aria-hidden="true">AS</Text.Span>} />`,
         },
         {
             title: 'With footer',
             content: <StatCardWithFooterExample />,
-            code: `<StatCard label="Open reviews" value="46" description="Pull requests waiting for owner approval." footer={<span>Updated 5 minutes ago</span>} />`,
+            code: `<StatCard label="Open reviews" value="46" description="Pull requests waiting for owner approval." footer={<Text.Small>Updated 5 minutes ago</Text.Small>} />`,
         },
         {
             title: 'Long text',
             content: <StatCardLongTextExample />,
-            code: `<StatCard label="Quarterly recognized revenue" value="$1,234,567.89" trend="+23.5% vs previous quarter" trendTone="success" />`,
+            code: `<StatCard label="Quarterly recognized revenue" value="$1,234,567.89" trend="+23.5% vs previous quarter" trendTone="success" icon={<Text.Span>QR</Text.Span>} />`,
         },
     ],
     props: [

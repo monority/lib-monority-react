@@ -3,6 +3,7 @@ import {
     DataListBasicExample,
     DataListWithRenderExample,
     DataListSplitExample,
+    DataListCompoundExample,
 } from './DataList.examples'
 
 const docData: DocPageData = {
@@ -17,11 +18,29 @@ const docData: DocPageData = {
     preview: () => <DataListBasicExample />,
     examples: [
         {
+            title: 'Compound composition',
+            content: <DataListCompoundExample />,
+            code: `<DataList columns="split">
+  <DataList.Item>
+    <DataList.Label>Framework</DataList.Label>
+    <DataList.Value>React 19</DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>Architecture</DataList.Label>
+    <DataList.Value>Compound Subcomponents</DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>CSS Foundation</DataList.Label>
+    <DataList.Value>@layer mr.*</DataList.Value>
+  </DataList.Item>
+</DataList>`,
+        },
+        {
             title: 'With render',
             content: <DataListWithRenderExample />,
             code: `<DataList items={[
-  { label: 'Status', value: 'stable', render: (value) => <Badge variant="secondary">{value}</Badge> },
-  { label: 'Release notes', value: 'View changelog', render: (value) => <a href="#">{value}</a> },
+  { label: 'Status', value: 'stable', render: (value) => <Badge variant="default">{String(value).toUpperCase()}</Badge> },
+  { label: 'Release notes', value: 'View changelog', render: (value) => <ButtonLink href="#">{value}</ButtonLink> },
 ]} />`,
         },
         {

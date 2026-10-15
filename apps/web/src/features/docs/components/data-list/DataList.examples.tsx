@@ -1,4 +1,5 @@
 import { Badge } from '@monority/ui/badge'
+import { ButtonLink } from '@monority/ui/button-link'
 import { DataList } from '@monority/ui/data-list'
 
 export function DataListBasicExample() {
@@ -30,7 +31,7 @@ export function DataListWithRenderExample() {
                     key: 'release',
                     label: 'Release notes',
                     value: 'View changelog',
-                    render: (value) => <a href="#">{value}</a>,
+                    render: (value) => <ButtonLink href="#">{value}</ButtonLink>,
                 },
                 {
                     key: 'owner',
@@ -53,5 +54,24 @@ export function DataListSplitExample() {
                 { key: 'keyboard', label: 'Keyboard support', value: 'Native' },
             ]}
         />
+    )
+}
+
+export function DataListCompoundExample() {
+    return (
+        <DataList columns="split">
+            <DataList.Item>
+                <DataList.Label>Framework</DataList.Label>
+                <DataList.Value>React 19</DataList.Value>
+            </DataList.Item>
+            <DataList.Item>
+                <DataList.Label>Architecture</DataList.Label>
+                <DataList.Value>Compound Subcomponents</DataList.Value>
+            </DataList.Item>
+            <DataList.Item>
+                <DataList.Label>CSS Foundation</DataList.Label>
+                <DataList.Value>@layer mr.*</DataList.Value>
+            </DataList.Item>
+        </DataList>
     )
 }

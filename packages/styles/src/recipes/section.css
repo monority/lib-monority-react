@@ -48,7 +48,14 @@
         box-shadow: var(--mr-shadow-overlay);
     }
 
-    /* Titre interne */
+    /* Structure compound interne */
+    :where(.mr-section__header) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--mr-space-1);
+        margin-block-end: var(--mr-space-3);
+    }
+
     :where(.mr-section__title) {
         margin: 0;
         margin-block-end: var(--mr-space-3);
@@ -57,5 +64,21 @@
         font-weight: var(--mr-font-weight-semibold);
         line-height: var(--mr-line-height-lg);
         color: var(--mr-text-primary);
+    }
+
+    :where(.mr-section__header) :where(.mr-section__title) {
+        margin-block-end: 0;
+    }
+
+    :where(.mr-section__description) {
+        margin: 0;
+        font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
+        color: var(--mr-text-secondary);
+        line-height: var(--mr-line-height-sm);
+    }
+
+    :where(.mr-section__content) {
+        display: block;
     }
 }

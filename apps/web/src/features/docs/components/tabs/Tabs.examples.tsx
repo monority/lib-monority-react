@@ -1,4 +1,6 @@
+import { Stack } from '@monority/ui/stack'
 import { Tabs } from '@monority/ui/tabs'
+import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 
 export function TabsBasicExample() {
@@ -22,11 +24,11 @@ export function TabsTonesExample() {
     ]
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Stack gap="md">
             <Tabs items={items} value={neutral} onChange={setNeutral} tone="neutral" />
             <Tabs items={items} value={accent} onChange={setAccent} tone="accent" />
             <Tabs items={items} value={danger} onChange={setDanger} tone="danger" />
-        </div>
+        </Stack>
     )
 }
 
@@ -40,11 +42,11 @@ export function TabsSizesExample() {
     ]
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Stack gap="md">
             <Tabs items={items} value={small} onChange={setSmall} size="sm" />
             <Tabs items={items} value={medium} onChange={setMedium} size="md" />
             <Tabs items={items} value={large} onChange={setLarge} size="lg" />
-        </div>
+        </Stack>
     )
 }
 
@@ -78,37 +80,19 @@ export function TabsCompoundExample() {
                 <Tabs.Trigger value="billing">Billing</Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content value="account">
-                <div
-                    style={{
-                        padding: '0.75rem 0',
-                        color: 'var(--mr-text-secondary)',
-                        fontSize: 'var(--mr-font-size-sm)',
-                    }}
-                >
+                <Text.Muted size="sm">
                     Manage your account profile, email addresses, and connected social accounts.
-                </div>
+                </Text.Muted>
             </Tabs.Content>
             <Tabs.Content value="notifications">
-                <div
-                    style={{
-                        padding: '0.75rem 0',
-                        color: 'var(--mr-text-secondary)',
-                        fontSize: 'var(--mr-font-size-sm)',
-                    }}
-                >
+                <Text.Muted size="sm">
                     Configure alert thresholds, daily digest frequency, and desktop push alerts.
-                </div>
+                </Text.Muted>
             </Tabs.Content>
             <Tabs.Content value="billing">
-                <div
-                    style={{
-                        padding: '0.75rem 0',
-                        color: 'var(--mr-text-secondary)',
-                        fontSize: 'var(--mr-font-size-sm)',
-                    }}
-                >
+                <Text.Muted size="sm">
                     Review your enterprise plan tier, invoices history, and active seats allocation.
-                </div>
+                </Text.Muted>
             </Tabs.Content>
         </Tabs>
     )

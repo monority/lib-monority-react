@@ -1,2 +1,25 @@
-export { StatCard } from './StatCard'
-export type { StatCardProps, StatCardTone } from './StatCard.types'
+export {
+    StatCard,
+    StatCardHeader,
+    StatCardLabel,
+    StatCardHeaderEnd,
+    StatCardIcon,
+    StatCardTrend,
+    StatCardMetric,
+    StatCardValue,
+    StatCardDescription,
+    StatCardFooter,
+} from './StatCard'
+export type {
+    StatCardProps,
+    StatCardTone,
+    StatCardHeaderProps,
+    StatCardLabelProps,
+    StatCardHeaderEndProps,
+    StatCardIconProps,
+    StatCardTrendProps,
+    StatCardMetricProps,
+    StatCardValueProps,
+    StatCardDescriptionProps,
+    StatCardFooterProps,
+} from './StatCard.types'

@@ -116,4 +116,30 @@ describe('Section', () => {
         const el = container.firstChild as HTMLElement
         expect(el.hasAttribute('role')).toBe(false)
     })
+
+    it('supports declarative compound composition', () => {
+        const { container } = render(
+            <Section variant="card" spacing="lg">
+                <Section.Header>
+                    <Section.Title as="h2">Architecture Overview</Section.Title>
+                    <Section.Description>Deep dive into modular layering.</Section.Description>
+                </Section.Header>
+                <Section.Content>
+                    <p>Body content goes here.</p>
+                </Section.Content>
+            </Section>
+        )
+        expect(container.querySelector('.mr-section__header')).toBeTruthy()
+        const title = container.querySelector('.mr-section__title')
+        expect(title?.tagName).toBe('H2')
+        expect(title?.textContent).toBe('Architecture Overview')
+        expect(container.querySelector('.mr-section__description')?.textContent).toBe(
+            'Deep dive into modular layering.'
+        )
+        expect(container.querySelector('.mr-section__content')?.textContent).toContain(
+            'Body content goes here.'
+        )
+        expect(container.querySelector('[data-variant="card"]')).toBeTruthy()
+        expect(container.querySelector('[data-spacing="lg"]')).toBeTruthy()
+    })
 })

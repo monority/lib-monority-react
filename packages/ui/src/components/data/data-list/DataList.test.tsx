@@ -64,4 +64,28 @@ describe('DataList', () => {
         render(<DataList ref={ref} items={items} />)
         expect(ref.current?.tagName).toBe('DL')
     })
+
+    it('supports declarative compound composition', () => {
+        const view = render(
+            <DataList columns="split">
+                <DataList.Item>
+                    <DataList.Label>Status</DataList.Label>
+                    <DataList.Value>Active</DataList.Value>
+                </DataList.Item>
+                <DataList.Item>
+                    <DataList.Label>Role</DataList.Label>
+                    <DataList.Value>Lead</DataList.Value>
+                </DataList.Item>
+            </DataList>
+        )
+        const dts = view.querySelectorAll('dt')
+        const dds = view.querySelectorAll('dd')
+        expect(dts.length).toBe(2)
+        expect(dds.length).toBe(2)
+        expect(dts[0]?.textContent).toBe('Status')
+        expect(dds[0]?.textContent).toBe('Active')
+        expect(dts[1]?.textContent).toBe('Role')
+        expect(dds[1]?.textContent).toBe('Lead')
+        expect(view.querySelector('dl')?.getAttribute('data-columns')).toBe('split')
+    })
 })

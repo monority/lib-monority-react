@@ -1,3 +1,4 @@
+import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 
 const sample =
@@ -5,7 +6,7 @@ const sample =
 
 export function TextBasicExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <Stack gap="sm">
             <Text as="p" size="sm" tone="muted">
                 Smaller muted text works well for release dates, helper copy, and low-priority
                 product metadata.
@@ -18,33 +19,33 @@ export function TextBasicExample() {
                 Stronger large text is useful for short statements that need a little more presence
                 inside a dense interface.
             </Text>
-        </div>
+        </Stack>
     )
 }
 
 export function TextSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Stack gap="xs">
             <Text size="sm">{sample}</Text>
             <Text size="md">{sample}</Text>
             <Text size="lg">{sample}</Text>
-        </div>
+        </Stack>
     )
 }
 
 export function TextTonesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Stack gap="xs">
             <Text tone="muted">{sample}</Text>
             <Text tone="base">{sample}</Text>
             <Text tone="strong">{sample}</Text>
-        </div>
+        </Stack>
     )
 }
 
 export function TextAsExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+        <Stack gap="xs">
             <Text as="p" tone="muted">
                 Rendered as &lt;p&gt; for paragraph copy inside content sections.
             </Text>
@@ -54,6 +55,6 @@ export function TextAsExample() {
             <Text as="div" tone="strong">
                 Rendered as &lt;div&gt; when the text needs block layout control.
             </Text>
-        </div>
+        </Stack>
     )
 }

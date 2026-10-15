@@ -1,9 +1,10 @@
+import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 import { Title } from '@monority/ui/title'
 
 export function TitleBasicExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Stack gap="md">
             <Title as="h1" size="display">
                 Release readiness
             </Title>
@@ -21,13 +22,13 @@ export function TitleBasicExample() {
                 Pair a compact heading with muted supporting text when the surrounding UI already
                 provides context.
             </Text>
-        </div>
+        </Stack>
     )
 }
 
 export function TitleSizesExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <Stack gap="sm">
             <Title as="h1" size="display">
                 Workspace settings
             </Title>
@@ -40,19 +41,19 @@ export function TitleSizesExample() {
             <Title as="h4" size="sm">
                 Invite permissions
             </Title>
-        </div>
+        </Stack>
     )
 }
 
 export function TitleLevelsExample() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Stack gap="xs">
             <Title as="h1">H1 document title</Title>
             <Title as="h2">H2 page section</Title>
             <Title as="h3">H3 settings group</Title>
             <Title as="h4">H4 card title</Title>
             <Title as="h5">H5 field group</Title>
             <Title as="h6">H6 detail label</Title>
-        </div>
+        </Stack>
     )
 }

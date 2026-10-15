@@ -81,4 +81,33 @@ describe('FormSection', () => {
         const root = view.querySelector('.mr-form-section')
         expect(root?.className).toContain('custom')
     })
+
+    it('supports declarative compound composition', () => {
+        const view = render(
+            <FormSection>
+                <FormSection.Header>
+                    <FormSection.Title>Account Settings</FormSection.Title>
+                    <FormSection.Description>
+                        Manage your workspace preferences
+                    </FormSection.Description>
+                    <FormSection.Meta>Beta</FormSection.Meta>
+                </FormSection.Header>
+                <FormSection.Body>
+                    <input type="text" defaultValue="Workspace Name" />
+                </FormSection.Body>
+                <FormSection.Footer>
+                    <button type="submit">Save</button>
+                </FormSection.Footer>
+            </FormSection>
+        )
+        expect(view.querySelector('.mr-form-section__header-title')?.textContent).toBe(
+            'Account Settings'
+        )
+        expect(view.querySelector('.mr-form-section__header-description')?.textContent).toBe(
+            'Manage your workspace preferences'
+        )
+        expect(view.querySelector('.mr-form-section__header-meta')?.textContent).toBe('Beta')
+        expect(view.querySelector('.mr-form-section__body input')).toBeTruthy()
+        expect(view.querySelector('.mr-form-section__footer button')).toBeTruthy()
+    })
 })

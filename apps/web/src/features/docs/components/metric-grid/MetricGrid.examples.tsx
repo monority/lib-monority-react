@@ -1,4 +1,5 @@
 import { MetricGrid } from '@monority/ui/metric-grid'
+import { StatCard } from '@monority/ui/stat-card'
 
 export function MetricGridBasicExample() {
     return (
@@ -89,5 +90,26 @@ export function MetricGridHealthExample() {
                 },
             ]}
         />
+    )
+}
+
+export function MetricGridChildrenExample() {
+    return (
+        <MetricGrid>
+            <StatCard
+                label="Conversion rate"
+                value="4.6%"
+                trend="+0.8%"
+                trendTone="success"
+                description="Organic funnel"
+            />
+            <StatCard
+                label="API uptime"
+                value="99.98%"
+                trend="Stable"
+                trendTone="neutral"
+                description="Past 90 days"
+            />
+        </MetricGrid>
     )
 }

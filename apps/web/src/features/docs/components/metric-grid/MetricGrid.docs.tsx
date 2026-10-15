@@ -4,6 +4,7 @@ import {
     MetricGridHealthExample,
     MetricGridRevenueExample,
     MetricGridRiskExample,
+    MetricGridChildrenExample,
 } from './MetricGrid.examples'
 
 const docData: DocPageData = {
@@ -16,6 +17,14 @@ const docData: DocPageData = {
 ]} />`,
     preview: () => <MetricGridBasicExample />,
     examples: [
+        {
+            title: 'Declarative children',
+            content: <MetricGridChildrenExample />,
+            code: `<MetricGrid>
+  <StatCard label="Conversion rate" value="4.6%" trend="+0.8%" trendTone="success" description="Organic funnel" />
+  <StatCard label="API uptime" value="99.98%" trend="Stable" trendTone="neutral" description="Past 90 days" />
+</MetricGrid>`,
+        },
         {
             title: 'Revenue item',
             content: <MetricGridRevenueExample />,

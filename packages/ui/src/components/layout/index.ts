@@ -8,8 +8,16 @@ export { Grid } from './grid'
 export type { GridProps, GridColumns } from './grid'
 export { PageHeader } from './page-header'
 export type { PageHeaderProps } from './page-header'
-export { Section } from './section'
-export type { SectionProps, SectionSpacing, SectionVariant } from './section'
+export { Section, SectionHeader, SectionTitle, SectionDescription, SectionContent } from './section'
+export type {
+    SectionProps,
+    SectionSpacing,
+    SectionVariant,
+    SectionHeaderProps,
+    SectionTitleProps,
+    SectionDescriptionProps,
+    SectionContentProps,
+} from './section'
 export { ScrollArea } from './scroll-area'
 export type { ScrollAreaProps } from './scroll-area'
 export { Separator } from './separator'

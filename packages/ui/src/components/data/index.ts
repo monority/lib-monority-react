@@ -1,8 +1,42 @@
-export { DataList, type DataListProps, type DataListItem, type DataListColumns } from './data-list'
+export {
+    DataList,
+    DataListItemComponent,
+    DataListLabel,
+    DataListValue,
+    type DataListProps,
+    type DataListItem,
+    type DataListItemData,
+    type DataListColumns,
+    type DataListItemProps,
+    type DataListLabelProps,
+    type DataListValueProps,
+} from './data-list'
 export { DataTable, type DataTableProps, type Sort, type SortDirection } from './data-table'
 export type { Column as DataTableColumn } from './data-table'
 export { MetricGrid, type MetricGridItem, type MetricGridProps } from './metric-grid'
-export { StatCard, type StatCardProps, type StatCardTone } from './stat-card'
+export {
+    StatCard,
+    StatCardHeader,
+    StatCardLabel,
+    StatCardHeaderEnd,
+    StatCardIcon,
+    StatCardTrend,
+    StatCardMetric,
+    StatCardValue,
+    StatCardDescription,
+    StatCardFooter,
+    type StatCardProps,
+    type StatCardTone,
+    type StatCardHeaderProps,
+    type StatCardLabelProps,
+    type StatCardHeaderEndProps,
+    type StatCardIconProps,
+    type StatCardTrendProps,
+    type StatCardMetricProps,
+    type StatCardValueProps,
+    type StatCardDescriptionProps,
+    type StatCardFooterProps,
+} from './stat-card'
 export {
     Table,
     TableHeader,

@@ -1,5 +1,9 @@
 import { DocPage, type DocPageData } from '../DocPage'
-import { SectionBasicExample, SectionSpacingExample } from './Section.examples'
+import {
+    SectionBasicExample,
+    SectionSpacingExample,
+    SectionCompoundExample,
+} from './Section.examples'
 
 const docData: DocPageData = {
     title: 'Section',
@@ -7,10 +11,25 @@ const docData: DocPageData = {
         'Content section with configurable spacing, visual variants, and polymorphic element.',
     importCode: "import { Section } from '@monority/ui/section'",
     usageCode: `<Section spacing="lg" variant="card" title="Features">
-  <p>Content grouped in a card-style section.</p>
+  <Text>Content grouped in a card-style section.</Text>
 </Section>`,
     preview: () => <SectionBasicExample />,
-    examples: [{ title: 'Spacing variants', content: <SectionSpacingExample /> }],
+    examples: [
+        {
+            title: 'Compound composition',
+            content: <SectionCompoundExample />,
+            code: `<Section variant="card" spacing="lg">
+  <Section.Header>
+    <Section.Title as="h2">Architecture overview</Section.Title>
+    <Section.Description>Explore how layers, tokens, and components compose predictably across applications.</Section.Description>
+  </Section.Header>
+  <Section.Content>
+    <Text>Sections provide clear boundary rhythm, semantic heading hierarchy, and consistent surface treatments.</Text>
+  </Section.Content>
+</Section>`,
+        },
+        { title: 'Spacing variants', content: <SectionSpacingExample /> },
+    ],
     props: [
         {
             name: 'title',
