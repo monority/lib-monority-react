@@ -1,4 +1,14 @@
-import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
+import {
+    cloneElement,
+    createContext,
+    isValidElement,
+    useCallback,
+    useContext,
+    useEffect,
+    useId,
+    useRef,
+    useState,
+} from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
@@ -35,12 +45,53 @@ export function PopoverTrigger({
     ref,
     children,
     className,
+    asChild,
     onClick,
     ...props
 }: PopoverTriggerProps) {
     const ctx = useContext(PopoverContext)
     const isOpen = ctx?.isOpen ?? false
     const instanceId = ctx?.instanceId ?? ''
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        onClick?.(e)
+        if (ctx) {
+            ctx.triggerElementRef.current = e.currentTarget
+            ctx.updatePosition()
+            ctx.setOpenState(!isOpen)
+        }
+    }
+
+    if (asChild || (asChild !== false && isValidElement(children))) {
+        const child = children as React.ReactElement<Record<string, unknown>>
+        const childProps = child.props as Record<string, unknown>
+        const childRef =
+            (child.props as { ref?: React.Ref<HTMLElement> })?.ref ??
+            (child as unknown as { ref?: React.Ref<HTMLElement> }).ref
+
+        return cloneElement(child, {
+            ref: (node: HTMLElement | null) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node
+
+                if (typeof childRef === 'function') childRef(node)
+                else if (childRef && typeof childRef === 'object' && 'current' in childRef) {
+                    ;(childRef as React.MutableRefObject<HTMLElement | null>).current = node
+                }
+            },
+            className: cn(childProps.className as string | undefined, className),
+            'aria-expanded': isOpen,
+            'aria-controls': `${instanceId}-content`,
+            'data-mr-popover-trigger': 'true',
+            onClick: (e: React.MouseEvent<HTMLElement>) => {
+                if (typeof childProps.onClick === 'function') {
+                    ;(childProps.onClick as React.MouseEventHandler<HTMLElement>)(e)
+                }
+                handleClick(e)
+            },
+            ...props,
+        } as Record<string, unknown>)
+    }
 
     return (
         <button
@@ -50,14 +101,7 @@ export function PopoverTrigger({
             aria-expanded={isOpen}
             aria-controls={`${instanceId}-content`}
             data-mr-popover-trigger="true"
-            onClick={(e) => {
-                onClick?.(e)
-                if (ctx) {
-                    ctx.triggerElementRef.current = e.currentTarget
-                    ctx.updatePosition()
-                    ctx.setOpenState(!isOpen)
-                }
-            }}
+            onClick={handleClick}
             {...props}
         >
             {children}

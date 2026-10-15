@@ -166,33 +166,36 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
 
     return (
         <>
-            <header className={homeNav ? 'app-header app-header--home' : 'app-header'}>
-                {showBanner && (
-                    <div className="app-header__announcement">
-                        <div className="app-header__announcement-inner">
-                            <span className="app-header__announcement-badge">Vague 3</span>
-                            <span className="app-header__announcement-text">
-                                Calendar dynamique et architecture compound deployes (Calendar,
-                                Popover, HoverCard, Tooltip, Collapsible, Avatar, Carousel).
-                            </span>
-                            <button
-                                type="button"
-                                className="app-header__announcement-details-btn"
-                                onClick={() => setChangelogOpen(true)}
-                            >
-                                Voir le journal
-                            </button>
-                            <button
-                                type="button"
-                                className="app-header__announcement-close"
-                                onClick={() => setShowBanner(false)}
-                                aria-label="Fermer le journal des modifications temporaire"
-                            >
-                                &#10005;
-                            </button>
-                        </div>
+            {showBanner && (
+                <div className="app-header__announcement">
+                    <div className="app-header__announcement-inner">
+                        <span className="app-header__announcement-badge">Vague 3</span>
+                        <span className="app-header__announcement-text">
+                            Calendar dynamique et architecture compound deployes (Calendar, Popover,
+                            HoverCard, Tooltip, Collapsible, Avatar, Carousel).
+                        </span>
+                        <button
+                            type="button"
+                            className="app-header__announcement-details-btn"
+                            onClick={() => setChangelogOpen(true)}
+                        >
+                            Voir le journal
+                        </button>
+                        <button
+                            type="button"
+                            className="app-header__announcement-close"
+                            onClick={() => setShowBanner(false)}
+                            aria-label="Fermer le journal des modifications temporaire"
+                        >
+                            &#10005;
+                        </button>
                     </div>
-                )}
+                </div>
+            )}
+            <header
+                className={homeNav ? 'app-header app-header--home' : 'app-header'}
+                role="banner"
+            >
                 <div className="app-header__inner">
                     <div className="app-header__start">
                         <Link className="app-header__brand" to="/" aria-label="Monority">

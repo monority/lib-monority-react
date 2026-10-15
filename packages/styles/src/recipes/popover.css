@@ -9,6 +9,13 @@
     :where(.mr-popover__trigger) {
         display: inline-flex;
         align-items: center;
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
     }
 
     :where(.mr-popover__anchor) {

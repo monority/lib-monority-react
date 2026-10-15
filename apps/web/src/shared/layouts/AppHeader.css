@@ -17,6 +17,10 @@
         var(--mr-duration-state) ease;
 }
 
+.app-header:has([data-open]) {
+    z-index: var(--mr-z-nav-open);
+}
+
 .app-header--home {
     border-block-end: 0;
     background: transparent;

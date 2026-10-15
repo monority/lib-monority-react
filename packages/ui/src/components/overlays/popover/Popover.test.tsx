@@ -122,4 +122,30 @@ describe('Popover', () => {
         const wrapper = container?.querySelector('.mr-popover')
         expect(wrapper?.getAttribute('data-open')).toBe('true')
     })
+
+    it('clones child element directly without nesting an outer button', () => {
+        render(
+            <Popover>
+                <Popover.Trigger>
+                    <button id="custom-btn" className="custom-class">
+                        Trigger Button
+                    </button>
+                </Popover.Trigger>
+                <Popover.Content>Content</Popover.Content>
+            </Popover>
+        )
+        const buttons = container?.querySelectorAll('button')
+        expect(buttons?.length).toBe(1)
+        const btn = container?.querySelector('#custom-btn')
+        expect(btn).not.toBeNull()
+        expect(btn?.getAttribute('data-mr-popover-trigger')).toBe('true')
+        expect(btn?.getAttribute('aria-expanded')).toBe('false')
+
+        act(() => {
+            btn?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+        })
+        const wrapper = container?.querySelector('.mr-popover')
+        expect(wrapper?.getAttribute('data-open')).toBe('true')
+        expect(btn?.getAttribute('aria-expanded')).toBe('true')
+    })
 })
