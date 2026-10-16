@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import { HeroHeader } from '@/shared/components/HeroHeader'
 import { PreviewCanvas } from '@/shared/components/PreviewCanvas'
 import { CodeViewer } from '@/shared/components/CodeViewer'
+import { ComponentPlayground } from './ComponentPlayground'
+import type { DocPlaygroundConfig } from './ComponentPlayground/ComponentPlayground.types'
 import { DocContainer } from './DocContainer'
 import { DocSection } from './DocSection'
 import { DocPropTable } from './DocPropTable'
@@ -30,6 +32,7 @@ export interface DocPageData {
     preview: () => ReactNode
     previewLabel?: string
     playground?: ReactNode
+    playgroundConfig?: DocPlaygroundConfig
     props?: PropRow[]
     keyboardNavigation?: KeyboardShortcutRow[]
     cssHooks?: string[]
@@ -54,7 +57,16 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 title="Apercu"
                 description="Demonstration interactive et code d'integration."
             >
-                {doc.playground ? (
+                {doc.playgroundConfig ? (
+                    <ComponentPlayground
+                        componentName={doc.title}
+                        importCode={doc.importCode}
+                        controls={doc.playgroundConfig.controls}
+                        render={doc.playgroundConfig.render}
+                        getCode={doc.playgroundConfig.getCode}
+                        initialValues={doc.playgroundConfig.initialValues}
+                    />
+                ) : doc.playground ? (
                     doc.playground
                 ) : (
                     <div className="docs-preview-stack docs-preview-card">

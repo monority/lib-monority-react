@@ -1,9 +1,93 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Popover } from '@monority/ui/popover'
+import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
+    PopoverAlignmentExample,
     PopoverBasicExample,
     PopoverWithFormExample,
-    PopoverAlignmentExample,
 } from './Popover.examples'
+
+function PopoverPlayground() {
+    const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('bottom')
+    const [align, setAlign] = useState<'start' | 'center' | 'end'>('start')
+
+    const snippet = `<Popover side="${side}" align="${align}">
+  <Popover.Trigger>
+    <Button variant="secondary">Paramètres rapides</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Stack gap="sm">
+      <Text.Strong size="sm">Configuration du projet</Text.Strong>
+      <Text tone="muted" size="sm">
+        Ajustez la visibilité et les permissions de l’espace de travail en temps réel.
+      </Text>
+      <Button size="sm" variant="primary">Sauvegarder</Button>
+    </Stack>
+  </Popover.Content>
+</Popover>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Côté (side)',
+                    value: side,
+                    options: [
+                        { value: 'bottom', label: 'Bas (bottom)' },
+                        { value: 'top', label: 'Haut (top)' },
+                        { value: 'left', label: 'Gauche (left)' },
+                        { value: 'right', label: 'Droite (right)' },
+                    ],
+                    onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
+                },
+                {
+                    type: 'select',
+                    label: 'Alignement (align)',
+                    value: align,
+                    options: [
+                        { value: 'start', label: 'Début (start)' },
+                        { value: 'center', label: 'Centre (center)' },
+                        { value: 'end', label: 'Fin (end)' },
+                    ],
+                    onChange: (v) => setAlign(v as 'start' | 'center' | 'end'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 200,
+                }}
+            >
+                <Popover side={side} align={align}>
+                    <Popover.Trigger>
+                        <Button variant="secondary">Paramètres rapides</Button>
+                    </Popover.Trigger>
+                    <Popover.Content>
+                        <Stack gap="sm" style={{ maxWidth: 260 }}>
+                            <Text.Strong size="sm">Configuration du projet</Text.Strong>
+                            <Text tone="muted" size="sm">
+                                Ajustez la visibilité et les permissions de l’espace de travail en
+                                temps réel.
+                            </Text>
+                            <Button size="sm" variant="primary">
+                                Sauvegarder
+                            </Button>
+                        </Stack>
+                    </Popover.Content>
+                </Popover>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Popover',
@@ -21,7 +105,7 @@ const docData: DocPageData = {
     </Stack>
   </Popover.Content>
 </Popover>`,
-    preview: () => <PopoverBasicExample />,
+    preview: () => <PopoverPlayground />,
     examples: [
         { title: 'With form', content: <PopoverWithFormExample /> },
         { title: 'Alignment', content: <PopoverAlignmentExample /> },
@@ -81,6 +165,12 @@ const docData: DocPageData = {
         '--mr-font-size-sm',
         '--mr-space-*',
         '--mr-border-subtle',
+    ],
+    keyboardNavigation: [
+        { key: 'Enter', action: 'Ouvre le popover' },
+        { key: 'Space', action: 'Ouvre le popover' },
+        { key: 'Tab', action: 'Déplace le focus dans les éléments interactifs du popover' },
+        { key: 'Escape', action: 'Ferme le popover et replace le focus sur le déclencheur' },
     ],
     a11y: [
         'Content uses role="dialog" with aria-modal="false".',

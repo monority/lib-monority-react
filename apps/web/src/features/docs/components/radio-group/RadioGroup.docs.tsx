@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { RadioGroup } from '@monority/ui/radio-group'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     RadioGroupBasicExample,
@@ -6,6 +9,130 @@ import {
     RadioGroupChoiceCardExample,
     RadioGroupFieldsetExample,
 } from './RadioGroup.examples'
+
+function RadioGroupPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'accent' | 'neutral' | 'danger'
+    label: string
+    hint: string
+    disabled: boolean
+    invalid: boolean
+}) {
+    const [value, setValue] = useState('pro')
+    const items = [
+        {
+            value: 'starter',
+            label: 'Starter',
+            description: 'Pour les projets personnels et prototypes.',
+        },
+        {
+            value: 'pro',
+            label: 'Professionnel',
+            description: 'Equipes en croissance avec collaboration avancee.',
+        },
+        {
+            value: 'enterprise',
+            label: 'Entreprise',
+            description: 'Support dedie, SLA et securite renforcee.',
+        },
+    ]
+
+    return (
+        <div style={{ width: '100%', maxWidth: '420px', margin: '0 auto' }}>
+            <RadioGroup
+                size={props.size}
+                tone={props.tone}
+                label={props.label}
+                hint={props.hint}
+                disabled={props.disabled}
+                invalid={props.invalid}
+                items={items}
+                value={value}
+                onChange={setValue}
+            />
+        </div>
+    )
+}
+
+const radioGroupPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'accent' | 'neutral' | 'danger'
+        label: string
+        hint: string
+        disabled: boolean
+        invalid: boolean
+    }>
+        componentName="RadioGroup"
+        importCode="import { RadioGroup } from '@monority/ui/radio-group'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.hint ? `  hint="${p.hint}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'accent' ? `  tone="${p.tone}"` : '',
+                p.disabled ? '  disabled' : '',
+                p.invalid ? '  invalid' : '',
+                `  items={[\n    { value: 'starter', label: 'Starter', description: 'Projets personnels.' },\n    { value: 'pro', label: 'Professionnel', description: 'Equipes en croissance.' },\n    { value: 'enterprise', label: 'Entreprise', description: 'Support dedie SLA.' }\n  ]}`,
+                '  value={value}',
+                '  onChange={setValue}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { RadioGroup } from '@monority/ui/radio-group'\n\nconst [value, setValue] = useState('pro')\n\n<RadioGroup\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle du groupe',
+                defaultValue: 'Offre d abonnement',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Facturation annuelle avec 2 mois offerts.',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'accent',
+                options: [
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+            {
+                name: 'invalid',
+                type: 'boolean',
+                label: 'Invalide (invalid)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <RadioGroupPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'RadioGroup',
@@ -20,6 +147,7 @@ const docData: DocPageData = {
 
 <RadioGroup label="Size" size="md" items={items} />`,
     preview: () => <RadioGroupBasicExample />,
+    playground: radioGroupPlayground,
     examples: [
         { title: 'Invalid', content: <RadioGroupInvalidExample /> },
         { title: 'With descriptions', content: <RadioGroupWithDescriptionExample /> },
@@ -127,6 +255,28 @@ const docData: DocPageData = {
         '--mr-space-3',
         '--mr-duration-fast',
         '--mr-ease-standard',
+    ],
+    keyboardNavigation: [
+        {
+            key: ['ArrowDown', 'ArrowRight'],
+            action: 'Selectionne et focalise l option radio suivante.',
+            context: 'Groupe radio (radiogroup)',
+        },
+        {
+            key: ['ArrowUp', 'ArrowLeft'],
+            action: 'Selectionne et focalise l option radio precedente.',
+            context: 'Groupe radio (radiogroup)',
+        },
+        {
+            key: 'Space',
+            action: 'Active et coche l option radio actuellement focalisee.',
+            context: 'Option radio cible',
+        },
+        {
+            key: 'Tab',
+            action: 'Transfere le focus vers le composant suivant hors du groupe radio.',
+            context: 'Groupe radio (radiogroup)',
+        },
     ],
     a11y: [
         'Native <input type="radio"> semantics.',

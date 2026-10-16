@@ -1,10 +1,75 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { Collapsible } from '@monority/ui/collapsible'
+import { Text } from '@monority/ui/text'
 import {
     CollapsibleBasicExample,
     CollapsibleDefaultOpenExample,
     CollapsibleControlledExample,
     CollapsibleSizesExample,
 } from './Collapsible.examples'
+
+function CollapsiblePlayground() {
+    return (
+        <ComponentPlayground
+            title="Collapsible"
+            description="Contrôlez l'état ouvert/fermé, la taille et le mode désactivé du panneau dépliable."
+            controls={[
+                {
+                    type: 'select',
+                    prop: 'size',
+                    label: 'Taille (size)',
+                    defaultValue: 'md',
+                    options: [
+                        { value: 'sm', label: 'Petite (sm)' },
+                        { value: 'md', label: 'Moyenne (md)' },
+                        { value: 'lg', label: 'Grande (lg)' },
+                    ],
+                },
+                {
+                    type: 'boolean',
+                    prop: 'defaultOpen',
+                    label: 'Ouvert par défaut (defaultOpen)',
+                    defaultValue: true,
+                },
+                {
+                    type: 'boolean',
+                    prop: 'disabled',
+                    label: 'Désactivé (disabled)',
+                    defaultValue: false,
+                },
+            ]}
+            renderCode={(props) => `<Collapsible
+  size="${props.size}"${props.defaultOpen ? '\n  defaultOpen' : ''}${props.disabled ? '\n  disabled' : ''}
+>
+  <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
+  <Collapsible.Content>
+    <Text size="sm" color="secondary">
+      Ce panneau animé affiche des informations contextuelles avec une transition fluide en CSS Grid.
+    </Text>
+  </Collapsible.Content>
+</Collapsible>`}
+        >
+            {(props) => (
+                <div style={{ width: '100%', maxWidth: 480 }}>
+                    <Collapsible
+                        size={props.size as 'sm' | 'md' | 'lg'}
+                        defaultOpen={props.defaultOpen as boolean}
+                        disabled={props.disabled as boolean}
+                    >
+                        <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
+                        <Collapsible.Content>
+                            <Text size="sm" color="secondary">
+                                Ce panneau animé affiche des informations contextuelles avec une
+                                transition fluide en CSS Grid sans résidu de hauteur.
+                            </Text>
+                        </Collapsible.Content>
+                    </Collapsible>
+                </div>
+            )}
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Collapsible',
@@ -17,7 +82,7 @@ const docData: DocPageData = {
     <Text>This panel can reveal supporting context without taking over the page.</Text>
   </Collapsible.Content>
 </Collapsible>`,
-    preview: () => <CollapsibleBasicExample />,
+    preview: () => <CollapsiblePlayground />,
     examples: [
         { title: 'Default open', content: <CollapsibleDefaultOpenExample /> },
         { title: 'Controlled', content: <CollapsibleControlledExample /> },
@@ -59,6 +124,16 @@ const docData: DocPageData = {
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
             description: 'Component size.',
+        },
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Tab / Shift + Tab',
+            description: 'Déplace le focus vers le bouton de déclenchement du panneau.',
+        },
+        {
+            key: 'Enter / Espace',
+            description: "Bascule le panneau entre l'état replié et développé.",
         },
     ],
     cssHooks: [

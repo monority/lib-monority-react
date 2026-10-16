@@ -1,10 +1,110 @@
+import { useState } from 'react'
+import { ColorSwatch } from '@monority/ui/color-swatch'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ColorSwatchBasicExample,
-    ColorSwatchSizesExample,
     ColorSwatchShapesExample,
+    ColorSwatchSizesExample,
     ColorSwatchValuesExample,
 } from './ColorSwatch.examples'
+
+function ColorSwatchPlayground() {
+    const [colorType, setColorType] = useState<'accent' | 'success' | 'danger' | 'custom'>('accent')
+    const [size, setSize] = useState<'sm' | 'md' | 'lg'>('md')
+    const [shape, setShape] = useState<'square' | 'rounded' | 'circle'>('rounded')
+    const [showValue, setShowValue] = useState(true)
+
+    const colorValue =
+        colorType === 'accent'
+            ? 'var(--mr-color-primary, #6366f1)'
+            : colorType === 'success'
+              ? '#10b981'
+              : colorType === 'danger'
+                ? '#ef4444'
+                : '#f59e0b'
+
+    const label =
+        colorType === 'accent'
+            ? 'Couleur d’accent'
+            : colorType === 'success'
+              ? 'Succès opérationnel'
+              : colorType === 'danger'
+                ? 'Erreur critique'
+                : 'Avertissement'
+
+    const snippet = `<ColorSwatch
+  value="${colorValue}"
+  label="${label}"
+  size="${size}"
+  shape="${shape}"${showValue ? '\n  showValue' : ''}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Teinte',
+                    value: colorType,
+                    options: [
+                        { value: 'accent', label: 'Accent principal' },
+                        { value: 'success', label: 'Succès (#10b981)' },
+                        { value: 'danger', label: 'Danger (#ef4444)' },
+                        { value: 'custom', label: 'Alerte (#f59e0b)' },
+                    ],
+                    onChange: (v) => setColorType(v as 'accent' | 'success' | 'danger' | 'custom'),
+                },
+                {
+                    type: 'select',
+                    label: 'Size',
+                    value: size,
+                    options: [
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
+                    ],
+                    onChange: (v) => setSize(v as 'sm' | 'md' | 'lg'),
+                },
+                {
+                    type: 'select',
+                    label: 'Forme (shape)',
+                    value: shape,
+                    options: [
+                        { value: 'rounded', label: 'Arrondi (rounded)' },
+                        { value: 'circle', label: 'Cercle (circle)' },
+                        { value: 'square', label: 'Carré (square)' },
+                    ],
+                    onChange: (v) => setShape(v as 'square' | 'rounded' | 'circle'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Afficher la valeur brute',
+                    value: showValue,
+                    onChange: setShowValue,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 96,
+                }}
+            >
+                <ColorSwatch
+                    value={colorValue}
+                    label={label}
+                    size={size}
+                    shape={shape}
+                    showValue={showValue}
+                />
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'ColorSwatch',
@@ -14,7 +114,7 @@ const docData: DocPageData = {
     usageCode: `<ColorSwatch value="var(--mr-accent)" label="Accent" />
 <ColorSwatch value="#ff0000" size="sm" shape="circle" />
 <ColorSwatch value="var(--mr-bg-canvas)" label="Canvas" showValue />`,
-    preview: () => <ColorSwatchBasicExample />,
+    preview: () => <ColorSwatchPlayground />,
     examples: [
         { title: 'Sizes', content: <ColorSwatchSizesExample /> },
         { title: 'Shapes', content: <ColorSwatchShapesExample /> },

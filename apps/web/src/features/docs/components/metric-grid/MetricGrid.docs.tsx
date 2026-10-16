@@ -1,11 +1,96 @@
+import { useState } from 'react'
+import { MetricGrid } from '@monority/ui/metric-grid'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     MetricGridBasicExample,
+    MetricGridChildrenExample,
     MetricGridHealthExample,
     MetricGridRevenueExample,
     MetricGridRiskExample,
-    MetricGridChildrenExample,
 } from './MetricGrid.examples'
+
+function MetricGridPlayground() {
+    const [count, setCount] = useState<'2' | '3' | '4'>('3')
+    const [trendTone, setTrendTone] = useState<'success' | 'warning' | 'danger'>('success')
+
+    const allItems = [
+        {
+            key: 'm1',
+            label: 'Chiffre d’affaires',
+            value: '45 680 €',
+            trend: '+14.2%',
+            trendTone: trendTone,
+            description: 'Facturation mensuelle consolidée',
+        },
+        {
+            key: 'm2',
+            label: 'Nouveaux clients',
+            value: '1 240',
+            trend: '+8.1%',
+            trendTone: 'success' as const,
+            description: 'Souscriptions confirmées',
+        },
+        {
+            key: 'm3',
+            label: 'Taux de rétention',
+            value: '98.4%',
+            trend: '+0.6%',
+            trendTone: 'neutral' as const,
+            description: 'Moyenne mobile sur 90 jours',
+        },
+        {
+            key: 'm4',
+            label: 'Tickets ouverts',
+            value: '18',
+            trend: '-4',
+            trendTone: 'success' as const,
+            description: 'Délai moyen de résolution : 12 min',
+        },
+    ]
+
+    const selectedItems = allItems.slice(0, Number(count))
+
+    const snippet = `<MetricGrid
+  items={[
+${selectedItems.map((item) => `    { key: '${item.key}', label: '${item.label}', value: '${item.value}', trend: '${item.trend}', trendTone: '${item.trendTone}' }`).join(',\n')}
+  ]}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Nombre d’indicateurs',
+                    value: count,
+                    options: [
+                        { value: '2', label: '2 colonnes' },
+                        { value: '3', label: '3 colonnes' },
+                        { value: '4', label: '4 colonnes' },
+                    ],
+                    onChange: (v) => setCount(v as '2' | '3' | '4'),
+                },
+                {
+                    type: 'select',
+                    label: 'Tendance KPI 1',
+                    value: trendTone,
+                    options: [
+                        { value: 'success', label: 'Positive (success)' },
+                        { value: 'warning', label: 'Alerte (warning)' },
+                        { value: 'danger', label: 'Négative (danger)' },
+                    ],
+                    onChange: (v) => setTrendTone(v as 'success' | 'warning' | 'danger'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ width: '100%' }}>
+                <MetricGrid items={selectedItems} />
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'MetricGrid',
@@ -15,7 +100,7 @@ const docData: DocPageData = {
   { label: 'Revenue', value: '$12,340', trend: '+12%', trendTone: 'success' },
   { label: 'Users', value: '1,234', trend: '+8%', trendTone: 'success' },
 ]} />`,
-    preview: () => <MetricGridBasicExample />,
+    preview: () => <MetricGridPlayground />,
     examples: [
         {
             title: 'Declarative children',

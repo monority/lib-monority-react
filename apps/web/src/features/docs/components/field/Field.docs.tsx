@@ -1,4 +1,7 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { Field } from '@monority/ui/field'
+import { Input } from '@monority/ui/input'
 import {
     FieldBasicExample,
     FieldWithHintExample,
@@ -10,6 +13,71 @@ import {
     FieldSetExample,
 } from './Field.examples'
 
+function FieldPlayground() {
+    return (
+        <ComponentPlayground
+            title="Field"
+            description="Configurez les métadonnées de champ de formulaire : libellé, indice, astérisque obligatoire et message d'erreur."
+            controls={[
+                {
+                    type: 'text',
+                    prop: 'label',
+                    label: 'Libellé (label)',
+                    defaultValue: 'Nom du projet',
+                },
+                {
+                    type: 'boolean',
+                    prop: 'required',
+                    label: 'Champ obligatoire (required)',
+                    defaultValue: true,
+                },
+                {
+                    type: 'text',
+                    prop: 'hint',
+                    label: 'Indice d’aide (hint)',
+                    defaultValue: 'Utilisez un identifiant unique en minuscules.',
+                },
+                {
+                    type: 'select',
+                    prop: 'state',
+                    label: 'État de validation',
+                    defaultValue: 'default',
+                    options: [
+                        { value: 'default', label: 'Normal / Valide' },
+                        { value: 'error', label: 'Erreur de saisie' },
+                    ],
+                },
+            ]}
+            renderCode={(props) => {
+                const hasError = props.state === 'error'
+                return `<Field
+  label="${props.label}"${props.required ? '\n  required' : ''}${props.hint ? `\n  hint="${props.hint}"` : ''}${hasError ? '\n  error="Ce nom de projet est déjà réservé."' : ''}
+>
+  <Input
+    defaultValue="lib-monority"${hasError ? '\n    invalid' : ''}
+  />
+</Field>`
+            }}
+        >
+            {(props) => {
+                const hasError = props.state === 'error'
+                return (
+                    <div style={{ width: '100%', maxWidth: 440 }}>
+                        <Field
+                            label={props.label as string}
+                            required={props.required as boolean}
+                            hint={props.hint ? (props.hint as string) : undefined}
+                            error={hasError ? 'Ce nom de projet est déjà réservé.' : undefined}
+                        >
+                            <Input defaultValue="lib-monority" invalid={hasError} />
+                        </Field>
+                    </div>
+                )
+            }}
+        </ComponentPlayground>
+    )
+}
+
 const docData: DocPageData = {
     title: 'Field',
     description:
@@ -19,7 +87,7 @@ import { Input } from '@monority/ui/input'`,
     usageCode: `<Field label="Workspace name">
   <Input defaultValue="Monority" />
 </Field>`,
-    preview: () => <FieldBasicExample />,
+    preview: () => <FieldPlayground />,
     examples: [
         {
             title: 'With hint',

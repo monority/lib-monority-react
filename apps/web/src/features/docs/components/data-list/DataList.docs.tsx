@@ -1,10 +1,67 @@
+import { useState } from 'react'
+import { DataList } from '@monority/ui/data-list'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DataListBasicExample,
-    DataListWithRenderExample,
-    DataListSplitExample,
     DataListCompoundExample,
+    DataListSplitExample,
+    DataListWithRenderExample,
 } from './DataList.examples'
+
+function DataListPlayground() {
+    const [columns, setColumns] = useState<'auto' | 'split'>('split')
+    const [itemCount, setItemCount] = useState<'2' | '3' | '4'>('3')
+
+    const baseItems = [
+        { label: 'Identifiant client', value: 'USR-89421' },
+        { label: 'Plan d’abonnement', value: 'Enterprise Edition' },
+        { label: 'Statut du compte', value: 'Actif (vérifié)' },
+        { label: 'Dernière connexion', value: 'Aujourd’hui à 14:32' },
+    ]
+
+    const selectedItems = baseItems.slice(0, Number(itemCount))
+
+    const snippet = `<DataList
+  columns="${columns}"
+  items={[
+${selectedItems.map((item) => `    { label: '${item.label}', value: '${item.value}' }`).join(',\n')}
+  ]}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Disposition colonnes',
+                    value: columns,
+                    options: [
+                        { value: 'split', label: 'Split (étiquette à gauche)' },
+                        { value: 'auto', label: 'Auto (empilé)' },
+                    ],
+                    onChange: (v) => setColumns(v as 'auto' | 'split'),
+                },
+                {
+                    type: 'select',
+                    label: 'Nombre d’éléments',
+                    value: itemCount,
+                    options: [
+                        { value: '2', label: '2 lignes' },
+                        { value: '3', label: '3 lignes' },
+                        { value: '4', label: '4 lignes' },
+                    ],
+                    onChange: (v) => setItemCount(v as '2' | '3' | '4'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ maxWidth: 480, margin: '0 auto', width: '100%' }}>
+                <DataList columns={columns} items={selectedItems} />
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'DataList',
@@ -15,7 +72,7 @@ const docData: DocPageData = {
   { label: 'Email', value: 'john@example.com' },
   { label: 'Role', value: 'Developer' },
 ]} />`,
-    preview: () => <DataListBasicExample />,
+    preview: () => <DataListPlayground />,
     examples: [
         {
             title: 'Compound composition',

@@ -1,3 +1,5 @@
+import { Progress } from '@monority/ui/progress'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ProgressAnimatedExample,
@@ -10,6 +12,119 @@ import {
     ProgressWithoutValueExample,
 } from './Progress.examples'
 
+function ProgressPlaygroundDemo(props: {
+    value: number
+    label: string
+    tone: 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'info'
+    mode: 'determinate' | 'indeterminate'
+    striped: boolean
+    animated: boolean
+    showValue: boolean
+}) {
+    return (
+        <div style={{ width: '100%', maxWidth: '420px', margin: '0 auto' }}>
+            <Progress
+                value={props.value}
+                label={props.label}
+                tone={props.tone}
+                mode={props.mode}
+                striped={props.striped}
+                animated={props.animated}
+                showValue={props.showValue}
+            />
+        </div>
+    )
+}
+
+const progressPlayground = (
+    <ComponentPlayground<{
+        value: number
+        label: string
+        tone: 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'info'
+        mode: 'determinate' | 'indeterminate'
+        striped: boolean
+        animated: boolean
+        showValue: boolean
+    }>
+        componentName="Progress"
+        importCode="import { Progress } from '@monority/ui/progress'"
+        getCode={(p) => {
+            const propsStr = [
+                `  value={${p.value}}`,
+                `  label="${p.label}"`,
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.mode !== 'determinate' ? `  mode="${p.mode}"` : '',
+                p.striped ? '  striped' : '',
+                p.animated ? '  animated' : '',
+                !p.showValue ? '  showValue={false}' : '',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { Progress } from '@monority/ui/progress'\n\n<Progress\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle accessible',
+                defaultValue: 'Deploiement de l application',
+            },
+            {
+                name: 'value',
+                type: 'number',
+                label: 'Progression (%)',
+                defaultValue: 68,
+                min: 0,
+                max: 100,
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'accent',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'success', label: 'Success' },
+                    { value: 'warning', label: 'Warning' },
+                    { value: 'danger', label: 'Danger' },
+                    { value: 'info', label: 'Info' },
+                ],
+            },
+            {
+                name: 'mode',
+                type: 'select',
+                label: 'Mode de progression',
+                defaultValue: 'determinate',
+                options: [
+                    { value: 'determinate', label: 'Determine' },
+                    { value: 'indeterminate', label: 'Indetermine' },
+                ],
+            },
+            {
+                name: 'striped',
+                type: 'boolean',
+                label: 'Motif strie (striped)',
+                defaultValue: true,
+            },
+            {
+                name: 'animated',
+                type: 'boolean',
+                label: 'Animation continue',
+                defaultValue: true,
+            },
+            {
+                name: 'showValue',
+                type: 'boolean',
+                label: 'Afficher le pourcentage',
+                defaultValue: true,
+            },
+        ]}
+        render={(props) => <ProgressPlaygroundDemo {...props} />}
+    />
+)
+
 const docData: DocPageData = {
     title: 'Progress',
     description:
@@ -17,6 +132,7 @@ const docData: DocPageData = {
     importCode: "import { Progress } from '@monority/ui/progress'",
     usageCode: `<Progress value={68} label="Release migration" />`,
     preview: () => <ProgressBasicExample />,
+    playground: progressPlayground,
     examples: [
         {
             title: 'Flux asynchrone réaliste (Règle d’or)',

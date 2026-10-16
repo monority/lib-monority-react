@@ -1,9 +1,95 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { PageHeader } from '@monority/ui/page-header'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     PageHeaderBasicExample,
-    PageHeaderWithTitleExample,
     PageHeaderWithActionsExample,
+    PageHeaderWithTitleExample,
 } from './PageHeader.examples'
+
+function PageHeaderPlayground() {
+    const [kicker, setKicker] = useState('Espace de travail')
+    const [title, setTitle] = useState('Projets & Livrables')
+    const [description, setDescription] = useState(
+        'Suivez l’avancement et la santé des déploiements en cours.'
+    )
+    const [showActions, setShowActions] = useState(true)
+
+    const snippet = `<PageHeader>
+  <PageHeader.Main>
+    <PageHeader.Kicker>${kicker}</PageHeader.Kicker>
+    <PageHeader.Title>${title}</PageHeader.Title>
+    <PageHeader.Description>${description}</PageHeader.Description>
+    <PageHeader.Meta>
+      <Text size="sm" tone="muted">Mis à jour il y a 5 min</Text>
+      <Text size="sm" tone="muted">14 projets actifs</Text>
+    </PageHeader.Meta>
+  </PageHeader.Main>${showActions ? `\n  <PageHeader.Actions>\n    <Button variant="secondary" size="sm">Exporter</Button>\n    <Button variant="primary" size="sm">Nouveau projet</Button>\n  </PageHeader.Actions>` : ''}
+</PageHeader>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'text',
+                    label: 'Surtitre (kicker)',
+                    value: kicker,
+                    onChange: setKicker,
+                },
+                {
+                    type: 'text',
+                    label: 'Titre principal',
+                    value: title,
+                    onChange: setTitle,
+                },
+                {
+                    type: 'text',
+                    label: 'Description',
+                    value: description,
+                    onChange: setDescription,
+                },
+                {
+                    type: 'boolean',
+                    label: 'Boutons d’action',
+                    value: showActions,
+                    onChange: setShowActions,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ width: '100%', minHeight: 120 }}>
+                <PageHeader>
+                    <PageHeader.Main>
+                        <PageHeader.Kicker>{kicker}</PageHeader.Kicker>
+                        <PageHeader.Title>{title}</PageHeader.Title>
+                        <PageHeader.Description>{description}</PageHeader.Description>
+                        <PageHeader.Meta>
+                            <Text size="sm" tone="muted">
+                                Mis à jour il y a 5 min
+                            </Text>
+                            <Text size="sm" tone="muted">
+                                14 projets actifs
+                            </Text>
+                        </PageHeader.Meta>
+                    </PageHeader.Main>
+                    {showActions && (
+                        <PageHeader.Actions>
+                            <Button variant="secondary" size="sm">
+                                Exporter
+                            </Button>
+                            <Button variant="primary" size="sm">
+                                Nouveau projet
+                            </Button>
+                        </PageHeader.Actions>
+                    )}
+                </PageHeader>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'PageHeader',
@@ -16,7 +102,7 @@ const docData: DocPageData = {
     <PageHeader.Description>Track delivery and ownership across active work.</PageHeader.Description>
   </PageHeader.Main>
 </PageHeader>`,
-    preview: () => <PageHeaderBasicExample />,
+    preview: () => <PageHeaderPlayground />,
     examples: [
         {
             title: 'With title',

@@ -1,3 +1,5 @@
+import { Spinner } from '@monority/ui/spinner'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SpinnerBasicExample,
@@ -5,6 +7,71 @@ import {
     SpinnerTonesExample,
     SpinnerWithTextExample,
 } from './Spinner.examples'
+
+function SpinnerPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'base' | 'muted' | 'inverse'
+}) {
+    return (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 'var(--mr-space-6)',
+                background: props.tone === 'inverse' ? 'var(--mr-text-primary)' : 'transparent',
+                borderRadius: 'var(--mr-radius-md)',
+            }}
+        >
+            <Spinner size={props.size} tone={props.tone} />
+        </div>
+    )
+}
+
+const spinnerPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'base' | 'muted' | 'inverse'
+    }>
+        componentName="Spinner"
+        importCode="import { Spinner } from '@monority/ui/spinner'"
+        getCode={(p) => {
+            const propsStr = [
+                p.size !== 'md' ? `size="${p.size}"` : '',
+                p.tone !== 'base' ? `tone="${p.tone}"` : '',
+            ]
+                .filter(Boolean)
+                .join(' ')
+
+            return `import { Spinner } from '@monority/ui/spinner'\n\n<Spinner ${propsStr} />`
+        }}
+        controls={[
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'base',
+                options: [
+                    { value: 'base', label: 'Base (accent)' },
+                    { value: 'muted', label: 'Muted (atténué)' },
+                    { value: 'inverse', label: 'Inverse (sur fond sombre)' },
+                ],
+            },
+        ]}
+        render={(props) => <SpinnerPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Spinner',
@@ -15,6 +82,7 @@ const docData: DocPageData = {
 <Spinner size="md" />
 <Spinner size="lg" />`,
     preview: () => <SpinnerBasicExample />,
+    playground: spinnerPlayground,
     examples: [
         { title: 'Sizes', content: <SpinnerSizesExample /> },
         { title: 'Tones', content: <SpinnerTonesExample /> },

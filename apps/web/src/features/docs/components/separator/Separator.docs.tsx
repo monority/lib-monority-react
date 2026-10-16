@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Separator } from '@monority/ui/separator'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SeparatorBasicExample,
@@ -5,12 +8,77 @@ import {
     SeparatorVerticalExample,
 } from './Separator.examples'
 
+function SeparatorPlayground() {
+    const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')
+    const [decorative, setDecorative] = useState(false)
+
+    const snippet = `<Separator
+  orientation="${orientation}"${decorative ? '\n  decorative' : ''}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Orientation',
+                    value: orientation,
+                    options: [
+                        { value: 'horizontal', label: 'Horizontal' },
+                        { value: 'vertical', label: 'Vertical' },
+                    ],
+                    onChange: (v) => setOrientation(v as 'horizontal' | 'vertical'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Purement décoratif (decorative)',
+                    value: decorative,
+                    onChange: setDecorative,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 120,
+                    width: '100%',
+                }}
+            >
+                {orientation === 'horizontal' ? (
+                    <div
+                        style={{
+                            width: '100%',
+                            maxWidth: 360,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 16,
+                        }}
+                    >
+                        <span style={{ fontSize: '0.875rem' }}>Section supérieure</span>
+                        <Separator orientation="horizontal" decorative={decorative} />
+                        <span style={{ fontSize: '0.875rem' }}>Section inférieure</span>
+                    </div>
+                ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: 60 }}>
+                        <span style={{ fontSize: '0.875rem' }}>Gauche</span>
+                        <Separator orientation="vertical" decorative={decorative} />
+                        <span style={{ fontSize: '0.875rem' }}>Droite</span>
+                    </div>
+                )}
+            </div>
+        </ComponentPlayground>
+    )
+}
+
 const docData: DocPageData = {
     title: 'Separator',
     description: 'Subtle divider for separating related groups without adding a new surface.',
     importCode: "import { Separator } from '@monority/ui/separator'",
     usageCode: '<Separator />',
-    preview: () => <SeparatorBasicExample />,
+    preview: () => <SeparatorPlayground />,
     examples: [
         { title: 'Vertical', content: <SeparatorVerticalExample /> },
         { title: 'Decorative', content: <SeparatorDecorativeExample /> },

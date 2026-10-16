@@ -1,5 +1,128 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Topbar } from '@monority/ui/topbar'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { TopbarBasicExample, TopbarWithContentExample } from './Topbar.examples'
+
+function TopbarPlayground() {
+    const [activeTab, setActiveTab] = useState<'docs' | 'components' | 'themes'>('docs')
+    const [statusTone, setStatusTone] = useState<'success' | 'warning' | 'danger'>('success')
+    const [showStatus, setShowStatus] = useState(true)
+
+    const statusLabel =
+        statusTone === 'success'
+            ? 'Opérationnel'
+            : statusTone === 'warning'
+              ? 'Maintenance'
+              : 'Incident'
+
+    const snippet = `<Topbar>
+  <Topbar.Brand>
+    <Topbar.BrandMark>M</Topbar.BrandMark>
+    <span>Monority UI</span>
+  </Topbar.Brand>
+  <Topbar.Nav aria-label="Navigation principale">
+    <Topbar.Link href="#" active={${activeTab === 'docs'}}>Documentation</Topbar.Link>
+    <Topbar.Link href="#" active={${activeTab === 'components'}}>Composants</Topbar.Link>
+    <Topbar.Link href="#" active={${activeTab === 'themes'}}>Thèmes</Topbar.Link>
+  </Topbar.Nav>${showStatus ? `\n  <Topbar.Status tone="${statusTone}">${statusLabel}</Topbar.Status>` : ''}
+  <Topbar.Actions>
+    <Button size="sm" variant="primary">Nouveau</Button>
+  </Topbar.Actions>
+</Topbar>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Onglet actif',
+                    value: activeTab,
+                    options: [
+                        { value: 'docs', label: 'Documentation' },
+                        { value: 'components', label: 'Composants' },
+                        { value: 'themes', label: 'Thèmes' },
+                    ],
+                    onChange: (v) => setActiveTab(v as 'docs' | 'components' | 'themes'),
+                },
+                {
+                    type: 'select',
+                    label: 'Statut système',
+                    value: statusTone,
+                    options: [
+                        { value: 'success', label: 'Opérationnel (success)' },
+                        { value: 'warning', label: 'Maintenance (warning)' },
+                        { value: 'danger', label: 'Incident (danger)' },
+                    ],
+                    onChange: (v) => setStatusTone(v as 'success' | 'warning' | 'danger'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Afficher le statut',
+                    value: showStatus,
+                    onChange: setShowStatus,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    width: '100%',
+                    minHeight: 80,
+                    border: '1px solid var(--mr-border-subtle, #e2e8f0)',
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                }}
+            >
+                <Topbar>
+                    <Topbar.Brand>
+                        <Topbar.BrandMark>M</Topbar.BrandMark>
+                        <span>Monority UI</span>
+                    </Topbar.Brand>
+                    <Topbar.Nav aria-label="Navigation principale">
+                        <Topbar.Link
+                            href="#"
+                            active={activeTab === 'docs'}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setActiveTab('docs')
+                            }}
+                        >
+                            Documentation
+                        </Topbar.Link>
+                        <Topbar.Link
+                            href="#"
+                            active={activeTab === 'components'}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setActiveTab('components')
+                            }}
+                        >
+                            Composants
+                        </Topbar.Link>
+                        <Topbar.Link
+                            href="#"
+                            active={activeTab === 'themes'}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setActiveTab('themes')
+                            }}
+                        >
+                            Thèmes
+                        </Topbar.Link>
+                    </Topbar.Nav>
+                    {showStatus && <Topbar.Status tone={statusTone}>{statusLabel}</Topbar.Status>}
+                    <Topbar.Actions>
+                        <Button size="sm" variant="primary">
+                            Nouveau
+                        </Button>
+                    </Topbar.Actions>
+                </Topbar>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Topbar',
@@ -20,7 +143,7 @@ const docData: DocPageData = {
     <Button size="sm">Nouveau</Button>
   </Topbar.Actions>
 </Topbar>`,
-    preview: () => <TopbarBasicExample />,
+    preview: () => <TopbarPlayground />,
     examples: [{ title: 'Avec statut et actions', content: <TopbarWithContentExample /> }],
     props: [
         {

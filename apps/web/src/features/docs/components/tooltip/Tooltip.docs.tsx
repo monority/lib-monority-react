@@ -1,9 +1,74 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Tooltip } from '@monority/ui/tooltip'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     TooltipBasicExample,
-    TooltipWithRichContentExample,
     TooltipOnIconButtonExample,
+    TooltipWithRichContentExample,
 } from './Tooltip.examples'
+
+function TooltipPlayground() {
+    const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('top')
+    const [arrow, setArrow] = useState(true)
+    const [content, setContent] = useState('Consulter les détails du jeton')
+
+    const snippet = `<Tooltip side="${side}"${arrow ? '\n  arrow' : ''}>
+  <Tooltip.Trigger>
+    <Button variant="secondary">Survolez-moi</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>${content}</Tooltip.Content>
+</Tooltip>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Position (side)',
+                    value: side,
+                    options: [
+                        { value: 'top', label: 'Haut (top)' },
+                        { value: 'bottom', label: 'Bas (bottom)' },
+                        { value: 'left', label: 'Gauche (left)' },
+                        { value: 'right', label: 'Droite (right)' },
+                    ],
+                    onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Flèche indicatrice (arrow)',
+                    value: arrow,
+                    onChange: setArrow,
+                },
+                {
+                    type: 'text',
+                    label: 'Texte d’infobulle',
+                    value: content,
+                    onChange: setContent,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 140,
+                }}
+            >
+                <Tooltip side={side} arrow={arrow}>
+                    <Tooltip.Trigger>
+                        <Button variant="secondary">Survolez-moi</Button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content>{content}</Tooltip.Content>
+                </Tooltip>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Tooltip',
@@ -15,7 +80,7 @@ const docData: DocPageData = {
   </Tooltip.Trigger>
   <Tooltip.Content>Inspect token details</Tooltip.Content>
 </Tooltip>`,
-    preview: () => <TooltipBasicExample />,
+    preview: () => <TooltipPlayground />,
     examples: [
         { title: 'Rich content', content: <TooltipWithRichContentExample /> },
         { title: 'On icon button', content: <TooltipOnIconButtonExample /> },
@@ -66,6 +131,10 @@ const docData: DocPageData = {
         '--mr-font-size-xs',
         '--mr-radius-sm',
         '--mr-shadow-sm',
+    ],
+    keyboardNavigation: [
+        { key: 'Tab', action: 'Déplace le focus sur le déclencheur et affiche l’infobulle' },
+        { key: 'Escape', action: 'Masque immédiatement l’infobulle sans déplacer le focus' },
     ],
     a11y: [
         'Tooltip ARIA pattern (role="tooltip").',

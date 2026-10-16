@@ -1,10 +1,71 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { FormSection } from '@monority/ui/form-section'
+import { Input } from '@monority/ui/input'
+import { Button } from '@monority/ui/button'
+import { Badge } from '@monority/ui/badge'
 import {
     FormSectionBasicExample,
     FormSectionWithoutActionsExample,
     FormSectionWithMetaExample,
     FormSectionCompoundExample,
 } from './FormSection.examples'
+
+function FormSectionPlayground() {
+    return (
+        <ComponentPlayground
+            title="FormSection"
+            description="Ajustez les éléments d'en-tête (titre, description, badge meta) et la présence de la barre d'actions."
+            controls={[
+                {
+                    type: 'text',
+                    prop: 'title',
+                    label: 'Titre de la section',
+                    defaultValue: 'Paramètres de sécurité',
+                },
+                {
+                    type: 'boolean',
+                    prop: 'showMeta',
+                    label: 'Afficher le badge méta',
+                    defaultValue: true,
+                },
+                {
+                    type: 'boolean',
+                    prop: 'showActions',
+                    label: 'Afficher les actions',
+                    defaultValue: true,
+                },
+            ]}
+            renderCode={(props) => `<FormSection
+  title="${props.title}"
+  description="Configurez les clés d'API et autorisations d'accès aux services."${props.showMeta ? '\n  meta={<Badge variant="default">Recommandé</Badge>}' : ''}${props.showActions ? '\n  actions={<Button variant="primary">Enregistrer</Button>}' : ''}
+>
+  <Input label="Clé API principale" defaultValue="pk_live_9482710394" />
+</FormSection>`}
+        >
+            {(props) => (
+                <div style={{ width: '100%', maxWidth: 520 }}>
+                    <FormSection
+                        title={props.title as string}
+                        description="Configurez les clés d'API et autorisations d'accès aux services."
+                        meta={
+                            props.showMeta ? <Badge variant="default">Recommandé</Badge> : undefined
+                        }
+                        actions={
+                            props.showActions ? (
+                                <Button variant="primary" size="sm">
+                                    Enregistrer
+                                </Button>
+                            ) : undefined
+                        }
+                    >
+                        <Input label="Clé API principale" defaultValue="pk_live_9482710394" />
+                    </FormSection>
+                </div>
+            )}
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'FormSection',
@@ -23,7 +84,7 @@ const docData: DocPageData = {
     rows={4}
   />
 </FormSection>`,
-    preview: () => <FormSectionBasicExample />,
+    preview: () => <FormSectionPlayground />,
     examples: [
         {
             title: 'Compound composition',
@@ -99,6 +160,18 @@ const docData: DocPageData = {
             type: `ReactNode`,
             defaultValue: '-',
             description: 'Form fields.',
+        },
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Tab / Shift + Tab',
+            description:
+                "Navigue séquentiellement à travers les champs de saisie et les boutons d'action.",
+        },
+        {
+            key: 'Enter',
+            description:
+                "Valide l'action de formulaire primaire lorsque le focus est sur un contrôle ou un bouton.",
         },
     ],
     cssHooks: [

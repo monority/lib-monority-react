@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Slider } from '@monority/ui/slider'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SliderBasicExample,
@@ -9,6 +12,122 @@ import {
     SliderWithErrorExample,
     SliderWithStepsExample,
 } from './Slider.examples'
+
+function SliderPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'neutral' | 'accent' | 'danger'
+    label: string
+    min: number
+    max: number
+    step: number
+    disabled: boolean
+}) {
+    const [value, setValue] = useState(65)
+    return (
+        <div style={{ width: '100%', maxWidth: '380px', margin: '0 auto' }}>
+            <Slider
+                size={props.size}
+                tone={props.tone}
+                label={props.label}
+                min={props.min}
+                max={props.max}
+                step={props.step}
+                disabled={props.disabled}
+                value={value}
+                onValueChange={(v: number | [number, number]) =>
+                    setValue(Array.isArray(v) ? v[0] : v)
+                }
+            />
+        </div>
+    )
+}
+
+const sliderPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'neutral' | 'accent' | 'danger'
+        label: string
+        min: number
+        max: number
+        step: number
+        disabled: boolean
+    }>
+        componentName="Slider"
+        importCode="import { Slider } from '@monority/ui/slider'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                `  min={${p.min}}`,
+                `  max={${p.max}}`,
+                p.step !== 1 ? `  step={${p.step}}` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'accent' ? `  tone="${p.tone}"` : '',
+                p.disabled ? '  disabled' : '',
+                '  value={value}',
+                '  onValueChange={setValue}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Slider } from '@monority/ui/slider'\n\nconst [value, setValue] = useState(65)\n\n<Slider\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Volume audio',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'accent',
+                options: [
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'min',
+                type: 'number',
+                label: 'Valeur min',
+                defaultValue: 0,
+            },
+            {
+                name: 'max',
+                type: 'number',
+                label: 'Valeur max',
+                defaultValue: 100,
+            },
+            {
+                name: 'step',
+                type: 'number',
+                label: 'Pas (step)',
+                defaultValue: 5,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <SliderPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Slider',
@@ -26,6 +145,7 @@ const [value, setValue] = useState(50)
 // Curseur d'intervalle (range)
 <Slider label="Budget" range defaultValue={[25, 75]} />`,
     preview: () => <SliderBasicExample />,
+    playground: sliderPlayground,
     examples: [
         {
             title: 'Tailles (sm, md, lg)',
@@ -59,63 +179,63 @@ const [value, setValue] = useState(50)
     props: [
         {
             name: 'label',
-            type: 'ReactNode',
+            type: 'string',
             defaultValue: '-',
-            description: 'Libellé accessible associé au champ.',
+            description: 'Libellé textuel associé au champ du curseur.',
         },
         {
             name: 'hint',
-            type: 'ReactNode',
+            type: 'string',
             defaultValue: '-',
-            description: 'Texte d’aide explicatif sous le champ.',
+            description: 'Texte d’aide affiché sous le curseur.',
         },
         {
             name: 'error',
-            type: 'ReactNode',
+            type: 'string',
             defaultValue: '-',
-            description: 'Message d’erreur signalant une valeur non valide.',
+            description: 'Message d’erreur visuel passant le composant en état invalide.',
         },
         {
             name: 'size',
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
-            description: 'Taille du curseur et hauteur de la zone interactive.',
+            description: 'Variante de taille ajustant la hauteur de piste et les marges.',
         },
         {
             name: 'tone',
             type: "'neutral' | 'accent' | 'danger'",
-            defaultValue: "'neutral'",
-            description: 'Tonalité chromatique de remplissage de la piste et du pouce.',
-        },
-        {
-            name: 'range',
-            type: 'boolean',
-            defaultValue: 'false',
-            description: 'Active le mode intervalle à deux pouces de saisie.',
+            defaultValue: "'accent'",
+            description: 'Tonalité chromatique de la piste active.',
         },
         {
             name: 'value',
             type: 'number | [number, number]',
             defaultValue: '-',
-            description: 'Valeur contrôlée (nombre ou tuple [min, max]).',
+            description: 'Valeur contrôlée.',
         },
         {
             name: 'defaultValue',
             type: 'number | [number, number]',
-            defaultValue: '50 (ou [25, 75] en mode range)',
-            description: 'Valeur initiale en mode non contrôlé.',
+            defaultValue: '0 | [min, max]',
+            description: 'Valeur initiale incontrôlée.',
+        },
+        {
+            name: 'range',
+            type: 'boolean',
+            defaultValue: 'false',
+            description: 'Active le mode intervalle à deux poignées (double curseur).',
         },
         {
             name: 'min',
             type: 'number',
             defaultValue: '0',
-            description: 'Valeur minimale admissible.',
+            description: 'Borne inférieure autorisée.',
         },
         {
             name: 'max',
             type: 'number',
             defaultValue: '100',
-            description: 'Valeur maximale admissible.',
+            description: 'Borne supérieure autorisée.',
         },
         {
             name: 'step',
@@ -168,6 +288,33 @@ const [value, setValue] = useState(50)
         '--mr-space-4',
         '--mr-space-5',
         '--mr-space-6',
+    ],
+    keyboardNavigation: [
+        {
+            key: ['ArrowRight', 'ArrowUp'],
+            action: 'Incremente la valeur selon le pas (step).',
+            context: 'Curseur focalise',
+        },
+        {
+            key: ['ArrowLeft', 'ArrowDown'],
+            action: 'Decremente la valeur selon le pas (step).',
+            context: 'Curseur focalise',
+        },
+        {
+            key: 'Home',
+            action: 'Positionne le curseur sur la borne minimale (min).',
+            context: 'Curseur focalise',
+        },
+        {
+            key: 'End',
+            action: 'Positionne le curseur sur la borne maximale (max).',
+            context: 'Curseur focalise',
+        },
+        {
+            key: ['PageUp', 'PageDown'],
+            action: 'Effectue un saut de valeur plus important (10% de l echelle).',
+            context: 'Curseur focalise',
+        },
     ],
     a11y: [
         'Éléments natifs <input type="range"> garantissant les rôles ARIA implicites.',

@@ -1,9 +1,97 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Stepper } from '@monority/ui/stepper'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     StepperBasicExample,
-    StepperVerticalExample,
     StepperCompoundExample,
+    StepperVerticalExample,
 } from './Stepper.examples'
+
+function StepperPlayground() {
+    const [activeStep, setActiveStep] = useState(1)
+    const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')
+
+    const steps = [
+        { title: 'Panier', description: 'Articles et remises' },
+        { title: 'Livraison', description: 'Adresse et point relais' },
+        { title: 'Paiement', description: 'Sélection du mode' },
+        { title: 'Confirmation', description: 'Reçu et suivi' },
+    ]
+
+    const snippet = `<Stepper
+  activeStep={${activeStep}}
+  orientation="${orientation}"
+  steps={[
+    { title: 'Panier', description: 'Articles et remises' },
+    { title: 'Livraison', description: 'Adresse et point relais' },
+    { title: 'Paiement', description: 'Sélection du mode' },
+    { title: 'Confirmation', description: 'Reçu et suivi' },
+  ]}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Orientation',
+                    value: orientation,
+                    options: [
+                        { value: 'horizontal', label: 'Horizontal' },
+                        { value: 'vertical', label: 'Vertical' },
+                    ],
+                    onChange: (v) => setOrientation(v as 'horizontal' | 'vertical'),
+                },
+                {
+                    type: 'select',
+                    label: 'Étape active',
+                    value: String(activeStep),
+                    options: [
+                        { value: '0', label: 'Étape 1 : Panier' },
+                        { value: '1', label: 'Étape 2 : Livraison' },
+                        { value: '2', label: 'Étape 3 : Paiement' },
+                        { value: '3', label: 'Étape 4 : Confirmation' },
+                    ],
+                    onChange: (v) => setActiveStep(Number(v)),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 20,
+                    width: '100%',
+                    maxWidth: orientation === 'vertical' ? 360 : '100%',
+                    margin: '0 auto',
+                }}
+            >
+                <Stepper activeStep={activeStep} orientation={orientation} steps={steps} />
+                <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                    <Button
+                        size="sm"
+                        variant="secondary"
+                        disabled={activeStep === 0}
+                        onClick={() => setActiveStep((s) => Math.max(0, s - 1))}
+                    >
+                        Précédent
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="primary"
+                        disabled={activeStep === steps.length - 1}
+                        onClick={() => setActiveStep((s) => Math.min(steps.length - 1, s + 1))}
+                    >
+                        Suivant
+                    </Button>
+                </div>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Stepper',
@@ -42,7 +130,7 @@ return (
     </Stack>
   </Stack>
 )`,
-    preview: () => <StepperBasicExample />,
+    preview: () => <StepperPlayground />,
     examples: [
         {
             title: 'Disposition verticale',

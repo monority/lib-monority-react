@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Textarea } from '@monority/ui/textarea'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     TextareaBasicExample,
@@ -8,12 +11,147 @@ import {
     TextareaResizableExample,
 } from './Textarea.examples'
 
+function TextareaPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'neutral' | 'accent' | 'danger'
+    label: string
+    placeholder: string
+    hint: string
+    rows: number
+    maxLength: number
+    disabled: boolean
+    invalid: boolean
+}) {
+    const [value, setValue] = useState('')
+    return (
+        <div style={{ width: '100%', maxWidth: '420px', margin: '0 auto' }}>
+            <Textarea
+                size={props.size}
+                tone={props.tone}
+                label={props.label}
+                placeholder={props.placeholder}
+                hint={props.hint}
+                rows={props.rows}
+                maxLength={props.maxLength > 0 ? props.maxLength : undefined}
+                disabled={props.disabled}
+                invalid={props.invalid}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
+        </div>
+    )
+}
+
+const textareaPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'neutral' | 'accent' | 'danger'
+        label: string
+        placeholder: string
+        hint: string
+        rows: number
+        maxLength: number
+        disabled: boolean
+        invalid: boolean
+    }>
+        componentName="Textarea"
+        importCode="import { Textarea } from '@monority/ui/textarea'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.placeholder ? `  placeholder="${p.placeholder}"` : '',
+                p.hint ? `  hint="${p.hint}"` : '',
+                p.rows !== 4 ? `  rows={${p.rows}}` : '',
+                p.maxLength > 0 ? `  maxLength={${p.maxLength}}` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.disabled ? '  disabled' : '',
+                p.invalid ? '  invalid' : '',
+                '  value={value}',
+                '  onChange={(e) => setValue(e.target.value)}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Textarea } from '@monority/ui/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Description du ticket',
+            },
+            {
+                name: 'placeholder',
+                type: 'text',
+                label: 'Placeholder',
+                defaultValue: 'Decrivez precisement le probleme ou la requete...',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Formatage Markdown pris en charge.',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'neutral',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'rows',
+                type: 'number',
+                label: 'Lignes initiales (rows)',
+                defaultValue: 4,
+            },
+            {
+                name: 'maxLength',
+                type: 'number',
+                label: 'Limite caracteres (maxLength)',
+                defaultValue: 200,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+            {
+                name: 'invalid',
+                type: 'boolean',
+                label: 'Invalide (invalid)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <TextareaPlaygroundDemo {...props} />}
+    />
+)
+
 const docData: DocPageData = {
     title: 'Textarea',
     description: 'Multi-line text input with Field wrapper for label, hint, and error.',
     importCode: "import { Textarea } from '@monority/ui/textarea'",
     usageCode: `<Textarea label="Description" rows={5} />`,
     preview: () => <TextareaBasicExample />,
+    playground: textareaPlayground,
     examples: [
         { title: 'With label', content: <TextareaWithLabelExample /> },
         { title: 'Error state', content: <TextareaWithErrorExample /> },
@@ -59,23 +197,22 @@ const docData: DocPageData = {
             description: 'Explicit invalid state. Automatically true when error is provided.',
         },
         {
-            name: 'resize',
-            type: `'none' | 'vertical' | 'both'`,
-            defaultValue: "'vertical'",
-            description:
-                'Controls native CSS resize behavior. Manual height is preserved across value changes.',
+            name: 'rows',
+            type: 'number',
+            defaultValue: '3',
+            description: 'Initial visible row height.',
         },
         {
             name: 'disabled',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Disables the textarea and prevents interaction.',
+            description: 'Disables user input and dims control.',
         },
         {
             name: 'required',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Required field indicator on the label.',
+            description: 'Adds required marker.',
         },
         {
             name: 'maxLength',
@@ -132,6 +269,18 @@ const docData: DocPageData = {
         '--mr-radius-xs',
         '--mr-duration-fast',
         '--mr-ease-standard',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Tab',
+            action: 'Navigue vers ou hors de la zone de texte multi-lignes.',
+            context: 'Zone de texte',
+        },
+        {
+            key: 'Enter',
+            action: 'Insere un retour chariot au sein du texte.',
+            context: 'Zone de texte',
+        },
     ],
     a11y: [
         'Native <textarea> element with implicit form semantics.',

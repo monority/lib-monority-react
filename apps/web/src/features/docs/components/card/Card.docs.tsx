@@ -1,5 +1,90 @@
+import { useState } from 'react'
+import { Badge } from '@monority/ui/badge'
+import { Card } from '@monority/ui/card'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { CardBasicExample, CardInteractiveExample, CardPaddingExample } from './Card.examples'
+
+function CardPlayground() {
+    const [padding, setPadding] = useState<'sm' | 'md' | 'lg'>('md')
+    const [interactive, setInteractive] = useState(false)
+    const [title, setTitle] = useState('Santé du projet')
+    const [description, setDescription] = useState(
+        'Version stable déployée en production sans anomalie signalée.'
+    )
+    const [showBadge, setShowBadge] = useState(true)
+
+    const snippet = `<Card padding="${padding}"${interactive ? '\n  interactive' : ''}>
+  <Card.Header>
+    <Card.Title>${title}</Card.Title>${showBadge ? '\n    <Badge variant="default">En ligne</Badge>' : ''}
+  </Card.Header>
+  <Card.Description>
+    ${description}
+  </Card.Description>
+  <Card.Footer>
+    <Text tone="muted" size="sm">Mis à jour il y a 5 min</Text>
+  </Card.Footer>
+</Card>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Padding',
+                    value: padding,
+                    options: [
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
+                    ],
+                    onChange: (v) => setPadding(v as 'sm' | 'md' | 'lg'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Interactive',
+                    value: interactive,
+                    onChange: setInteractive,
+                },
+                {
+                    type: 'text',
+                    label: 'Titre',
+                    value: title,
+                    onChange: setTitle,
+                },
+                {
+                    type: 'text',
+                    label: 'Description',
+                    value: description,
+                    onChange: setDescription,
+                },
+                {
+                    type: 'boolean',
+                    label: 'Badge en-tête',
+                    value: showBadge,
+                    onChange: setShowBadge,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ maxWidth: 440, margin: '0 auto', width: '100%' }}>
+                <Card padding={padding} interactive={interactive}>
+                    <Card.Header>
+                        <Card.Title>{title}</Card.Title>
+                        {showBadge && <Badge variant="default">En ligne</Badge>}
+                    </Card.Header>
+                    <Card.Description>{description}</Card.Description>
+                    <Card.Footer>
+                        <Text tone="muted" size="sm">
+                            Mis à jour il y a 5 min
+                        </Text>
+                    </Card.Footer>
+                </Card>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Card',
@@ -19,7 +104,7 @@ const docData: DocPageData = {
     </Text>
   </Card.Footer>
 </Card>`,
-    preview: () => <CardBasicExample />,
+    preview: () => <CardPlayground />,
     examples: [
         { title: 'Padding sizes', content: <CardPaddingExample /> },
         { title: 'Interactive', content: <CardInteractiveExample /> },

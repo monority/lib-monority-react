@@ -1,10 +1,97 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { HoverCard } from '@monority/ui/hover-card'
+import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     HoverCardBasicExample,
+    HoverCardControlledExample,
     HoverCardCustomDelayExample,
     HoverCardSidesExample,
-    HoverCardControlledExample,
 } from './HoverCard.examples'
+
+function HoverCardPlayground() {
+    const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('bottom')
+    const [align, setAlign] = useState<'start' | 'center' | 'end'>('center')
+    const [arrow, setArrow] = useState(true)
+
+    const snippet = `<HoverCard side="${side}" align="${align}"${!arrow ? '\n  arrow={false}' : ''}>
+  <HoverCard.Trigger>
+    <Button variant="secondary">@monority/ui</Button>
+  </HoverCard.Trigger>
+  <HoverCard.Content>
+    <Stack gap="xs">
+      <Text.Strong size="sm">Monority UI</Text.Strong>
+      <Text.Muted size="sm">
+        Bibliothèque de composants React 19 pilotée par les design tokens CSS natifs.
+      </Text.Muted>
+    </Stack>
+  </HoverCard.Content>
+</HoverCard>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Position (side)',
+                    value: side,
+                    options: [
+                        { value: 'bottom', label: 'Bas (bottom)' },
+                        { value: 'top', label: 'Haut (top)' },
+                        { value: 'left', label: 'Gauche (left)' },
+                        { value: 'right', label: 'Droite (right)' },
+                    ],
+                    onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
+                },
+                {
+                    type: 'select',
+                    label: 'Alignement (align)',
+                    value: align,
+                    options: [
+                        { value: 'center', label: 'Centre (center)' },
+                        { value: 'start', label: 'Début (start)' },
+                        { value: 'end', label: 'Fin (end)' },
+                    ],
+                    onChange: (v) => setAlign(v as 'start' | 'center' | 'end'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Flèche indicatrice (arrow)',
+                    value: arrow,
+                    onChange: setArrow,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 180,
+                }}
+            >
+                <HoverCard side={side} align={align} arrow={arrow}>
+                    <HoverCard.Trigger>
+                        <Button variant="secondary">@monority/ui</Button>
+                    </HoverCard.Trigger>
+                    <HoverCard.Content>
+                        <Stack gap="xs" style={{ maxWidth: 240 }}>
+                            <Text.Strong size="sm">Monority UI</Text.Strong>
+                            <Text.Muted size="sm">
+                                Bibliothèque de composants React 19 pilotée par les design tokens
+                                CSS natifs.
+                            </Text.Muted>
+                        </Stack>
+                    </HoverCard.Content>
+                </HoverCard>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'HoverCard',
@@ -22,7 +109,7 @@ const docData: DocPageData = {
     </Stack>
   </HoverCard.Content>
 </HoverCard>`,
-    preview: () => <HoverCardBasicExample />,
+    preview: () => <HoverCardPlayground />,
     examples: [
         { title: 'Custom delay', content: <HoverCardCustomDelayExample /> },
         { title: 'Sides', content: <HoverCardSidesExample /> },

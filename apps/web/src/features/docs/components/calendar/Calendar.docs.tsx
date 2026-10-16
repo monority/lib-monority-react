@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Calendar } from '@monority/ui/calendar'
 import {
     CalendarBasicPreview,
     CalendarPickersExample,
@@ -8,6 +10,32 @@ import {
 } from './Calendar.examples'
 import { DocPage, type DocPageData } from '../DocPage'
 
+function CalendarInteractivePlayground(props: {
+    showPickers: boolean
+    showOutsideDays: boolean
+    fixedWeeks: boolean
+    numberOfMonths: number
+}) {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <Calendar
+                value={selectedDate}
+                onChange={setSelectedDate}
+                showPickers={props.showPickers}
+                showOutsideDays={props.showOutsideDays}
+                fixedWeeks={props.fixedWeeks}
+                numberOfMonths={props.numberOfMonths}
+            />
+            <div style={{ fontSize: '0.875rem', color: 'var(--mr-text-secondary)' }}>
+                Date sélectionnée :{' '}
+                {selectedDate ? selectedDate.toLocaleDateString('fr-FR') : 'aucune'}
+            </div>
+        </div>
+    )
+}
+
 const docData: DocPageData = {
     title: 'Calendar',
     description:
@@ -15,6 +43,50 @@ const docData: DocPageData = {
     importCode: "import { Calendar } from '@monority/ui/calendar'",
     usageCode: '<Calendar onChange={(date) => console.log(date)} />',
     preview: () => <CalendarBasicPreview />,
+    playgroundConfig: {
+        controls: [
+            {
+                name: 'showPickers',
+                type: 'boolean',
+                label: 'Sélecteurs mois/année (showPickers)',
+                defaultValue: true,
+            },
+            {
+                name: 'showOutsideDays',
+                type: 'boolean',
+                label: 'Jours hors mois (showOutsideDays)',
+                defaultValue: true,
+            },
+            {
+                name: 'fixedWeeks',
+                type: 'boolean',
+                label: '6 semaines fixes (fixedWeeks)',
+                defaultValue: false,
+            },
+            {
+                name: 'numberOfMonths',
+                type: 'select',
+                label: 'Nombre de mois',
+                defaultValue: '1',
+                options: [
+                    { value: '1', label: '1 mois' },
+                    { value: '2', label: '2 mois (côte à côte)' },
+                ],
+            },
+        ],
+        getCode: (p) => `<Calendar
+  value={selectedDate}
+  onChange={setSelectedDate}${p.showPickers ? '\n  showPickers' : ''}${!p.showOutsideDays ? '\n  showOutsideDays={false}' : ''}${p.fixedWeeks ? '\n  fixedWeeks' : ''}${Number(p.numberOfMonths) > 1 ? `\n  numberOfMonths={${p.numberOfMonths}}` : ''}
+/>`,
+        render: (props) => (
+            <CalendarInteractivePlayground
+                showPickers={props.showPickers as boolean}
+                showOutsideDays={props.showOutsideDays as boolean}
+                fixedWeeks={props.fixedWeeks as boolean}
+                numberOfMonths={Number(props.numberOfMonths) || 1}
+            />
+        ),
+    },
     examples: [
         {
             title: 'Basic',
@@ -140,6 +212,38 @@ const docData: DocPageData = {
             type: 'number',
             defaultValue: '1',
             description: 'Number of months to display side by side.',
+        },
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Flèche Gauche / Flèche Droite',
+            action: 'Déplace le focus vers le jour précédent ou suivant.',
+            context: 'Grille des jours',
+        },
+        {
+            key: 'Flèche Haut / Flèche Bas',
+            action: 'Déplace le focus vers le même jour de la semaine précédente ou suivante.',
+            context: 'Grille des jours',
+        },
+        {
+            key: 'PageUp / PageDown',
+            action: 'Recule ou avance d’un mois.',
+            context: 'Grille des jours',
+        },
+        {
+            key: ['Shift', 'PageUp / PageDown'],
+            action: 'Recule ou avance d’une année complète.',
+            context: 'Grille des jours',
+        },
+        {
+            key: 'Origine (Home) / Fin (End)',
+            action: 'Déplace le focus vers le premier ou dernier jour du mois en cours.',
+            context: 'Grille des jours',
+        },
+        {
+            key: 'Enter / Espace',
+            action: 'Sélectionne la date ciblée.',
+            context: 'Grille des jours',
         },
     ],
     cssHooks: [

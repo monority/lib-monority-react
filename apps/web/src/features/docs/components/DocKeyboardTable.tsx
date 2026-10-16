@@ -3,7 +3,8 @@ import { Kbd } from '@monority/ui/kbd'
 
 export interface KeyboardShortcutRow extends Record<string, unknown> {
     key: string | string[]
-    action: string
+    action?: string
+    description?: string
     context?: string
 }
 
@@ -39,7 +40,9 @@ const keyboardColumns: Column<KeyboardShortcutRow>[] = [
     {
         key: 'action',
         label: 'Comportement',
-        render: (_val, row) => <span className="docs-keyboard-action">{row.action}</span>,
+        render: (_val, row) => (
+            <span className="docs-keyboard-action">{row.action || row.description}</span>
+        ),
     },
     {
         key: 'context',
@@ -65,7 +68,7 @@ export function DocKeyboardTable({ shortcuts }: DocKeyboardTableProps) {
                 columns={keyboardColumns}
                 rows={shortcuts}
                 getRowId={(row) =>
-                    `${Array.isArray(row.key) ? row.key.join('+') : row.key}-${row.action}`
+                    `${Array.isArray(row.key) ? row.key.join('+') : row.key}-${row.action || row.description || ''}`
                 }
             />
         </div>

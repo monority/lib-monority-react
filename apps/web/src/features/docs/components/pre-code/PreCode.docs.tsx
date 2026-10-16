@@ -1,4 +1,6 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { PreCode } from '@monority/ui/pre-code'
 import {
     PreCodeBasicExample,
     PreCodeScrollExample,
@@ -6,13 +8,68 @@ import {
     PreCodeWrapExample,
 } from './PreCode.examples'
 
+const demoSnippet = `import { Button } from '@monority/ui/button'
+
+export function App() {
+  return (
+    <Button variant="primary" size="md">
+      Commander le composant
+    </Button>
+  )
+}`
+
+function PreCodePlayground() {
+    return (
+        <ComponentPlayground
+            title="PreCode"
+            description="Personnalisez la taille de police du bloc de code et activez le retour à la ligne automatique."
+            controls={[
+                {
+                    type: 'select',
+                    prop: 'size',
+                    label: 'Taille (size)',
+                    defaultValue: 'md',
+                    options: [
+                        { value: 'sm', label: 'Petite (sm)' },
+                        { value: 'md', label: 'Moyenne (md)' },
+                    ],
+                },
+                {
+                    type: 'boolean',
+                    prop: 'wrap',
+                    label: 'Retour à la ligne (wrap)',
+                    defaultValue: false,
+                },
+            ]}
+            renderCode={(props) => `<PreCode
+  language="tsx"
+  size="${props.size}"${props.wrap ? '\n  wrap' : ''}
+>
+  {\`${demoSnippet}\`}
+</PreCode>`}
+        >
+            {(props) => (
+                <div style={{ width: '100%', maxWidth: 540 }}>
+                    <PreCode
+                        language="tsx"
+                        size={props.size as 'sm' | 'md'}
+                        wrap={props.wrap as boolean}
+                    >
+                        {demoSnippet}
+                    </PreCode>
+                </div>
+            )}
+        </ComponentPlayground>
+    )
+}
+
 const docData: DocPageData = {
     title: 'PreCode',
     description:
         'Preformatted code block with horizontal scrolling, optional wrapping, and readable theme-aware syntax colors.',
     importCode: "import { PreCode } from '@monority/ui/pre-code'",
     usageCode: `<PreCode language="tsx">const value = 1</PreCode>`,
-    preview: () => <PreCodeBasicExample />,
+    preview: () => <PreCodePlayground />,
     examples: [
         { title: 'Sizes', content: <PreCodeSizesExample /> },
         { title: 'Horizontal scrolling', content: <PreCodeScrollExample /> },

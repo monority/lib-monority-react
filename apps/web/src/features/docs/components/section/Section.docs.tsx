@@ -1,9 +1,76 @@
+import { useState } from 'react'
+import { Section } from '@monority/ui/section'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SectionBasicExample,
-    SectionSpacingExample,
     SectionCompoundExample,
+    SectionSpacingExample,
 } from './Section.examples'
+
+function SectionPlayground() {
+    const [variant, setVariant] = useState<'default' | 'bordered' | 'muted' | 'card'>('card')
+    const [spacing, setSpacing] = useState<'sm' | 'md' | 'lg' | 'xl'>('md')
+    const [title, setTitle] = useState('Vue d’ensemble de l’architecture')
+
+    const snippet = `<Section
+  variant="${variant}"
+  spacing="${spacing}"
+  title="${title}"
+>
+  <Text>
+    Les sections structurent le rythme vertical des pages et fournissent une hiérarchie de titres sémantique.
+  </Text>
+</Section>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Variante visuelle',
+                    value: variant,
+                    options: [
+                        { value: 'card', label: 'Carte (card)' },
+                        { value: 'default', label: 'Défaut (transparent)' },
+                        { value: 'bordered', label: 'Bordé (bordered)' },
+                        { value: 'muted', label: 'Atténué (muted)' },
+                    ],
+                    onChange: (v) => setVariant(v as 'default' | 'bordered' | 'muted' | 'card'),
+                },
+                {
+                    type: 'select',
+                    label: 'Espacement (spacing)',
+                    value: spacing,
+                    options: [
+                        { value: 'sm', label: 'Compact (sm)' },
+                        { value: 'md', label: 'Normal (md)' },
+                        { value: 'lg', label: 'Généreux (lg)' },
+                        { value: 'xl', label: 'Spacieux (xl)' },
+                    ],
+                    onChange: (v) => setSpacing(v as 'sm' | 'md' | 'lg' | 'xl'),
+                },
+                {
+                    type: 'text',
+                    label: 'Titre de la section',
+                    value: title,
+                    onChange: setTitle,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ width: '100%', minHeight: 140 }}>
+                <Section variant={variant} spacing={spacing} title={title}>
+                    <Text>
+                        Les sections structurent le rythme vertical des pages et fournissent une
+                        hiérarchie de titres sémantique.
+                    </Text>
+                </Section>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Section',
@@ -13,7 +80,7 @@ const docData: DocPageData = {
     usageCode: `<Section spacing="lg" variant="card" title="Features">
   <Text>Content grouped in a card-style section.</Text>
 </Section>`,
-    preview: () => <SectionBasicExample />,
+    preview: () => <SectionPlayground />,
     examples: [
         {
             title: 'Compound composition',

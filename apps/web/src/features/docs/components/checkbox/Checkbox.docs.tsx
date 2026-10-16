@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Checkbox } from '@monority/ui/checkbox'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     CheckboxBasicExample,
@@ -7,6 +10,110 @@ import {
     CheckboxIndeterminateExample,
 } from './Checkbox.examples'
 
+function CheckboxPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'accent' | 'neutral' | 'danger'
+    label: string
+    hint: string
+    disabled: boolean
+    indeterminate: boolean
+}) {
+    const [checked, setChecked] = useState(true)
+    return (
+        <div style={{ width: '100%', maxWidth: '360px', margin: '0 auto' }}>
+            <Checkbox
+                size={props.size}
+                tone={props.tone}
+                label={props.label}
+                hint={props.hint}
+                disabled={props.disabled}
+                indeterminate={props.indeterminate}
+                checked={checked}
+                onChange={(e) => setChecked(e.target.checked)}
+            />
+        </div>
+    )
+}
+
+const checkboxPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'accent' | 'neutral' | 'danger'
+        label: string
+        hint: string
+        disabled: boolean
+        indeterminate: boolean
+    }>
+        componentName="Checkbox"
+        importCode="import { Checkbox } from '@monority/ui/checkbox'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.hint ? `  hint="${p.hint}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'accent' ? `  tone="${p.tone}"` : '',
+                p.indeterminate ? '  indeterminate' : '',
+                p.disabled ? '  disabled' : '',
+                '  checked={checked}',
+                '  onChange={(e) => setChecked(e.target.checked)}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Checkbox } from '@monority/ui/checkbox'\n\nconst [checked, setChecked] = useState(true)\n\n<Checkbox\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Recevoir le resume hebdomadaire',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Synthese envoyee chaque lundi matin par email.',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'accent',
+                options: [
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'indeterminate',
+                type: 'boolean',
+                label: 'Etat indetermine (dash)',
+                defaultValue: false,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <CheckboxPlaygroundDemo {...props} />}
+    />
+)
+
 const docData: DocPageData = {
     title: 'Checkbox',
     description: 'Selection control for independent choices, bulk actions, and optional settings.',
@@ -14,6 +121,7 @@ const docData: DocPageData = {
     usageCode: `<Checkbox label="Send weekly summary" />
 <Checkbox label="Include failed jobs" defaultChecked />`,
     preview: () => <CheckboxBasicExample />,
+    playground: checkboxPlayground,
     examples: [
         { title: 'Disabled', content: <CheckboxDisabledExample /> },
         { title: 'Error state', content: <CheckboxWithErrorExample /> },
@@ -108,6 +216,18 @@ const docData: DocPageData = {
         '--mr-text-primary',
         '--mr-font-size-sm',
         '--mr-checkbox-size',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Space',
+            action: 'Bascule l etat coche / decoche de la case.',
+            context: 'Case a cocher focalisee',
+        },
+        {
+            key: 'Tab',
+            action: 'Passe le focus au champ de formulaire suivant.',
+            context: 'Case a cocher focalisee',
+        },
     ],
     a11y: [
         'Native checkbox input with an implicit label.',

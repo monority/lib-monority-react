@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { StatCard } from '@monority/ui/stat-card'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     StatCardBasicExample,
@@ -8,12 +11,85 @@ import {
     StatCardCompoundExample,
 } from './StatCard.examples'
 
+function StatCardPlayground() {
+    const [label, setLabel] = useState('Revenu net')
+    const [value, setValue] = useState('128 420 €')
+    const [trend, setTrend] = useState('+8.4% vs mois dernier')
+    const [trendTone, setTrendTone] = useState<'success' | 'neutral' | 'warning' | 'danger'>(
+        'success'
+    )
+    const [description, setDescription] = useState('Chiffre d’affaires récurrent après déductions.')
+
+    const snippet = `<StatCard
+  label="${label}"
+  value="${value}"
+  trend="${trend}"
+  trendTone="${trendTone}"
+  description="${description}"
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'text',
+                    label: 'Label',
+                    value: label,
+                    onChange: setLabel,
+                },
+                {
+                    type: 'text',
+                    label: 'Valeur',
+                    value: value,
+                    onChange: setValue,
+                },
+                {
+                    type: 'text',
+                    label: 'Tendance',
+                    value: trend,
+                    onChange: setTrend,
+                },
+                {
+                    type: 'select',
+                    label: 'Ton de tendance',
+                    value: trendTone,
+                    options: [
+                        { value: 'success', label: 'Success (positif)' },
+                        { value: 'neutral', label: 'Neutral' },
+                        { value: 'warning', label: 'Warning (alerte)' },
+                        { value: 'danger', label: 'Danger (négatif)' },
+                    ],
+                    onChange: (v) =>
+                        setTrendTone(v as 'success' | 'neutral' | 'warning' | 'danger'),
+                },
+                {
+                    type: 'text',
+                    label: 'Description',
+                    value: description,
+                    onChange: setDescription,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div style={{ maxWidth: 360, margin: '0 auto', width: '100%' }}>
+                <StatCard
+                    label={label}
+                    value={value}
+                    trend={trend}
+                    trendTone={trendTone}
+                    description={description}
+                />
+            </div>
+        </ComponentPlayground>
+    )
+}
+
 const docData: DocPageData = {
     title: 'StatCard',
     description: 'Compact KPI card for dashboard metrics, trend context, and supporting notes.',
     importCode: "import { StatCard } from '@monority/ui/stat-card'",
     usageCode: `<StatCard label="Net revenue" value="$128,420" trend="+8.4% vs last month" trendTone="success" />`,
-    preview: () => <StatCardBasicExample />,
+    preview: () => <StatCardPlayground />,
     examples: [
         {
             title: 'Compound composition',

@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { ToggleGroup } from '@monority/ui/toggle-group'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     ToggleGroupSinglePreview,
     ToggleGroupMultipleExample,
@@ -6,7 +10,144 @@ import {
     ToggleGroupVariantsExample,
     ToggleGroupSizesExample,
 } from './ToggleGroup.examples'
-import { DocPage, type DocPageData } from '../DocPage'
+
+function ToggleGroupPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    variant: 'default' | 'outline'
+    type: 'single' | 'multiple'
+    orientation: 'horizontal' | 'vertical'
+    disabled: boolean
+}) {
+    const [valSingle, setValSingle] = useState<string>('list')
+    const [valMulti, setValMulti] = useState<string[]>(['list'])
+    const items = [
+        { value: 'grid', label: 'Grille' },
+        { value: 'list', label: 'Liste' },
+        { value: 'compact', label: 'Compact' },
+    ]
+
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 'var(--mr-space-4)',
+            }}
+        >
+            {props.type === 'single' ? (
+                <ToggleGroup
+                    items={items}
+                    type="single"
+                    size={props.size}
+                    variant={props.variant}
+                    orientation={props.orientation}
+                    disabled={props.disabled}
+                    value={valSingle}
+                    onValueChange={(next) => setValSingle(next as string)}
+                />
+            ) : (
+                <ToggleGroup
+                    items={items}
+                    type="multiple"
+                    size={props.size}
+                    variant={props.variant}
+                    orientation={props.orientation}
+                    disabled={props.disabled}
+                    value={valMulti}
+                    onValueChange={(next) => setValMulti(next as string[])}
+                />
+            )}
+            <span style={{ fontSize: 'var(--mr-font-size-sm)', color: 'var(--mr-text-primary)' }}>
+                Selection :{' '}
+                <strong>
+                    {props.type === 'single'
+                        ? valSingle || 'aucune'
+                        : valMulti.join(', ') || 'aucune'}
+                </strong>
+            </span>
+        </div>
+    )
+}
+
+const toggleGroupPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        variant: 'default' | 'outline'
+        type: 'single' | 'multiple'
+        orientation: 'horizontal' | 'vertical'
+        disabled: boolean
+    }>
+        componentName="ToggleGroup"
+        importCode="import { ToggleGroup } from '@monority/ui/toggle-group'"
+        getCode={(p) => {
+            const propsStr = [
+                `  items={[\n    { value: 'grid', label: 'Grille' },\n    { value: 'list', label: 'Liste' },\n    { value: 'compact', label: 'Compact' }\n  ]}`,
+                `  type="${p.type}"`,
+                p.variant !== 'default' ? `  variant="${p.variant}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.orientation !== 'horizontal' ? `  orientation="${p.orientation}"` : '',
+                p.disabled ? '  disabled' : '',
+                p.type === 'single' ? '  value={value}' : '  value={values}',
+                '  onValueChange={setValue}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { ToggleGroup } from '@monority/ui/toggle-group'\n\nconst [value, setValue] = useState('list')\n\n<ToggleGroup\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'type',
+                type: 'select',
+                label: 'Mode de selection',
+                defaultValue: 'single',
+                options: [
+                    { value: 'single', label: 'Unique (single)' },
+                    { value: 'multiple', label: 'Multiple' },
+                ],
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'variant',
+                type: 'select',
+                label: 'Variante de style',
+                defaultValue: 'default',
+                options: [
+                    { value: 'default', label: 'Default' },
+                    { value: 'outline', label: 'Outline' },
+                ],
+            },
+            {
+                name: 'orientation',
+                type: 'select',
+                label: 'Disposition',
+                defaultValue: 'horizontal',
+                options: [
+                    { value: 'horizontal', label: 'Horizontale' },
+                    { value: 'vertical', label: 'Verticale' },
+                ],
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <ToggleGroupPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'ToggleGroup',
@@ -14,6 +155,7 @@ const docData: DocPageData = {
     importCode: "import { ToggleGroup } from '@monority/ui/toggle-group'",
     usageCode: '<ToggleGroup items={items} type="single" />',
     preview: () => <ToggleGroupSinglePreview />,
+    playground: toggleGroupPlayground,
     examples: [
         { title: 'Single select', content: <ToggleGroupSinglePreview /> },
         { title: 'Multiple select', content: <ToggleGroupMultipleExample /> },
@@ -86,6 +228,18 @@ const docData: DocPageData = {
         '[data-state]',
     ],
     tokens: ['--mr-radius-sm'],
+    keyboardNavigation: [
+        {
+            key: 'Tab',
+            action: 'Fait circuler le focus entre les options actives du groupe.',
+            context: 'Groupe de bascules',
+        },
+        {
+            key: ['Space', 'Enter'],
+            action: 'Active ou desactive l option focalisee.',
+            context: 'Option cible du groupe',
+        },
+    ],
     a11y: [
         'role="group" for single selection, role="toolbar" for multiple.',
         'aria-orientation reflects layout direction.',

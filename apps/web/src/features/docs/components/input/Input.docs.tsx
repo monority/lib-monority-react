@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Input } from '@monority/ui/input'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     InputBasicExample,
@@ -7,6 +10,131 @@ import {
     InputPasswordExample,
     InputSearchExample,
 } from './Input.examples'
+
+function InputPlaygroundDemo(props: {
+    tone: 'neutral' | 'accent' | 'danger'
+    size: 'sm' | 'md' | 'lg'
+    label: string
+    placeholder: string
+    hint: string
+    disabled: boolean
+    invalid: boolean
+    clearable: boolean
+}) {
+    const [value, setValue] = useState('')
+    return (
+        <div style={{ width: '100%', maxWidth: '360px', margin: '0 auto' }}>
+            <Input
+                tone={props.tone}
+                size={props.size}
+                label={props.label}
+                placeholder={props.placeholder}
+                hint={props.hint}
+                disabled={props.disabled}
+                invalid={props.invalid}
+                clearable={props.clearable}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClear={() => setValue('')}
+            />
+        </div>
+    )
+}
+
+const inputPlayground = (
+    <ComponentPlayground<{
+        tone: 'neutral' | 'accent' | 'danger'
+        size: 'sm' | 'md' | 'lg'
+        label: string
+        placeholder: string
+        hint: string
+        disabled: boolean
+        invalid: boolean
+        clearable: boolean
+    }>
+        componentName="Input"
+        importCode="import { Input } from '@monority/ui/input'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.placeholder ? `  placeholder="${p.placeholder}"` : '',
+                p.hint ? `  hint="${p.hint}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.clearable ? '  clearable' : '',
+                p.disabled ? '  disabled' : '',
+                p.invalid ? '  invalid' : '',
+                '  value={value}',
+                '  onChange={(e) => setValue(e.target.value)}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Input } from '@monority/ui/input'\n\nconst [value, setValue] = useState('')\n\n<Input\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Adresse email',
+            },
+            {
+                name: 'placeholder',
+                type: 'text',
+                label: 'Placeholder',
+                defaultValue: 'nom@entreprise.com',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Utilisez votre adresse professionnelle.',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'neutral',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'clearable',
+                type: 'boolean',
+                label: 'Effacable (clearable)',
+                defaultValue: true,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+            {
+                name: 'invalid',
+                type: 'boolean',
+                label: 'Invalide (invalid)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <InputPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Input',
@@ -19,6 +147,7 @@ const docData: DocPageData = {
   placeholder="you@company.com"
 />`,
     preview: () => <InputBasicExample />,
+    playground: inputPlayground,
     examples: [
         { title: 'Search', content: <InputSearchExample /> },
         { title: 'Clearable', content: <InputClearableExample /> },
@@ -100,42 +229,18 @@ const docData: DocPageData = {
             description: 'Native placeholder text.',
         },
         {
-            name: 'value',
-            type: `string`,
-            defaultValue: `'-'`,
-            description:
-                'Controlled value. When omitted, the input is uncontrolled and `defaultValue` sets the initial value.',
-        },
-        {
-            name: 'defaultValue',
-            type: `string`,
-            defaultValue: `"''"`,
-            description:
-                'Uncontrolled initial value. Use instead of `value` for a controlled-less form field.',
-        },
-        {
             name: 'clearable',
             type: `boolean`,
             defaultValue: `'false'`,
-            description:
-                "Affiche un bouton d'effacement rapide lorsque le champ contient une valeur.",
-        },
-        {
-            name: 'clearAriaLabel',
-            type: `string`,
-            defaultValue: `'Effacer le texte'`,
-            description: "Libellé accessible (aria-label) pour le bouton d'effacement.",
-        },
-        {
-            name: 'onClear',
-            type: `() => void`,
-            defaultValue: `'-'`,
-            description: "Rappel déclenché lors du clic sur le bouton d'effacement.",
+            description: 'Adds an accessible clear button when text is entered.',
         },
     ],
     cssHooks: [
+        '.mr-field',
+        '.mr-field__label',
+        '.mr-field__hint',
+        '.mr-field__error',
         '.mr-input',
-        '.mr-input-base',
         '.mr-input__clear',
         '[data-size]',
         '[data-tone]',
@@ -160,6 +265,18 @@ const docData: DocPageData = {
         '--mr-duration-fast',
         '--mr-ease-standard',
         '--mr-danger',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Tab',
+            action: 'Deplace le focus vers ou depuis le champ de saisie.',
+            context: 'Champ de saisie',
+        },
+        {
+            key: 'Escape',
+            action: 'Reinitialise la saisie textuelle si le champ est effacable (clearable).',
+            context: 'Champ avec bouton d effacement',
+        },
     ],
     a11y: [
         'Label uses htmlFor.',

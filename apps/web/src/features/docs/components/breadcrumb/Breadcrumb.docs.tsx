@@ -1,9 +1,70 @@
+import { useState } from 'react'
+import { Breadcrumb } from '@monority/ui/breadcrumb'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     BreadcrumbBasicExample,
     BreadcrumbManyItemsExample,
     BreadcrumbSingleItemExample,
 } from './Breadcrumb.examples'
+
+function BreadcrumbPlayground() {
+    const [depth, setDepth] = useState<'2' | '3' | '4'>('3')
+
+    const allItems = [
+        { label: 'Accueil', href: '#' },
+        { label: 'Composants', href: '#' },
+        { label: 'Navigation', href: '#' },
+        { label: 'Breadcrumb' },
+    ]
+
+    const items =
+        depth === '2'
+            ? [{ label: 'Accueil', href: '#' }, { label: 'Breadcrumb' }]
+            : depth === '3'
+              ? [
+                    { label: 'Accueil', href: '#' },
+                    { label: 'Composants', href: '#' },
+                    { label: 'Breadcrumb' },
+                ]
+              : allItems
+
+    const snippet = `<Breadcrumb
+  items={[
+${items.map((i) => `    { label: '${i.label}'${i.href ? `, href: '${i.href}'` : ''} }`).join(',\n')}
+  ]}
+/>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Profondeur d’arborescence',
+                    value: depth,
+                    options: [
+                        { value: '2', label: '2 niveaux' },
+                        { value: '3', label: '3 niveaux' },
+                        { value: '4', label: '4 niveaux' },
+                    ],
+                    onChange: (v) => setDepth(v as '2' | '3' | '4'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 80,
+                }}
+            >
+                <Breadcrumb items={items} />
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Breadcrumb',
@@ -17,7 +78,7 @@ const docData: DocPageData = {
     { label: 'Monority UI' },
   ]}
 />`,
-    preview: () => <BreadcrumbBasicExample />,
+    preview: () => <BreadcrumbPlayground />,
     examples: [
         { title: 'Many Items', content: <BreadcrumbManyItemsExample /> },
         { title: 'Single Item', content: <BreadcrumbSingleItemExample /> },

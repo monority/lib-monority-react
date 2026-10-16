@@ -1,10 +1,103 @@
+import { useState } from 'react'
+import { Menubar } from '@monority/ui/menubar'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     MenubarBasicExample,
-    MenubarWithIconsExample,
     MenubarDangerExample,
     MenubarDisabledExample,
+    MenubarWithIconsExample,
 } from './Menubar.examples'
+
+function MenubarPlayground() {
+    const [density, setDensity] = useState<'standard' | 'compact'>('standard')
+
+    const snippet = `<Menubar>
+  <Menubar.Menu value="fichier">
+    <Menubar.Trigger>Fichier</Menubar.Trigger>
+    <Menubar.Content>
+      <Menubar.Item shortcut="Ctrl+N">Nouveau document</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+O">Ouvrir...</Menubar.Item>
+      <Menubar.Separator />
+      <Menubar.Item shortcut="Ctrl+S">Enregistrer</Menubar.Item>
+    </Menubar.Content>
+  </Menubar.Menu>
+  <Menubar.Menu value="edition">
+    <Menubar.Trigger>Édition</Menubar.Trigger>
+    <Menubar.Content>
+      <Menubar.Item shortcut="Ctrl+Z">Annuler</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+Y">Rétablir</Menubar.Item>
+      <Menubar.Separator />
+      <Menubar.Item shortcut="Ctrl+X">Couper</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+C">Copier</Menubar.Item>
+    </Menubar.Content>
+  </Menubar.Menu>
+  <Menubar.Menu value="affichage">
+    <Menubar.Trigger>Affichage</Menubar.Trigger>
+    <Menubar.Content>
+      <Menubar.Item shortcut="Alt+1">Densité normale</Menubar.Item>
+      <Menubar.Item shortcut="Alt+2">Densité compacte</Menubar.Item>
+    </Menubar.Content>
+  </Menubar.Menu>
+</Menubar>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Affichage par défaut',
+                    value: density,
+                    options: [
+                        { value: 'standard', label: 'Standard' },
+                        { value: 'compact', label: 'Compact' },
+                    ],
+                    onChange: (v) => setDensity(v as 'standard' | 'compact'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    minHeight: 180,
+                    width: '100%',
+                    paddingTop: 12,
+                }}
+            >
+                <Menubar>
+                    <Menubar.Menu value="fichier">
+                        <Menubar.Trigger>Fichier</Menubar.Trigger>
+                        <Menubar.Content>
+                            <Menubar.Item shortcut="Ctrl+N">Nouveau document</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+O">Ouvrir...</Menubar.Item>
+                            <Menubar.Separator />
+                            <Menubar.Item shortcut="Ctrl+S">Enregistrer</Menubar.Item>
+                        </Menubar.Content>
+                    </Menubar.Menu>
+                    <Menubar.Menu value="edition">
+                        <Menubar.Trigger>Édition</Menubar.Trigger>
+                        <Menubar.Content>
+                            <Menubar.Item shortcut="Ctrl+Z">Annuler</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+Y">Rétablir</Menubar.Item>
+                            <Menubar.Separator />
+                            <Menubar.Item shortcut="Ctrl+X">Couper</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+C">Copier</Menubar.Item>
+                        </Menubar.Content>
+                    </Menubar.Menu>
+                    <Menubar.Menu value="affichage">
+                        <Menubar.Trigger>Affichage</Menubar.Trigger>
+                        <Menubar.Content>
+                            <Menubar.Item shortcut="Alt+1">Densité normale</Menubar.Item>
+                            <Menubar.Item shortcut="Alt+2">Densité compacte</Menubar.Item>
+                        </Menubar.Content>
+                    </Menubar.Menu>
+                </Menubar>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Menubar',
@@ -29,7 +122,7 @@ const docData: DocPageData = {
     </Menubar.Content>
   </Menubar.Menu>
 </Menubar>`,
-    preview: () => <MenubarBasicExample />,
+    preview: () => <MenubarPlayground />,
     examples: [
         {
             title: 'With icons',
@@ -179,6 +272,13 @@ const docData: DocPageData = {
         '--mr-z-dropdown',
         '--mr-accent-solid',
         '--mr-font-mono',
+    ],
+    keyboardNavigation: [
+        { key: 'Tab', action: 'Navigue entre les déclencheurs de menus' },
+        { key: 'Enter', action: 'Ouvre le menu ou exécute l’action sélectionnée' },
+        { key: 'Space', action: 'Ouvre le menu' },
+        { key: 'Flèches directionnelles', action: 'Navigue entre les items du menu déroulant' },
+        { key: 'Escape', action: 'Ferme le menu déroulant actif' },
     ],
     a11y: [
         'Root uses role="menubar".',

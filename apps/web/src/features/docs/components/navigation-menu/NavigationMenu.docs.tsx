@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { NavigationMenu } from '@monority/ui/navigation-menu'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     NavigationMenuBasicExample,
@@ -5,6 +8,124 @@ import {
     NavigationMenuWithIconsExample,
     NavigationMenuDisabledExample,
 } from './NavigationMenu.examples'
+
+function NavigationMenuPlayground() {
+    const [activeSection, setActiveSection] = useState<'none' | 'components' | 'solutions'>(
+        'components'
+    )
+
+    const snippet = `<NavigationMenu value="${activeSection === 'none' ? '' : activeSection}">
+  <NavigationMenu.List>
+    <NavigationMenu.Item>
+      <NavigationMenu.Link href="#">Accueil</NavigationMenu.Link>
+    </NavigationMenu.Item>
+    <NavigationMenu.Item value="components">
+      <NavigationMenu.Trigger>Composants</NavigationMenu.Trigger>
+      <NavigationMenu.Content>
+        <NavigationMenu.Link href="#" description="Champs, boutons et contrôles de saisie">
+          Formulaires
+        </NavigationMenu.Link>
+        <NavigationMenu.Link href="#" description="Tableaux, graphiques et métriques">
+          Visualisation
+        </NavigationMenu.Link>
+      </NavigationMenu.Content>
+    </NavigationMenu.Item>
+    <NavigationMenu.Item value="solutions">
+      <NavigationMenu.Trigger>Solutions</NavigationMenu.Trigger>
+      <NavigationMenu.Content>
+        <NavigationMenu.Link href="#" description="Pour les équipes produit et scale-ups">
+          Entreprise
+        </NavigationMenu.Link>
+        <NavigationMenu.Link href="#" description="Licence permissive MIT pour la communauté">
+          Open Source
+        </NavigationMenu.Link>
+      </NavigationMenu.Content>
+    </NavigationMenu.Item>
+    <NavigationMenu.Item>
+      <NavigationMenu.Link href="#">Documentation</NavigationMenu.Link>
+    </NavigationMenu.Item>
+  </NavigationMenu.List>
+</NavigationMenu>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Sous-menu ouvert',
+                    value: activeSection,
+                    options: [
+                        { value: 'none', label: 'Aucun (fermé)' },
+                        { value: 'components', label: 'Composants' },
+                        { value: 'solutions', label: 'Solutions' },
+                    ],
+                    onChange: (v) => setActiveSection(v as 'none' | 'components' | 'solutions'),
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    minHeight: 180,
+                    width: '100%',
+                    paddingTop: 8,
+                }}
+            >
+                <NavigationMenu
+                    value={activeSection === 'none' ? undefined : activeSection}
+                    onValueChange={(v) =>
+                        setActiveSection(v ? (v as 'components' | 'solutions') : 'none')
+                    }
+                >
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item>
+                            <NavigationMenu.Link href="#">Accueil</NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item value="components">
+                            <NavigationMenu.Trigger>Composants</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link
+                                    href="#"
+                                    description="Champs, boutons et contrôles de saisie"
+                                >
+                                    Formulaires
+                                </NavigationMenu.Link>
+                                <NavigationMenu.Link
+                                    href="#"
+                                    description="Tableaux, graphiques et métriques"
+                                >
+                                    Visualisation
+                                </NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item value="solutions">
+                            <NavigationMenu.Trigger>Solutions</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link
+                                    href="#"
+                                    description="Pour les équipes produit et scale-ups"
+                                >
+                                    Entreprise
+                                </NavigationMenu.Link>
+                                <NavigationMenu.Link
+                                    href="#"
+                                    description="Licence permissive MIT pour la communauté"
+                                >
+                                    Open Source
+                                </NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item>
+                            <NavigationMenu.Link href="#">Documentation</NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'NavigationMenu',
@@ -38,7 +159,7 @@ const docData: DocPageData = {
     </NavigationMenu.Item>
   </NavigationMenu.List>
 </NavigationMenu>`,
-    preview: () => <NavigationMenuBasicExample />,
+    preview: () => <NavigationMenuPlayground />,
     examples: [
         {
             title: 'With sub-items',
@@ -224,6 +345,15 @@ const docData: DocPageData = {
         '--mr-shadow-md',
         '--mr-z-dropdown',
         '--mr-accent-solid',
+    ],
+    keyboardNavigation: [
+        { key: 'Tab', action: 'Navigue entre les liens et déclencheurs de menu' },
+        { key: 'Enter', action: 'Ouvre le sous-menu ou active le lien sélectionné' },
+        { key: 'Space', action: 'Ouvre le sous-menu' },
+        {
+            key: 'Escape',
+            action: 'Ferme le sous-menu ouvert et replace le focus sur le déclencheur',
+        },
     ],
     a11y: [
         'Root uses role="navigation" with aria-label="Main navigation".',

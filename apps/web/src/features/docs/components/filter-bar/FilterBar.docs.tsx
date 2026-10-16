@@ -1,9 +1,143 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { FilterBar } from '@monority/ui/filter-bar'
+import { Input } from '@monority/ui/input'
+import { Select } from '@monority/ui/select'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     FilterBarBasicExample,
     FilterBarWithControlsExample,
     FilterBarWithResetExample,
 } from './FilterBar.examples'
+
+function FilterBarPlayground() {
+    const [search, setSearch] = useState('')
+    const [status, setStatus] = useState('all')
+    const [showChips, setShowChips] = useState(true)
+
+    const activeCount = (search ? 1 : 0) + (status !== 'all' ? 1 : 0)
+
+    const snippet = `<FilterBar>
+  <FilterBar.Main>
+    <FilterBar.Leading>
+      <Input
+        placeholder="Rechercher un composant..."
+        value="${search}"
+      />
+    </FilterBar.Leading>
+    <Select aria-label="Filtre de statut" value="${status}">
+      <option value="all">Tous les statuts</option>
+      <option value="stable">Stable</option>
+      <option value="beta">Beta</option>
+      <option value="deprecated">Obsolète</option>
+    </Select>
+  </FilterBar.Main>
+  <FilterBar.Meta>
+    <span>${activeCount > 0 ? `${activeCount} filtre(s) actif(s)` : '34 résultats'}</span>
+  </FilterBar.Meta>
+</FilterBar>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'text',
+                    label: 'Recherche texte',
+                    value: search,
+                    onChange: setSearch,
+                },
+                {
+                    type: 'select',
+                    label: 'Filtre de statut',
+                    value: status,
+                    options: [
+                        { value: 'all', label: 'Tous les statuts' },
+                        { value: 'stable', label: 'Stable' },
+                        { value: 'beta', label: 'Beta' },
+                        { value: 'deprecated', label: 'Obsolète' },
+                    ],
+                    onChange: setStatus,
+                },
+                {
+                    type: 'boolean',
+                    label: 'Afficher tags actifs',
+                    value: showChips,
+                    onChange: setShowChips,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    width: '100%',
+                    minHeight: 96,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 12,
+                }}
+            >
+                <FilterBar>
+                    <FilterBar.Main>
+                        <FilterBar.Leading>
+                            <Input
+                                placeholder="Rechercher un composant..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </FilterBar.Leading>
+                        <Select
+                            aria-label="Filtre de statut"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                        >
+                            <option value="all">Tous les statuts</option>
+                            <option value="stable">Stable</option>
+                            <option value="beta">Beta</option>
+                            <option value="deprecated">Obsolète</option>
+                        </Select>
+                        {activeCount > 0 && (
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => {
+                                    setSearch('')
+                                    setStatus('all')
+                                }}
+                            >
+                                Réinitialiser
+                            </Button>
+                        )}
+                    </FilterBar.Main>
+                    <FilterBar.Meta>
+                        <span
+                            style={{
+                                fontSize: '0.85rem',
+                                color: 'var(--mr-text-secondary, #64748b)',
+                            }}
+                        >
+                            {activeCount > 0 ? `${activeCount} filtre(s) actif(s)` : '34 résultats'}
+                        </span>
+                    </FilterBar.Meta>
+                </FilterBar>
+                {showChips && activeCount > 0 && (
+                    <FilterBar.Chips>
+                        {search && (
+                            <FilterBar.Chip active onClick={() => setSearch('')}>
+                                Requête: {search} ✕
+                            </FilterBar.Chip>
+                        )}
+                        {status !== 'all' && (
+                            <FilterBar.Chip active onClick={() => setStatus('all')}>
+                                Statut: {status} ✕
+                            </FilterBar.Chip>
+                        )}
+                    </FilterBar.Chips>
+                )}
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'FilterBar',
@@ -22,7 +156,7 @@ const docData: DocPageData = {
   </FilterBar.Main>
   <FilterBar.Meta>24 results</FilterBar.Meta>
 </FilterBar>`,
-    preview: () => <FilterBarBasicExample />,
+    preview: () => <FilterBarPlayground />,
     examples: [
         {
             title: 'With controls',

@@ -1,5 +1,107 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Sheet } from '@monority/ui/sheet'
+import { Stack } from '@monority/ui/stack'
+import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { SheetBasicExample, SheetCompoundExample, SheetSidesExample } from './Sheet.examples'
+
+function SheetPlayground() {
+    const [open, setOpen] = useState(false)
+    const [side, setSide] = useState<'right' | 'left' | 'top' | 'bottom'>('right')
+    const [title, setTitle] = useState('Édition du profil utilisateur')
+
+    const snippet = `const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Ouvrir le volet (${side})</Button>
+
+<Sheet
+  open={open}
+  title="${title}"
+  side="${side}"
+  description="Modifiez vos préférences et enregistrez."
+  onClose={() => setOpen(false)}
+  footer={
+    <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+      <Button variant="ghost" onClick={() => setOpen(false)}>Annuler</Button>
+      <Button variant="primary" onClick={() => setOpen(false)}>Sauvegarder</Button>
+    </div>
+  }
+>
+  <p>Contenu principal du volet...</p>
+</Sheet>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Côté d’ouverture (side)',
+                    value: side,
+                    options: [
+                        { value: 'right', label: 'Droite (right)' },
+                        { value: 'left', label: 'Gauche (left)' },
+                        { value: 'top', label: 'Haut (top)' },
+                        { value: 'bottom', label: 'Bas (bottom)' },
+                    ],
+                    onChange: (v) => setSide(v as 'right' | 'left' | 'top' | 'bottom'),
+                },
+                {
+                    type: 'text',
+                    label: 'Titre du volet',
+                    value: title,
+                    onChange: setTitle,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 120,
+                }}
+            >
+                <Button variant="primary" onClick={() => setOpen(true)}>
+                    Ouvrir le volet ({side})
+                </Button>
+                <Sheet
+                    open={open}
+                    title={title}
+                    side={side}
+                    description="Modifiez vos préférences et enregistrez."
+                    onClose={() => setOpen(false)}
+                    footer={
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 8,
+                                justifyContent: 'flex-end',
+                                width: '100%',
+                            }}
+                        >
+                            <Button variant="ghost" onClick={() => setOpen(false)}>
+                                Annuler
+                            </Button>
+                            <Button variant="primary" onClick={() => setOpen(false)}>
+                                Sauvegarder
+                            </Button>
+                        </div>
+                    }
+                >
+                    <Stack gap="md">
+                        <Text tone="muted">
+                            Le volet Sheet permet des flux secondaires approfondis sans perdre le
+                            contexte visuel de la page hôte.
+                        </Text>
+                    </Stack>
+                </Sheet>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Sheet',
@@ -36,7 +138,7 @@ return (
     </Sheet>
   </>
 )`,
-    preview: () => <SheetBasicExample />,
+    preview: () => <SheetPlayground />,
     examples: [
         { title: 'Ancrage sur les 4 cotes (Sides)', content: <SheetSidesExample /> },
         { title: 'Composition avec sous-composants', content: <SheetCompoundExample /> },
@@ -102,6 +204,10 @@ return (
         '--mr-border-subtle',
         '--mr-duration-panel',
         '--mr-space-6',
+    ],
+    keyboardNavigation: [
+        { key: 'Tab', action: 'Navigue cycliquement dans les éléments du volet (focus trap)' },
+        { key: 'Escape', action: 'Ferme le volet et replace le focus sur le bouton d’ouverture' },
     ],
     a11y: [
         'Conforme au motif WAI-ARIA Dialog avec role="dialog" et aria-modal="true".',

@@ -1,10 +1,106 @@
+import { useState } from 'react'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@monority/ui/resizable'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ResizableHorizontalExample,
+    ResizableThreePanelsExample,
     ResizableVerticalExample,
     ResizableWithHandleExample,
-    ResizableThreePanelsExample,
 } from './Resizable.examples'
+
+function ResizablePlayground() {
+    const [direction, setDirection] = useState<'horizontal' | 'vertical'>('horizontal')
+    const [withHandle, setWithHandle] = useState(true)
+
+    const snippet = `<ResizablePanelGroup direction="${direction}">
+  <ResizablePanel defaultSize={35}>
+    <div>Panneau 1 (35%)</div>
+  </ResizablePanel>
+  <ResizableHandle${withHandle ? ' withHandle' : ''} />
+  <ResizablePanel defaultSize={65}>
+    <div>Panneau 2 (65%)</div>
+  </ResizablePanel>
+</ResizablePanelGroup>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Orientation',
+                    value: direction,
+                    options: [
+                        { value: 'horizontal', label: 'Horizontal' },
+                        { value: 'vertical', label: 'Vertical' },
+                    ],
+                    onChange: (v) => setDirection(v as 'horizontal' | 'vertical'),
+                },
+                {
+                    type: 'boolean',
+                    label: 'Poignée visuelle (withHandle)',
+                    value: withHandle,
+                    onChange: setWithHandle,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    height: 200,
+                    width: '100%',
+                    border: '1px solid var(--mr-border-subtle, #e2e8f0)',
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                }}
+            >
+                <ResizablePanelGroup direction={direction}>
+                    <ResizablePanel defaultSize={35}>
+                        <div
+                            style={{
+                                padding: 16,
+                                background: 'var(--mr-bg-sunken, #f8fafc)',
+                                height: '100%',
+                                fontSize: '0.875rem',
+                            }}
+                        >
+                            <strong>Panneau A</strong>
+                            <p
+                                style={{
+                                    margin: '8px 0 0',
+                                    color: 'var(--mr-text-secondary, #64748b)',
+                                }}
+                            >
+                                Redimensionnez avec la souris ou au clavier (flèches).
+                            </p>
+                        </div>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle={withHandle} />
+                    <ResizablePanel defaultSize={65}>
+                        <div
+                            style={{
+                                padding: 16,
+                                background: 'var(--mr-bg-surface, #ffffff)',
+                                height: '100%',
+                                fontSize: '0.875rem',
+                            }}
+                        >
+                            <strong>Panneau B</strong>
+                            <p
+                                style={{
+                                    margin: '8px 0 0',
+                                    color: 'var(--mr-text-secondary, #64748b)',
+                                }}
+                            >
+                                Zone de contenu adaptative.
+                            </p>
+                        </div>
+                    </ResizablePanel>
+                </ResizablePanelGroup>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Resizable',
@@ -21,7 +117,7 @@ const docData: DocPageData = {
     <div>Right panel</div>
   </ResizablePanel>
 </ResizablePanelGroup>`,
-    preview: () => <ResizableHorizontalExample />,
+    preview: () => <ResizablePlayground />,
     examples: [
         { title: 'Vertical panels', content: <ResizableVerticalExample /> },
         { title: 'With handle indicator', content: <ResizableWithHandleExample /> },
@@ -79,6 +175,11 @@ const docData: DocPageData = {
         '--mr-bg-surface-strong',
         '--mr-border-subtle',
         '--mr-text-secondary',
+    ],
+    keyboardNavigation: [
+        { key: 'Flèche Gauche / Haut', action: 'Diminue la taille du panneau précédent de 1%' },
+        { key: 'Flèche Droite / Bas', action: 'Augmente la taille du panneau précédent de 1%' },
+        { key: 'Shift + Flèche', action: 'Ajuste la taille par pas de 10%' },
     ],
     a11y: [
         'Handles use role="separator" with aria-orientation matching the group direction.',

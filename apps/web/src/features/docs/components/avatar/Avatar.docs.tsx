@@ -1,10 +1,87 @@
+import { useState } from 'react'
+import { Avatar } from '@monority/ui/avatar'
+import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     AvatarBasicExample,
+    AvatarGroupExample,
     AvatarSizesExample,
     AvatarWithImageExample,
-    AvatarGroupExample,
 } from './Avatar.examples'
+
+function AvatarPlayground() {
+    const [size, setSize] = useState<'sm' | 'md' | 'lg'>('md')
+    const [status, setStatus] = useState<'none' | 'online' | 'offline'>('online')
+    const [initials, setInitials] = useState('MC')
+    const [showImage, setShowImage] = useState(false)
+
+    const placeholderAvatar =
+        'data:image/svg+xml;utf8,' +
+        encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" fill="#7c6cf4"/><circle cx="32" cy="24" r="12" fill="#fff"/><path d="M10 64c2-14 12-20 22-20s20 6 22 20z" fill="#fff"/></svg>'
+        )
+
+    const snippet = `<Avatar size="${size}">
+${showImage ? `  <Avatar.Image src="..." alt="Utilisateur" />\n` : ''}  <Avatar.Fallback>${initials}</Avatar.Fallback>${status !== 'none' ? `\n  <Avatar.Status status="${status}" />` : ''}
+</Avatar>`
+
+    return (
+        <ComponentPlayground
+            controls={[
+                {
+                    type: 'select',
+                    label: 'Size',
+                    value: size,
+                    options: [
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
+                    ],
+                    onChange: (v) => setSize(v as 'sm' | 'md' | 'lg'),
+                },
+                {
+                    type: 'select',
+                    label: 'Statut',
+                    value: status,
+                    options: [
+                        { value: 'none', label: 'Aucun' },
+                        { value: 'online', label: 'En ligne (online)' },
+                        { value: 'offline', label: 'Hors ligne (offline)' },
+                    ],
+                    onChange: (v) => setStatus(v as 'none' | 'online' | 'offline'),
+                },
+                {
+                    type: 'text',
+                    label: 'Initiales',
+                    value: initials,
+                    onChange: setInitials,
+                },
+                {
+                    type: 'boolean',
+                    label: 'Avec image',
+                    value: showImage,
+                    onChange: setShowImage,
+                },
+            ]}
+            codeSnippet={snippet}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 96,
+                }}
+            >
+                <Avatar size={size}>
+                    {showImage && <Avatar.Image src={placeholderAvatar} alt="Utilisateur" />}
+                    <Avatar.Fallback>{initials}</Avatar.Fallback>
+                    {status !== 'none' && <Avatar.Status status={status} />}
+                </Avatar>
+            </div>
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Avatar',
@@ -16,7 +93,7 @@ const docData: DocPageData = {
   <Avatar.Fallback>AB</Avatar.Fallback>
   <Avatar.Status status="online" />
 </Avatar>`,
-    preview: () => <AvatarBasicExample />,
+    preview: () => <AvatarPlayground />,
     examples: [
         { title: 'Sizes', content: <AvatarSizesExample /> },
         { title: 'With image', content: <AvatarWithImageExample /> },

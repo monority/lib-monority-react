@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { NumberInput } from '@monority/ui/number-input'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     NumberInputBasicPreview,
@@ -7,6 +10,130 @@ import {
     NumberInputStatesExample,
 } from './NumberInput.examples'
 
+function NumberInputPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'neutral' | 'accent' | 'danger'
+    label: string
+    hint: string
+    min: number
+    max: number
+    step: number
+    disabled: boolean
+}) {
+    const [value, setValue] = useState<number | null>(4)
+    return (
+        <div style={{ width: '100%', maxWidth: '320px', margin: '0 auto' }}>
+            <NumberInput
+                size={props.size}
+                tone={props.tone}
+                label={props.label}
+                hint={props.hint}
+                min={props.min}
+                max={props.max}
+                step={props.step}
+                disabled={props.disabled}
+                value={value}
+                onValueChange={setValue}
+            />
+        </div>
+    )
+}
+
+const numberInputPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'neutral' | 'accent' | 'danger'
+        label: string
+        hint: string
+        min: number
+        max: number
+        step: number
+        disabled: boolean
+    }>
+        componentName="NumberInput"
+        importCode="import { NumberInput } from '@monority/ui/number-input'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.hint ? `  hint="${p.hint}"` : '',
+                `  min={${p.min}}`,
+                `  max={${p.max}}`,
+                p.step !== 1 ? `  step={${p.step}}` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.disabled ? '  disabled' : '',
+                '  value={value}',
+                '  onValueChange={setValue}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { NumberInput } from '@monority/ui/number-input'\n\nconst [value, setValue] = useState<number | null>(4)\n\n<NumberInput\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Nombre de licences',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Minimum 1, maximum 20 utilisateurs.',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'neutral',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'min',
+                type: 'number',
+                label: 'Valeur minimale (min)',
+                defaultValue: 1,
+            },
+            {
+                name: 'max',
+                type: 'number',
+                label: 'Valeur maximale (max)',
+                defaultValue: 20,
+            },
+            {
+                name: 'step',
+                type: 'number',
+                label: 'Pas d incrementation (step)',
+                defaultValue: 1,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <NumberInputPlaygroundDemo {...props} />}
+    />
+)
+
 const docData: DocPageData = {
     title: 'NumberInput',
     description:
@@ -14,6 +141,7 @@ const docData: DocPageData = {
     importCode: "import { NumberInput } from '@monority/ui/number-input'",
     usageCode: '<NumberInput label="Quantity" min={1} max={10} defaultValue={1} />',
     preview: () => <NumberInputBasicPreview />,
+    playground: numberInputPlayground,
     examples: [
         { title: 'Controlled Usage', content: <NumberInputControlledExample /> },
         { title: 'Sizes', content: <NumberInputSizesExample /> },
@@ -114,6 +242,33 @@ const docData: DocPageData = {
         '--mr-radius-md',
         '--mr-space-2',
         '--mr-space-3',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'ArrowUp',
+            action: 'Incremente la valeur selon le pas (step).',
+            context: 'Champ numerique',
+        },
+        {
+            key: 'ArrowDown',
+            action: 'Decremente la valeur selon le pas (step).',
+            context: 'Champ numerique',
+        },
+        {
+            key: 'Home',
+            action: 'Reinitialise a la valeur minimale (min) si definie.',
+            context: 'Champ numerique',
+        },
+        {
+            key: 'End',
+            action: 'Definit la valeur sur le maximum (max) si defini.',
+            context: 'Champ numerique',
+        },
+        {
+            key: 'Tab',
+            action: 'Navigue vers les boutons du stepper ou le controle suivant.',
+            context: 'Champ numerique',
+        },
     ],
     a11y: [
         'Stepper buttons have accessible labels (Increment / Decrement).',

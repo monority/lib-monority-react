@@ -1,4 +1,6 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { Text, type TextSize, type TextTone } from '@monority/ui/text'
 import {
     TextBasicExample,
     TextTonesExample,
@@ -6,18 +8,88 @@ import {
     TextAsExample,
 } from './Text.examples'
 
+function TextPlayground() {
+    return (
+        <ComponentPlayground
+            title="Text"
+            description="Ajustez l'échelle typographique, la nuance sémantique (tone) et le tag HTML sous-jacent."
+            controls={[
+                {
+                    type: 'select',
+                    prop: 'size',
+                    label: 'Taille (size)',
+                    defaultValue: 'md',
+                    options: [
+                        { value: 'sm', label: 'Petite (sm)' },
+                        { value: 'md', label: 'Moyenne (md)' },
+                        { value: 'lg', label: 'Grande (lg)' },
+                    ],
+                },
+                {
+                    type: 'select',
+                    prop: 'tone',
+                    label: 'Nuance (tone)',
+                    defaultValue: 'base',
+                    options: [
+                        { value: 'base', label: 'Base (défaut)' },
+                        { value: 'muted', label: 'Atténuée (muted)' },
+                        { value: 'strong', label: 'Accentuation (strong)' },
+                        { value: 'accent', label: 'Accent primaire (accent)' },
+                        { value: 'success', label: 'Succès (success)' },
+                        { value: 'warning', label: 'Avertissement (warning)' },
+                        { value: 'danger', label: 'Danger (danger)' },
+                    ],
+                },
+                {
+                    type: 'select',
+                    prop: 'as',
+                    label: 'Élément HTML (as)',
+                    defaultValue: 'p',
+                    options: ['p', 'span', 'div'],
+                },
+                {
+                    type: 'text',
+                    prop: 'content',
+                    label: 'Contenu textuel',
+                    defaultValue:
+                        'Le design system Monority unifie tokens CSS, fluidité et rigueur typographique.',
+                },
+            ]}
+            renderCode={(props) => `<Text
+  as="${props.as}"
+  size="${props.size}"
+  tone="${props.tone}"
+>
+  ${props.content}
+</Text>`}
+        >
+            {(props) => (
+                <div style={{ maxWidth: 540 }}>
+                    <Text
+                        as={props.as as 'p' | 'span' | 'div'}
+                        size={props.size as TextSize}
+                        tone={props.tone as TextTone}
+                    >
+                        {props.content as string}
+                    </Text>
+                </div>
+            )}
+        </ComponentPlayground>
+    )
+}
+
 const docData: DocPageData = {
     title: 'Text',
     description:
         'Polymorphic text component with tone and size variants. Combine with Title for rich typographic layouts.',
-    importCode: "import { Text } from '@monority/ui'",
+    importCode: "import { Text } from '@monority/ui/text'",
     usageCode: `<Text as="p" tone="base" size="md">
   Body text for paragraphs and descriptions.
 </Text>
 <Text as="span" tone="muted" size="sm">
   Captions and secondary information
 </Text>`,
-    preview: () => <TextBasicExample />,
+    preview: () => <TextPlayground />,
     examples: [
         { title: 'Sizes', content: <TextSizesExample /> },
         { title: 'Tones', content: <TextTonesExample /> },

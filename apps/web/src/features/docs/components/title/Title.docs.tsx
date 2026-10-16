@@ -1,16 +1,71 @@
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { Title, type TitleSize } from '@monority/ui/title'
 import { TitleBasicExample, TitleLevelsExample, TitleSizesExample } from './Title.examples'
+
+function TitlePlayground() {
+    return (
+        <ComponentPlayground
+            title="Title"
+            description="Configurez l'échelle visuelle du titre (size) et sa sémantique de document HTML (as)."
+            controls={[
+                {
+                    type: 'select',
+                    prop: 'size',
+                    label: 'Taille visuelle (size)',
+                    defaultValue: 'lg',
+                    options: [
+                        { value: 'sm', label: 'Petite (sm)' },
+                        { value: 'md', label: 'Moyenne (md)' },
+                        { value: 'lg', label: 'Grande (lg)' },
+                        { value: 'display', label: 'Affichage monumental (display)' },
+                    ],
+                },
+                {
+                    type: 'select',
+                    prop: 'as',
+                    label: 'Balise sémantique (as)',
+                    defaultValue: 'h2',
+                    options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                },
+                {
+                    type: 'text',
+                    prop: 'content',
+                    label: 'Texte du titre',
+                    defaultValue: 'Rigueur & Équilibre Typographique',
+                },
+            ]}
+            renderCode={(props) => `<Title
+  as="${props.as}"
+  size="${props.size}"
+>
+  ${props.content}
+</Title>`}
+        >
+            {(props) => (
+                <div style={{ maxWidth: 540 }}>
+                    <Title
+                        as={props.as as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'}
+                        size={props.size as TitleSize}
+                    >
+                        {props.content as string}
+                    </Title>
+                </div>
+            )}
+        </ComponentPlayground>
+    )
+}
 
 const docData: DocPageData = {
     title: 'Title',
     description: 'Polymorphic heading component for semantic page and panel hierarchy.',
-    importCode: "import { Title } from '@monority/ui'",
+    importCode: "import { Title } from '@monority/ui/title'",
     usageCode: `<Title as="h1" size="display">Release readiness</Title>
 <Title as="h2" size="lg">Review queue</Title>
 <Text as="p" tone="base">
   Use titles to give product sections a clear hierarchy without changing semantic heading order.
 </Text>`,
-    preview: () => <TitleBasicExample />,
+    preview: () => <TitlePlayground />,
     examples: [
         { title: 'Sizes', content: <TitleSizesExample /> },
         { title: 'Heading levels', content: <TitleLevelsExample /> },
