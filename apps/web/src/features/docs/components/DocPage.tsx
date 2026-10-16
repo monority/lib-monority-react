@@ -7,6 +7,7 @@ import { DocSection } from './DocSection'
 import { DocPropTable } from './DocPropTable'
 import { DocTagList } from './DocTagList'
 import { DocExampleCard } from './DocExampleCard'
+import { DocKeyboardTable, type KeyboardShortcutRow } from './DocKeyboardTable'
 
 export interface PropRow extends Record<string, unknown> {
     name: string
@@ -28,7 +29,9 @@ export interface DocPageData {
     usageCode?: string
     preview: () => ReactNode
     previewLabel?: string
+    playground?: ReactNode
     props?: PropRow[]
+    keyboardNavigation?: KeyboardShortcutRow[]
     cssHooks?: string[]
     tokens?: string[]
     a11y?: string[]
@@ -48,17 +51,21 @@ export function DocPage({ doc }: { doc: DocPageData }) {
 
             <DocSection
                 id="overview"
-                title="Aperçu"
-                description="Démonstration interactive et code d'intégration."
+                title="Apercu"
+                description="Demonstration interactive et code d'integration."
             >
-                <div className="docs-preview-stack docs-preview-card">
-                    <PreviewCanvas label={previewLabel} padding="none">
-                        <div className="docs-preview-area docs-preview-content">
-                            <Preview />
-                        </div>
-                    </PreviewCanvas>
-                    {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
-                </div>
+                {doc.playground ? (
+                    doc.playground
+                ) : (
+                    <div className="docs-preview-stack docs-preview-card">
+                        <PreviewCanvas label={previewLabel} padding="none">
+                            <div className="docs-preview-area docs-preview-content">
+                                <Preview />
+                            </div>
+                        </PreviewCanvas>
+                        {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
+                    </div>
+                )}
             </DocSection>
 
             {doc.examples && doc.examples.length > 0 && (
@@ -102,11 +109,21 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                 </DocSection>
             )}
 
+            {doc.keyboardNavigation && doc.keyboardNavigation.length > 0 && (
+                <DocSection
+                    id="keyboard"
+                    title="Navigation au clavier"
+                    description="Raccourcis et comportements au clavier conformes WAI-ARIA."
+                >
+                    <DocKeyboardTable shortcuts={doc.keyboardNavigation} />
+                </DocSection>
+            )}
+
             {doc.a11y && doc.a11y.length > 0 && (
                 <DocSection
                     id="accessibility"
-                    title="Accessibilité & Clavier"
-                    description="Comportements WAI-ARIA, navigation au clavier et gestion du focus."
+                    title="Accessibilite & Recommandations"
+                    description="Comportements WAI-ARIA, roles et gestion des lecteurs d'ecran."
                 >
                     <ul className="docs-list">
                         {doc.a11y.map((item) => (

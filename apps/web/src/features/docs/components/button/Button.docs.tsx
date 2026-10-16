@@ -1,4 +1,6 @@
+import { Button, type ButtonVariant, type ButtonSize } from '@monority/ui/button'
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
 import {
     ButtonBasicPreview,
     ButtonVariantsExample,
@@ -10,6 +12,63 @@ import {
     ButtonFullWidthExample,
 } from './Button.examples'
 
+const buttonPlayground = (
+    <ComponentPlayground<{
+        variant: ButtonVariant
+        size: ButtonSize
+        disabled: boolean
+        loading: boolean
+        children: string
+    }>
+        componentName="Button"
+        importCode="import { Button } from '@monority/ui/button'"
+        controls={[
+            {
+                name: 'variant',
+                type: 'select',
+                label: 'Variante',
+                options: ['primary', 'secondary', 'muted', 'ghost', 'subtle', 'danger', 'warning'],
+                defaultValue: 'primary',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Taille',
+                options: ['sm', 'md', 'lg'],
+                defaultValue: 'md',
+            },
+            {
+                name: 'loading',
+                type: 'boolean',
+                label: 'Chargement (loading)',
+                defaultValue: false,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+            {
+                name: 'children',
+                type: 'text',
+                label: 'Libelle du bouton',
+                defaultValue: 'Executer une action',
+            },
+        ]}
+        render={(props) => (
+            <Button
+                variant={props.variant}
+                size={props.size}
+                loading={props.loading}
+                disabled={props.disabled}
+            >
+                {props.children}
+            </Button>
+        )}
+    />
+)
+
 const docData: DocPageData = {
     title: 'Button',
     description:
@@ -17,6 +76,7 @@ const docData: DocPageData = {
     importCode: "import { Button } from '@monority/ui/button'",
     usageCode: '<Button>Button</Button>',
     preview: () => <ButtonBasicPreview />,
+    playground: buttonPlayground,
     examples: [
         { title: 'Variants', content: <ButtonVariantsExample /> },
         { title: 'Sizes', content: <ButtonSizesExample /> },
@@ -142,6 +202,23 @@ const docData: DocPageData = {
         '--mr-radius-sm',
         '--mr-dur-150',
         '--mr-ease-in-out',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Space',
+            action: 'Active le bouton lors du relachement de la touche.',
+            context: 'Focus sur le bouton',
+        },
+        {
+            key: 'Enter',
+            action: 'Declenche immediatement l action associee au bouton.',
+            context: 'Focus sur le bouton',
+        },
+        {
+            key: 'Tab',
+            action: 'Deplace le focus sequentiel vers ou hors du bouton.',
+            context: 'Navigation globale',
+        },
     ],
     a11y: [
         'Native <button> semantics by default.',

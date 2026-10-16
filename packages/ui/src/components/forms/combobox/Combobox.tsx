@@ -291,9 +291,9 @@ export function Combobox({
                                     data-has-clear={showClear ? true : undefined}
                                     aria-busy={loading ? 'true' : undefined}
                                     aria-expanded={open}
-                                    aria-controls={`${inputId}-list`}
+                                    aria-controls={open ? `${inputId}-list` : undefined}
                                     aria-activedescendant={
-                                        filteredItems[activeIndex]
+                                        open && filteredItems[activeIndex]
                                             ? `${inputId}-item-${filteredItems[activeIndex].value}`
                                             : undefined
                                     }

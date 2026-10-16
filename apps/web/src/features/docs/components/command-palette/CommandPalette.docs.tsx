@@ -1,10 +1,106 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { CommandPalette } from '@monority/ui/command-palette'
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
 import {
     CommandPaletteBasicExample,
     CommandPaletteCompoundExample,
     CommandPaletteWithGroupsExample,
     CommandPaletteWithShortcutsExample,
 } from './CommandPalette.examples'
+
+function CommandPalettePlaygroundDemo(props: {
+    title: string
+    placeholder: string
+    emptyLabel: string
+}) {
+    const [open, setOpen] = useState(false)
+    const items = [
+        {
+            value: 'docs',
+            label: 'Consulter la documentation',
+            description: 'Parcourir les 75 composants et guides WAI-ARIA',
+            shortcut: 'Ctrl+D',
+            onSelect: () => setOpen(false),
+        },
+        {
+            value: 'tokens',
+            label: 'Inspecter les tokens CSS',
+            description: 'Couleurs, espaces, rayons, transitions et focus rings',
+            shortcut: 'Ctrl+T',
+            onSelect: () => setOpen(false),
+        },
+        {
+            value: 'a11y',
+            label: 'Audit accessibilite WCAG 2.1 AA',
+            description: 'Verifications axe-core et navigation clavier',
+            shortcut: 'Ctrl+A',
+            onSelect: () => setOpen(false),
+        },
+    ]
+
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 'var(--mr-space-3)',
+            }}
+        >
+            <Button onClick={() => setOpen(true)} variant="primary">
+                Ouvrir la palette de commandes
+            </Button>
+            <span style={{ fontSize: 'var(--mr-font-size-xs)', color: 'var(--mr-text-secondary)' }}>
+                Raccourci clavier de demonstration disponible a tout moment
+            </span>
+            <CommandPalette
+                open={open}
+                onClose={() => setOpen(false)}
+                items={items}
+                title={props.title}
+                placeholder={props.placeholder}
+                emptyLabel={props.emptyLabel}
+            />
+        </div>
+    )
+}
+
+const commandPalettePlayground = (
+    <ComponentPlayground<{
+        title: string
+        placeholder: string
+        emptyLabel: string
+    }>
+        componentName="CommandPalette"
+        importCode="import { CommandPalette } from '@monority/ui/command-palette'"
+        getCode={(p) => {
+            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { CommandPalette } from '@monority/ui/command-palette'\n\nconst [open, setOpen] = useState(false)\nconst items = [\n  {\n    value: 'docs',\n    label: 'Consulter la documentation',\n    description: 'Parcourir les 75 composants et guides WAI-ARIA',\n    shortcut: 'Ctrl+D',\n    onSelect: () => setOpen(false),\n  },\n  {\n    value: 'tokens',\n    label: 'Inspecter les tokens CSS',\n    description: 'Couleurs, espaces, rayons, transitions et focus rings',\n    shortcut: 'Ctrl+T',\n    onSelect: () => setOpen(false),\n  },\n]\n\n<>\n  <Button onClick={() => setOpen(true)}>Ouvrir la palette de commandes</Button>\n  <CommandPalette\n    open={open}\n    onClose={() => setOpen(false)}\n    items={items}\n    title="${p.title}"\n    placeholder="${p.placeholder}"\n    emptyLabel="${p.emptyLabel}"\n  />\n</>`
+        }}
+        controls={[
+            {
+                name: 'title',
+                type: 'text',
+                label: 'Titre de la palette',
+                defaultValue: 'Navigation rapide',
+            },
+            {
+                name: 'placeholder',
+                type: 'text',
+                label: 'Placeholder de recherche',
+                defaultValue: 'Rechercher une action ou une page...',
+            },
+            {
+                name: 'emptyLabel',
+                type: 'text',
+                label: 'Message aucun resultat',
+                defaultValue: 'Aucune commande correspondante.',
+            },
+        ]}
+        render={(props) => <CommandPalettePlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'CommandPalette',
@@ -35,6 +131,7 @@ return (
   </>
 )`,
     preview: () => <CommandPaletteBasicExample />,
+    playground: commandPalettePlayground,
     examples: [
         {
             title: 'Compound composition',
@@ -118,6 +215,38 @@ return (
         '--mr-border-subtle',
         '--mr-border-strong',
         '--mr-radius-md',
+    ],
+    keyboardNavigation: [
+        {
+            key: ['Control', 'k'],
+            action: 'Ouvre la palette de commandes depuis n importe quel endroit.',
+            context: 'Raccourci global',
+        },
+        {
+            key: 'ArrowDown',
+            action: 'Deplace le focus et la surbrillance sur la commande suivante.',
+            context: 'Palette ouverte',
+        },
+        {
+            key: 'ArrowUp',
+            action: 'Deplace le focus et la surbrillance sur la commande precedente.',
+            context: 'Palette ouverte',
+        },
+        {
+            key: 'Enter',
+            action: 'Execute l action associee a la commande surlignee et referme la palette.',
+            context: 'Commande active',
+        },
+        {
+            key: 'Escape',
+            action: 'Ferme immediatement la palette de commandes et restaure le focus.',
+            context: 'Palette ouverte',
+        },
+        {
+            key: 'Tab',
+            action: 'Fait circuler le focus a l interieur du piege de focus du modal.',
+            context: 'Palette ouverte',
+        },
     ],
     a11y: [
         'The palette is presented as a modal dialog.',

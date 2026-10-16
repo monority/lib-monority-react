@@ -1,4 +1,6 @@
+import { FileUpload } from '@monority/ui/file-upload'
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
 import {
     FileUploadBasicExample,
     FileUploadWithActionExample,
@@ -13,6 +15,71 @@ import {
     FileListWithRemoveExample,
 } from './FileUpload.examples'
 
+const fileUploadPlayground = (
+    <ComponentPlayground<{
+        label: string
+        actionLabel: string
+        description: string
+        multiple: boolean
+        disabled: boolean
+    }>
+        componentName="FileUpload"
+        importCode="import { FileUpload } from '@monority/ui/file-upload'"
+        getCode={(p) => {
+            const props: string[] = []
+            if (p.label) props.push(`label="${p.label}"`)
+            if (p.actionLabel) props.push(`actionLabel="${p.actionLabel}"`)
+            if (p.description) props.push(`description="${p.description}"`)
+            if (p.multiple) props.push('multiple')
+            if (p.disabled) props.push('disabled')
+            return `import { FileUpload } from '@monority/ui/file-upload'\n\n<FileUpload\n  ${props.join('\n  ')}\n/>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle principal',
+                defaultValue: 'Fichiers joints',
+            },
+            {
+                name: 'actionLabel',
+                type: 'text',
+                label: 'Texte du bouton declencheur',
+                defaultValue: 'Selectionner un fichier',
+            },
+            {
+                name: 'description',
+                type: 'text',
+                label: 'Description d aide',
+                defaultValue: 'Glissez-deposez vos documents ou cliquez pour parcourir',
+            },
+            {
+                name: 'multiple',
+                type: 'boolean',
+                label: 'Fichiers multiples',
+                defaultValue: false,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => (
+            <div style={{ width: '100%', maxWidth: '28rem' }}>
+                <FileUpload
+                    label={props.label}
+                    actionLabel={props.actionLabel}
+                    description={props.description}
+                    multiple={props.multiple}
+                    disabled={props.disabled}
+                />
+            </div>
+        )}
+    />
+)
+
 const docData: DocPageData = {
     title: 'FileUpload',
     description:
@@ -20,6 +87,7 @@ const docData: DocPageData = {
     importCode: `import { FileUpload, FileTrigger, DropZone, FileList } from '@monority/ui/file-upload'`,
     usageCode: `<FileUpload label="Attachment" actionLabel="Choose a file" />`,
     preview: () => <FileUploadBasicExample />,
+    playground: fileUploadPlayground,
     examples: [
         {
             title: 'With action & description',
@@ -157,6 +225,28 @@ const docData: DocPageData = {
         '--mr-space-1',
         '--mr-space-2',
         '--mr-space-3',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Tab',
+            action: 'Fait entrer ou sortir le focus sur la zone de depot ou le bouton de selection.',
+            context: 'Navigation globale',
+        },
+        {
+            key: 'Enter',
+            action: 'Ouvre le selecteur de fichiers natif du systeme d exploitation.',
+            context: 'Declencheur actif',
+        },
+        {
+            key: 'Space',
+            action: 'Ouvre le selecteur de fichiers natif du systeme d exploitation.',
+            context: 'Declencheur actif',
+        },
+        {
+            key: 'Escape',
+            action: 'Annule la selection ou referme le selecteur natif.',
+            context: 'Dialogue systeme actif',
+        },
     ],
     a11y: [
         'Native file input and button semantics via FileTrigger.',
