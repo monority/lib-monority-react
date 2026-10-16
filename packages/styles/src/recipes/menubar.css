@@ -43,7 +43,7 @@
         color: var(--mr-text-primary);
         cursor: pointer;
         user-select: none;
-        transition: background-color var(--mr-duration-state) ease;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-menubar__trigger:hover:not(:disabled)),
@@ -52,7 +52,7 @@
     }
 
     :where(.mr-menubar__trigger:focus-visible) {
-        outline: 2px solid var(--mr-focus-ring);
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
         outline-offset: -2px;
     }
 
@@ -82,7 +82,7 @@
         display: flex;
         flex-direction: column;
         gap: 1px;
-        animation: mr-menubar-enter var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-menubar-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
     }
 
@@ -102,7 +102,7 @@
         text-align: start;
         cursor: pointer;
         gap: var(--mr-space-2);
-        transition: background-color var(--mr-duration-state) ease;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-menubar__item:hover:not(:disabled)) {
@@ -110,7 +110,7 @@
     }
 
     :where(.mr-menubar__item:focus-visible) {
-        outline: 2px solid var(--mr-focus-ring);
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
         outline-offset: -2px;
     }
 

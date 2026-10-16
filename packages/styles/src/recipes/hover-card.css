@@ -25,7 +25,7 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-primary);
         outline: none;
-        animation: mr-hovercard-enter var(--mr-duration-state) ease;
+        animation: mr-hovercard-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
     }
 

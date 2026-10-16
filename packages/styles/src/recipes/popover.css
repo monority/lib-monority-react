@@ -35,7 +35,7 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-primary);
         outline: none;
-        animation: mr-popover-enter var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
     }
 

@@ -41,7 +41,7 @@
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 45%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
-        animation: mr-fade-in var(--mr-duration-panel) ease;
+        animation: mr-fade-in var(--mr-duration-panel) var(--mr-ease-out);
     }
 
     @keyframes mr-sheet-enter-right {
@@ -163,41 +163,38 @@
 
     :where(.mr-sheet__panel)[data-side='right'] {
         border-inline-start: 1px solid var(--mr-border-default);
-        animation: mr-sheet-enter-right var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-sheet-enter-right var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-sheet__panel)[data-side='right'][data-closing] {
-        animation: mr-sheet-exit-right var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1)
-            forwards;
+        animation: mr-sheet-exit-right var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-sheet__panel)[data-side='left'] {
         border-inline-end: 1px solid var(--mr-border-default);
-        animation: mr-sheet-enter-left var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-sheet-enter-left var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-sheet__panel)[data-side='left'][data-closing] {
-        animation: mr-sheet-exit-left var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1)
-            forwards;
+        animation: mr-sheet-exit-left var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-sheet__panel)[data-side='top'] {
         border-block-end: 1px solid var(--mr-border-default);
-        animation: mr-sheet-enter-top var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-sheet-enter-top var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-sheet__panel)[data-side='top'][data-closing] {
-        animation: mr-sheet-exit-top var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation: mr-sheet-exit-top var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-sheet__panel)[data-side='bottom'] {
         border-block-start: 1px solid var(--mr-border-default);
-        animation: mr-sheet-enter-bottom var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-sheet-enter-bottom var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-sheet__panel)[data-side='bottom'][data-closing] {
-        animation: mr-sheet-exit-bottom var(--mr-duration-state) cubic-bezier(0.16, 1, 0.3, 1)
-            forwards;
+        animation: mr-sheet-exit-bottom var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-sheet__header) {

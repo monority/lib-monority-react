@@ -41,7 +41,7 @@
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
-        animation: mr-fade-in var(--mr-duration-panel) ease;
+        animation: mr-fade-in var(--mr-duration-panel) var(--mr-ease-out);
     }
 
     @keyframes mr-drawer-enter-right {
@@ -97,17 +97,17 @@
         gap: var(--mr-space-4);
         overflow-y: auto;
         outline: none;
-        transition: transform var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='right'] {
         border-inline-start: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-right var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-drawer-enter-right var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='left'] {
         border-inline-end: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-left var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-drawer-enter-left var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='top'] {
@@ -115,7 +115,7 @@
         block-size: auto;
         max-block-size: calc(var(--mr-size-container-sm) - var(--mr-space-6));
         border-block-end: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-top var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-drawer-enter-top var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='bottom'] {
@@ -123,7 +123,7 @@
         block-size: auto;
         max-block-size: calc(var(--mr-size-container-sm) - var(--mr-space-6));
         border-block-start: 1px solid var(--mr-border-default);
-        animation: mr-drawer-enter-bottom var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-drawer-enter-bottom var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='right'][data-closing] {

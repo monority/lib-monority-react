@@ -57,13 +57,22 @@
         --mr-state-active-mix: 24%;
         --mr-state-disabled-mix: 84%;
 
+        /* Courbes d'acceleration (mouvement naturel et reactif) */
+        --mr-ease-default: cubic-bezier(0.16, 1, 0.3, 1);
+        --mr-ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --mr-ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --mr-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+        --mr-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
         /* Mouvement : micro-interactions et boucles continues.
          * Regle : multiples de 50ms (ADR-021).
+         * instant : 100ms (2 x 50ms) pour les micro-etats tres rapides.
          * state : 150ms (3 x 50ms) pour les micro-interactions d'etat.
          * panel : 200ms (4 x 50ms) pour les surfaces coulissantes.
          * spin  : 800ms (16 x 50ms) pour la rotation d'attente.
          * pulse : 1200ms (24 x 50ms) pour l'oscillation de squelette.
          * loop  : 1500ms (30 x 50ms) pour le balayage de progression. */
+        --mr-duration-instant: 100ms;
         --mr-duration-state: 150ms;
         --mr-duration-panel: 200ms;
         --mr-duration-spin: 800ms;
@@ -182,6 +191,7 @@
      * face a la couche des tokens a specificite egale. */
     @media (prefers-reduced-motion: reduce) {
         :where(:root, [data-theme]) {
+            --mr-duration-instant: 0ms;
             --mr-duration-state: 0ms;
             --mr-duration-panel: 0ms;
             --mr-duration-spin: 1600ms;
@@ -210,6 +220,8 @@
 
         /* Focus : anneau sans doublon lie a accent-solid, reposant sur le canevas par outline-offset */
         --mr-focus-ring: var(--mr-accent-solid);
+        --mr-focus-ring-width: 2px;
+        --mr-focus-ring-offset: 2px;
 
         /* Controles interactifs / Boutons et saisies lies a l'accent */
         --mr-control-accent: var(--mr-accent-solid);

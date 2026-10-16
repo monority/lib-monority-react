@@ -333,7 +333,7 @@
         flex-direction: column;
         gap: 2px;
         user-select: none;
-        animation: mr-combobox-enter var(--mr-duration-state) ease;
+        animation: mr-combobox-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
         scrollbar-width: thin;
         scrollbar-color: var(--mr-border-default) transparent;

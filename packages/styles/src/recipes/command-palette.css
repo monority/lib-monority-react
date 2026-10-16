@@ -19,6 +19,7 @@
         padding: 0;
         gap: 0;
         outline: none;
+        animation: mr-modal-enter var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-command__layout) {
@@ -96,8 +97,8 @@
         color: var(--mr-text-primary);
         text-align: start;
         cursor: pointer;
-        transition: background-color var(--mr-duration-state) ease, color var(--mr-duration-state)
-            ease;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), color
+            var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-command__item.is-active),
@@ -169,5 +170,13 @@
         background-color: var(--mr-border-subtle);
         margin-block: var(--mr-space-1);
         margin-inline: calc(var(--mr-space-2) * -1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-modal.mr-command-palette) :where(.mr-modal__panel),
+        :where(.mr-command-palette__panel),
+        :where(.mr-command) {
+            animation: none;
+        }
     }
 }

@@ -94,7 +94,7 @@
         display: grid;
         grid-template-rows: 0fr;
         overflow: hidden;
-        transition: grid-template-rows var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        transition: grid-template-rows var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__panel) {
@@ -114,8 +114,8 @@
         font-size: var(--mr-font-size-md);
         opacity: 0;
         transform: translateY(calc(-1 * var(--mr-space-1)));
-        transition: opacity var(--mr-duration-panel) ease, transform var(--mr-duration-panel)
-            cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity var(--mr-duration-panel) var(--mr-ease-out), transform
+            var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__body) {

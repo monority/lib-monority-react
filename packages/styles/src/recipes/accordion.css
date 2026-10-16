@@ -106,7 +106,7 @@
         display: grid;
         grid-template-rows: 0fr;
         overflow: hidden;
-        transition: grid-template-rows var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        transition: grid-template-rows var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-accordion__panel)[hidden] {
@@ -131,8 +131,8 @@
         color: var(--mr-text-primary);
         opacity: 0;
         transform: translateY(calc(-1 * var(--mr-space-1)));
-        transition: opacity var(--mr-duration-panel) ease, transform var(--mr-duration-panel)
-            cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity var(--mr-duration-panel) var(--mr-ease-out), transform
+            var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-accordion__item)[data-open] :where(.mr-accordion__body) {

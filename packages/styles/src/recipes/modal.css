@@ -27,7 +27,7 @@
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
-        animation: mr-fade-in var(--mr-duration-state) ease;
+        animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
     }
 
     @keyframes mr-modal-enter {
@@ -59,7 +59,7 @@
         flex-direction: column;
         gap: var(--mr-space-4);
         outline: none;
-        animation: mr-modal-enter var(--mr-duration-panel) cubic-bezier(0.16, 1, 0.3, 1);
+        animation: mr-modal-enter var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     /* En-tete */

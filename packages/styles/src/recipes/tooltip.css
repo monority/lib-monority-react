@@ -14,8 +14,9 @@
         margin-block-end: var(--mr-space-1);
         opacity: 0;
         pointer-events: none;
-        transition: opacity var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms), transform
-            var(--mr-duration-state) ease var(--mr-tooltip-delay, 0ms);
+        transition: opacity var(--mr-duration-state) var(--mr-ease-default)
+            var(--mr-tooltip-delay, 0ms), transform var(--mr-duration-state) var(--mr-ease-default)
+            var(--mr-tooltip-delay, 0ms);
         z-index: var(--mr-z-tooltip);
         background-color: var(--mr-bg-inverse);
         color: var(--mr-text-on-inverse);
