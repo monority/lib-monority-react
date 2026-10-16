@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react'
 
+export type SelectOption = string | { value: string; label: string }
+
 export interface SelectControl {
     type: 'select'
     name: string
     label: string
-    options: string[]
+    options: SelectOption[]
     defaultValue: string
     description?: string
 }

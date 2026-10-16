@@ -1,5 +1,97 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { Modal } from '@monority/ui/modal'
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { ModalBasicExample, ModalWithFormExample, ModalScrollableExample } from './Modal.examples'
+
+function ModalPlaygroundDemo(props: {
+    title: string
+    description: string
+    confirmLabel: string
+}) {
+    const [open, setOpen] = useState(false)
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 'var(--mr-space-3)',
+            }}
+        >
+            <Button onClick={() => setOpen(true)} variant="primary">
+                Ouvrir la modale
+            </Button>
+            <Modal
+                open={open}
+                title={props.title}
+                description={props.description}
+                onClose={() => setOpen(false)}
+                footer={
+                    <div
+                        style={{
+                            display: 'flex',
+                            gap: 'var(--mr-space-2)',
+                            justifyContent: 'flex-end',
+                        }}
+                    >
+                        <Button variant="secondary" onClick={() => setOpen(false)}>
+                            Annuler
+                        </Button>
+                        <Button onClick={() => setOpen(false)}>{props.confirmLabel}</Button>
+                    </div>
+                }
+            >
+                <p
+                    style={{
+                        margin: 0,
+                        color: 'var(--mr-text-primary)',
+                        fontSize: 'var(--mr-font-size-sm)',
+                    }}
+                >
+                    Exemple de contenu interactif a l interieur du corps de la boite de dialogue
+                    modale.
+                </p>
+            </Modal>
+        </div>
+    )
+}
+
+const modalPlayground = (
+    <ComponentPlayground<{
+        title: string
+        description: string
+        confirmLabel: string
+    }>
+        componentName="Modal"
+        importCode="import { Modal } from '@monority/ui/modal'"
+        getCode={(p) => {
+            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { Modal } from '@monority/ui/modal'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)}>Ouvrir la modale</Button>\n  <Modal\n    open={open}\n    title="${p.title}"\n    description="${p.description}"\n    onClose={() => setOpen(false)}\n    footer={\n      <div style={{ display: 'flex', gap: 'var(--mr-space-2)', justifyContent: 'flex-end' }}>\n        <Button variant="secondary" onClick={() => setOpen(false)}>Annuler</Button>\n        <Button onClick={() => setOpen(false)}>${p.confirmLabel}</Button>\n      </div>\n    }\n  >\n    <p>Contenu principal du dialogue modale.</p>\n  </Modal>\n</>`
+        }}
+        controls={[
+            {
+                name: 'title',
+                type: 'text',
+                label: 'Titre du dialogue',
+                defaultValue: 'Validation de la publication',
+            },
+            {
+                name: 'description',
+                type: 'text',
+                label: 'Description du dialogue',
+                defaultValue: 'Verifiez les elements avant d enregistrer.',
+            },
+            {
+                name: 'confirmLabel',
+                type: 'text',
+                label: 'Bouton de confirmation',
+                defaultValue: 'Confirmer',
+            },
+        ]}
+        render={(props) => <ModalPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Modal',
@@ -23,6 +115,7 @@ return (
   </>
 )`,
     preview: () => <ModalBasicExample />,
+    playground: modalPlayground,
     examples: [
         { title: 'With form', content: <ModalWithFormExample /> },
         { title: 'Scrollable content', content: <ModalScrollableExample /> },
@@ -65,6 +158,23 @@ return (
         '--mr-border-subtle',
         '--mr-shadow-md',
         '--mr-radius-md',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Escape',
+            action: 'Ferme la boite de dialogue modale et restitue le focus a l element appelant.',
+            context: 'Modale ouverte',
+        },
+        {
+            key: 'Tab',
+            action: 'Fait circuler le focus entre les elements interactifs pieges dans la modale.',
+            context: 'Modale ouverte',
+        },
+        {
+            key: ['Shift', 'Tab'],
+            action: 'Fait circuler le focus en sens inverse dans la modale.',
+            context: 'Modale ouverte',
+        },
     ],
     a11y: [
         'The panel uses role="dialog" and aria-modal="true".',

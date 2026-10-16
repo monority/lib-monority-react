@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Select } from '@monority/ui/select'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SelectBasicExample,
@@ -8,6 +11,125 @@ import {
     SelectSizesExample,
     SelectWithHintExample,
 } from './Select.examples'
+
+function SelectPlaygroundDemo(props: {
+    size: 'sm' | 'md' | 'lg'
+    tone: 'neutral' | 'accent' | 'danger'
+    label: string
+    hint: string
+    disabled: boolean
+    loading: boolean
+    invalid: boolean
+}) {
+    const [val, setVal] = useState('prod-eu')
+    return (
+        <div style={{ width: '100%', maxWidth: '360px', margin: '0 auto' }}>
+            <Select
+                label={props.label}
+                hint={props.hint}
+                size={props.size}
+                tone={props.tone}
+                disabled={props.disabled}
+                loading={props.loading}
+                invalid={props.invalid}
+                value={val}
+                onChange={(e) => setVal(e.target.value)}
+            >
+                <option value="dev">Developpement local (dev)</option>
+                <option value="staging">Staging pre-production (stg)</option>
+                <option value="prod-eu">Production Europe (eu-west-1)</option>
+                <option value="prod-us">Production Americas (us-east-1)</option>
+            </Select>
+        </div>
+    )
+}
+
+const selectPlayground = (
+    <ComponentPlayground<{
+        size: 'sm' | 'md' | 'lg'
+        tone: 'neutral' | 'accent' | 'danger'
+        label: string
+        hint: string
+        disabled: boolean
+        loading: boolean
+        invalid: boolean
+    }>
+        componentName="Select"
+        importCode="import { Select } from '@monority/ui/select'"
+        getCode={(p) => {
+            const propsStr = [
+                `  label="${p.label}"`,
+                p.hint ? `  hint="${p.hint}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.disabled ? '  disabled' : '',
+                p.loading ? '  loading' : '',
+                p.invalid ? '  invalid' : '',
+                '  value={value}',
+                '  onChange={(e) => setValue(e.target.value)}',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Select } from '@monority/ui/select'\n\nconst [value, setValue] = useState('prod-eu')\n\n<Select\n${propsStr}\n>\n  <option value="dev">Developpement local (dev)</option>\n  <option value="staging">Staging pre-production (stg)</option>\n  <option value="prod-eu">Production Europe (eu-west-1)</option>\n  <option value="prod-us">Production Americas (us-east-1)</option>\n</Select>`
+        }}
+        controls={[
+            {
+                name: 'label',
+                type: 'text',
+                label: 'Libelle (label)',
+                defaultValue: 'Environnement cible',
+            },
+            {
+                name: 'hint',
+                type: 'text',
+                label: 'Indication (hint)',
+                defaultValue: 'Choisissez la zone de deploiement',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'neutral',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+            {
+                name: 'loading',
+                type: 'boolean',
+                label: 'Chargement (loading)',
+                defaultValue: false,
+            },
+            {
+                name: 'invalid',
+                type: 'boolean',
+                label: 'Invalide (invalid)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <SelectPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Select',
@@ -20,6 +142,7 @@ const docData: DocPageData = {
   <option value="option2">Option 2</option>
 </Select>`,
     preview: () => <SelectBasicExample />,
+    playground: selectPlayground,
     examples: [
         { title: 'With hint', content: <SelectWithHintExample /> },
         { title: 'Loading state', content: <SelectLoadingExample /> },
@@ -116,6 +239,28 @@ const docData: DocPageData = {
         '--mr-control-padding-inline-sm',
         '--mr-control-padding-inline-md',
         '--mr-control-padding-inline-lg',
+    ],
+    keyboardNavigation: [
+        {
+            key: ['Space', 'Enter'],
+            action: 'Ouvre le menu contextuel natif de selection des options.',
+            context: 'Select focalise',
+        },
+        {
+            key: ['ArrowDown', 'ArrowUp'],
+            action: 'Fait defiler les options disponibles et modifie la valeur selectionnee.',
+            context: 'Select focalise ou menu deroulant',
+        },
+        {
+            key: 'Tab',
+            action: 'Valide l option active et deplace le focus au champ suivant du formulaire.',
+            context: 'Select focalise',
+        },
+        {
+            key: 'Escape',
+            action: 'Referme la liste d options native sans modifier la selection.',
+            context: 'Menu d options ouvert',
+        },
     ],
     a11y: [
         'Native form element semantics.',

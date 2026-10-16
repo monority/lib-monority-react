@@ -1,5 +1,7 @@
 import {
+    cloneElement,
     createContext,
+    isValidElement,
     useCallback,
     useContext,
     useEffect,
@@ -244,17 +246,68 @@ export function DropdownMenu({
                     >
                         {trigger}
                     </button>
+                ) : isValidElement(trigger) ? (
+                    cloneElement(
+                        trigger as React.ReactElement<Record<string, unknown>>,
+                        {
+                            'data-mr-dropdown-trigger': 'true',
+                            'aria-expanded': isOpen,
+                            'aria-controls': `${instanceId}-content`,
+                            'aria-haspopup': 'menu',
+                            ref: (node: HTMLElement | null) => {
+                                triggerElementRef.current = node
+                                const childRef =
+                                    (trigger.props as { ref?: React.Ref<HTMLElement> })?.ref ??
+                                    (trigger as unknown as { ref?: React.Ref<HTMLElement> }).ref
+                                if (typeof childRef === 'function') childRef(node)
+                                else if (
+                                    childRef &&
+                                    typeof childRef === 'object' &&
+                                    'current' in childRef
+                                ) {
+                                    ;(
+                                        childRef as unknown as { current: HTMLElement | null }
+                                    ).current = node
+                                }
+                            },
+                            onClick: (e: React.MouseEvent<HTMLElement>) => {
+                                const childProps = (
+                                    trigger as React.ReactElement<Record<string, unknown>>
+                                ).props
+                                if (typeof childProps.onClick === 'function') {
+                                    ;(childProps.onClick as React.MouseEventHandler<HTMLElement>)(e)
+                                }
+                                triggerElementRef.current = e.currentTarget
+                                updatePosition()
+                                setOpenState(!isOpen)
+                            },
+                            onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
+                                const childProps = (
+                                    trigger as React.ReactElement<Record<string, unknown>>
+                                ).props
+                                if (typeof childProps.onKeyDown === 'function') {
+                                    ;(
+                                        childProps.onKeyDown as React.KeyboardEventHandler<HTMLElement>
+                                    )(e)
+                                }
+                                if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault()
+                                    updatePosition()
+                                    setOpenState(true)
+                                }
+                            },
+                        } as Record<string, unknown>
+                    )
                 ) : (
-                    <span
-                        className="mr-dropdown__anchor"
+                    <button
+                        type="button"
+                        className="mr-dropdown__trigger"
                         data-mr-dropdown-trigger="true"
                         aria-expanded={isOpen}
                         aria-controls={`${instanceId}-content`}
                         aria-haspopup="menu"
                         onClick={(e) => {
-                            triggerElementRef.current =
-                                (e.target as HTMLElement).closest('button, a, [tabindex]') ??
-                                e.currentTarget
+                            triggerElementRef.current = e.currentTarget
                             updatePosition()
                             setOpenState(!isOpen)
                         }}
@@ -267,7 +320,7 @@ export function DropdownMenu({
                         }}
                     >
                         {trigger}
-                    </span>
+                    </button>
                 )}
                 {isOpen && portalTarget
                     ? createPortal(

@@ -142,11 +142,17 @@ export function ComponentPlayground<T extends Record<string, unknown> = Record<s
                                                 handleValueChange(ctrl.name, e.target.value)
                                             }
                                         >
-                                            {ctrl.options.map((opt) => (
-                                                <option key={opt} value={opt}>
-                                                    {opt}
-                                                </option>
-                                            ))}
+                                            {ctrl.options.map((opt) => {
+                                                const optVal =
+                                                    typeof opt === 'string' ? opt : opt.value
+                                                const optLabel =
+                                                    typeof opt === 'string' ? opt : opt.label
+                                                return (
+                                                    <option key={optVal} value={optVal}>
+                                                        {optLabel}
+                                                    </option>
+                                                )
+                                            })}
                                         </select>
                                     </div>
                                 )

@@ -1,10 +1,102 @@
+import { useState } from 'react'
+import { Button } from '@monority/ui/button'
+import { AlertDialog } from '@monority/ui/alert-dialog'
 import { DocPage, type DocPageData } from '../DocPage'
+import { ComponentPlayground } from '../ComponentPlayground'
 import {
     AlertDialogBasicExample,
     AlertDialogDefaultToneExample,
     AlertDialogCustomLabelsExample,
     AlertDialogCompoundExample,
 } from './AlertDialog.examples'
+
+function AlertDialogPlaygroundDemo(props: {
+    tone: 'danger' | 'default'
+    title: string
+    description: string
+    confirmLabel: string
+    cancelLabel: string
+}) {
+    const [open, setOpen] = useState(false)
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 'var(--mr-space-3)',
+            }}
+        >
+            <Button
+                onClick={() => setOpen(true)}
+                variant={props.tone === 'danger' ? 'danger' : 'primary'}
+            >
+                Declencher l alerte
+            </Button>
+            <AlertDialog
+                open={open}
+                tone={props.tone}
+                title={props.title}
+                description={props.description}
+                confirmLabel={props.confirmLabel}
+                cancelLabel={props.cancelLabel}
+                onConfirm={() => setOpen(false)}
+                onCancel={() => setOpen(false)}
+            />
+        </div>
+    )
+}
+
+const alertDialogPlayground = (
+    <ComponentPlayground<{
+        tone: 'danger' | 'default'
+        title: string
+        description: string
+        confirmLabel: string
+        cancelLabel: string
+    }>
+        componentName="AlertDialog"
+        importCode="import { AlertDialog } from '@monority/ui/alert-dialog'"
+        getCode={(p) => {
+            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { AlertDialog } from '@monority/ui/alert-dialog'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)} variant="${p.tone === 'danger' ? 'danger' : 'primary'}">\n    Declencher l alerte\n  </Button>\n  <AlertDialog\n    open={open}\n    tone="${p.tone}"\n    title="${p.title}"\n    description="${p.description}"\n    confirmLabel="${p.confirmLabel}"\n    cancelLabel="${p.cancelLabel}"\n    onConfirm={() => setOpen(false)}\n    onCancel={() => setOpen(false)}\n  />\n</>`
+        }}
+        controls={[
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite',
+                options: ['danger', 'default'],
+                defaultValue: 'danger',
+            },
+            {
+                name: 'title',
+                type: 'text',
+                label: 'Titre de l alerte',
+                defaultValue: 'Supprimer cette ressource ?',
+            },
+            {
+                name: 'description',
+                type: 'text',
+                label: 'Description des consequences',
+                defaultValue:
+                    'Cette action est irreversible et supprimera definitivement les donnees.',
+            },
+            {
+                name: 'confirmLabel',
+                type: 'text',
+                label: 'Libelle de confirmation',
+                defaultValue: 'Supprimer',
+            },
+            {
+                name: 'cancelLabel',
+                type: 'text',
+                label: 'Libelle d annulation',
+                defaultValue: 'Annuler',
+            },
+        ]}
+        render={(props) => <AlertDialogPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'AlertDialog',
@@ -28,6 +120,7 @@ return (
   </>
 )`,
     preview: () => <AlertDialogBasicExample />,
+    playground: alertDialogPlayground,
     examples: [
         { title: 'Compound syntax', content: <AlertDialogCompoundExample /> },
         { title: 'Default tone', content: <AlertDialogDefaultToneExample /> },
@@ -93,6 +186,23 @@ return (
         '--mr-danger',
         '--mr-shadow-md',
         '--mr-radius-md',
+    ],
+    keyboardNavigation: [
+        {
+            key: 'Escape',
+            action: 'Annule l action et referme la boite d alerte sans appliquer de changement.',
+            context: 'Dialogue d alerte ouvert',
+        },
+        {
+            key: 'Tab',
+            action: 'Bascule le focus entre le bouton d annulation et le bouton de confirmation.',
+            context: 'Dialogue d alerte ouvert',
+        },
+        {
+            key: 'Enter',
+            action: 'Declenche le bouton actuellement actif sous le focus (Annulation ou Confirmation).',
+            context: 'Bouton d action actif',
+        },
     ],
     a11y: [
         'The panel uses role="alertdialog" with aria-modal="true".',

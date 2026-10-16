@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Tabs } from '@monority/ui/tabs'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     TabsBasicExample,
@@ -7,6 +10,121 @@ import {
     TabsFullWidthExample,
     TabsCompoundExample,
 } from './Tabs.examples'
+
+function TabsPlaygroundDemo(props: {
+    tone: 'neutral' | 'accent' | 'danger'
+    size: 'sm' | 'md' | 'lg'
+    fullWidth: boolean
+    disabled: boolean
+}) {
+    const [value, setValue] = useState('overview')
+    const items = [
+        { value: 'overview', label: 'Vue d ensemble' },
+        { value: 'deployments', label: 'Deploiements' },
+        { value: 'settings', label: 'Configuration' },
+    ]
+
+    return (
+        <div
+            style={{
+                width: '100%',
+                maxWidth: '520px',
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--mr-space-4)',
+            }}
+        >
+            <Tabs
+                items={items}
+                value={value}
+                onChange={setValue}
+                tone={props.tone}
+                size={props.size}
+                fullWidth={props.fullWidth}
+                disabled={props.disabled}
+                aria-label="Navigation du projet"
+            />
+            <div
+                style={{
+                    padding: 'var(--mr-space-4)',
+                    background: 'var(--mr-bg-surface-strong)',
+                    border: '1px solid var(--mr-border-subtle)',
+                    borderRadius: 'var(--mr-radius-md)',
+                    color: 'var(--mr-text-primary)',
+                    fontSize: 'var(--mr-font-size-sm)',
+                }}
+            >
+                Panneau actif : <strong>{value}</strong>
+            </div>
+        </div>
+    )
+}
+
+const tabsPlayground = (
+    <ComponentPlayground<{
+        tone: 'neutral' | 'accent' | 'danger'
+        size: 'sm' | 'md' | 'lg'
+        fullWidth: boolean
+        disabled: boolean
+    }>
+        componentName="Tabs"
+        importCode="import { Tabs } from '@monority/ui/tabs'"
+        getCode={(p) => {
+            const propsStr = [
+                `  items={[\n    { value: 'overview', label: 'Vue d ensemble' },\n    { value: 'deployments', label: 'Deploiements' },\n    { value: 'settings', label: 'Configuration' }\n  ]}`,
+                '  value={value}',
+                '  onChange={setValue}',
+                p.tone !== 'neutral' ? `  tone="${p.tone}"` : '',
+                p.size !== 'md' ? `  size="${p.size}"` : '',
+                p.fullWidth ? '  fullWidth' : '',
+                p.disabled ? '  disabled' : '',
+                '  aria-label="Navigation du projet"',
+            ]
+                .filter(Boolean)
+                .join('\n')
+
+            return `import { useState } from 'react'\nimport { Tabs } from '@monority/ui/tabs'\n\nconst [value, setValue] = useState('overview')\n\n<Tabs\n${propsStr}\n/>`
+        }}
+        controls={[
+            {
+                name: 'tone',
+                type: 'select',
+                label: 'Tonalite visuelle',
+                defaultValue: 'neutral',
+                options: [
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
+                ],
+            },
+            {
+                name: 'size',
+                type: 'select',
+                label: 'Dimension (size)',
+                defaultValue: 'md',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' },
+                ],
+            },
+            {
+                name: 'fullWidth',
+                type: 'boolean',
+                label: 'Pleine largeur (fullWidth)',
+                defaultValue: false,
+            },
+            {
+                name: 'disabled',
+                type: 'boolean',
+                label: 'Desactive (disabled)',
+                defaultValue: false,
+            },
+        ]}
+        render={(props) => <TabsPlaygroundDemo {...props} />}
+    />
+)
 
 const docData: DocPageData = {
     title: 'Tabs',
@@ -23,6 +141,7 @@ const docData: DocPageData = {
     <Tabs.Content value="activity">Activity panel...</Tabs.Content>
 </Tabs>`,
     preview: () => <TabsBasicExample />,
+    playground: tabsPlayground,
     examples: [
         { title: 'Compound syntax', content: <TabsCompoundExample /> },
         { title: 'Tones', content: <TabsTonesExample /> },
@@ -105,6 +224,33 @@ const docData: DocPageData = {
         '--mr-text-primary',
         '--mr-accent-solid',
         '--mr-danger',
+    ],
+    keyboardNavigation: [
+        {
+            key: ['ArrowRight', 'ArrowLeft'],
+            action: 'Deplace le focus horizontalement entre les onglets interactifs.',
+            context: 'Liste des onglets (tablist)',
+        },
+        {
+            key: 'Home',
+            action: 'Positionne le focus sur le premier onglet disponible.',
+            context: 'Liste des onglets (tablist)',
+        },
+        {
+            key: 'End',
+            action: 'Positionne le focus sur le dernier onglet disponible.',
+            context: 'Liste des onglets (tablist)',
+        },
+        {
+            key: ['Enter', 'Space'],
+            action: 'Active et selectionne l onglet focalise.',
+            context: 'Onglet cible',
+        },
+        {
+            key: 'Tab',
+            action: 'Passe le focus au panneau de contenu associe ou a l element interactif suivant.',
+            context: 'Onglet actif',
+        },
     ],
     a11y: [
         'Root uses role="tablist" with aria-label.',
