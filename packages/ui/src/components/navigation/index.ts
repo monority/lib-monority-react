@@ -72,7 +72,22 @@ export {
     type PaginationNextProps,
     type PaginationEllipsisProps,
 } from './pagination'
-export { SidebarLayout, type SidebarLayoutProps, type SidebarWidth } from './sidebar-layout'
+export {
+    SidebarLayout,
+    SidebarLayoutSidebar,
+    SidebarLayoutMain,
+    SidebarLayoutHeader,
+    SidebarLayoutContent,
+    SidebarLayoutToggle,
+    type SidebarLayoutProps,
+    type SidebarWidth,
+    type SidebarLayoutSidebarProps,
+    type SidebarLayoutMainProps,
+    type SidebarLayoutHeaderProps,
+    type SidebarLayoutContentProps,
+    type SidebarLayoutToggleProps,
+} from './sidebar-layout'
+
 export {
     Tabs,
     TabsList,

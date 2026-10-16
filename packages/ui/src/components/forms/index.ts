@@ -21,11 +21,24 @@ export {
 
 export {
     Combobox,
-    type ComboboxItem,
+    ComboboxInput,
+    ComboboxList,
+    ComboboxItem,
+    ComboboxItemLabel,
+    ComboboxItemDescription,
+    ComboboxEmpty,
+    type ComboboxItemData,
     type ComboboxProps,
     type ComboboxSize,
     type ComboboxTone,
+    type ComboboxInputProps,
+    type ComboboxListProps,
+    type ComboboxItemProps,
+    type ComboboxItemLabelProps,
+    type ComboboxItemDescriptionProps,
+    type ComboboxEmptyProps,
 } from './combobox'
+
 export {
     DatePicker,
     type DatePickerProps,

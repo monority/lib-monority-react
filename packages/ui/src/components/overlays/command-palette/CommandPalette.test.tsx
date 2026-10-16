@@ -133,4 +133,82 @@ describe('CommandPalette', () => {
         expect(ref.current?.tagName).toBe('DIV')
         expect(ref.current?.className).toContain('mr-modal')
     })
+
+    it('renders declarative compound subcomponents correctly', () => {
+        const onSelect = vi.fn()
+        const onClose = vi.fn()
+        render(
+            <CommandPalette open onClose={onClose}>
+                <CommandPalette.Header>
+                    <CommandPalette.Input placeholder="Search actions..." />
+                </CommandPalette.Header>
+                <CommandPalette.List>
+                    <CommandPalette.Group heading="Navigation">
+                        <CommandPalette.Item value="home" onSelect={onSelect}>
+                            <CommandPalette.ItemLabel>Go Home</CommandPalette.ItemLabel>
+                            <CommandPalette.ItemDescription>
+                                Main dashboard
+                            </CommandPalette.ItemDescription>
+                            <CommandPalette.Shortcut>Cmd+H</CommandPalette.Shortcut>
+                        </CommandPalette.Item>
+                    </CommandPalette.Group>
+                    <CommandPalette.Separator />
+                    <CommandPalette.Empty>No results</CommandPalette.Empty>
+                </CommandPalette.List>
+            </CommandPalette>
+        )
+
+        expect(document.body.querySelector('.mr-command__header')).not.toBeNull()
+        expect(document.body.querySelector('.mr-command__input')?.getAttribute('placeholder')).toBe(
+            'Search actions...'
+        )
+        expect(document.body.querySelector('.mr-command__group-heading')?.textContent).toBe(
+            'Navigation'
+        )
+        expect(document.body.querySelector('.mr-command__item-label')?.textContent).toBe('Go Home')
+        expect(document.body.querySelector('.mr-command__item-description')?.textContent).toBe(
+            'Main dashboard'
+        )
+        expect(document.body.querySelector('.mr-command__shortcut')?.textContent).toBe('Cmd+H')
+        expect(document.body.querySelector('.mr-command__separator')).not.toBeNull()
+        expect(document.body.querySelector('.mr-command__empty')?.textContent).toBe('No results')
+
+        const item = document.body.querySelector<HTMLButtonElement>('.mr-command__item')
+        act(() => {
+            item?.click()
+        })
+        expect(onSelect).toHaveBeenCalled()
+        expect(onClose).toHaveBeenCalled()
+    })
+
+    it('handles keyboard navigation with compound items', () => {
+        const onSelect = vi.fn()
+        render(
+            <CommandPalette open>
+                <CommandPalette.List>
+                    <CommandPalette.Item value="first">
+                        <CommandPalette.ItemLabel>First</CommandPalette.ItemLabel>
+                    </CommandPalette.Item>
+                    <CommandPalette.Item value="second" onSelect={onSelect}>
+                        <CommandPalette.ItemLabel>Second</CommandPalette.ItemLabel>
+                    </CommandPalette.Item>
+                </CommandPalette.List>
+            </CommandPalette>
+        )
+
+        const panel = document.body.querySelector('[role="dialog"]')
+        const items = document.body.querySelectorAll('.mr-command__item')
+        expect(items[0]?.getAttribute('aria-selected')).toBe('true')
+
+        act(() => {
+            panel?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }))
+        })
+        expect(items[0]?.getAttribute('aria-selected')).toBe('false')
+        expect(items[1]?.getAttribute('aria-selected')).toBe('true')
+
+        act(() => {
+            panel?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+        })
+        expect(onSelect).toHaveBeenCalled()
+    })
 })

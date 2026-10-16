@@ -1,6 +1,42 @@
 import { cn } from '@/lib/cn'
 import type { FileListProps } from './FileList.types'
 
+function FileIcon() {
+    return (
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+            <polyline points="14 2 14 8 20 8" />
+        </svg>
+    )
+}
+
+function RemoveIcon() {
+    return (
+        <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden="true"
+        >
+            <path d="M4 4l8 8M12 4l-8 8" />
+        </svg>
+    )
+}
+
 function formatSize(bytes?: number): string {
     if (bytes === undefined || bytes < 0) return ''
     if (bytes === 0) return '0 B'
@@ -25,7 +61,7 @@ export function FileList({
             {files.map((file, i) => (
                 <div key={`${file.name}-${i}`} className="mr-file-list__item" role="listitem">
                     <span className="mr-file-list__icon" aria-hidden="true">
-                        📄
+                        <FileIcon />
                     </span>
                     <div className="mr-file-list__info">
                         <span className="mr-file-list__name">{file.name}</span>
@@ -40,7 +76,7 @@ export function FileList({
                             className="mr-file-list__remove"
                             aria-label={`Remove ${file.name}`}
                         >
-                            ✕
+                            <RemoveIcon />
                         </button>
                     )}
                 </div>

@@ -193,4 +193,24 @@ describe('FileUpload', () => {
         const field = view.querySelector('.mr-file-upload-field')
         expect(field?.className).toContain('custom-class')
     })
+
+    it('renders and operates via compound subcomponents (FileUpload.DropZone, FileUpload.Trigger, FileUpload.List)', () => {
+        const onFilesChange = vi.fn()
+        const file = new File(['data'], 'compound.pdf', { type: 'application/pdf' })
+        const view = render(
+            <FileUpload label="Custom Compound" onFilesChange={onFilesChange}>
+                <FileUpload.DropZone>
+                    <FileUpload.Trigger>
+                        <span>Select Document</span>
+                    </FileUpload.Trigger>
+                </FileUpload.DropZone>
+                <FileUpload.List files={[file]} />
+            </FileUpload>
+        )
+
+        expect(view.querySelector('.mr-drop-zone')).not.toBeNull()
+        expect(view.querySelector('.mr-file-trigger')).not.toBeNull()
+        expect(view.textContent).toContain('Select Document')
+        expect(view.querySelector('.mr-file-list__name')?.textContent).toBe('compound.pdf')
+    })
 })

@@ -21,4 +21,5 @@ export interface FileUploadProps {
     files?: File[]
     onFilesChange?: (files: File[]) => void
     id?: string
+    children?: ReactNode
 }

@@ -183,7 +183,7 @@ const fileTriggerDoc: DocPageData = {
             title: 'Custom trigger',
             content: <FileTriggerCustomExample />,
             code: `<FileTrigger>
-  <span>📎 Upload document</span>
+  <span>Upload document</span>
 </FileTrigger>`,
         },
     ],

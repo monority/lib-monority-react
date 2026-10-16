@@ -41,8 +41,10 @@ describe('EmptyState', () => {
     })
 
     it('renders icon when provided', () => {
-        const view = render(<EmptyState title="Empty" icon={<span>📦</span>} />)
-        expect(view.querySelector('[aria-hidden="true"]')?.textContent).toBe('📦')
+        const view = render(
+            <EmptyState title="Empty" icon={<span data-testid="custom-icon">Icon</span>} />
+        )
+        expect(view.querySelector('[data-testid="custom-icon"]')?.textContent).toBe('Icon')
     })
 
     it('renders action buttons', () => {

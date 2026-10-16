@@ -1,7 +1,8 @@
 import { act, createRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import { SidebarLayout } from './SidebarLayout'
 
 let container: HTMLDivElement | null = null
@@ -83,6 +84,44 @@ describe('SidebarLayout', () => {
         const toggleBtn = view.querySelector('.mr-sidebar-layout__toggle') as HTMLButtonElement
         expect(toggleBtn).not.toBeNull()
         expect(view.querySelector('.mr-sidebar-layout')?.getAttribute('data-collapsed')).toBeNull()
+
+        act(() => {
+            toggleBtn.click()
+        })
+        expect(view.querySelector('.mr-sidebar-layout')?.getAttribute('data-collapsed')).toBe(
+            'true'
+        )
+        expect(onOpenChange).toHaveBeenCalledWith(false)
+    })
+
+    it('renders and operates via compound subcomponents (Sidebar, Main, Header, Toggle, Content)', () => {
+        const onOpenChange = vi.fn()
+        const view = render(
+            <SidebarLayout collapsible onOpenChange={onOpenChange}>
+                <SidebarLayout.Sidebar>
+                    <nav>Compound Nav</nav>
+                </SidebarLayout.Sidebar>
+                <SidebarLayout.Main>
+                    <SidebarLayout.Header>
+                        <SidebarLayout.Toggle />
+                        <span>Header Title</span>
+                    </SidebarLayout.Header>
+                    <SidebarLayout.Content>
+                        <p>Compound Content</p>
+                    </SidebarLayout.Content>
+                </SidebarLayout.Main>
+            </SidebarLayout>
+        )
+
+        expect(view.querySelector('aside')?.textContent).toBe('Compound Nav')
+        expect(view.querySelector('.mr-sidebar-layout__header')?.textContent).toContain(
+            'Header Title'
+        )
+        expect(view.querySelector('.mr-sidebar-layout__content')?.textContent).toBe(
+            'Compound Content'
+        )
+        const toggleBtn = view.querySelector('.mr-sidebar-layout__toggle') as HTMLButtonElement
+        expect(toggleBtn).not.toBeNull()
 
         act(() => {
             toggleBtn.click()

@@ -152,31 +152,35 @@ describe('Input', () => {
 
     it('renders iconLeading and sets data-has-leading-icon', () => {
         const view = render(
-            <Input id="with-lead" iconLeading={<span data-testid="lead-icon">🔍</span>} />
+            <Input id="with-lead" iconLeading={<span data-testid="lead-icon">Search</span>} />
         )
         const wrapper = view.querySelector('.mr-input__wrapper')
         const icon = view.querySelector('.mr-input__icon--leading')
         const input = view.querySelector('input')
         expect(wrapper).toBeTruthy()
-        expect(icon?.textContent).toBe('🔍')
+        expect(icon?.textContent).toBe('Search')
         expect(input?.hasAttribute('data-has-leading-icon')).toBe(true)
     })
 
     it('renders iconTrailing and sets data-has-trailing-icon', () => {
         const view = render(
-            <Input id="with-trail" iconTrailing={<span data-testid="trail-icon">✓</span>} />
+            <Input id="with-trail" iconTrailing={<span data-testid="trail-icon">Check</span>} />
         )
         const wrapper = view.querySelector('.mr-input__wrapper')
         const icon = view.querySelector('.mr-input__icon--trailing')
         const input = view.querySelector('input')
         expect(wrapper).toBeTruthy()
-        expect(icon?.textContent).toBe('✓')
+        expect(icon?.textContent).toBe('Check')
         expect(input?.hasAttribute('data-has-trailing-icon')).toBe(true)
     })
 
     it('renders both leading and trailing icons simultaneously', () => {
         const view = render(
-            <Input id="with-both" iconLeading={<span>🔍</span>} iconTrailing={<span>✕</span>} />
+            <Input
+                id="with-both"
+                iconLeading={<span>Search</span>}
+                iconTrailing={<span>Clear</span>}
+            />
         )
         const input = view.querySelector('input')
         expect(input?.hasAttribute('data-has-leading-icon')).toBe(true)

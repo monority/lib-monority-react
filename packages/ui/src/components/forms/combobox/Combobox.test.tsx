@@ -296,4 +296,24 @@ describe('Combobox', () => {
         const clearBtn = view.querySelector('.mr-combobox__clear')
         expect(clearBtn?.getAttribute('aria-label')).toBe('Réinitialiser le pays')
     })
+
+    it('renders and operates via compound subcomponents (Combobox.Input, Combobox.List, Combobox.Item)', () => {
+        const onChange = vi.fn()
+        const view = render(
+            <Combobox label="Custom Compound" onChange={onChange}>
+                <Combobox.Input placeholder="Select country..." />
+                <Combobox.List>
+                    <Combobox.Item value="ca" label="Canada">
+                        <Combobox.ItemLabel>Canada</Combobox.ItemLabel>
+                        <Combobox.ItemDescription>North America</Combobox.ItemDescription>
+                    </Combobox.Item>
+                    <Combobox.Empty>No country found</Combobox.Empty>
+                </Combobox.List>
+            </Combobox>
+        )
+
+        const input = view.querySelector('input') as HTMLInputElement
+        expect(input).not.toBeNull()
+        expect(input.placeholder).toBe('Select country...')
+    })
 })

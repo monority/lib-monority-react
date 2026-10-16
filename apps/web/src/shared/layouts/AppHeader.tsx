@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
     Badge,
+    Banner,
     CommandPalette,
     Popover,
     Separator,
@@ -11,6 +12,7 @@ import {
     type CommandItem,
     useTheme,
 } from '@monority/ui'
+
 import { docsComponentRegistry } from '@/features/docs/components/registry'
 import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
@@ -168,30 +170,30 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
         <>
             {showBanner && (
                 <div className="app-header__announcement">
-                    <div className="app-header__announcement-inner">
-                        <span className="app-header__announcement-badge">Vague 3</span>
-                        <span className="app-header__announcement-text">
-                            Calendar dynamique et architecture compound deployes (Calendar, Popover,
-                            HoverCard, Tooltip, Collapsible, Avatar, Carousel).
-                        </span>
-                        <button
-                            type="button"
-                            className="app-header__announcement-details-btn"
-                            onClick={() => setChangelogOpen(true)}
-                        >
-                            Voir le journal
-                        </button>
-                        <button
-                            type="button"
-                            className="app-header__announcement-close"
-                            onClick={() => setShowBanner(false)}
-                            aria-label="Fermer le journal des modifications temporaire"
-                        >
-                            &#10005;
-                        </button>
-                    </div>
+                    <Banner
+                        tone="accent"
+                        dismissible
+                        onDismiss={() => setShowBanner(false)}
+                        className="app-header__announcement-banner"
+                    >
+                        <Banner.Eyebrow>Vague 6</Banner.Eyebrow>
+                        <Banner.Description>
+                            Architecture compound étendue à CommandPalette, FileUpload,
+                            SidebarLayout et Combobox.
+                        </Banner.Description>
+                        <Banner.Actions>
+                            <button
+                                type="button"
+                                className="app-header__announcement-details-btn"
+                                onClick={() => setChangelogOpen(true)}
+                            >
+                                Voir le journal
+                            </button>
+                        </Banner.Actions>
+                    </Banner>
                 </div>
             )}
+
             <header
                 className={homeNav ? 'app-header app-header--home' : 'app-header'}
                 role="banner"
@@ -288,7 +290,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                             >
                                 <span className="app-header__changes-dot" aria-hidden="true" />
                                 <span className="app-header__changes-title">Log</span>
-                                <span className="app-header__changes-tag">V3</span>
+                                <span className="app-header__changes-tag">V6</span>
                             </Popover.Trigger>
                             <Popover.Content className="app-header__changes-popover">
                                 <Stack gap="sm">
@@ -297,7 +299,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                             Journal des modifications
                                         </Text.Strong>
                                         <Badge tone="accent" size="sm">
-                                            Vague 3
+                                            Vague 6
                                         </Badge>
                                     </Stack>
                                     <Separator />
@@ -306,32 +308,42 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                         style={{ maxHeight: '280px', overflowY: 'auto' }}
                                     >
                                         <Text.Small tone="strong">
+                                            Vague 6 — Composants avancés & Qualité :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • CommandPalette, FileUpload, SidebarLayout, Combobox
+                                            compound
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Composition déclarative et rétro-compatibilité totale
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Purge intégrale des emojis Unicode dans tout le dépôt
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • AppHeader : intégration Banner compound
+                                        </Text.Small>
+                                        <Separator />
+                                        <Text.Small tone="strong">
+                                            Vague 5 — Fenêtres modales & Tiroirs :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Modal, Dialog, Sheet, Drawer : architecture compound
+                                        </Text.Small>
+                                        <Separator />
+                                        <Text.Small tone="strong">
+                                            Vague 4 — Données & Collections :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Table, Tabs, Pagination : architecture compound
+                                        </Text.Small>
+                                        <Separator />
+                                        <Text.Small tone="strong">
                                             Vague 3 — Overlays & Dynamique :
                                         </Text.Small>
                                         <Text.Small tone="muted">
-                                            • Calendar : sélection directe et interactive du
-                                            mois/année
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Calendar : sous-composants Header, Pickers, NavButton,
-                                            Grid
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Popover, HoverCard, Tooltip : architecture compound
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Collapsible : architecture compound
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Avatar : sous-composants Image, Fallback, Status
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Carousel : sous-composants Content, Item, Previous,
-                                            Next, Dots
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Documentation : 100% primitives, zéro balise HTML
-                                            brute
+                                            • Calendar, Popover, HoverCard, Tooltip, Collapsible,
+                                            Avatar, Carousel compound
                                         </Text.Small>
                                         <Separator />
                                         <Text.Small tone="strong">

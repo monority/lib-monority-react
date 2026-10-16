@@ -10,7 +10,32 @@ export {
     type AlertDialogProps,
     type AlertDialogTone,
 } from './alert-dialog'
-export { CommandPalette, type CommandPaletteProps, type CommandItem } from './command-palette'
+export {
+    CommandPalette,
+    CommandPaletteHeader,
+    CommandPaletteInput,
+    CommandPaletteList,
+    CommandPaletteGroup,
+    CommandPaletteItem,
+    CommandPaletteItemLabel,
+    CommandPaletteItemDescription,
+    CommandPaletteShortcut,
+    CommandPaletteEmpty,
+    CommandPaletteSeparator,
+    type CommandPaletteProps,
+    type CommandItem,
+    type CommandPaletteHeaderProps,
+    type CommandPaletteInputProps,
+    type CommandPaletteListProps,
+    type CommandPaletteGroupProps,
+    type CommandPaletteItemProps,
+    type CommandPaletteItemLabelProps,
+    type CommandPaletteItemDescriptionProps,
+    type CommandPaletteShortcutProps,
+    type CommandPaletteEmptyProps,
+    type CommandPaletteSeparatorProps,
+} from './command-palette'
+
 export { Drawer, type DrawerProps, type DrawerSide } from './drawer'
 export {
     ContextMenu,

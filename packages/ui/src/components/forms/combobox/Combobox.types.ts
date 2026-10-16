@@ -1,4 +1,10 @@
-import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
+import type {
+    ButtonHTMLAttributes,
+    HTMLAttributes,
+    InputHTMLAttributes,
+    ReactNode,
+    Ref,
+} from 'react'
 
 export interface ComboboxItem {
     value: string
@@ -7,13 +13,15 @@ export interface ComboboxItem {
     keywords?: string
 }
 
+export type ComboboxItemData = ComboboxItem
+
 export type ComboboxTone = 'neutral' | 'accent' | 'danger'
 export type ComboboxSize = 'sm' | 'md' | 'lg'
 
 export interface ComboboxProps
     extends Omit<
         InputHTMLAttributes<HTMLInputElement>,
-        'type' | 'size' | 'onChange' | 'children' | 'defaultValue'
+        'type' | 'size' | 'onChange' | 'defaultValue'
     > {
     ref?: Ref<HTMLInputElement>
     tone?: ComboboxTone
@@ -32,4 +40,32 @@ export interface ComboboxProps
     clearable?: boolean
     clearAriaLabel?: string
     onClear?: () => void
+    children?: ReactNode
+}
+
+export interface ComboboxInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+    ref?: Ref<HTMLInputElement>
+}
+
+export interface ComboboxListProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+}
+
+export interface ComboboxItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    ref?: Ref<HTMLButtonElement>
+    value: string
+    label?: string
+    description?: string
+}
+
+export interface ComboboxItemLabelProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+}
+
+export interface ComboboxItemDescriptionProps extends HTMLAttributes<HTMLSpanElement> {
+    ref?: Ref<HTMLSpanElement>
+}
+
+export interface ComboboxEmptyProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
 }

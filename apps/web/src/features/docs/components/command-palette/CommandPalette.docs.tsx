@@ -1,6 +1,7 @@
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     CommandPaletteBasicExample,
+    CommandPaletteCompoundExample,
     CommandPaletteWithGroupsExample,
     CommandPaletteWithShortcutsExample,
 } from './CommandPalette.examples'
@@ -35,9 +36,41 @@ return (
 )`,
     preview: () => <CommandPaletteBasicExample />,
     examples: [
+        {
+            title: 'Compound composition',
+            content: <CommandPaletteCompoundExample />,
+            code: `<CommandPalette open={open} onClose={() => setOpen(false)}>
+  <CommandPalette.Header>
+    <CommandPalette.Input placeholder="Tapez une commande ou recherchez..." />
+  </CommandPalette.Header>
+  <CommandPalette.List>
+    <CommandPalette.Group heading="Navigation">
+      <CommandPalette.Item value="docs" onSelect={() => setOpen(false)}>
+        <CommandPalette.ItemLabel>Documentation</CommandPalette.ItemLabel>
+        <CommandPalette.ItemDescription>Consulter les guides et composants</CommandPalette.ItemDescription>
+        <CommandPalette.Shortcut>Ctrl+D</CommandPalette.Shortcut>
+      </CommandPalette.Item>
+      <CommandPalette.Item value="moodboard" onSelect={() => setOpen(false)}>
+        <CommandPalette.ItemLabel>Moodboard Studio</CommandPalette.ItemLabel>
+        <CommandPalette.ItemDescription>Personnalisation et thèmes</CommandPalette.ItemDescription>
+        <CommandPalette.Shortcut>Ctrl+M</CommandPalette.Shortcut>
+      </CommandPalette.Item>
+    </CommandPalette.Group>
+    <CommandPalette.Separator />
+    <CommandPalette.Group heading="Actions">
+      <CommandPalette.Item value="theme" onSelect={() => setOpen(false)}>
+        <CommandPalette.ItemLabel>Changer de thème</CommandPalette.ItemLabel>
+        <CommandPalette.ItemDescription>Bascule rapide entre thèmes clair et sombre</CommandPalette.ItemDescription>
+        <CommandPalette.Shortcut>Ctrl+T</CommandPalette.Shortcut>
+      </CommandPalette.Item>
+    </CommandPalette.Group>
+  </CommandPalette.List>
+</CommandPalette>`,
+        },
         { title: 'With groups', content: <CommandPaletteWithGroupsExample /> },
         { title: 'With shortcuts', content: <CommandPaletteWithShortcutsExample /> },
     ],
+
     props: [
         { name: 'open', type: `boolean`, defaultValue: '-', description: 'Controls open state.' },
         { name: 'onClose', type: `() => void`, defaultValue: '-', description: 'Close callback.' },

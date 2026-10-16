@@ -146,4 +146,28 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-secondary);
     }
+
+    :where(.mr-command__group) {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-block: var(--mr-space-1);
+    }
+
+    :where(.mr-command__group-heading) {
+        padding-inline: var(--mr-space-3);
+        padding-block: var(--mr-space-1);
+        font-size: var(--mr-font-size-xs);
+        font-weight: var(--mr-font-weight-semibold);
+        color: var(--mr-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: var(--mr-tracking-label);
+    }
+
+    :where(.mr-command__separator) {
+        block-size: 1px;
+        background-color: var(--mr-border-subtle);
+        margin-block: var(--mr-space-1);
+        margin-inline: calc(var(--mr-space-2) * -1);
+    }
 }

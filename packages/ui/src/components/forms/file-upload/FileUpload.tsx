@@ -1,11 +1,33 @@
 import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import { DropZone } from './DropZone'
 import { FileList } from './FileList'
 import { FileTrigger } from './FileTrigger'
-import type { FileUploadProps } from './FileUpload.types'
+import type { FileUploadProps, FileUploadSize } from './FileUpload.types'
+
+interface FileUploadContextValue {
+    files: File[]
+    updateFiles: (nextFiles: File[]) => void
+    handleRemove: (index: number) => void
+    disabled: boolean
+    resolvedId: string
+    resolvedSize: FileUploadSize
+    setInputRef: (node: HTMLInputElement | null) => void
+    handleZoneClick: (event: React.MouseEvent<HTMLDivElement>) => void
+    accept?: string | string[]
+    multiple?: boolean
+    name?: string
+    required?: boolean
+    invalid?: boolean
+}
+
+const FileUploadContext = createContext<FileUploadContextValue | null>(null)
+
+export function useFileUploadContext() {
+    return useContext(FileUploadContext)
+}
 
 export function FileUpload({
     ref,
@@ -26,6 +48,7 @@ export function FileUpload({
     description,
     files: controlledFiles,
     onFilesChange,
+    children,
 }: FileUploadProps) {
     const [internalFiles, setInternalFiles] = useState<File[]>([])
     const generatedId = useId()
@@ -80,70 +103,109 @@ export function FileUpload({
         [disabled]
     )
 
+    const contextValue: FileUploadContextValue = {
+        files,
+        updateFiles,
+        handleRemove,
+        disabled,
+        resolvedId,
+        resolvedSize,
+        setInputRef,
+        handleZoneClick,
+        accept,
+        multiple,
+        name,
+        required,
+        invalid,
+    }
+
     return (
-        <FormControl
-            id={resolvedId}
-            hint={hint != null}
-            error={error != null}
-            disabled={disabled}
-            required={required}
-            invalid={invalid || error != null}
-            size={resolvedSize}
-        >
-            <Field
-                className={cn('mr-file-upload-field', className)}
-                label={label}
-                labelId={`${resolvedId}-label`}
-                hint={hint}
-                error={error}
+        <FileUploadContext.Provider value={contextValue}>
+            <FormControl
+                id={resolvedId}
+                hint={hint != null}
+                error={error != null}
+                disabled={disabled}
+                required={required}
+                invalid={invalid || error != null}
+                size={resolvedSize}
             >
-                <DropZone
-                    accept={accept}
-                    multiple={multiple}
-                    disabled={disabled}
-                    onDrop={updateFiles}
-                    onClick={handleZoneClick}
-                    className="mr-file-upload__dropzone"
-                    data-size={resolvedSize}
+                <Field
+                    className={cn('mr-file-upload-field', className)}
+                    label={label}
+                    labelId={`${resolvedId}-label`}
+                    hint={hint}
+                    error={error}
                 >
-                    <div className="mr-file-upload__content">
-                        {description != null ? (
-                            <span className="mr-file-upload__description">{description}</span>
-                        ) : null}
-                        {placeholder != null && files.length === 0 ? (
-                            <span className="mr-file-upload__placeholder">{placeholder}</span>
-                        ) : null}
-                        <FileTrigger
-                            ref={setInputRef}
-                            id={resolvedId}
-                            aria-labelledby={label != null ? `${resolvedId}-label` : undefined}
-                            accept={accept}
-                            multiple={multiple}
-                            disabled={disabled}
-                            required={required && files.length === 0}
-                            invalid={invalid || error != null}
-                            name={name}
-                            onSelect={updateFiles}
-                        >
-                            {actionLabel != null ? (
-                                <span className="mr-file-upload__action">{actionLabel}</span>
-                            ) : (
-                                <span className="mr-file-upload__default-action">Choose files</span>
-                            )}
-                        </FileTrigger>
-                    </div>
-                </DropZone>
-                {files.length > 0 ? (
-                    <FileList
-                        files={files}
-                        onRemove={handleRemove}
-                        disabled={disabled}
-                        className="mr-file-upload__files"
-                    />
-                ) : null}
-            </Field>
-        </FormControl>
+                    {children ? (
+                        children
+                    ) : (
+                        <>
+                            <DropZone
+                                accept={accept}
+                                multiple={multiple}
+                                disabled={disabled}
+                                onDrop={updateFiles}
+                                onClick={handleZoneClick}
+                                className="mr-file-upload__dropzone"
+                                data-size={resolvedSize}
+                            >
+                                <div className="mr-file-upload__content">
+                                    {description != null ? (
+                                        <span className="mr-file-upload__description">
+                                            {description}
+                                        </span>
+                                    ) : null}
+                                    {placeholder != null && files.length === 0 ? (
+                                        <span className="mr-file-upload__placeholder">
+                                            {placeholder}
+                                        </span>
+                                    ) : null}
+                                    <FileTrigger
+                                        ref={setInputRef}
+                                        id={resolvedId}
+                                        aria-labelledby={
+                                            label != null ? `${resolvedId}-label` : undefined
+                                        }
+                                        accept={accept}
+                                        multiple={multiple}
+                                        disabled={disabled}
+                                        required={required && files.length === 0}
+                                        invalid={invalid || error != null}
+                                        name={name}
+                                        onSelect={updateFiles}
+                                    >
+                                        {actionLabel != null ? (
+                                            <span className="mr-file-upload__action">
+                                                {actionLabel}
+                                            </span>
+                                        ) : (
+                                            <span className="mr-file-upload__default-action">
+                                                Choose files
+                                            </span>
+                                        )}
+                                    </FileTrigger>
+                                </div>
+                            </DropZone>
+                            {files.length > 0 ? (
+                                <FileList
+                                    files={files}
+                                    onRemove={handleRemove}
+                                    disabled={disabled}
+                                    className="mr-file-upload__files"
+                                />
+                            ) : null}
+                        </>
+                    )}
+                </Field>
+            </FormControl>
+        </FileUploadContext.Provider>
     )
 }
 
+FileUpload.DropZone = DropZone
+FileUpload.Trigger = FileTrigger
+FileUpload.List = FileList
+
+export { DropZone, FileTrigger, FileList }
 export type { FileUploadProps, FileUploadSize } from './FileUpload.types'
