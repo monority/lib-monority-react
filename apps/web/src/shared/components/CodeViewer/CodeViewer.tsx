@@ -1,6 +1,6 @@
 import type { Ref } from 'react'
 import { CopyButton } from '@monority/ui/copy-button'
-import { DocsCodeBlock } from '@/features/docs/components/DocsCodeBlock'
+import { CodeBlock } from './CodeBlock'
 import './CodeViewer.css'
 
 export interface CodeViewerProps {
@@ -33,7 +33,7 @@ export function CodeViewer({
                 />
             </div>
             <div className="code-viewer__body">
-                <DocsCodeBlock language={language}>{code}</DocsCodeBlock>
+                <CodeBlock language={language}>{code}</CodeBlock>
             </div>
         </div>
     )

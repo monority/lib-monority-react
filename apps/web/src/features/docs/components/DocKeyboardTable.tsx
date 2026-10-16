@@ -29,7 +29,7 @@ const keyboardColumns: Column<KeyboardShortcutRow>[] = [
                     }}
                 >
                     {keys.map((k, idx) => (
-                        <Kbd key={idx} size="sm">
+                        <Kbd key={`${k}-${idx}`} size="sm">
                             {k}
                         </Kbd>
                     ))}
