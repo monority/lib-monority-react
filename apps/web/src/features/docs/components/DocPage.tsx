@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react'
 import { HeroHeader } from '@/shared/components/HeroHeader'
-import { PreviewCanvas } from '@/shared/components/PreviewCanvas'
-import { CodeViewer } from '@/shared/components/CodeViewer'
 import { ComponentPlayground } from './ComponentPlayground'
 import type { DocPlaygroundConfig } from './ComponentPlayground/ComponentPlayground.types'
 import { DocContainer } from './DocContainer'
@@ -43,10 +41,6 @@ export interface DocPageData {
 
 export function DocPage({ doc }: { doc: DocPageData }) {
     const Preview = doc.preview
-    const fullCode = doc.importCode
-        ? `${doc.importCode}\n${doc.usageCode || ''}`
-        : doc.usageCode || ''
-    const previewLabel = doc.previewLabel ?? `${doc.title.toLowerCase().replace(/\s+/g, '-')}.tsx`
 
     return (
         <DocContainer className="docs-page">
@@ -68,16 +62,9 @@ export function DocPage({ doc }: { doc: DocPageData }) {
                     />
                 ) : doc.playground ? (
                     doc.playground
-                ) : (
-                    <div className="docs-preview-stack docs-preview-card">
-                        <PreviewCanvas label={previewLabel} padding="none">
-                            <div className="docs-preview-area docs-preview-content">
-                                <Preview />
-                            </div>
-                        </PreviewCanvas>
-                        {fullCode ? <CodeViewer code={fullCode} filename="index.tsx" /> : null}
-                    </div>
-                )}
+                ) : Preview ? (
+                    <Preview />
+                ) : null}
             </DocSection>
 
             {doc.examples && doc.examples.length > 0 && (
