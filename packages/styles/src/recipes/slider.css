@@ -89,8 +89,9 @@
         box-shadow: 0 0 0 1px var(--mr-border-control);
         cursor: pointer;
         margin-top: calc((var(--mr-space-1) - var(--mr-space-4)) / 2);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
-            transform var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring);
     }
 
     /* Pouce manipulateur Firefox */
@@ -103,8 +104,26 @@
         border: 2px solid var(--mr-bg-canvas);
         box-shadow: 0 0 0 1px var(--mr-border-control);
         cursor: pointer;
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
-            transform var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring);
+    }
+
+    /* Effet tactile au survol et a l'appui sur le pouce */
+    :where(.mr-slider:hover:not(:disabled, [data-disabled]))::-webkit-slider-thumb {
+        transform: scale(1.1);
+    }
+
+    :where(.mr-slider:hover:not(:disabled, [data-disabled]))::-moz-range-thumb {
+        transform: scale(1.1);
+    }
+
+    :where(.mr-slider:active:not(:disabled, [data-disabled]))::-webkit-slider-thumb {
+        transform: scale(1.18);
+    }
+
+    :where(.mr-slider:active:not(:disabled, [data-disabled]))::-moz-range-thumb {
+        transform: scale(1.18);
     }
 
     /* Taille sm : pouce 14px, zone interactive 20px */

@@ -313,4 +313,27 @@
             opacity: 1;
         }
     }
+
+    /* Notifications toast (entree et sortie) */
+    @keyframes mr-toast-enter {
+        from {
+            opacity: 0;
+            transform: translateY(var(--mr-space-2)) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes mr-toast-exit {
+        from {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(var(--mr-space-2)) scale(0.96);
+        }
+    }
 }

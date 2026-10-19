@@ -72,8 +72,9 @@
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
         background-color: color-mix(in oklch, var(--mr-bg-sunken), var(--mr-text-primary) 8%);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
-            transform var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring);
     }
 
     /* Effet tactile a l'appui */
@@ -92,9 +93,9 @@
         background-color: var(--mr-switch-thumb-off);
         box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 20%, transparent);
         transform: translateX(0);
-        transition: transform var(--mr-duration-state) var(--mr-ease-default), background-color
-            var(--mr-duration-state), border-color var(--mr-duration-state), box-shadow
-            var(--mr-duration-state);
+        transition: transform var(--mr-duration-state) var(--mr-ease-spring), background-color
+            var(--mr-duration-state) var(--mr-ease-out), border-color var(--mr-duration-state)
+            var(--mr-ease-out), box-shadow var(--mr-duration-state) var(--mr-ease-out);
     }
 
     /* Taille sm : piste 36px x 20px, pouce 16px */

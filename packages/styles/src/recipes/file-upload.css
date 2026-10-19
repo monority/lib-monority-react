@@ -32,7 +32,9 @@
         border-radius: var(--mr-radius-lg);
         cursor: pointer;
         user-select: none;
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-state)
+            var(--mr-ease-spring);
     }
 
     /* Tailles de la zone de depot */
@@ -73,6 +75,7 @@
         background-color: var(--mr-bg-raised);
         border-color: var(--mr-text-primary);
         border-style: solid;
+        transform: scale(1.01);
     }
 
     /* Focus visible sur la zone */
@@ -196,6 +199,7 @@
         background-color: var(--mr-bg-raised);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
+        animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-file-list__icon) {

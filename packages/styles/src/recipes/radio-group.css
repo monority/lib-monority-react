@@ -70,8 +70,9 @@
         border: 1px solid var(--mr-border-control);
         border-radius: 50%;
         background-color: var(--mr-bg-sunken);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
-            transform var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring);
     }
 
     /* Effet tactile a l'appui */
@@ -95,8 +96,9 @@
         background-color: var(--mr-control-accent, var(--mr-bg-inverse));
         opacity: 0;
         transform: scale(0.4);
-        transition: opacity var(--mr-duration-state), transform var(--mr-duration-state),
-            background-color var(--mr-duration-state);
+        transition: opacity var(--mr-duration-state) var(--mr-ease-out), transform
+            var(--mr-duration-state) var(--mr-ease-spring), background-color
+            var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-radio-group[data-size='lg']) :where(.mr-radio__dot) {

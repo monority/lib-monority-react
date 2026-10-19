@@ -67,8 +67,9 @@
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-sm);
         background-color: var(--mr-bg-sunken);
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
-            transform var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring);
     }
 
     /* Effet tactile a l'appui */
@@ -87,7 +88,8 @@
         border-block-end: 2px solid var(--mr-text-on-inverse);
         transform: translateY(-10%) rotate(45deg) scale(0.6);
         opacity: 0;
-        transition: opacity var(--mr-duration-state), transform var(--mr-duration-state);
+        transition: opacity var(--mr-duration-state) var(--mr-ease-out), transform
+            var(--mr-duration-state) var(--mr-ease-spring);
     }
 
     /* Taille sm : typographie 12px, boite 16px */
