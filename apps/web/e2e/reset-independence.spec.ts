@@ -125,7 +125,8 @@ async function collectStyles(page: Page, url: string, withoutReset: boolean) {
     return styles
 }
 
-test.beforeEach((_, testInfo) => {
+// biome-ignore lint/correctness/noEmptyPattern: Playwright requires object destructuring for first argument
+test.beforeEach(({}, testInfo) => {
     test.skip(
         testInfo.project.name !== 'desktop',
         'comparaison de styles calculés : desktop uniquement'
