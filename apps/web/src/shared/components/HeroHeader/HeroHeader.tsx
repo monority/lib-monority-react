@@ -1,5 +1,5 @@
-import type { ReactNode, Ref } from 'react'
 import { PageHeader } from '@monority/ui/page-header'
+import type { ReactNode, Ref } from 'react'
 import './HeroHeader.css'
 
 export interface HeroHeaderProps {

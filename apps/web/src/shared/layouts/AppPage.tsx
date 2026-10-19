@@ -1,6 +1,6 @@
-import { AppShell } from './AppShell'
-import { usePageSeo, type UsePageSeoOptions } from '@/shared/seo/usePageSeo'
+import { type UsePageSeoOptions, usePageSeo } from '@/shared/seo/usePageSeo'
 import { Container, Stack } from '@monority/ui'
+import { AppShell } from './AppShell'
 
 interface AppPageProps {
     seo?: UsePageSeoOptions

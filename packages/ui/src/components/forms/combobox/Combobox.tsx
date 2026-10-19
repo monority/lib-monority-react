@@ -1,3 +1,10 @@
+import { Spinner } from '@/components/feedback/spinner/Spinner'
+import { Field } from '@/components/forms/field/Field'
+import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
+import { OVERLAY_OFFSET } from '@/lib/constants'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
 import {
     createContext,
     useCallback,
@@ -9,13 +16,6 @@ import {
     useState,
 } from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
-import { OVERLAY_OFFSET } from '@/lib/constants'
-import { Field } from '@/components/forms/field/Field'
-import { FormControl } from '@/primitives/form-control'
-import { InputBase } from '@/primitives/input-base'
-import { Spinner } from '@/components/feedback/spinner/Spinner'
-import { usePortalTarget } from '@/internal/use-portal-target'
 import type {
     ComboboxEmptyProps,
     ComboboxInputProps,

@@ -1,7 +1,7 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Kbd } from '@monority/ui/kbd'
-import { KbdBasicExample, KbdKeysExample, KbdSizesExample } from './Kbd.examples'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
+import { KbdKeysExample, KbdSizesExample } from './Kbd.examples'
 
 function KbdPlayground() {
     return (

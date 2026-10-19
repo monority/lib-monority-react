@@ -1,5 +1,5 @@
-import type { HTMLAttributes, ReactNode, Ref } from 'react'
 import type { ButtonProps } from '@/components/actions/button/Button.types'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export type AlertDialogTone = 'default' | 'danger'
 

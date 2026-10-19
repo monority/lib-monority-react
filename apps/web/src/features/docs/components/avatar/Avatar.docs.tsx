@@ -1,13 +1,8 @@
-import { useState } from 'react'
 import { Avatar } from '@monority/ui/avatar'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    AvatarBasicExample,
-    AvatarGroupExample,
-    AvatarSizesExample,
-    AvatarWithImageExample,
-} from './Avatar.examples'
+import { AvatarGroupExample, AvatarSizesExample, AvatarWithImageExample } from './Avatar.examples'
 
 function AvatarPlayground() {
     const [size, setSize] = useState<'sm' | 'md' | 'lg'>('md')

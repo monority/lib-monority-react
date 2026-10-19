@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react'
 import { Badge } from '@monority/ui/badge'
 import { DataTable } from '@monority/ui/data-table'
+import type { ReactNode } from 'react'
 
 const columns = [
     { key: 'issue', header: 'Issue', sortable: true },

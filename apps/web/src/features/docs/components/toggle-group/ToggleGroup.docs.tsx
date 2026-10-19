@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { ToggleGroup } from '@monority/ui/toggle-group'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    ToggleGroupSinglePreview,
-    ToggleGroupMultipleExample,
     ToggleGroupDisabledExample,
-    ToggleGroupVerticalExample,
-    ToggleGroupVariantsExample,
+    ToggleGroupMultipleExample,
+    ToggleGroupSinglePreview,
     ToggleGroupSizesExample,
+    ToggleGroupVariantsExample,
+    ToggleGroupVerticalExample,
 } from './ToggleGroup.examples'
 
 function ToggleGroupPlaygroundDemo(props: {

@@ -1,7 +1,7 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Title, type TitleSize } from '@monority/ui/title'
-import { TitleBasicExample, TitleLevelsExample, TitleSizesExample } from './Title.examples'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
+import { TitleLevelsExample, TitleSizesExample } from './Title.examples'
 
 function TitlePlayground() {
     return (

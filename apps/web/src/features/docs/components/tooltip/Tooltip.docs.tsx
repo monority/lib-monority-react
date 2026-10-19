@@ -1,13 +1,9 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Tooltip } from '@monority/ui/tooltip'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    TooltipBasicExample,
-    TooltipOnIconButtonExample,
-    TooltipWithRichContentExample,
-} from './Tooltip.examples'
+import { TooltipOnIconButtonExample, TooltipWithRichContentExample } from './Tooltip.examples'
 
 function TooltipPlayground() {
     const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('top')

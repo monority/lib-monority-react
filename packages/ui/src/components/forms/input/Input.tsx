@@ -1,8 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
+import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { Field } from '@/components/forms/field/Field'
+import { useCallback, useRef, useState } from 'react'
 import type { InputProps } from './Input.types'
 
 const EyeIcon = () => (

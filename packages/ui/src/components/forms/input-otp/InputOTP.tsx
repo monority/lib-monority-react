@@ -1,15 +1,5 @@
-import {
-    createContext,
-    useContext,
-    useId,
-    useRef,
-    useState,
-    type ChangeEvent,
-    type ClipboardEvent,
-    type FocusEvent,
-    type KeyboardEvent,
-} from 'react'
 import { cn } from '@/lib/cn'
+import { type ClipboardEvent, createContext, useContext, useId, useRef, useState } from 'react'
 import type {
     InputOTPGroupProps,
     InputOTPProps,
@@ -88,11 +78,11 @@ export function InputOTP({
         updateValue(pastedData)
     }
 
-    function handleFocus(e: FocusEvent<HTMLInputElement>) {
+    function handleFocus() {
         setFocused(true)
     }
 
-    function handleBlur(e: FocusEvent<HTMLInputElement>) {
+    function handleBlur() {
         setFocused(false)
     }
 

@@ -1,18 +1,18 @@
 import { FileUpload } from '@monority/ui/file-upload'
-import { DocPage, type DocPageData } from '../DocPage'
 import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    FileUploadBasicExample,
-    FileUploadWithActionExample,
-    FileUploadWithErrorExample,
-    FileUploadMultipleExample,
-    FileUploadDisabledExample,
-    FileTriggerDefaultExample,
-    FileTriggerCustomExample,
     DropZoneBasicExample,
     DropZoneWithHandlerExample,
     FileListBasicExample,
     FileListWithRemoveExample,
+    FileTriggerCustomExample,
+    FileTriggerDefaultExample,
+    FileUploadBasicExample,
+    FileUploadDisabledExample,
+    FileUploadMultipleExample,
+    FileUploadWithActionExample,
+    FileUploadWithErrorExample,
 } from './FileUpload.examples'
 
 const fileUploadPlayground = (

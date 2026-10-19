@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import { Timeline, type TimelineItemData } from '@monority/ui/timeline'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    TimelineBasicExample,
-    TimelineCompoundExample,
-    TimelineHorizontalExample,
-} from './Timeline.examples'
+import { TimelineCompoundExample, TimelineHorizontalExample } from './Timeline.examples'
 
 function TimelinePlayground() {
     const [orientation, setOrientation] = useState<'vertical' | 'horizontal'>('vertical')

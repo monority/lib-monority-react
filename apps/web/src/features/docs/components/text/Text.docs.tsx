@@ -1,12 +1,7 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Text, type TextSize, type TextTone } from '@monority/ui/text'
-import {
-    TextBasicExample,
-    TextTonesExample,
-    TextSizesExample,
-    TextAsExample,
-} from './Text.examples'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
+import { TextAsExample, TextSizesExample, TextTonesExample } from './Text.examples'
 
 function TextPlayground() {
     return (

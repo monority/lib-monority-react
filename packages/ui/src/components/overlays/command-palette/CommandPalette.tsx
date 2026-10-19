@@ -1,3 +1,9 @@
+import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
+import { useFocusTrap } from '@/internal/use-focus-trap'
+import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
+import { cva } from '@/lib/variants'
+import { InputBase } from '@/primitives/input-base'
 import {
     createContext,
     useCallback,
@@ -9,14 +15,7 @@ import {
     useState,
 } from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
-import { cva } from '@/lib/variants'
-import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
-import { useFocusTrap } from '@/internal/use-focus-trap'
-import { usePortalTarget } from '@/internal/use-portal-target'
-import { InputBase } from '@/primitives/input-base'
 import type {
-    CommandItem,
     CommandPaletteEmptyProps,
     CommandPaletteGroupProps,
     CommandPaletteHeaderProps,
@@ -383,13 +382,10 @@ function CommandPaletteItem({
         }
     }, [panelRef, setActiveIndex])
 
-    const handleClick = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
-            onSelect?.()
-            closePalette()
-        },
-        [onSelect, closePalette]
-    )
+    const handleClick = useCallback(() => {
+        onSelect?.()
+        closePalette()
+    }, [onSelect, closePalette])
 
     const setNode = useCallback(
         (node: HTMLButtonElement | null) => {

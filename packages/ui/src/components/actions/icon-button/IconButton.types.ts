@@ -1,5 +1,5 @@
-import type { ButtonProps } from '../button/Button.types'
 import type { ReactNode } from 'react'
+import type { ButtonProps } from '../button/Button.types'
 
 export type IconButtonSize = ButtonProps['size']
 export type IconButtonTone = 'neutral' | 'accent' | 'danger'

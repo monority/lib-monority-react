@@ -1,14 +1,13 @@
-import { useState } from 'react'
 import { StatCard } from '@monority/ui/stat-card'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    StatCardBasicExample,
-    StatCardTonesExample,
-    StatCardWithIconExample,
-    StatCardWithFooterExample,
-    StatCardLongTextExample,
     StatCardCompoundExample,
+    StatCardLongTextExample,
+    StatCardTonesExample,
+    StatCardWithFooterExample,
+    StatCardWithIconExample,
 } from './StatCard.examples'
 
 function StatCardPlayground() {

@@ -1,5 +1,5 @@
-import { createElement } from 'react'
 import { cn } from '@/lib/cn'
+import { createElement } from 'react'
 import type { TitleProps } from './Title.types'
 
 export function Title({ as = 'h2', size = 'md', className, children, ref, ...props }: TitleProps) {

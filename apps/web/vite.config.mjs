@@ -1,8 +1,8 @@
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
 import fs from 'node:fs'
-import { defineConfig, normalizePath } from 'vite'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
+import { defineConfig, normalizePath } from 'vite'
 /* Exception documentée à la frontière inter-packages (gardée par
  * src/package-boundary.test.ts) : ce fichier de configuration est évalué par
  * Node AVANT tout build, et `turbo dev` ne déclare pas `dependsOn: ["^build"]`.
@@ -91,5 +91,21 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         sourcemap: true,
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (
+                        id.includes('node_modules/react/') ||
+                        id.includes('node_modules/react-dom/') ||
+                        id.includes('node_modules/react-router-dom/')
+                    ) {
+                        return 'vendor-react'
+                    }
+                    if (id.includes('node_modules/highlight.js/')) {
+                        return 'vendor-syntax'
+                    }
+                },
+            },
+        },
     },
 })

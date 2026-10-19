@@ -1,5 +1,5 @@
-import { useRef, useEffect, useCallback, useState, type RefObject } from 'react'
 import { cn } from '@/lib/cn'
+import { type RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import type { InfiniteScrollProps } from './InfiniteScroll.types'
 
 function useIntersectionObserver(

@@ -1,5 +1,5 @@
-import { createContext } from 'react'
 import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '@/lib/constants'
+import { createContext } from 'react'
 
 export interface ThemeContextValue {
     theme: ThemePreference

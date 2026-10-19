@@ -1,3 +1,5 @@
+import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
 import {
     createContext,
     useCallback,
@@ -8,10 +10,8 @@ import {
     useRef,
     useState,
 } from 'react'
-import type { MouseEvent as ReactMouseEvent, MutableRefObject } from 'react'
+import type { MutableRefObject, MouseEvent as ReactMouseEvent } from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
-import { usePortalTarget } from '@/internal/use-portal-target'
 import type {
     ContextMenuContentProps,
     ContextMenuItem,

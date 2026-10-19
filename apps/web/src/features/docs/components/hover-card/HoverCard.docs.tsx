@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { HoverCard } from '@monority/ui/hover-card'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    HoverCardBasicExample,
     HoverCardControlledExample,
     HoverCardCustomDelayExample,
     HoverCardSidesExample,

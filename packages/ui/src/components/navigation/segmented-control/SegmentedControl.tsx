@@ -1,6 +1,6 @@
-import { createContext, useContext, useId } from 'react'
-import { cn } from '@/lib/cn'
 import { useControllableState } from '@/internal/use-controllable-state'
+import { cn } from '@/lib/cn'
+import { createContext, useContext, useId } from 'react'
 import type {
     SegmentedControlItemProps,
     SegmentedControlOption,

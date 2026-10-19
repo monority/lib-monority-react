@@ -2,13 +2,13 @@ import { DatePicker, type DatePickerSize, type DatePickerTone } from '@monority/
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DatePickerBasicExample,
+    DatePickerControlledExample,
+    DatePickerDisabledDatesExample,
+    DatePickerDisabledExample,
+    DatePickerSizesExample,
     DatePickerWithErrorExample,
     DatePickerWithHintExample,
     DatePickerWithMinMaxExample,
-    DatePickerDisabledExample,
-    DatePickerControlledExample,
-    DatePickerSizesExample,
-    DatePickerDisabledDatesExample,
 } from './DatePicker.examples'
 
 const docData: DocPageData = {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
     type AccentPreset,
-    type DesignConfig,
     DEFAULT_DESIGN_CONFIG,
     DESIGN_PRESETS,
+    type DesignConfig,
     formatAccentStorage,
     resolveAccentPreset,
     resolveDesignConfig,

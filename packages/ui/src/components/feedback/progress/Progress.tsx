@@ -1,12 +1,10 @@
-import { useId } from 'react'
 import { cn } from '@/lib/cn'
+import { useId } from 'react'
 import type {
     ProgressBarProps,
     ProgressLabelProps,
     ProgressMetaProps,
-    ProgressMode,
     ProgressProps,
-    ProgressTone,
     ProgressTrackProps,
     ProgressValueProps,
 } from './Progress.types'

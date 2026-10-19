@@ -1,15 +1,9 @@
-import type { MouseEvent } from 'react'
+import { Spinner } from '@/components/feedback/spinner/Spinner'
+import { Field } from '@/components/forms/field/Field'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
-import { Field } from '@/components/forms/field/Field'
-import { Spinner } from '@/components/feedback/spinner/Spinner'
-import type {
-    SelectGroupProps,
-    SelectOptionProps,
-    SelectProps,
-    SelectSize,
-    SelectTone,
-} from './Select.types'
+import type { MouseEvent } from 'react'
+import type { SelectGroupProps, SelectOptionProps, SelectProps } from './Select.types'
 
 export function SelectOption({ ref, children, ...props }: SelectOptionProps) {
     return (

@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Slider } from '@monority/ui/slider'
 import { Stack } from '@monority/ui/stack'
+import { useState } from 'react'
 
 export function SliderBasicExample() {
     return <Slider label="Volume" defaultValue={50} />

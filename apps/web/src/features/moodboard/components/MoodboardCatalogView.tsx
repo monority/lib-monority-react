@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
     Accordion,
     AlertDialog,
@@ -64,6 +63,7 @@ import {
     ToggleGroup,
     Tooltip,
 } from '@monority/ui'
+import { useState } from 'react'
 
 export function MoodboardCatalogView() {
     /* États pour les dialogues et overlays */

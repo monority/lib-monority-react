@@ -1,4 +1,4 @@
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@monority/ui/resizable'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@monority/ui/resizable'
 
 export function ResizableHorizontalExample() {
     return (

@@ -1,11 +1,11 @@
-import { lazy, Suspense, type ComponentType } from 'react'
+import { AppHeader } from '@/shared/layouts/AppHeader'
+import { type ComponentType, Suspense, lazy } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { DocsLayout } from './DocsLayout'
-import { Introduction } from './Introduction'
 import { Installation } from './Installation'
-import { docsComponentRegistry } from './components/registry'
+import { Introduction } from './Introduction'
 import { DocPageWithToc } from './components/DocPageWithToc'
-import { AppHeader } from '@/shared/layouts/AppHeader'
+import { docsComponentRegistry } from './components/registry'
 
 import { HeroHeader } from '@/shared/components/HeroHeader'
 

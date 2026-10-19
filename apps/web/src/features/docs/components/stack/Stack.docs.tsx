@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Stack } from '@monority/ui/stack'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { StackBasicExample, StackGapExample, StackHorizontalExample } from './Stack.examples'
+import { StackGapExample, StackHorizontalExample } from './Stack.examples'
 
 function StackPlayground() {
     const [direction, setDirection] = useState<'vertical' | 'horizontal'>('horizontal')

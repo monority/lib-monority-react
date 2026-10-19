@@ -1,8 +1,7 @@
+import { cn } from '@/lib/cn'
 import { createContext, useCallback, useContext, useId, useState } from 'react'
 import type { KeyboardEvent } from 'react'
-import { cn } from '@/lib/cn'
 import type {
-    TabItem,
     TabsContentProps,
     TabsListProps,
     TabsProps,

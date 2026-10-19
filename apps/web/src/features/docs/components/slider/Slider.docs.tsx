@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Slider } from '@monority/ui/slider'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {

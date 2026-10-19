@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import { NavigationMenu } from '@monority/ui/navigation-menu'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    NavigationMenuBasicExample,
-    NavigationMenuWithSubItemsExample,
-    NavigationMenuWithIconsExample,
     NavigationMenuDisabledExample,
+    NavigationMenuWithIconsExample,
+    NavigationMenuWithSubItemsExample,
 } from './NavigationMenu.examples'
 
 function NavigationMenuPlayground() {

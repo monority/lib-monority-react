@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Badge, Button, Card, Progress, Rating, Slider, Stack, Text, Toolbar } from '@monority/ui'
+import { useState } from 'react'
 
 export function MoodboardQuotasModule() {
     const [cpuThreshold, setCpuThreshold] = useState(68)

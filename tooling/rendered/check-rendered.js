@@ -1,7 +1,7 @@
 import { chromium } from './common.js'
 import { testContrast } from './test-contrast.js'
-import { testHostIsolation } from './test-isolation.js'
 import { testControlDimensions } from './test-dimensions.js'
+import { testHostIsolation } from './test-isolation.js'
 
 async function run() {
     const browser = await chromium.launch({ headless: true })

@@ -1,5 +1,5 @@
+import { DESIGN_PRESETS, type DesignConfig, Select, Stack } from '@monority/ui'
 import type { ChangeEvent } from 'react'
-import { DESIGN_PRESETS, Select, Stack, type DesignConfig } from '@monority/ui'
 
 interface AxisDefinition {
     key: keyof DesignConfig

@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { Badge } from '@monority/ui/badge'
 import { Table } from '@monority/ui/table'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { TableBasicExample, TableEmptyExample, TableWithDataExample } from './Table.examples'
+import { TableEmptyExample, TableWithDataExample } from './Table.examples'
 
 function TablePlayground() {
     const [rowCount, setRowCount] = useState<'3' | '5' | '0'>('3')

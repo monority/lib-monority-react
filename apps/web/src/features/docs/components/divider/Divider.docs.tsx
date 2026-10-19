@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import { Divider } from '@monority/ui/divider'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    DividerBasicExample,
-    DividerVerticalExample,
-    DividerWithLabelExample,
-} from './Divider.examples'
+import { DividerVerticalExample, DividerWithLabelExample } from './Divider.examples'
 
 function DividerPlayground() {
     const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')

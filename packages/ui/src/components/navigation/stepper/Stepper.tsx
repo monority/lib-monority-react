@@ -1,10 +1,9 @@
-import { Children, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/cn'
+import { Children, cloneElement, isValidElement } from 'react'
 import type {
     StepItemData,
     StepStatus,
     StepperDescriptionProps,
-    StepperOrientation,
     StepperProps,
     StepperStepProps,
     StepperTitleProps,

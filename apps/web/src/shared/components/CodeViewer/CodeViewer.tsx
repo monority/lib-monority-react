@@ -1,5 +1,5 @@
-import type { Ref } from 'react'
 import { CopyButton } from '@monority/ui/copy-button'
+import type { Ref } from 'react'
 import { CodeBlock } from './CodeBlock'
 import './CodeViewer.css'
 

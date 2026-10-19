@@ -1,3 +1,6 @@
+import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
+import { OVERLAY_OFFSET } from '@/lib/constants'
 import {
     cloneElement,
     createContext,
@@ -9,11 +12,7 @@ import {
     useRef,
     useState,
 } from 'react'
-import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
-import { OVERLAY_OFFSET } from '@/lib/constants'
-import { usePortalTarget } from '@/internal/use-portal-target'
 import type {
     PopoverAlign,
     PopoverAnchorProps,

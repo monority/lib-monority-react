@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 // ──────────────────────────────────────────────
 // Package manifest contract
@@ -23,82 +23,82 @@ const declaredSubpaths = Object.keys(manifest.exports)
 // Uses `resolve.conditions: ['monority-source']` to match the exports map
 // ──────────────────────────────────────────────
 import {
-    // Actions
-    Button,
-    ButtonLink,
-    CopyButton,
-    IconButton,
-    Toggle,
-    ToggleGroup,
-    // Typography
-    Text,
-    Title,
+    // Display
+    Accordion,
+    // Overlays
+    AlertDialog,
+    // Layout
+    AspectRatio,
+    AsyncStateNotice,
+    Avatar,
     // Feedback
     Badge,
     Banner,
-    Callout,
-    InlineAlert,
-    Progress,
-    Skeleton,
-    Spinner,
-    Toast,
-    AsyncStateNotice,
-    EmptyState,
-    // Display
-    Accordion,
-    Avatar,
-    Card,
-    Carousel,
-    MetricGrid,
-    StatCard,
-    Table,
-    // Data-display
-    DataList,
-    DataTable,
-    // Layout
-    AspectRatio,
-    Container,
-    Divider,
-    Grid,
-    PageHeader,
-    Section,
-    Stack,
-    Toolbar,
     // Navigation
     Breadcrumb,
-    FilterBar,
-    NavigationMenu,
-    Pagination,
-    SidebarLayout,
-    Tabs,
-    Topbar,
+    // Actions
+    Button,
+    ButtonLink,
+    Callout,
+    Card,
+    Carousel,
     // Forms
     Checkbox,
     Combobox,
+    CommandPalette,
+    Container,
+    CopyButton,
+    // Data-display
+    DataList,
+    DataTable,
     DatePicker,
     DateRangePicker,
-    FileUpload,
-    FormSection,
-    Input,
-    NumberInput,
-    PasswordInput,
-    RadioGroup,
-    Select,
-    Slider,
-    Switch,
-    Textarea,
-    Field,
-    // Overlays
-    AlertDialog,
+    Divider,
     Drawer,
     DropdownMenu,
+    EmptyState,
+    Field,
+    FileUpload,
+    FilterBar,
+    FormSection,
+    Grid,
     HoverCard,
-    Modal,
-    Popover,
-    Tooltip,
-    CommandPalette,
+    IconButton,
     // Experimental
     InfiniteScroll,
+    InlineAlert,
+    Input,
+    MetricGrid,
+    Modal,
+    NavigationMenu,
+    NumberInput,
+    PageHeader,
+    Pagination,
+    PasswordInput,
+    Popover,
+    Progress,
+    RadioGroup,
+    Section,
+    Select,
+    SidebarLayout,
+    Skeleton,
+    Slider,
+    Spinner,
+    Stack,
+    StatCard,
+    Switch,
+    Table,
+    Tabs,
+    // Typography
+    Text,
+    Textarea,
+    Title,
+    Toast,
+    Toggle,
+    ToggleGroup,
+    Toolbar,
+    Tooltip,
+    Topbar,
 } from '@monority/ui'
 
 describe('root barrel import (@monority/ui)', () => {

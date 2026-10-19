@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import type { ReactElement, ReactNode } from 'react'
 import { AppProviders } from '@/shared/providers/AppProviders'
+import { render } from '@testing-library/react'
+import type { ReactElement, ReactNode } from 'react'
+import { MemoryRouter } from 'react-router-dom'
 
 interface RenderWithProvidersOptions {
     initialEntries?: string[]

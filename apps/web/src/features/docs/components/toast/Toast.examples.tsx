@@ -1,6 +1,6 @@
-import { Toast } from '@monority/ui/toast'
 import { ToastProvider, useToast } from '@monority/ui'
 import { Button } from '@monority/ui/button'
+import { Toast } from '@monority/ui/toast'
 
 export function ToastBasicExample() {
     return (

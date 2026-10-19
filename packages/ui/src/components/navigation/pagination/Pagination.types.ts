@@ -1,10 +1,4 @@
-import type {
-    AnchorHTMLAttributes,
-    ButtonHTMLAttributes,
-    HTMLAttributes,
-    ReactNode,
-    Ref,
-} from 'react'
+import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode, Ref } from 'react'
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
     ref?: Ref<HTMLElement>

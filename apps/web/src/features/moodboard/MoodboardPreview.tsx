@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Container, Stack, Tabs } from '@monority/ui'
+import { useState } from 'react'
 import { MoodboardCatalogView } from './components/MoodboardCatalogView'
 import { MoodboardDashboardView } from './components/MoodboardDashboardView'
 

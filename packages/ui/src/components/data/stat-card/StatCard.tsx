@@ -1,7 +1,7 @@
-import { cn } from '@/lib/cn'
 import { Card } from '@/components/display/card/Card'
 import { Text } from '@/components/typography/text/Text'
 import { Title } from '@/components/typography/title/Title'
+import { cn } from '@/lib/cn'
 import type {
     StatCardDescriptionProps,
     StatCardFooterProps,
@@ -11,7 +11,6 @@ import type {
     StatCardLabelProps,
     StatCardMetricProps,
     StatCardProps,
-    StatCardTone,
     StatCardTrendProps,
     StatCardValueProps,
 } from './StatCard.types'

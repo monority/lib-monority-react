@@ -105,14 +105,6 @@ const accentColors: Record<AccentPreset, { hue: number; chroma: number }> = {
     rose: { hue: 350, chroma: 0.13 },
 }
 
-interface ComponentRole {
-    fill: string
-    label: string
-    hover: string
-    active: string
-    border: string
-}
-
 const chartColors: Record<ChartPalettePreset, [number, number, number, number, number]> = {
     default: [200, 150, 75, 25, 255],
     ocean: [200, 230, 195, 160, 320],

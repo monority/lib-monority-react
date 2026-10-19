@@ -4,8 +4,8 @@ import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DropdownMenuBasicExample,
-    DropdownMenuWithDisabledExample,
     DropdownMenuWithCallbacksExample,
+    DropdownMenuWithDisabledExample,
 } from './DropdownMenu.examples'
 
 function DropdownMenuPlaygroundDemo(props: {

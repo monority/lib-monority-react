@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Rating } from '@monority/ui/rating'
 import { Stack } from '@monority/ui/stack'
+import { useState } from 'react'
 
 export function RatingBasicExample() {
     const [score, setScore] = useState(4)

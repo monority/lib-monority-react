@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Drawer } from '@monority/ui/drawer'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { DrawerBasicExample, DrawerSidesExample, DrawerWithFooterExample } from './Drawer.examples'
+import { DrawerSidesExample, DrawerWithFooterExample } from './Drawer.examples'
 
 function DrawerPlayground() {
     const [open, setOpen] = useState(false)

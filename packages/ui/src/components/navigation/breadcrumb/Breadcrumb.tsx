@@ -1,6 +1,5 @@
 import { cn } from '@/lib/cn'
 import type {
-    BreadcrumbItemData,
     BreadcrumbItemProps,
     BreadcrumbLinkProps,
     BreadcrumbListProps,

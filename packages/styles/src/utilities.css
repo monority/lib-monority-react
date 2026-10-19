@@ -1,4 +1,5 @@
 @import './layers.css';
 
 @layer mr.utilities {
+    /* Couche utilitaires reservee aux regles utilitaires consommatrices */
 }

@@ -1,4 +1,4 @@
-import { useEffect, type ComponentType } from 'react'
+import { type ComponentType, useEffect } from 'react'
 import { DocToc } from './DocToc'
 
 export function DocPageWithToc({ DocComponent }: { DocComponent: ComponentType }) {

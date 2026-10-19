@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { InputOTP } from '@monority/ui/input-otp'
 import { Button } from '@monority/ui/button'
 import { Callout } from '@monority/ui/callout'
+import { InputOTP } from '@monority/ui/input-otp'
 import { Stack } from '@monority/ui/stack'
+import { useState } from 'react'
 
 export function InputOtpBasicExample() {
     const [value, setValue] = useState('')

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { expect, test, type Page } from '@playwright/test'
+import { type Page, expect, test } from '@playwright/test'
 
 /**
  * Autonomie des composants : aucun composant public ne doit dépendre de
@@ -125,7 +125,7 @@ async function collectStyles(page: Page, url: string, withoutReset: boolean) {
     return styles
 }
 
-test.beforeEach(({}, testInfo) => {
+test.beforeEach((_, testInfo) => {
     test.skip(
         testInfo.project.name !== 'desktop',
         'comparaison de styles calculés : desktop uniquement'

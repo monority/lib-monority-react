@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
 import { InfiniteScroll } from '@monority/ui/infinite-scroll'
+import { useCallback, useState } from 'react'
 
 const MOCK_ITEMS = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`)
 

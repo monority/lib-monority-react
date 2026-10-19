@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { Textarea } from '@monority/ui/textarea'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     TextareaBasicExample,
-    TextareaWithLabelExample,
-    TextareaWithErrorExample,
     TextareaDisabledExample,
-    TextareaWithCharCountExample,
     TextareaResizableExample,
+    TextareaWithCharCountExample,
+    TextareaWithErrorExample,
+    TextareaWithLabelExample,
 } from './Textarea.examples'
 
 function TextareaPlaygroundDemo(props: {

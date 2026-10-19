@@ -1,5 +1,5 @@
-import { Switch } from '@monority/ui/switch'
 import { Stack } from '@monority/ui/stack'
+import { Switch } from '@monority/ui/switch'
 import { useState } from 'react'
 
 export function SwitchBasicExample() {

@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Collapsible } from '@monority/ui/collapsible'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 
 export function CollapsibleBasicExample() {
     return (

@@ -3,11 +3,11 @@ import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ButtonLinkBasicPreview,
-    ButtonLinkVariantsExample,
+    ButtonLinkFullWidthExample,
+    ButtonLinkIconsExample,
     ButtonLinkSizesExample,
     ButtonLinkStatesExample,
-    ButtonLinkIconsExample,
-    ButtonLinkFullWidthExample,
+    ButtonLinkVariantsExample,
 } from './ButtonLink.examples'
 
 function ButtonLinkPlaygroundDemo(props: {

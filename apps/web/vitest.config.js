@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import path from 'node:path'
 import { readFileSync } from 'node:fs'
+import path from 'node:path'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vitest/config'
 
 const uiPkg = JSON.parse(
     readFileSync(path.resolve(__dirname, '../../packages/ui/package.json'), 'utf8')

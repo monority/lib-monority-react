@@ -1,9 +1,9 @@
+import { FormControl } from '@/primitives/form-control/FormControl'
 import { act, createRef } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
 import { InputBase } from './InputBase'
-import { FormControl } from '@/primitives/form-control/FormControl'
 
 let container: HTMLDivElement | null = null
 let root: Root | null = null

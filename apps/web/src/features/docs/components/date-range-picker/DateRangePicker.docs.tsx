@@ -2,9 +2,9 @@ import { DateRangePicker } from '@monority/ui/date-range-picker'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DateRangePickerBasicExample,
+    DateRangePickerDisabledExample,
     DateRangePickerWithErrorExample,
     DateRangePickerWithHintExample,
-    DateRangePickerDisabledExample,
 } from './DateRangePicker.examples'
 
 const docData: DocPageData = {

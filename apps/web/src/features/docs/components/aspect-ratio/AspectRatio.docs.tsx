@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import { AspectRatio } from '@monority/ui/aspect-ratio'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    AspectRatioBasicExample,
-    AspectRatioSquareExample,
-    AspectRatioVideoExample,
-} from './AspectRatio.examples'
+import { AspectRatioSquareExample, AspectRatioVideoExample } from './AspectRatio.examples'
 
 function AspectRatioPlayground() {
     const [ratioType, setRatioType] = useState<'16/9' | '4/3' | '1/1' | '21/9'>('16/9')

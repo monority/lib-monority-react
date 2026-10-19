@@ -2,12 +2,12 @@ import { Badge } from '@monority/ui/badge'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
+    BadgeDangerExample,
     BadgeDefaultExample,
     BadgePrimaryExample,
     BadgeSuccessExample,
-    BadgeDangerExample,
-    BadgeWarningExample,
     BadgeVariantsExample,
+    BadgeWarningExample,
 } from './Badge.examples'
 
 function BadgePlaygroundDemo(props: {

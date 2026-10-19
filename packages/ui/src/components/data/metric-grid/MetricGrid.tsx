@@ -1,5 +1,5 @@
-import { cn } from '@/lib/cn'
 import { StatCard } from '@/components/data/stat-card/StatCard'
+import { cn } from '@/lib/cn'
 import type { MetricGridProps } from './MetricGrid.types'
 
 export function MetricGrid({ ref, items, children, className, ...props }: MetricGridProps) {

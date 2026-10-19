@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Topbar } from '@monority/ui/topbar'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { TopbarBasicExample, TopbarWithContentExample } from './Topbar.examples'
+import { TopbarWithContentExample } from './Topbar.examples'
 
 function TopbarPlayground() {
     const [activeTab, setActiveTab] = useState<'docs' | 'components' | 'themes'>('docs')

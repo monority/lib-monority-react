@@ -1,7 +1,7 @@
-import { screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
 import { AppPage } from '@/shared/layouts/AppPage'
 import { renderWithProviders } from '@/shared/test/test-utils'
+import { screen } from '@testing-library/react'
+import { afterEach, describe, expect, it } from 'vitest'
 
 describe('AppPage SEO', () => {
     afterEach(() => {

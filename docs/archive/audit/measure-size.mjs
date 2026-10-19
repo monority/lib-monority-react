@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import fs from 'node:fs'
 /**
  * Phase 0 bis (refonte) — entry point weight.
  *
@@ -11,10 +12,9 @@
  * "gzip" = zlib gzip level 9 of the minified output.
  */
 import { createRequire } from 'node:module'
-import fs from 'node:fs'
 import path from 'node:path'
-import zlib from 'node:zlib'
 import { fileURLToPath } from 'node:url'
+import zlib from 'node:zlib'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const require = createRequire(path.join(repoRoot, 'package.json'))

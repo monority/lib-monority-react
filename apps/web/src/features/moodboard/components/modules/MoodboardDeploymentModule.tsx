@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
     Badge,
     Button,
@@ -13,6 +12,7 @@ import {
     Textarea,
     Toolbar,
 } from '@monority/ui'
+import { useState } from 'react'
 
 export function MoodboardDeploymentModule() {
     const [workspace, setWorkspace] = useState('monority-prod')

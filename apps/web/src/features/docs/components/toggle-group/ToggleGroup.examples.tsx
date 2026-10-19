@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { ToggleGroup } from '@monority/ui/toggle-group'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { ToggleGroup } from '@monority/ui/toggle-group'
+import { useState } from 'react'
 
 const formatItems = [
     { value: 'bold', label: 'Bold' },

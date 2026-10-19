@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
 import {
     Badge,
     BadgeDelta,
+    type BadgeDeltaType,
     Button,
     Card,
     SegmentedControl,
     Text,
-    type BadgeDeltaType,
 } from '@monority/ui'
+import { useEffect, useRef, useState } from 'react'
 
 type PeriodKey = '15m' | '1h' | '24h' | '7d'
 

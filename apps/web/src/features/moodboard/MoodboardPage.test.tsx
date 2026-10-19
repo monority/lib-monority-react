@@ -1,6 +1,6 @@
-import { screen, within, fireEvent, act } from '@testing-library/react'
-import { MoodboardPage } from './MoodboardPage'
 import { renderWithProviders } from '@/shared/test/test-utils'
+import { act, fireEvent, screen, within } from '@testing-library/react'
+import { MoodboardPage } from './MoodboardPage'
 
 beforeEach(() => {
     localStorage.clear()

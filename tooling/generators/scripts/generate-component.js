@@ -26,9 +26,9 @@ const cssBlock = `mr-${slug}`
 
 const componentDir = path.join(ROOT_DIR, 'packages/ui/src/components', category, slug)
 const categoryIndexFile = path.join(ROOT_DIR, 'packages/ui/src/components', category, 'index.ts')
-const docsDir = path.join(ROOT_DIR, 'apps/web/src/docs/components', slug)
-const docsRegistryFile = path.join(ROOT_DIR, 'apps/web/src/docs/components/registry.ts')
-const recipeFile = path.join(ROOT_DIR, 'packages/styles/src/recipes', `${slug}.recipe.css`)
+const docsDir = path.join(ROOT_DIR, 'apps/web/src/features/docs/components', slug)
+const docsRegistryFile = path.join(ROOT_DIR, 'apps/web/src/features/docs/components/registry.ts')
+const recipeFile = path.join(ROOT_DIR, 'packages/styles/src/recipes', `${slug}.css`)
 
 const files = [
     {
@@ -85,7 +85,7 @@ addSubpathExport(path.join(ROOT_DIR, 'packages/ui/package.json'), slug, category
 
 addTsupEntry(path.join(ROOT_DIR, 'packages/ui/tsup.config.ts'), componentName, slug, category)
 
-addRecipeImport(path.join(ROOT_DIR, 'packages/styles/src/recipes/index.css'), slug)
+addRecipeImport(path.join(ROOT_DIR, 'packages/styles/src/index.css'), slug)
 
 log(`Generated ${componentName} in ${relative(componentDir)}`)
 log(`Category: ${category}`)
@@ -195,12 +195,12 @@ function appendDocsRegistry(registryPath, { category, componentName, slug }) {
 }
 
 function typesTemplate(name) {
-    return `import type { ButtonHTMLAttributes, ReactNode } from 'react'
+    return `import type { ReactNode } from 'react'
 
 export type ${name}Variant = 'primary' | 'secondary'
 export type ${name}Size = 'sm' | 'md' | 'lg'
 
-export interface ${name}Props extends React.ComponentPropsWithoutRef<'button'> {
+export interface ${name}Props extends React.ComponentProps<'button'> {
   variant?: ${name}Variant
   size?: ${name}Size
   children?: ReactNode
@@ -210,8 +210,7 @@ export interface ${name}Props extends React.ComponentPropsWithoutRef<'button'> {
 
 function componentTemplate(name, cssBlock) {
     const camelName = camelCase(name)
-    return `import { forwardRef } from 'react'
-import { cn } from '@/lib/cn'
+    return `import { cn } from '@/lib/cn'
 import { cva } from '@/lib/variants'
 import type { ${name}Props } from './${name}.types'
 
@@ -234,10 +233,14 @@ const ${camelName}Variants = cva({
   },
 })
 
-export const ${name} = forwardRef<HTMLButtonElement, ${name}Props>(function ${name}(
-  { variant, size, className, children, ...props },
+export function ${name}({
   ref,
-) {
+  variant = 'primary',
+  size = 'md',
+  className,
+  children,
+  ...props
+}: ${name}Props) {
   return (
     <button
       ref={ref}
@@ -249,7 +252,7 @@ export const ${name} = forwardRef<HTMLButtonElement, ${name}Props>(function ${na
       {children}
     </button>
   )
-})
+}
 
 export type { ${name}Props, ${name}Variant, ${name}Size } from './${name}.types'
 `
@@ -297,10 +300,10 @@ describe('${name}', () => {
     expect(btn?.getAttribute('data-size')).toBe('lg')
   })
 
-  it('forwards refs', () => {
-    const ref = { current: null as HTMLButtonElement | null }
-    render(<${name} ref={ref}>Ref</${name}>)
-    expect(ref.current?.tagName).toBe('BUTTON')
+  it('supports native ref', () => {
+    let element: HTMLButtonElement | null = null
+    render(<${name} ref={(node) => { element = node }}>Ref</${name}>)
+    expect(element?.tagName).toBe('BUTTON')
   })
 })
 `
@@ -327,7 +330,8 @@ function docsMetaTemplate(name, category) {
 }
 
 function docsExamplesTemplate(name) {
-    return `import { ${name} } from '@monority/ui'
+    const slug = kebabCase(name)
+    return `import { ${name} } from '@monority/ui/${slug}'
 
 export function ${name}BasicExample() {
   return <${name}>Basic ${name}</${name}>
@@ -336,11 +340,28 @@ export function ${name}BasicExample() {
 }
 
 function docsPageTemplate(name) {
-    return `import { ComponentDocsPage } from '../componentDocs'
-import { ${camelCase(name)}Meta } from './${name}.meta'
+    const slug = kebabCase(name)
+    return `import { DocPage, type DocPageData } from '../DocPage'
+import { ${name} } from '@monority/ui/${slug}'
+import { ${name}BasicExample } from './${name}.examples'
+
+const docData: DocPageData = {
+  title: '${name}',
+  description: '${name} component.',
+  importCode: "import { ${name} } from '@monority/ui/${slug}'",
+  usageCode: '<${name}>${name}</${name}>',
+  preview: () => <${name}BasicExample />,
+  examples: [
+    { title: 'Basic usage', content: <${name}BasicExample /> },
+  ],
+  props: [
+    { name: 'variant', type: "'primary' | 'secondary'", defaultValue: "'primary'", description: 'Visual intent.' },
+    { name: 'size', type: "'sm' | 'md' | 'lg'", defaultValue: "'md'", description: 'Control size.' },
+  ],
+}
 
 export function ${name}Docs() {
-  return <ComponentDocsPage slug="${kebabCase(name)}" />
+  return <DocPage doc={docData} />
 }
 `
 }
@@ -369,18 +390,47 @@ ${registryEntry}
 }
 
 function recipeTemplate(cssBlock) {
-    return `@layer monority.recipes {
-  .${cssBlock} {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
+    return `@layer mr.components {
+    :where(.${cssBlock}) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        font-family: inherit;
+        border: 1px solid transparent;
+        border-radius: var(--mr-radius-md);
+        transition: background-color var(--mr-duration-instant) var(--mr-ease-default),
+            color var(--mr-duration-instant) var(--mr-ease-default);
+    }
 
-  .${cssBlock}--primary {}
-  .${cssBlock}--secondary {}
-  .${cssBlock}--sm {}
-  .${cssBlock}--md {}
-  .${cssBlock}--lg {}
+    :where(.${cssBlock}--primary) {
+        background-color: var(--mr-color-accent);
+        color: var(--mr-color-accent-contrast);
+    }
+
+    :where(.${cssBlock}--secondary) {
+        background-color: var(--mr-bg-surface);
+        border-color: var(--mr-border-control);
+        color: var(--mr-text-primary);
+    }
+
+    :where(.${cssBlock}--sm) {
+        height: 28px;
+        padding-inline: var(--mr-space-3);
+        font-size: var(--mr-font-size-sm);
+    }
+
+    :where(.${cssBlock}--md) {
+        height: 32px;
+        padding-inline: var(--mr-space-4);
+        font-size: var(--mr-font-size-md);
+    }
+
+    :where(.${cssBlock}--lg) {
+        height: 40px;
+        padding-inline: var(--mr-space-5);
+        font-size: var(--mr-font-size-lg);
+    }
 }
 `
 }
@@ -431,22 +481,20 @@ function addTsupEntry(tsupPath, _componentName, slug, category) {
     log(`Updated tsup.config.ts entry: ${entryKey}`)
 }
 
-function addRecipeImport(recipesIndexPath, slug) {
+function addRecipeImport(stylesIndexPath, slug) {
     if (options.dryRun) {
-        log(`Would update recipes/index.css with ${slug}`)
+        log(`Would update packages/styles/src/index.css with ${slug}`)
         return
     }
 
-    const importLine = `@import './${slug}.recipe.css';`
-    const content = fs.readFileSync(recipesIndexPath, 'utf8')
+    const importLine = `@import './recipes/${slug}.css';`
+    const content = fs.readFileSync(stylesIndexPath, 'utf8')
     if (content.includes(importLine)) return
 
-    // Append as last import, in alphabetical order
     const lines = content.trim().split('\n')
     lines.push(importLine)
-    lines.sort()
-    fs.writeFileSync(recipesIndexPath, lines.join('\n') + '\n')
-    log(`Updated recipes/index.css with ${slug}`)
+    fs.writeFileSync(stylesIndexPath, lines.join('\n') + '\n')
+    log(`Updated packages/styles/src/index.css with ${slug}`)
 }
 
 function kebabCase(value) {

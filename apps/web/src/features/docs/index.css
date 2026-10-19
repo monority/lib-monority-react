@@ -247,9 +247,6 @@
     min-width: 0;
 }
 
-.docs-page {
-}
-
 .docs-hero {
     display: grid;
     gap: var(--mr-space-3);

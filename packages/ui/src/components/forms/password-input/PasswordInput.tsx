@@ -1,5 +1,5 @@
-import { cn } from '@/lib/cn'
 import { Input } from '@/components/forms/input/Input'
+import { cn } from '@/lib/cn'
 import type { PasswordInputProps } from './PasswordInput.types'
 
 export function PasswordInput({

@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { AppHeader } from '@/shared/layouts/AppHeader'
+import { usePageSeo } from '@/shared/seo/usePageSeo'
 import {
     DEFAULT_DESIGN_CONFIG,
+    type DesignConfig,
     DesignProvider,
+    type ResolvedThemeName,
+    type ThemeNameType,
     ThemeScope,
     designConfigToJSON,
     resolveDesignConfig,
     sanitizeDesignConfig,
     useTheme,
-    type DesignConfig,
-    type ResolvedThemeName,
-    type ThemeNameType,
 } from '@monority/ui'
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
-import { AppHeader } from '@/shared/layouts/AppHeader'
-import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { useEffect, useRef, useState } from 'react'
 import { MoodboardPreview } from './MoodboardPreview'
 import { MoodboardSidebar } from './MoodboardSidebar'
 

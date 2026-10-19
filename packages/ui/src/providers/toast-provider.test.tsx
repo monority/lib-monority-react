@@ -1,9 +1,9 @@
 import { act } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ToastProvider } from './toast-provider'
 import { ToastContext } from '../contexts/toast-context'
+import { ToastProvider } from './toast-provider'
 
 let container: HTMLDivElement | null = null
 let root: Root | null = null

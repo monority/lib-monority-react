@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { Combobox } from '@monority/ui/combobox'
-import { DocPage, type DocPageData } from '../DocPage'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    ComboboxBasicExample,
     ComboboxAsyncAndClearableExample,
-    ComboboxWithDescriptionsExample,
+    ComboboxBasicExample,
     ComboboxDisabledExample,
-    ComboboxWithErrorExample,
     ComboboxSizesExample,
+    ComboboxWithDescriptionsExample,
+    ComboboxWithErrorExample,
 } from './Combobox.examples'
 
 function ComboboxPlaygroundDemo(props: {

@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Grid } from '@monority/ui/grid'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { GridBasicExample, GridColumnsExample } from './Grid.examples'
+import { GridColumnsExample } from './Grid.examples'
 
 function GridPlayground() {
     const [columns, setColumns] = useState<'1' | '2' | '3' | '4'>('3')

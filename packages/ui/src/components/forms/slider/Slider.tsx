@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { cn } from '@/lib/cn'
-import { FormControl, useFormControl } from '@/primitives/form-control'
-import { InputBase } from '@/primitives/input-base'
 import { Field } from '@/components/forms/field/Field'
+import { cn } from '@/lib/cn'
+import { FormControl } from '@/primitives/form-control'
+import { InputBase } from '@/primitives/input-base'
+import { useState } from 'react'
 import type { SliderProps } from './Slider.types'
 
 export function Slider({

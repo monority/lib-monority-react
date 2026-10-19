@@ -1,5 +1,5 @@
-import { useMemo, type Ref } from 'react'
 import { cn } from '@/lib/cn'
+import { useMemo } from 'react'
 import type {
     PaginationContentProps,
     PaginationEllipsisProps,

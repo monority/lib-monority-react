@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import type {
     MenuItem,
     MenubarContentProps,

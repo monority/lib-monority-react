@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, within } from '@testing-library/react'
+import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { AppHeader } from './AppHeader'
-import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
 
 function renderHeader(homeNav = false) {
     return render(

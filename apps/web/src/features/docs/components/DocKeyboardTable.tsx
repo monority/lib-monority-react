@@ -1,5 +1,5 @@
-import { Table, type Column } from '@monority/ui/table'
 import { Kbd } from '@monority/ui/kbd'
+import { type Column, Table } from '@monority/ui/table'
 
 export interface KeyboardShortcutRow extends Record<string, unknown> {
     key: string | string[]

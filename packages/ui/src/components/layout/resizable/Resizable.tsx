@@ -1,9 +1,9 @@
-import { createContext, useContext, useState, useRef, useCallback, useEffect, useId } from 'react'
 import { cn } from '@/lib/cn'
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import type {
+    ResizableHandleProps,
     ResizablePanelGroupProps,
     ResizablePanelProps,
-    ResizableHandleProps,
 } from './Resizable.types'
 
 // --- Context ---

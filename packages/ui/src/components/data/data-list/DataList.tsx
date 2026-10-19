@@ -1,7 +1,5 @@
 import { cn } from '@/lib/cn'
 import type {
-    DataListColumns,
-    DataListItem,
     DataListItemProps,
     DataListLabelProps,
     DataListProps,

@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { NumberInput } from '@monority/ui/number-input'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 
 export function NumberInputBasicPreview() {
     return <NumberInput label="Quantity" defaultValue={1} min={0} max={10} step={1} />

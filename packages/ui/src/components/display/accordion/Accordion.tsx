@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useId, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { createContext, useCallback, useContext, useId, useRef, useState } from 'react'
 import type {
     AccordionContentProps,
     AccordionItemData,

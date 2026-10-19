@@ -4,7 +4,6 @@ import type {
     CalloutDescriptionProps,
     CalloutIconProps,
     CalloutProps,
-    CalloutSize,
     CalloutTitleProps,
     CalloutTone,
 } from './Callout.types'

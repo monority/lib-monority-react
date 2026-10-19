@@ -1,5 +1,5 @@
+import { Badge, Button, Card, type Column, Table, Text } from '@monority/ui'
 import { useState } from 'react'
-import { Badge, Button, Card, Table, Text, type Column } from '@monority/ui'
 
 interface ServiceRow extends Record<string, unknown> {
     id: string

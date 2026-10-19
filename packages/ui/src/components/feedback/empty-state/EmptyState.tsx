@@ -5,7 +5,6 @@ import type {
     EmptyStateDescriptionProps,
     EmptyStateIconProps,
     EmptyStateProps,
-    EmptyStateStatus,
     EmptyStateTitleProps,
 } from './EmptyState.types'
 

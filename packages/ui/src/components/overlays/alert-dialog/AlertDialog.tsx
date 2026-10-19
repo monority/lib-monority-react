@@ -1,12 +1,11 @@
-import { useEffect, useId, useRef } from 'react'
-import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
 import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
+import { useEffect, useId, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import type {
-    AlertDialogActionsProps,
     AlertDialogCancelProps,
     AlertDialogConfirmProps,
     AlertDialogDescriptionProps,

@@ -1,12 +1,7 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { PreCode } from '@monority/ui/pre-code'
-import {
-    PreCodeBasicExample,
-    PreCodeScrollExample,
-    PreCodeSizesExample,
-    PreCodeWrapExample,
-} from './PreCode.examples'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
+import { PreCodeScrollExample, PreCodeSizesExample, PreCodeWrapExample } from './PreCode.examples'
 
 const demoSnippet = `import { Button } from '@monority/ui/button'
 

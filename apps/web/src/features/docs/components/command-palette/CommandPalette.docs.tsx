@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { CommandPalette } from '@monority/ui/command-palette'
-import { DocPage, type DocPageData } from '../DocPage'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     CommandPaletteBasicExample,
     CommandPaletteCompoundExample,

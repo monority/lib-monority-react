@@ -1,12 +1,11 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Accordion, type AccordionSize } from '@monority/ui/accordion'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    AccordionBasicExample,
-    AccordionWithItemsExample,
-    AccordionMultipleExample,
     AccordionCollapsibleExample,
     AccordionCompoundExample,
+    AccordionMultipleExample,
+    AccordionWithItemsExample,
 } from './Accordion.examples'
 
 const accordionDemoItems = [

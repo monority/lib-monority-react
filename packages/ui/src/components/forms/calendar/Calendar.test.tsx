@@ -1,6 +1,6 @@
 import { act, createRef } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Calendar } from './Calendar'
 
@@ -176,7 +176,6 @@ describe('Calendar', () => {
 
     it('highlights today', () => {
         const view = render(<Calendar />)
-        const today = new Date()
         const todayBtn = view.querySelector('.mr-calendar__day--today')
 
         // Today should be highlighted

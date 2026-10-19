@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { createContext, useCallback, useContext, useState } from 'react'
 import type {
     SidebarLayoutContentProps,
     SidebarLayoutHeaderProps,
@@ -7,7 +7,6 @@ import type {
     SidebarLayoutProps,
     SidebarLayoutSidebarProps,
     SidebarLayoutToggleProps,
-    SidebarWidth,
 } from './SidebarLayout.types'
 
 interface SidebarLayoutContextValue {

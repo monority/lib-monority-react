@@ -1,15 +1,15 @@
-import { Button, type ButtonVariant, type ButtonSize } from '@monority/ui/button'
-import { DocPage, type DocPageData } from '../DocPage'
+import { Button, type ButtonSize, type ButtonVariant } from '@monority/ui/button'
 import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     ButtonBasicPreview,
-    ButtonVariantsExample,
-    ButtonSizesExample,
-    ButtonLoadingExample,
-    ButtonIconsExample,
     ButtonCopyExample,
-    ButtonIconOnlyExample,
     ButtonFullWidthExample,
+    ButtonIconOnlyExample,
+    ButtonIconsExample,
+    ButtonLoadingExample,
+    ButtonSizesExample,
+    ButtonVariantsExample,
 } from './Button.examples'
 
 const buttonPlayground = (

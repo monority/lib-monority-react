@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Outlet, useLocation, Link } from 'react-router-dom'
-import { Input } from '@monority/ui/input'
 import { Badge } from '@monority/ui/badge'
+import { Input } from '@monority/ui/input'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { docsComponentRegistry } from './components/registry'
 
 interface DocsLayoutProps {

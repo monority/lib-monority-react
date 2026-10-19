@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { Calendar } from '@monority/ui/calendar'
+import { useState } from 'react'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     CalendarBasicPreview,
-    CalendarPickersExample,
-    CalendarMinMaxExample,
-    CalendarDisabledDatesExample,
-    CalendarMultipleMonthsExample,
     CalendarControlledExample,
+    CalendarDisabledDatesExample,
+    CalendarMinMaxExample,
+    CalendarMultipleMonthsExample,
+    CalendarPickersExample,
 } from './Calendar.examples'
-import { DocPage, type DocPageData } from '../DocPage'
 
 function CalendarInteractivePlayground(props: {
     showPickers: boolean

@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Rating } from '@monority/ui/rating'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { RatingBasicExample, RatingReadOnlyExample, RatingSizesExample } from './Rating.examples'

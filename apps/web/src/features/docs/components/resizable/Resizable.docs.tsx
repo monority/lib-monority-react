@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@monority/ui/resizable'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    ResizableHorizontalExample,
     ResizableThreePanelsExample,
     ResizableVerticalExample,
     ResizableWithHandleExample,

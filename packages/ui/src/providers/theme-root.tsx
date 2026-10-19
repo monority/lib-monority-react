@@ -1,7 +1,7 @@
 import { useTheme } from '../hooks/use-theme'
-import { ThemeScope } from './theme-scope'
 import { deprecate } from '../internal/deprecate'
 import { isDevelopment } from '../internal/env'
+import { ThemeScope } from './theme-scope'
 
 interface ThemeRootProps {
     children: React.ReactNode

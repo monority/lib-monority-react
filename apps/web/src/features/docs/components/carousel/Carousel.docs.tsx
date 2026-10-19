@@ -1,11 +1,10 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
-import { Carousel } from '@monority/ui/carousel'
 import { Card } from '@monority/ui/card'
+import { Carousel } from '@monority/ui/carousel'
 import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     CarouselAutoPlayExample,
-    CarouselBasicExample,
     CarouselLoopExample,
     CarouselNoControlsExample,
 } from './Carousel.examples'

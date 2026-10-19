@@ -1,14 +1,10 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { PageHeader } from '@monority/ui/page-header'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    PageHeaderBasicExample,
-    PageHeaderWithActionsExample,
-    PageHeaderWithTitleExample,
-} from './PageHeader.examples'
+import { PageHeaderWithActionsExample, PageHeaderWithTitleExample } from './PageHeader.examples'
 
 function PageHeaderPlayground() {
     const [kicker, setKicker] = useState('Espace de travail')

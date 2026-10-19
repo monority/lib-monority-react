@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react'
-import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
-import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '../lib/constants'
 import { ThemeContext } from '../contexts/theme-context'
+import type { ThemeContextValue } from '../contexts/theme-context'
 import { deprecate } from '../internal/deprecate'
 import { isDevelopment } from '../internal/env'
-import type { ThemeContextValue } from '../contexts/theme-context'
+import { THEME_STORAGE_KEY, ThemeName } from '../lib/constants'
+import type { ResolvedThemeName, ThemeNameType, ThemePreference } from '../lib/constants'
 
 const THEME_CHANGE_EVENT = 'monority-theme-change'
 const RESOLVED_THEMES: readonly ResolvedThemeName[] = [
@@ -66,7 +66,6 @@ function readStoredTheme(): ThemeNameType {
     } catch {
         return ThemeName.DARK
     }
-    return ThemeName.DARK
 }
 
 function resolveSystemTheme(): ResolvedThemeName {

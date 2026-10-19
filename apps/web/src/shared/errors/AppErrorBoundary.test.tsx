@@ -1,11 +1,10 @@
-import { fireEvent, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
 import { AppErrorBoundary } from '@/shared/errors/AppErrorBoundary'
 import { renderWithProviders } from '@/shared/test/test-utils'
+import { fireEvent, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
-function ThrowingComponent() {
+function ThrowingComponent(): null {
     throw new Error('Boom')
-    return null
 }
 
 describe('AppErrorBoundary', () => {

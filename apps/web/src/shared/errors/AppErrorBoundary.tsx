@@ -1,5 +1,5 @@
-import { Component } from 'react'
 import { Button, Container, Section, Stack, Text, Title } from '@monority/ui'
+import { Component } from 'react'
 
 interface AppErrorBoundaryState {
     hasError: boolean

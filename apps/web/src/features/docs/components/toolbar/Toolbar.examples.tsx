@@ -1,7 +1,7 @@
-import { Toolbar } from '@monority/ui/toolbar'
 import { Button } from '@monority/ui/button'
-import { Text } from '@monority/ui/text'
 import { Separator } from '@monority/ui/separator'
+import { Text } from '@monority/ui/text'
+import { Toolbar } from '@monority/ui/toolbar'
 
 export function ToolbarBasicExample() {
     return (

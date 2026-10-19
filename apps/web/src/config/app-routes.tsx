@@ -1,6 +1,5 @@
-import { MoodboardPage } from '@/features/moodboard/MoodboardPage'
-import { NotFoundPage } from '@/shared/NotFoundPage'
 import { HomePage } from '@/features/home/HomePage'
+import { NotFoundPage } from '@/shared/NotFoundPage'
 import type { RouteObject } from 'react-router-dom'
 
 interface AppRouteDefinition {
@@ -43,7 +42,10 @@ export const appRoutes: RouteObject[] = [
     // Design Studio / Moodboard
     {
         path: '/moodboard',
-        element: <MoodboardPage />,
+        lazy: async () => {
+            const { MoodboardPage } = await import('@/features/moodboard/MoodboardPage')
+            return { Component: MoodboardPage }
+        },
     },
 
     // Docs — lazy load avec son propre layout

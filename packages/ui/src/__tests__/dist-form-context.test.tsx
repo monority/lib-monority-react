@@ -1,7 +1,7 @@
-import { act, createElement, type ReactElement } from 'react'
-import { createRoot } from 'react-dom/client'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { type ReactElement, act, createElement } from 'react'
+import { createRoot } from 'react-dom/client'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 /**

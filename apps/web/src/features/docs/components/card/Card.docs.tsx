@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { Badge } from '@monority/ui/badge'
 import { Card } from '@monority/ui/card'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { CardBasicExample, CardInteractiveExample, CardPaddingExample } from './Card.examples'
+import { CardInteractiveExample, CardPaddingExample } from './Card.examples'
 
 function CardPlayground() {
     const [padding, setPadding] = useState<'sm' | 'md' | 'lg'>('md')

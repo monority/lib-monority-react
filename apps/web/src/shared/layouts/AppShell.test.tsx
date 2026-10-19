@@ -1,7 +1,7 @@
-import { screen, within } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
 import { AppShell } from '@/shared/layouts/AppShell'
 import { renderWithProviders } from '@/shared/test/test-utils'
+import { screen, within } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 
 describe('AppShell', () => {
     it('rend un seul header global et le contenu de la page', () => {

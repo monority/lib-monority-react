@@ -1,12 +1,12 @@
-import { useState } from 'react'
 import { PasswordInput } from '@monority/ui/password-input'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     PasswordInputBasicPreview,
     PasswordInputSizesExample,
-    PasswordInputToggleExample,
     PasswordInputStatesExample,
+    PasswordInputToggleExample,
 } from './PasswordInput.examples'
 
 function PasswordInputPlaygroundDemo(props: {

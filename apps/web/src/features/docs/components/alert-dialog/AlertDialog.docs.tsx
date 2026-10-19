@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { Button } from '@monority/ui/button'
 import { AlertDialog } from '@monority/ui/alert-dialog'
-import { DocPage, type DocPageData } from '../DocPage'
+import { Button } from '@monority/ui/button'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
     AlertDialogBasicExample,
-    AlertDialogDefaultToneExample,
-    AlertDialogCustomLabelsExample,
     AlertDialogCompoundExample,
+    AlertDialogCustomLabelsExample,
+    AlertDialogDefaultToneExample,
 } from './AlertDialog.examples'
 
 function AlertDialogPlaygroundDemo(props: {

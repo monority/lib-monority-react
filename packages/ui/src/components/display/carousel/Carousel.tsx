@@ -1,3 +1,4 @@
+import { cn } from '@/lib/cn'
 import {
     Children,
     cloneElement,
@@ -9,7 +10,6 @@ import {
     useRef,
     useState,
 } from 'react'
-import { cn } from '@/lib/cn'
 import type {
     CarouselButtonProps,
     CarouselContentProps,

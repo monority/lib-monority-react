@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { computePosition, positionOverlay, type PositionPlacement } from './position'
+import { type PositionPlacement, computePosition, positionOverlay } from './position'
 
 const anchor = { top: 100, right: 300, bottom: 140, left: 200, width: 100, height: 40 }
 const floating = { width: 80, height: 30 }

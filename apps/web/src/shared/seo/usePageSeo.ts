@@ -1,6 +1,6 @@
+import { buildAbsoluteUrl, siteConfig } from '@/shared/seo/site-config'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { buildAbsoluteUrl, siteConfig } from '@/shared/seo/site-config'
 
 type SeoAttributes = Record<string, string>
 

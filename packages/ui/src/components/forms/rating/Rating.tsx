@@ -1,5 +1,5 @@
-import { useState, type KeyboardEvent } from 'react'
 import { cn } from '@/lib/cn'
+import { type KeyboardEvent, useState } from 'react'
 import type { RatingProps } from './Rating.types'
 
 function StarIcon({ filled }: { filled: boolean }) {

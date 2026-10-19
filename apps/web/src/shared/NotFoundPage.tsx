@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { usePageSeo } from '@/shared/seo/usePageSeo'
+import { Link } from 'react-router-dom'
 
 export function NotFoundPage() {
     usePageSeo({ title: '404', description: 'Page introuvable.' })

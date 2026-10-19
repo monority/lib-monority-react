@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
     Badge,
     Button,
@@ -11,6 +10,7 @@ import {
     Text,
     Toolbar,
 } from '@monority/ui'
+import { useState } from 'react'
 
 const surfaceSwatches = [
     { color: 'var(--mr-bg-canvas)', label: 'Canvas' },

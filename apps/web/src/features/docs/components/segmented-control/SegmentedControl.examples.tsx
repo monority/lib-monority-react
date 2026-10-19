@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { SegmentedControl } from '@monority/ui/segmented-control'
 import { Card } from '@monority/ui/card'
+import { SegmentedControl } from '@monority/ui/segmented-control'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 
 const viewOptions = [
     { value: 'grid', label: 'Vue Grille' },

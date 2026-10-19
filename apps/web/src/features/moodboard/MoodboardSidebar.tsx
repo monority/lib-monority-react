@@ -1,12 +1,12 @@
 import {
     Button,
+    type DesignConfig,
     PreCode,
     Separator,
     Stack,
     Text,
     Title,
     designConfigToJSON,
-    type DesignConfig,
 } from '@monority/ui'
 import { MoodboardSidebarControls } from './components/MoodboardSidebarControls'
 

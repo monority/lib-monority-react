@@ -1,7 +1,7 @@
-import type { ChangeEvent } from 'react'
+import { Input } from '@monority/ui/input'
 import { Select } from '@monority/ui/select'
 import { Switch } from '@monority/ui/switch'
-import { Input } from '@monority/ui/input'
+import type { ChangeEvent } from 'react'
 import type { PlaygroundControl } from '../ComponentPlayground.types'
 
 export interface PlaygroundControlItemProps {

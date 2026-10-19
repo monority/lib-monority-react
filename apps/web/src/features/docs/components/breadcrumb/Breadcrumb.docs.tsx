@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import { Breadcrumb } from '@monority/ui/breadcrumb'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    BreadcrumbBasicExample,
-    BreadcrumbManyItemsExample,
-    BreadcrumbSingleItemExample,
-} from './Breadcrumb.examples'
+import { BreadcrumbManyItemsExample, BreadcrumbSingleItemExample } from './Breadcrumb.examples'
 
 function BreadcrumbPlayground() {
     const [depth, setDepth] = useState<'2' | '3' | '4'>('3')

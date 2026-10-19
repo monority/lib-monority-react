@@ -1,4 +1,4 @@
-import { Table, type Column } from '@monority/ui/table'
+import { type Column, Table } from '@monority/ui/table'
 import type { PropRow } from './DocPage'
 
 export interface DocPropTableProps {

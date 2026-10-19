@@ -507,35 +507,35 @@ export async function testControlDimensions(browser) {
         const getRect = (id) => document.getElementById(id).getBoundingClientRect()
         return {
             sm: {
-                minHeight: parseFloat(getStyle('ta-sm').minHeight),
-                paddingTop: parseFloat(getStyle('ta-sm').paddingTop),
-                paddingBottom: parseFloat(getStyle('ta-sm').paddingBottom),
-                paddingLeft: parseFloat(getStyle('ta-sm').paddingLeft),
-                paddingRight: parseFloat(getStyle('ta-sm').paddingRight),
+                minHeight: Number.parseFloat(getStyle('ta-sm').minHeight),
+                paddingTop: Number.parseFloat(getStyle('ta-sm').paddingTop),
+                paddingBottom: Number.parseFloat(getStyle('ta-sm').paddingBottom),
+                paddingLeft: Number.parseFloat(getStyle('ta-sm').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('ta-sm').paddingRight),
                 height: getRect('ta-sm').height,
             },
             md: {
-                minHeight: parseFloat(getStyle('ta-md').minHeight),
-                paddingTop: parseFloat(getStyle('ta-md').paddingTop),
-                paddingBottom: parseFloat(getStyle('ta-md').paddingBottom),
-                paddingLeft: parseFloat(getStyle('ta-md').paddingLeft),
-                paddingRight: parseFloat(getStyle('ta-md').paddingRight),
+                minHeight: Number.parseFloat(getStyle('ta-md').minHeight),
+                paddingTop: Number.parseFloat(getStyle('ta-md').paddingTop),
+                paddingBottom: Number.parseFloat(getStyle('ta-md').paddingBottom),
+                paddingLeft: Number.parseFloat(getStyle('ta-md').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('ta-md').paddingRight),
                 height: getRect('ta-md').height,
             },
             lg: {
-                minHeight: parseFloat(getStyle('ta-lg').minHeight),
-                paddingTop: parseFloat(getStyle('ta-lg').paddingTop),
-                paddingBottom: parseFloat(getStyle('ta-lg').paddingBottom),
-                paddingLeft: parseFloat(getStyle('ta-lg').paddingLeft),
-                paddingRight: parseFloat(getStyle('ta-lg').paddingRight),
+                minHeight: Number.parseFloat(getStyle('ta-lg').minHeight),
+                paddingTop: Number.parseFloat(getStyle('ta-lg').paddingTop),
+                paddingBottom: Number.parseFloat(getStyle('ta-lg').paddingBottom),
+                paddingLeft: Number.parseFloat(getStyle('ta-lg').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('ta-lg').paddingRight),
                 height: getRect('ta-lg').height,
             },
             resizeNone: getStyle('ta-none').resize,
             resizeVert: getStyle('ta-vert').resize,
             resizeBoth: getStyle('ta-both').resize,
             counter: {
-                fontSize: parseFloat(getStyle('ta-counter').fontSize),
-                marginTop: parseFloat(getStyle('ta-counter').marginTop),
+                fontSize: Number.parseFloat(getStyle('ta-counter').fontSize),
+                marginTop: Number.parseFloat(getStyle('ta-counter').marginTop),
             },
         }
     })
@@ -643,20 +643,20 @@ export async function testControlDimensions(browser) {
         return {
             sm: {
                 height: getRect('sel-sm').height,
-                paddingLeft: parseFloat(getStyle('sel-sm').paddingLeft),
-                paddingRight: parseFloat(getStyle('sel-sm').paddingRight),
+                paddingLeft: Number.parseFloat(getStyle('sel-sm').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('sel-sm').paddingRight),
             },
             md: {
                 height: getRect('sel-md').height,
-                paddingLeft: parseFloat(getStyle('sel-md').paddingLeft),
-                paddingRight: parseFloat(getStyle('sel-md').paddingRight),
-                borderRadius: parseFloat(getStyle('sel-md').borderRadius),
+                paddingLeft: Number.parseFloat(getStyle('sel-md').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('sel-md').paddingRight),
+                borderRadius: Number.parseFloat(getStyle('sel-md').borderRadius),
                 appearance: getStyle('sel-md').appearance,
             },
             lg: {
                 height: getRect('sel-lg').height,
-                paddingLeft: parseFloat(getStyle('sel-lg').paddingLeft),
-                paddingRight: parseFloat(getStyle('sel-lg').paddingRight),
+                paddingLeft: Number.parseFloat(getStyle('sel-lg').paddingLeft),
+                paddingRight: Number.parseFloat(getStyle('sel-lg').paddingRight),
             },
         }
     })
@@ -766,21 +766,21 @@ export async function testControlDimensions(browser) {
             md: {
                 width: getRect('cb-ctrl-md').width,
                 height: getRect('cb-ctrl-md').height,
-                borderRadius: parseFloat(getStyle('cb-ctrl-md').borderRadius),
+                borderRadius: Number.parseFloat(getStyle('cb-ctrl-md').borderRadius),
                 rowHeight: getRect('cb-md').height,
-                gap: parseFloat(getStyle('cb-md').gap),
+                gap: Number.parseFloat(getStyle('cb-md').gap),
             },
             lg: {
                 width: getRect('cb-ctrl-lg').width,
                 height: getRect('cb-ctrl-lg').height,
             },
             input: {
-                opacity: parseFloat(getStyle('cb-input-md').opacity),
-                width: parseFloat(getStyle('cb-input-md').width),
-                height: parseFloat(getStyle('cb-input-md').height),
+                opacity: Number.parseFloat(getStyle('cb-input-md').opacity),
+                width: Number.parseFloat(getStyle('cb-input-md').width),
+                height: Number.parseFloat(getStyle('cb-input-md').height),
             },
             checked: {
-                afterOpacity: parseFloat(getAfter('cb-ctrl-checked').opacity),
+                afterOpacity: Number.parseFloat(getAfter('cb-ctrl-checked').opacity),
             },
         }
     })
@@ -903,7 +903,7 @@ export async function testControlDimensions(browser) {
                 thumbWidth: getRect('sw-thumb-md').width,
                 thumbHeight: getRect('sw-thumb-md').height,
                 rowHeight: getRect('sw-row-md').height,
-                borderRadius: parseFloat(getStyle('sw-ctrl-md').borderRadius),
+                borderRadius: Number.parseFloat(getStyle('sw-ctrl-md').borderRadius),
             },
             lg: {
                 trackWidth: getRect('sw-ctrl-lg').width,
@@ -913,7 +913,7 @@ export async function testControlDimensions(browser) {
                 rowHeight: getRect('sw-row-lg').height,
             },
             input: {
-                opacity: parseFloat(getStyle('sw-input-md').opacity),
+                opacity: Number.parseFloat(getStyle('sw-input-md').opacity),
             },
             checked: {
                 transform: getStyle('sw-thumb-checked').transform,
@@ -1274,8 +1274,8 @@ export async function testControlDimensions(browser) {
 
             return {
                 inputHeight: Math.round(rInput.height),
-                paddingLeft: Math.round(parseFloat(sInput.paddingLeft)),
-                borderRadius: Math.round(parseFloat(sInput.borderRadius)),
+                paddingLeft: Math.round(Number.parseFloat(sInput.paddingLeft)),
+                borderRadius: Math.round(Number.parseFloat(sInput.borderRadius)),
                 fontVariantNumeric: sInput.fontVariantNumeric,
                 buttonCount: buttons.length,
                 btnDownWidth: Math.round(rBtnDown.width),
@@ -1396,8 +1396,8 @@ export async function testControlDimensions(browser) {
             const rIcon = icon.getBoundingClientRect()
             return {
                 height: Math.round(rTrigger.height),
-                paddingLeft: Math.round(parseFloat(sTrigger.paddingLeft)),
-                borderRadius: Math.round(parseFloat(sTrigger.borderRadius)),
+                paddingLeft: Math.round(Number.parseFloat(sTrigger.paddingLeft)),
+                borderRadius: Math.round(Number.parseFloat(sTrigger.borderRadius)),
                 cursor: sTrigger.cursor,
                 iconWidth: Math.round(rIcon.width),
                 iconHeight: Math.round(rIcon.height),
@@ -1413,7 +1413,7 @@ export async function testControlDimensions(browser) {
             sm: getTrigger('dp-sm'),
             md: getTrigger('dp-md'),
             lg: getTrigger('dp-lg'),
-            popoverRadius: Math.round(parseFloat(sPopover.borderRadius)),
+            popoverRadius: Math.round(Number.parseFloat(sPopover.borderRadius)),
             dayWidth: Math.round(rDay.width),
             dayHeight: Math.round(rDay.height),
             dayFontVariantNumeric: sDay.fontVariantNumeric,
@@ -1512,7 +1512,7 @@ export async function testControlDimensions(browser) {
                 width: Math.round(rEl.width),
                 height: Math.round(rEl.height),
                 animationName: sRing.animationName,
-                borderRadius: parseFloat(sRing.borderRadius),
+                borderRadius: Number.parseFloat(sRing.borderRadius),
             }
         }
         return {

@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type {
     AvatarFallbackProps,
     AvatarImageProps,
@@ -49,7 +49,7 @@ export function AvatarImage({
             ref={ref}
             className={cn('mr-avatar__img', className)}
             src={src}
-            alt={alt}
+            alt={alt ?? ''}
             onError={(e) => {
                 onError?.(e)
                 ctx?.setImgError(true)
@@ -61,7 +61,7 @@ export function AvatarImage({
 
 export function AvatarFallback({ ref, children, className, ...props }: AvatarFallbackProps) {
     const ctx = useContext(AvatarContext)
-    if (ctx && ctx.hasImage && !ctx.imgError) {
+    if (ctx?.hasImage && !ctx.imgError) {
         return null
     }
 

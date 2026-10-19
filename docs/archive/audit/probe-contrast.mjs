@@ -1,9 +1,9 @@
-/** Sonde X2 : calcule des candidats de paires et compare aux minimums du tableau 5.5. */
-import { loadSources } from './lib/tokens-lib.mjs'
-import { buildMaps, comboValue } from './lib/resolve.mjs'
-import { contrast } from './lib/tokens-lib.mjs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { buildMaps, comboValue } from './lib/resolve.mjs'
+/** Sonde X2 : calcule des candidats de paires et compare aux minimums du tableau 5.5. */
+import { loadSources } from './lib/tokens-lib.mjs'
+import { contrast } from './lib/tokens-lib.mjs'
 
 const pkgDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const sources = loadSources(path.join(pkgDir, 'src'))

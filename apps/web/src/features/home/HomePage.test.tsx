@@ -1,7 +1,7 @@
+import { renderWithProviders } from '@/shared/test/test-utils'
 import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { HomePage } from './HomePage'
-import { renderWithProviders } from '@/shared/test/test-utils'
 
 describe('HomePage', () => {
     it('renders header, hero, sections and footer without error', () => {

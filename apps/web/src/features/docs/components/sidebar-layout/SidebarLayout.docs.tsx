@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
-    SidebarLayoutBasicExample,
-    SidebarLayoutWithContentExample,
     SidebarLayoutWidthsExample,
+    SidebarLayoutWithContentExample,
 } from './SidebarLayout.examples'
 
 function SidebarLayoutPlayground() {

@@ -1,14 +1,13 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
+import { Badge } from '@monority/ui/badge'
+import { Button } from '@monority/ui/button'
 import { FormSection } from '@monority/ui/form-section'
 import { Input } from '@monority/ui/input'
-import { Button } from '@monority/ui/button'
-import { Badge } from '@monority/ui/badge'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    FormSectionBasicExample,
-    FormSectionWithoutActionsExample,
-    FormSectionWithMetaExample,
     FormSectionCompoundExample,
+    FormSectionWithMetaExample,
+    FormSectionWithoutActionsExample,
 } from './FormSection.examples'
 
 function FormSectionPlayground() {

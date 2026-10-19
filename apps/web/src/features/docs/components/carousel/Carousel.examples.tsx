@@ -1,5 +1,5 @@
-import { Carousel } from '@monority/ui/carousel'
 import { Card } from '@monority/ui/card'
+import { Carousel } from '@monority/ui/carousel'
 
 const demoSlides = [
     <Card key="0" padding="lg" style={{ textAlign: 'center' }}>

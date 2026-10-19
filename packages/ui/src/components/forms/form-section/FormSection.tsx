@@ -1,7 +1,7 @@
-import { cn } from '@/lib/cn'
 import { Card } from '@/components/display/card/Card'
-import { Title } from '@/components/typography/title/Title'
 import { Text } from '@/components/typography/text/Text'
+import { Title } from '@/components/typography/title/Title'
+import { cn } from '@/lib/cn'
 import type {
     FormSectionBodyProps,
     FormSectionDescriptionProps,

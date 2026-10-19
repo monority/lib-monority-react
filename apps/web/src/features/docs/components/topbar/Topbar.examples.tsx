@@ -1,5 +1,5 @@
-import { Topbar } from '@monority/ui/topbar'
 import { Button } from '@monority/ui/button'
+import { Topbar } from '@monority/ui/topbar'
 
 export function TopbarBasicExample() {
     return (

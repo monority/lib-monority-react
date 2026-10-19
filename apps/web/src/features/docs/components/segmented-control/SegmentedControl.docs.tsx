@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { SegmentedControl } from '@monority/ui/segmented-control'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SegmentedControlBasicExample,
-    SegmentedControlSizesExample,
     SegmentedControlCompoundExample,
+    SegmentedControlSizesExample,
 } from './SegmentedControl.examples'
 
 function SegmentedControlPlaygroundDemo(props: {

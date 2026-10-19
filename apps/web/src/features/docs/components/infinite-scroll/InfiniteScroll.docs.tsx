@@ -1,12 +1,11 @@
-import { useState } from 'react'
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
-import { InfiniteScroll } from '@monority/ui/infinite-scroll'
 import { Button } from '@monority/ui/button'
+import { InfiniteScroll } from '@monority/ui/infinite-scroll'
+import { useState } from 'react'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    InfiniteScrollBasicExample,
-    InfiniteScrollErrorExample,
     InfiniteScrollEndMessageExample,
+    InfiniteScrollErrorExample,
 } from './InfiniteScroll.examples'
 
 function InfiniteScrollPlayground() {

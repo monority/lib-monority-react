@@ -1,5 +1,5 @@
-import type { DocExample } from './DocPage'
 import { CodeViewer } from '@/shared/components/CodeViewer'
+import type { DocExample } from './DocPage'
 
 export interface DocExampleCardProps {
     example: DocExample

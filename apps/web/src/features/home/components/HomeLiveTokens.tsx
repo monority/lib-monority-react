@@ -1,4 +1,3 @@
-import { useState, type CSSProperties } from 'react'
 import {
     Badge,
     Button,
@@ -12,6 +11,7 @@ import {
     Title,
     ToggleGroup,
 } from '@monority/ui'
+import { type CSSProperties, useState } from 'react'
 
 const ACCENTS = [
     { value: 'neutral', label: 'Neutral', hue: '0', chroma: '0' },

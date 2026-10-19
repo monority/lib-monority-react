@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
     Badge,
     Banner,
+    type CommandItem,
     CommandPalette,
     Popover,
     Separator,
     Stack,
     Text,
     ThemeName,
-    type CommandItem,
     useTheme,
 } from '@monority/ui'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { docsComponentRegistry } from '@/features/docs/components/registry'
 import { ThemeToggle } from './ThemeToggle'
@@ -194,15 +194,18 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                 </div>
             )}
 
-            <header
-                className={homeNav ? 'app-header app-header--home' : 'app-header'}
-                role="banner"
-            >
+            <header className={homeNav ? 'app-header app-header--home' : 'app-header'}>
                 <div className="app-header__inner">
                     <div className="app-header__start">
                         <Link className="app-header__brand" to="/" aria-label="Monority">
                             <span className="app-header__logo-mark" aria-hidden="true">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
                                     <path
                                         d="M12 2L2 7L12 12L22 7L12 2Z"
                                         stroke="currentColor"

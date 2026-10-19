@@ -2,9 +2,9 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { useTheme } from '../hooks/use-theme'
 import { THEME_STORAGE_KEY } from '../lib/constants'
 import { ThemeProvider } from './theme-provider'
-import { useTheme } from '../hooks/use-theme'
 
 interface MediaController {
     matches: boolean

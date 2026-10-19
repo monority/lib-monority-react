@@ -1,8 +1,8 @@
 import { act, createRef } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
 import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './Resizable'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './Resizable'
 
 let containerEl: HTMLDivElement | null = null
 let root: Root | null = null

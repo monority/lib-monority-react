@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { Tabs } from '@monority/ui/tabs'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     TabsBasicExample,
-    TabsTonesExample,
-    TabsSizesExample,
+    TabsCompoundExample,
     TabsDisabledExample,
     TabsFullWidthExample,
-    TabsCompoundExample,
+    TabsSizesExample,
+    TabsTonesExample,
 } from './Tabs.examples'
 
 function TabsPlaygroundDemo(props: {

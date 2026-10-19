@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
 import { HeroHeader } from '@/shared/components/HeroHeader'
+import type { ReactNode } from 'react'
 import { ComponentPlayground } from './ComponentPlayground'
 import type { DocPlaygroundConfig } from './ComponentPlayground/ComponentPlayground.types'
 import { DocContainer } from './DocContainer'
-import { DocSection } from './DocSection'
-import { DocPropTable } from './DocPropTable'
-import { DocTagList } from './DocTagList'
 import { DocExampleCard } from './DocExampleCard'
 import { DocKeyboardTable, type KeyboardShortcutRow } from './DocKeyboardTable'
+import { DocPropTable } from './DocPropTable'
+import { DocSection } from './DocSection'
+import { DocTagList } from './DocTagList'
 
 export interface PropRow extends Record<string, unknown> {
     name: string

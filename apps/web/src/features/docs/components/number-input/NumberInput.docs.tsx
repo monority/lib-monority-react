@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import { NumberInput } from '@monority/ui/number-input'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     NumberInputBasicPreview,
     NumberInputControlledExample,
     NumberInputSizesExample,
-    NumberInputTonesExample,
     NumberInputStatesExample,
+    NumberInputTonesExample,
 } from './NumberInput.examples'
 
 function NumberInputPlaygroundDemo(props: {

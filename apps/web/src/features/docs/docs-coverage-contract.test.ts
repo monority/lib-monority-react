@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest'
 // @ts-ignore - node builtins unavailable in the web tsconfig types; vitest runs on node
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 // @ts-ignore - path builtin
 import { join } from 'node:path'
+import { describe, expect, it } from 'vitest'
 
 declare const process: { cwd(): string }
 

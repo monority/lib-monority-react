@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import { Checkbox } from '@monority/ui/checkbox'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     CheckboxBasicExample,
     CheckboxDisabledExample,
-    CheckboxWithErrorExample,
-    CheckboxWithDescriptionExample,
     CheckboxIndeterminateExample,
+    CheckboxWithDescriptionExample,
+    CheckboxWithErrorExample,
 } from './Checkbox.examples'
 
 function CheckboxPlaygroundDemo(props: {

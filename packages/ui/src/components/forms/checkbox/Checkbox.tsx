@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl, useFormControl } from '@/primitives/form-control'
-import { Field } from '@/components/forms/field/Field'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CheckboxProps } from './Checkbox.types'
 
 function CheckboxInner({

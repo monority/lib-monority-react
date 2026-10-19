@@ -1,8 +1,8 @@
-import { act, createRef } from 'react'
-import { createRoot, type Root } from 'react-dom/client'
-import type { ReactElement } from 'react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
+import { act, createRef } from 'react'
+import type { ReactElement } from 'react'
+import { type Root, createRoot } from 'react-dom/client'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Combobox } from './Combobox'
 
 let container: HTMLDivElement | null = null

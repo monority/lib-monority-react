@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { Stepper } from '@monority/ui/stepper'
 import { Button } from '@monority/ui/button'
 import { Card } from '@monority/ui/card'
 import { Stack } from '@monority/ui/stack'
+import { Stepper } from '@monority/ui/stepper'
+import { useState } from 'react'
 
 const checkoutSteps = [
     { title: 'Panier', description: 'Articles et remises' },

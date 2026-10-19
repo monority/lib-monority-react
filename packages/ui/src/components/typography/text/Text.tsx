@@ -1,5 +1,5 @@
-import { createElement } from 'react'
 import { cn } from '@/lib/cn'
+import { createElement } from 'react'
 import type { TextProps } from './Text.types'
 
 export function Text({

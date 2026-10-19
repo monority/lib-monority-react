@@ -5,9 +5,9 @@
  * Generates a temporary component, typechecks it, runs its tests, then cleans up.
  */
 
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { execSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -17,8 +17,8 @@ const TMP_SLUG = 'smoke-test-probe'
 const CATEGORY = 'display'
 
 const componentDir = path.join(ROOT, 'packages/ui/src/components', CATEGORY, TMP_SLUG)
-const recipeFile = path.join(ROOT, 'packages/styles/src/recipes', TMP_SLUG + '.recipe.css')
-const docsDir = path.join(ROOT, 'apps/web/src/docs/components', TMP_SLUG)
+const recipeFile = path.join(ROOT, 'packages/styles/src/recipes', TMP_SLUG + '.css')
+const docsDir = path.join(ROOT, 'apps/web/src/features/docs/components', TMP_SLUG)
 const CLEANUP_PATHS = [componentDir, recipeFile, docsDir]
 
 console.log('\n=== Generator Smoke Test ===\n')
@@ -103,11 +103,11 @@ function revertCategoryIndex() {
 }
 
 function revertRegistry() {
-    const p = path.join(ROOT, 'apps/web/src/docs/components/registry.ts')
+    const p = path.join(ROOT, 'apps/web/src/features/docs/components/registry.ts')
     if (!fs.existsSync(p)) return
     let c = fs.readFileSync(p, 'utf8')
     const e =
-        "{ category: '" +
+        "  { category: '" +
         CATEGORY +
         "', label: '" +
         TMP_NAME +
@@ -145,10 +145,10 @@ function revertTsup() {
 }
 
 function revertRecipesIndex() {
-    const p = path.join(ROOT, 'packages/styles/src/recipes/index.css')
+    const p = path.join(ROOT, 'packages/styles/src/index.css')
     if (!fs.existsSync(p)) return
     let c = fs.readFileSync(p, 'utf8')
-    const e = "@import './" + TMP_SLUG + ".recipe.css';"
+    const e = "@import './recipes/" + TMP_SLUG + ".css';"
     if (c.includes(e)) {
         c = c.replace(e + '\n', '')
         fs.writeFileSync(p, c)

@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
-import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
 import { Checkbox } from '@/components/forms/checkbox/Checkbox'
+import { cn } from '@/lib/cn'
+import { useCallback, useMemo, useState } from 'react'
 import type { Column, DataTableProps, Sort } from './DataTable.types'
 
 function getCellValue<T>(row: T, col: Column<T>): React.ReactNode {

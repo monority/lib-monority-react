@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { DesignProvider } from './design-provider'
 import { DEFAULT_DESIGN_CONFIG } from '../lib/design-config'
+import { DesignProvider } from './design-provider'
 
 describe('DesignProvider', () => {
     it('applies the selected axes as data attributes and CSS variables', () => {

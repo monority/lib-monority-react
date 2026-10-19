@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { Toggle } from '@monority/ui/toggle'
 import { Text } from '@monority/ui/text'
+import { Toggle } from '@monority/ui/toggle'
+import { useState } from 'react'
 
 export function ToggleBasicPreview() {
     return <Toggle>Preview</Toggle>

@@ -1,3 +1,6 @@
+import { usePortalTarget } from '@/internal/use-portal-target'
+import { cn } from '@/lib/cn'
+import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
 import {
     createContext,
     useCallback,
@@ -8,11 +11,8 @@ import {
     useRef,
     useState,
 } from 'react'
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '@/lib/cn'
-import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
-import { usePortalTarget } from '@/internal/use-portal-target'
 import type {
     HoverCardAlign,
     HoverCardContentProps,

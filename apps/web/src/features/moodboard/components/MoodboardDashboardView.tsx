@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
     Badge,
     Button,
@@ -12,6 +11,7 @@ import {
     Toast,
     Topbar,
 } from '@monority/ui'
+import { useState } from 'react'
 import { MoodboardTelemetryChart } from './MoodboardTelemetryChart'
 import {
     MoodboardActivityModule,

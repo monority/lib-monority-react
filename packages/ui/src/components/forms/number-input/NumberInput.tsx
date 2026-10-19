@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { Field } from '@/components/forms/field/Field'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
-import { Field } from '@/components/forms/field/Field'
 import { InputBase } from '@/primitives/input-base'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import type { NumberInputProps } from './NumberInput.types'
 
 const MinusIcon = () => (

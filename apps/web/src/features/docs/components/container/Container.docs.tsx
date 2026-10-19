@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Container } from '@monority/ui/container'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import { ContainerBasicExample, ContainerSizesExample } from './Container.examples'
+import { ContainerSizesExample } from './Container.examples'
 
 function ContainerPlayground() {
     const [size, setSize] = useState<'sm' | 'md' | 'lg' | 'xl'>('md')

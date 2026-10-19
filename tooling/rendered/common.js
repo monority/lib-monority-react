@@ -49,9 +49,9 @@ export function colorToRgb(str) {
     if (oklabMatch) {
         return clipRgb(
             oklabToRgbRaw(
-                parseFloat(oklabMatch[1]),
-                parseFloat(oklabMatch[2]),
-                parseFloat(oklabMatch[3])
+                Number.parseFloat(oklabMatch[1]),
+                Number.parseFloat(oklabMatch[2]),
+                Number.parseFloat(oklabMatch[3])
             )
         )
     }
@@ -59,7 +59,8 @@ export function colorToRgb(str) {
         /color\(\s*srgb\s+([-\d.%]+)\s+([-\d.%]+)\s+([-\d.%]+)(?:\s*\/\s*[-\d.%]+)?\s*\)/i
     )
     if (colorSrgbMatch) {
-        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v))
+        const parseChannel = (v) =>
+            v.endsWith('%') ? Number.parseFloat(v) / 100 : Number.parseFloat(v)
         return clipRgb([
             parseChannel(colorSrgbMatch[1]),
             parseChannel(colorSrgbMatch[2]),
@@ -70,7 +71,8 @@ export function colorToRgb(str) {
         /rgba?\(\s*([\d.%]+)\s*,\s*([\d.%]+)\s*,\s*([\d.%]+)(?:\s*,\s*[\d.%]+)?\s*\)/i
     )
     if (rgbCommaMatch) {
-        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v) / 255)
+        const parseChannel = (v) =>
+            v.endsWith('%') ? Number.parseFloat(v) / 100 : Number.parseFloat(v) / 255
         return clipRgb([
             parseChannel(rgbCommaMatch[1]),
             parseChannel(rgbCommaMatch[2]),
@@ -81,7 +83,8 @@ export function colorToRgb(str) {
         /rgba?\(\s*([\d.%]+)\s+([\d.%]+)\s+([\d.%]+)(?:\s*\/\s*[\d.%]+)?\s*\)/i
     )
     if (rgbSpaceMatch) {
-        const parseChannel = (v) => (v.endsWith('%') ? parseFloat(v) / 100 : parseFloat(v) / 255)
+        const parseChannel = (v) =>
+            v.endsWith('%') ? Number.parseFloat(v) / 100 : Number.parseFloat(v) / 255
         return clipRgb([
             parseChannel(rgbSpaceMatch[1]),
             parseChannel(rgbSpaceMatch[2]),

@@ -17,7 +17,7 @@
  *
  * Lancé par tsup (`onSuccess`) après chaque build.
  */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
 const BANNER = '"use client";'

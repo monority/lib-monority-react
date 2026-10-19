@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
 import { Modal } from '@monority/ui/modal'
+import { useState } from 'react'
 
 export function ModalBasicExample() {
     const [open, setOpen] = useState(false)

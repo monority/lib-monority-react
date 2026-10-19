@@ -1,8 +1,8 @@
-import { useId, useMemo, useState, type ReactNode } from 'react'
 import { CodeViewer } from '@/shared/components/CodeViewer'
-import { PlaygroundHeader, PlaygroundStage, PlaygroundControls } from './components'
-import { getDefaultValues, notifyControlResets, formatCode } from './utils'
+import { type ReactNode, useId, useMemo, useState } from 'react'
 import type { ComponentPlaygroundProps, PlaygroundControl } from './ComponentPlayground.types'
+import { PlaygroundControls, PlaygroundHeader, PlaygroundStage } from './components'
+import { formatCode, getDefaultValues, notifyControlResets } from './utils'
 import './ComponentPlayground.css'
 
 export function ComponentPlayground<T extends Record<string, unknown> = Record<string, unknown>>({

@@ -1,13 +1,12 @@
-import { cn } from '@/lib/cn'
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
+import { cn } from '@/lib/cn'
 import type {
-    Column,
     TableBodyProps,
     TableCaptionProps,
     TableCellProps,
     TableFooterProps,
-    TableHeaderProps,
     TableHeadProps,
+    TableHeaderProps,
     TableProps,
     TableRowProps,
 } from './Table.types'

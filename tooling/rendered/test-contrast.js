@@ -1,16 +1,7 @@
 import assert from 'node:assert'
 import fs from 'node:fs'
 import path from 'node:path'
-import {
-    ROOT,
-    colorToRgb,
-    getContrastRatio,
-    inGamutRgb,
-    marginRgb,
-    parseCssVariables,
-    reduceChroma,
-    waitForAnimations,
-} from './common.js'
+import { ROOT, colorToRgb, getContrastRatio, marginRgb, waitForAnimations } from './common.js'
 
 // 1. Preuves en negatif et assertions de reference
 async function testNegativeProof(browser) {

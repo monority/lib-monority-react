@@ -1,14 +1,14 @@
-import { createContext, useContext } from 'react'
-import { cn } from '@/lib/cn'
 import { useControllableState } from '@/internal/use-controllable-state'
+import { cn } from '@/lib/cn'
+import { createContext, useContext } from 'react'
 import { Toggle } from '../toggle'
 import type {
-    ToggleGroupProps,
     ToggleGroupItemProps,
-    ToggleGroupType,
+    ToggleGroupProps,
     ToggleGroupSize,
-    ToggleGroupVariant,
     ToggleGroupTone,
+    ToggleGroupType,
+    ToggleGroupVariant,
 } from './ToggleGroup.types'
 
 interface ToggleGroupContextValue {

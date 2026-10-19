@@ -1,12 +1,8 @@
-import { useState } from 'react'
 import { Separator } from '@monority/ui/separator'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    SeparatorBasicExample,
-    SeparatorDecorativeExample,
-    SeparatorVerticalExample,
-} from './Separator.examples'
+import { SeparatorDecorativeExample, SeparatorVerticalExample } from './Separator.examples'
 
 function SeparatorPlayground() {
     const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')

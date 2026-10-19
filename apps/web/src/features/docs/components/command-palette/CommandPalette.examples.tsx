@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { CommandPalette } from '@monority/ui/command-palette'
+import { useState } from 'react'
 
 export function CommandPaletteBasicExample() {
     const [open, setOpen] = useState(false)

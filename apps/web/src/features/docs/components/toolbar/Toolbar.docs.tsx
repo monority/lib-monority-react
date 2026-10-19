@@ -1,14 +1,10 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Divider } from '@monority/ui/divider'
 import { Toolbar } from '@monority/ui/toolbar'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    ToolbarBasicExample,
-    ToolbarWithButtonsExample,
-    ToolbarWithDividerExample,
-} from './Toolbar.examples'
+import { ToolbarWithButtonsExample, ToolbarWithDividerExample } from './Toolbar.examples'
 
 function ToolbarPlayground() {
     const [density, setDensity] = useState<'md' | 'sm'>('md')

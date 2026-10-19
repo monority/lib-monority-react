@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Modal } from '@monority/ui/modal'
-import { DocPage, type DocPageData } from '../DocPage'
+import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
-import { ModalBasicExample, ModalWithFormExample, ModalScrollableExample } from './Modal.examples'
+import { DocPage, type DocPageData } from '../DocPage'
+import { ModalBasicExample, ModalScrollableExample, ModalWithFormExample } from './Modal.examples'
 
 function ModalPlaygroundDemo(props: {
     title: string

@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { resolveDesignConfig, type DesignConfig } from '../lib/design-config'
+import { type DesignConfig, resolveDesignConfig } from '../lib/design-config'
 
 export interface DesignProviderProps {
     config: DesignConfig

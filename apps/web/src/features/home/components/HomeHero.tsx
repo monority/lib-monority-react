@@ -1,6 +1,6 @@
+import { HeroHeader } from '@/shared/components/HeroHeader'
 import { ButtonLink } from '@monority/ui/button-link'
 import { Section } from '@monority/ui/section'
-import { HeroHeader } from '@/shared/components/HeroHeader'
 
 export function HomeHero() {
     return (

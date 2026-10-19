@@ -1,11 +1,10 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Collapsible } from '@monority/ui/collapsible'
 import { Text } from '@monority/ui/text'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    CollapsibleBasicExample,
-    CollapsibleDefaultOpenExample,
     CollapsibleControlledExample,
+    CollapsibleDefaultOpenExample,
     CollapsibleSizesExample,
 } from './Collapsible.examples'
 

@@ -1,5 +1,5 @@
-import { cn } from '@/lib/cn'
 import { CopyButton } from '@/components/actions/copy-button/CopyButton'
+import { cn } from '@/lib/cn'
 import type { PreCodeProps } from './PreCode.types'
 
 export function PreCode({

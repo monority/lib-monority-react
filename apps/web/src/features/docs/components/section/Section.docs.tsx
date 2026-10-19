@@ -1,13 +1,9 @@
-import { useState } from 'react'
 import { Section } from '@monority/ui/section'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    SectionBasicExample,
-    SectionCompoundExample,
-    SectionSpacingExample,
-} from './Section.examples'
+import { SectionCompoundExample, SectionSpacingExample } from './Section.examples'
 
 function SectionPlayground() {
     const [variant, setVariant] = useState<'default' | 'bordered' | 'muted' | 'card'>('card')

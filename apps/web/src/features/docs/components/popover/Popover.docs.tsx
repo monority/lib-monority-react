@@ -1,15 +1,11 @@
-import { useState } from 'react'
 import { Button } from '@monority/ui/button'
 import { Popover } from '@monority/ui/popover'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
-import {
-    PopoverAlignmentExample,
-    PopoverBasicExample,
-    PopoverWithFormExample,
-} from './Popover.examples'
+import { PopoverAlignmentExample, PopoverWithFormExample } from './Popover.examples'
 
 function PopoverPlayground() {
     const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('bottom')

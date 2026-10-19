@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Badge, Button, Card, Text, Timeline, Title, Toolbar } from '@monority/ui'
+import { useState } from 'react'
 
 interface ActivityItem {
     id: string

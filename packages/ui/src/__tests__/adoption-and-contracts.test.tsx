@@ -5,22 +5,22 @@
  * install → import → render → interact → typecheck
  */
 import { useState } from 'react'
-import { createRoot } from 'react-dom/client'
 import { act } from 'react'
-import { afterEach, describe, it, expect, vi } from 'vitest'
+import { createRoot } from 'react-dom/client'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 // ─── Simple ──────────────────────────────────────────────────────────────────
 import { Button } from '@/components/actions/button/Button'
 import { Badge } from '@/components/feedback/badge/Badge'
 
+import { Checkbox } from '@/components/forms/checkbox/Checkbox'
 // ─── Form ────────────────────────────────────────────────────────────────────
 import { Input } from '@/components/forms/input/Input'
-import { Textarea } from '@/components/forms/textarea/Textarea'
-import { Select } from '@/components/forms/select/Select'
-import { Checkbox } from '@/components/forms/checkbox/Checkbox'
-import { Switch } from '@/components/forms/switch/Switch'
 import { RadioGroup } from '@/components/forms/radio-group/RadioGroup'
+import { Select } from '@/components/forms/select/Select'
 import { Slider } from '@/components/forms/slider/Slider'
+import { Switch } from '@/components/forms/switch/Switch'
+import { Textarea } from '@/components/forms/textarea/Textarea'
 
 // ─── Layout / interaction ────────────────────────────────────────────────────
 import { Accordion } from '@/components/display/accordion/Accordion'
@@ -29,11 +29,11 @@ import { Tooltip } from '@/components/overlays/tooltip/Tooltip'
 
 // ─── Complex ─────────────────────────────────────────────────────────────────
 import { Toast } from '@/components/feedback/toast/Toast'
-import { ToastProvider } from '@/providers/toast-provider'
-import { useToast } from '@/hooks/use-toast'
-import { Modal } from '@/components/overlays/modal/Modal'
 import { AlertDialog } from '@/components/overlays/alert-dialog/AlertDialog'
+import { Modal } from '@/components/overlays/modal/Modal'
+import { useToast } from '@/hooks/use-toast'
 import { FormControl } from '@/primitives/form-control'
+import { ToastProvider } from '@/providers/toast-provider'
 
 // ─── Display ─────────────────────────────────────────────────────────────────
 import { Avatar } from '@/components/display/avatar/Avatar'
@@ -41,7 +41,7 @@ import { Progress } from '@/components/feedback/progress/Progress'
 
 // ─── Root + subpath ──────────────────────────────────────────────────────────
 import { Spinner } from '@monority/ui'
-import type { ButtonProps, InputProps, SliderProps, ButtonVariant } from '@monority/ui'
+import type { ButtonProps, ButtonVariant, InputProps, SliderProps } from '@monority/ui'
 
 describe('Step 11 · Fresh consumer install', () => {
     it('resolves @monority/ui root barrel', () => {

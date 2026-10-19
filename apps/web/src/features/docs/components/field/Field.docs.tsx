@@ -1,16 +1,15 @@
-import { DocPage, type DocPageData } from '../DocPage'
-import { ComponentPlayground } from '../ComponentPlayground'
 import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
+import { ComponentPlayground } from '../ComponentPlayground'
+import { DocPage, type DocPageData } from '../DocPage'
 import {
-    FieldBasicExample,
-    FieldWithHintExample,
-    FieldWithErrorExample,
-    FieldRequiredExample,
-    FieldStandaloneExample,
     FieldCompositionExample,
     FieldGroupExample,
+    FieldRequiredExample,
     FieldSetExample,
+    FieldStandaloneExample,
+    FieldWithErrorExample,
+    FieldWithHintExample,
 } from './Field.examples'
 
 function FieldPlayground() {

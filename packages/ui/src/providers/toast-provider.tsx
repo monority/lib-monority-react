@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ToastContext } from '../contexts/toast-context'
 import { Toast } from '../components/feedback/toast/Toast'
+import { ToastContext } from '../contexts/toast-context'
 import { usePortalTarget } from '../internal/use-portal-target'
 
 type ToastTone = 'neutral' | 'success' | 'danger'
@@ -23,11 +23,6 @@ let toastId = 0
 function createToastId() {
     toastId += 1
     return `toast-${toastId}`
-}
-
-interface ToastContextValue {
-    pushToast: (toast: Partial<ToastItem> & { duration?: number }) => string
-    dismissToast: (id: string) => void
 }
 
 /**

@@ -1,3 +1,4 @@
+import { cn } from '@/lib/cn'
 import {
     cloneElement,
     createContext,
@@ -7,7 +8,6 @@ import {
     useId,
     useState,
 } from 'react'
-import { cn } from '@/lib/cn'
 import type {
     TooltipContentProps,
     TooltipProps,

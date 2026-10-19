@@ -18,7 +18,7 @@ export function oklchToRgbRaw(l, c, h) {
     const bl = -0.0041960863 * L - 0.7034186147 * M + 1.707614701 * S
 
     const toLinearSrgb = (x) => {
-        return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(Math.max(0, x), 1 / 2.4) - 0.055
+        return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.max(0, x) ** (1 / 2.4) - 0.055
     }
 
     return [toLinearSrgb(r), toLinearSrgb(g), toLinearSrgb(bl)]
@@ -38,7 +38,7 @@ export function oklabToRgbRaw(l, a, b) {
     const bl = -0.0041960863 * L - 0.7034186147 * M + 1.707614701 * S
 
     const toLinearSrgb = (x) => {
-        return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(Math.max(0, x), 1 / 2.4) - 0.055
+        return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.max(0, x) ** (1 / 2.4) - 0.055
     }
 
     return [toLinearSrgb(r), toLinearSrgb(g), toLinearSrgb(bl)]
@@ -80,7 +80,7 @@ export function oklchToRgb(l, c, h) {
 }
 
 export function getLuminance([r, g, b]) {
-    const toLinear = (c) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4))
+    const toLinear = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
     return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
 }
 
@@ -95,9 +95,8 @@ export function getContrastRatio(rgb1, rgb2) {
 // Extrait les definitions de variables d'un fichier CSS
 export function parseCssVariables(cssContent) {
     const vars = {}
-    const regex = /--([a-zA-Z0-9-]+)\s*:\s*([^;]+);/g
-    let match
-    while ((match = regex.exec(cssContent)) !== null) {
+    const matches = cssContent.matchAll(/--([a-zA-Z0-9-]+)\s*:\s*([^;]+);/g)
+    for (const match of matches) {
         vars[`--${match[1]}`] = match[2].trim()
     }
     return vars
@@ -127,5 +126,5 @@ export function parseOklch(str, contextVars = {}) {
 
     const match = resolved.match(/oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)/i)
     if (!match) return null
-    return [parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3])]
+    return [Number.parseFloat(match[1]), Number.parseFloat(match[2]), Number.parseFloat(match[3])]
 }

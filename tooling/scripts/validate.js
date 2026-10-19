@@ -1,8 +1,8 @@
 #!/usr/bin/env node
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { execSync } from 'node:child_process'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '../..')
@@ -17,7 +17,7 @@ const fail = (m) => {
 }
 const warn = (m) => console.warn('\x1b[33m⚠️  ' + m + '\x1b[0m')
 const info = (m) => console.log('\x1b[36mℹ️  ' + m + '\x1b[0m')
-let errors = []
+const errors = []
 
 info('Checking package metadata...')
 const pkg = JSON.parse(fs.readFileSync(UI_PKG, 'utf8'))

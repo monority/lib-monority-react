@@ -1,6 +1,6 @@
-import { Timeline } from '@monority/ui/timeline'
-import { Card } from '@monority/ui/card'
 import { Badge } from '@monority/ui/badge'
+import { Card } from '@monority/ui/card'
+import { Timeline } from '@monority/ui/timeline'
 
 export function TimelineBasicExample() {
     return (
