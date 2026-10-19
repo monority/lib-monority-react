@@ -75,7 +75,8 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier chantier : exporteur de thème CSS et snippets Studio Moodboard.
+Dernier commit vert : 75ae39b (sur main).
+Chantier : exporteur de thème CSS et snippets Studio Moodboard.
 Contrats et vérifications :
 - pnpm verify : 100% vert (exit code 0).
 - Biome lint & format : 0 erreur, 1012 fichiers conformes.
