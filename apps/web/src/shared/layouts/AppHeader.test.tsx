@@ -70,7 +70,7 @@ describe('AppHeader', () => {
     it('affiche la section temporaire des changements et le déclencheur de log', () => {
         renderHeader()
 
-        expect(screen.getByText(/Vague 6/i)).toBeInTheDocument()
+        expect(screen.getByText(/Vague 7/i)).toBeInTheDocument()
         expect(
             screen.getByRole('button', { name: /journal des derniers changements/i })
         ).toBeInTheDocument()

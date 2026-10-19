@@ -176,10 +176,10 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                         onDismiss={() => setShowBanner(false)}
                         className="app-header__announcement-banner"
                     >
-                        <Banner.Eyebrow>Vague 6</Banner.Eyebrow>
+                        <Banner.Eyebrow>Vague 7</Banner.Eyebrow>
                         <Banner.Description>
-                            Architecture compound étendue à CommandPalette, FileUpload,
-                            SidebarLayout et Combobox.
+                            Système de mouvement, focus rings calibrés, documentation interactive
+                            sur 72 composants et conformité WCAG 2.1 AA.
                         </Banner.Description>
                         <Banner.Actions>
                             <button
@@ -290,7 +290,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                             >
                                 <span className="app-header__changes-dot" aria-hidden="true" />
                                 <span className="app-header__changes-title">Log</span>
-                                <span className="app-header__changes-tag">V6</span>
+                                <span className="app-header__changes-tag">V7</span>
                             </Popover.Trigger>
                             <Popover.Content className="app-header__changes-popover">
                                 <Stack gap="sm">
@@ -299,7 +299,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                             Journal des modifications
                                         </Text.Strong>
                                         <Badge tone="accent" size="sm">
-                                            Vague 6
+                                            Vague 7
                                         </Badge>
                                     </Stack>
                                     <Separator />
@@ -307,6 +307,21 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                         gap="xs"
                                         style={{ maxHeight: '280px', overflowY: 'auto' }}
                                     >
+                                        <Text.Small tone="strong">
+                                            Vague 7 — Mouvement, Focus & Documentation :
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Playgrounds interactifs dynamiques sur 72 composants
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Système de mouvement tokenisé et anneaux de focus
+                                            calibrés
+                                        </Text.Small>
+                                        <Text.Small tone="muted">
+                                            • Certification accessibilité WCAG 2.1 AA (0 violation
+                                            Axe)
+                                        </Text.Small>
+                                        <Separator />
                                         <Text.Small tone="strong">
                                             Vague 6 — Composants avancés & Qualité :
                                         </Text.Small>
