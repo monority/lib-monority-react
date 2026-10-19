@@ -30,6 +30,10 @@
         transform-origin: top left;
     }
 
+    :where(.mr-context-menu__content)[data-closing] {
+        animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
+    }
+
     :where(.mr-context-menu__separator) {
         height: 1px;
         margin-block: var(--mr-space-1);

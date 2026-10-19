@@ -124,4 +124,19 @@ describe('Banner', () => {
         )
         expect(customView.querySelector('.custom-banner-icon')).not.toBeNull()
     })
+
+    it('handles exit animation lifecycle with data-closing before unmounting', () => {
+        const view = render(<Banner open={true} title="Exiting Banner" />)
+        expect(view.querySelector('.mr-banner')).not.toBeNull()
+        expect(view.querySelector('.mr-banner')?.hasAttribute('data-closing')).toBe(false)
+
+        act(() => {
+            root?.render(<Banner open={false} title="Exiting Banner" />)
+        })
+
+        // In exit phase: element remains with data-closing
+        const bannerEl = view.querySelector('.mr-banner')
+        expect(bannerEl).not.toBeNull()
+        expect(bannerEl?.hasAttribute('data-closing')).toBe(true)
+    })
 })

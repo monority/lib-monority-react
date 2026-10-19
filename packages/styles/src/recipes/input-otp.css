@@ -97,7 +97,18 @@
         }
     }
 
+    /* Animation de secousse en cas d'erreur ou d'etat invalide */
+    :where(.mr-input-otp)[data-invalid],
+    :where(.mr-input-otp)[aria-invalid='true'] {
+        animation: mr-shake var(--mr-duration-state) ease-in-out;
+    }
+
     @media (prefers-reduced-motion: reduce) {
+        :where(.mr-input-otp)[data-invalid],
+        :where(.mr-input-otp)[aria-invalid='true'] {
+            animation: none;
+        }
+
         :where(.mr-input-otp__caret) {
             animation: none !important;
             opacity: 1;

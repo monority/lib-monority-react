@@ -336,4 +336,36 @@
             transform: translateY(var(--mr-space-2)) scale(0.96);
         }
     }
+
+    /* Secousse horizontale subtile de rejet / validation invalide (input-otp, formulaires) */
+    @keyframes mr-shake {
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+        20%,
+        60% {
+            transform: translateX(calc(-1 * 2px));
+        }
+        40%,
+        80% {
+            transform: translateX(2px);
+        }
+    }
+
+    /* Rebond elastique discret pour validation et copie (copy-button, checkmark) */
+    @keyframes mr-pop-check {
+        0% {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+        70% {
+            opacity: 1;
+            transform: scale(1.12);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 }

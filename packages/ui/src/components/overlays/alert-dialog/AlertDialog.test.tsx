@@ -146,4 +146,34 @@ describe('AlertDialog', () => {
         })
         expect(onConfirm).toHaveBeenCalledTimes(1)
     })
+
+    it('orchestre le cycle de sortie avec data-closing avant demontage', () => {
+        vi.useFakeTimers()
+        container = document.createElement('div')
+        document.body.appendChild(container)
+        root = createRoot(container)
+
+        act(() => {
+            root?.render(<AlertDialog open title="Exit?" />)
+        })
+
+        expect(document.body.querySelector('.mr-alert-dialog__backdrop')).not.toBeNull()
+
+        act(() => {
+            root?.render(<AlertDialog open={false} title="Exit?" />)
+        })
+
+        // Reste dans le DOM pendant la sortie avec data-closing
+        const closingBackdrop = document.body.querySelector('.mr-alert-dialog__backdrop')
+        expect(closingBackdrop).not.toBeNull()
+        expect(closingBackdrop?.hasAttribute('data-closing')).toBe(true)
+
+        // A la fin de l'animation de sortie (200ms)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
+
+        expect(document.body.querySelector('.mr-alert-dialog__backdrop')).toBeNull()
+        vi.useRealTimers()
+    })
 })

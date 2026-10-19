@@ -1,3 +1,4 @@
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import type {
     BannerActionsProps,
@@ -178,7 +179,11 @@ export function Banner({
     ref,
     ...props
 }: BannerProps) {
-    if (open === false) return null
+    const isControlled = open !== undefined
+    const { isMounted, isClosing } = usePresence(open ?? true)
+
+    if (isControlled && !isMounted) return null
+    if (!isControlled && open === false) return null
 
     const resolvedRole = role ?? (tone === 'danger' ? 'alert' : 'status')
     const hasStructuredProps = Boolean(eyebrow || title || description)
@@ -192,6 +197,7 @@ export function Banner({
             ref={ref}
             className={cn('mr-banner', className)}
             data-tone={tone}
+            data-closing={isClosing ? '' : undefined}
             role={resolvedRole}
             {...props}
         >

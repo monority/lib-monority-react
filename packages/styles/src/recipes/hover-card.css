@@ -29,6 +29,10 @@
         transform-origin: top center;
     }
 
+    :where(.mr-hovercard__content)[data-closing] {
+        animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
+    }
+
     :where(.mr-hovercard__content)[data-side='top'] {
         transform-origin: bottom center;
     }

@@ -16,6 +16,12 @@
         font-family: var(--mr-font-family-sans);
         background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
+        animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out) both;
+    }
+
+    :where(.mr-banner)[data-closing] {
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-in) both;
+        pointer-events: none;
     }
 
     /* Icone de statut coloree */
@@ -119,5 +125,12 @@
 
     :where(.mr-banner)[data-tone='danger'] :where(.mr-banner__icon) {
         color: var(--mr-danger-solid);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-banner),
+        :where(.mr-banner)[data-closing] {
+            animation: none;
+        }
     }
 }

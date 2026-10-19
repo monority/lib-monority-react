@@ -215,4 +215,34 @@ describe('Modal', () => {
         })
         expect(onClose).toHaveBeenCalledTimes(1)
     })
+
+    it('orchestre le cycle de vie de sortie avec data-closing avant demontage', () => {
+        vi.useFakeTimers()
+        const { rerender } = renderWithRerender(
+            <Modal open title="Exit animation test" onClose={() => {}}>
+                Exit Content
+            </Modal>
+        )
+
+        expect(document.body.querySelector('.mr-modal')).not.toBeNull()
+
+        rerender(
+            <Modal open={false} title="Exit animation test" onClose={() => {}}>
+                Exit Content
+            </Modal>
+        )
+
+        // Pendant la sortie, le noeud reste dans le DOM avec data-closing
+        const closingModal = document.body.querySelector('.mr-modal')
+        expect(closingModal).not.toBeNull()
+        expect(closingModal?.hasAttribute('data-closing')).toBe(true)
+
+        // A la fin de l'animation de sortie (200ms)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
+
+        expect(document.body.querySelector('.mr-modal')).toBeNull()
+        vi.useRealTimers()
+    })
 })

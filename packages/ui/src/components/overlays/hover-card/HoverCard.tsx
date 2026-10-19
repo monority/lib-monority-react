@@ -1,6 +1,8 @@
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { OVERLAY_ARROW_PADDING, OVERLAY_OFFSET, OVERLAY_VIEWPORT_GUTTER } from '@/lib/constants'
+
 import {
     createContext,
     useCallback,
@@ -110,6 +112,8 @@ function calculatePosition(
 
 interface HoverCardContextValue {
     isOpen: boolean
+    isMounted: boolean
+    presenceProps: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
     setOpenState: (open: boolean) => void
     triggerRef: React.MutableRefObject<HTMLSpanElement | null>
     contentRef: React.MutableRefObject<HTMLDivElement | null>
@@ -170,7 +174,7 @@ export function HoverCardContent({
     ...props
 }: HoverCardContentProps) {
     const ctx = useContext(HoverCardContext)
-    if (!ctx || !ctx.isOpen || !ctx.portalTarget) return null
+    if (!ctx || !ctx.isMounted || !ctx.portalTarget) return null
 
     const showArrow = explicitArrow !== undefined ? explicitArrow : ctx.arrow
     const { position, instanceId } = ctx
@@ -187,6 +191,7 @@ export function HoverCardContent({
             role="dialog"
             aria-modal="false"
             data-side={position.side}
+            data-closing={ctx.presenceProps['data-closing']}
             style={
                 {
                     top: `${position.top}px`,
@@ -248,6 +253,7 @@ export function HoverCard({
     })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
 
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
@@ -310,6 +316,8 @@ export function HoverCard({
 
     const contextValue: HoverCardContextValue = {
         isOpen,
+        isMounted,
+        presenceProps,
         setOpenState,
         triggerRef,
         contentRef,

@@ -211,4 +211,34 @@ describe('CommandPalette', () => {
         })
         expect(onSelect).toHaveBeenCalled()
     })
+
+    it('orchestre le cycle de sortie avec data-closing avant demontage', () => {
+        vi.useFakeTimers()
+        container = document.createElement('div')
+        document.body.appendChild(container)
+        root = createRoot(container)
+
+        act(() => {
+            root?.render(<CommandPalette open items={sampleItems} />)
+        })
+
+        expect(document.body.querySelector('.mr-command-palette')).not.toBeNull()
+
+        act(() => {
+            root?.render(<CommandPalette open={false} items={sampleItems} />)
+        })
+
+        // Reste dans le DOM pendant la sortie avec data-closing
+        const closingPalette = document.body.querySelector('.mr-command-palette')
+        expect(closingPalette).not.toBeNull()
+        expect(closingPalette?.hasAttribute('data-closing')).toBe(true)
+
+        // A la fin de l'animation de sortie (200ms)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
+
+        expect(document.body.querySelector('.mr-command-palette')).toBeNull()
+        vi.useRealTimers()
+    })
 })

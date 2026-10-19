@@ -1,4 +1,5 @@
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import {
     createContext,
@@ -28,6 +29,8 @@ function isActionableItem(item: ContextMenuItem) {
 
 interface ContextMenuContextValue {
     isOpen: boolean
+    isMounted: boolean
+    presenceProps: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
     setOpenState: (open: boolean) => void
     position: { top: number; left: number }
     openMenuAt: (x: number, y: number) => void
@@ -59,6 +62,7 @@ export function ContextMenu({
     const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
 
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
@@ -180,6 +184,8 @@ export function ContextMenu({
 
     const contextValue: ContextMenuContextValue = {
         isOpen,
+        isMounted,
+        presenceProps,
         setOpenState,
         position,
         openMenuAt,
@@ -231,7 +237,7 @@ export function ContextMenu({
                     {trigger}
                 </div>
 
-                {isOpen && portalTarget
+                {isMounted && portalTarget
                     ? createPortal(
                           <div
                               ref={contentRef}
@@ -239,6 +245,7 @@ export function ContextMenu({
                               className={cn('mr-context-menu__content', contentClassName)}
                               role="menu"
                               aria-orientation="vertical"
+                              data-closing={presenceProps['data-closing']}
                               style={{ top: `${position.top}px`, left: `${position.left}px` }}
                               onKeyDown={(e) => {
                                   if (e.key === 'ArrowDown') {
@@ -352,7 +359,7 @@ function ContextMenuContent({
 }: ContextMenuContentProps) {
     const context = useContext(ContextMenuContext)
     const portalTarget = usePortalTarget()
-    if (!context?.isOpen || !portalTarget) return null
+    if (!context?.isMounted || !portalTarget) return null
 
     return createPortal(
         <div
@@ -364,6 +371,7 @@ function ContextMenuContent({
             role="menu"
             aria-orientation="vertical"
             className={cn('mr-context-menu__content', className)}
+            data-closing={context.presenceProps['data-closing']}
             style={{ top: `${context.position.top}px`, left: `${context.position.left}px` }}
             onKeyDown={(e) => {
                 onKeyDown?.(e)

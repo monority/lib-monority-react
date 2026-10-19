@@ -20,6 +20,11 @@
         animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
     }
 
+    /* Animation de sortie du voile */
+    :where(.mr-modal)[data-closing] :where(.mr-modal__backdrop) {
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+    }
+
     /* Panneau central */
     :where(.mr-modal__panel) {
         position: relative;
@@ -39,6 +44,11 @@
         gap: var(--mr-space-4);
         outline: none;
         animation: mr-modal-enter var(--mr-duration-panel) var(--mr-ease-default);
+    }
+
+    /* Animation de sortie du panneau */
+    :where(.mr-modal)[data-closing] :where(.mr-modal__panel) {
+        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-default) forwards;
     }
 
     /* En-tete */

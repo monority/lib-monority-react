@@ -1,4 +1,5 @@
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import {
@@ -33,6 +34,8 @@ function isActionableItem(item: DropdownMenuItem) {
 
 interface DropdownMenuContextValue {
     isOpen: boolean
+    isMounted: boolean
+    presenceProps: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
     setOpenState: (open: boolean) => void
     triggerElementRef: MutableRefObject<Element | null>
     contentRef: MutableRefObject<HTMLDivElement | null>
@@ -70,6 +73,7 @@ export function DropdownMenu({
     const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
     // Never paint at the (0,0) initial position: hidden until measured.
     const [positioned, setPositioned] = useState(false)
 
@@ -130,8 +134,11 @@ export function DropdownMenu({
     }, [])
 
     useEffect(() => {
-        if (!isOpen) {
+        if (!isMounted) {
             setPositioned(false)
+            return
+        }
+        if (!isOpen) {
             return
         }
         const frameId = window.requestAnimationFrame(updatePosition)
@@ -166,7 +173,7 @@ export function DropdownMenu({
             window.removeEventListener('resize', vc)
             window.removeEventListener('scroll', vc, true)
         }
-    }, [isOpen, setOpenState, updatePosition])
+    }, [isMounted, isOpen, setOpenState, updatePosition])
 
     useEffect(() => {
         if (isOpen && actionableItems.length > 0) {
@@ -176,6 +183,8 @@ export function DropdownMenu({
 
     const contextValue: DropdownMenuContextValue = {
         isOpen,
+        isMounted,
+        presenceProps,
         setOpenState,
         triggerElementRef,
         contentRef,
@@ -322,7 +331,7 @@ export function DropdownMenu({
                         {trigger}
                     </button>
                 )}
-                {isOpen && portalTarget
+                {isMounted && portalTarget
                     ? createPortal(
                           <div
                               ref={contentRef}
@@ -330,6 +339,7 @@ export function DropdownMenu({
                               className={cn('mr-dropdown__content', contentClassName)}
                               role="menu"
                               aria-orientation="vertical"
+                              data-closing={presenceProps['data-closing']}
                               style={{
                                   top: `${position.top}px`,
                                   left: `${position.left}px`,
@@ -462,7 +472,7 @@ function DropdownMenuContent({
 }: DropdownMenuContentProps) {
     const context = useContext(DropdownMenuContext)
     const portalTarget = usePortalTarget()
-    if (!context?.isOpen || !portalTarget) return null
+    if (!context?.isMounted || !portalTarget) return null
 
     return createPortal(
         <div
@@ -476,6 +486,7 @@ function DropdownMenuContent({
             className={cn('mr-dropdown__content', className)}
             data-side={context.side}
             data-align={context.align}
+            data-closing={context.presenceProps['data-closing']}
             style={{
                 top: `${context.position.top}px`,
                 left: `${context.position.left}px`,

@@ -19,6 +19,11 @@
         animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
     }
 
+    /* Animation de sortie du voile */
+    :where(.mr-alert-dialog__backdrop)[data-closing] :where(.mr-alert-dialog__backdrop-surface) {
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+    }
+
     :where(.mr-alert-dialog),
     :where(.mr-alert-dialog__panel) {
         position: relative;
@@ -37,6 +42,12 @@
         gap: var(--mr-space-4);
         outline: none;
         animation: mr-alert-dialog-enter var(--mr-duration-panel) var(--mr-ease-default);
+    }
+
+    /* Animation de sortie de la boite de dialogue */
+    :where(.mr-alert-dialog)[data-closing],
+    :where(.mr-alert-dialog__panel)[data-closing] {
+        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-alert-dialog)[data-tone='danger'] {

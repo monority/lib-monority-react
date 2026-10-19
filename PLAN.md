@@ -55,15 +55,23 @@ Branche `feat/showcase-enrichment-and-animations`.
 - Enrichissement Moodboard Studio (MoodboardCatalogView.tsx et MoodboardDeploymentModule.tsx) avec contrôles de simulation asynchrone, états loading sur Select et Combobox, boutons clearable, badges et déclenchement Toast.
 - Nettoyage et vérification de la fondation CSS : pnpm verify (typecheck, format, lint:css, test:rendered, build, test) et test:dist 100% verts.
 
+## Chantier terminé — Système d'Animations Globales et Micro-Interactions (Cycle de Vie et usePresence)
+
+Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
+- Phase 1 (Socle Motion & usePresence) : hook interne usePresence (isMounted, isClosing, presenceProps) avec démontage asynchrone sur [data-closing] et ouverture synchrone (150ms / 0ms sous reduced-motion). Keyframes mr-shake et mr-pop-check.
+- Phase 2 (Overlays Majeurs) : animations d'entrée et de sortie sur Modal, AlertDialog, CommandPalette avec tests de cycle de vie complets.
+- Phase 3 (Menus Flottants et Popovers) : intégration de usePresence dans DropdownMenu, ContextMenu, Popover, HoverCard avec maintien de l'état de positionnement pendant la fermeture.
+- Phase 4 (Micro-Interactions Tactiles et Retours Visuels) : micro-presse active (scale 0.98 et 0.94 icon-only), animation pop-check sur data-copied dans Button/CopyButton, rebond Rating (hover 1.18, active 0.92), secousse InputOTP (mr-shake), fondu sortie Banner.
+- Phase 5 (Porte de preuve et validation) : 100% vert sous pnpm verify (typecheck, format, lint, lint:css, test:rendered, build, test). 109 suites / 1422 tests dans @monority/ui, 17 suites / 94 tests dans @monority/web.
+
 ## Reprise
 
-Dernier commit vert : ced879f (pousse sur main).
-Contrats et verifications :
-- pnpm verify : 8/8 etapes passees avec succes (exit code 0).
-- Biome lint : 0 erreur, 0 avertissement sur l'integralite du monorepo (1010 fichiers).
-- Stylelint : 0 violation sur les regles de specificite et valeurs brutes.
-- Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 themes.
-- Tests : 108 suites / 1412 tests dans @monority/ui et 17 suites / 94 tests dans @monority/web.
-- Docs UX : elimination des descriptions et en-tetes dupliques dans les playgrounds (FormSection, InfiniteScroll, Kbd, PreCode, Text, Title) et resolution propre du binding docData.playground.
+Dernier chantier : animations globales et cycle de vie sortant (usePresence).
+Contrats et vérifications :
+- pnpm verify : 100% vert (exit code 0).
+- Biome lint & format : 0 erreur, 1012 fichiers conformes.
+- Stylelint : 0 violation.
+- Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 thèmes.
+- Tests : 109 suites / 1422 tests dans @monority/ui et 17 suites / 94 tests dans @monority/web (1516 tests au total).
 
-Prochaine action disponible : Studio Moodboard exporteur de theme CSS ou enrichissement continue.
+Prochaine action disponible : Studio Moodboard exporteur de thème CSS ou suite de tests E2E Playwright dédiée aux transitions.

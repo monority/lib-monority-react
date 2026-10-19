@@ -39,6 +39,10 @@
         transform-origin: top center;
     }
 
+    :where(.mr-popover__content)[data-closing] {
+        animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
+    }
+
     :where(.mr-popover__content)[data-side='top'] {
         transform-origin: bottom center;
     }

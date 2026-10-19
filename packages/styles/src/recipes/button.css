@@ -325,6 +325,18 @@
         transform: scale(0.98);
     }
 
+    /* Retour tactile actif pour les boutons d'icones seuls */
+    :where(.mr-btn)[data-icon-only]:active:where(
+            :not(:disabled, [aria-disabled='true'], [data-loading])
+        ) {
+        transform: scale(0.94);
+    }
+
+    /* Animation de confirmation de copie */
+    :where(.mr-btn)[data-copied] .mr-btn__icon {
+        animation: mr-pop-check var(--mr-duration-state) var(--mr-ease-spring) both;
+    }
+
     /* Focus visible */
     :where(.mr-btn):focus-visible {
         outline: 2px solid var(--mr-focus-ring);
@@ -334,6 +346,10 @@
     @media (prefers-reduced-motion: reduce) {
         :where(.mr-btn):active {
             transform: none;
+        }
+
+        :where(.mr-btn)[data-copied] .mr-btn__icon {
+            animation: none;
         }
     }
 }

@@ -1,4 +1,5 @@
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import {
@@ -24,6 +25,8 @@ import type {
 
 interface PopoverContextValue {
     isOpen: boolean
+    isMounted: boolean
+    presenceProps: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
     setOpenState: (open: boolean) => void
     triggerElementRef: React.MutableRefObject<Element | null>
     contentRef: React.MutableRefObject<HTMLDivElement | null>
@@ -123,7 +126,7 @@ export function PopoverAnchor({ ref, children, className, ...props }: PopoverAnc
 
 export function PopoverContent({ ref, children, className, ...props }: PopoverContentProps) {
     const ctx = useContext(PopoverContext)
-    if (!ctx || !ctx.isOpen || !ctx.portalTarget) return null
+    if (!ctx || !ctx.isMounted || !ctx.portalTarget) return null
 
     return createPortal(
         <div
@@ -139,6 +142,7 @@ export function PopoverContent({ ref, children, className, ...props }: PopoverCo
             tabIndex={-1}
             data-side={ctx.side}
             data-align={ctx.align}
+            data-closing={ctx.presenceProps['data-closing']}
             style={{
                 top: `${ctx.position.top}px`,
                 left: `${ctx.position.left}px`,
@@ -174,6 +178,7 @@ export function Popover({
     const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
     const [positioned, setPositioned] = useState(false)
 
     const setOpenState = useCallback(
@@ -208,8 +213,11 @@ export function Popover({
     }, [align, side])
 
     useEffect(() => {
-        if (!isOpen) {
+        if (!isMounted) {
             setPositioned(false)
+            return
+        }
+        if (!isOpen) {
             return
         }
         const frameId = window.requestAnimationFrame(updatePosition)
@@ -244,7 +252,7 @@ export function Popover({
             window.removeEventListener('resize', vc)
             window.removeEventListener('scroll', vc, true)
         }
-    }, [isOpen, setOpenState, updatePosition])
+    }, [isMounted, isOpen, setOpenState, updatePosition])
 
     useEffect(() => {
         if (isOpen) contentRef.current?.focus()
@@ -252,6 +260,8 @@ export function Popover({
 
     const contextValue: PopoverContextValue = {
         isOpen,
+        isMounted,
+        presenceProps,
         setOpenState,
         triggerElementRef,
         contentRef,

@@ -1,7 +1,9 @@
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
+
 import { cva } from '@/lib/variants'
 import { InputBase } from '@/primitives/input-base'
 import {
@@ -74,8 +76,10 @@ export function CommandPalette({
     const panelRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
 
     const [query, setQuery] = useState('')
+
     const [activeIndex, setActiveIndex] = useState(0)
 
     const closePalette = useCallback(() => {
@@ -161,7 +165,7 @@ export function CommandPalette({
         }
     }
 
-    if (!open || !portalTarget) return null
+    if (!isMounted || !portalTarget) return null
 
     const contextValue: CommandPaletteContextValue = {
         query,
@@ -181,9 +185,11 @@ export function CommandPalette({
                 className={cn('mr-modal', 'mr-command-palette', className)}
                 data-open={open ? true : undefined}
                 role="presentation"
+                {...presenceProps}
                 {...props}
             >
                 <div className="mr-modal__backdrop" onClick={closePalette} aria-hidden="true" />
+
                 <div
                     ref={panelRef}
                     className={cn(commandPaletteVariants(), 'mr-modal__panel', 'mr-command')}

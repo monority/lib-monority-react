@@ -2,6 +2,7 @@ import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
@@ -31,6 +32,7 @@ export function Modal({
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
 
     useBodyScrollLock(open)
     useFocusTrap({
@@ -40,7 +42,7 @@ export function Modal({
         onEscape: onClose,
     })
 
-    if (!open || !portalTarget) return null
+    if (!isMounted || !portalTarget) return null
 
     return createPortal(
         <div
@@ -48,9 +50,11 @@ export function Modal({
             className={cn('mr-modal', className)}
             role="presentation"
             data-open={open ? true : undefined}
+            {...presenceProps}
             {...props}
         >
             <div className="mr-modal__backdrop" onClick={onClose} aria-hidden="true" />
+
             <div
                 ref={panelRef}
                 className="mr-modal__panel"

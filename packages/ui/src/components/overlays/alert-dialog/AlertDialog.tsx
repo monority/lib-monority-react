@@ -2,6 +2,7 @@ import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
@@ -43,18 +44,20 @@ export function AlertDialog({
         onEscape: onCancel,
     })
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
 
     useEffect(() => {
         if (open) cancelButtonRef.current?.focus()
     }, [open])
 
-    if (!open || !portalTarget) return null
+    if (!isMounted || !portalTarget) return null
 
     return createPortal(
         <div
             ref={ref}
             className={cn('mr-alert-dialog__backdrop', className)}
             data-open={open ? true : undefined}
+            {...presenceProps}
             {...props}
         >
             <div
@@ -71,6 +74,7 @@ export function AlertDialog({
                 aria-describedby={descriptionId}
                 data-tone={tone}
                 data-open={open ? true : undefined}
+                data-closing={presenceProps['data-closing']}
                 tabIndex={-1}
             >
                 {children ? (

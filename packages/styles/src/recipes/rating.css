@@ -61,4 +61,24 @@
         inline-size: var(--mr-space-6);
         block-size: var(--mr-space-6);
     }
+
+    /* Micro-interactions tactiles et survol */
+    @media (hover: hover) {
+        :where(.mr-rating):not([data-disabled], [data-readonly]) :where(.mr-rating__item):hover {
+            transform: scale(1.18);
+        }
+    }
+
+    :where(.mr-rating):not([data-disabled], [data-readonly]) :where(.mr-rating__item):active {
+        transform: scale(0.92);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-rating__item),
+        :where(.mr-rating):not([data-disabled], [data-readonly]) :where(.mr-rating__item):hover,
+        :where(.mr-rating):not([data-disabled], [data-readonly]) :where(.mr-rating__item):active {
+            transform: none;
+            transition: none;
+        }
+    }
 }
