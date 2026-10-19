@@ -143,6 +143,7 @@ export function PopoverContent({ ref, children, className, ...props }: PopoverCo
             data-side={ctx.side}
             data-align={ctx.align}
             data-closing={ctx.presenceProps['data-closing']}
+            data-positioned={ctx.positioned ? '' : undefined}
             style={{
                 top: `${ctx.position.top}px`,
                 left: `${ctx.position.left}px`,

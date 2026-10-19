@@ -26,7 +26,7 @@
     :where(.mr-modal.mr-command-palette)[data-closing] :where(.mr-modal__panel),
     :where(.mr-command-palette__panel)[data-closing],
     :where(.mr-command)[data-closing] {
-        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-default) forwards;
+        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-in) forwards;
     }
 
     :where(.mr-command__layout) {

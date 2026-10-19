@@ -22,7 +22,7 @@
 
     /* Animation de sortie du voile */
     :where(.mr-modal)[data-closing] :where(.mr-modal__backdrop) {
-        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
     /* Panneau central */
@@ -48,7 +48,7 @@
 
     /* Animation de sortie du panneau */
     :where(.mr-modal)[data-closing] :where(.mr-modal__panel) {
-        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-default) forwards;
+        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-in) forwards;
     }
 
     /* En-tete */

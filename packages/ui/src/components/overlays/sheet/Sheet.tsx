@@ -2,6 +2,7 @@ import { Button } from '@/components/actions/button/Button'
 import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
 import { useFocusTrap } from '@/internal/use-focus-trap'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -32,11 +33,15 @@ export function Sheet({
     const descriptionId = `${generatedId}-description`
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
-    const [closing, setClosing] = useState(false)
+    const [localClosing, setLocalClosing] = useState(false)
+    const { isMounted, isClosing } = usePresence(open, { durationMs: 200 })
 
-    useBodyScrollLock(open && !closing)
+    const effectiveClosing = isClosing || localClosing
+    const effectiveMounted = isMounted || localClosing
+
+    useBodyScrollLock(open && !effectiveClosing)
     useFocusTrap({
-        active: open && !closing,
+        active: open && !effectiveClosing,
         containerRef: panelRef,
         initialFocusRef: closeButtonRef,
         onEscape: handleClose,
@@ -44,7 +49,7 @@ export function Sheet({
     const portalTarget = usePortalTarget()
 
     function handleClose() {
-        setClosing(true)
+        setLocalClosing(true)
     }
 
     function setPanelNode(node: HTMLDivElement | null) {
@@ -62,22 +67,22 @@ export function Sheet({
     }
 
     useEffect(() => {
-        if (!closing) return
+        if (!localClosing) return
         const timer = setTimeout(() => {
-            setClosing(false)
+            setLocalClosing(false)
             onClose?.()
         }, 150)
         return () => clearTimeout(timer)
-    }, [closing, onClose])
+    }, [localClosing, onClose])
 
-    if ((!open && !closing) || !portalTarget) return null
+    if (!effectiveMounted || !portalTarget) return null
 
     return createPortal(
         <div
             className={cn('mr-sheet__backdrop', className)}
             data-open={open ? true : undefined}
             data-side={side}
-            data-closing={closing ? '' : undefined}
+            data-closing={effectiveClosing ? '' : undefined}
             onClick={handleClose}
             {...props}
         >
@@ -91,7 +96,7 @@ export function Sheet({
                 aria-describedby={description ? descriptionId : undefined}
                 data-side={side}
                 data-open={open ? true : undefined}
-                data-closing={closing ? '' : undefined}
+                data-closing={effectiveClosing ? '' : undefined}
                 tabIndex={-1}
                 onClick={(e) => e.stopPropagation()}
             >

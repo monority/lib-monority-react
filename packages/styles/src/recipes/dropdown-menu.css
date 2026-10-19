@@ -30,8 +30,11 @@
         flex-direction: column;
         gap: 1px;
         outline: none;
-        animation: mr-dropdown-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top center;
+    }
+
+    :where(.mr-dropdown__content[data-positioned]) {
+        animation: mr-dropdown-enter var(--mr-duration-state) var(--mr-ease-default);
     }
 
     :where(.mr-dropdown__content)[data-closing] {

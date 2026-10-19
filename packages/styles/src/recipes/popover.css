@@ -35,8 +35,11 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-primary);
         outline: none;
-        animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top center;
+    }
+
+    :where(.mr-popover__content[data-positioned]) {
+        animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
     }
 
     :where(.mr-popover__content)[data-closing] {

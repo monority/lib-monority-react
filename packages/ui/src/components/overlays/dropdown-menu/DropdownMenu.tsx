@@ -340,6 +340,7 @@ export function DropdownMenu({
                               role="menu"
                               aria-orientation="vertical"
                               data-closing={presenceProps['data-closing']}
+                              data-positioned={positioned ? '' : undefined}
                               style={{
                                   top: `${position.top}px`,
                                   left: `${position.left}px`,
@@ -487,6 +488,7 @@ function DropdownMenuContent({
             data-side={context.side}
             data-align={context.align}
             data-closing={context.presenceProps['data-closing']}
+            data-positioned={context.positioned ? '' : undefined}
             style={{
                 top: `${context.position.top}px`,
                 left: `${context.position.left}px`,

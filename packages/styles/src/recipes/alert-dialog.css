@@ -21,7 +21,7 @@
 
     /* Animation de sortie du voile */
     :where(.mr-alert-dialog__backdrop)[data-closing] :where(.mr-alert-dialog__backdrop-surface) {
-        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
     :where(.mr-alert-dialog),
@@ -47,7 +47,7 @@
     /* Animation de sortie de la boite de dialogue */
     :where(.mr-alert-dialog)[data-closing],
     :where(.mr-alert-dialog__panel)[data-closing] {
-        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-default) forwards;
+        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-in) forwards;
     }
 
     :where(.mr-alert-dialog)[data-tone='danger'] {
