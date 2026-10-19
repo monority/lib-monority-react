@@ -66,7 +66,8 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier chantier : animations globales et cycle de vie sortant (usePresence).
+Dernier commit vert : 18da35e (sur main).
+Chantier : animations globales et cycle de vie sortant (usePresence).
 Contrats et vérifications :
 - pnpm verify : 100% vert (exit code 0).
 - Biome lint & format : 0 erreur, 1012 fichiers conformes.
