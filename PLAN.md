@@ -75,13 +75,14 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier commit vert : 75ae39b (sur main).
-Chantier : exporteur de thème CSS et snippets Studio Moodboard.
+Dernier commit vert : 448652f (sur main).
+Chantier : correction du masquage des animations non positionnees, calibration perceptuelle et raccordement de Drawer et Sheet.
 Contrats et vérifications :
 - pnpm verify : 100% vert (exit code 0).
-- Biome lint & format : 0 erreur, 1012 fichiers conformes.
+- Biome lint & format : 0 erreur, 1013 fichiers conformes.
 - Stylelint : 0 violation.
 - Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 thèmes.
-- Tests : 109 suites / 1424 tests dans @monority/ui et 17 suites / 95 tests dans @monority/web (1519 tests au total).
+- Tests : 109 suites / 1424 tests dans @monority/ui et 17 suites / 95 tests dans @monority/web (1519 tests unitaires au total).
+- Tests E2E animations (Playwright) : 2/2 tests valides sur Chromium (Modal et DropdownMenu).
 
-Prochaine action disponible : Suite de tests E2E Playwright dédiée aux transitions ou documentation interactive enrichie.
+Prochaine action disponible : verification du rendu par l'utilisateur sur son navigateur.
