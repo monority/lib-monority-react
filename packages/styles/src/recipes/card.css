@@ -96,12 +96,14 @@
     :where(.mr-card)[data-interactive='true'] {
         cursor: pointer;
         user-select: none;
-        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state), border-color var(--mr-duration-state),
+            box-shadow var(--mr-duration-state);
     }
 
     :where(.mr-card)[data-interactive='true']:hover {
         background-color: var(--mr-bg-raised);
         border-color: var(--mr-border-default);
+        box-shadow: var(--mr-shadow-sm);
     }
 
     :where(.mr-card)[data-interactive='true']:focus-visible {

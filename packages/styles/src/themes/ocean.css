@@ -52,5 +52,10 @@
         --mr-info-subtle: oklch(0.24 0.065 255);
         --mr-info-border: oklch(0.38 0.12 255);
         --mr-info-text: oklch(0.76 0.15 255);
+
+        /* Ombre overlay et discrete pour surfaces sombres Ocean */
+        --mr-shadow-overlay: inset 0 1px 0 0 oklch(1 0 0 / 0.08), 0 4px 20px -2px
+            oklch(0 0 0 / 0.45), 0 2px 8px -1px oklch(0 0 0 / 0.35);
+        --mr-shadow-sm: inset 0 1px 0 0 oklch(1 0 0 / 0.05), 0 1px 3px 0 oklch(0 0 0 / 0.35);
     }
 }

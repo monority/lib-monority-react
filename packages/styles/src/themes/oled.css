@@ -45,5 +45,10 @@
         --mr-info-subtle: oklch(0.2 0.065 255);
         --mr-info-border: oklch(0.36 0.12 255);
         --mr-info-text: oklch(0.78 0.15 255);
+
+        /* Ombre overlay et discrete pour surfaces sur noir absolu OLED */
+        --mr-shadow-overlay: inset 0 1px 0 0 oklch(1 0 0 / 0.12), 0 4px 24px -2px
+            oklch(0 0 0 / 0.75), 0 2px 8px -1px oklch(0 0 0 / 0.55);
+        --mr-shadow-sm: inset 0 1px 0 0 oklch(1 0 0 / 0.08), 0 1px 3px 0 oklch(0 0 0 / 0.5);
     }
 }
