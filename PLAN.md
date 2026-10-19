@@ -57,13 +57,13 @@ Branche `feat/showcase-enrichment-and-animations`.
 
 ## Reprise
 
-Dernier commit vert : 8e26d04 (pousse sur main).
+Dernier commit vert : en cours de finalisation (nettoyage en-tetes playgrounds et binding docData.playground).
 Contrats et verifications :
 - pnpm verify : 8/8 etapes passees avec succes (exit code 0).
 - Biome lint : 0 erreur, 0 avertissement sur l'integralite du monorepo (1010 fichiers).
 - Stylelint : 0 violation sur les regles de specificite et valeurs brutes.
 - Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 themes.
 - Tests : 108 suites / 1412 tests dans @monority/ui et 17 suites / 94 tests dans @monority/web.
-- Tokens : highlight speculaire superieur (inset 0 1px 0 0 oklch) integre aux ombres sombres (dark, oled, night, ocean, slate) et micro-elevation au survol sur les cartes interactives.
+- Docs UX : elimination des descriptions et en-tetes dupliques dans les playgrounds (FormSection, InfiniteScroll, Kbd, PreCode, Text, Title) et resolution propre du binding docData.playground.
 
-Prochaine action disponible : Phase 3 (Playgrounds interactifs sur l'ensemble des pages de doc restantes) ou Studio Moodboard exporteur.
+Prochaine action disponible : Studio Moodboard exporteur de theme CSS ou enrichissement continue.

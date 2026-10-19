@@ -6,8 +6,7 @@ import { KbdKeysExample, KbdSizesExample } from './Kbd.examples'
 function KbdPlayground() {
     return (
         <ComponentPlayground
-            title="Kbd"
-            description="Visualisez les touches de raccourci clavier avec les différentes échelles de taille."
+            componentName="Kbd"
             controls={[
                 {
                     type: 'select',
@@ -70,6 +69,7 @@ const docData: DocPageData = {
     usageCode: `<Kbd>Ctrl</Kbd>
 <Kbd keys={["Ctrl", "C"]} />
 <Kbd size="sm">Esc</Kbd>`,
+    playground: <KbdPlayground />,
     preview: () => <KbdPlayground />,
     examples: [
         { title: 'Keys array', content: <KbdKeysExample /> },

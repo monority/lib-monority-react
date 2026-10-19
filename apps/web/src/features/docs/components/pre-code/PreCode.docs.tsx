@@ -16,8 +16,7 @@ export function App() {
 function PreCodePlayground() {
     return (
         <ComponentPlayground
-            title="PreCode"
-            description="Personnalisez la taille de police du bloc de code et activez le retour à la ligne automatique."
+            componentName="PreCode"
             controls={[
                 {
                     type: 'select',
@@ -64,6 +63,7 @@ const docData: DocPageData = {
         'Preformatted code block with horizontal scrolling, optional wrapping, and readable theme-aware syntax colors.',
     importCode: "import { PreCode } from '@monority/ui/pre-code'",
     usageCode: `<PreCode language="tsx">const value = 1</PreCode>`,
+    playground: <PreCodePlayground />,
     preview: () => <PreCodePlayground />,
     examples: [
         { title: 'Sizes', content: <PreCodeSizesExample /> },

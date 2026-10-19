@@ -6,8 +6,7 @@ import { TitleLevelsExample, TitleSizesExample } from './Title.examples'
 function TitlePlayground() {
     return (
         <ComponentPlayground
-            title="Title"
-            description="Configurez l'échelle visuelle du titre (size) et sa sémantique de document HTML (as)."
+            componentName="Title"
             controls={[
                 {
                     type: 'select',
@@ -65,6 +64,7 @@ const docData: DocPageData = {
 <Text as="p" tone="base">
   Use titles to give product sections a clear hierarchy without changing semantic heading order.
 </Text>`,
+    playground: <TitlePlayground />,
     preview: () => <TitlePlayground />,
     examples: [
         { title: 'Sizes', content: <TitleSizesExample /> },

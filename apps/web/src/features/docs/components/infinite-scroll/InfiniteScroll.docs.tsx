@@ -15,8 +15,7 @@ function InfiniteScrollPlayground() {
 
     return (
         <ComponentPlayground
-            title="InfiniteScroll"
-            description="Simulez le défilement infini basé sur IntersectionObserver avec gestion des états d'erreur et de fin de liste."
+            componentName="InfiniteScroll"
             controls={[
                 {
                     type: 'select',
@@ -159,6 +158,7 @@ const docData: DocPageData = {
     <div key={item}>{item}</div>
   ))}
 </InfiniteScroll>`,
+    playground: <InfiniteScrollPlayground />,
     preview: () => <InfiniteScrollPlayground />,
     examples: [
         { title: 'Error state', content: <InfiniteScrollErrorExample /> },

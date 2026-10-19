@@ -6,8 +6,7 @@ import { TextAsExample, TextSizesExample, TextTonesExample } from './Text.exampl
 function TextPlayground() {
     return (
         <ComponentPlayground
-            title="Text"
-            description="Ajustez l'échelle typographique, la nuance sémantique (tone) et le tag HTML sous-jacent."
+            componentName="Text"
             controls={[
                 {
                     type: 'select',
@@ -84,6 +83,7 @@ const docData: DocPageData = {
 <Text as="span" tone="muted" size="sm">
   Captions and secondary information
 </Text>`,
+    playground: <TextPlayground />,
     preview: () => <TextPlayground />,
     examples: [
         { title: 'Sizes', content: <TextSizesExample /> },

@@ -13,8 +13,7 @@ import {
 function FormSectionPlayground() {
     return (
         <ComponentPlayground
-            title="FormSection"
-            description="Ajustez les éléments d'en-tête (titre, description, badge meta) et la présence de la barre d'actions."
+            componentName="FormSection"
             controls={[
                 {
                     type: 'text',
@@ -83,6 +82,7 @@ const docData: DocPageData = {
     rows={4}
   />
 </FormSection>`,
+    playground: <FormSectionPlayground />,
     preview: () => <FormSectionPlayground />,
     examples: [
         {

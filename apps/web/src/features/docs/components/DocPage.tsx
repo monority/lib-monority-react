@@ -27,7 +27,7 @@ export interface DocPageData {
     description: string
     importCode?: string
     usageCode?: string
-    preview: () => ReactNode
+    preview?: () => ReactNode
     previewLabel?: string
     playground?: ReactNode
     playgroundConfig?: DocPlaygroundConfig
