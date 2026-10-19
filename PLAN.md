@@ -55,5 +55,16 @@ Branche `feat/showcase-enrichment-and-animations`.
 - Enrichissement Moodboard Studio (MoodboardCatalogView.tsx et MoodboardDeploymentModule.tsx) avec contrôles de simulation asynchrone, états loading sur Select et Combobox, boutons clearable, badges et déclenchement Toast.
 - Nettoyage et vérification de la fondation CSS : pnpm verify (typecheck, format, lint:css, test:rendered, build, test) et test:dist 100% verts.
 
+## Reprise
 
+Dernier commit vert : cc33b12 (pousse sur main).
+Contrats et verifications :
+- pnpm verify : 8/8 etapes passees avec succes (exit code 0).
+- Biome lint : 0 erreur, 0 avertissement sur l'integralite du monorepo (1010 fichiers).
+- Stylelint : 0 violation sur les regles de specificite et valeurs brutes.
+- Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 themes.
+- Tests : 108 suites / 1412 tests dans @monority/ui et 17 suites / 94 tests dans @monority/web.
+- Tokens : declaration formelle de --mr-shadow-sm dans semantic.css, dark.css et high-contrast.css.
+- DX docs : 36 pages de documentation normalisees avec l'import canonique ../ComponentPlayground.
 
+Prochaine action disponible : Phase 2 (Highlight speculaire et relief visuel en mode sombre) ou Phase 3 (Playgrounds interactifs sur l'ensemble des pages de doc restantes).
