@@ -322,6 +322,48 @@ export function designConfigToJSON(config: DesignConfig): string {
     return JSON.stringify(config, null, 2)
 }
 
+export interface DesignConfigCSSOptions {
+    /**
+     * Selecteur CSS cible pour les variables de theme generees.
+     * Par defaut : `[data-theme='${config.theme}']`.
+     */
+    selector?: string
+    /**
+     * Envelopper ou non le bloc de regles dans la couche `@layer mr.themes`.
+     * Par defaut : true.
+     */
+    layer?: boolean
+}
+
+/**
+ * Genere un snippet CSS valide pret a l'emploi contenant l'integralite
+ * des jetons de design resolus pour une configuration donnee.
+ */
+export function designConfigToCSS(
+    config: DesignConfig,
+    options: DesignConfigCSSOptions = {}
+): string {
+    const { selector = `[data-theme='${config.theme}']`, layer = true } = options
+    const resolved = resolveDesignConfig(config)
+    const styleEntries = Object.entries(resolved.style)
+        .filter(([key]) => key.startsWith('--mr-'))
+        .sort(([a], [b]) => a.localeCompare(b))
+
+    const indent = layer ? '    ' : ''
+    const varIndent = layer ? '        ' : '    '
+    const varsBlock = styleEntries.map(([prop, val]) => `${varIndent}${prop}: ${val};`).join('\n')
+
+    const header = `/* Monority UI - Exported Design Tokens */\n/* Theme: ${config.theme} | Accent: ${config.accent} | Radius: ${config.radius} | Density: ${config.density} */`
+
+    const ruleBlock = `${indent}${selector} {\n${varsBlock}\n${indent}}`
+
+    if (layer) {
+        return `${header}\n@layer mr.themes {\n${ruleBlock}\n}`
+    }
+
+    return `${header}\n${ruleBlock}`
+}
+
 /* ------------------------------------------------------------------ */
 /*  Storage boundary                                                    */
 /* ------------------------------------------------------------------ */

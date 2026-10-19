@@ -2,6 +2,7 @@ export { cn } from './cn'
 export {
     DEFAULT_DESIGN_CONFIG,
     DESIGN_PRESETS,
+    designConfigToCSS,
     designConfigToJSON,
     formatAccentStorage,
     resolveAccentPreset,
@@ -13,6 +14,7 @@ export type {
     BrandPreset,
     ChartPalettePreset,
     DesignConfig,
+    DesignConfigCSSOptions,
     LayoutDensityPreset,
     RadiusPreset,
     ResolvedDesignConfig,

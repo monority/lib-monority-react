@@ -2,12 +2,15 @@ import {
     Button,
     type DesignConfig,
     PreCode,
+    SegmentedControl,
     Separator,
     Stack,
     Text,
     Title,
+    designConfigToCSS,
     designConfigToJSON,
 } from '@monority/ui'
+import { useState } from 'react'
 import { MoodboardSidebarControls } from './components/MoodboardSidebarControls'
 
 export interface MoodboardSidebarProps {
@@ -16,6 +19,8 @@ export interface MoodboardSidebarProps {
     onReset: () => void
     onCopy: () => void
     copied: boolean
+    onCopyCss?: () => void
+    copiedCss?: boolean
 }
 
 export function MoodboardSidebar({
@@ -24,7 +29,11 @@ export function MoodboardSidebar({
     onReset,
     onCopy,
     copied,
+    onCopyCss,
+    copiedCss = false,
 }: MoodboardSidebarProps) {
+    const [previewFormat, setPreviewFormat] = useState<'json' | 'css'>('json')
+
     return (
         <Stack
             gap="lg"
@@ -58,7 +67,7 @@ export function MoodboardSidebar({
                 </Text>
             </Stack>
 
-            <Stack direction="horizontal" gap="sm">
+            <Stack direction="horizontal" gap="xs">
                 <Button
                     variant="secondary"
                     size="sm"
@@ -68,6 +77,17 @@ export function MoodboardSidebar({
                 >
                     Reset
                 </Button>
+                {onCopyCss && (
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={onCopyCss}
+                        data-testid="moodboard-copy-css"
+                        style={{ flex: 1 }}
+                    >
+                        {copiedCss ? 'Copied CSS!' : 'Copy CSS'}
+                    </Button>
+                )}
                 <Button
                     variant="primary"
                     size="sm"
@@ -104,8 +124,28 @@ export function MoodboardSidebar({
                 >
                     Token Details
                 </summary>
-                <div style={{ marginTop: 'var(--mr-space-3)' }}>
-                    <PreCode language="json">{designConfigToJSON(config)}</PreCode>
+                <div
+                    style={{
+                        marginTop: 'var(--mr-space-3)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 'var(--mr-space-2)',
+                    }}
+                >
+                    <SegmentedControl
+                        size="sm"
+                        value={previewFormat}
+                        onChange={(val) => setPreviewFormat(val as 'json' | 'css')}
+                        options={[
+                            { label: 'JSON', value: 'json' },
+                            { label: 'CSS', value: 'css' },
+                        ]}
+                    />
+                    {previewFormat === 'json' ? (
+                        <PreCode language="json">{designConfigToJSON(config)}</PreCode>
+                    ) : (
+                        <PreCode language="css">{designConfigToCSS(config)}</PreCode>
+                    )}
                 </div>
             </details>
         </Stack>

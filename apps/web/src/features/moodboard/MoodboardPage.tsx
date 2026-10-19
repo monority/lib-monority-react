@@ -7,6 +7,7 @@ import {
     type ResolvedThemeName,
     type ThemeNameType,
     ThemeScope,
+    designConfigToCSS,
     designConfigToJSON,
     resolveDesignConfig,
     sanitizeDesignConfig,
@@ -37,6 +38,7 @@ export function MoodboardPage() {
     })
 
     const [copied, setCopied] = useState(false)
+    const [copiedCss, setCopiedCss] = useState(false)
     const lastResolvedThemeRef = useRef(resolvedTheme)
 
     /* Sync top header ThemeToggle changes into Studio config */
@@ -66,6 +68,11 @@ export function MoodboardPage() {
         setCopied(true)
     }
 
+    const handleCopyCss = async () => {
+        await navigator.clipboard.writeText(designConfigToCSS(config))
+        setCopiedCss(true)
+    }
+
     /* Persist to localStorage */
     useEffect(() => {
         try {
@@ -75,12 +82,18 @@ export function MoodboardPage() {
         }
     }, [config])
 
-    /* Reset copied flag */
+    /* Reset copied flags */
     useEffect(() => {
         if (!copied) return
         const timer = setTimeout(() => setCopied(false), 2000)
         return () => clearTimeout(timer)
     }, [copied])
+
+    useEffect(() => {
+        if (!copiedCss) return
+        const timer = setTimeout(() => setCopiedCss(false), 2000)
+        return () => clearTimeout(timer)
+    }, [copiedCss])
 
     const density = config.density === 'compact' ? 'compact' : 'comfortable'
     const resolved = resolveDesignConfig(config)
@@ -104,6 +117,8 @@ export function MoodboardPage() {
                                 onReset={handleReset}
                                 onCopy={handleCopy}
                                 copied={copied}
+                                onCopyCss={handleCopyCss}
+                                copiedCss={copiedCss}
                             />
                         }
                     >

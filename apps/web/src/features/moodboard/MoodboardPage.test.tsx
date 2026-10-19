@@ -172,6 +172,27 @@ describe('MoodboardPage', () => {
         expect(copiedJson.theme).toBe('ocean')
     })
 
+    it('copy CSS button copies CSS snippet to clipboard', async () => {
+        const writeText = vi.fn().mockResolvedValue(undefined)
+        Object.assign(navigator, { clipboard: { writeText } })
+
+        renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
+
+        fireEvent.change(
+            within(screen.getByRole('group', { name: 'Theme axis' })).getByRole('combobox'),
+            { target: { value: 'ocean' } }
+        )
+        await act(async () => {
+            fireEvent.click(screen.getByTestId('moodboard-copy-css'))
+        })
+
+        expect(writeText).toHaveBeenCalled()
+        const copiedCss = String(writeText.mock.calls[0]?.[0])
+        expect(copiedCss).toContain('@layer mr.themes')
+        expect(copiedCss).toContain("[data-theme='ocean']")
+        expect(copiedCss).toContain('--mr-accent-solid:')
+    })
+
     it('persists configuration to localStorage', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
@@ -185,7 +206,7 @@ describe('MoodboardPage', () => {
         expect(JSON.parse(stored!).theme).toBe('ocean')
     })
 
-    it('sidebar token details are collapsible', () => {
+    it('sidebar token details are collapsible and switch between JSON and CSS', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
         const details = screen.getByText('Token Details').closest('details')!
@@ -194,8 +215,12 @@ describe('MoodboardPage', () => {
         fireEvent.click(screen.getByText('Token Details'))
         expect(details).toHaveAttribute('open')
 
-        /* JSON content visible when open */
+        /* JSON content visible by default */
         expect(screen.getByText(/"theme"/)).toBeInTheDocument()
+
+        /* Switch to CSS format */
+        fireEvent.click(screen.getByRole('radio', { name: 'CSS' }))
+        expect(screen.getByText(/@layer mr\.themes/)).toBeInTheDocument()
     })
 
     it('recovers from a stored config predating the component color axis change', () => {

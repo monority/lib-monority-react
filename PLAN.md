@@ -64,15 +64,23 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 - Phase 4 (Micro-Interactions Tactiles et Retours Visuels) : micro-presse active (scale 0.98 et 0.94 icon-only), animation pop-check sur data-copied dans Button/CopyButton, rebond Rating (hover 1.18, active 0.92), secousse InputOTP (mr-shake), fondu sortie Banner.
 - Phase 5 (Porte de preuve et validation) : 100% vert sous pnpm verify (typecheck, format, lint, lint:css, test:rendered, build, test). 109 suites / 1422 tests dans @monority/ui, 17 suites / 94 tests dans @monority/web.
 
+## Chantier terminé — Exporteur de Thème CSS & Snippets dans le Studio Moodboard
+
+- Fonction `designConfigToCSS(config, options)` dans `packages/ui/src/lib/design-config.ts` produisant un bloc CSS complet `@layer mr.themes` avec variables `--mr-*` ordonnées et en-tête de métadonnées.
+- Export public depuis `@monority/ui` avec options configurables (`selector`, `layer`).
+- Intégration dans le Design Studio (`apps/web/src/features/moodboard/`) :
+  * Bouton "Copy CSS" en parallèle de "Copy JSON" avec notification de copie.
+  * Sélecteur de format `SegmentedControl` (JSON / CSS) dans l'inspecteur "Token Details".
+- Tests unitaires et d'intégration validés (109 suites / 1424 tests `@monority/ui`, 17 suites / 95 tests `@monority/web`, 1519 tests au total).
+
 ## Reprise
 
-Dernier commit vert : 18da35e (sur main).
-Chantier : animations globales et cycle de vie sortant (usePresence).
+Dernier chantier : exporteur de thème CSS et snippets Studio Moodboard.
 Contrats et vérifications :
 - pnpm verify : 100% vert (exit code 0).
 - Biome lint & format : 0 erreur, 1012 fichiers conformes.
 - Stylelint : 0 violation.
 - Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 thèmes.
-- Tests : 109 suites / 1422 tests dans @monority/ui et 17 suites / 94 tests dans @monority/web (1516 tests au total).
+- Tests : 109 suites / 1424 tests dans @monority/ui et 17 suites / 95 tests dans @monority/web (1519 tests au total).
 
-Prochaine action disponible : Studio Moodboard exporteur de thème CSS ou suite de tests E2E Playwright dédiée aux transitions.
+Prochaine action disponible : Suite de tests E2E Playwright dédiée aux transitions ou documentation interactive enrichie.

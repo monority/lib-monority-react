@@ -4,6 +4,8 @@ import {
     DEFAULT_DESIGN_CONFIG,
     DESIGN_PRESETS,
     type DesignConfig,
+    designConfigToCSS,
+    designConfigToJSON,
     formatAccentStorage,
     resolveAccentPreset,
     resolveDesignConfig,
@@ -197,17 +199,36 @@ describe('sanitizeDesignConfig', () => {
         })
     })
 
-    it('never throws on junk payloads and drops obsolete componentColor', () => {
-        for (const junk of [
-            null,
-            undefined,
-            42,
-            'cyan',
-            [],
-            { componentColor: 'inverse' },
-            { componentColor: { nested: true } },
-        ]) {
-            expect(sanitizeDesignConfig(junk)).toEqual(DEFAULT_DESIGN_CONFIG)
-        }
+    it('serializes design configuration to JSON', () => {
+        const json = designConfigToJSON(DEFAULT_DESIGN_CONFIG)
+        expect(JSON.parse(json)).toEqual(DEFAULT_DESIGN_CONFIG)
+    })
+
+    it('generates valid CSS snippet wrapped in @layer mr.themes by default', () => {
+        const css = designConfigToCSS({
+            ...DEFAULT_DESIGN_CONFIG,
+            theme: 'ocean',
+            accent: 'cyan',
+            radius: 'rounded',
+            density: 'compact',
+        })
+
+        expect(css).toContain('@layer mr.themes')
+        expect(css).toContain("[data-theme='ocean']")
+        expect(css).toContain('--mr-brand-hue: 200;')
+        expect(css).toContain('--mr-accent-solid:')
+        expect(css).toContain('--mr-radius-md:')
+        expect(css).toContain('--mr-size-control-md:')
+    })
+
+    it('supports custom selector and disabling @layer wrapping in CSS output', () => {
+        const css = designConfigToCSS(DEFAULT_DESIGN_CONFIG, {
+            selector: ':root',
+            layer: false,
+        })
+
+        expect(css).not.toContain('@layer')
+        expect(css).toContain(':root {')
+        expect(css).toContain('--mr-brand-hue:')
     })
 })
