@@ -35,6 +35,10 @@
         animation: mr-fade-in var(--mr-duration-panel) var(--mr-ease-out);
     }
 
+    :where(.mr-sheet__backdrop)[data-closing] :where(.mr-sheet__backdrop-surface) {
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+    }
+
     @keyframes mr-sheet-enter-right {
         from {
             transform: translateX(100%);

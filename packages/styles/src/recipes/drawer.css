@@ -35,6 +35,10 @@
         animation: mr-fade-in var(--mr-duration-panel) var(--mr-ease-out);
     }
 
+    :where(.mr-drawer__backdrop)[data-closing] :where(.mr-drawer__backdrop-surface) {
+        animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-out) forwards;
+    }
+
     :where(.mr-drawer),
     :where(.mr-drawer__panel) {
         position: relative;

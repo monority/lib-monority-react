@@ -137,6 +137,8 @@ export function PopoverContent({ ref, children, className, ...props }: PopoverCo
             role="dialog"
             aria-modal="false"
             tabIndex={-1}
+            data-side={ctx.side}
+            data-align={ctx.align}
             style={{
                 top: `${ctx.position.top}px`,
                 left: `${ctx.position.left}px`,

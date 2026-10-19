@@ -31,7 +31,23 @@
         gap: 1px;
         outline: none;
         animation: mr-dropdown-enter var(--mr-duration-state) var(--mr-ease-default);
-        transform-origin: top;
+        transform-origin: top center;
+    }
+
+    :where(.mr-dropdown__content)[data-side='top'] {
+        transform-origin: bottom center;
+    }
+
+    :where(.mr-dropdown__content)[data-side='bottom'] {
+        transform-origin: top center;
+    }
+
+    :where(.mr-dropdown__content)[data-side='left'] {
+        transform-origin: right center;
+    }
+
+    :where(.mr-dropdown__content)[data-side='right'] {
+        transform-origin: left center;
     }
 
     :where(.mr-dropdown__separator) {

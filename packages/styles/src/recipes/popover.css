@@ -36,7 +36,23 @@
         color: var(--mr-text-primary);
         outline: none;
         animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
-        transform-origin: top;
+        transform-origin: top center;
+    }
+
+    :where(.mr-popover__content)[data-side='top'] {
+        transform-origin: bottom center;
+    }
+
+    :where(.mr-popover__content)[data-side='bottom'] {
+        transform-origin: top center;
+    }
+
+    :where(.mr-popover__content)[data-side='left'] {
+        transform-origin: right center;
+    }
+
+    :where(.mr-popover__content)[data-side='right'] {
+        transform-origin: left center;
     }
 
     @media (prefers-reduced-motion: reduce) {

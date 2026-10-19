@@ -474,6 +474,8 @@ function DropdownMenuContent({
             role="menu"
             aria-orientation="vertical"
             className={cn('mr-dropdown__content', className)}
+            data-side={context.side}
+            data-align={context.align}
             style={{
                 top: `${context.position.top}px`,
                 left: `${context.position.left}px`,
