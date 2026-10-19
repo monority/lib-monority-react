@@ -1,8 +1,8 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { Divider } from '@monority/ui/divider'
 import { Toolbar } from '@monority/ui/toolbar'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { ToolbarWithButtonsExample, ToolbarWithDividerExample } from './Toolbar.examples'
 

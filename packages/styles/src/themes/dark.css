@@ -47,5 +47,6 @@
 
         /* Ombre overlay pour surfaces flottantes sombres */
         --mr-shadow-overlay: 0 4px 20px -2px oklch(0 0 0 / 0.45), 0 2px 8px -1px oklch(0 0 0 / 0.35);
+        --mr-shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.35);
     }
 }

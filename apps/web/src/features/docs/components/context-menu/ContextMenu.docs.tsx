@@ -1,6 +1,6 @@
-import { ContextMenu } from '@monority/ui/context-menu'
+﻿import { ContextMenu } from '@monority/ui/context-menu'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ContextMenuWithDangerExample,

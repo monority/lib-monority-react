@@ -1,6 +1,6 @@
-import { AspectRatio } from '@monority/ui/aspect-ratio'
+﻿import { AspectRatio } from '@monority/ui/aspect-ratio'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { AspectRatioSquareExample, AspectRatioVideoExample } from './AspectRatio.examples'
 

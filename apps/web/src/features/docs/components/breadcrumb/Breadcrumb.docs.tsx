@@ -1,6 +1,6 @@
-import { Breadcrumb } from '@monority/ui/breadcrumb'
+﻿import { Breadcrumb } from '@monority/ui/breadcrumb'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { BreadcrumbManyItemsExample, BreadcrumbSingleItemExample } from './Breadcrumb.examples'
 

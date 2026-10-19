@@ -1,6 +1,6 @@
-import { CopyButton } from '@monority/ui/copy-button'
+﻿import { CopyButton } from '@monority/ui/copy-button'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     CopyButtonCustomFeedbackExample,

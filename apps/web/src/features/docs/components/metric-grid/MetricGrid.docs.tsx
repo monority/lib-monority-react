@@ -1,6 +1,6 @@
-import { MetricGrid } from '@monority/ui/metric-grid'
+﻿import { MetricGrid } from '@monority/ui/metric-grid'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     MetricGridChildrenExample,

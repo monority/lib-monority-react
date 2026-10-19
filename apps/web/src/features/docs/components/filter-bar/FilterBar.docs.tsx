@@ -1,9 +1,9 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { FilterBar } from '@monority/ui/filter-bar'
 import { Input } from '@monority/ui/input'
 import { Select } from '@monority/ui/select'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { FilterBarWithControlsExample, FilterBarWithResetExample } from './FilterBar.examples'
 

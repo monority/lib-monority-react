@@ -1,8 +1,8 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { PageHeader } from '@monority/ui/page-header'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { PageHeaderWithActionsExample, PageHeaderWithTitleExample } from './PageHeader.examples'
 

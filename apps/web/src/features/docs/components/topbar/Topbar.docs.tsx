@@ -1,7 +1,7 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { Topbar } from '@monority/ui/topbar'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { TopbarWithContentExample } from './Topbar.examples'
 

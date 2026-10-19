@@ -53,7 +53,12 @@ describe('DataTable', () => {
 
     it('supports selection', () => {
         const view = render(
-            <DataTable columns={columns} rows={rows} selectable getRowId={(r: any) => r.name} />
+            <DataTable
+                columns={columns}
+                rows={rows}
+                selectable
+                getRowId={(r: { name: string; age: number }) => r.name}
+            />
         )
         const checkboxes = view.querySelectorAll('.mr-data-table__checkbox')
         expect(checkboxes.length).toBe(3) // select all + 2 rows

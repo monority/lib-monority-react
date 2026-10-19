@@ -1,6 +1,6 @@
-import { Container } from '@monority/ui/container'
+﻿import { Container } from '@monority/ui/container'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { ContainerSizesExample } from './Container.examples'
 

@@ -1,6 +1,6 @@
-import { IconButton } from '@monority/ui/icon-button'
+﻿import { IconButton } from '@monority/ui/icon-button'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     IconButtonSizesExample,

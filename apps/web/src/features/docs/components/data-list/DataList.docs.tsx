@@ -1,6 +1,6 @@
-import { DataList } from '@monority/ui/data-list'
+﻿import { DataList } from '@monority/ui/data-list'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DataListCompoundExample,

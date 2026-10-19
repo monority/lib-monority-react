@@ -1,6 +1,6 @@
-import { ColorSwatch } from '@monority/ui/color-swatch'
+﻿import { ColorSwatch } from '@monority/ui/color-swatch'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     ColorSwatchShapesExample,

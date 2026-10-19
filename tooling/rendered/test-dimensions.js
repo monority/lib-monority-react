@@ -1265,7 +1265,6 @@ export async function testControlDimensions(browser) {
         const getM = (id) => {
             const el = document.getElementById(id)
             const input = el.querySelector('.mr-number-input')
-            const actions = el.querySelector('.mr-number-input__actions')
             const buttons = el.querySelectorAll('.mr-number-input__btn')
             const rInput = input.getBoundingClientRect()
             const sInput = window.getComputedStyle(input)

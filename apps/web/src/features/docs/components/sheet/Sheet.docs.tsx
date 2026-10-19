@@ -1,9 +1,9 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { Sheet } from '@monority/ui/sheet'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { SheetCompoundExample, SheetSidesExample } from './Sheet.examples'
 

@@ -1,7 +1,7 @@
-import { Section } from '@monority/ui/section'
+﻿import { Section } from '@monority/ui/section'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { SectionCompoundExample, SectionSpacingExample } from './Section.examples'
 

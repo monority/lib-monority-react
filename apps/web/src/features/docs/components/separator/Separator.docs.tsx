@@ -1,6 +1,6 @@
-import { Separator } from '@monority/ui/separator'
+﻿import { Separator } from '@monority/ui/separator'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { SeparatorDecorativeExample, SeparatorVerticalExample } from './Separator.examples'
 

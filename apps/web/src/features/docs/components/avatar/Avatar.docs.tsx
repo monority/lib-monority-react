@@ -1,6 +1,6 @@
-import { Avatar } from '@monority/ui/avatar'
+﻿import { Avatar } from '@monority/ui/avatar'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { AvatarGroupExample, AvatarSizesExample, AvatarWithImageExample } from './Avatar.examples'
 

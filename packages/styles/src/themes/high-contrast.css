@@ -50,7 +50,8 @@
         --mr-info-border: oklch(0.45 0 0);
         --mr-info-text: oklch(0.3 0.16 255);
 
-        /* Ombre overlay : neutralisee en haut contraste (bordure AAA nette) */
+        /* Ombre overlay et discrete : neutralisees en haut contraste (bordure AAA nette) */
         --mr-shadow-overlay: none;
+        --mr-shadow-sm: none;
     }
 }

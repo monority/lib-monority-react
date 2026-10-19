@@ -1,6 +1,6 @@
-import { Menubar } from '@monority/ui/menubar'
+﻿import { Menubar } from '@monority/ui/menubar'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     MenubarDangerExample,

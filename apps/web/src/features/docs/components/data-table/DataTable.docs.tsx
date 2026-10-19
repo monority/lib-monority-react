@@ -1,7 +1,7 @@
-import { Badge } from '@monority/ui/badge'
+﻿import { Badge } from '@monority/ui/badge'
 import { DataTable } from '@monority/ui/data-table'
 import { type ReactNode, useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     DataTableEmptyExample,

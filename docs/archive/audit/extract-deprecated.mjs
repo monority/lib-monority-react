@@ -187,7 +187,7 @@ decorated.sort((a, b) => {
 
 const mr = {}
 const mrOrigin = {}
-let superseded = 0
+let _superseded = 0
 for (const e of decorated) {
     const key = e.name.replace(/^--mr-/, '')
     const leaf = { $value: e.value }
@@ -199,7 +199,7 @@ for (const e of decorated) {
     if (mr[key]) {
         const firstSel = mr[key].$extensions?.['com.monority.deprecated']?.selector ?? ':root'
         if (e.origin !== 'reference-alias' && mrOrigin[key] === 'reference-alias') {
-            superseded++ // l'alias de référence gagne sur l'ancienne valeur
+            _superseded++ // l'alias de référence gagne sur l'ancienne valeur
             continue
         }
         if (mr[key].$value === e.value && firstSel === e.selector) {

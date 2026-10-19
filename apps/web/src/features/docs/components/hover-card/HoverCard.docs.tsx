@@ -1,9 +1,9 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { HoverCard } from '@monority/ui/hover-card'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     HoverCardControlledExample,

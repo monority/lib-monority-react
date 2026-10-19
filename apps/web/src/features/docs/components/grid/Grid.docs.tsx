@@ -1,6 +1,6 @@
-import { Grid } from '@monority/ui/grid'
+﻿import { Grid } from '@monority/ui/grid'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { GridColumnsExample } from './Grid.examples'
 

@@ -27,37 +27,6 @@ async function setTheme(page: Page, theme: (typeof themes)[number]) {
     await page.waitForTimeout(50)
 }
 
-async function sampleStateAnimation(page: Page, state: 'loading' | 'error') {
-    return page.evaluate(
-        (nextState) =>
-            new Promise<number[]>((resolve) => {
-                const observer = new MutationObserver(() => {
-                    const elements = document.querySelectorAll(
-                        `.mr-async-state-notice[data-state="${nextState}"]`
-                    )
-                    const element = elements[elements.length - 1]
-                    const animation = element?.getAnimations()[0]
-                    if (!animation) return
-                    observer.disconnect()
-                    void animation.ready.then(async () => {
-                        const samples = [Number(animation.currentTime ?? 0)]
-                        for (let index = 0; index < 3; index += 1) {
-                            await new Promise<void>((frame) => requestAnimationFrame(() => frame()))
-                            samples.push(Number(animation.currentTime ?? 0))
-                        }
-                        resolve(samples)
-                    })
-                })
-                observer.observe(document.body, { childList: true, subtree: true })
-                window.setTimeout(() => {
-                    observer.disconnect()
-                    resolve([])
-                }, 2000)
-            }),
-        state
-    )
-}
-
 test('card geometry stays measurable and distinct across themes', async ({ page }) => {
     const width = page.viewportSize()?.width ?? 0
     await page.goto('/docs/card')

@@ -1,6 +1,6 @@
-import { Stack } from '@monority/ui/stack'
+﻿import { Stack } from '@monority/ui/stack'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { StackGapExample, StackHorizontalExample } from './Stack.examples'
 

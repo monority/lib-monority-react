@@ -1,6 +1,6 @@
-import { Divider } from '@monority/ui/divider'
+﻿import { Divider } from '@monority/ui/divider'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { DividerVerticalExample, DividerWithLabelExample } from './Divider.examples'
 

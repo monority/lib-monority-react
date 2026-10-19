@@ -1,6 +1,6 @@
-import { Timeline, type TimelineItemData } from '@monority/ui/timeline'
+﻿import { Timeline, type TimelineItemData } from '@monority/ui/timeline'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { TimelineCompoundExample, TimelineHorizontalExample } from './Timeline.examples'
 

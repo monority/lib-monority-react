@@ -1,7 +1,7 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { Tooltip } from '@monority/ui/tooltip'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { TooltipOnIconButtonExample, TooltipWithRichContentExample } from './Tooltip.examples'
 

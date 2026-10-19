@@ -27,10 +27,12 @@ import { beforeAll, describe, expect, it } from 'vitest'
 const distDir = join(process.cwd(), 'dist')
 const load = (entry: string) => import(pathToFileURL(join(distDir, entry)).href)
 
-let FormControl: any
-let Field: any
-let FieldError: any
-let Input: any
+import type { ComponentType } from 'react'
+
+let FormControl: ComponentType<Record<string, unknown>>
+let Field: ComponentType<Record<string, unknown>>
+let FieldError: ComponentType<Record<string, unknown>>
+let Input: ComponentType<Record<string, unknown>>
 
 beforeAll(async () => {
     const index = await load('index.js')

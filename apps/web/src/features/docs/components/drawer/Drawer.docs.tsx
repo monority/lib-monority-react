@@ -1,9 +1,9 @@
-import { Button } from '@monority/ui/button'
+﻿import { Button } from '@monority/ui/button'
 import { Drawer } from '@monority/ui/drawer'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
-import { ComponentPlayground } from '../../components/ComponentPlayground/ComponentPlayground'
+import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { DrawerSidesExample, DrawerWithFooterExample } from './Drawer.examples'
 
