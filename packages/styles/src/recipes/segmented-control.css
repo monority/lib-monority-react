@@ -51,8 +51,9 @@
         line-height: 1;
         cursor: pointer;
         white-space: nowrap;
-        transition: color var(--mr-duration-state) ease, background-color var(--mr-duration-state)
-            ease, box-shadow var(--mr-duration-state) ease, transform var(--mr-duration-state) ease;
+        transition: color var(--mr-duration-state) var(--mr-ease-out), background-color
+            var(--mr-duration-state) var(--mr-ease-out), box-shadow var(--mr-duration-state)
+            var(--mr-ease-out), transform var(--mr-duration-instant) var(--mr-ease-spring);
         outline: none;
     }
 

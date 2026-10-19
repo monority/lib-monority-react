@@ -91,17 +91,6 @@
         color: var(--mr-text-primary);
     }
 
-    @keyframes mr-tab-indicator-enter {
-        from {
-            transform: scaleX(0.7);
-            opacity: 0;
-        }
-        to {
-            transform: scaleX(1);
-            opacity: 1;
-        }
-    }
-
     :where(.mr-tabs__tab[data-active='true'])::after,
     :where(.mr-tabs__tab[aria-selected='true'])::after {
         content: '';
@@ -110,7 +99,7 @@
         inset-block-end: -1px;
         block-size: 2px;
         background-color: var(--mr-accent-solid);
-        animation: mr-tab-indicator-enter var(--mr-duration-state) ease;
+        animation: mr-tab-indicator-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: center;
     }
 

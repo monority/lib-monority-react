@@ -49,14 +49,16 @@
         font-size: var(--mr-font-size-xs);
         font-weight: var(--mr-font-weight-semibold);
         line-height: 1;
-        transition: background-color var(--mr-duration-state) ease, border-color
-            var(--mr-duration-state) ease, color var(--mr-duration-state) ease;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out), color var(--mr-duration-state)
+            var(--mr-ease-out), transform var(--mr-duration-state) var(--mr-ease-spring);
     }
 
     :where(.mr-stepper__item[data-status='active']) :where(.mr-stepper__indicator) {
-        border-color: var(--mr-brand-primary);
-        background-color: var(--mr-brand-primary);
-        color: var(--mr-text-on-brand);
+        border-color: var(--mr-accent-solid);
+        background-color: var(--mr-accent-solid);
+        color: var(--mr-control-on-accent);
+        transform: scale(1.05);
     }
 
     :where(.mr-stepper__item[data-status='completed']) :where(.mr-stepper__indicator) {
@@ -103,7 +105,7 @@
         height: 2px;
         background-color: var(--mr-border-default);
         margin-inline: var(--mr-space-2);
-        transition: background-color var(--mr-duration-state) ease;
+        transition: background-color var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-stepper__item[data-status='completed']) + :where(.mr-stepper__connector) {
@@ -116,5 +118,13 @@
         min-block-size: var(--mr-space-5);
         margin-inline: calc(var(--mr-size-control-sm) / 2 - 1px);
         margin-block: var(--mr-space-1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.mr-stepper__indicator),
+        :where(.mr-stepper__connector) {
+            transition: none;
+            transform: none;
+        }
     }
 }

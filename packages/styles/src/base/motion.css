@@ -301,4 +301,16 @@
             opacity: 0.5;
         }
     }
+
+    /* Indicateur d'onglet actif (tabs) */
+    @keyframes mr-tab-indicator-enter {
+        from {
+            transform: scaleX(0.7);
+            opacity: 0;
+        }
+        to {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+    }
 }
