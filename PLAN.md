@@ -57,7 +57,7 @@ Branche `feat/showcase-enrichment-and-animations`.
 
 ## Reprise
 
-Dernier commit vert : en cours de finalisation (highlight speculaire dark themes).
+Dernier commit vert : 8e26d04 (pousse sur main).
 Contrats et verifications :
 - pnpm verify : 8/8 etapes passees avec succes (exit code 0).
 - Biome lint : 0 erreur, 0 avertissement sur l'integralite du monorepo (1010 fichiers).
