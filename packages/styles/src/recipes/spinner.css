@@ -73,14 +73,4 @@
     :where(.mr-spinner)[data-tone='accent'] {
         color: var(--mr-accent-solid);
     }
-
-    /* Animation rotative continue */
-    @keyframes mr-spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
-    }
 }

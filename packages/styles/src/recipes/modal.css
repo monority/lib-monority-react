@@ -11,16 +11,6 @@
         box-sizing: border-box;
         padding: var(--mr-space-4);
     }
-
-    @keyframes mr-fade-in {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
     /* Voile d'arriere-plan */
     :where(.mr-modal__backdrop) {
         position: fixed;
@@ -28,17 +18,6 @@
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
         animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
-    }
-
-    @keyframes mr-modal-enter {
-        from {
-            opacity: 0;
-            transform: scale(0.96);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
     }
 
     /* Panneau central */

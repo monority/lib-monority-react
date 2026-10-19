@@ -1,0 +1,304 @@
+/* Socle d'animations et keyframes fondamentales de Monority UI.
+ * Couche : mr.base.
+ * Centralise les keyframes partagées pour eviter la duplication
+ * dans les recettes de composants et garantir l'uniformite des transitions. */
+@layer mr.base {
+    /* Fondu (fade) */
+    @keyframes mr-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes mr-fade-out {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Zoom et echelle (scale / modales) */
+    @keyframes mr-scale-in {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes mr-scale-out {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+    }
+
+    /* Boites modales (modal, alert-dialog, command-palette) */
+    @keyframes mr-modal-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes mr-modal-exit {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+    }
+
+    /* Alias pour boite de dialogue de confirmation */
+    @keyframes mr-alert-dialog-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Surfaces flottantes contextualisees (popover, dropdown, combobox, context-menu, hovercard) */
+    @keyframes mr-floating-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-floating-exit {
+        from {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+    }
+
+    /* Alias retrocompatibles des surfaces flottantes */
+    @keyframes mr-popover-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-dropdown-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-context-menu-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-hovercard-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-menubar-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes mr-nav-menu-enter {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    /* Glissements directionnels d'entree (drawer, sheet, toast, notification) */
+    @keyframes mr-slide-in-right {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mr-slide-in-left {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mr-slide-in-top {
+        from {
+            transform: translateY(-100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes mr-slide-in-bottom {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    /* Alias retrocompatibles tiroirs */
+    @keyframes mr-drawer-enter-right {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mr-drawer-enter-left {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mr-drawer-enter-top {
+        from {
+            transform: translateY(-100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes mr-drawer-enter-bottom {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    /* Glissements directionnels de sortie */
+    @keyframes mr-slide-out-right {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes mr-slide-out-left {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    @keyframes mr-slide-out-top {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-100%);
+        }
+    }
+
+    @keyframes mr-slide-out-bottom {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(100%);
+        }
+    }
+
+    /* Rotation continue standard (spinner, boutons de chargement) */
+    @keyframes mr-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Pulsation / Respiration generique */
+    @keyframes mr-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+}

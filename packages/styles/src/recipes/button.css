@@ -154,15 +154,6 @@
         animation: mr-spin var(--mr-duration-spin) linear infinite;
     }
 
-    @keyframes mr-spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
     /* Survol (uniquement avec pointeur survolant) */
     @media (hover: hover) {
         :where(.mr-btn)[data-variant='primary']:hover:where(

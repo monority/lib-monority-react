@@ -29,17 +29,6 @@
         transform-origin: top;
     }
 
-    @keyframes mr-hovercard-enter {
-        from {
-            opacity: 0;
-            transform: scale(0.96) translateY(calc(-1 * var(--mr-space-1)));
-        }
-        to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-    }
-
     :where(.mr-hovercard__arrow) {
         position: absolute;
         width: var(--mr-space-2);
