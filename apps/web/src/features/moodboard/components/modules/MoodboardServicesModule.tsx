@@ -116,6 +116,7 @@ export function MoodboardServicesModule() {
                     columns={serviceColumns}
                     rows={services}
                     getRowId={(row) => row.id}
+                    aria-label="État des services du cluster"
                 />
             </Card.Content>
 

@@ -65,7 +65,10 @@ export function MoodboardChatModule() {
             </Card.Header>
 
             <Card.Content style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <ScrollArea style={{ maxHeight: 160 }}>
+                <ScrollArea
+                    style={{ maxHeight: 160 }}
+                    aria-label="Discussion de l'équipe d'exploitation"
+                >
                     <Stack gap="xs">
                         {messages.map((msg) => (
                             <div

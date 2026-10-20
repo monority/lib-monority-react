@@ -31,6 +31,28 @@ import {
     Grid,
     HoverCard,
     IconButton,
+    IconAlertCircle,
+    IconAlertTriangle,
+    IconBell,
+    IconCalendar,
+    IconCheck,
+    IconCheckCircle,
+    IconChevronDown,
+    IconChevronLeft,
+    IconChevronRight,
+    IconChevronUp,
+    IconClose,
+    IconCopy,
+    IconEye,
+    IconEyeOff,
+    IconInfo,
+    IconMinus,
+    IconPause,
+    IconPlay,
+    IconPlus,
+    IconSearch,
+    IconSparkles,
+    IconUpload,
     Input,
     Kbd,
     Menubar,
@@ -744,18 +766,7 @@ export function MoodboardCatalogView() {
                                 </ButtonLink>
 
                                 <IconButton label="Recharger les sondes" tone="neutral" size="sm">
-                                    <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        aria-hidden="true"
-                                    >
-                                        <polyline points="23 4 23 10 17 10" />
-                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                                    </svg>
+                                    <IconSparkles size={14} />
                                 </IconButton>
 
                                 <Spinner size="md" tone="base" />
@@ -814,19 +825,7 @@ export function MoodboardCatalogView() {
 
                             <EmptyState>
                                 <EmptyState.Icon>
-                                    <svg
-                                        width="32"
-                                        height="32"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                        aria-hidden="true"
-                                    >
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="12" y1="8" x2="12" y2="12" />
-                                        <line x1="12" y1="16" x2="12.01" y2="16" />
-                                    </svg>
+                                    <IconAlertCircle size={32} />
                                 </EmptyState.Icon>
                                 <EmptyState.Title>Aucun incident détecté</EmptyState.Title>
                                 <EmptyState.Description>
@@ -1060,6 +1059,78 @@ export function MoodboardCatalogView() {
 
                             <Calendar value={dateValue} onChange={setDateValue} />
                         </Stack>
+                    </Card.Content>
+                </Card>
+
+                {/* 7. Bibliothèque d'icônes natives */}
+                <Card style={{ gridColumn: '1 / -1' }}>
+                    <Card.Header>
+                        <Stack gap="xs">
+                            <Title as="h3" size="sm">
+                                Icônes natives vectorielles (@monority/ui/icons)
+                            </Title>
+                            <Text tone="muted" size="sm">
+                                Collection SVG intégrée sans dépendance externe, héritant de
+                                currentColor et réactive au thème.
+                            </Text>
+                        </Stack>
+                    </Card.Header>
+                    <Card.Content>
+                        <Grid columns="auto-fill" gap="sm">
+                            {[
+                                { name: 'Check', icon: <IconCheck size={18} /> },
+                                { name: 'CheckCircle', icon: <IconCheckCircle size={18} /> },
+                                { name: 'Search', icon: <IconSearch size={18} /> },
+                                { name: 'Bell', icon: <IconBell size={18} /> },
+                                { name: 'Calendar', icon: <IconCalendar size={18} /> },
+                                { name: 'Sparkles', icon: <IconSparkles size={18} /> },
+                                { name: 'AlertTriangle', icon: <IconAlertTriangle size={18} /> },
+                                { name: 'AlertCircle', icon: <IconAlertCircle size={18} /> },
+                                { name: 'Info', icon: <IconInfo size={18} /> },
+                                { name: 'Copy', icon: <IconCopy size={18} /> },
+                                { name: 'Upload', icon: <IconUpload size={18} /> },
+                                { name: 'Eye', icon: <IconEye size={18} /> },
+                                { name: 'EyeOff', icon: <IconEyeOff size={18} /> },
+                                { name: 'Plus', icon: <IconPlus size={18} /> },
+                                { name: 'Minus', icon: <IconMinus size={18} /> },
+                                { name: 'Close', icon: <IconClose size={18} /> },
+                                { name: 'Play', icon: <IconPlay size={18} /> },
+                                { name: 'Pause', icon: <IconPause size={18} /> },
+                                { name: 'ChevronLeft', icon: <IconChevronLeft size={18} /> },
+                                { name: 'ChevronRight', icon: <IconChevronRight size={18} /> },
+                                { name: 'ChevronUp', icon: <IconChevronUp size={18} /> },
+                                { name: 'ChevronDown', icon: <IconChevronDown size={18} /> },
+                            ].map(({ name, icon }) => (
+                                <div
+                                    key={name}
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: 'var(--mr-space-2)',
+                                        padding: 'var(--mr-space-3)',
+                                        borderRadius: 'var(--mr-radius-md)',
+                                        backgroundColor: 'var(--mr-bg-sunken)',
+                                        border: '1px solid var(--mr-border-subtle)',
+                                        textAlign: 'center',
+                                        minInlineSize: '100px',
+                                    }}
+                                >
+                                    <span style={{ color: 'var(--mr-text-primary)' }}>{icon}</span>
+                                    <Text
+                                        size="sm"
+                                        tone="muted"
+                                        style={{
+                                            fontSize: 'var(--mr-font-size-xs)',
+                                            wordBreak: 'break-all',
+                                        }}
+                                    >
+                                        {name}
+                                    </Text>
+                                </div>
+                            ))}
+                        </Grid>
                     </Card.Content>
                 </Card>
             </Grid>

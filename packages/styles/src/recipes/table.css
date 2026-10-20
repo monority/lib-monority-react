@@ -7,6 +7,11 @@
         overflow-x: auto;
     }
 
+    :where(.mr-table:focus-visible) {
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
     :where(.mr-table__table) {
         inline-size: 100%;
         border-collapse: collapse;
