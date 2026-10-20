@@ -1,4 +1,6 @@
 import { cn } from '@/lib/cn'
+import { MenuItemPrimitive, MenuSeparatorPrimitive } from '@/internal/menu/MenuItemPrimitive'
+import { usePresence } from '@/internal/use-presence'
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import type {
     MenuItem,
@@ -94,17 +96,31 @@ export function MenubarTrigger({
 }
 
 export function MenubarContent({ ref, children, className, ...props }: MenubarContentProps) {
+    const menubarCtx = useContext(MenubarContext)
     const menuCtx = useContext(MenubarMenuContext)
     const isOpen = menuCtx?.isOpen ?? false
+    const isSwitching = Boolean(menubarCtx?.activeMenu && !isOpen)
+    const durationMs = isSwitching ? 0 : 150
+    const presence = usePresence(isOpen, { durationMs })
 
-    if (!isOpen) return null
+    if (!presence.isMounted) return null
+
+    const handleRef = (node: HTMLDivElement | null) => {
+        presence.ref(node)
+        if (typeof ref === 'function') {
+            ref(node)
+        } else if (ref && 'current' in ref) {
+            ;(ref as { current: HTMLDivElement | null }).current = node
+        }
+    }
 
     return (
         <div
-            ref={ref}
+            ref={handleRef}
             className={cn('mr-menubar__menu', className)}
             role="menu"
             aria-label={menuCtx?.value}
+            {...presence.presenceProps}
             {...props}
         >
             {children}
@@ -126,37 +142,32 @@ export function MenubarItem({
     const menubarCtx = useContext(MenubarContext)
 
     return (
-        <button
+        <MenuItemPrimitive
             ref={ref}
-            type="button"
-            role="menuitem"
+            classPrefix="mr-menubar"
+            danger={variant === 'danger'}
+            dangerClassName="mr-menubar__item--danger"
             disabled={disabled}
-            onClick={(e) => {
-                if (disabled) return
-                onClick?.(e)
-                menubarCtx?.setActiveMenu(null)
-            }}
-            className={cn(
-                'mr-menubar__item',
-                variant === 'danger' && 'mr-menubar__item--danger',
-                disabled && 'mr-menubar__item--disabled',
-                className
-            )}
+            disabledClassName="mr-menubar__item--disabled"
+            icon={icon}
+            shortcut={shortcut}
+            shortcutClassName="mr-menubar__shortcut"
+            className={className}
+            onClick={onClick}
+            onItemClick={() => menubarCtx?.setActiveMenu(null)}
             {...props}
         >
-            {icon ? <span className="mr-menubar__item-icon">{icon}</span> : null}
-            <span className="mr-menubar__item-label">{children}</span>
-            {shortcut ? <span className="mr-menubar__shortcut">{shortcut}</span> : null}
-        </button>
+            {children}
+        </MenuItemPrimitive>
     )
 }
 
 export function MenubarSeparator({ ref, className, ...props }: MenubarSeparatorProps) {
     return (
-        <div
+        <MenuSeparatorPrimitive
             ref={ref}
-            className={cn('mr-menubar__separator', className)}
-            role="separator"
+            classPrefix="mr-menubar"
+            className={className}
             {...props}
         />
     )

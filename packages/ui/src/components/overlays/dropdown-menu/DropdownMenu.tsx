@@ -1,3 +1,9 @@
+import {
+    MenuItemPrimitive,
+    MenuLabelPrimitive,
+    MenuSeparatorPrimitive,
+} from '@/internal/menu/MenuItemPrimitive'
+import { useFloatingPosition } from '@/internal/use-floating-position'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
@@ -40,12 +46,14 @@ interface DropdownMenuContextValue {
     triggerElementRef: MutableRefObject<Element | null>
     contentRef: MutableRefObject<HTMLDivElement | null>
     position: { top: number; left: number }
+    actualSide: DropdownSide
+    actualAlign: DropdownAlign
     positioned: boolean
     focusItem: (direction?: number, targetValue?: string) => void
+    returnFocusToTrigger: () => void
     updatePosition: () => void
-    align: DropdownAlign
-    side: DropdownSide
     instanceId: string
+    presenceRef: (node: HTMLElement | null) => void
 }
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null)
@@ -70,12 +78,20 @@ export function DropdownMenu({
     const contentRef = useRef<HTMLDivElement>(null)
     const isControlled = controlledOpen !== undefined
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
-    const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
-    // Never paint at the (0,0) initial position: hidden until measured.
-    const [positioned, setPositioned] = useState(false)
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(isOpen, { durationMs: 200 })
+
+    const { position, actualSide, actualAlign, positioned, updatePosition } = useFloatingPosition(
+        triggerElementRef,
+        contentRef,
+        {
+            side,
+            align,
+            sideOffset: OVERLAY_OFFSET,
+            enabled: isMounted,
+        }
+    )
 
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
@@ -85,99 +101,82 @@ export function DropdownMenu({
         [isControlled, onOpenChange]
     )
 
+    const returnFocusToTrigger = useCallback(() => {
+        const triggerEl =
+            triggerElementRef.current ??
+            rootRef.current?.querySelector<HTMLElement>(
+                '[data-mr-dropdown-trigger="true"] button, [data-mr-dropdown-trigger="true"] a, [data-mr-dropdown-trigger="true"] [tabindex], button[data-mr-dropdown-trigger="true"]'
+            )
+        if (triggerEl && 'focus' in triggerEl) {
+            ;(triggerEl as HTMLElement).focus()
+        }
+    }, [])
+
     const actionableItems = useMemo(() => items.filter(isActionableItem), [items])
 
-    const updatePosition = useCallback(() => {
-        const el =
-            triggerElementRef.current ??
-            rootRef.current?.querySelector('[data-mr-dropdown-trigger="true"]')
-        if (!el) return
-        const anchorRect = el.getBoundingClientRect()
-        const contentEl = contentRef.current
-        const floatingRect = contentEl ? contentEl.getBoundingClientRect() : { width: 0, height: 0 }
-        const gap = OVERLAY_OFFSET
-        const top = side === 'top' ? anchorRect.top - gap : anchorRect.bottom + gap
-        let left = anchorRect.left
-        if (align === 'center') {
-            left = anchorRect.left + anchorRect.width / 2 - floatingRect.width / 2
-        } else if (align === 'end') {
-            left = anchorRect.right - floatingRect.width
-        }
-        const padding = 8
-        const maxLeft = (window.innerWidth || 1024) - floatingRect.width - padding
-        left = Math.min(Math.max(left, padding), Math.max(padding, maxLeft))
-        setPosition({ top, left })
-        setPositioned(true)
-    }, [align, side])
-
     const focusItem = useCallback((direction = 1, targetValue?: string) => {
-        const menuItems = contentRef.current?.querySelectorAll('[role="menuitem"]')
-        if (!menuItems?.length) return
-        if (targetValue) {
-            ;(
-                Array.from(menuItems).find(
-                    (item) => (item as HTMLElement).dataset.value === targetValue
-                ) as HTMLElement
-            )?.focus()
-            return
-        }
-        const activeIndex = Array.from(menuItems).findIndex(
-            (item) => item === document.activeElement
+        const menuItems = Array.from(
+            contentRef.current?.querySelectorAll<HTMLElement>(
+                '[role="menuitem"]:not([disabled])'
+            ) ?? []
         )
+        if (!menuItems.length) return
+
+        if (targetValue) {
+            const target = menuItems.find((item) => item.dataset.value === targetValue)
+            if (target) {
+                target.focus()
+                return
+            }
+        }
+
+        const activeIndex = menuItems.findIndex((item) => item === document.activeElement)
         const nextIndex =
             activeIndex === -1
                 ? direction > 0
                     ? 0
                     : menuItems.length - 1
                 : (activeIndex + direction + menuItems.length) % menuItems.length
-        ;(menuItems[nextIndex] as HTMLElement)?.focus()
+
+        menuItems[nextIndex]?.focus()
     }, [])
 
+    // Écoute des clics extérieurs et de la touche Escape pour fermer
     useEffect(() => {
-        if (!isMounted) {
-            setPositioned(false)
-            return
-        }
-        if (!isOpen) {
-            return
-        }
-        const frameId = window.requestAnimationFrame(updatePosition)
-        function pd(e: MouseEvent) {
-            if (
-                !rootRef.current?.contains(e.target as Node) &&
-                !contentRef.current?.contains(e.target as Node)
-            )
+        if (!isOpen) return
+
+        function handlePointerDown(e: MouseEvent) {
+            const target = e.target as Node
+            if (!rootRef.current?.contains(target) && !contentRef.current?.contains(target)) {
                 setOpenState(false)
-        }
-        function kd(e: KeyboardEvent) {
-            if (e.key === 'Escape') {
-                setOpenState(false)
-                ;(
-                    rootRef.current?.querySelector(
-                        '[data-mr-dropdown-trigger="true"] button, [data-mr-dropdown-trigger="true"] a, [data-mr-dropdown-trigger="true"] [tabindex]'
-                    ) as HTMLElement
-                )?.focus()
             }
         }
-        function vc() {
-            updatePosition()
-        }
-        document.addEventListener('mousedown', pd)
-        document.addEventListener('keydown', kd)
-        window.addEventListener('resize', vc)
-        window.addEventListener('scroll', vc, true)
-        return () => {
-            window.cancelAnimationFrame(frameId)
-            document.removeEventListener('mousedown', pd)
-            document.removeEventListener('keydown', kd)
-            window.removeEventListener('resize', vc)
-            window.removeEventListener('scroll', vc, true)
-        }
-    }, [isMounted, isOpen, setOpenState, updatePosition])
 
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key === 'Escape') {
+                e.preventDefault()
+                setOpenState(false)
+                returnFocusToTrigger()
+            }
+        }
+
+        document.addEventListener('mousedown', handlePointerDown)
+        document.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            document.removeEventListener('mousedown', handlePointerDown)
+            document.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [isOpen, setOpenState, returnFocusToTrigger])
+
+    // Focus automatique sur le premier élément dès que le menu est ouvert
     useEffect(() => {
-        if (isOpen && actionableItems.length > 0) {
-            focusItem(1, actionableItems[0]?.value)
+        if (isOpen) {
+            if (actionableItems.length > 0) {
+                focusItem(1, actionableItems[0]?.value)
+            } else {
+                focusItem(1)
+            }
         }
     }, [actionableItems, isOpen, focusItem])
 
@@ -189,12 +188,14 @@ export function DropdownMenu({
         triggerElementRef,
         contentRef,
         position,
+        actualSide,
+        actualAlign,
         positioned,
         focusItem,
+        returnFocusToTrigger,
         updatePosition,
-        align,
-        side,
         instanceId,
+        presenceRef,
     }
 
     if (children) {
@@ -203,7 +204,8 @@ export function DropdownMenu({
                 <div
                     ref={(node) => {
                         if (typeof ref === 'function') ref(node)
-                        else if (ref) (ref as { current: HTMLDivElement | null }).current = node
+                        else if (ref)
+                            (ref as MutableRefObject<HTMLDivElement | null>).current = node
                         rootRef.current = node
                     }}
                     className={cn('mr-dropdown', className)}
@@ -223,7 +225,7 @@ export function DropdownMenu({
             <div
                 ref={(node) => {
                     if (typeof ref === 'function') ref(node)
-                    else if (ref) (ref as { current: HTMLDivElement | null }).current = node
+                    else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node
                     rootRef.current = node
                 }}
                 className={cn('mr-dropdown', className)}
@@ -242,13 +244,12 @@ export function DropdownMenu({
                         aria-haspopup="menu"
                         onClick={(e) => {
                             triggerElementRef.current = e.currentTarget
-                            updatePosition()
                             setOpenState(!isOpen)
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault()
-                                updatePosition()
+                                triggerElementRef.current = e.currentTarget
                                 setOpenState(true)
                             }
                         }}
@@ -287,7 +288,6 @@ export function DropdownMenu({
                                     ;(childProps.onClick as React.MouseEventHandler<HTMLElement>)(e)
                                 }
                                 triggerElementRef.current = e.currentTarget
-                                updatePosition()
                                 setOpenState(!isOpen)
                             },
                             onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -301,7 +301,7 @@ export function DropdownMenu({
                                 }
                                 if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                                     e.preventDefault()
-                                    updatePosition()
+                                    triggerElementRef.current = e.currentTarget
                                     setOpenState(true)
                                 }
                             },
@@ -317,13 +317,12 @@ export function DropdownMenu({
                         aria-haspopup="menu"
                         onClick={(e) => {
                             triggerElementRef.current = e.currentTarget
-                            updatePosition()
                             setOpenState(!isOpen)
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault()
-                                updatePosition()
+                                triggerElementRef.current = e.currentTarget
                                 setOpenState(true)
                             }
                         }}
@@ -331,14 +330,21 @@ export function DropdownMenu({
                         {trigger}
                     </button>
                 )}
+
                 {isMounted && portalTarget
                     ? createPortal(
                           <div
-                              ref={contentRef}
+                              ref={(node) => {
+                                  contentRef.current = node
+                                  presenceRef(node)
+                              }}
                               id={`${instanceId}-content`}
                               className={cn('mr-dropdown__content', contentClassName)}
                               role="menu"
                               aria-orientation="vertical"
+                              data-side={actualSide}
+                              data-align={actualAlign}
+                              data-state={presenceProps['data-state']}
                               data-closing={presenceProps['data-closing']}
                               data-positioned={positioned ? '' : undefined}
                               style={{
@@ -350,21 +356,20 @@ export function DropdownMenu({
                                   if (e.key === 'ArrowDown') {
                                       e.preventDefault()
                                       focusItem(1)
-                                  }
-                                  if (e.key === 'ArrowUp') {
+                                  } else if (e.key === 'ArrowUp') {
                                       e.preventDefault()
                                       focusItem(-1)
-                                  }
-                                  if (e.key === 'Home') {
+                                  } else if (e.key === 'Home') {
                                       e.preventDefault()
                                       focusItem(1, actionableItems[0]?.value)
-                                  }
-                                  if (e.key === 'End') {
+                                  } else if (e.key === 'End') {
                                       e.preventDefault()
                                       focusItem(
                                           -1,
                                           actionableItems[actionableItems.length - 1]?.value
                                       )
+                                  } else if (e.key === 'Tab') {
+                                      setOpenState(false)
                                   }
                               }}
                           >
@@ -389,6 +394,7 @@ export function DropdownMenu({
                                           onClick={() => {
                                               item.onSelect?.(item.value)
                                               setOpenState(false)
+                                              returnFocusToTrigger()
                                           }}
                                       >
                                           {item.icon ? (
@@ -432,7 +438,7 @@ function DropdownMenuTrigger({
         <button
             ref={(node) => {
                 if (typeof ref === 'function') ref(node)
-                else if (ref) (ref as { current: HTMLButtonElement | null }).current = node
+                else if (ref) (ref as MutableRefObject<HTMLButtonElement | null>).current = node
                 if (context) context.triggerElementRef.current = node
             }}
             type="button"
@@ -443,7 +449,6 @@ function DropdownMenuTrigger({
             onClick={(e) => {
                 onClick?.(e)
                 if (context) {
-                    context.updatePosition()
                     context.setOpenState(!context.isOpen)
                 }
             }}
@@ -452,7 +457,6 @@ function DropdownMenuTrigger({
                 if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
                     if (context) {
-                        context.updatePosition()
                         context.setOpenState(true)
                     }
                 }
@@ -479,14 +483,18 @@ function DropdownMenuContent({
         <div
             ref={(node) => {
                 if (typeof ref === 'function') ref(node)
-                else if (ref) (ref as { current: HTMLDivElement | null }).current = node
-                if (context) context.contentRef.current = node
+                else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node
+                if (context) {
+                    context.contentRef.current = node
+                    context.presenceRef(node)
+                }
             }}
             role="menu"
             aria-orientation="vertical"
             className={cn('mr-dropdown__content', className)}
-            data-side={context.side}
-            data-align={context.align}
+            data-side={context.actualSide}
+            data-align={context.actualAlign}
+            data-state={context.presenceProps['data-state']}
             data-closing={context.presenceProps['data-closing']}
             data-positioned={context.positioned ? '' : undefined}
             style={{
@@ -503,6 +511,8 @@ function DropdownMenuContent({
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault()
                     context.focusItem(-1)
+                } else if (e.key === 'Tab') {
+                    context.setOpenState(false)
                 }
             }}
             {...props}
@@ -528,37 +538,34 @@ function DropdownMenuItemComponent({
 }: DropdownMenuItemProps) {
     const context = useContext(DropdownMenuContext)
     return (
-        <button
+        <MenuItemPrimitive
             ref={ref}
-            type="button"
-            role="menuitem"
-            data-value={value}
+            value={value}
+            danger={danger}
+            icon={icon}
+            shortcut={shortcut}
+            onSelect={onSelect}
             disabled={disabled}
-            className={cn('mr-dropdown__item', danger && 'is-danger', className)}
-            onClick={(e) => {
-                onClick?.(e)
-                onSelect?.(value ?? '')
+            className={className}
+            classPrefix="mr-dropdown"
+            onItemClick={() => {
                 context?.setOpenState(false)
+                context?.returnFocusToTrigger()
             }}
+            onClick={onClick}
             {...props}
         >
-            {icon ? (
-                <span className="mr-dropdown__item-icon" aria-hidden="true">
-                    {icon}
-                </span>
-            ) : null}
-            <span className="mr-dropdown__item-label">{children}</span>
-            {shortcut ? <kbd className="mr-dropdown__item-shortcut">{shortcut}</kbd> : null}
-        </button>
+            {children}
+        </MenuItemPrimitive>
     )
 }
 
 function DropdownMenuSeparator({ ref, className, ...props }: DropdownMenuSeparatorProps) {
     return (
-        <div
+        <MenuSeparatorPrimitive
             ref={ref}
-            role="separator"
-            className={cn('mr-dropdown__separator', className)}
+            classPrefix="mr-dropdown"
+            className={className}
             {...props}
         />
     )
@@ -566,9 +573,9 @@ function DropdownMenuSeparator({ ref, className, ...props }: DropdownMenuSeparat
 
 function DropdownMenuLabel({ ref, className, children, ...props }: DropdownMenuLabelProps) {
     return (
-        <div ref={ref} className={cn('mr-dropdown__label', className)} {...props}>
+        <MenuLabelPrimitive ref={ref} classPrefix="mr-dropdown" className={className} {...props}>
             {children}
-        </div>
+        </MenuLabelPrimitive>
     )
 }
 

@@ -1,3 +1,8 @@
+import {
+    MenuItemPrimitive,
+    MenuLabelPrimitive,
+    MenuSeparatorPrimitive,
+} from '@/internal/menu/MenuItemPrimitive'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
@@ -38,6 +43,7 @@ interface ContextMenuContextValue {
     rootRef: MutableRefObject<HTMLDivElement | null>
     focusItem: (direction?: number, targetValue?: string) => void
     instanceId: string
+    presenceRef: (node: HTMLElement | null) => void
 }
 
 const ContextMenuContext = createContext<ContextMenuContextValue | null>(null)
@@ -62,7 +68,7 @@ export function ContextMenu({
     const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(isOpen, { durationMs: 200 })
 
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
@@ -193,6 +199,7 @@ export function ContextMenu({
         rootRef,
         focusItem,
         instanceId,
+        presenceRef,
     }
 
     if (children) {
@@ -240,11 +247,15 @@ export function ContextMenu({
                 {isMounted && portalTarget
                     ? createPortal(
                           <div
-                              ref={contentRef}
+                              ref={(node) => {
+                                  contentRef.current = node
+                                  presenceRef(node)
+                              }}
                               id={`${instanceId}-content`}
                               className={cn('mr-context-menu__content', contentClassName)}
                               role="menu"
                               aria-orientation="vertical"
+                              data-state={presenceProps['data-state']}
                               data-closing={presenceProps['data-closing']}
                               style={{ top: `${position.top}px`, left: `${position.left}px` }}
                               onKeyDown={(e) => {
@@ -366,11 +377,15 @@ function ContextMenuContent({
             ref={(node) => {
                 if (typeof ref === 'function') ref(node)
                 else if (ref) (ref as { current: HTMLDivElement | null }).current = node
-                if (context) context.contentRef.current = node
+                if (context) {
+                    context.contentRef.current = node
+                    context.presenceRef(node)
+                }
             }}
             role="menu"
             aria-orientation="vertical"
             className={cn('mr-context-menu__content', className)}
+            data-state={context.presenceProps['data-state']}
             data-closing={context.presenceProps['data-closing']}
             style={{ top: `${context.position.top}px`, left: `${context.position.left}px` }}
             onKeyDown={(e) => {
@@ -407,37 +422,33 @@ function ContextMenuItemComponent({
 }: ContextMenuItemProps) {
     const context = useContext(ContextMenuContext)
     return (
-        <button
+        <MenuItemPrimitive
             ref={ref}
-            type="button"
-            role="menuitem"
-            data-value={value}
+            value={value}
+            danger={danger}
+            icon={icon}
+            shortcut={shortcut}
+            onSelect={onSelect}
             disabled={disabled}
-            className={cn('mr-context-menu__item', danger && 'is-danger', className)}
-            onClick={(e) => {
-                onClick?.(e)
-                onSelect?.(value ?? '')
+            className={className}
+            classPrefix="mr-context-menu"
+            onItemClick={() => {
                 context?.setOpenState(false)
             }}
+            onClick={onClick}
             {...props}
         >
-            {icon ? (
-                <span className="mr-context-menu__item-icon" aria-hidden="true">
-                    {icon}
-                </span>
-            ) : null}
-            <span className="mr-context-menu__item-label">{children}</span>
-            {shortcut ? <kbd className="mr-context-menu__item-shortcut">{shortcut}</kbd> : null}
-        </button>
+            {children}
+        </MenuItemPrimitive>
     )
 }
 
 function ContextMenuSeparator({ ref, className, ...props }: ContextMenuSeparatorProps) {
     return (
-        <div
+        <MenuSeparatorPrimitive
             ref={ref}
-            role="separator"
-            className={cn('mr-context-menu__separator', className)}
+            classPrefix="mr-context-menu"
+            className={className}
             {...props}
         />
     )
@@ -445,9 +456,14 @@ function ContextMenuSeparator({ ref, className, ...props }: ContextMenuSeparator
 
 function ContextMenuLabel({ ref, className, children, ...props }: ContextMenuLabelProps) {
     return (
-        <div ref={ref} className={cn('mr-context-menu__label', className)} {...props}>
+        <MenuLabelPrimitive
+            ref={ref}
+            classPrefix="mr-context-menu"
+            className={className}
+            {...props}
+        >
             {children}
-        </div>
+        </MenuLabelPrimitive>
     )
 }
 

@@ -17,6 +17,10 @@ function render(ui: ReactElement) {
     return container
 }
 
+beforeEach(() => {
+    vi.useFakeTimers()
+})
+
 afterEach(() => {
     act(() => {
         root?.unmount()
@@ -24,6 +28,7 @@ afterEach(() => {
     container?.remove()
     root = null
     container = null
+    vi.useRealTimers()
 })
 
 const basicItems = [
@@ -178,6 +183,9 @@ describe('Menubar', () => {
         act(() => {
             item.click()
         })
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
 
         expect(view.querySelector('.mr-menubar__menu')).toBeNull()
     })
@@ -276,6 +284,9 @@ describe('Menubar', () => {
         act(() => {
             document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
         })
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
 
         expect(view.querySelector('.mr-menubar__menu')).toBeNull()
     })
@@ -291,6 +302,9 @@ describe('Menubar', () => {
 
         act(() => {
             document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+        })
+        act(() => {
+            vi.advanceTimersByTime(200)
         })
 
         expect(view.querySelector('.mr-menubar__menu')).toBeNull()
@@ -354,6 +368,34 @@ describe('Menubar', () => {
         act(() => {
             trigger.click()
         })
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
+        expect(view.querySelector('.mr-menubar__menu')).toBeNull()
+    })
+
+    it('applies data-closing and data-state="closed" during exit animation', () => {
+        const view = render(<Menubar items={basicItems} />)
+        const trigger = view.querySelectorAll('.mr-menubar__trigger')[0]
+
+        act(() => {
+            trigger.click()
+        })
+        const menu = view.querySelector('.mr-menubar__menu')
+        expect(menu?.getAttribute('data-state')).toBe('open')
+        expect(menu?.hasAttribute('data-closing')).toBe(false)
+
+        act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+        })
+
+        const closingMenu = view.querySelector('.mr-menubar__menu')
+        expect(closingMenu?.getAttribute('data-state')).toBe('closed')
+        expect(closingMenu?.hasAttribute('data-closing')).toBe(true)
+
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
         expect(view.querySelector('.mr-menubar__menu')).toBeNull()
     })
 
@@ -400,6 +442,9 @@ describe('Menubar', () => {
                 item.click()
             })
             expect(onSave).toHaveBeenCalled()
+            act(() => {
+                vi.advanceTimersByTime(200)
+            })
             expect(view.querySelector('.mr-menubar__menu')).toBeNull()
         })
     })
