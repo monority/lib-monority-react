@@ -198,6 +198,7 @@
 
     /* ─── Surface flottante (Popover) ─────────────────────────── */
     :where(.mr-datepicker__popover) {
+        position: fixed;
         z-index: var(--mr-z-popover);
         box-sizing: border-box;
         padding: var(--mr-space-4);
@@ -207,6 +208,48 @@
         border-radius: var(--mr-radius-lg);
         box-shadow: var(--mr-shadow-overlay);
         user-select: none;
+        outline: none;
+        transform-origin: top center;
+    }
+
+    :where(.mr-datepicker__popover[data-positioned]) {
+        animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
+    }
+
+    :where(.mr-datepicker__popover)[data-closing],
+    :where(.mr-datepicker__popover)[data-state='closed'] {
+        pointer-events: none;
+        animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
+    }
+
+    :where(.mr-datepicker__popover)[data-side='top'] {
+        transform-origin: bottom center;
+    }
+
+    :where(.mr-datepicker__popover)[data-side='bottom'] {
+        transform-origin: top center;
+    }
+
+    :where(.mr-datepicker__popover)[data-side='left'] {
+        transform-origin: right center;
+    }
+
+    :where(.mr-datepicker__popover)[data-side='right'] {
+        transform-origin: left center;
+    }
+
+    :where(.mr-datepicker__popover) :where(.mr-calendar) {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-datepicker__popover) {
+            animation: none;
+        }
     }
 
     /* En-tete du calendrier (mois / annee et boutons prev / next) */

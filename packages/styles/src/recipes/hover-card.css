@@ -25,11 +25,16 @@
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-primary);
         outline: none;
-        animation: mr-hovercard-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top center;
     }
 
-    :where(.mr-hovercard__content)[data-closing] {
+    :where(.mr-hovercard__content[data-positioned]) {
+        animation: mr-hovercard-enter var(--mr-duration-state) var(--mr-ease-default);
+    }
+
+    :where(.mr-hovercard__content)[data-closing],
+    :where(.mr-hovercard__content)[data-state='closed'] {
+        pointer-events: none;
         animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
@@ -55,11 +60,44 @@
         height: var(--mr-space-2);
         background-color: var(--mr-bg-surface);
         border: 1px solid var(--mr-border-default);
-        transform: rotate(45deg);
+        z-index: 1;
+    }
+
+    :where(.mr-hovercard__content)[data-side='top'] > :where(.mr-hovercard__arrow) {
+        bottom: calc(-1 * var(--mr-space-1));
+        left: var(--mr-hovercard-arrow-left, 50%);
+        transform: translateX(-50%) rotate(45deg);
+        border-top: none;
+        border-left: none;
+    }
+
+    :where(.mr-hovercard__content)[data-side='bottom'] > :where(.mr-hovercard__arrow) {
+        top: calc(-1 * var(--mr-space-1));
+        left: var(--mr-hovercard-arrow-left, 50%);
+        transform: translateX(-50%) rotate(45deg);
+        border-bottom: none;
+        border-right: none;
+    }
+
+    :where(.mr-hovercard__content)[data-side='left'] > :where(.mr-hovercard__arrow) {
+        right: calc(-1 * var(--mr-space-1));
+        top: var(--mr-hovercard-arrow-top, 50%);
+        transform: translateY(-50%) rotate(45deg);
+        border-bottom: none;
+        border-left: none;
+    }
+
+    :where(.mr-hovercard__content)[data-side='right'] > :where(.mr-hovercard__arrow) {
+        left: calc(-1 * var(--mr-space-1));
+        top: var(--mr-hovercard-arrow-top, 50%);
+        transform: translateY(-50%) rotate(45deg);
+        border-top: none;
+        border-right: none;
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-hovercard__content) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-hovercard__content) {
             animation: none;
         }
     }

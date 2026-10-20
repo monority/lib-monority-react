@@ -44,7 +44,7 @@ export function AlertDialog({
         onEscape: onCancel,
     })
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(open, { durationMs: 200 })
 
     useEffect(() => {
         if (open) cancelButtonRef.current?.focus()
@@ -64,9 +64,13 @@ export function AlertDialog({
                 className="mr-alert-dialog__backdrop-surface"
                 onClick={onCancel}
                 aria-hidden="true"
+                data-state={presenceProps['data-state']}
             />
             <div
-                ref={panelRef}
+                ref={(node) => {
+                    panelRef.current = node
+                    presenceRef(node)
+                }}
                 className={cn('mr-alert-dialog', 'mr-alert-dialog__panel')}
                 role="alertdialog"
                 aria-modal="true"
@@ -74,6 +78,7 @@ export function AlertDialog({
                 aria-describedby={descriptionId}
                 data-tone={tone}
                 data-open={open ? true : undefined}
+                data-state={presenceProps['data-state']}
                 data-closing={presenceProps['data-closing']}
                 tabIndex={-1}
             >

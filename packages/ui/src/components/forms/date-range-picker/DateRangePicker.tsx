@@ -1,29 +1,8 @@
 import { DatePicker } from '@/components/forms/date-picker/DatePicker'
+import { addDays, isOnOrBefore, parseDate, startOfDay } from '@/internal/date-utils'
 import { cn } from '@/lib/cn'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { DateRangePickerProps } from './DateRangePicker.types'
-
-type DateValue = Date | string | null | undefined
-
-function parseDate(value: DateValue): Date | null {
-    if (value == null || value === '') return null
-    const date = value instanceof Date ? new Date(value) : new Date(value)
-    return Number.isNaN(date.getTime()) ? null : date
-}
-
-function startOfDay(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
-}
-
-function addDays(date: Date, amount: number): Date {
-    const next = new Date(date)
-    next.setDate(next.getDate() + amount)
-    return next
-}
-
-function isOnOrBefore(date: Date, boundary: Date): boolean {
-    return startOfDay(date).getTime() <= startOfDay(boundary).getTime()
-}
 
 export function DateRangePicker({
     ref,

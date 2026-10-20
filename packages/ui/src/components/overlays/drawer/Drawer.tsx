@@ -1,11 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
-import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
-import { useFocusTrap } from '@/internal/use-focus-trap'
-import { usePortalTarget } from '@/internal/use-portal-target'
-import { usePresence } from '@/internal/use-presence'
-import { cn } from '@/lib/cn'
-import { useEffect, useId, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { SlidePanel, createSlideSubcomponents } from '@/internal/slide-panel/SlidePanel'
 import type {
     DrawerBodyProps,
     DrawerCloseProps,
@@ -15,6 +8,8 @@ import type {
     DrawerProps,
     DrawerTitleProps,
 } from './Drawer.types'
+
+const subcomponents = createSlideSubcomponents('mr-drawer', 'Fermer le panneau')
 
 export function Drawer({
     ref,
@@ -28,167 +23,34 @@ export function Drawer({
     className,
     ...props
 }: DrawerProps) {
-    const generatedId = useId()
-    const titleId = `${generatedId}-title`
-    const panelRef = useRef<HTMLDivElement>(null)
-    const closeButtonRef = useRef<HTMLButtonElement>(null)
-    const [localClosing, setLocalClosing] = useState(false)
-    const { isMounted, isClosing } = usePresence(open, { durationMs: 200 })
-
-    const effectiveClosing = isClosing || localClosing
-    const effectiveMounted = isMounted || localClosing
-
-    useBodyScrollLock(open && !effectiveClosing)
-    useFocusTrap({
-        active: open && !effectiveClosing,
-        containerRef: panelRef,
-        initialFocusRef: closeButtonRef,
-        onEscape: handleClose,
-    })
-    const portalTarget = usePortalTarget()
-
-    function handleClose() {
-        setLocalClosing(true)
-    }
-
-    function setPanelNode(node: HTMLDivElement | null) {
-        panelRef.current = node
-
-        if (!ref) return
-        if (typeof ref === 'function') {
-            ref(node)
-            return
-        }
-
-        if ('current' in ref) {
-            ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-        }
-    }
-
-    useEffect(() => {
-        if (!localClosing) return
-        const timer = setTimeout(() => {
-            setLocalClosing(false)
-            onClose?.()
-        }, 200)
-        return () => clearTimeout(timer)
-    }, [localClosing, onClose])
-
-    if (!effectiveMounted || !portalTarget) return null
-
-    return createPortal(
-        <div
-            className={cn('mr-drawer__backdrop', className)}
-            data-open={open ? true : undefined}
-            data-side={side}
-            data-closing={effectiveClosing ? '' : undefined}
-            onClick={handleClose}
-            {...props}
-        >
-            <div className="mr-drawer__backdrop-surface" aria-hidden="true" />
-            <div
-                ref={setPanelNode}
-                className={cn('mr-drawer', 'mr-drawer__panel')}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={titleId}
-                data-side={side}
-                data-open={open ? true : undefined}
-                data-closing={effectiveClosing ? '' : undefined}
-                tabIndex={-1}
-                onClick={(e) => e.stopPropagation()}
-            >
-                {title || description ? (
-                    <header className="mr-drawer__header">
-                        <div className="mr-drawer__heading">
-                            {title ? (
-                                <h3 id={titleId} className="mr-drawer__title">
-                                    {title}
-                                </h3>
-                            ) : null}
-                            {description ? (
-                                <p className="mr-drawer__description">{description}</p>
-                            ) : null}
-                        </div>
-                        <Button
-                            ref={closeButtonRef}
-                            className="mr-drawer__close"
-                            variant="ghost"
-                            size="sm"
-                            onClick={handleClose}
-                            aria-label="Fermer le panneau"
-                        >
-                            Fermer
-                        </Button>
-                    </header>
-                ) : null}
-                {title || description || footer ? (
-                    <div className="mr-drawer__body">{children}</div>
-                ) : (
-                    children
-                )}
-                {footer ? <footer className="mr-drawer__footer">{footer}</footer> : null}
-            </div>
-        </div>,
-        portalTarget
-    )
-}
-
-function DrawerHeader({ ref, className, children, ...props }: DrawerHeaderProps) {
     return (
-        <header ref={ref} className={cn('mr-drawer__header', className)} {...props}>
-            {children}
-        </header>
-    )
-}
-
-function DrawerTitle({ ref, className, children, ...props }: DrawerTitleProps) {
-    return (
-        <h3 ref={ref} className={cn('mr-drawer__title', className)} {...props}>
-            {children}
-        </h3>
-    )
-}
-
-function DrawerDescription({ ref, className, children, ...props }: DrawerDescriptionProps) {
-    return (
-        <p ref={ref} className={cn('mr-drawer__description', className)} {...props}>
-            {children}
-        </p>
-    )
-}
-
-function DrawerBody({ ref, className, children, ...props }: DrawerBodyProps) {
-    return (
-        <div ref={ref} className={cn('mr-drawer__body', className)} {...props}>
-            {children}
-        </div>
-    )
-}
-
-function DrawerFooter({ ref, className, children, ...props }: DrawerFooterProps) {
-    return (
-        <footer ref={ref} className={cn('mr-drawer__footer', className)} {...props}>
-            {children}
-        </footer>
-    )
-}
-
-function DrawerClose({ ref, className, children = 'Fermer', onClose, ...props }: DrawerCloseProps) {
-    return (
-        <Button
+        <SlidePanel
             ref={ref}
-            className={cn('mr-drawer__close', className)}
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            aria-label="Fermer le panneau"
+            open={open}
+            title={title}
+            description={description}
+            footer={footer}
+            side={side}
+            onClose={onClose}
+            className={className}
+            classPrefix="mr-drawer"
+            closeLabel="Fermer le panneau"
+            wrapBodyWhenNoHeader={false}
             {...props}
         >
             {children}
-        </Button>
+        </SlidePanel>
     )
 }
+
+export const DrawerHeader = subcomponents.Header as (props: DrawerHeaderProps) => React.ReactNode
+export const DrawerTitle = subcomponents.Title as (props: DrawerTitleProps) => React.ReactNode
+export const DrawerDescription = subcomponents.Description as (
+    props: DrawerDescriptionProps
+) => React.ReactNode
+export const DrawerBody = subcomponents.Body as (props: DrawerBodyProps) => React.ReactNode
+export const DrawerFooter = subcomponents.Footer as (props: DrawerFooterProps) => React.ReactNode
+export const DrawerClose = subcomponents.Close as (props: DrawerCloseProps) => React.ReactNode
 
 Drawer.Header = DrawerHeader
 Drawer.Title = DrawerTitle
@@ -196,8 +58,6 @@ Drawer.Description = DrawerDescription
 Drawer.Body = DrawerBody
 Drawer.Footer = DrawerFooter
 Drawer.Close = DrawerClose
-
-export { DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose }
 
 export type {
     DrawerProps,

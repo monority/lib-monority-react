@@ -42,7 +42,9 @@
         animation: mr-popover-enter var(--mr-duration-state) var(--mr-ease-default);
     }
 
-    :where(.mr-popover__content)[data-closing] {
+    :where(.mr-popover__content)[data-closing],
+    :where(.mr-popover__content)[data-state='closed'] {
+        pointer-events: none;
         animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
@@ -63,7 +65,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-popover__content) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-popover__content) {
             animation: none;
         }
     }

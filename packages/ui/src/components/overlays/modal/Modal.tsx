@@ -32,7 +32,7 @@ export function Modal({
     const panelRef = useRef<HTMLDivElement>(null)
     const closeButtonRef = useRef<HTMLButtonElement>(null)
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(open, { durationMs: 200 })
 
     useBodyScrollLock(open)
     useFocusTrap({
@@ -53,16 +53,25 @@ export function Modal({
             {...presenceProps}
             {...props}
         >
-            <div className="mr-modal__backdrop" onClick={onClose} aria-hidden="true" />
+            <div
+                className="mr-modal__backdrop"
+                onClick={onClose}
+                aria-hidden="true"
+                data-state={presenceProps['data-state']}
+            />
 
             <div
-                ref={panelRef}
+                ref={(node) => {
+                    panelRef.current = node
+                    presenceRef(node)
+                }}
                 className="mr-modal__panel"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={titleId}
                 aria-describedby={description ? descriptionId : undefined}
                 tabIndex={-1}
+                data-state={presenceProps['data-state']}
             >
                 {title || description ? (
                     <header className="mr-modal__header">

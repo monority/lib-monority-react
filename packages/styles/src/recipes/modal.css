@@ -17,11 +17,12 @@
         inset: 0;
         background-color: color-mix(in oklch, var(--mr-bg-inverse) 40%, transparent);
         backdrop-filter: blur(var(--mr-space-1));
-        animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out);
+        animation: mr-fade-in var(--mr-duration-panel) var(--mr-ease-out);
     }
 
     /* Animation de sortie du voile */
-    :where(.mr-modal)[data-closing] :where(.mr-modal__backdrop) {
+    :where(.mr-modal)[data-closing] :where(.mr-modal__backdrop),
+    :where(.mr-modal__backdrop)[data-state='closed'] {
         animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
@@ -47,8 +48,9 @@
     }
 
     /* Animation de sortie du panneau */
-    :where(.mr-modal)[data-closing] :where(.mr-modal__panel) {
-        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-in) forwards;
+    :where(.mr-modal)[data-closing] :where(.mr-modal__panel),
+    :where(.mr-modal__panel)[data-state='closed'] {
+        animation: mr-modal-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
     /* En-tete */
@@ -110,8 +112,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-modal__panel),
-        :where(.mr-modal__backdrop) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-modal__panel),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-modal__backdrop) {
             animation: none;
         }
     }

@@ -81,8 +81,7 @@ describe('Drawer', () => {
         expect(panel?.getAttribute('data-side')).toBe('right')
     })
 
-    it('calls onClose from backdrop click after animation', () => {
-        vi.useFakeTimers()
+    it('calls onClose from backdrop click', () => {
         const onClose = vi.fn()
         render(
             <Drawer open title="Nav" onClose={onClose}>
@@ -94,15 +93,10 @@ describe('Drawer', () => {
                 .querySelector('.mr-drawer__backdrop-surface')
                 ?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
         })
-        expect(onClose).toHaveBeenCalledTimes(0)
-        act(() => {
-            vi.advanceTimersByTime(200)
-        })
         expect(onClose).toHaveBeenCalledTimes(1)
     })
 
-    it('calls onClose from close button after animation', () => {
-        vi.useFakeTimers()
+    it('calls onClose from close button', () => {
         const onClose = vi.fn()
         render(
             <Drawer open title="Nav" onClose={onClose}>
@@ -114,11 +108,45 @@ describe('Drawer', () => {
                 .querySelector<HTMLButtonElement>('[aria-label="Fermer le panneau"]')
                 ?.click()
         })
-        expect(onClose).toHaveBeenCalledTimes(0)
-        act(() => {
-            vi.advanceTimersByTime(200)
-        })
         expect(onClose).toHaveBeenCalledTimes(1)
+    })
+
+    it('handles exit animation lifecycle when open changes to false', () => {
+        vi.useFakeTimers()
+        let isOpen = true
+        function ControlledDrawer() {
+            return (
+                <Drawer
+                    open={isOpen}
+                    title="Nav"
+                    onClose={() => {
+                        isOpen = false
+                    }}
+                >
+                    X
+                </Drawer>
+            )
+        }
+        render(<ControlledDrawer />)
+        expect(document.body.querySelector('.mr-drawer__panel')).not.toBeNull()
+
+        // Trigger close
+        isOpen = false
+        act(() => {
+            root?.render(<ControlledDrawer />)
+        })
+
+        const closingPanel = document.body.querySelector('.mr-drawer__panel')
+        expect(closingPanel).not.toBeNull()
+        expect(closingPanel?.getAttribute('data-state')).toBe('closed')
+        expect(closingPanel?.hasAttribute('data-closing')).toBe(true)
+
+        // Advance through exit duration
+        act(() => {
+            vi.advanceTimersByTime(250)
+        })
+
+        expect(document.body.querySelector('.mr-drawer__panel')).toBeNull()
     })
 
     it('forwards ref to panel element', () => {

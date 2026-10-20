@@ -30,7 +30,8 @@
         transform-origin: top left;
     }
 
-    :where(.mr-context-menu__content)[data-closing] {
+    :where(.mr-context-menu__content)[data-closing],
+    :where(.mr-context-menu__content)[data-state='closed'] {
         animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
@@ -115,7 +116,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-context-menu__content) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-context-menu__content) {
             animation: none;
         }
     }

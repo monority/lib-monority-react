@@ -85,8 +85,7 @@ describe('Sheet', () => {
         expect(panel?.getAttribute('data-side')).toBe('left')
     })
 
-    it('calls onClose when clicking close button after animation', () => {
-        vi.useFakeTimers()
+    it('calls onClose when clicking close button', () => {
         const onClose = vi.fn()
         render(
             <Sheet open title="Filtres" onClose={onClose}>
@@ -101,15 +100,45 @@ describe('Sheet', () => {
             closeBtn.click()
         })
 
-        expect(document.body.querySelector('.mr-sheet__panel')?.hasAttribute('data-closing')).toBe(
-            true
-        )
+        expect(onClose).toHaveBeenCalledTimes(1)
+    })
 
+    it('handles exit animation lifecycle when open changes to false', () => {
+        vi.useFakeTimers()
+        let isOpen = true
+        function ControlledSheet() {
+            return (
+                <Sheet
+                    open={isOpen}
+                    title="Filtres"
+                    onClose={() => {
+                        isOpen = false
+                    }}
+                >
+                    Contenu
+                </Sheet>
+            )
+        }
+        render(<ControlledSheet />)
+        expect(document.body.querySelector('.mr-sheet__panel')).not.toBeNull()
+
+        // Trigger close
+        isOpen = false
         act(() => {
-            vi.advanceTimersByTime(200)
+            root?.render(<ControlledSheet />)
         })
 
-        expect(onClose).toHaveBeenCalledTimes(1)
+        const closingPanel = document.body.querySelector('.mr-sheet__panel')
+        expect(closingPanel).not.toBeNull()
+        expect(closingPanel?.getAttribute('data-state')).toBe('closed')
+        expect(closingPanel?.hasAttribute('data-closing')).toBe(true)
+
+        // Advance through exit duration
+        act(() => {
+            vi.advanceTimersByTime(250)
+        })
+
+        expect(document.body.querySelector('.mr-sheet__panel')).toBeNull()
     })
 
     it('renders custom footer', () => {

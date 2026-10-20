@@ -1,11 +1,4 @@
-import { Button } from '@/components/actions/button/Button'
-import { useBodyScrollLock } from '@/internal/use-body-scroll-lock'
-import { useFocusTrap } from '@/internal/use-focus-trap'
-import { usePortalTarget } from '@/internal/use-portal-target'
-import { usePresence } from '@/internal/use-presence'
-import { cn } from '@/lib/cn'
-import { useEffect, useId, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { SlidePanel, createSlideSubcomponents } from '@/internal/slide-panel/SlidePanel'
 import type {
     SheetBodyProps,
     SheetCloseProps,
@@ -15,6 +8,8 @@ import type {
     SheetProps,
     SheetTitleProps,
 } from './Sheet.types'
+
+const subcomponents = createSlideSubcomponents('mr-sheet', 'Fermer le volet')
 
 export function Sheet({
     ref,
@@ -28,167 +23,34 @@ export function Sheet({
     className,
     ...props
 }: SheetProps) {
-    const generatedId = useId()
-    const titleId = `${generatedId}-title`
-    const descriptionId = `${generatedId}-description`
-    const panelRef = useRef<HTMLDivElement>(null)
-    const closeButtonRef = useRef<HTMLButtonElement>(null)
-    const [localClosing, setLocalClosing] = useState(false)
-    const { isMounted, isClosing } = usePresence(open, { durationMs: 200 })
-
-    const effectiveClosing = isClosing || localClosing
-    const effectiveMounted = isMounted || localClosing
-
-    useBodyScrollLock(open && !effectiveClosing)
-    useFocusTrap({
-        active: open && !effectiveClosing,
-        containerRef: panelRef,
-        initialFocusRef: closeButtonRef,
-        onEscape: handleClose,
-    })
-    const portalTarget = usePortalTarget()
-
-    function handleClose() {
-        setLocalClosing(true)
-    }
-
-    function setPanelNode(node: HTMLDivElement | null) {
-        panelRef.current = node
-
-        if (!ref) return
-        if (typeof ref === 'function') {
-            ref(node)
-            return
-        }
-
-        if ('current' in ref) {
-            ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-        }
-    }
-
-    useEffect(() => {
-        if (!localClosing) return
-        const timer = setTimeout(() => {
-            setLocalClosing(false)
-            onClose?.()
-        }, 150)
-        return () => clearTimeout(timer)
-    }, [localClosing, onClose])
-
-    if (!effectiveMounted || !portalTarget) return null
-
-    return createPortal(
-        <div
-            className={cn('mr-sheet__backdrop', className)}
-            data-open={open ? true : undefined}
-            data-side={side}
-            data-closing={effectiveClosing ? '' : undefined}
-            onClick={handleClose}
-            {...props}
-        >
-            <div className="mr-sheet__backdrop-surface" aria-hidden="true" />
-            <div
-                ref={setPanelNode}
-                className={cn('mr-sheet', 'mr-sheet__panel')}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={title ? titleId : undefined}
-                aria-describedby={description ? descriptionId : undefined}
-                data-side={side}
-                data-open={open ? true : undefined}
-                data-closing={effectiveClosing ? '' : undefined}
-                tabIndex={-1}
-                onClick={(e) => e.stopPropagation()}
-            >
-                {title || description ? (
-                    <header className="mr-sheet__header">
-                        <div className="mr-sheet__heading">
-                            {title ? (
-                                <h3 id={titleId} className="mr-sheet__title">
-                                    {title}
-                                </h3>
-                            ) : null}
-                            {description ? (
-                                <p id={descriptionId} className="mr-sheet__description">
-                                    {description}
-                                </p>
-                            ) : null}
-                        </div>
-                        <Button
-                            ref={closeButtonRef}
-                            className="mr-sheet__close"
-                            variant="ghost"
-                            size="sm"
-                            onClick={handleClose}
-                            aria-label="Fermer le volet"
-                        >
-                            Fermer
-                        </Button>
-                    </header>
-                ) : null}
-                <div className="mr-sheet__body">{children}</div>
-                {footer ? <footer className="mr-sheet__footer">{footer}</footer> : null}
-            </div>
-        </div>,
-        portalTarget
-    )
-}
-
-function SheetHeader({ ref, className, children, ...props }: SheetHeaderProps) {
     return (
-        <header ref={ref} className={cn('mr-sheet__header', className)} {...props}>
-            {children}
-        </header>
-    )
-}
-
-function SheetTitle({ ref, className, children, ...props }: SheetTitleProps) {
-    return (
-        <h3 ref={ref} className={cn('mr-sheet__title', className)} {...props}>
-            {children}
-        </h3>
-    )
-}
-
-function SheetDescription({ ref, className, children, ...props }: SheetDescriptionProps) {
-    return (
-        <p ref={ref} className={cn('mr-sheet__description', className)} {...props}>
-            {children}
-        </p>
-    )
-}
-
-function SheetBody({ ref, className, children, ...props }: SheetBodyProps) {
-    return (
-        <div ref={ref} className={cn('mr-sheet__body', className)} {...props}>
-            {children}
-        </div>
-    )
-}
-
-function SheetFooter({ ref, className, children, ...props }: SheetFooterProps) {
-    return (
-        <footer ref={ref} className={cn('mr-sheet__footer', className)} {...props}>
-            {children}
-        </footer>
-    )
-}
-
-function SheetClose({ ref, className, children = 'Fermer', onClose, ...props }: SheetCloseProps) {
-    return (
-        <Button
+        <SlidePanel
             ref={ref}
-            variant="ghost"
-            size="sm"
-            className={cn('mr-sheet__close', className)}
-            onClick={onClose}
-            aria-label="Fermer le volet"
+            open={open}
+            title={title}
+            description={description}
+            footer={footer}
+            side={side}
+            onClose={onClose}
+            className={className}
+            classPrefix="mr-sheet"
+            closeLabel="Fermer le volet"
+            wrapBodyWhenNoHeader={true}
             {...props}
         >
             {children}
-        </Button>
+        </SlidePanel>
     )
 }
+
+export const SheetHeader = subcomponents.Header as (props: SheetHeaderProps) => React.ReactNode
+export const SheetTitle = subcomponents.Title as (props: SheetTitleProps) => React.ReactNode
+export const SheetDescription = subcomponents.Description as (
+    props: SheetDescriptionProps
+) => React.ReactNode
+export const SheetBody = subcomponents.Body as (props: SheetBodyProps) => React.ReactNode
+export const SheetFooter = subcomponents.Footer as (props: SheetFooterProps) => React.ReactNode
+export const SheetClose = subcomponents.Close as (props: SheetCloseProps) => React.ReactNode
 
 Sheet.Header = SheetHeader
 Sheet.Title = SheetTitle
@@ -197,4 +59,13 @@ Sheet.Body = SheetBody
 Sheet.Footer = SheetFooter
 Sheet.Close = SheetClose
 
-export { SheetHeader, SheetTitle, SheetDescription, SheetBody, SheetFooter, SheetClose }
+export type {
+    SheetProps,
+    SheetSide,
+    SheetHeaderProps,
+    SheetTitleProps,
+    SheetDescriptionProps,
+    SheetBodyProps,
+    SheetFooterProps,
+    SheetCloseProps,
+} from './Sheet.types'

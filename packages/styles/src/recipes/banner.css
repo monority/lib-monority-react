@@ -19,7 +19,8 @@
         animation: mr-fade-in var(--mr-duration-state) var(--mr-ease-out) both;
     }
 
-    :where(.mr-banner)[data-closing] {
+    :where(.mr-banner)[data-closing],
+    :where(.mr-banner)[data-state='closed'] {
         animation: mr-fade-out var(--mr-duration-state) var(--mr-ease-in) both;
         pointer-events: none;
     }
@@ -128,8 +129,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-banner),
-        :where(.mr-banner)[data-closing] {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-banner),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-banner)[data-closing] {
             animation: none;
         }
     }

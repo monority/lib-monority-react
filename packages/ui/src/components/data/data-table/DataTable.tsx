@@ -1,5 +1,6 @@
 import { EmptyState } from '@/components/feedback/empty-state/EmptyState'
 import { Checkbox } from '@/components/forms/checkbox/Checkbox'
+import { Pagination } from '@/components/navigation/pagination/Pagination'
 import { cn } from '@/lib/cn'
 import { useCallback, useMemo, useState } from 'react'
 import type { Column, DataTableProps, Sort } from './DataTable.types'
@@ -44,6 +45,12 @@ export function DataTable<T>({
     onSelectedRowIdsChange,
     caption,
     getRowLabel,
+    page,
+    pageSize,
+    totalItems,
+    totalPages,
+    onPageChange,
+    paginationClassName,
     ...htmlProps
 }: DataTableProps<T>) {
     const [internalSort, setInternalSort] = useState<Sort | undefined>(initialSort)
@@ -52,6 +59,23 @@ export function DataTable<T>({
     const sort = controlledSort ?? internalSort
     const sortedRows = useMemo(() => sortRows(rows, columns, sort), [columns, rows, sort])
     const hasRows = sortedRows.length > 0
+
+    const resolvedTotalPages =
+        totalPages ??
+        (totalItems !== undefined && pageSize
+            ? Math.max(1, Math.ceil(totalItems / pageSize))
+            : pageSize
+              ? Math.max(1, Math.ceil(sortedRows.length / pageSize))
+              : 1)
+
+    const displayRows = useMemo(() => {
+        if (pageSize && totalItems === undefined && page) {
+            const startIndex = (page - 1) * pageSize
+            return sortedRows.slice(startIndex, startIndex + pageSize)
+        }
+        return sortedRows
+    }, [page, pageSize, sortedRows, totalItems])
+
     const isSelectionControlled = onSelectedRowIdsChange && selectedRowIds !== undefined
     const currentSelectedRowIds = isSelectionControlled ? selectedRowIds : internalSelectedRowIds
     const selectedSet = useMemo(() => new Set(currentSelectedRowIds), [currentSelectedRowIds])
@@ -63,8 +87,8 @@ export function DataTable<T>({
     )
 
     const visibleRowIds = useMemo(
-        () => sortedRows.map((row, index) => resolveRowId(row, index)),
-        [resolveRowId, sortedRows]
+        () => displayRows.map((row, index) => resolveRowId(row, index)),
+        [resolveRowId, displayRows]
     )
 
     const selectedVisibleCount = visibleRowIds.filter((id) => selectedSet.has(id)).length
@@ -105,124 +129,137 @@ export function DataTable<T>({
             {...htmlProps}
         >
             {hasRows ? (
-                <table className={cn('mr-table mr-data-table', tableClassName)}>
-                    {caption ? (
-                        <caption className="mr-data-table__caption">{caption}</caption>
-                    ) : null}
-                    <thead className="mr-data-table__head">
-                        <tr className="mr-data-table__header-row">
-                            {selectable ? (
-                                <th
-                                    scope="col"
-                                    className="mr-data-table__th mr-data-table__select-cell"
-                                >
-                                    <Checkbox
-                                        size="sm"
-                                        className="mr-data-table__checkbox"
-                                        aria-label="Select all rows"
-                                        checked={allSelected}
-                                        indeterminate={partiallySelected}
-                                        onChange={(e) => updateAllSelection(e.target.checked)}
-                                    />
-                                </th>
-                            ) : null}
-                            {columns.map((col) => {
-                                const isSorted = sort?.key === col.key
-                                const sortLabel = isSorted
-                                    ? sort!.direction === 'desc'
-                                        ? '↓'
-                                        : '↑'
-                                    : '↑'
-
-                                return (
+                <>
+                    <table className={cn('mr-table mr-data-table', tableClassName)}>
+                        {caption ? (
+                            <caption className="mr-data-table__caption">{caption}</caption>
+                        ) : null}
+                        <thead className="mr-data-table__head">
+                            <tr className="mr-data-table__header-row">
+                                {selectable ? (
                                     <th
-                                        key={col.key}
                                         scope="col"
-                                        className={cn(
-                                            'mr-data-table__th',
-                                            col.align ? `mr-table__cell--${col.align}` : undefined
-                                        )}
-                                        data-sortable={col.sortable ? 'true' : undefined}
-                                        data-sorted={isSorted ? 'true' : undefined}
-                                        aria-sort={
-                                            isSorted
-                                                ? sort!.direction === 'desc'
-                                                    ? 'descending'
-                                                    : 'ascending'
-                                                : undefined
-                                        }
+                                        className="mr-data-table__th mr-data-table__select-cell"
                                     >
-                                        {col.sortable ? (
-                                            <button
-                                                type="button"
-                                                className="mr-data-table__sort"
-                                                data-active={isSorted ? 'true' : undefined}
-                                                onClick={() => updateSort(col)}
-                                            >
-                                                <span>{col.header}</span>
-                                                <span
-                                                    className="mr-data-table__sort-indicator"
-                                                    aria-hidden="true"
-                                                >
-                                                    {sortLabel}
-                                                </span>
-                                            </button>
-                                        ) : (
-                                            col.header
-                                        )}
+                                        <Checkbox
+                                            size="sm"
+                                            className="mr-data-table__checkbox"
+                                            aria-label="Select all rows"
+                                            checked={allSelected}
+                                            indeterminate={partiallySelected}
+                                            onChange={(e) => updateAllSelection(e.target.checked)}
+                                        />
                                     </th>
-                                )
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody className="mr-data-table__body">
-                        {sortedRows.map((row, index) => {
-                            const rowId = resolveRowId(row, index)
-                            const rowLabel =
-                                getRowLabel?.(row, index) ??
-                                (row as { name?: string; title?: string }).name ??
-                                (row as { title?: string }).title ??
-                                String(index + 1)
+                                ) : null}
+                                {columns.map((col) => {
+                                    const isSorted = sort?.key === col.key
+                                    const sortLabel = isSorted
+                                        ? sort!.direction === 'desc'
+                                            ? '↓'
+                                            : '↑'
+                                        : '↑'
 
-                            return (
-                                <tr
-                                    key={rowId}
-                                    className="mr-data-table__tr"
-                                    data-selected={selectedSet.has(rowId) ? 'true' : undefined}
-                                >
-                                    {selectable ? (
-                                        <td className="mr-data-table__td mr-data-table__select-cell">
-                                            <Checkbox
-                                                size="sm"
-                                                className="mr-data-table__checkbox"
-                                                aria-label={`Select ${rowLabel}`}
-                                                checked={selectedSet.has(rowId)}
-                                                onChange={(e) =>
-                                                    updateSelection(rowId, e.target.checked)
-                                                }
-                                            />
-                                        </td>
-                                    ) : null}
-                                    {columns.map((col) => (
-                                        <td
+                                    return (
+                                        <th
                                             key={col.key}
+                                            scope="col"
                                             className={cn(
-                                                'mr-data-table__td',
+                                                'mr-data-table__th',
                                                 col.align
                                                     ? `mr-table__cell--${col.align}`
                                                     : undefined
                                             )}
+                                            data-sortable={col.sortable ? 'true' : undefined}
+                                            data-sorted={isSorted ? 'true' : undefined}
+                                            aria-sort={
+                                                isSorted
+                                                    ? sort!.direction === 'desc'
+                                                        ? 'descending'
+                                                        : 'ascending'
+                                                    : undefined
+                                            }
                                         >
-                                            {col.render
-                                                ? col.render(getCellValue(row, col), row, index)
-                                                : getCellValue(row, col)}
-                                        </td>
-                                    ))}
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                                            {col.sortable ? (
+                                                <button
+                                                    type="button"
+                                                    className="mr-data-table__sort"
+                                                    data-active={isSorted ? 'true' : undefined}
+                                                    onClick={() => updateSort(col)}
+                                                >
+                                                    <span>{col.header}</span>
+                                                    <span
+                                                        className="mr-data-table__sort-indicator"
+                                                        aria-hidden="true"
+                                                    >
+                                                        {sortLabel}
+                                                    </span>
+                                                </button>
+                                            ) : (
+                                                col.header
+                                            )}
+                                        </th>
+                                    )
+                                })}
+                            </tr>
+                        </thead>
+                        <tbody className="mr-data-table__body">
+                            {displayRows.map((row, index) => {
+                                const rowId = resolveRowId(row, index)
+                                const rowLabel =
+                                    getRowLabel?.(row, index) ??
+                                    (row as { name?: string; title?: string }).name ??
+                                    (row as { title?: string }).title ??
+                                    String(index + 1)
+
+                                return (
+                                    <tr
+                                        key={rowId}
+                                        className="mr-data-table__tr"
+                                        data-selected={selectedSet.has(rowId) ? 'true' : undefined}
+                                    >
+                                        {selectable ? (
+                                            <td className="mr-data-table__td mr-data-table__select-cell">
+                                                <Checkbox
+                                                    size="sm"
+                                                    className="mr-data-table__checkbox"
+                                                    aria-label={`Select ${rowLabel}`}
+                                                    checked={selectedSet.has(rowId)}
+                                                    onChange={(e) =>
+                                                        updateSelection(rowId, e.target.checked)
+                                                    }
+                                                />
+                                            </td>
+                                        ) : null}
+                                        {columns.map((col) => (
+                                            <td
+                                                key={col.key}
+                                                className={cn(
+                                                    'mr-data-table__td',
+                                                    col.align
+                                                        ? `mr-table__cell--${col.align}`
+                                                        : undefined
+                                                )}
+                                            >
+                                                {col.render
+                                                    ? col.render(getCellValue(row, col), row, index)
+                                                    : getCellValue(row, col)}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                    {page !== undefined && resolvedTotalPages > 0 ? (
+                        <div className={cn('mr-data-table__footer', paginationClassName)}>
+                            <Pagination
+                                page={page}
+                                totalPages={resolvedTotalPages}
+                                onPageChange={onPageChange}
+                            />
+                        </div>
+                    ) : null}
+                </>
             ) : (
                 (emptyState ?? (
                     <EmptyState title="No data" description="Adjust filters or add a first row." />

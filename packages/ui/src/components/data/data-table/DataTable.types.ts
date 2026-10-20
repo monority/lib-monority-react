@@ -33,4 +33,10 @@ export interface DataTableProps<T = unknown> extends HTMLAttributes<HTMLDivEleme
     onSelectedRowIdsChange?: (selectedRowIds: string[]) => void
     caption?: ReactNode
     getRowLabel?: (row: T, index: number) => string
+    page?: number
+    pageSize?: number
+    totalItems?: number
+    totalPages?: number
+    onPageChange?: (page: number) => void
+    paginationClassName?: string
 }

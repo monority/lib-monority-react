@@ -1,4 +1,5 @@
 import { cn } from '@/lib/cn'
+import { usePresence } from '@/internal/use-presence'
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react'
 import type {
     NavigationItem,
@@ -158,12 +159,28 @@ export function NavigationMenuContent({
 }: NavigationMenuContentProps) {
     const itemCtx = useContext(NavigationMenuItemContext)
     const isActive = itemCtx?.isActive ?? false
+    const presence = usePresence(isActive, { durationMs: 150 })
 
-    if (!isActive) return null
+    if (!presence.isMounted) return null
+
+    const handleRef = (node: HTMLDivElement | null) => {
+        presence.ref(node)
+        if (typeof ref === 'function') {
+            ref(node)
+        } else if (ref && 'current' in ref) {
+            ;(ref as { current: HTMLDivElement | null }).current = node
+        }
+    }
 
     return (
         <NavigationMenuContentContext.Provider value={true}>
-            <div ref={ref} className={cn('mr-nav-menu__content', className)} role="menu" {...props}>
+            <div
+                ref={handleRef}
+                className={cn('mr-nav-menu__content', className)}
+                role="menu"
+                {...presence.presenceProps}
+                {...props}
+            >
                 <div className="mr-nav-menu__sub-list">{children}</div>
             </div>
         </NavigationMenuContentContext.Provider>

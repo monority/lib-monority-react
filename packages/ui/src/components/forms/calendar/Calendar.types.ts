@@ -20,6 +20,8 @@ export interface CalendarProps
     fixedWeeks?: boolean
     numberOfMonths?: number
     showPickers?: boolean
+    classPrefix?: string
+    autoFocus?: boolean
     children?: ReactNode
 }
 

@@ -98,4 +98,59 @@ describe('Toast', () => {
         expect(iconEl).not.toBeNull()
         expect(iconEl?.querySelector('svg')).not.toBeNull()
     })
+
+    it('does not render when open={false}', () => {
+        const view = render(<Toast open={false} title="Hidden" />)
+        expect(view.querySelector('.mr-toast')).toBeNull()
+    })
+
+    it('renders and applies data-state="open" when open={true}', () => {
+        const view = render(<Toast open={true} title="Visible" />)
+        const el = view.querySelector('.mr-toast')
+        expect(el).not.toBeNull()
+        expect(el?.getAttribute('data-state')).toBe('open')
+    })
+
+    it('manages exit animation and calls onExitComplete when open changes to false', () => {
+        vi.useFakeTimers()
+        const onExitComplete = vi.fn()
+        let isOpen = true
+
+        function ControlledToast() {
+            return (
+                <Toast
+                    open={isOpen}
+                    title="Alert"
+                    onClose={() => {
+                        isOpen = false
+                    }}
+                    onExitComplete={onExitComplete}
+                />
+            )
+        }
+
+        render(<ControlledToast />)
+        expect(document.body.querySelector('.mr-toast')).not.toBeNull()
+
+        // Switch to closed
+        isOpen = false
+        act(() => {
+            root?.render(<ControlledToast />)
+        })
+
+        const closingToast = document.body.querySelector('.mr-toast')
+        expect(closingToast).not.toBeNull()
+        expect(closingToast?.getAttribute('data-state')).toBe('closed')
+        expect(closingToast?.hasAttribute('data-closing')).toBe(true)
+        expect(onExitComplete).not.toHaveBeenCalled()
+
+        // Advance through exit duration (150ms)
+        act(() => {
+            vi.advanceTimersByTime(150)
+        })
+
+        expect(document.body.querySelector('.mr-toast')).toBeNull()
+        expect(onExitComplete).toHaveBeenCalledTimes(1)
+        vi.useRealTimers()
+    })
 })

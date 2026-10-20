@@ -108,7 +108,7 @@ describe('ToastProvider', () => {
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(2)
     })
 
-    it('auto-dismisses each toast after its own duration', () => {
+    it('auto-dismisses each toast after its own duration with exit animation', () => {
         let container2: HTMLElement | null = null
         container2 = render(
             <MountedReader
@@ -121,14 +121,29 @@ describe('ToastProvider', () => {
         clickActions(container2)
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(2)
 
+        // Reach duration of short toast: starts exit animation
         act(() => {
             vi.advanceTimersByTime(1000)
+        })
+        const closingToast = Array.from(getViewport()?.querySelectorAll('.mr-toast') ?? []).find(
+            (el) => el.getAttribute('data-state') === 'closed'
+        )
+        expect(closingToast).not.toBeUndefined()
+        expect(closingToast?.textContent).toContain('Short')
+
+        // Complete exit duration (150ms)
+        act(() => {
+            vi.advanceTimersByTime(150)
         })
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(1)
         expect(getViewport()?.textContent).toContain('Long')
 
+        // Reach duration of long toast + exit duration
         act(() => {
             vi.advanceTimersByTime(4000)
+        })
+        act(() => {
+            vi.advanceTimersByTime(150)
         })
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(0)
     })
@@ -157,15 +172,18 @@ describe('ToastProvider', () => {
         clickActions(container2)
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(2)
 
-        // The first toast (2000ms) must still be dismissed on schedule
+        // The first toast (2000ms) reaches its duration at +500ms and finishes exit at +150ms
         act(() => {
             vi.advanceTimersByTime(500)
+        })
+        act(() => {
+            vi.advanceTimersByTime(150)
         })
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(1)
         expect(getViewport()?.textContent).toContain('Second')
     })
 
-    it('dismisses manually via dismissToast or the close button', () => {
+    it('dismisses manually via dismissToast or the close button with exit animation', () => {
         let container2: HTMLElement | null = null
         container2 = render(
             <MountedReader
@@ -180,6 +198,14 @@ describe('ToastProvider', () => {
         const closeButton = getViewport()?.querySelector('button') as HTMLButtonElement
         act(() => {
             closeButton.click()
+        })
+        // Immediately enters closing state with animation
+        expect(getViewport()?.querySelector('.mr-toast')?.getAttribute('data-state')).toBe('closed')
+        expect(getViewport()?.querySelector('.mr-toast')?.hasAttribute('data-closing')).toBe(true)
+
+        // Completes exit after duration
+        act(() => {
+            vi.advanceTimersByTime(150)
         })
         expect(getViewport()?.querySelectorAll('.mr-toast').length).toBe(0)
     })

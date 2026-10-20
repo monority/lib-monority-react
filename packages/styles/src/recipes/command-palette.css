@@ -25,8 +25,11 @@
     /* Animation de sortie de la palette */
     :where(.mr-modal.mr-command-palette)[data-closing] :where(.mr-modal__panel),
     :where(.mr-command-palette__panel)[data-closing],
-    :where(.mr-command)[data-closing] {
-        animation: mr-modal-exit var(--mr-duration-panel) var(--mr-ease-in) forwards;
+    :where(.mr-command)[data-closing],
+    :where(.mr-modal.mr-command-palette)[data-state='closed'] :where(.mr-modal__panel),
+    :where(.mr-command-palette__panel)[data-state='closed'],
+    :where(.mr-command)[data-state='closed'] {
+        animation: mr-modal-exit var(--mr-duration-state) var(--mr-ease-in) forwards;
     }
 
     :where(.mr-command__layout) {
@@ -180,9 +183,13 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-modal.mr-command-palette) :where(.mr-modal__panel),
-        :where(.mr-command-palette__panel),
-        :where(.mr-command) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-modal.mr-command-palette)
+            :where(.mr-modal__panel),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-command-palette__panel),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-command) {
             animation: none;
         }
     }

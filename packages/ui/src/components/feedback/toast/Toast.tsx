@@ -1,4 +1,5 @@
 import { cn } from '@/lib/cn'
+import { usePresence } from '@/internal/use-presence'
 import type {
     ToastCloseProps,
     ToastDescriptionProps,
@@ -182,18 +183,26 @@ function ToastClose({ className, children, ref, onClick, ...props }: ToastCloseP
 }
 
 export function Toast({
+    open,
     tone,
     icon,
     title,
     description,
     onClose,
     onOpenChange,
+    onExitComplete,
     className,
     children,
     role,
     ref,
     ...props
 }: ToastProps) {
+    const isControlled = open !== undefined
+    const presence = usePresence(isControlled ? open : true, {
+        durationMs: 150,
+        onExitComplete,
+    })
+
     const resolvedTone: ToastTone = tone ?? 'neutral'
     const resolvedRole = role ?? roleByTone[resolvedTone]
     const handleClose = () => {
@@ -204,13 +213,29 @@ export function Toast({
     const hasStructuredProps = Boolean(title || description)
     const resolvedIcon = icon === null ? null : (icon ?? defaultIcons[resolvedTone])
 
+    if (isControlled && !presence.isMounted) {
+        return null
+    }
+
+    const handleRef = (node: HTMLDivElement | null) => {
+        if (isControlled) {
+            presence.ref(node)
+        }
+        if (typeof ref === 'function') {
+            ref(node)
+        } else if (ref && 'current' in ref) {
+            ;(ref as { current: HTMLDivElement | null }).current = node
+        }
+    }
+
     return (
         <div
-            ref={ref}
+            ref={handleRef}
             className={cn('mr-toast', className)}
             role={resolvedRole}
             aria-live={ariaLiveByTone[resolvedTone]}
             data-tone={resolvedTone}
+            {...(isControlled ? presence.presenceProps : {})}
             {...props}
         >
             {resolvedIcon ? <ToastIcon>{resolvedIcon}</ToastIcon> : null}

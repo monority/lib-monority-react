@@ -12,6 +12,7 @@ interface ToastItem {
     description?: string
     tone?: ToastTone
     duration?: number
+    closing?: boolean
 }
 
 interface ToastProviderProps {
@@ -28,20 +29,50 @@ function createToastId() {
 /**
  * Owns its own auto-dismiss timer so that adding or removing another toast
  * never resets an existing countdown.
+ * Coordinates smooth exit animation before removing the toast from DOM.
  */
-function TimedToast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string) => void }) {
-    const { id, title, description, tone, duration } = toast
+function TimedToast({
+    toast,
+    onDismiss,
+    onRemove,
+}: {
+    toast: ToastItem
+    onDismiss: (id: string) => void
+    onRemove: (id: string) => void
+}) {
+    const { id, title, description, tone, duration, closing } = toast
+    const [localClosing, setLocalClosing] = useState(false)
+    const isClosing = Boolean(closing || localClosing)
 
     useEffect(() => {
-        if (duration === Number.POSITIVE_INFINITY) {
+        if (duration === Number.POSITIVE_INFINITY || isClosing) {
             return undefined
         }
-        const timer = window.setTimeout(() => onDismiss(id), duration)
+        const timer = window.setTimeout(() => {
+            setLocalClosing(true)
+            onDismiss(id)
+        }, duration)
         return () => window.clearTimeout(timer)
-    }, [duration, id, onDismiss])
+    }, [duration, id, isClosing, onDismiss])
+
+    const handleClose = useCallback(() => {
+        setLocalClosing(true)
+        onDismiss(id)
+    }, [id, onDismiss])
+
+    const handleExitComplete = useCallback(() => {
+        onRemove(id)
+    }, [id, onRemove])
 
     return (
-        <Toast title={title} description={description} tone={tone} onClose={() => onDismiss(id)} />
+        <Toast
+            open={!isClosing}
+            title={title}
+            description={description}
+            tone={tone}
+            onClose={handleClose}
+            onExitComplete={handleExitComplete}
+        />
     )
 }
 
@@ -49,6 +80,12 @@ export function ToastProvider({ children }: ToastProviderProps) {
     const [toasts, setToasts] = useState<ToastItem[]>([])
 
     const dismissToast = useCallback((id: string) => {
+        setToasts((currentToasts) =>
+            currentToasts.map((toast) => (toast.id === id ? { ...toast, closing: true } : toast))
+        )
+    }, [])
+
+    const removeToast = useCallback((id: string) => {
         setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== id))
     }, [])
 
@@ -81,7 +118,12 @@ export function ToastProvider({ children }: ToastProviderProps) {
                 createPortal(
                     <div className="mr-toast-viewport" aria-live="polite" aria-atomic="false">
                         {toasts.map((toast) => (
-                            <TimedToast key={toast.id} toast={toast} onDismiss={dismissToast} />
+                            <TimedToast
+                                key={toast.id}
+                                toast={toast}
+                                onDismiss={dismissToast}
+                                onRemove={removeToast}
+                            />
                         ))}
                     </div>,
                     portalTarget

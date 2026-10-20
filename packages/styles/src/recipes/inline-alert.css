@@ -12,8 +12,10 @@
         border-radius: var(--mr-radius-md);
         border: 1px solid var(--mr-border-default);
         font-family: var(--mr-font-family-sans);
+        font-size: var(--mr-font-size-sm);
         background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
+        line-height: 1.4;
     }
 
     :where(.mr-inline-alert__icon) {
@@ -57,17 +59,37 @@
         align-self: center;
     }
 
-    /* Couleurs portees par l'icone selon le ton (comme Toast) */
+    /* Couleurs et fonds portés selon le ton */
+    :where(.mr-inline-alert)[data-tone='info'] {
+        background-color: var(--mr-info-subtle);
+        border-color: var(--mr-info-border);
+    }
+
     :where(.mr-inline-alert)[data-tone='info'] :where(.mr-inline-alert__icon) {
         color: var(--mr-info-text);
+    }
+
+    :where(.mr-inline-alert)[data-tone='success'] {
+        background-color: var(--mr-success-subtle);
+        border-color: var(--mr-success-border);
     }
 
     :where(.mr-inline-alert)[data-tone='success'] :where(.mr-inline-alert__icon) {
         color: var(--mr-success-text);
     }
 
+    :where(.mr-inline-alert)[data-tone='warning'] {
+        background-color: var(--mr-warning-subtle);
+        border-color: var(--mr-warning-border);
+    }
+
     :where(.mr-inline-alert)[data-tone='warning'] :where(.mr-inline-alert__icon) {
         color: var(--mr-warning-text);
+    }
+
+    :where(.mr-inline-alert)[data-tone='danger'] {
+        background-color: var(--mr-danger-subtle);
+        border-color: var(--mr-danger-border);
     }
 
     :where(.mr-inline-alert)[data-tone='danger'] :where(.mr-inline-alert__icon) {

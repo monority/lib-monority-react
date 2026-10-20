@@ -22,7 +22,8 @@
         animation: mr-toast-enter var(--mr-duration-panel) var(--mr-ease-default);
     }
 
-    :where(.mr-toast)[data-closing] {
+    :where(.mr-toast)[data-closing],
+    :where(.mr-toast)[data-state='closed'] {
         animation: mr-toast-exit var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
@@ -141,7 +142,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-toast) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-toast) {
             animation: none;
         }
     }

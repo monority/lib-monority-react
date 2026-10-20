@@ -332,11 +332,27 @@
         display: flex;
         flex-direction: column;
         gap: 2px;
-        user-select: none;
-        animation: mr-combobox-enter var(--mr-duration-state) var(--mr-ease-default);
-        transform-origin: top;
         scrollbar-width: thin;
         scrollbar-color: var(--mr-border-default) transparent;
+    }
+
+    :where(.mr-combobox__list)[data-positioned] {
+        animation: mr-combobox-enter var(--mr-duration-state) var(--mr-ease-default);
+    }
+
+    :where(.mr-combobox__list)[data-side='top'] {
+        transform-origin: bottom;
+        animation-name: mr-combobox-enter-top;
+    }
+
+    :where(.mr-combobox__list)[data-side='bottom'] {
+        transform-origin: top;
+    }
+
+    :where(.mr-combobox__list)[data-closing],
+    :where(.mr-combobox__list)[data-state='closed'] {
+        animation: mr-floating-exit var(--mr-duration-state) var(--mr-ease-default) forwards;
+        pointer-events: none;
     }
 
     @keyframes mr-combobox-enter {
@@ -350,8 +366,20 @@
         }
     }
 
+    @keyframes mr-combobox-enter-top {
+        from {
+            opacity: 0;
+            transform: translateY(var(--mr-space-1)) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-combobox__list) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-combobox__list) {
             animation: none;
         }
     }

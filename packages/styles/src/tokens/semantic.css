@@ -62,19 +62,19 @@
         --mr-ease-out: cubic-bezier(0, 0, 0.2, 1);
         --mr-ease-in: cubic-bezier(0.4, 0, 1, 1);
         --mr-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-        --mr-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        --mr-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-        /* Mouvement : micro-interactions et boucles continues.
-         * Regle : multiples de 50ms (ADR-021).
-         * instant : 100ms (2 x 50ms) pour les micro-etats tres rapides.
-         * state : 150ms (3 x 50ms) pour les micro-interactions d'etat.
-         * panel : 200ms (4 x 50ms) pour les surfaces coulissantes.
-         * spin  : 800ms (16 x 50ms) pour la rotation d'attente.
-         * pulse : 1200ms (24 x 50ms) pour l'oscillation de squelette.
-         * loop  : 1500ms (30 x 50ms) pour le balayage de progression. */
-        --mr-duration-instant: 100ms;
-        --mr-duration-state: 150ms;
-        --mr-duration-panel: 200ms;
+        /* Mouvement : micro-interactions, surfaces et boucles continues.
+         * Calibre pour la perception humaine et la fluidite d'ecran haute frequence :
+         * instant : 120ms pour les micro-interactions tactiles (clic bouton, check).
+         * state : 200ms pour les surfaces flottantes (dropdown, popover, tooltip).
+         * panel : 280ms pour les surfaces coulissantes et modales (modal, dialog, drawer, sheet).
+         * spin  : 800ms pour la rotation d'attente.
+         * pulse : 1200ms pour l'oscillation de squelette.
+         * loop  : 1500ms pour le balayage de progression. */
+        --mr-duration-instant: 120ms;
+        --mr-duration-state: 200ms;
+        --mr-duration-panel: 280ms;
         --mr-duration-spin: 800ms;
         --mr-duration-pulse: 1200ms;
         --mr-duration-loop: 1500ms;
@@ -193,7 +193,7 @@
      * Doit vivre dans mr.tokens apres la declaration par defaut pour ne pas perdre
      * face a la couche des tokens a specificite egale. */
     @media (prefers-reduced-motion: reduce) {
-        :where(:root, [data-theme]) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always'])) {
             --mr-duration-instant: 0ms;
             --mr-duration-state: 0ms;
             --mr-duration-panel: 0ms;
@@ -201,6 +201,16 @@
             --mr-duration-pulse: 2400ms;
             --mr-duration-loop: 3000ms;
         }
+    }
+
+    /* Debrayage explicite data-motion="always" : force les animations meme si l'OS a desactive les effets */
+    :where(:root[data-motion='always'], [data-theme][data-motion='always']) {
+        --mr-duration-instant: 120ms;
+        --mr-duration-state: 200ms;
+        --mr-duration-panel: 280ms;
+        --mr-duration-spin: 800ms;
+        --mr-duration-pulse: 1200ms;
+        --mr-duration-loop: 1500ms;
     }
 
     /* Valeurs dependantes de la marque */

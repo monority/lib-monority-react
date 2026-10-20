@@ -1,3 +1,17 @@
+import {
+    addDays,
+    addMonths,
+    eachDayOfInterval,
+    endOfMonth,
+    formatMonthYear,
+    getDayNames,
+    isDateDisabled,
+    isSameDay,
+    isSameMonth,
+    isToday,
+    startOfMonth,
+    startOfWeek,
+} from '@/internal/date-utils'
 import { cn } from '@/lib/cn'
 import { useCallback, useEffect, useState } from 'react'
 import type {
@@ -7,95 +21,6 @@ import type {
     CalendarPickersProps,
     CalendarProps,
 } from './Calendar.types'
-
-// ─── Date math utilities (no external deps) ───────────────────────────
-
-function startOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), 1)
-}
-
-function endOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0)
-}
-
-function startOfWeek(date: Date, weekStartsOn = 0): Date {
-    const d = new Date(date)
-    const day = d.getDay()
-    const diff = (day - weekStartsOn + 7) % 7
-    d.setDate(d.getDate() - diff)
-    d.setHours(0, 0, 0, 0)
-    return d
-}
-
-function addMonths(date: Date, n: number): Date {
-    const d = new Date(date)
-    d.setMonth(d.getMonth() + n)
-    return d
-}
-
-function eachDayOfInterval(start: Date, end: Date): Date[] {
-    const days: Date[] = []
-    const current = new Date(start)
-    while (current <= end) {
-        days.push(new Date(current))
-        current.setDate(current.getDate() + 1)
-    }
-    return days
-}
-
-function isSameDay(a: Date, b: Date): boolean {
-    return (
-        a.getFullYear() === b.getFullYear() &&
-        a.getMonth() === b.getMonth() &&
-        a.getDate() === b.getDate()
-    )
-}
-
-function isToday(date: Date): boolean {
-    return isSameDay(date, new Date())
-}
-
-function isSameMonth(a: Date, b: Date): boolean {
-    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth()
-}
-
-function isDateDisabled(
-    date: Date,
-    minDate?: Date,
-    maxDate?: Date,
-    disabledDates?: Date[] | ((date: Date) => boolean)
-): boolean {
-    if (minDate && date < new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate()))
-        return true
-    if (maxDate && date > new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate()))
-        return true
-    if (Array.isArray(disabledDates)) {
-        return disabledDates.some((d) => isSameDay(d, date))
-    }
-    if (typeof disabledDates === 'function') {
-        return disabledDates(date)
-    }
-    return false
-}
-
-function getDayNames(locale?: string): string[] {
-    const formatter = new Intl.DateTimeFormat(locale ?? navigator.language ?? 'en-US', {
-        weekday: 'short',
-    })
-    const baseDate = new Date(2024, 0, 0) // Sunday
-    return Array.from({ length: 7 }, (_, i) => {
-        const d = new Date(baseDate)
-        d.setDate(d.getDate() + i)
-        return formatter.format(d)
-    })
-}
-
-function formatMonthYear(date: Date, locale?: string): string {
-    return new Intl.DateTimeFormat(locale ?? navigator.language ?? 'en-US', {
-        month: 'long',
-        year: 'numeric',
-    }).format(date)
-}
 
 // ─── Chevron icons ────────────────────────────────────────────────────
 
@@ -138,13 +63,28 @@ export function Calendar({
     fixedWeeks = false,
     numberOfMonths = 1,
     showPickers = false,
+    classPrefix = 'mr-calendar',
+    autoFocus = false,
     className,
     ...props
 }: CalendarProps) {
     const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
     const selectedDate = value !== undefined ? value : internalValue
     const today = new Date()
-    const [viewDate, setViewDate] = useState(() => startOfMonth(selectedDate || today))
+    const initialBase = selectedDate || minDate || today
+    const [viewDate, setViewDate] = useState(() => startOfMonth(initialBase))
+
+    const [focusedDate, setFocusedDate] = useState<Date | null>(() => {
+        if (selectedDate && !isDateDisabled(selectedDate, minDate, maxDate, disabledDates)) {
+            return selectedDate
+        }
+        const monthStart = startOfMonth(initialBase)
+        const monthEnd = endOfMonth(initialBase)
+        const days = eachDayOfInterval(monthStart, monthEnd)
+        return (
+            days.find((day) => !isDateDisabled(day, minDate, maxDate, disabledDates)) ?? initialBase
+        )
+    })
 
     const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
     const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
@@ -154,8 +94,17 @@ export function Calendar({
     useEffect(() => {
         if (value !== undefined && value) {
             setViewDate(startOfMonth(value))
+            setFocusedDate(value)
+        } else if (minDate && !selectedDate) {
+            setViewDate(startOfMonth(minDate))
+            const monthStart = startOfMonth(minDate)
+            const monthEnd = endOfMonth(minDate)
+            const days = eachDayOfInterval(monthStart, monthEnd)
+            setFocusedDate(
+                days.find((day) => !isDateDisabled(day, minDate, maxDate, disabledDates)) ?? minDate
+            )
         }
-    }, [value])
+    }, [value, minDate, selectedDate])
 
     const handleChange = useCallback(
         (date: Date | null) => {
@@ -174,6 +123,77 @@ export function Calendar({
 
     const [isPickerActive, setIsPickerActive] = useState(false)
     const effectiveShowPickers = showPickers || isPickerActive
+
+    const prefix = (suffix: string) => {
+        const standard = `mr-calendar__${suffix}`
+        if (classPrefix && classPrefix !== 'mr-calendar') {
+            return `${standard} ${classPrefix}__${suffix}`
+        }
+        return standard
+    }
+
+    const handleGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, currentMonthDate: Date) => {
+        const base =
+            focusedDate ??
+            (selectedDate && isSameMonth(selectedDate, currentMonthDate)
+                ? selectedDate
+                : currentMonthDate)
+        let next: Date | null = null
+
+        switch (e.key) {
+            case 'ArrowLeft':
+                e.preventDefault()
+                next = addDays(base, -1)
+                break
+            case 'ArrowRight':
+                e.preventDefault()
+                next = addDays(base, 1)
+                break
+            case 'ArrowUp':
+                e.preventDefault()
+                next = addDays(base, -7)
+                break
+            case 'ArrowDown':
+                e.preventDefault()
+                next = addDays(base, 7)
+                break
+            case 'Home':
+                e.preventDefault()
+                next = startOfMonth(base)
+                break
+            case 'End':
+                e.preventDefault()
+                next = endOfMonth(base)
+                break
+            case 'PageUp':
+                e.preventDefault()
+                next = addMonths(base, e.shiftKey ? -12 : -1)
+                break
+            case 'PageDown':
+                e.preventDefault()
+                next = addMonths(base, e.shiftKey ? 12 : 1)
+                break
+            case 'Enter':
+            case ' ':
+                e.preventDefault()
+                if (focusedDate) {
+                    const disabled = isDateDisabled(focusedDate, minDate, maxDate, disabledDates)
+                    if (!disabled) {
+                        handleChange(focusedDate)
+                    }
+                }
+                return
+            default:
+                return
+        }
+
+        if (next) {
+            setFocusedDate(next)
+            if (!isSameMonth(next, viewDate)) {
+                setViewDate(startOfMonth(next))
+            }
+        }
+    }
 
     const renderMonth = (monthDate: Date, monthIndex: number) => {
         const monthStart = startOfMonth(monthDate)
@@ -222,21 +242,21 @@ export function Calendar({
         const dayNames = getDayNames(locale)
 
         return (
-            <div key={monthIndex} className="mr-calendar__month">
-                <div className="mr-calendar__header">
+            <div key={monthIndex} className={prefix('month')}>
+                <div className={prefix('header')}>
                     <button
                         type="button"
                         onClick={handlePrevMonth}
-                        className="mr-calendar__nav-btn mr-calendar__nav-btn--prev"
+                        className={cn(prefix('nav-btn'), 'mr-calendar__nav-btn--prev')}
                         aria-label="Previous month"
                         tabIndex={-1}
                     >
                         <ChevronLeftIcon />
                     </button>
                     {effectiveShowPickers ? (
-                        <div className="mr-calendar__pickers">
+                        <div className={prefix('pickers')}>
                             <select
-                                className="mr-calendar__select mr-calendar__select--month"
+                                className={cn(prefix('select'), 'mr-calendar__select--month')}
                                 aria-label="Select month"
                                 value={monthDate.getMonth()}
                                 onChange={(e) => {
@@ -258,7 +278,7 @@ export function Calendar({
                                 })}
                             </select>
                             <select
-                                className="mr-calendar__select mr-calendar__select--year"
+                                className={cn(prefix('select'), 'mr-calendar__select--year')}
                                 aria-label="Select year"
                                 value={monthDate.getFullYear()}
                                 onChange={(e) => {
@@ -277,7 +297,10 @@ export function Calendar({
                     ) : (
                         <button
                             type="button"
-                            className="mr-calendar__month-label mr-calendar__month-label--interactive"
+                            className={cn(
+                                prefix('month-label'),
+                                'mr-calendar__month-label--interactive'
+                            )}
                             onClick={() => setIsPickerActive(true)}
                             aria-label="Select month and year"
                             title="Click to select month and year"
@@ -288,7 +311,7 @@ export function Calendar({
                     <button
                         type="button"
                         onClick={handleNextMonth}
-                        className="mr-calendar__nav-btn mr-calendar__nav-btn--next"
+                        className={cn(prefix('nav-btn'), 'mr-calendar__nav-btn--next')}
                         aria-label="Next month"
                         tabIndex={-1}
                     >
@@ -297,15 +320,16 @@ export function Calendar({
                 </div>
 
                 <div
-                    className="mr-calendar__grid"
+                    className={prefix('grid')}
                     role="grid"
                     aria-label={formatMonthYear(monthDate, locale)}
+                    onKeyDown={(e) => handleGridKeyDown(e, monthDate)}
                 >
-                    <div className="mr-calendar__day-names" role="row">
+                    <div className={prefix('day-names')} role="row">
                         {dayNames.map((name) => (
                             <span
                                 key={name}
-                                className="mr-calendar__day-name"
+                                className={prefix('day-name')}
                                 role="columnheader"
                                 aria-label={name}
                             >
@@ -314,7 +338,7 @@ export function Calendar({
                         ))}
                     </div>
                     {weeks.map((week, wi) => (
-                        <div key={wi} className="mr-calendar__week" role="row">
+                        <div key={wi} className={prefix('week')} role="row">
                             {week.map((day, di) => {
                                 const isCurrentMonth = isSameMonth(day, monthDate)
                                 const isSelected = selectedDate
@@ -327,13 +351,19 @@ export function Calendar({
                                     disabledDates
                                 )
                                 const isTodayDate = isToday(day)
+                                const isFocused = focusedDate
+                                    ? isSameDay(day, focusedDate)
+                                    : isSelected || (isCurrentMonth && !disabled && di === 0)
                                 const isHidden = !showOutsideDays && !isCurrentMonth
 
                                 if (isHidden) {
                                     return (
                                         <div
                                             key={di}
-                                            className="mr-calendar__day mr-calendar__day--hidden"
+                                            className={cn(
+                                                prefix('day'),
+                                                'mr-calendar__day--hidden'
+                                            )}
                                             role="gridcell"
                                         />
                                     )
@@ -347,20 +377,29 @@ export function Calendar({
                                         disabled={disabled}
                                         aria-selected={isSelected || undefined}
                                         aria-disabled={disabled || undefined}
-                                        aria-label={day.toLocaleDateString(locale || 'en-US', {
-                                            weekday: 'long',
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                        })}
-                                        tabIndex={isSelected ? 0 : -1}
+                                        aria-label={
+                                            classPrefix === 'mr-datepicker'
+                                                ? undefined
+                                                : day.toLocaleDateString(locale || 'en-US', {
+                                                      weekday: 'long',
+                                                      year: 'numeric',
+                                                      month: 'long',
+                                                      day: 'numeric',
+                                                  })
+                                        }
+                                        tabIndex={isFocused ? 0 : -1}
                                         data-selected={isSelected || undefined}
                                         data-today={isTodayDate || undefined}
                                         data-disabled={disabled || undefined}
                                         data-current-month={isCurrentMonth || undefined}
+                                        ref={
+                                            isFocused && autoFocus
+                                                ? (node) => node?.focus()
+                                                : undefined
+                                        }
                                         onClick={() => !disabled && handleChange(day)}
                                         className={cn(
-                                            'mr-calendar__day',
+                                            prefix('day'),
                                             isCurrentMonth && 'mr-calendar__day--current-month',
                                             !isCurrentMonth && 'mr-calendar__day--other-month',
                                             isTodayDate && 'mr-calendar__day--today',

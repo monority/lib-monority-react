@@ -76,7 +76,7 @@ export function CommandPalette({
     const panelRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(open, { durationMs: 200 })
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(open, { durationMs: 200 })
 
     const [query, setQuery] = useState('')
 
@@ -188,15 +188,24 @@ export function CommandPalette({
                 {...presenceProps}
                 {...props}
             >
-                <div className="mr-modal__backdrop" onClick={closePalette} aria-hidden="true" />
+                <div
+                    className="mr-modal__backdrop"
+                    onClick={closePalette}
+                    aria-hidden="true"
+                    data-state={presenceProps['data-state']}
+                />
 
                 <div
-                    ref={panelRef}
+                    ref={(node) => {
+                        panelRef.current = node
+                        presenceRef(node)
+                    }}
                     className={cn(commandPaletteVariants(), 'mr-modal__panel', 'mr-command')}
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby={titleId}
                     tabIndex={-1}
+                    data-state={presenceProps['data-state']}
                     onKeyDown={handleKeyDown}
                 >
                     <div className="mr-command__layout">

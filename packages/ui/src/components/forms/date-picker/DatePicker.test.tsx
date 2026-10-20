@@ -46,6 +46,7 @@ describe('DatePicker', () => {
 
     // 3. Closes popover on day selection
     it('closes popover on day selection', () => {
+        vi.useFakeTimers()
         const view = render(<DatePicker label="Date" />)
         const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
         act(() => trigger?.click())
@@ -55,12 +56,18 @@ describe('DatePicker', () => {
         if (clickableDay) {
             act(() => (clickableDay as HTMLButtonElement).click())
         }
-        const popover = document.querySelector('.mr-datepicker__popover')
-        expect(popover).toBeNull()
+        const closing = document.querySelector('.mr-datepicker__popover')
+        expect(closing?.hasAttribute('data-closing')).toBe(true)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
+        expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
+        vi.useRealTimers()
     })
 
     // 4. Closes popover on Escape key
     it('closes popover on Escape key', () => {
+        vi.useFakeTimers()
         const view = render(<DatePicker label="Date" />)
         const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
         act(() => trigger?.click())
@@ -68,11 +75,18 @@ describe('DatePicker', () => {
         act(() => {
             window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
         })
+        const closing = document.querySelector('.mr-datepicker__popover')
+        expect(closing?.hasAttribute('data-closing')).toBe(true)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
         expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
+        vi.useRealTimers()
     })
 
     // 5. Closes popover on outside click
     it('closes popover on outside click', () => {
+        vi.useFakeTimers()
         const view = render(<DatePicker label="Date" />)
         const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
         act(() => trigger?.click())
@@ -80,7 +94,13 @@ describe('DatePicker', () => {
         act(() => {
             document.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))
         })
+        const closing = document.querySelector('.mr-datepicker__popover')
+        expect(closing?.hasAttribute('data-closing')).toBe(true)
+        act(() => {
+            vi.advanceTimersByTime(200)
+        })
         expect(document.querySelector('.mr-datepicker__popover')).toBeNull()
+        vi.useRealTimers()
     })
 
     // 6. Selects a date — formatted value shows in input

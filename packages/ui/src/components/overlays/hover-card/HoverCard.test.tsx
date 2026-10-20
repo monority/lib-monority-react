@@ -51,6 +51,7 @@ describe('HoverCard', () => {
         const portalContent = document.body.querySelector('.mr-hovercard__content')
         expect(portalContent).not.toBeNull()
         expect(portalContent?.textContent).toContain('Card content')
+        expect(portalContent?.hasAttribute('data-positioned')).toBe(true)
     })
 
     it('hides content by default', () => {

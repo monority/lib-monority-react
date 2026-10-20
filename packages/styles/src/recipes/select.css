@@ -38,7 +38,14 @@
         box-sizing: border-box;
         pointer-events: none;
         transform: translateY(-70%) rotate(45deg);
-        transition: border-color var(--mr-duration-state);
+        transition: border-color var(--mr-duration-state) var(--mr-ease-out), transform
+            var(--mr-duration-state) var(--mr-ease-spring);
+    }
+
+    /* Rotation animée du chevron au focus */
+    :where(.mr-select-wrapper:focus-within)::after {
+        border-color: var(--mr-focus-ring);
+        transform: translateY(-30%) rotate(225deg);
     }
 
     /* Chevron en taille sm */
@@ -171,6 +178,13 @@
         border-color: var(--mr-text-primary);
     }
 
+    /* Rotation du chevron lorsque le select est actif ou ouvert */
+    :where(.mr-select-wrapper:has(:where(.mr-select:open)))::after,
+    :where(.mr-select-wrapper:has(:where(.mr-select:active)))::after {
+        transform: translateY(-30%) rotate(225deg);
+        border-color: var(--mr-text-primary);
+    }
+
     /* Etat invalide : bordure de statut danger */
     :where(.mr-select)[aria-invalid='true'] {
         border-color: var(--mr-danger-solid);
@@ -236,5 +250,12 @@
     :where(.mr-select:is([multiple], [size])) option:checked {
         background-color: var(--mr-accent-solid);
         color: var(--mr-text-on-inverse);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-select-wrapper)::after {
+            transition: none;
+        }
     }
 }

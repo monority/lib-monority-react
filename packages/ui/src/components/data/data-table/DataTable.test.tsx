@@ -69,4 +69,61 @@ describe('DataTable', () => {
         render(<DataTable ref={ref} columns={columns} rows={rows} />)
         expect(ref.current?.className).toContain('mr-data-table-wrap')
     })
+
+    it('supports client-side pagination slicing and onPageChange', () => {
+        let currentPage = 1
+        const manyRows = [
+            { name: 'Alice', age: 30 },
+            { name: 'Bob', age: 25 },
+            { name: 'Charlie', age: 35 },
+            { name: 'David', age: 28 },
+        ]
+        const view = render(
+            <DataTable
+                columns={columns}
+                rows={manyRows}
+                page={1}
+                pageSize={2}
+                onPageChange={(p) => {
+                    currentPage = p
+                }}
+            />
+        )
+        const renderedRows = view.querySelectorAll('tbody tr')
+        expect(renderedRows.length).toBe(2)
+        expect(renderedRows[0]?.textContent).toContain('Alice')
+        expect(renderedRows[1]?.textContent).toContain('Bob')
+
+        const pagination = view.querySelector('.mr-pagination')
+        expect(pagination).not.toBeNull()
+
+        const nextBtn = view.querySelector('button[aria-label="Next page"]') as HTMLButtonElement
+        expect(nextBtn).not.toBeNull()
+        act(() => nextBtn.click())
+        expect(currentPage).toBe(2)
+    })
+
+    it('supports server-side pagination with totalItems and controlled rows', () => {
+        const page1Rows = [
+            { name: 'Charlie', age: 35 },
+            { name: 'David', age: 28 },
+        ]
+        const view = render(
+            <DataTable
+                columns={columns}
+                rows={page1Rows}
+                page={2}
+                pageSize={2}
+                totalItems={20}
+                onPageChange={() => {}}
+            />
+        )
+        const renderedRows = view.querySelectorAll('tbody tr')
+        expect(renderedRows.length).toBe(2)
+        expect(renderedRows[0]?.textContent).toContain('Charlie')
+
+        const pagination = view.querySelector('.mr-pagination')
+        expect(pagination).not.toBeNull()
+        expect(view.textContent).toContain('10')
+    })
 })

@@ -316,4 +316,41 @@ describe('Combobox', () => {
         expect(input).not.toBeNull()
         expect(input.placeholder).toBe('Select country...')
     })
+
+    it('exhibits data-state and data-closing during exit animation', () => {
+        vi.useFakeTimers()
+        try {
+            const view = render(<Combobox label="Country" items={sampleItems} />)
+            const input = view.querySelector('input')
+            act(() => {
+                input?.focus()
+            })
+
+            const list = document.querySelector('.mr-combobox__list')
+            expect(list).not.toBeNull()
+            expect(list?.getAttribute('data-state')).toBe('open')
+            expect(list?.hasAttribute('data-closing')).toBe(false)
+
+            // Close with Escape key
+            act(() => {
+                fireEvent.keyDown(input!, { key: 'Escape' })
+            })
+
+            expect(input?.getAttribute('aria-expanded')).toBe('false')
+            const closingList = document.querySelector('.mr-combobox__list')
+            expect(closingList?.hasAttribute('data-closing')).toBe(true)
+            expect(closingList?.getAttribute('data-state')).toBe('closed')
+            expect(closingList?.getAttribute('aria-hidden')).toBe('true')
+
+            // Fast forward past the 150ms animation duration
+            act(() => {
+                vi.advanceTimersByTime(200)
+            })
+
+            // Completely unmounted from DOM
+            expect(document.querySelector('.mr-combobox__list')).toBeNull()
+        } finally {
+            vi.useRealTimers()
+        }
+    })
 })

@@ -180,7 +180,7 @@ export function Banner({
     ...props
 }: BannerProps) {
     const isControlled = open !== undefined
-    const { isMounted, isClosing } = usePresence(open ?? true)
+    const { isMounted, isClosing, presenceProps } = usePresence(open ?? true)
 
     if (isControlled && !isMounted) return null
     if (!isControlled && open === false) return null
@@ -197,6 +197,7 @@ export function Banner({
             ref={ref}
             className={cn('mr-banner', className)}
             data-tone={tone}
+            data-state={presenceProps['data-state']}
             data-closing={isClosing ? '' : undefined}
             role={resolvedRole}
             {...props}

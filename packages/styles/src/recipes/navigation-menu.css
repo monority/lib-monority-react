@@ -5,6 +5,10 @@
         position: relative;
         display: flex;
         align-items: center;
+        align-self: flex-start;
+        inline-size: fit-content;
+        block-size: fit-content;
+        max-block-size: fit-content;
         box-sizing: border-box;
         z-index: var(--mr-z-sticky);
     }
@@ -87,6 +91,11 @@
         box-shadow: var(--mr-shadow-overlay);
         animation: mr-nav-menu-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
+    }
+
+    :where(.mr-nav-menu__content)[data-closing] {
+        animation: mr-nav-menu-exit var(--mr-duration-state) var(--mr-ease-default) forwards;
+        pointer-events: none;
     }
 
     :where(.mr-nav-menu__sub-list) {

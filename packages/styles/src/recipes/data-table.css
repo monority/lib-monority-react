@@ -161,4 +161,11 @@
     :where(.mr-table__cell--right) :where(.mr-data-table__sort) {
         margin-inline-start: auto;
     }
+
+    :where(.mr-data-table__footer) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-block-start: var(--mr-space-2);
+    }
 }

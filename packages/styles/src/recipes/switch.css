@@ -72,14 +72,23 @@
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
         background-color: color-mix(in oklch, var(--mr-bg-sunken), var(--mr-text-primary) 8%);
-        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
-            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
-            var(--mr-ease-spring);
+        transition: background-color var(--mr-duration-panel) var(--mr-ease-out), border-color
+            var(--mr-duration-panel) var(--mr-ease-out);
     }
 
-    /* Effet tactile a l'appui */
-    :where(.mr-switch:active:not([data-disabled='true'])) :where(.mr-switch__control) {
-        transform: scale(0.96);
+    /* Effet tactile a l'appui : allongement elastique subtil du pouce */
+    :where(.mr-switch:active:not([data-disabled='true'])) :where(.mr-switch__thumb) {
+        inline-size: calc(var(--mr-space-5) + var(--mr-space-1));
+    }
+
+    :where(.mr-switch[data-size='sm']:active:not([data-disabled='true']))
+        :where(.mr-switch__thumb) {
+        inline-size: calc(var(--mr-space-4) + var(--mr-space-1));
+    }
+
+    :where(.mr-switch[data-size='lg']:active:not([data-disabled='true']))
+        :where(.mr-switch__thumb) {
+        inline-size: calc(var(--mr-space-6) + var(--mr-space-1));
     }
 
     /* Pouce circulaire coulissant */
@@ -93,9 +102,12 @@
         background-color: var(--mr-switch-thumb-off);
         box-shadow: 0 1px 2px color-mix(in oklch, var(--mr-text-primary) 20%, transparent);
         transform: translateX(0);
-        transition: transform var(--mr-duration-state) var(--mr-ease-spring), background-color
-            var(--mr-duration-state) var(--mr-ease-out), border-color var(--mr-duration-state)
-            var(--mr-ease-out), box-shadow var(--mr-duration-state) var(--mr-ease-out);
+        transition:
+            transform var(--mr-duration-panel) var(--mr-ease-spring),
+            inline-size var(--mr-duration-state) var(--mr-ease-out),
+            background-color var(--mr-duration-panel) var(--mr-ease-out),
+            border-color var(--mr-duration-panel) var(--mr-ease-out),
+            box-shadow var(--mr-duration-panel) var(--mr-ease-out);
     }
 
     /* Taille sm : piste 36px x 20px, pouce 16px */
@@ -144,6 +156,32 @@
         + :where(.mr-switch__control)
         :where(.mr-switch__thumb) {
         transform: translateX(var(--mr-space-6));
+    }
+
+    /* Ajustement a l'appui actif a l'etat coche */
+    :where(.mr-switch[data-checked]:active:not([data-disabled='true'])) :where(.mr-switch__thumb),
+    :where(.mr-switch__input:checked:active)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(calc(var(--mr-space-5) - var(--mr-space-1)));
+    }
+
+    :where(.mr-switch[data-size='sm'][data-checked]:active:not([data-disabled='true']))
+        :where(.mr-switch__thumb),
+    :where(.mr-switch[data-size='sm'])
+        :where(.mr-switch__input:checked:active)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(calc(var(--mr-space-4) - var(--mr-space-1)));
+    }
+
+    :where(.mr-switch[data-size='lg'][data-checked]:active:not([data-disabled='true']))
+        :where(.mr-switch__thumb),
+    :where(.mr-switch[data-size='lg'])
+        :where(.mr-switch__input:checked:active)
+        + :where(.mr-switch__control)
+        :where(.mr-switch__thumb) {
+        transform: translateX(calc(var(--mr-space-6) - var(--mr-space-1)));
     }
 
     /* Support RTL : deplacement inverse */
@@ -366,13 +404,17 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-switch__control),
-        :where(.mr-switch__thumb) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-switch__control),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-switch__thumb) {
             transition: none;
         }
 
-        :where(.mr-switch:active:not([data-disabled='true'])) :where(.mr-switch__control) {
-            transform: none;
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-switch:active:not([data-disabled='true']))
+            :where(.mr-switch__thumb) {
+            inline-size: inherit;
         }
     }
 }

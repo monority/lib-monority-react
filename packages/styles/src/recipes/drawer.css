@@ -56,7 +56,6 @@
         gap: var(--mr-space-4);
         overflow-y: auto;
         outline: none;
-        transition: transform var(--mr-duration-panel) var(--mr-ease-default);
     }
 
     :where(.mr-drawer__panel)[data-side='right'] {
@@ -85,20 +84,24 @@
         animation: mr-drawer-enter-bottom var(--mr-duration-panel) var(--mr-ease-default);
     }
 
-    :where(.mr-drawer__panel)[data-side='right'][data-closing] {
-        transform: translateX(100%);
+    :where(.mr-drawer__panel)[data-side='right'][data-closing],
+    :where(.mr-drawer__panel)[data-side='right'][data-state='closed'] {
+        animation: mr-slide-out-right var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
-    :where(.mr-drawer__panel)[data-side='left'][data-closing] {
-        transform: translateX(-100%);
+    :where(.mr-drawer__panel)[data-side='left'][data-closing],
+    :where(.mr-drawer__panel)[data-side='left'][data-state='closed'] {
+        animation: mr-slide-out-left var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
-    :where(.mr-drawer__panel)[data-side='top'][data-closing] {
-        transform: translateY(-100%);
+    :where(.mr-drawer__panel)[data-side='top'][data-closing],
+    :where(.mr-drawer__panel)[data-side='top'][data-state='closed'] {
+        animation: mr-slide-out-top var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
-    :where(.mr-drawer__panel)[data-side='bottom'][data-closing] {
-        transform: translateY(100%);
+    :where(.mr-drawer__panel)[data-side='bottom'][data-closing],
+    :where(.mr-drawer__panel)[data-side='bottom'][data-state='closed'] {
+        animation: mr-slide-out-bottom var(--mr-duration-state) var(--mr-ease-default) forwards;
     }
 
     :where(.mr-drawer__header) {
@@ -153,9 +156,12 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-drawer),
-        :where(.mr-drawer__panel),
-        :where(.mr-drawer__backdrop-surface) {
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-drawer),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-drawer__panel),
+        :where(:root:not([data-motion='always']), [data-theme]:not([data-motion='always']))
+            :where(.mr-drawer__backdrop-surface) {
             animation: none;
         }
     }

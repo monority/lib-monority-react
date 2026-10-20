@@ -5,9 +5,9 @@
         display: flex;
         box-sizing: border-box;
         inline-size: 100%;
-        block-size: 100%;
         min-block-size: 100%;
         background-color: var(--mr-bg-canvas);
+        border-radius: inherit;
     }
 
     :where(.mr-sidebar-layout__sidebar) {
@@ -18,10 +18,7 @@
         border-inline-end: 1px solid var(--mr-border-subtle);
         background-color: var(--mr-bg-surface);
         overflow-y: auto;
-        position: sticky;
-        top: var(--app-header-height, 3.5rem);
-        max-height: calc(100dvh - var(--app-header-height, 3.5rem));
-        align-self: flex-start;
+        align-self: stretch;
         transition: inline-size var(--mr-duration-panel) ease, opacity var(--mr-duration-panel) ease;
     }
 

@@ -5,6 +5,10 @@
         position: relative;
         display: flex;
         align-items: center;
+        align-self: flex-start;
+        inline-size: fit-content;
+        block-size: fit-content;
+        max-block-size: fit-content;
         box-sizing: border-box;
         gap: var(--mr-space-1);
         padding: var(--mr-space-1);
@@ -73,6 +77,11 @@
         gap: 1px;
         animation: mr-menubar-enter var(--mr-duration-state) var(--mr-ease-default);
         transform-origin: top;
+    }
+
+    :where(.mr-menubar__menu)[data-closing] {
+        animation: mr-menubar-exit var(--mr-duration-state) var(--mr-ease-default) forwards;
+        pointer-events: none;
     }
 
     :where(.mr-menubar__item) {

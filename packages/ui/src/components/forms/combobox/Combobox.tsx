@@ -1,6 +1,8 @@
 import { Spinner } from '@/components/feedback/spinner/Spinner'
 import { Field } from '@/components/forms/field/Field'
+import { useFloatingPosition } from '@/internal/use-floating-position'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
 import { FormControl } from '@/primitives/form-control'
@@ -54,7 +56,13 @@ interface ComboboxContextValue {
     resolvedTone: ComboboxTone
     disabled: boolean
     inputRef: React.RefObject<HTMLInputElement | null>
-    position: { top: number; left: number; width: number }
+    position: { top: number; left: number; width?: number }
+    actualSide?: string
+    positioned?: boolean
+    presenceProps?: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
+    presenceRef?: (node: HTMLElement | null) => void
+    listRef?: React.RefObject<HTMLDivElement | null>
+    isMounted?: boolean
     activeTheme?: string
     activeBrand?: string
     activeDensity?: string
@@ -99,10 +107,19 @@ export function Combobox({
     const [query, setQuery] = useState('')
     const [open, setOpen] = useState(false)
     const [activeIndex, setActiveIndex] = useState(0)
-    const [position, setPosition] = useState({ top: 0, left: 0, width: 0 })
 
     const selectedValue = isControlled ? value : internalValue
     const portalTarget = usePortalTarget()
+
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(open, { durationMs: 150 })
+
+    const { position, actualSide, positioned } = useFloatingPosition(inputRef, listRef, {
+        side: 'bottom',
+        align: 'start',
+        sideOffset: OVERLAY_OFFSET,
+        matchWidth: true,
+        enabled: isMounted,
+    })
 
     const hasValue = Boolean(selectedValue && selectedValue.length > 0) || query.length > 0
     const showClear = Boolean(clearable) && hasValue && !disabled && !props.readOnly && !loading
@@ -149,10 +166,6 @@ export function Combobox({
 
     useEffect(() => {
         if (!open) return
-        const frameId = window.requestAnimationFrame(() => {
-            const r = inputRef.current?.getBoundingClientRect()
-            if (r) setPosition({ top: r.bottom + OVERLAY_OFFSET, left: r.left, width: r.width })
-        })
         function pd(e: MouseEvent) {
             if (
                 !rootRef.current?.contains(e.target as Node) &&
@@ -163,18 +176,9 @@ export function Combobox({
                 setActiveIndex(0)
             }
         }
-        function vc() {
-            const r = inputRef.current?.getBoundingClientRect()
-            if (r) setPosition({ top: r.bottom + OVERLAY_OFFSET, left: r.left, width: r.width })
-        }
         document.addEventListener('mousedown', pd)
-        window.addEventListener('resize', vc)
-        window.addEventListener('scroll', vc, true)
         return () => {
-            window.cancelAnimationFrame(frameId)
             document.removeEventListener('mousedown', pd)
-            window.removeEventListener('resize', vc)
-            window.removeEventListener('scroll', vc, true)
         }
     }, [open])
 
@@ -246,6 +250,12 @@ export function Combobox({
         disabled,
         inputRef,
         position,
+        actualSide,
+        positioned,
+        presenceProps,
+        presenceRef,
+        listRef,
+        isMounted,
         activeTheme,
         activeBrand,
         activeDensity,
@@ -338,10 +348,13 @@ export function Combobox({
                                         <Spinner size="sm" />
                                     </span>
                                 ) : null}
-                                {open && portalTarget
+                                {isMounted && portalTarget
                                     ? createPortal(
                                           <div
-                                              ref={listRef}
+                                              ref={(node) => {
+                                                  listRef.current = node
+                                                  presenceRef(node)
+                                              }}
                                               id={`${inputId}-list`}
                                               className="mr-combobox__list"
                                               role="listbox"
@@ -353,11 +366,19 @@ export function Combobox({
                                               data-theme={activeTheme}
                                               data-brand={activeBrand}
                                               data-density={activeDensity}
+                                              data-side={actualSide}
+                                              data-positioned={positioned ? '' : undefined}
+                                              data-state={presenceProps['data-state']}
+                                              data-closing={presenceProps['data-closing']}
+                                              aria-hidden={!open ? 'true' : undefined}
                                               style={{
                                                   position: 'fixed',
                                                   top: `${position.top}px`,
                                                   left: `${position.left}px`,
-                                                  width: `${position.width}px`,
+                                                  width: position.width
+                                                      ? `${position.width}px`
+                                                      : undefined,
+                                                  visibility: positioned ? 'visible' : 'hidden',
                                               }}
                                           >
                                               {filteredItems.length ? (
@@ -438,11 +459,21 @@ function ComboboxList({ ref, className, children, ...props }: ComboboxListProps)
     const ctx = useContext(ComboboxContext)
     const portalTarget = usePortalTarget()
 
-    if (!ctx?.open || !portalTarget) return null
+    if (!ctx?.isMounted || !portalTarget) return null
 
     return createPortal(
         <div
-            ref={ref}
+            ref={(node) => {
+                if (typeof ref === 'function') {
+                    ref(node)
+                } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                    ;(ref as { current: HTMLDivElement | null }).current = node
+                }
+                if (ctx.listRef && typeof ctx.listRef === 'object' && 'current' in ctx.listRef) {
+                    ;(ctx.listRef as { current: HTMLDivElement | null }).current = node
+                }
+                ctx.presenceRef?.(node)
+            }}
             id={`${ctx.inputId}-list`}
             className={cn('mr-combobox__list', className)}
             role="listbox"
@@ -451,11 +482,17 @@ function ComboboxList({ ref, className, children, ...props }: ComboboxListProps)
             data-theme={ctx.activeTheme}
             data-brand={ctx.activeBrand}
             data-density={ctx.activeDensity}
+            data-side={ctx.actualSide}
+            data-positioned={ctx.positioned ? '' : undefined}
+            data-state={ctx.presenceProps?.['data-state']}
+            data-closing={ctx.presenceProps?.['data-closing']}
+            aria-hidden={!ctx.open ? 'true' : undefined}
             style={{
                 position: 'fixed',
                 top: `${ctx.position.top}px`,
                 left: `${ctx.position.left}px`,
-                width: `${ctx.position.width}px`,
+                width: ctx.position.width ? `${ctx.position.width}px` : undefined,
+                visibility: ctx.positioned ? 'visible' : 'hidden',
             }}
             {...props}
         >

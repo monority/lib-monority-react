@@ -1,3 +1,4 @@
+import { useFloatingPosition } from '@/internal/use-floating-position'
 import { usePortalTarget } from '@/internal/use-portal-target'
 import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
@@ -13,6 +14,7 @@ import {
     useRef,
     useState,
 } from 'react'
+import type { MutableRefObject } from 'react'
 import { createPortal } from 'react-dom'
 import type {
     PopoverAlign,
@@ -28,17 +30,18 @@ interface PopoverContextValue {
     isMounted: boolean
     presenceProps: { 'data-state': 'open' | 'closed'; 'data-closing'?: '' }
     setOpenState: (open: boolean) => void
-    triggerElementRef: React.MutableRefObject<Element | null>
-    contentRef: React.MutableRefObject<HTMLDivElement | null>
-    rootRef: React.RefObject<HTMLDivElement | null>
+    triggerElementRef: MutableRefObject<Element | null>
+    contentRef: MutableRefObject<HTMLDivElement | null>
+    rootRef: MutableRefObject<HTMLDivElement | null>
     instanceId: string
-    align: PopoverAlign
-    side: PopoverSide
+    actualSide: PopoverSide
+    actualAlign: PopoverAlign
     updatePosition: () => void
     position: { top: number; left: number }
     positioned: boolean
     portalTarget: HTMLElement | null
     contentClassName?: string
+    presenceRef: (node: HTMLElement | null) => void
 }
 
 const PopoverContext = createContext<PopoverContextValue | null>(null)
@@ -59,7 +62,6 @@ export function PopoverTrigger({
         onClick?.(e)
         if (ctx) {
             ctx.triggerElementRef.current = e.currentTarget
-            ctx.updatePosition()
             ctx.setOpenState(!isOpen)
         }
     }
@@ -74,11 +76,13 @@ export function PopoverTrigger({
         return cloneElement(child, {
             ref: (node: HTMLElement | null) => {
                 if (typeof ref === 'function') ref(node)
-                else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node
+                else if (ref) (ref as MutableRefObject<HTMLElement | null>).current = node
+
+                if (ctx) ctx.triggerElementRef.current = node
 
                 if (typeof childRef === 'function') childRef(node)
                 else if (childRef && typeof childRef === 'object' && 'current' in childRef) {
-                    ;(childRef as React.MutableRefObject<HTMLElement | null>).current = node
+                    ;(childRef as MutableRefObject<HTMLElement | null>).current = node
                 }
             },
             className: cn(childProps.className as string | undefined, className),
@@ -97,7 +101,11 @@ export function PopoverTrigger({
 
     return (
         <button
-            ref={ref as React.Ref<HTMLButtonElement>}
+            ref={(node) => {
+                if (typeof ref === 'function') ref(node)
+                else if (ref) (ref as MutableRefObject<HTMLButtonElement | null>).current = node
+                if (ctx) ctx.triggerElementRef.current = node
+            }}
             type="button"
             className={cn('mr-popover__trigger', className)}
             aria-expanded={isOpen}
@@ -112,9 +120,17 @@ export function PopoverTrigger({
 }
 
 export function PopoverAnchor({ ref, children, className, ...props }: PopoverAnchorProps) {
+    const ctx = useContext(PopoverContext)
     return (
         <span
-            ref={ref as React.Ref<HTMLSpanElement>}
+            ref={(node) => {
+                if (typeof ref === 'function') {
+                    ;(ref as (instance: HTMLElement | null) => void)(node)
+                } else if (ref) {
+                    ;(ref as MutableRefObject<HTMLElement | null>).current = node
+                }
+                if (ctx) ctx.triggerElementRef.current = node
+            }}
             className={cn('mr-popover__anchor', className)}
             data-mr-popover-trigger="true"
             {...props}
@@ -132,16 +148,18 @@ export function PopoverContent({ ref, children, className, ...props }: PopoverCo
         <div
             ref={(node) => {
                 if (typeof ref === 'function') ref(node)
-                else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-                ;(ctx.contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+                else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node
+                ctx.contentRef.current = node
+                ctx.presenceRef(node)
             }}
             id={`${ctx.instanceId}-content`}
             className={cn('mr-popover__content', ctx.contentClassName, className)}
             role="dialog"
             aria-modal="false"
             tabIndex={-1}
-            data-side={ctx.side}
-            data-align={ctx.align}
+            data-side={ctx.actualSide}
+            data-align={ctx.actualAlign}
+            data-state={ctx.presenceProps['data-state']}
             data-closing={ctx.presenceProps['data-closing']}
             data-positioned={ctx.positioned ? '' : undefined}
             style={{
@@ -176,11 +194,20 @@ export function Popover({
     const contentRef = useRef<HTMLDivElement>(null)
     const isControlled = controlledOpen !== undefined
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
-    const [position, setPosition] = useState({ top: 0, left: 0 })
     const isOpen = isControlled ? controlledOpen : internalOpen
     const portalTarget = usePortalTarget()
-    const { isMounted, presenceProps } = usePresence(isOpen, { durationMs: 150 })
-    const [positioned, setPositioned] = useState(false)
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(isOpen, { durationMs: 200 })
+
+    const { position, actualSide, actualAlign, positioned, updatePosition } = useFloatingPosition(
+        triggerElementRef,
+        contentRef,
+        {
+            side,
+            align,
+            sideOffset: OVERLAY_OFFSET,
+            enabled: isMounted,
+        }
+    )
 
     const setOpenState = useCallback(
         (nextOpen: boolean) => {
@@ -190,70 +217,34 @@ export function Popover({
         [isControlled, onOpenChange]
     )
 
-    const updatePosition = useCallback(() => {
-        const el =
-            triggerElementRef.current ??
-            rootRef.current?.querySelector('[data-mr-popover-trigger="true"]')
-        if (!el) return
-        const anchorRect = el.getBoundingClientRect()
-        const contentEl = contentRef.current
-        const floatingRect = contentEl ? contentEl.getBoundingClientRect() : { width: 0, height: 0 }
-        const gap = OVERLAY_OFFSET
-        const top = side === 'top' ? anchorRect.top - gap : anchorRect.bottom + gap
-        let left = anchorRect.left
-        if (align === 'center') {
-            left = anchorRect.left + anchorRect.width / 2 - floatingRect.width / 2
-        } else if (align === 'end') {
-            left = anchorRect.right - floatingRect.width
-        }
-        const padding = 8
-        const maxLeft = (window.innerWidth || 1024) - floatingRect.width - padding
-        left = Math.min(Math.max(left, padding), Math.max(padding, maxLeft))
-        setPosition({ top, left })
-        setPositioned(true)
-    }, [align, side])
-
     useEffect(() => {
-        if (!isMounted) {
-            setPositioned(false)
-            return
-        }
-        if (!isOpen) {
-            return
-        }
-        const frameId = window.requestAnimationFrame(updatePosition)
-        function pd(e: MouseEvent) {
-            if (
-                !rootRef.current?.contains(e.target as Node) &&
-                !contentRef.current?.contains(e.target as Node)
-            )
+        if (!isOpen) return
+
+        function handlePointerDown(e: MouseEvent) {
+            const target = e.target as Node
+            if (!rootRef.current?.contains(target) && !contentRef.current?.contains(target)) {
                 setOpenState(false)
-        }
-        function kd(e: KeyboardEvent) {
-            if (e.key === 'Escape') {
-                setOpenState(false)
-                ;(
-                    rootRef.current?.querySelector(
-                        '[data-mr-popover-trigger="true"] button, [data-mr-popover-trigger="true"] a, [data-mr-popover-trigger="true"] [tabindex]'
-                    ) as HTMLElement
-                )?.focus()
             }
         }
-        function vc() {
-            updatePosition()
+
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key === 'Escape') {
+                setOpenState(false)
+                const focusableTrigger = rootRef.current?.querySelector<HTMLElement>(
+                    '[data-mr-popover-trigger="true"] button, [data-mr-popover-trigger="true"] a, [data-mr-popover-trigger="true"] [tabindex], button[data-mr-popover-trigger="true"]'
+                )
+                focusableTrigger?.focus()
+            }
         }
-        document.addEventListener('mousedown', pd)
-        document.addEventListener('keydown', kd)
-        window.addEventListener('resize', vc)
-        window.addEventListener('scroll', vc, true)
+
+        document.addEventListener('mousedown', handlePointerDown)
+        document.addEventListener('keydown', handleKeyDown)
+
         return () => {
-            window.cancelAnimationFrame(frameId)
-            document.removeEventListener('mousedown', pd)
-            document.removeEventListener('keydown', kd)
-            window.removeEventListener('resize', vc)
-            window.removeEventListener('scroll', vc, true)
+            document.removeEventListener('mousedown', handlePointerDown)
+            document.removeEventListener('keydown', handleKeyDown)
         }
-    }, [isMounted, isOpen, setOpenState, updatePosition])
+    }, [isOpen, setOpenState])
 
     useEffect(() => {
         if (isOpen) contentRef.current?.focus()
@@ -268,13 +259,14 @@ export function Popover({
         contentRef,
         rootRef,
         instanceId,
-        align,
-        side,
+        actualSide,
+        actualAlign,
         updatePosition,
         position,
         positioned,
         portalTarget,
         contentClassName,
+        presenceRef,
     }
 
     return (
@@ -282,9 +274,8 @@ export function Popover({
             <div
                 ref={(node) => {
                     if (typeof ref === 'function') ref(node)
-                    else if (ref)
-                        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-                    ;(rootRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+                    else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node
+                    rootRef.current = node
                 }}
                 className={cn('mr-popover', className)}
                 data-open={isOpen ? true : undefined}
@@ -296,23 +287,10 @@ export function Popover({
                     <>
                         {typeof trigger === 'string' ? (
                             <PopoverTrigger>{trigger}</PopoverTrigger>
+                        ) : isValidElement(trigger) ? (
+                            <PopoverTrigger asChild>{trigger}</PopoverTrigger>
                         ) : (
-                            <span
-                                className="mr-popover__anchor"
-                                data-mr-popover-trigger="true"
-                                aria-expanded={isOpen}
-                                aria-controls={`${instanceId}-content`}
-                                onClick={(e) => {
-                                    triggerElementRef.current =
-                                        (e.target as HTMLElement).closest(
-                                            'button, a, [tabindex]'
-                                        ) ?? e.currentTarget
-                                    updatePosition()
-                                    setOpenState(!isOpen)
-                                }}
-                            >
-                                {trigger}
-                            </span>
+                            <PopoverAnchor>{trigger}</PopoverAnchor>
                         )}
                         <PopoverContent>{children}</PopoverContent>
                     </>

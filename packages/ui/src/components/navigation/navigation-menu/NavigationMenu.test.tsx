@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { act, createRef } from 'react'
 import type { ReactElement } from 'react'
 import { type Root, createRoot } from 'react-dom/client'
@@ -315,6 +315,39 @@ describe('NavigationMenu', () => {
             expect(view.querySelector('.mr-nav-menu__sub-desc')?.textContent).toBe(
                 'Real-time analytics'
             )
+        })
+
+        it('animates exit with data-closing and unmounts after duration', () => {
+            const view = render(
+                <NavigationMenu items={itemsWithSubItems} defaultValue="products" />
+            )
+            const content = view.querySelector('.mr-nav-menu__content')
+            expect(content).not.toBeNull()
+            expect(content?.getAttribute('data-state')).toBe('open')
+            expect(content?.hasAttribute('data-closing')).toBe(false)
+
+            const nav = view.querySelector('nav')
+            act(() => {
+                fireEvent.mouseLeave(nav!)
+            })
+
+            // Advance through mouse leave debounce timeout (150ms)
+            act(() => {
+                vi.advanceTimersByTime(150)
+            })
+
+            // Content is now closing
+            const closingContent = view.querySelector('.mr-nav-menu__content')
+            expect(closingContent?.getAttribute('data-state')).toBe('closed')
+            expect(closingContent?.hasAttribute('data-closing')).toBe(true)
+
+            // Advance through presence duration (150ms)
+            act(() => {
+                vi.advanceTimersByTime(160)
+            })
+
+            // Content is unmounted from DOM
+            expect(view.querySelector('.mr-nav-menu__content')).toBeNull()
         })
     })
 })

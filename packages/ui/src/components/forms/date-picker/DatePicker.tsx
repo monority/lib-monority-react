@@ -1,5 +1,9 @@
+import { Calendar } from '@/components/forms/calendar/Calendar'
 import { Field } from '@/components/forms/field/Field'
+import { formatDate, parseDate, toISODateString } from '@/internal/date-utils'
+import { useFloatingPosition } from '@/internal/use-floating-position'
 import { usePortalTarget } from '@/internal/use-portal-target'
+import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { DATEPICKER_MIN_WIDTH, OVERLAY_OFFSET } from '@/lib/constants'
 import { FormControl } from '@/primitives/form-control'
@@ -7,150 +11,6 @@ import { InputBase } from '@/primitives/input-base'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { DatePickerProps } from './DatePicker.types'
-
-// ─── Date math utilities (no external deps) ───────────────────────────
-
-function startOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), 1)
-}
-
-function endOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0)
-}
-
-function startOfWeek(date: Date, weekStartsOn = 0): Date {
-    const d = new Date(date)
-    const day = d.getDay()
-    const diff = (day - weekStartsOn + 7) % 7
-    d.setDate(d.getDate() - diff)
-    d.setHours(0, 0, 0, 0)
-    return d
-}
-
-function addMonths(date: Date, n: number): Date {
-    const d = new Date(date)
-    d.setMonth(d.getMonth() + n)
-    return d
-}
-
-function subMonths(date: Date, n: number): Date {
-    return addMonths(date, -n)
-}
-
-function eachDayOfInterval(start: Date, end: Date): Date[] {
-    const days: Date[] = []
-    const current = new Date(start)
-    while (current <= end) {
-        days.push(new Date(current))
-        current.setDate(current.getDate() + 1)
-    }
-    return days
-}
-
-function isSameDay(a: Date, b: Date): boolean {
-    return (
-        a.getFullYear() === b.getFullYear() &&
-        a.getMonth() === b.getMonth() &&
-        a.getDate() === b.getDate()
-    )
-}
-
-function isToday(date: Date): boolean {
-    return isSameDay(date, new Date())
-}
-
-function isSameMonth(a: Date, b: Date): boolean {
-    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth()
-}
-
-function isDateDisabled(
-    date: Date,
-    minDate?: Date,
-    maxDate?: Date,
-    disabledDates?: Date[] | ((date: Date) => boolean)
-): boolean {
-    if (minDate && date < new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate()))
-        return true
-    if (maxDate && date > new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate()))
-        return true
-    if (Array.isArray(disabledDates)) {
-        return disabledDates.some((d) => isSameDay(d, date))
-    }
-    if (typeof disabledDates === 'function') {
-        return disabledDates(date)
-    }
-    return false
-}
-
-function parseDate(value: Date | string | undefined | null): Date | null {
-    if (!value) return null
-    if (value instanceof Date) return Number.isNaN(value.getTime()) ? null : value
-    const d = new Date(value)
-    return Number.isNaN(d.getTime()) ? null : d
-}
-
-function formatDate(date: Date, locale?: string): string {
-    return new Intl.DateTimeFormat(locale ?? navigator.language ?? 'en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    }).format(date)
-}
-
-function formatMonthYear(date: Date, locale?: string): string {
-    return new Intl.DateTimeFormat(locale ?? navigator.language ?? 'en-US', {
-        month: 'long',
-        year: 'numeric',
-    }).format(date)
-}
-
-function getDayNames(locale?: string): string[] {
-    const formatter = new Intl.DateTimeFormat(locale ?? navigator.language ?? 'en-US', {
-        weekday: 'short',
-    })
-    const baseDate = new Date(2024, 0, 0) // Sunday
-    return Array.from({ length: 7 }, (_, i) => {
-        const d = new Date(baseDate)
-        d.setDate(d.getDate() + i)
-        return formatter.format(d)
-    })
-}
-
-function toISODateString(date: Date | null): string {
-    if (!date) return ''
-    const y = date.getFullYear()
-    const m = String(date.getMonth() + 1).padStart(2, '0')
-    const d = String(date.getDate()).padStart(2, '0')
-    return `${y}-${m}-${d}`
-}
-
-// ─── Variant ──────────────────────────────────────────────────────────
-
-// ─── Sub-components ───────────────────────────────────────────────────
-
-const ChevronLeftIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-            d="M12.5 5L7.5 10L12.5 15"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-)
-
-const ChevronRightIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-            d="M7.5 5L12.5 10L7.5 15"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-)
 
 const CalendarIcon = () => (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -161,382 +21,74 @@ const CalendarIcon = () => (
     </svg>
 )
 
-interface CalendarHeaderProps {
-    viewDate: Date
-    onPrev: () => void
-    onNext: () => void
-    showPickers?: boolean
-    onViewDateChange?: (date: Date) => void
-    minDate?: Date
-    maxDate?: Date
-}
-
-function CalendarHeader({
-    viewDate,
-    onPrev,
-    onNext,
-    showPickers,
-    onViewDateChange,
-    minDate,
-    maxDate,
-}: CalendarHeaderProps) {
-    const today = new Date()
-    const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
-    const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
-    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
-
-    return (
-        <div className="mr-datepicker__header">
-            <button
-                type="button"
-                className="mr-datepicker__nav-btn"
-                onClick={onPrev}
-                aria-label="Previous month"
-                tabIndex={-1}
-            >
-                <ChevronLeftIcon />
-            </button>
-            {showPickers ? (
-                <div className="mr-calendar__pickers">
-                    <select
-                        className="mr-calendar__select mr-calendar__select--month"
-                        aria-label="Select month"
-                        value={viewDate.getMonth()}
-                        onChange={(e) => {
-                            const next = new Date(viewDate)
-                            next.setMonth(Number(e.target.value))
-                            onViewDateChange?.(next)
-                        }}
-                    >
-                        {Array.from({ length: 12 }, (_, i) => {
-                            const d = new Date(2024, i, 1)
-                            const name = new Intl.DateTimeFormat('en-US', {
-                                month: 'short',
-                            }).format(d)
-                            return (
-                                <option key={i} value={i}>
-                                    {name}
-                                </option>
-                            )
-                        })}
-                    </select>
-                    <select
-                        className="mr-calendar__select mr-calendar__select--year"
-                        aria-label="Select year"
-                        value={viewDate.getFullYear()}
-                        onChange={(e) => {
-                            const next = new Date(viewDate)
-                            next.setFullYear(Number(e.target.value))
-                            onViewDateChange?.(next)
-                        }}
-                    >
-                        {years.map((y) => (
-                            <option key={y} value={y}>
-                                {y}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            ) : (
-                <span className="mr-datepicker__month-label">{formatMonthYear(viewDate)}</span>
-            )}
-            <button
-                type="button"
-                className="mr-datepicker__nav-btn"
-                onClick={onNext}
-                aria-label="Next month"
-                tabIndex={-1}
-            >
-                <ChevronRightIcon />
-            </button>
-        </div>
-    )
-}
-
-interface CalendarGridProps {
-    viewDate: Date
-    selectedDate: Date | null
-    onSelect: (date: Date) => void
-    minDate?: Date
-    maxDate?: Date
-    disabledDates?: Date[] | ((date: Date) => boolean)
-}
-
-function CalendarGrid({
-    viewDate,
-    selectedDate,
-    onSelect,
-    minDate,
-    maxDate,
-    disabledDates,
-}: CalendarGridProps) {
-    const monthStart = startOfMonth(viewDate)
-    const monthEnd = endOfMonth(viewDate)
-    const gridStart = startOfWeek(monthStart)
-    const gridEnd = startOfWeek(addMonths(monthEnd, 1))
-    // Ensure gridEnd is after gridStart
-    if (gridEnd <= gridStart) {
-        gridEnd.setDate(gridEnd.getDate() + 7)
-    }
-    const days = eachDayOfInterval(gridStart, gridEnd)
-
-    // Trim trailing weeks that are entirely next month
-    const weeks: Date[][] = []
-    for (let i = 0; i < days.length; i += 7) {
-        weeks.push(days.slice(i, i + 7))
-    }
-    while (weeks.length > 1) {
-        const lastWeek = weeks[weeks.length - 1]
-        const hasCurrentMonth = lastWeek?.some((d) => isSameMonth(d, viewDate)) ?? false
-        if (!hasCurrentMonth) {
-            weeks.pop()
-        } else {
-            break
-        }
-    }
-    const trimmedDays = weeks.flat()
-    const dayNames = getDayNames()
-
-    const [focusedDate, setFocusedDate] = useState<Date | null>(() => {
-        const selectedFocus =
-            selectedDate &&
-            isSameMonth(selectedDate, viewDate) &&
-            !isDateDisabled(selectedDate, minDate, maxDate, disabledDates)
-                ? selectedDate
-                : null
-        return (
-            selectedFocus ??
-            trimmedDays.find((day) => !isDateDisabled(day, minDate, maxDate, disabledDates)) ??
-            viewDate
-        )
-    })
-    const focusFocusedDay = useCallback((node: HTMLButtonElement | null) => {
-        if (node) node.focus()
-    }, [])
-
-    const handleGridKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLDivElement>) => {
-            const base = focusedDate ?? selectedDate ?? new Date()
-            let next: Date | null = null
-
-            switch (e.key) {
-                case 'ArrowLeft':
-                    e.preventDefault()
-                    next = new Date(base.getFullYear(), base.getMonth(), base.getDate() - 1)
-                    break
-                case 'ArrowRight':
-                    e.preventDefault()
-                    next = new Date(base.getFullYear(), base.getMonth(), base.getDate() + 1)
-                    break
-                case 'ArrowUp':
-                    e.preventDefault()
-                    next = new Date(base.getFullYear(), base.getMonth(), base.getDate() - 7)
-                    break
-                case 'ArrowDown':
-                    e.preventDefault()
-                    next = new Date(base.getFullYear(), base.getMonth(), base.getDate() + 7)
-                    break
-                case 'Enter':
-                case ' ':
-                    e.preventDefault()
-                    if (focusedDate) {
-                        const disabled = isDateDisabled(
-                            focusedDate,
-                            minDate,
-                            maxDate,
-                            disabledDates
-                        )
-                        if (!disabled) onSelect(focusedDate)
-                    }
-                    return
-                default:
-                    return
-            }
-
-            if (next) {
-                setFocusedDate(next)
-            }
-        },
-        [focusedDate, selectedDate, minDate, maxDate, disabledDates, onSelect]
-    )
-
-    return (
-        <>
-            <div className="mr-datepicker__day-names" role="row">
-                {dayNames.map((name) => (
-                    <span key={name} className="mr-datepicker__day-name" role="columnheader">
-                        {name}
-                    </span>
-                ))}
-            </div>
-            <div className="mr-datepicker__grid" role="grid" onKeyDown={handleGridKeyDown}>
-                {trimmedDays.map((day) => {
-                    const disabled = isDateDisabled(day, minDate, maxDate, disabledDates)
-                    const selected = selectedDate ? isSameDay(day, selectedDate) : false
-                    const today = isToday(day)
-                    const currentMonth = isSameMonth(day, viewDate)
-                    const isFocused = focusedDate ? isSameDay(day, focusedDate) : false
-
-                    return (
-                        <button
-                            ref={isFocused ? focusFocusedDay : undefined}
-                            key={day.toISOString()}
-                            type="button"
-                            className="mr-datepicker__day"
-                            disabled={disabled}
-                            role="gridcell"
-                            tabIndex={isFocused && !disabled ? 0 : -1}
-                            data-selected={selected ? true : undefined}
-                            data-today={today ? true : undefined}
-                            data-disabled={disabled ? true : undefined}
-                            data-current-month={currentMonth ? true : undefined}
-                            aria-selected={selected ? true : undefined}
-                            onClick={disabled ? undefined : () => onSelect(day)}
-                        >
-                            {day.getDate()}
-                        </button>
-                    )
-                })}
-            </div>
-        </>
-    )
-}
-
-// ─── Main component ───────────────────────────────────────────────────
-
 export function DatePicker({
     ref,
-    size,
-    tone,
+    size = 'md',
+    tone = 'neutral',
     label,
     hint,
     error,
-    id,
-    className,
-    inputClassName,
-    disabled = false,
-    required = false,
     invalid = false,
     fullWidth = false,
-    theme: themeProp,
-    brand: brandProp,
-    density: densityProp,
+    theme,
+    brand,
+    density,
     value,
     defaultValue,
     onChange,
     minDate,
     maxDate,
     disabledDates,
-    placeholder = 'Select a date',
-    showPickers = false,
+    placeholder,
+    showPickers,
+    inputClassName,
     popoverClassName,
+    className,
     style,
+    id,
+    disabled = false,
+    required = false,
     ...props
 }: DatePickerProps) {
     const isControlled = value !== undefined
-    const initialDate = parseDate(isControlled ? value : defaultValue)
-
-    const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
-    const [viewDate, setViewDate] = useState<Date>(
-        initialDate ? startOfMonth(initialDate) : startOfMonth(new Date())
+    const [internalValue, setInternalValue] = useState<Date | null>(() =>
+        parseDate(value ?? defaultValue)
     )
+    const selectedDate = isControlled ? parseDate(value) : internalValue
     const [open, setOpen] = useState(false)
-    const [position, setPosition] = useState({ top: 0, left: 0, width: 0 })
-    // The popover must never paint at the (0,0) initial position: it stays
-    // hidden until the first real measurement lands.
-    const [positioned, setPositioned] = useState(false)
-
-    const [inheritedTheme, setInheritedTheme] = useState<string | undefined>(undefined)
-    const [inheritedBrand, setInheritedBrand] = useState<string | undefined>(undefined)
-    const [inheritedDensity, setInheritedDensity] = useState<string | undefined>(undefined)
 
     const rootRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLInputElement>(null)
     const popoverRef = useRef<HTMLDivElement>(null)
+
     const portalTarget = usePortalTarget()
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(open, { durationMs: 200 })
 
-    const resolvedSize = size ?? 'md'
-    const resolvedTone = tone ?? 'neutral'
-    const isInvalid = invalid || Boolean(error)
-
-    // Capture inherited theme, brand and density from trigger DOM ancestry
-    useEffect(() => {
-        if (!open) return
-        if (rootRef.current) {
-            const themeEl = rootRef.current.closest('[data-theme]')
-            const brandEl = rootRef.current.closest('[data-brand]')
-            const densityEl = rootRef.current.closest('[data-density]')
-
-            setInheritedTheme(
-                themeEl?.getAttribute('data-theme') ??
-                    (typeof document !== 'undefined'
-                        ? (document.documentElement.getAttribute('data-theme') ?? undefined)
-                        : undefined)
-            )
-            setInheritedBrand(brandEl?.getAttribute('data-brand') ?? undefined)
-            setInheritedDensity(densityEl?.getAttribute('data-density') ?? undefined)
+    const { position, actualSide, actualAlign, positioned } = useFloatingPosition(
+        triggerRef,
+        popoverRef,
+        {
+            side: 'bottom',
+            align: 'start',
+            sideOffset: OVERLAY_OFFSET,
+            enabled: isMounted,
         }
-    }, [open])
-
-    const activeTheme =
-        themeProp ??
-        (rootRef.current
-            ? (rootRef.current.closest('[data-theme]')?.getAttribute('data-theme') ??
-              (typeof document !== 'undefined'
-                  ? (document.documentElement.getAttribute('data-theme') ?? undefined)
-                  : undefined))
-            : inheritedTheme)
-    const activeBrand =
-        brandProp ??
-        (rootRef.current
-            ? (rootRef.current.closest('[data-brand]')?.getAttribute('data-brand') ?? undefined)
-            : inheritedBrand)
-    const activeDensity =
-        densityProp ??
-        (rootRef.current
-            ? (rootRef.current.closest('[data-density]')?.getAttribute('data-density') ?? undefined)
-            : inheritedDensity)
+    )
 
     // Sync controlled value
     useEffect(() => {
         if (isControlled) {
-            const parsed = parseDate(value)
-            setSelectedDate(parsed)
-            if (parsed) setViewDate(startOfMonth(parsed))
+            setInternalValue(parseDate(value))
         }
     }, [isControlled, value])
 
-    // Update view when selected date changes (uncontrolled)
-    useEffect(() => {
-        if (!isControlled && selectedDate) {
-            setViewDate(startOfMonth(selectedDate))
-        }
-    }, [isControlled, selectedDate])
-
-    // Popover positioning + outside click + escape
+    // Outside click & Escape handlers
     useEffect(() => {
         if (!open) return
 
-        setPositioned(false)
-        const frameId = window.requestAnimationFrame(() => {
-            const r = triggerRef.current?.getBoundingClientRect()
-            if (r) {
-                setPosition({
-                    top: r.bottom + OVERLAY_OFFSET,
-                    left: r.left,
-                    width: fullWidth
-                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
-                        : DATEPICKER_MIN_WIDTH,
-                })
-                setPositioned(true)
-            }
-        })
-
-        function onPointerDown(e: PointerEvent) {
-            if (
-                !rootRef.current?.contains(e.target as Node) &&
-                !popoverRef.current?.contains(e.target as Node)
-            ) {
+        function onPointerDown(e: PointerEvent | MouseEvent) {
+            const target = e.target as Node
+            if (!rootRef.current?.contains(target) && !popoverRef.current?.contains(target)) {
                 setOpen(false)
             }
         }
@@ -545,66 +97,57 @@ export function DatePicker({
             if (e.key === 'Escape') {
                 e.preventDefault()
                 setOpen(false)
-            }
-        }
-
-        function onResize() {
-            const r = triggerRef.current?.getBoundingClientRect()
-            if (r) {
-                setPosition({
-                    top: r.bottom + OVERLAY_OFFSET,
-                    left: r.left,
-                    width: fullWidth
-                        ? Math.max(r.width, DATEPICKER_MIN_WIDTH)
-                        : DATEPICKER_MIN_WIDTH,
-                })
-                setPositioned(true)
+                triggerRef.current?.focus()
             }
         }
 
         document.addEventListener('pointerdown', onPointerDown)
         window.addEventListener('keydown', onKey)
-        window.addEventListener('resize', onResize)
-        window.addEventListener('scroll', onResize, true)
 
         return () => {
-            window.cancelAnimationFrame(frameId)
             document.removeEventListener('pointerdown', onPointerDown)
             window.removeEventListener('keydown', onKey)
-            window.removeEventListener('resize', onResize)
-            window.removeEventListener('scroll', onResize, true)
         }
     }, [open])
 
+    useEffect(() => {
+        if (open && positioned) {
+            const focusedEl = popoverRef.current?.querySelector<HTMLElement>(
+                '.mr-datepicker__day[tabindex="0"]'
+            )
+            focusedEl?.focus()
+        }
+    }, [open, positioned])
+
     const handleSelect = useCallback(
-        (date: Date) => {
-            if (!isControlled) setSelectedDate(date)
+        (date: Date | null) => {
+            if (!isControlled) setInternalValue(date)
             onChange?.(date)
             setOpen(false)
+            triggerRef.current?.focus()
         },
         [isControlled, onChange]
     )
 
-    const handlePrevMonth = useCallback(() => setViewDate((d) => subMonths(d, 1)), [])
-    const handleNextMonth = useCallback(() => setViewDate((d) => addMonths(d, 1)), [])
-
     const handleTriggerClick = useCallback(() => {
-        if (!disabled) setOpen((o) => !o)
+        if (!disabled) setOpen((prev) => !prev)
     }, [disabled])
 
     const handleTriggerKeyDown = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
                 e.preventDefault()
-                if (!disabled) setOpen((o) => !o)
+                if (!disabled) setOpen(true)
             }
         },
         [disabled]
     )
 
     const displayValue = selectedDate ? formatDate(selectedDate) : ''
+    const isInvalid = Boolean(invalid || error)
+    const resolvedSize = size ?? 'md'
+    const resolvedTone = tone ?? 'neutral'
 
-    // Forward ref to hidden input
     const hiddenInputRef = useCallback(
         (node: HTMLInputElement | null) => {
             if (typeof ref === 'function') {
@@ -615,6 +158,8 @@ export function DatePicker({
         },
         [ref]
     )
+
+    const triggerWidth = triggerRef.current?.getBoundingClientRect().width
 
     return (
         <FormControl
@@ -670,43 +215,49 @@ export function DatePicker({
                     </div>
                 </Field>
 
-                {open && portalTarget
+                {isMounted && portalTarget
                     ? createPortal(
                           <div
-                              ref={popoverRef}
+                              ref={(node) => {
+                                  popoverRef.current = node
+                                  presenceRef(node)
+                              }}
                               className={cn('mr-datepicker__popover', popoverClassName)}
                               data-size={resolvedSize}
                               data-tone={resolvedTone}
-                              data-theme={activeTheme}
-                              data-brand={activeBrand}
-                              data-density={activeDensity}
+                              data-theme={theme}
+                              data-brand={brand}
+                              data-density={density}
+                              data-side={actualSide}
+                              data-align={actualAlign}
+                              data-state={presenceProps['data-state']}
+                              data-closing={presenceProps['data-closing']}
+                              data-positioned={positioned ? '' : undefined}
                               role="dialog"
+                              aria-modal="false"
                               aria-label="Choose date"
+                              aria-hidden={!open ? 'true' : undefined}
+                              tabIndex={-1}
                               style={{
                                   position: 'fixed',
                                   top: `${position.top}px`,
                                   left: `${position.left}px`,
-                                  width: `${position.width}px`,
+                                  width:
+                                      fullWidth && triggerWidth
+                                          ? `${Math.max(triggerWidth, DATEPICKER_MIN_WIDTH)}px`
+                                          : undefined,
                                   visibility: positioned ? undefined : 'hidden',
                               }}
                           >
-                              <CalendarHeader
-                                  viewDate={viewDate}
-                                  onPrev={handlePrevMonth}
-                                  onNext={handleNextMonth}
-                                  showPickers={showPickers}
-                                  onViewDateChange={setViewDate}
-                                  minDate={minDate}
-                                  maxDate={maxDate}
-                              />
-                              <CalendarGrid
-                                  key={viewDate.toISOString()}
-                                  viewDate={viewDate}
-                                  selectedDate={selectedDate}
-                                  onSelect={handleSelect}
+                              <Calendar
+                                  classPrefix="mr-datepicker"
+                                  value={selectedDate}
+                                  onChange={handleSelect}
                                   minDate={minDate}
                                   maxDate={maxDate}
                                   disabledDates={disabledDates}
+                                  showPickers={showPickers}
+                                  autoFocus
                               />
                           </div>,
                           portalTarget
