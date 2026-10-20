@@ -1,5 +1,5 @@
 /* Recette Timeline dans la couche mr.components.
- * Fil chronologique d'etapes, journal d'activite et suivi d'evenements. */
+ * Fil chronologique d'étapes, journal d'activité et suivi d'événements. */
 @layer mr.components {
     :where(.mr-timeline) {
         list-style: none;
@@ -7,8 +7,9 @@
         padding: 0;
         display: flex;
         box-sizing: border-box;
-        --mr-timeline-marker-size: var(--mr-space-3);
-        --mr-timeline-col-width: var(--mr-space-3);
+        --mr-timeline-rail-width: var(--mr-space-6);
+        --mr-timeline-dot-size: var(--mr-space-3);
+        --mr-timeline-icon-size: var(--mr-space-6);
         --mr-timeline-line-width: 2px;
         --mr-timeline-line-color: var(--mr-border-default);
         --mr-timeline-gap: var(--mr-space-4);
@@ -16,22 +17,25 @@
     }
 
     :where(.mr-timeline)[data-size='sm'] {
-        --mr-timeline-marker-size: var(--mr-space-2);
-        --mr-timeline-col-width: var(--mr-space-2);
+        --mr-timeline-rail-width: var(--mr-space-5);
+        --mr-timeline-dot-size: var(--mr-space-2);
+        --mr-timeline-icon-size: var(--mr-space-5);
         --mr-timeline-gap: var(--mr-space-3);
         --mr-timeline-item-gap: var(--mr-space-4);
     }
 
     :where(.mr-timeline)[data-size='md'] {
-        --mr-timeline-marker-size: var(--mr-space-3);
-        --mr-timeline-col-width: var(--mr-space-3);
+        --mr-timeline-rail-width: var(--mr-space-6);
+        --mr-timeline-dot-size: var(--mr-space-3);
+        --mr-timeline-icon-size: var(--mr-space-6);
         --mr-timeline-gap: var(--mr-space-4);
         --mr-timeline-item-gap: var(--mr-space-6);
     }
 
     :where(.mr-timeline)[data-size='lg'] {
-        --mr-timeline-marker-size: var(--mr-space-4);
-        --mr-timeline-col-width: var(--mr-space-4);
+        --mr-timeline-rail-width: var(--mr-size-control-md);
+        --mr-timeline-dot-size: var(--mr-space-4);
+        --mr-timeline-icon-size: var(--mr-size-control-md);
         --mr-timeline-gap: var(--mr-space-5);
         --mr-timeline-item-gap: var(--mr-space-8);
     }
@@ -43,22 +47,22 @@
     :where(.mr-timeline)[data-orientation='horizontal'] {
         flex-direction: row;
         overflow-x: auto;
-        gap: var(--mr-timeline-item-gap);
+        gap: 0;
         scrollbar-width: thin;
         scrollbar-color: var(--mr-border-default) transparent;
         padding-block: var(--mr-space-2);
     }
 
-    /* Element individuel de la chronologie */
+    /* Élément individuel de la chronologie */
     :where(.mr-timeline__item) {
         position: relative;
         box-sizing: border-box;
     }
 
-    /* Disposition verticale en grille */
+    /* Disposition verticale en grille avec rail continu */
     :where(.mr-timeline[data-orientation='vertical'] .mr-timeline__item) {
         display: grid;
-        grid-template-columns: var(--mr-timeline-col-width) 1fr;
+        grid-template-columns: var(--mr-timeline-rail-width) minmax(0, 1fr);
         column-gap: var(--mr-timeline-gap);
         padding-block-end: var(--mr-timeline-item-gap);
     }
@@ -67,17 +71,18 @@
         padding-block-end: 0;
     }
 
-    /* Ligne connectrice verticale */
+    /* Ligne connectrice verticale alignée au centre du rail */
     :where(.mr-timeline[data-orientation='vertical'] .mr-timeline__item:not(:last-child))::before {
         content: '';
         position: absolute;
-        inset-inline-start: calc(var(--mr-timeline-col-width) / 2);
+        inset-inline-start: calc(var(--mr-timeline-rail-width) / 2);
         transform: translateX(-50%);
-        inset-block-start: calc(var(--mr-space-1) + var(--mr-timeline-marker-size) / 2);
+        inset-block-start: calc(var(--mr-timeline-rail-width) / 2);
         inline-size: var(--mr-timeline-line-width);
         block-size: 100%;
         background-color: var(--mr-timeline-line-color);
         box-sizing: border-box;
+        z-index: 0;
     }
 
     /* Disposition horizontale */
@@ -87,6 +92,7 @@
         gap: var(--mr-space-2);
         min-inline-size: calc(var(--mr-space-8) * 4);
         flex: 1 1 0;
+        padding-inline-end: var(--mr-space-4);
     }
 
     /* Ligne connectrice horizontale */
@@ -95,13 +101,14 @@
         )::before {
         content: '';
         position: absolute;
-        inset-inline-start: calc(var(--mr-timeline-col-width) / 2);
-        inset-block-start: calc(var(--mr-space-1) + var(--mr-timeline-marker-size) / 2);
+        inset-inline-start: calc(var(--mr-timeline-rail-width) / 2);
+        inset-block-start: calc(var(--mr-timeline-rail-width) / 2);
         transform: translateY(-50%);
-        inline-size: calc(100% + var(--mr-timeline-item-gap));
+        inline-size: 100%;
         block-size: var(--mr-timeline-line-width);
         background-color: var(--mr-timeline-line-color);
         box-sizing: border-box;
+        z-index: 0;
     }
 
     /* Variantes de style de ligne */
@@ -145,18 +152,23 @@
         border-block-start: var(--mr-timeline-line-width) dotted var(--mr-timeline-line-color);
     }
 
-    /* Item interactif */
+    /* Élément interactif */
     :where(.mr-timeline__item)[data-interactive='true'] {
         cursor: pointer;
         padding-block: var(--mr-space-2);
-        padding-inline: var(--mr-space-3);
-        margin-inline: calc(-1 * var(--mr-space-3));
+        padding-inline: var(--mr-space-2);
+        margin-inline: calc(-1 * var(--mr-space-2));
         border-radius: var(--mr-radius-md);
-        transition: background-color var(--mr-duration-state) ease;
+        transition: background-color var(--mr-duration-state) ease, transform
+            var(--mr-duration-fast) ease;
     }
 
     :where(.mr-timeline__item)[data-interactive='true']:hover {
         background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-timeline__item)[data-interactive='true']:active {
+        transform: scale(0.995);
     }
 
     :where(.mr-timeline__item)[data-interactive='true']:focus-visible {
@@ -164,19 +176,20 @@
         outline-offset: 2px;
     }
 
-    /* Point indicateur d'etape */
+    /* Point indicateur d'étape */
     :where(.mr-timeline__point) {
         position: relative;
         z-index: var(--mr-z-base);
         flex-shrink: 0;
-        inline-size: var(--mr-timeline-marker-size);
-        block-size: var(--mr-timeline-marker-size);
+        inline-size: var(--mr-timeline-dot-size);
+        block-size: var(--mr-timeline-dot-size);
         justify-self: center;
         align-self: start;
         border-radius: var(--mr-radius-full);
-        margin-block-start: var(--mr-space-1);
+        margin-block-start: calc((var(--mr-timeline-rail-width) - var(--mr-timeline-dot-size)) / 2);
         border: 2px solid var(--mr-border-strong);
         background-color: var(--mr-bg-canvas);
+        box-shadow: 0 0 0 2px var(--mr-bg-canvas);
         box-sizing: border-box;
         display: inline-flex;
         align-items: center;
@@ -186,24 +199,21 @@
             ease, background-color var(--mr-duration-state) ease;
     }
 
-    /* Point avec icone vectorielle integree */
+    /* Point avec icône vectorielle intégrée */
     :where(.mr-timeline__point)[data-has-icon='true'] {
-        inline-size: var(--mr-space-6);
-        block-size: var(--mr-space-6);
+        inline-size: var(--mr-timeline-icon-size);
+        block-size: var(--mr-timeline-icon-size);
+        margin-block-start: 0;
         font-size: var(--mr-font-size-xs);
     }
 
-    :where(.mr-timeline__point)[data-size='sm'][data-has-icon='true'] {
-        inline-size: var(--mr-space-5);
-        block-size: var(--mr-space-5);
+    :where(.mr-timeline__point)[data-has-icon='true'] svg {
+        inline-size: 60%;
+        block-size: 60%;
+        flex-shrink: 0;
     }
 
-    :where(.mr-timeline__point)[data-size='lg'][data-has-icon='true'] {
-        inline-size: var(--mr-size-control-md);
-        block-size: var(--mr-size-control-md);
-    }
-
-    /* Statuts chromatiques - Solid (defaut) */
+    /* Statuts chromatiques - Solid (défaut) */
     :where(.mr-timeline__point)[data-status='primary'] {
         border-color: var(--mr-accent-solid);
         background-color: var(--mr-accent-solid);
@@ -287,19 +297,19 @@
     @keyframes mr-timeline-pulse {
         0%,
         100% {
-            box-shadow: 0 0 0 0 color-mix(in oklch, var(--mr-accent-solid) 40%, transparent);
+            box-shadow: 0 0 0 2px var(--mr-bg-canvas), 0 0 0 0
+                color-mix(in oklch, var(--mr-accent-solid) 40%, transparent);
         }
         50% {
-            box-shadow: 0 0 0 var(--mr-space-1)
+            box-shadow: 0 0 0 2px var(--mr-bg-canvas), 0 0 0 var(--mr-space-1)
                 color-mix(in oklch, var(--mr-accent-solid) 0%, transparent);
         }
     }
 
-    /* Contenu de l'etape */
+    /* Contenu de l'étape */
     :where(.mr-timeline__content) {
         display: flex;
         flex-direction: column;
-        gap: var(--mr-space-1);
         flex: 1 1 auto;
         min-inline-size: 0;
         grid-column: 2;
@@ -309,23 +319,24 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--mr-space-2);
+        gap: var(--mr-space-3);
         inline-size: 100%;
+        min-inline-size: 0;
+    }
+
+    :where(.mr-timeline__heading-group) {
+        display: flex;
+        align-items: baseline;
+        gap: var(--mr-space-2);
+        flex-wrap: wrap;
+        min-inline-size: 0;
     }
 
     :where(.mr-timeline__extra) {
         display: inline-flex;
         align-items: center;
         gap: var(--mr-space-1);
-        margin-inline-start: auto;
-    }
-
-    :where(.mr-timeline__date) {
-        font-family: var(--mr-font-family-mono);
-        font-size: var(--mr-font-size-xs);
-        font-variant-numeric: tabular-nums;
-        color: var(--mr-text-tertiary);
-        line-height: var(--mr-line-height-normal);
+        flex-shrink: 0;
     }
 
     :where(.mr-timeline__title) {
@@ -345,12 +356,22 @@
         font-size: var(--mr-font-size-md);
     }
 
+    :where(.mr-timeline__date) {
+        font-family: var(--mr-font-family-mono);
+        font-size: var(--mr-font-size-xs);
+        font-variant-numeric: tabular-nums;
+        color: var(--mr-text-tertiary);
+        line-height: var(--mr-line-height-normal);
+        white-space: nowrap;
+    }
+
     :where(.mr-timeline__description) {
         margin: 0;
         font-family: var(--mr-font-family-base);
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-secondary);
         line-height: var(--mr-line-height-normal);
+        margin-block-start: var(--mr-space-1);
     }
 
     :where(.mr-timeline)[data-size='sm'] :where(.mr-timeline__description) {

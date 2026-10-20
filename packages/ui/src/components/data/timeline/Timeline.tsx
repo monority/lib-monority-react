@@ -65,17 +65,17 @@ export function Timeline({
                           >
                               <TimelinePoint status={item.status} icon={item.icon} />
                               <TimelineContent>
-                                  {item.date || item.extra ? (
-                                      <TimelineHeader>
+                                  <TimelineHeader>
+                                      <div className="mr-timeline__heading-group">
+                                          <TimelineTitle>{item.title}</TimelineTitle>
                                           {item.date ? (
                                               <TimelineDate>{item.date}</TimelineDate>
                                           ) : null}
-                                          {item.extra ? (
-                                              <TimelineExtra>{item.extra}</TimelineExtra>
-                                          ) : null}
-                                      </TimelineHeader>
-                                  ) : null}
-                                  <TimelineTitle>{item.title}</TimelineTitle>
+                                      </div>
+                                      {item.extra ? (
+                                          <TimelineExtra>{item.extra}</TimelineExtra>
+                                      ) : null}
+                                  </TimelineHeader>
                                   {item.description ? (
                                       <TimelineDescription>{item.description}</TimelineDescription>
                                   ) : null}
