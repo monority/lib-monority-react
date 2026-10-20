@@ -1,13 +1,15 @@
 /* Recette du composant Collapsible (couche mr.components)
  *
  * Section isolee de contenu repliable sous un declencheur.
+ * Primitif de disclosure partage entre Collapsible et Accordion.
  *
  * Tokens :
  * - Fond : --mr-bg-surface
  * - Bordure : 1px solid --mr-border-subtle
  * - Rayon : --mr-radius-md
  * - Declencheur : hauteur derivee de --mr-size-control-*, texte --mr-text-primary
- * - Chevron : rotation a 180 deg en --mr-duration-state
+ * - Chevron : rotation a 180 deg en --mr-duration-panel et --mr-ease-spring
+ * - Grille : transition grid-template-rows en --mr-duration-panel et --mr-ease-default
  */
 @layer mr.components {
     :where(.mr-collapsible) {
@@ -19,10 +21,11 @@
         border-radius: var(--mr-radius-md);
         background-color: var(--mr-bg-surface);
         overflow: hidden;
-        transition: border-color var(--mr-duration-state);
+        transition: border-color var(--mr-duration-state) var(--mr-ease-default);
     }
 
-    :where(.mr-collapsible)[data-state='open'] {
+    :where(.mr-collapsible)[data-state='open'],
+    :where(.mr-collapsible)[data-open] {
         border-color: var(--mr-border-default);
     }
 
@@ -43,16 +46,33 @@
         font-size: var(--mr-font-size-md);
         font-weight: var(--mr-font-weight-medium);
         text-align: start;
-        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-out);
     }
 
-    :where(.mr-collapsible__trigger):hover {
+    :where(.mr-collapsible__trigger):hover:not(:disabled) {
         background-color: var(--mr-bg-raised);
+    }
+
+    :where(.mr-collapsible__trigger):active:not(:disabled) {
+        transform: scale(0.995);
     }
 
     :where(.mr-collapsible__trigger):focus-visible {
         outline: 2px solid var(--mr-focus-ring);
         outline-offset: -2px;
+    }
+
+    :where(.mr-collapsible)[data-disabled='true'] :where(.mr-collapsible__trigger),
+    :where(.mr-collapsible__trigger):disabled {
+        cursor: not-allowed;
+        color: var(--mr-text-disabled);
+    }
+
+    :where(.mr-collapsible)[data-disabled='true'] :where(.mr-collapsible__trigger):hover,
+    :where(.mr-collapsible__trigger):disabled:hover {
+        background: transparent;
     }
 
     :where(.mr-collapsible__label) {
@@ -69,7 +89,7 @@
         block-size: var(--mr-space-4);
         flex: 0 0 auto;
         color: var(--mr-text-secondary);
-        transition: transform var(--mr-duration-state) var(--mr-ease-default), color
+        transition: transform var(--mr-duration-panel) var(--mr-ease-spring), color
             var(--mr-duration-state) var(--mr-ease-out);
     }
 
@@ -82,11 +102,13 @@
         transform: translateY(-2px) rotate(45deg);
     }
 
-    :where(.mr-collapsible__trigger):hover :where(.mr-collapsible__icon) {
+    :where(.mr-collapsible__trigger):hover:not(:disabled) :where(.mr-collapsible__icon) {
         color: var(--mr-text-primary);
     }
 
-    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__icon) {
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__icon),
+    :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__icon),
+    :where(.mr-collapsible__trigger)[aria-expanded='true'] :where(.mr-collapsible__icon) {
         transform: rotate(180deg);
         color: var(--mr-text-primary);
     }
@@ -98,7 +120,14 @@
         transition: grid-template-rows var(--mr-duration-panel) var(--mr-ease-default);
     }
 
-    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__panel) {
+    :where(.mr-collapsible__panel)[hidden] {
+        display: grid;
+        grid-template-rows: 0fr;
+    }
+
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__panel),
+    :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__panel),
+    :where(.mr-collapsible__panel)[data-state='open'] {
         grid-template-rows: 1fr;
     }
 
@@ -119,7 +148,9 @@
             var(--mr-duration-panel) var(--mr-ease-default);
     }
 
-    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__body) {
+    :where(.mr-collapsible)[data-open] :where(.mr-collapsible__body),
+    :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__body),
+    :where(.mr-collapsible__panel)[data-state='open'] :where(.mr-collapsible__body) {
         opacity: 1;
         transform: translateY(0);
     }

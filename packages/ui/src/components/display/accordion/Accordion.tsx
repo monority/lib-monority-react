@@ -1,5 +1,6 @@
 import { cn } from '@/lib/cn'
-import { createContext, useCallback, useContext, useId, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { Collapsible } from '../collapsible/Collapsible'
 import type {
     AccordionContentProps,
     AccordionItemData,
@@ -20,12 +21,74 @@ interface AccordionItemContextValue {
     value: string
     isOpen: boolean
     isDisabled: boolean
-    triggerId: string
-    panelId: string
 }
 
 const AccordionContext = createContext<AccordionContextValue | null>(null)
 const AccordionItemContext = createContext<AccordionItemContextValue | null>(null)
+
+function AccordionItem({
+    ref,
+    value,
+    disabled = false,
+    className,
+    children,
+    ...props
+}: AccordionItemProps) {
+    const accordionContext = useContext(AccordionContext)
+    const isOpen = accordionContext ? accordionContext.openValues.includes(value) : false
+    const size = accordionContext?.size ?? 'md'
+
+    const handleToggle = useCallback(() => {
+        if (disabled || !accordionContext) return
+        if (accordionContext.collapsible || !isOpen) {
+            accordionContext.toggle(value)
+        }
+    }, [disabled, accordionContext, isOpen, value])
+
+    const itemContextValue: AccordionItemContextValue = {
+        value,
+        isOpen,
+        isDisabled: disabled,
+    }
+
+    return (
+        <AccordionItemContext.Provider value={itemContextValue}>
+            <Collapsible
+                ref={ref}
+                className={cn('mr-accordion__item', className)}
+                open={isOpen}
+                onOpenChange={handleToggle}
+                size={size}
+                disabled={disabled}
+                data-value={value}
+                {...props}
+            >
+                {children}
+            </Collapsible>
+        </AccordionItemContext.Provider>
+    )
+}
+
+function AccordionTrigger({ ref, className, children, onClick, ...props }: AccordionTriggerProps) {
+    return (
+        <Collapsible.Trigger
+            ref={ref}
+            className={cn('mr-accordion__trigger', className)}
+            onClick={onClick}
+            {...props}
+        >
+            {children}
+        </Collapsible.Trigger>
+    )
+}
+
+function AccordionContent({ ref, className, children, ...props }: AccordionContentProps) {
+    return (
+        <Collapsible.Content ref={ref} className={cn('mr-accordion__panel', className)} {...props}>
+            {children}
+        </Collapsible.Content>
+    )
+}
 
 export function Accordion({
     items = [],
@@ -53,7 +116,6 @@ export function Accordion({
             : [controlledValue]
         : internalValue
 
-    const generatedId = useId()
     const firstEnabledIndex = Math.max(
         0,
         items.findIndex((item) => !item.disabled)
@@ -132,165 +194,26 @@ export function Accordion({
         size,
     }
 
-    if (children) {
-        return (
-            <AccordionContext.Provider value={contextValue}>
-                <div
-                    ref={ref}
-                    className={cn('mr-accordion', className)}
-                    data-size={size}
-                    {...props}
-                >
-                    {children}
-                </div>
-            </AccordionContext.Provider>
-        )
-    }
-
     return (
-        <div ref={ref} className={cn('mr-accordion', className)} data-size={size} {...props}>
-            {items.map((item: AccordionItemData, index: number) => {
-                const isOpen = openValues.includes(item.value)
-                const panelId = `${generatedId}-panel-${item.value}`
-                const triggerId = `${generatedId}-trigger-${item.value}`
-                const isDisabled = item.disabled === true
-
-                return (
-                    <div
-                        key={item.value}
-                        className="mr-accordion__item"
-                        data-open={isOpen ? true : undefined}
-                        data-disabled={isDisabled ? true : undefined}
-                    >
-                        <button
-                            id={triggerId}
-                            ref={(node) => {
-                                triggerRefs.current[index] = node
-                            }}
-                            type="button"
-                            className="mr-accordion__trigger"
-                            disabled={isDisabled}
-                            aria-expanded={isOpen}
-                            aria-controls={panelId}
-                            tabIndex={index === focusIndex ? 0 : -1}
-                            onKeyDown={handleTriggerKeyDown(index)}
-                            onClick={() => {
-                                if (isDisabled) return
-                                if (collapsible || !isOpen) toggle(item.value)
-                            }}
-                        >
-                            <span className="mr-accordion__label">{item.title}</span>
-                            <span className="mr-accordion__icon" aria-hidden="true" />
-                        </button>
-                        <div
-                            id={panelId}
-                            role="region"
-                            aria-labelledby={triggerId}
-                            className="mr-accordion__panel"
-                            hidden={!isOpen}
-                        >
-                            <div className="mr-accordion__content">
-                                <div className="mr-accordion__body">{item.content}</div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
-    )
-}
-
-function AccordionItem({
-    ref,
-    value,
-    disabled = false,
-    className,
-    children,
-    ...props
-}: AccordionItemProps) {
-    const context = useContext(AccordionContext)
-    const generatedId = useId()
-    const triggerId = `${generatedId}-trigger-${value}`
-    const panelId = `${generatedId}-panel-${value}`
-    const isOpen = context ? context.openValues.includes(value) : false
-
-    const itemContextValue: AccordionItemContextValue = {
-        value,
-        isOpen,
-        isDisabled: disabled,
-        triggerId,
-        panelId,
-    }
-
-    return (
-        <AccordionItemContext.Provider value={itemContextValue}>
-            <div
-                ref={ref}
-                className={cn('mr-accordion__item', className)}
-                data-open={isOpen ? true : undefined}
-                data-disabled={disabled ? true : undefined}
-                {...props}
-            >
-                {children}
+        <AccordionContext.Provider value={contextValue}>
+            <div ref={ref} className={cn('mr-accordion', className)} data-size={size} {...props}>
+                {children ??
+                    items.map((item: AccordionItemData, index: number) => (
+                        <AccordionItem key={item.value} value={item.value} disabled={item.disabled}>
+                            <AccordionTrigger
+                                ref={(node) => {
+                                    triggerRefs.current[index] = node
+                                }}
+                                tabIndex={index === focusIndex ? 0 : -1}
+                                onKeyDown={handleTriggerKeyDown(index)}
+                            >
+                                {item.title}
+                            </AccordionTrigger>
+                            <AccordionContent>{item.content}</AccordionContent>
+                        </AccordionItem>
+                    ))}
             </div>
-        </AccordionItemContext.Provider>
-    )
-}
-
-function AccordionTrigger({ ref, className, children, onClick, ...props }: AccordionTriggerProps) {
-    const accordionContext = useContext(AccordionContext)
-    const itemContext = useContext(AccordionItemContext)
-
-    const isOpen = itemContext?.isOpen ?? false
-    const isDisabled = itemContext?.isDisabled ?? false
-    const triggerId = itemContext?.triggerId
-    const panelId = itemContext?.panelId
-    const value = itemContext?.value ?? ''
-
-    return (
-        <button
-            ref={ref}
-            id={triggerId}
-            type="button"
-            className={cn('mr-accordion__trigger', className)}
-            disabled={isDisabled}
-            aria-expanded={isOpen}
-            aria-controls={panelId}
-            onClick={(e) => {
-                onClick?.(e)
-                if (isDisabled || !accordionContext) return
-                if (accordionContext.collapsible || !isOpen) {
-                    accordionContext.toggle(value)
-                }
-            }}
-            {...props}
-        >
-            <span className="mr-accordion__label">{children}</span>
-            <span className="mr-accordion__icon" aria-hidden="true" />
-        </button>
-    )
-}
-
-function AccordionContent({ ref, className, children, ...props }: AccordionContentProps) {
-    const itemContext = useContext(AccordionItemContext)
-    const isOpen = itemContext?.isOpen ?? false
-    const triggerId = itemContext?.triggerId
-    const panelId = itemContext?.panelId
-
-    return (
-        <div
-            ref={ref}
-            id={panelId}
-            role="region"
-            aria-labelledby={triggerId}
-            className={cn('mr-accordion__panel', className)}
-            hidden={!isOpen}
-            {...props}
-        >
-            <div className="mr-accordion__content">
-                <div className="mr-accordion__body">{children}</div>
-            </div>
-        </div>
+        </AccordionContext.Provider>
     )
 }
 

@@ -1,5 +1,6 @@
 import { Collapsible } from '@monority/ui/collapsible'
 import { Text } from '@monority/ui/text'
+import { useEffect, useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -7,6 +8,35 @@ import {
     CollapsibleDefaultOpenExample,
     CollapsibleSizesExample,
 } from './Collapsible.examples'
+
+function CollapsiblePlaygroundContent({
+    size,
+    open: propOpen,
+    disabled,
+}: {
+    size: 'sm' | 'md' | 'lg'
+    open: boolean
+    disabled: boolean
+}) {
+    const [isOpen, setIsOpen] = useState(propOpen)
+    useEffect(() => {
+        setIsOpen(propOpen)
+    }, [propOpen])
+
+    return (
+        <div style={{ width: '100%', maxWidth: 480 }}>
+            <Collapsible size={size} open={isOpen} onOpenChange={setIsOpen} disabled={disabled}>
+                <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
+                <Collapsible.Content>
+                    <Text size="sm" color="secondary">
+                        Ce panneau animé affiche des informations contextuelles avec une transition
+                        fluide en CSS Grid sans résidu de hauteur.
+                    </Text>
+                </Collapsible.Content>
+            </Collapsible>
+        </div>
+    )
+}
 
 function CollapsiblePlayground() {
     return (
@@ -27,8 +57,8 @@ function CollapsiblePlayground() {
                 },
                 {
                     type: 'boolean',
-                    prop: 'defaultOpen',
-                    label: 'Ouvert par défaut (defaultOpen)',
+                    prop: 'open',
+                    label: 'Ouvert (open)',
                     defaultValue: true,
                 },
                 {
@@ -39,7 +69,7 @@ function CollapsiblePlayground() {
                 },
             ]}
             renderCode={(props) => `<Collapsible
-  size="${props.size}"${props.defaultOpen ? '\n  defaultOpen' : ''}${props.disabled ? '\n  disabled' : ''}
+  size="${props.size}"${props.open ? '\n  open' : ''}${props.disabled ? '\n  disabled' : ''}
 >
   <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
   <Collapsible.Content>
@@ -50,21 +80,11 @@ function CollapsiblePlayground() {
 </Collapsible>`}
         >
             {(props) => (
-                <div style={{ width: '100%', maxWidth: 480 }}>
-                    <Collapsible
-                        size={props.size as 'sm' | 'md' | 'lg'}
-                        defaultOpen={props.defaultOpen as boolean}
-                        disabled={props.disabled as boolean}
-                    >
-                        <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
-                        <Collapsible.Content>
-                            <Text size="sm" color="secondary">
-                                Ce panneau animé affiche des informations contextuelles avec une
-                                transition fluide en CSS Grid sans résidu de hauteur.
-                            </Text>
-                        </Collapsible.Content>
-                    </Collapsible>
-                </div>
+                <CollapsiblePlaygroundContent
+                    size={props.size as 'sm' | 'md' | 'lg'}
+                    open={props.open as boolean}
+                    disabled={props.disabled as boolean}
+                />
             )}
         </ComponentPlayground>
     )

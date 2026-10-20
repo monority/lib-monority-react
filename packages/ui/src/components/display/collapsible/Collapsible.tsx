@@ -12,6 +12,7 @@ interface CollapsibleContextValue {
     toggle: () => void
     disabled: boolean
     state: 'open' | 'closed'
+    size: 'sm' | 'md' | 'lg'
     instanceId: string
 }
 
@@ -44,10 +45,11 @@ export function CollapsibleTrigger({
             }}
             disabled={disabled}
             data-state={state}
+            data-disabled={disabled ? true : undefined}
             {...props}
         >
-            <span className="mr-collapsible__label">{children}</span>
-            <span className="mr-collapsible__icon" aria-hidden="true" />
+            <span className="mr-collapsible__label mr-accordion__label">{children}</span>
+            <span className="mr-collapsible__icon mr-accordion__icon" aria-hidden="true" />
         </button>
     )
 }
@@ -71,11 +73,12 @@ export function CollapsibleContent({
             aria-labelledby={`${instanceId}-trigger`}
             className={cn('mr-collapsible__panel', className)}
             aria-hidden={!isOpen}
+            hidden={!isOpen ? true : undefined}
             data-state={state}
             {...props}
         >
-            <div className="mr-collapsible__content">
-                <div className="mr-collapsible__body">{children}</div>
+            <div className="mr-collapsible__content mr-accordion__content">
+                <div className="mr-collapsible__body mr-accordion__body">{children}</div>
             </div>
         </div>
     )
@@ -112,6 +115,7 @@ export function Collapsible({
         toggle,
         disabled,
         state,
+        size,
         instanceId,
     }
 
@@ -120,9 +124,10 @@ export function Collapsible({
             <div
                 ref={ref}
                 className={cn('mr-collapsible', className)}
-                data-open={isOpen || undefined}
-                data-size={size}
+                data-open={isOpen ? true : undefined}
                 data-state={state}
+                data-size={size}
+                data-disabled={disabled ? true : undefined}
                 {...props}
             >
                 {title !== undefined ? (
@@ -136,9 +141,15 @@ export function Collapsible({
                             onClick={toggle}
                             disabled={disabled}
                             data-state={state}
+                            data-disabled={disabled ? true : undefined}
                         >
-                            <span className="mr-collapsible__label">{title}</span>
-                            <span className="mr-collapsible__icon" aria-hidden="true" />
+                            <span className="mr-collapsible__label mr-accordion__label">
+                                {title}
+                            </span>
+                            <span
+                                className="mr-collapsible__icon mr-accordion__icon"
+                                aria-hidden="true"
+                            />
                         </button>
                         <div
                             id={`${instanceId}-panel`}
@@ -146,10 +157,13 @@ export function Collapsible({
                             aria-labelledby={`${instanceId}-trigger`}
                             className="mr-collapsible__panel"
                             aria-hidden={!isOpen}
+                            hidden={!isOpen ? true : undefined}
                             data-state={state}
                         >
-                            <div className="mr-collapsible__content">
-                                <div className="mr-collapsible__body">{children}</div>
+                            <div className="mr-collapsible__content mr-accordion__content">
+                                <div className="mr-collapsible__body mr-accordion__body">
+                                    {children}
+                                </div>
                             </div>
                         </div>
                     </>

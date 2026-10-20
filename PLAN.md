@@ -82,8 +82,8 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier commit vert : fd088e4 (sur main).
-Chantier : stabilisation, animations complètes, navigation clavier, accessibilité et automatisation CI/CD.
+Dernier commit vert : ee65a8e (sur main).
+Chantier : fusion Accordion / Collapsible, animations complètes, navigation clavier, accessibilité et automatisation CI/CD.
 Contrats et vérifications :
 - GitHub Actions CI (run 39426043471) : 100% vert (9 étapes validées).
 - GitHub Actions Release CD (run 39426043388) : 100% vert.
@@ -92,6 +92,14 @@ Contrats et vérifications :
 - Stylelint : 0 violation sur les recettes CSS et tokens.
 - Rendu et contrastes : 100% conformes WCAG AA sur les 7 thèmes actifs.
 - Tests unitaires : 112 suites / 1463 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1559 tests au total).
+- Tests E2E Playwright animations : 130 tests 100% passés sur la matrice de viewports et mouvement réduit.
+- Fusion Accordion / Collapsible :
+  * Collapsible sert de primitif de disclosure unique, avec gestion d'état déclaratif/contrôlé, chevrons animés en spring, et grille CSS 0fr -> 1fr.
+  * AccordionItem compose directement Collapsible sans duplication de DOM ni de logique d'état.
+  * Synchronisation parfaite des durées (--mr-duration-panel 280ms) entre rotation du chevron et dépliage du panneau.
+  * Micro-presse active (scale 0.995) sur les déclencheurs.
+  * Attributs data-state ("open" / "closed") et aria-expanded harmonisés.
+  * Playgrounds documentation (Collapsible et Accordion) réactifs et interactifs.
 - Calendar : sélecteurs compacts, sous-composants composés, 100 ans d'historique scrollable, chevron animé.
 - Select & Switch : micro-interactions haptiques, retour tactile, rotation ressort et halos de focus.
 - Menubar & NavigationMenu : navigation clavier WAI-ARIA complète et z-index corrigés.

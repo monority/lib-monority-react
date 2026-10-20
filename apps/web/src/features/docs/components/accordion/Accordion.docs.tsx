@@ -80,6 +80,7 @@ function AccordionPlayground() {
             {(props) => (
                 <div style={{ width: '100%', maxWidth: 540 }}>
                     <Accordion
+                        key={`${props.size}-${props.collapsible}-${props.allowMultiple}`}
                         size={props.size as AccordionSize}
                         collapsible={props.collapsible as boolean}
                         allowMultiple={props.allowMultiple as boolean}

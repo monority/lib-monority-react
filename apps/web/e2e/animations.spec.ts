@@ -406,4 +406,96 @@ test.describe('Component Animations Contract', () => {
         })
         expect(slMetrics.sidebarHeight).toBeCloseTo(slMetrics.mainHeight || 0, -1)
     })
+
+    test('Collapsible exhibits smooth CSS Grid expansion and chevron rotation transitions', async ({
+        page,
+    }) => {
+        await page.goto('/docs/collapsible')
+
+        const trigger = page.locator('.component-playground .mr-collapsible__trigger').first()
+        const panel = page.locator('.component-playground .mr-collapsible__panel').first()
+        const icon = page.locator('.component-playground .mr-collapsible__icon').first()
+
+        await expect(trigger).toBeVisible()
+        await expect(panel).toBeVisible()
+        await expect(icon).toBeVisible()
+
+        const initialStyles = await page.evaluate(() => {
+            const p = document.querySelector('.component-playground .mr-collapsible__panel')
+            const ic = document.querySelector('.component-playground .mr-collapsible__icon')
+            if (!p || !ic) return null
+            const ps = window.getComputedStyle(p)
+            const ics = window.getComputedStyle(ic)
+            return {
+                panelTransition: ps.transition,
+                iconTransition: ics.transition,
+                state: p.getAttribute('data-state'),
+                hasGridRows: ps.gridTemplateRows !== '',
+                isReduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+            }
+        })
+
+        expect(initialStyles?.hasGridRows).toBe(true)
+        if (!initialStyles?.isReduced) {
+            expect(initialStyles?.panelTransition).toContain('grid-template-rows')
+            expect(initialStyles?.iconTransition).toContain('transform')
+        } else {
+            expect(initialStyles?.panelTransition).toBe('none')
+        }
+
+        // Click trigger to toggle closed
+        await trigger.click()
+        await page.waitForTimeout(350)
+
+        const closedState = await panel.getAttribute('data-state')
+        expect(closedState).toBe('closed')
+
+        // Click trigger to toggle open
+        await trigger.click()
+        await page.waitForTimeout(350)
+
+        const openState = await panel.getAttribute('data-state')
+        expect(openState).toBe('open')
+    })
+
+    test('Accordion exhibits smooth CSS Grid expansion and roving keyboard focus', async ({
+        page,
+    }) => {
+        await page.goto('/docs/accordion')
+
+        const triggers = page.locator('.component-playground .mr-accordion__trigger')
+        const panels = page.locator('.component-playground .mr-accordion__panel')
+
+        await expect(triggers.first()).toBeVisible()
+        await expect(panels.first()).toBeVisible()
+
+        const initialAccordion = await page.evaluate(() => {
+            const p = document.querySelector('.component-playground .mr-accordion__panel')
+            const ic = document.querySelector('.component-playground .mr-accordion__icon')
+            if (!p || !ic) return null
+            const ps = window.getComputedStyle(p)
+            const ics = window.getComputedStyle(ic)
+            return {
+                panelTransition: ps.transition,
+                iconTransition: ics.transition,
+                hasGridRows: ps.gridTemplateRows !== '',
+                isReduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+            }
+        })
+
+        expect(initialAccordion?.hasGridRows).toBe(true)
+        if (!initialAccordion?.isReduced) {
+            expect(initialAccordion?.panelTransition).toContain('grid-template-rows')
+            expect(initialAccordion?.iconTransition).toContain('transform')
+        } else {
+            expect(initialAccordion?.panelTransition).toBe('none')
+        }
+
+        // Click second section
+        await triggers.nth(1).click()
+        await page.waitForTimeout(350)
+
+        const secondOpen = await panels.nth(1).getAttribute('data-state')
+        expect(secondOpen).toBe('open')
+    })
 })
