@@ -82,16 +82,18 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier commit vert : 9240b13 (sur main).
-Chantier : consolidation, déduplication et durcissement des composants et playgrounds.
+Dernier commit vert : fd088e4 (sur main).
+Chantier : stabilisation, animations complètes, navigation clavier, accessibilité et automatisation CI/CD.
 Contrats et vérifications :
-- pnpm verify : 100% vert (exit code 0).
+- GitHub Actions CI (run 39426043471) : 100% vert (9 étapes validées).
+- GitHub Actions Release CD (run 39426043388) : 100% vert.
+- pnpm verify local : 100% vert (exit code 0).
 - Biome lint & format : 0 erreur, 1022 fichiers conformes.
-- Stylelint : 0 violation.
-- Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 thèmes.
-- Tests : 112 suites / 1458 tests dans @monority/ui et 17 suites / 96 tests dans @monority/web (1554 tests unitaires au total).
-- Tests E2E animations (Playwright) : 110/110 tests valides sur 10 résolutions et viewports.
-- Tests E2E reset-independence (Playwright) : 83/83 composants validés strictement identiques sans reset.css.
-- Consumer fixture (@monority/ui-consumer-fixture) : vérification types et runtime validées.
+- Stylelint : 0 violation sur les recettes CSS et tokens.
+- Rendu et contrastes : 100% conformes WCAG AA sur les 7 thèmes actifs.
+- Tests unitaires : 112 suites / 1463 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1559 tests au total).
+- Calendar : sélecteurs compacts, sous-composants composés, 100 ans d'historique scrollable, chevron animé.
+- Select & Switch : micro-interactions haptiques, retour tactile, rotation ressort et halos de focus.
+- Menubar & NavigationMenu : navigation clavier WAI-ARIA complète et z-index corrigés.
 
-Prochaine action disponible : suivi des étapes de préparation de release (changeset, tarball dry-run) et audit d'accessibilité.
+Prochaine action disponible : suivi des étapes de release (changeset version, tarball dry-run) ou audit ciblé supplémentaire.
