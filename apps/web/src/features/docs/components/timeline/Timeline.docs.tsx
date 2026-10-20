@@ -1,3 +1,4 @@
+import { Badge } from '@monority/ui/badge'
 import { IconAlertCircle, IconCheck, IconSparkles, IconUpload } from '@monority/ui/icons'
 import {
     Timeline,
@@ -36,7 +37,11 @@ function TimelinePlayground() {
             description: 'Version v2.4.0 active sur le cluster européen.',
             status: 'success',
             icon: markerType === 'icon' ? iconMap.success : undefined,
-            extra: 'Production',
+            extra: (
+                <Badge variant="success" size="sm">
+                    Production
+                </Badge>
+            ),
         },
         {
             date: '12h10',
@@ -44,7 +49,11 @@ function TimelinePlayground() {
             description: '0 vulnérabilité critique détectée sur l’image docker.',
             status: 'primary',
             icon: markerType === 'icon' ? iconMap.primary : undefined,
-            extra: 'Vérifié',
+            extra: (
+                <Badge variant="primary" size="sm">
+                    Vérifié
+                </Badge>
+            ),
         },
         {
             date: '09h45',
@@ -73,7 +82,11 @@ ${items
     .map(
         (i) =>
             `    { date: '${i.date}', title: '${i.title}', status: '${i.status}'${
-                i.extra ? `, extra: '${i.extra}'` : ''
+                i.status === 'success'
+                    ? `, extra: <Badge variant="success" size="sm">Production</Badge>`
+                    : i.status === 'primary'
+                      ? `, extra: <Badge variant="primary" size="sm">Vérifié</Badge>`
+                      : ''
             } }`
     )
     .join(',\n')}
@@ -239,9 +252,13 @@ const docData: DocPageData = {
         '--mr-bg-canvas',
         '--mr-bg-sunken',
         '--mr-accent-solid',
-        '--mr-success-solid',
-        '--mr-warning-solid',
-        '--mr-danger-solid',
+        '--mr-accent-subtle',
+        '--mr-success-subtle',
+        '--mr-success-text',
+        '--mr-warning-subtle',
+        '--mr-warning-text',
+        '--mr-danger-subtle',
+        '--mr-danger-text',
         '--mr-radius-full',
         '--mr-radius-md',
         '--mr-space-2',

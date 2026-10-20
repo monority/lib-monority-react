@@ -161,12 +161,14 @@
 }
 
 .component-playground__code {
-    border-top: none;
+    border-top: 1px solid var(--mr-border-subtle);
     min-width: 0;
     max-width: 100%;
+    background: var(--mr-bg-sunken);
 }
 
 .component-playground__code .code-viewer {
     border: none;
     border-radius: 0;
+    background: var(--mr-bg-sunken);
 }

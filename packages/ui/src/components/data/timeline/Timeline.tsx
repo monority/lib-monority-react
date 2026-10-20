@@ -66,12 +66,8 @@ export function Timeline({
                               <TimelinePoint status={item.status} icon={item.icon} />
                               <TimelineContent>
                                   <TimelineHeader>
-                                      <div className="mr-timeline__heading-group">
-                                          <TimelineTitle>{item.title}</TimelineTitle>
-                                          {item.date ? (
-                                              <TimelineDate>{item.date}</TimelineDate>
-                                          ) : null}
-                                      </div>
+                                      <TimelineTitle>{item.title}</TimelineTitle>
+                                      {item.date ? <TimelineDate>{item.date}</TimelineDate> : null}
                                       {item.extra ? (
                                           <TimelineExtra>{item.extra}</TimelineExtra>
                                       ) : null}

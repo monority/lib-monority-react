@@ -41,6 +41,7 @@ export function TimelineCompoundExample() {
                 <Timeline.Point icon={<IconCheck size={14} />} status="success" />
                 <Timeline.Content>
                     <Timeline.Header>
+                        <Timeline.Title>Compilation et bundle production</Timeline.Title>
                         <Timeline.Date>14:32:00</Timeline.Date>
                         <Timeline.Extra>
                             <Badge variant="success" size="sm">
@@ -48,7 +49,6 @@ export function TimelineCompoundExample() {
                             </Badge>
                         </Timeline.Extra>
                     </Timeline.Header>
-                    <Timeline.Title>Compilation et bundle production</Timeline.Title>
                     <Timeline.Description>
                         Artefacts générés sans avertissement (tsup + turborepo).
                     </Timeline.Description>
@@ -59,6 +59,7 @@ export function TimelineCompoundExample() {
                 <Timeline.Point icon={<IconUpload size={14} />} status="in-progress" />
                 <Timeline.Content>
                     <Timeline.Header>
+                        <Timeline.Title>Synchronisation multi-régions</Timeline.Title>
                         <Timeline.Date>14:32:15</Timeline.Date>
                         <Timeline.Extra>
                             <Badge variant="primary" size="sm">
@@ -66,7 +67,6 @@ export function TimelineCompoundExample() {
                             </Badge>
                         </Timeline.Extra>
                     </Timeline.Header>
-                    <Timeline.Title>Synchronisation multi-régions</Timeline.Title>
                     <Timeline.Description>
                         Propagation en direct vers 24 nœuds edge mondiaux.
                     </Timeline.Description>
@@ -77,6 +77,7 @@ export function TimelineCompoundExample() {
                 <Timeline.Point icon={<IconSparkles size={14} />} status="default" />
                 <Timeline.Content>
                     <Timeline.Header>
+                        <Timeline.Title>Vérification de santé des pods</Timeline.Title>
                         <Timeline.Date>En attente</Timeline.Date>
                         <Timeline.Extra>
                             <Badge variant="default" size="sm">
@@ -84,7 +85,6 @@ export function TimelineCompoundExample() {
                             </Badge>
                         </Timeline.Extra>
                     </Timeline.Header>
-                    <Timeline.Title>Vérification de santé des pods</Timeline.Title>
                     <Timeline.Description>
                         Tests synthétiques et basculement du trafic résiduel.
                     </Timeline.Description>
@@ -108,6 +108,7 @@ export function TimelineInteractiveExample() {
                     <Timeline.Point icon={<IconCheck size={12} />} status="success" />
                     <Timeline.Content>
                         <Timeline.Header>
+                            <Timeline.Title>Validation des tests unitaires</Timeline.Title>
                             <Timeline.Date>Étape 1</Timeline.Date>
                             <Timeline.Extra>
                                 <Badge variant="success" size="sm">
@@ -115,7 +116,6 @@ export function TimelineInteractiveExample() {
                                 </Badge>
                             </Timeline.Extra>
                         </Timeline.Header>
-                        <Timeline.Title>Validation des tests unitaires</Timeline.Title>
                         <Timeline.Description>
                             1568 tests passés avec 0 régression.
                         </Timeline.Description>
@@ -130,6 +130,7 @@ export function TimelineInteractiveExample() {
                     <Timeline.Point icon={<IconAlertCircle size={12} />} status="warning" />
                     <Timeline.Content>
                         <Timeline.Header>
+                            <Timeline.Title>Contrôle de taille des paquets</Timeline.Title>
                             <Timeline.Date>Étape 2</Timeline.Date>
                             <Timeline.Extra>
                                 <Badge variant="warning" size="sm">
@@ -137,7 +138,6 @@ export function TimelineInteractiveExample() {
                                 </Badge>
                             </Timeline.Extra>
                         </Timeline.Header>
-                        <Timeline.Title>Contrôle de taille des paquets</Timeline.Title>
                         <Timeline.Description>
                             Le bundle a augmenté de 1.2% (seuil toléré: 2.0%).
                         </Timeline.Description>
@@ -152,6 +152,7 @@ export function TimelineInteractiveExample() {
                     <Timeline.Point icon={<IconPlay size={12} />} status="primary" />
                     <Timeline.Content>
                         <Timeline.Header>
+                            <Timeline.Title>Signature cryptographique</Timeline.Title>
                             <Timeline.Date>Étape 3</Timeline.Date>
                             <Timeline.Extra>
                                 <Badge variant="primary" size="sm">
@@ -159,7 +160,6 @@ export function TimelineInteractiveExample() {
                                 </Badge>
                             </Timeline.Extra>
                         </Timeline.Header>
-                        <Timeline.Title>Signature cryptographique</Timeline.Title>
                         <Timeline.Description>
                             Cliquez sur cet élément pour approuver la publication.
                         </Timeline.Description>

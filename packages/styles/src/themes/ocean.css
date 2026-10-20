@@ -18,6 +18,7 @@
         --mr-bg-canvas: oklch(0.18 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-surface: oklch(0.23 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-raised: oklch(0.27 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-bg-sunken: oklch(0.14 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-overlay: var(--mr-bg-raised);
 
         /* Textes */
