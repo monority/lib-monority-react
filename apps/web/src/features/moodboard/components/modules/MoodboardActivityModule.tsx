@@ -67,33 +67,26 @@ export function MoodboardActivityModule() {
             </Card.Header>
 
             <Card.Content style={{ flex: 1 }}>
-                <Timeline>
+                <Timeline size="sm">
                     {activities.map((item) => (
                         <Timeline.Item key={item.id} status={item.status}>
                             <Timeline.Point status={item.status} />
                             <Timeline.Content>
-                                <div
+                                <Timeline.Header>
+                                    <Timeline.Date>{item.time}</Timeline.Date>
+                                    <Timeline.Extra>
+                                        <Badge variant={item.badgeVariant} size="sm">
+                                            {item.badge}
+                                        </Badge>
+                                    </Timeline.Extra>
+                                </Timeline.Header>
+                                <Timeline.Title
                                     style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'flex-start',
-                                        gap: 'var(--mr-space-2)',
+                                        fontWeight: item.read ? 400 : 600,
                                     }}
                                 >
-                                    <div>
-                                        <Timeline.Date>{item.time}</Timeline.Date>
-                                        <Timeline.Title
-                                            style={{
-                                                fontWeight: item.read ? 400 : 600,
-                                            }}
-                                        >
-                                            {item.title}
-                                        </Timeline.Title>
-                                    </div>
-                                    <Badge variant={item.badgeVariant} size="sm">
-                                        {item.badge}
-                                    </Badge>
-                                </div>
+                                    {item.title}
+                                </Timeline.Title>
                             </Timeline.Content>
                         </Timeline.Item>
                     ))}
