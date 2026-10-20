@@ -1,22 +1,19 @@
 import { cn } from '@/lib/cn'
 import { useFormControl } from '@/primitives/form-control'
-import type { HTMLAttributes, LabelHTMLAttributes, ReactNode, Ref } from 'react'
+import type {
+    FieldContentProps,
+    FieldDescriptionProps,
+    FieldErrorProps,
+    FieldGroupProps,
+    FieldLabelProps,
+    FieldLegendProps,
+    FieldProps,
+    FieldSeparatorProps,
+    FieldSetProps,
+    FieldTitleProps,
+} from './Field.types'
 
 // ─── Field (composite) ───────────────────────────────────────────────────────
-
-export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
-    ref?: Ref<HTMLDivElement>
-    label?: ReactNode
-    hint?: ReactNode
-    error?: ReactNode
-    required?: boolean
-    htmlFor?: string
-    labelId?: string
-    hintId?: string
-    errorId?: string
-    className?: string
-    children?: ReactNode
-}
 
 export function Field({
     ref,
@@ -67,12 +64,6 @@ export function Field({
 
 // ─── FieldLabel ──────────────────────────────────────────────────────────────
 
-export interface FieldLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
-    ref?: Ref<HTMLLabelElement>
-    required?: boolean
-    children?: ReactNode
-}
-
 export function FieldLabel({ ref, required, className, children, ...props }: FieldLabelProps) {
     return (
         <label ref={ref} className={cn('mr-field__label', className)} {...props}>
@@ -84,11 +75,6 @@ export function FieldLabel({ ref, required, className, children, ...props }: Fie
 
 // ─── FieldContent ────────────────────────────────────────────────────────────
 
-export interface FieldContentProps extends HTMLAttributes<HTMLDivElement> {
-    ref?: Ref<HTMLDivElement>
-    children?: ReactNode
-}
-
 export function FieldContent({ ref, className, children, ...props }: FieldContentProps) {
     return (
         <div ref={ref} className={cn('mr-field__content', className)} {...props}>
@@ -99,11 +85,6 @@ export function FieldContent({ ref, className, children, ...props }: FieldConten
 
 // ─── FieldDescription ────────────────────────────────────────────────────────
 
-export interface FieldDescriptionProps extends HTMLAttributes<HTMLSpanElement> {
-    ref?: Ref<HTMLSpanElement>
-    children?: ReactNode
-}
-
 export function FieldDescription({ ref, className, children, ...props }: FieldDescriptionProps) {
     return (
         <span ref={ref} className={cn('mr-field__hint', className)} {...props}>
@@ -113,11 +94,6 @@ export function FieldDescription({ ref, className, children, ...props }: FieldDe
 }
 
 // ─── FieldError ──────────────────────────────────────────────────────────────
-
-export interface FieldErrorProps extends HTMLAttributes<HTMLSpanElement> {
-    ref?: Ref<HTMLSpanElement>
-    children?: ReactNode
-}
 
 export function FieldError({ ref, className, children, ...props }: FieldErrorProps) {
     return (
@@ -134,12 +110,6 @@ export function FieldError({ ref, className, children, ...props }: FieldErrorPro
 }
 
 // ─── FieldGroup ──────────────────────────────────────────────────────────────
-
-export interface FieldGroupProps extends HTMLAttributes<HTMLDivElement> {
-    ref?: Ref<HTMLDivElement>
-    direction?: 'row' | 'column'
-    children?: ReactNode
-}
 
 export function FieldGroup({
     ref,
@@ -161,12 +131,6 @@ export function FieldGroup({
 
 // ─── FieldLegend ─────────────────────────────────────────────────────────────
 
-export interface FieldLegendProps extends HTMLAttributes<HTMLLegendElement> {
-    ref?: Ref<HTMLLegendElement>
-    required?: boolean
-    children?: ReactNode
-}
-
 export function FieldLegend({ ref, required, className, children, ...props }: FieldLegendProps) {
     return (
         <legend ref={ref} className={cn('mr-field__legend', className)} {...props}>
@@ -178,20 +142,11 @@ export function FieldLegend({ ref, required, className, children, ...props }: Fi
 
 // ─── FieldSeparator ──────────────────────────────────────────────────────────
 
-export interface FieldSeparatorProps extends HTMLAttributes<HTMLHRElement> {
-    ref?: Ref<HTMLHRElement>
-}
-
 export function FieldSeparator({ ref, className, ...props }: FieldSeparatorProps) {
     return <hr ref={ref} className={cn('mr-field__separator', className)} {...props} />
 }
 
 // ─── FieldSet ────────────────────────────────────────────────────────────────
-
-export interface FieldSetProps extends HTMLAttributes<HTMLFieldSetElement> {
-    ref?: Ref<HTMLFieldSetElement>
-    children?: ReactNode
-}
 
 export function FieldSet({ ref, className, children, ...props }: FieldSetProps) {
     return (
@@ -202,12 +157,6 @@ export function FieldSet({ ref, className, children, ...props }: FieldSetProps) 
 }
 
 // ─── FieldTitle ──────────────────────────────────────────────────────────────
-
-export interface FieldTitleProps extends HTMLAttributes<HTMLHeadingElement> {
-    ref?: Ref<HTMLHeadingElement>
-    as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-    children?: ReactNode
-}
 
 export function FieldTitle({
     ref,
@@ -232,3 +181,16 @@ Field.Legend = FieldLegend
 Field.Separator = FieldSeparator
 Field.Set = FieldSet
 Field.Title = FieldTitle
+
+export type {
+    FieldProps,
+    FieldLabelProps,
+    FieldContentProps,
+    FieldDescriptionProps,
+    FieldErrorProps,
+    FieldGroupProps,
+    FieldLegendProps,
+    FieldSeparatorProps,
+    FieldSetProps,
+    FieldTitleProps,
+} from './Field.types'
