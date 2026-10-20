@@ -30,23 +30,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm build
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Lint JS/TS
+        run: pnpm lint
+
+      - name: Lint CSS
+        run: pnpm lint:css
+
+      - name: Test rendered contrast
+        run: pnpm test:rendered
 
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Build
+        run: pnpm build
+
       - name: Test
         run: pnpm test
 
-      - name: Format check
-        run: pnpm format:check
-
-      # Dette de lint connue et pre-existante (401 diagnostics au moment du
-      # cablage, dont 328 sur deux regles de gout : noUnusedTemplateLiteral et
-      # useTemplate). Etape non bloquante : elle rend la dette visible et
-      # permet de la faire baisser, sans bloquer chaque PR. A passer en
-      # bloquante une fois le compteur a zero.
-      - name: Lint (non bloquant)
-        run: pnpm lint
-        continue-on-error: true
+      - name: Test dist package
+        run: pnpm --filter @monority/ui test:dist
