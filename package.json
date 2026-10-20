@@ -22,7 +22,7 @@
         "generate:component": "pnpm --filter @monority/generators generate:component",
         "lint:css": "stylelint \"packages/styles/src/**/*.css\"",
         "test:rendered": "node tooling/rendered/check-rendered.js",
-        "verify": "pnpm typecheck && pnpm format:check && pnpm lint && pnpm lint:css && pnpm test:rendered && pnpm build && pnpm test"
+        "verify": "pnpm typecheck && pnpm format:check && pnpm lint && pnpm lint:css && pnpm build && pnpm test:rendered && pnpm test"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.0",

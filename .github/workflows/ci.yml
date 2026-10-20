@@ -39,17 +39,17 @@ jobs:
       - name: Lint CSS
         run: pnpm lint:css
 
-      - name: Install Playwright Chromium
-        run: pnpm --filter @monority/web exec playwright install --with-deps chromium
-
-      - name: Test rendered contrast
-        run: pnpm test:rendered
-
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Build
         run: pnpm build
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @monority/web exec playwright install --with-deps chromium
+
+      - name: Test rendered contrast
+        run: pnpm test:rendered
 
       - name: Test
         run: pnpm test
