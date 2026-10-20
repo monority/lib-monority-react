@@ -15,11 +15,15 @@ import {
 import { cn } from '@/lib/cn'
 import { useCallback, useEffect, useState } from 'react'
 import type {
+    CalendarDayNamesProps,
+    CalendarDayProps,
     CalendarGridProps,
     CalendarHeaderProps,
+    CalendarMonthProps,
     CalendarNavButtonProps,
     CalendarPickersProps,
     CalendarProps,
+    CalendarSelectProps,
 } from './Calendar.types'
 
 // ─── Chevron icons ────────────────────────────────────────────────────
@@ -66,6 +70,7 @@ export function Calendar({
     classPrefix = 'mr-calendar',
     autoFocus = false,
     className,
+    children,
     ...props
 }: CalendarProps) {
     const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
@@ -242,20 +247,17 @@ export function Calendar({
         const dayNames = getDayNames(locale)
 
         return (
-            <div key={monthIndex} className={prefix('month')}>
-                <div className={prefix('header')}>
-                    <button
-                        type="button"
+            <CalendarMonth key={monthIndex} className={prefix('month')}>
+                <CalendarHeader className={prefix('header')}>
+                    <CalendarNavButton
+                        direction="prev"
                         onClick={handlePrevMonth}
                         className={cn(prefix('nav-btn'), 'mr-calendar__nav-btn--prev')}
-                        aria-label="Previous month"
                         tabIndex={-1}
-                    >
-                        <ChevronLeftIcon />
-                    </button>
+                    />
                     {effectiveShowPickers ? (
-                        <div className={prefix('pickers')}>
-                            <select
+                        <CalendarPickers className={prefix('pickers')}>
+                            <CalendarSelect
                                 className={cn(prefix('select'), 'mr-calendar__select--month')}
                                 aria-label="Select month"
                                 value={monthDate.getMonth()}
@@ -276,8 +278,8 @@ export function Calendar({
                                         </option>
                                     )
                                 })}
-                            </select>
-                            <select
+                            </CalendarSelect>
+                            <CalendarSelect
                                 className={cn(prefix('select'), 'mr-calendar__select--year')}
                                 aria-label="Select year"
                                 value={monthDate.getFullYear()}
@@ -292,8 +294,8 @@ export function Calendar({
                                         {y}
                                     </option>
                                 ))}
-                            </select>
-                        </div>
+                            </CalendarSelect>
+                        </CalendarPickers>
                     ) : (
                         <button
                             type="button"
@@ -308,24 +310,21 @@ export function Calendar({
                             {formatMonthYear(monthDate, locale)}
                         </button>
                     )}
-                    <button
-                        type="button"
+                    <CalendarNavButton
+                        direction="next"
                         onClick={handleNextMonth}
                         className={cn(prefix('nav-btn'), 'mr-calendar__nav-btn--next')}
-                        aria-label="Next month"
                         tabIndex={-1}
-                    >
-                        <ChevronRightIcon />
-                    </button>
-                </div>
+                    />
+                </CalendarHeader>
 
-                <div
+                <CalendarGrid
                     className={prefix('grid')}
                     role="grid"
                     aria-label={formatMonthYear(monthDate, locale)}
                     onKeyDown={(e) => handleGridKeyDown(e, monthDate)}
                 >
-                    <div className={prefix('day-names')} role="row">
+                    <CalendarDayNames className={prefix('day-names')} role="row">
                         {dayNames.map((name) => (
                             <span
                                 key={name}
@@ -336,7 +335,7 @@ export function Calendar({
                                 {name}
                             </span>
                         ))}
-                    </div>
+                    </CalendarDayNames>
                     {weeks.map((week, wi) => (
                         <div key={wi} className={prefix('week')} role="row">
                             {week.map((day, di) => {
@@ -413,8 +412,8 @@ export function Calendar({
                             })}
                         </div>
                     ))}
-                </div>
-            </div>
+                </CalendarGrid>
+            </CalendarMonth>
         )
     }
 
@@ -427,14 +426,16 @@ export function Calendar({
             data-months={numberOfMonths > 1 ? numberOfMonths : undefined}
             {...props}
         >
-            <div
-                className={cn(
-                    'mr-calendar__months',
-                    numberOfMonths > 1 && 'mr-calendar__months--multiple'
-                )}
-            >
-                {months.map((monthDate, i) => renderMonth(monthDate, i))}
-            </div>
+            {children ?? (
+                <div
+                    className={cn(
+                        'mr-calendar__months',
+                        numberOfMonths > 1 && 'mr-calendar__months--multiple'
+                    )}
+                >
+                    {months.map((monthDate, i) => renderMonth(monthDate, i))}
+                </div>
+            )}
         </div>
     )
 }
@@ -479,6 +480,68 @@ export function CalendarNavButton({
     )
 }
 
+export function CalendarSelect({ ref, className, children, ...props }: CalendarSelectProps) {
+    return (
+        <select ref={ref} className={cn('mr-calendar__select', className)} {...props}>
+            {children}
+        </select>
+    )
+}
+
+export function CalendarMonth({ ref, className, children, ...props }: CalendarMonthProps) {
+    return (
+        <div ref={ref} className={cn('mr-calendar__month', className)} {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function CalendarDayNames({ ref, className, children, ...props }: CalendarDayNamesProps) {
+    return (
+        <div ref={ref} className={cn('mr-calendar__day-names', className)} role="row" {...props}>
+            {children}
+        </div>
+    )
+}
+
+export function CalendarDay({
+    ref,
+    className,
+    date,
+    isCurrentMonth = true,
+    isSelected = false,
+    isToday: isDayToday = false,
+    isDisabled = false,
+    children,
+    ...props
+}: CalendarDayProps) {
+    return (
+        <button
+            ref={ref}
+            type="button"
+            role="gridcell"
+            aria-selected={isSelected || undefined}
+            data-selected={isSelected || undefined}
+            data-today={isDayToday || undefined}
+            data-disabled={isDisabled || undefined}
+            data-current-month={isCurrentMonth || undefined}
+            disabled={isDisabled}
+            className={cn(
+                'mr-calendar__day',
+                isCurrentMonth && 'mr-calendar__day--current-month',
+                !isCurrentMonth && 'mr-calendar__day--other-month',
+                isDayToday && 'mr-calendar__day--today',
+                isSelected && 'mr-calendar__day--selected',
+                isDisabled && 'mr-calendar__day--disabled',
+                className
+            )}
+            {...props}
+        >
+            {children ?? (date ? date.getDate() : '')}
+        </button>
+    )
+}
+
 export function CalendarGrid({ ref, className, children, ...props }: CalendarGridProps) {
     return (
         <div ref={ref} className={cn('mr-calendar__grid', className)} role="grid" {...props}>
@@ -489,13 +552,21 @@ export function CalendarGrid({ ref, className, children, ...props }: CalendarGri
 
 Calendar.Header = CalendarHeader
 Calendar.Pickers = CalendarPickers
+Calendar.Select = CalendarSelect
 Calendar.NavButton = CalendarNavButton
 Calendar.Grid = CalendarGrid
+Calendar.Month = CalendarMonth
+Calendar.DayNames = CalendarDayNames
+Calendar.Day = CalendarDay
 
 export type {
     CalendarProps,
     CalendarHeaderProps,
     CalendarPickersProps,
+    CalendarSelectProps,
     CalendarNavButtonProps,
     CalendarGridProps,
+    CalendarMonthProps,
+    CalendarDayNamesProps,
+    CalendarDayProps,
 } from './Calendar.types'

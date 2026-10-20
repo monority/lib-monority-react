@@ -84,29 +84,45 @@
     :where(.mr-calendar__pickers) {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: var(--mr-space-1);
     }
 
     :where(.mr-calendar__select) {
+        box-sizing: border-box;
         appearance: none;
-        background-color: transparent;
+        background-color: var(--mr-bg-sunken);
         color: var(--mr-text-primary);
         font-family: var(--mr-font-family-sans);
         font-weight: var(--mr-font-weight-medium);
-        font-size: var(--mr-font-size-sm);
-        padding-block: var(--mr-space-1);
+        font-size: var(--mr-font-size-xs);
+        line-height: 1;
+        block-size: var(--mr-size-control-sm);
+        padding-block: 0;
         padding-inline: var(--mr-space-2);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-sm);
         cursor: pointer;
         outline: none;
-        transition: border-color var(--mr-duration-state);
+        text-align: center;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out);
     }
 
-    :where(.mr-calendar__select):focus-visible {
+    :where(.mr-calendar__select:hover) {
+        background-color: var(--mr-bg-muted);
         border-color: var(--mr-border-control);
-        outline: 2px solid var(--mr-focus-ring);
+    }
+
+    :where(.mr-calendar__select:focus-visible) {
+        border-color: var(--mr-border-control);
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
         outline-offset: 1px;
+    }
+
+    :where(.mr-calendar__select option) {
+        background-color: var(--mr-bg-raised);
+        color: var(--mr-text-primary);
     }
 
     /* Boutons de navigation (precedent / suivant) */

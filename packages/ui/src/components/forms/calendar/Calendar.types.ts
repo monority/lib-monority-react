@@ -48,3 +48,22 @@ export interface CalendarGridProps extends HTMLAttributes<HTMLDivElement> {
     ref?: Ref<HTMLDivElement>
     children?: ReactNode
 }
+
+export interface CalendarMonthProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface CalendarDayNamesProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    children?: ReactNode
+}
+
+export interface CalendarDayProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    ref?: Ref<HTMLButtonElement>
+    date?: Date
+    isCurrentMonth?: boolean
+    isSelected?: boolean
+    isToday?: boolean
+    isDisabled?: boolean
+}

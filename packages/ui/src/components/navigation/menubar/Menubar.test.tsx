@@ -448,4 +448,58 @@ describe('Menubar', () => {
             expect(view.querySelector('.mr-menubar__menu')).toBeNull()
         })
     })
+
+    describe('WAI-ARIA keyboard navigation', () => {
+        it('ArrowRight and ArrowLeft cycles through triggers', () => {
+            const view = render(<Menubar items={basicItems} />)
+            const triggers = view.querySelectorAll('.mr-menubar__trigger')
+            const trigger0 = triggers[0] as HTMLButtonElement
+            const trigger1 = triggers[1] as HTMLButtonElement
+
+            trigger0.focus()
+            expect(document.activeElement).toBe(trigger0)
+
+            act(() => {
+                trigger0.dispatchEvent(
+                    new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+                )
+            })
+            expect(document.activeElement).toBe(trigger1)
+
+            act(() => {
+                trigger1.dispatchEvent(
+                    new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })
+                )
+            })
+            expect(document.activeElement).toBe(trigger0)
+        })
+
+        it('ArrowDown on trigger opens active menu', () => {
+            const view = render(<Menubar items={basicItems} />)
+            const trigger0 = view.querySelectorAll('.mr-menubar__trigger')[0] as HTMLButtonElement
+
+            trigger0.focus()
+            expect(view.querySelector('.mr-menubar__menu')).toBeNull()
+
+            act(() => {
+                trigger0.dispatchEvent(
+                    new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })
+                )
+            })
+            expect(view.querySelector('.mr-menubar__menu')).toBeTruthy()
+        })
+
+        it('ArrowRight when menu is open switches to next menu', () => {
+            const view = render(<Menubar items={basicItems} defaultActive="File" />)
+            expect(view.querySelector('.mr-menubar__menu[aria-label="File"]')).toBeTruthy()
+
+            act(() => {
+                document.dispatchEvent(
+                    new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+                )
+            })
+
+            expect(view.querySelector('.mr-menubar__menu[aria-label="Edit"]')).toBeTruthy()
+        })
+    })
 })

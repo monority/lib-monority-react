@@ -52,6 +52,7 @@ export function MenubarMenuComponent({
                     isOpen && 'mr-menubar__menu-wrapper--active',
                     className
                 )}
+                data-value={value}
                 data-active={isOpen || undefined}
                 {...props}
             >
@@ -223,25 +224,152 @@ export function Menubar({
         [setActiveMenu]
     )
 
-    const handleEscape = useCallback(
-        (e: KeyboardEvent) => {
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent | KeyboardEvent) => {
+            if (!menubarRef.current) return
+
+            const triggers = Array.from(
+                menubarRef.current.querySelectorAll<HTMLButtonElement>(
+                    '.mr-menubar__trigger:not(:disabled)'
+                )
+            )
+            if (!triggers.length) return
+
+            const activeWrapper = menubarRef.current.querySelector<HTMLElement>(
+                '.mr-menubar__menu-wrapper--active, .mr-menubar__menu-wrapper[data-active="true"]'
+            )
+            const activeTrigger =
+                activeWrapper?.querySelector<HTMLButtonElement>('.mr-menubar__trigger')
+            const activeTriggerIndex = activeTrigger ? triggers.indexOf(activeTrigger) : -1
+
+            const menuItems = activeWrapper
+                ? Array.from(
+                      activeWrapper.querySelectorAll<HTMLElement>(
+                          '.mr-menubar__menu [role="menuitem"]:not([disabled])'
+                      )
+                  )
+                : []
+
+            const focusedItemIndex = menuItems.indexOf(document.activeElement as HTMLElement)
+            const isFocusInMenu = focusedItemIndex !== -1
+            const isFocusOnTrigger = triggers.includes(document.activeElement as HTMLButtonElement)
+
             if (e.key === 'Escape') {
-                setActiveMenu(null)
+                if (activeMenu) {
+                    e.preventDefault()
+                    setActiveMenu(null)
+                    activeTrigger?.focus()
+                }
+                return
+            }
+
+            if (e.key === 'ArrowRight') {
+                e.preventDefault()
+                const currentIdx = isFocusOnTrigger
+                    ? triggers.indexOf(document.activeElement as HTMLButtonElement)
+                    : activeTriggerIndex !== -1
+                      ? activeTriggerIndex
+                      : 0
+                const nextIdx = (currentIdx + 1) % triggers.length
+                const nextTrigger = triggers[nextIdx]
+                if (nextTrigger) {
+                    const menuWrapper = nextTrigger.closest('.mr-menubar__menu-wrapper')
+                    const menuValue =
+                        menuWrapper?.getAttribute('data-value') ?? nextTrigger.textContent ?? ''
+                    if (activeMenu) {
+                        setActiveMenu(menuValue)
+                    }
+                    nextTrigger.focus()
+                }
+                return
+            }
+
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault()
+                const currentIdx = isFocusOnTrigger
+                    ? triggers.indexOf(document.activeElement as HTMLButtonElement)
+                    : activeTriggerIndex !== -1
+                      ? activeTriggerIndex
+                      : 0
+                const prevIdx = (currentIdx - 1 + triggers.length) % triggers.length
+                const prevTrigger = triggers[prevIdx]
+                if (prevTrigger) {
+                    const menuWrapper = prevTrigger.closest('.mr-menubar__menu-wrapper')
+                    const menuValue =
+                        menuWrapper?.getAttribute('data-value') ?? prevTrigger.textContent ?? ''
+                    if (activeMenu) {
+                        setActiveMenu(menuValue)
+                    }
+                    prevTrigger.focus()
+                }
+                return
+            }
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                if (isFocusOnTrigger && !activeMenu) {
+                    const trigger = document.activeElement as HTMLButtonElement
+                    const wrapper = trigger.closest('.mr-menubar__menu-wrapper')
+                    const menuVal = wrapper?.getAttribute('data-value') ?? trigger.textContent ?? ''
+                    setActiveMenu(menuVal)
+                } else if (menuItems.length > 0) {
+                    const nextItemIdx =
+                        focusedItemIndex === -1 ? 0 : (focusedItemIndex + 1) % menuItems.length
+                    menuItems[nextItemIdx]?.focus()
+                }
+                return
+            }
+
+            if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                if (isFocusOnTrigger && !activeMenu) {
+                    const trigger = document.activeElement as HTMLButtonElement
+                    const wrapper = trigger.closest('.mr-menubar__menu-wrapper')
+                    const menuVal = wrapper?.getAttribute('data-value') ?? trigger.textContent ?? ''
+                    setActiveMenu(menuVal)
+                } else if (menuItems.length > 0) {
+                    const prevItemIdx =
+                        focusedItemIndex === -1
+                            ? menuItems.length - 1
+                            : (focusedItemIndex - 1 + menuItems.length) % menuItems.length
+                    menuItems[prevItemIdx]?.focus()
+                }
+                return
+            }
+
+            if (e.key === 'Home') {
+                e.preventDefault()
+                if (isFocusInMenu && menuItems.length > 0) {
+                    menuItems[0]?.focus()
+                } else if (triggers.length > 0) {
+                    triggers[0]?.focus()
+                }
+                return
+            }
+
+            if (e.key === 'End') {
+                e.preventDefault()
+                if (isFocusInMenu && menuItems.length > 0) {
+                    menuItems[menuItems.length - 1]?.focus()
+                } else if (triggers.length > 0) {
+                    triggers[triggers.length - 1]?.focus()
+                }
+                return
             }
         },
-        [setActiveMenu]
+        [activeMenu, setActiveMenu]
     )
 
     useEffect(() => {
         if (activeMenu) {
             document.addEventListener('mousedown', handleClickOutside)
-            document.addEventListener('keydown', handleEscape)
+            document.addEventListener('keydown', handleKeyDown)
         }
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
-            document.removeEventListener('keydown', handleEscape)
+            document.removeEventListener('keydown', handleKeyDown)
         }
-    }, [activeMenu, handleClickOutside, handleEscape])
+    }, [activeMenu, handleClickOutside, handleKeyDown])
 
     return (
         <MenubarContext.Provider value={{ activeMenu, setActiveMenu, toggleMenu }}>
@@ -256,6 +384,7 @@ export function Menubar({
                 className={cn('mr-menubar', className)}
                 data-open={activeMenu !== null ? true : undefined}
                 data-has-active={activeMenu !== null ? true : undefined}
+                onKeyDown={handleKeyDown}
                 {...props}
             >
                 {children ??

@@ -255,4 +255,38 @@ describe('Calendar', () => {
 
         expect(view.textContent).toContain('2025')
     })
+
+    it('supports compound subcomponents', () => {
+        expect(Calendar.Header).toBeDefined()
+        expect(Calendar.Pickers).toBeDefined()
+        expect(Calendar.Select).toBeDefined()
+        expect(Calendar.NavButton).toBeDefined()
+        expect(Calendar.Grid).toBeDefined()
+        expect(Calendar.Month).toBeDefined()
+        expect(Calendar.DayNames).toBeDefined()
+
+        const view = render(
+            <Calendar>
+                <Calendar.Month>
+                    <Calendar.Header>
+                        <Calendar.NavButton direction="prev" />
+                        <Calendar.Pickers>
+                            <Calendar.Select data-testid="month-sel">
+                                <option value="0">Jan</option>
+                            </Calendar.Select>
+                        </Calendar.Pickers>
+                        <Calendar.NavButton direction="next" />
+                    </Calendar.Header>
+                    <Calendar.Grid>
+                        <Calendar.DayNames>
+                            <span>Mo</span>
+                        </Calendar.DayNames>
+                    </Calendar.Grid>
+                </Calendar.Month>
+            </Calendar>
+        )
+
+        expect(view.querySelector('.mr-calendar__select')).not.toBeNull()
+        expect(view.querySelector('.mr-calendar__header')).not.toBeNull()
+    })
 })
