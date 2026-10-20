@@ -123,6 +123,11 @@
     :where(.mr-calendar__select option) {
         background-color: var(--mr-bg-raised);
         color: var(--mr-text-primary);
+        font-size: var(--mr-font-size-xs);
+    }
+
+    :where(.mr-calendar__select--year) {
+        font-variant-numeric: tabular-nums;
     }
 
     /* Boutons de navigation (precedent / suivant) */

@@ -289,4 +289,23 @@ describe('Calendar', () => {
         expect(view.querySelector('.mr-calendar__select')).not.toBeNull()
         expect(view.querySelector('.mr-calendar__header')).not.toBeNull()
     })
+
+    it('renders a compact default year list and supports fromYear and toYear', () => {
+        const view = render(<Calendar showPickers value={new Date(2025, 4, 1)} />)
+        const yearSelect = view.querySelector('.mr-calendar__select--year') as HTMLSelectElement
+        expect(yearSelect).not.toBeNull()
+        // Default range is currentYear - 5 to currentYear + 5 (11 options)
+        expect(yearSelect.options.length).toBeLessThanOrEqual(15)
+        expect(yearSelect.options.length).toBeGreaterThanOrEqual(10)
+
+        const customView = render(
+            <Calendar showPickers value={new Date(2025, 4, 1)} fromYear={2020} toYear={2026} />
+        )
+        const customYearSelect = customView.querySelector(
+            '.mr-calendar__select--year'
+        ) as HTMLSelectElement
+        expect(customYearSelect.options.length).toBe(7)
+        expect(customYearSelect.options[0]?.value).toBe('2020')
+        expect(customYearSelect.options[6]?.value).toBe('2026')
+    })
 })

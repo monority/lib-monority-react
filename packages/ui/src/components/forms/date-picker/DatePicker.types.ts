@@ -29,6 +29,8 @@ export interface DatePickerProps
     disabledDates?: Date[] | ((date: Date) => boolean)
     placeholder?: string
     showPickers?: boolean
+    fromYear?: number
+    toYear?: number
     // Styling
     inputClassName?: string
     popoverClassName?: string

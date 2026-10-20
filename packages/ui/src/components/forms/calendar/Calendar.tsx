@@ -67,6 +67,8 @@ export function Calendar({
     fixedWeeks = false,
     numberOfMonths = 1,
     showPickers = false,
+    fromYear,
+    toYear,
     classPrefix = 'mr-calendar',
     autoFocus = false,
     className,
@@ -91,9 +93,15 @@ export function Calendar({
         )
     })
 
-    const startYear = minDate ? minDate.getFullYear() : today.getFullYear() - 30
-    const endYear = maxDate ? maxDate.getFullYear() : today.getFullYear() + 20
-    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
+    const currentYear = (selectedDate ?? viewDate ?? today).getFullYear()
+    const defaultStartYear = Math.min(today.getFullYear() - 5, currentYear)
+    const defaultEndYear = Math.max(today.getFullYear() + 5, currentYear)
+    const startYear = fromYear ?? (minDate ? minDate.getFullYear() : defaultStartYear)
+    const endYear = toYear ?? (maxDate ? maxDate.getFullYear() : defaultEndYear)
+    const years = Array.from(
+        { length: Math.max(1, endYear - startYear + 1) },
+        (_, i) => startYear + i
+    )
 
     // Sync controlled value changes
     useEffect(() => {

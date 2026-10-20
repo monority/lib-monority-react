@@ -41,6 +41,8 @@ export function DatePicker({
     disabledDates,
     placeholder,
     showPickers,
+    fromYear,
+    toYear,
     inputClassName,
     popoverClassName,
     className,
@@ -257,6 +259,8 @@ export function DatePicker({
                                   maxDate={maxDate}
                                   disabledDates={disabledDates}
                                   showPickers={showPickers}
+                                  fromYear={fromYear}
+                                  toYear={toYear}
                                   autoFocus
                               />
                           </div>,
