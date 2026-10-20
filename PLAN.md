@@ -73,16 +73,25 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
   * Sélecteur de format `SegmentedControl` (JSON / CSS) dans l'inspecteur "Token Details".
 - Tests unitaires et d'intégration validés (109 suites / 1424 tests `@monority/ui`, 17 suites / 95 tests `@monority/web`, 1519 tests au total).
 
+## Chantier terminé — Primitives Internes, Parité Typage, Reset-Independence et Durcissement Playground
+
+- Parité 100% typage dédié : extraction de `Field.types.ts` couvrant l'ensemble des 10 sous-composants Field. Les 83 composants du catalogue disposent désormais d'un fichier `.types.ts` dédié.
+- Mutualisation des primitives de menu : création de `MenuItemPrimitive`, `MenuSeparatorPrimitive` et `MenuLabelPrimitive` dans `packages/ui/src/internal/menu/` et composition dans `DropdownMenu`, `ContextMenu` et `Menubar`.
+- Indépendance stricte vis-à-vis de `reset.css` : audit et correction des styles autonomes (`topbar.css`, etc.) avec validation Playwright de non-régression sur les 83 composants (83/83 au vert).
+- Durcissement du `ComponentPlayground` : capture des valeurs initiales par référence, réinitialisation dynamique des formulaires contrôlés (`notifyControlResets`), support du callback `onReset`, déverrouillage `overflow: visible` pour les menus et listes déroulantes.
+
 ## Reprise
 
-Dernier commit vert : 448652f (sur main).
-Chantier : correction du masquage des animations non positionnees, calibration perceptuelle et raccordement de Drawer et Sheet.
+Dernier commit vert : 9240b13 (sur main).
+Chantier : consolidation, déduplication et durcissement des composants et playgrounds.
 Contrats et vérifications :
 - pnpm verify : 100% vert (exit code 0).
-- Biome lint & format : 0 erreur, 1013 fichiers conformes.
+- Biome lint & format : 0 erreur, 1022 fichiers conformes.
 - Stylelint : 0 violation.
 - Rendu et contrastes : 100% conformes aux exigences WCAG AA / AAA sur 7 thèmes.
-- Tests : 109 suites / 1424 tests dans @monority/ui et 17 suites / 95 tests dans @monority/web (1519 tests unitaires au total).
-- Tests E2E animations (Playwright) : 2/2 tests valides sur Chromium (Modal et DropdownMenu).
+- Tests : 112 suites / 1458 tests dans @monority/ui et 17 suites / 96 tests dans @monority/web (1554 tests unitaires au total).
+- Tests E2E animations (Playwright) : 110/110 tests valides sur 10 résolutions et viewports.
+- Tests E2E reset-independence (Playwright) : 83/83 composants validés strictement identiques sans reset.css.
+- Consumer fixture (@monority/ui-consumer-fixture) : vérification types et runtime validées.
 
-Prochaine action disponible : verification du rendu par l'utilisateur sur son navigateur.
+Prochaine action disponible : suivi des étapes de préparation de release (changeset, tarball dry-run) et audit d'accessibilité.
