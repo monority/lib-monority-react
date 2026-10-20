@@ -50,5 +50,17 @@
         --mr-shadow-overlay: inset 0 1px 0 0 oklch(1 0 0 / 0.12), 0 4px 24px -2px
             oklch(0 0 0 / 0.75), 0 2px 8px -1px oklch(0 0 0 / 0.55);
         --mr-shadow-sm: inset 0 1px 0 0 oklch(1 0 0 / 0.08), 0 1px 3px 0 oklch(0 0 0 / 0.5);
+
+        /* Controles interactifs / Boutons en theme OLED */
+        --mr-control-accent-hover: color-mix(
+            in oklch,
+            var(--mr-control-accent),
+            var(--mr-text-primary) var(--mr-state-hover-mix)
+        );
+        --mr-control-accent-active: color-mix(
+            in oklch,
+            var(--mr-control-accent),
+            var(--mr-text-primary) var(--mr-state-active-mix)
+        );
     }
 }

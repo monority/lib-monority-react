@@ -10,10 +10,12 @@ import {
 } from './Collapsible.examples'
 
 function CollapsiblePlaygroundContent({
+    apiMode,
     size,
     open: propOpen,
     disabled,
 }: {
+    apiMode: 'compound' | 'shorthand'
     size: 'sm' | 'md' | 'lg'
     open: boolean
     disabled: boolean
@@ -22,6 +24,25 @@ function CollapsiblePlaygroundContent({
     useEffect(() => {
         setIsOpen(propOpen)
     }, [propOpen])
+
+    if (apiMode === 'shorthand') {
+        return (
+            <div style={{ width: '100%', maxWidth: 480 }}>
+                <Collapsible
+                    size={size}
+                    title="Détails de configuration"
+                    open={isOpen}
+                    onOpenChange={setIsOpen}
+                    disabled={disabled}
+                >
+                    <Text size="sm" color="secondary">
+                        Ce panneau animé affiche des informations contextuelles avec une transition
+                        fluide en CSS Grid sans résidu de hauteur.
+                    </Text>
+                </Collapsible>
+            </div>
+        )
+    }
 
     return (
         <div style={{ width: '100%', maxWidth: 480 }}>
@@ -42,8 +63,18 @@ function CollapsiblePlayground() {
     return (
         <ComponentPlayground
             title="Collapsible"
-            description="Contrôlez l'état ouvert/fermé, la taille et le mode désactivé du panneau dépliable."
+            description="Contrôlez l'état ouvert/fermé, le mode d'API, la taille et le mode désactivé du panneau dépliable."
             controls={[
+                {
+                    type: 'select',
+                    prop: 'apiMode',
+                    label: "Mode d'API",
+                    defaultValue: 'compound',
+                    options: [
+                        { value: 'compound', label: 'Composé (Compound)' },
+                        { value: 'shorthand', label: 'Raccourci (Shorthand)' },
+                    ],
+                },
                 {
                     type: 'select',
                     prop: 'size',
@@ -68,19 +99,34 @@ function CollapsiblePlayground() {
                     defaultValue: false,
                 },
             ]}
-            renderCode={(props) => `<Collapsible
-  size="${props.size}"${props.open ? '\n  open' : ''}${props.disabled ? '\n  disabled' : ''}
+            renderCode={(props) => {
+                const sizeAttr = props.size !== 'md' ? `\n  size="${props.size}"` : ''
+                const openAttr = props.open ? '\n  open' : ''
+                const disAttr = props.disabled ? '\n  disabled' : ''
+
+                if (props.apiMode === 'shorthand') {
+                    return `<Collapsible
+  title="Détails de configuration"${sizeAttr}${openAttr}${disAttr}
 >
+  <Text size="sm" color="secondary">
+    Ce panneau animé affiche des informations contextuelles avec une transition fluide en CSS Grid.
+  </Text>
+</Collapsible>`
+                }
+
+                return `<Collapsible${sizeAttr}${openAttr}${disAttr}>
   <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
   <Collapsible.Content>
     <Text size="sm" color="secondary">
       Ce panneau animé affiche des informations contextuelles avec une transition fluide en CSS Grid.
     </Text>
   </Collapsible.Content>
-</Collapsible>`}
+</Collapsible>`
+            }}
         >
             {(props) => (
                 <CollapsiblePlaygroundContent
+                    apiMode={(props.apiMode as 'compound' | 'shorthand') || 'compound'}
                     size={props.size as 'sm' | 'md' | 'lg'}
                     open={props.open as boolean}
                     disabled={props.disabled as boolean}

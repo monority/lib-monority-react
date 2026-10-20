@@ -5,6 +5,7 @@ import { usePortalTarget } from '@/internal/use-portal-target'
 import { usePresence } from '@/internal/use-presence'
 import { cn } from '@/lib/cn'
 import { OVERLAY_OFFSET } from '@/lib/constants'
+import { IconClose } from '@/icons'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import {
@@ -31,16 +32,7 @@ import type {
     ComboboxTone,
 } from './Combobox.types'
 
-const ClearIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-            d="M5 5L15 15M15 5L5 15"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-        />
-    </svg>
-)
+const ClearIcon = () => <IconClose size="1em" strokeWidth={1.5} />
 
 interface ComboboxContextValue {
     open: boolean

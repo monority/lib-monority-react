@@ -1,5 +1,14 @@
-import { cn } from '@/lib/cn'
+import {
+    IconAlertCircle,
+    IconAlertTriangle,
+    IconBell,
+    IconCheckCircle,
+    IconClose,
+    IconInfo,
+    IconSparkles,
+} from '@/icons'
 import { usePresence } from '@/internal/use-presence'
+import { cn } from '@/lib/cn'
 import type {
     ToastCloseProps,
     ToastDescriptionProps,
@@ -28,120 +37,15 @@ const ariaLiveByTone: Record<ToastTone, 'polite' | 'assertive'> = {
 }
 
 const defaultIcons: Record<ToastTone, React.ReactElement> = {
-    success: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M6.5 10l2.5 2.5 4.5-4.5" />
-        </svg>
-    ),
-    warning: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M10 2.5L2 16.5h16L10 2.5z" />
-            <path d="M10 7.5v4" />
-            <circle cx="10" cy="14" r="0.75" fill="currentColor" stroke="none" />
-        </svg>
-    ),
-    danger: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M10 6.5v4.5" />
-            <circle cx="10" cy="14" r="0.75" fill="currentColor" stroke="none" />
-        </svg>
-    ),
-    info: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M10 9v4.5M10 6.5h.01" />
-        </svg>
-    ),
-    accent: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M10 2v16M2 10h16M4.5 4.5l11 11M15.5 4.5l-11 11" />
-        </svg>
-    ),
-    neutral: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M15 13.5H5c.5-1 1.5-2.5 1.5-5a3.5 3.5 0 017 0c0 2.5 1 4 1.5 5z" />
-            <path d="M8.5 16a1.5 1.5 0 003 0" />
-        </svg>
-    ),
+    success: <IconCheckCircle size={20} />,
+    warning: <IconAlertTriangle size={20} />,
+    danger: <IconAlertCircle size={20} />,
+    info: <IconInfo size={20} />,
+    accent: <IconSparkles size={20} />,
+    neutral: <IconBell size={20} />,
 }
 
-const defaultCloseIcon = (
-    <svg
-        width="14"
-        height="14"
-        viewBox="0 0 14 14"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <path d="M11 3L3 11M3 3l8 8" />
-    </svg>
-)
+const defaultCloseIcon = <IconClose size={14} />
 
 function ToastIcon({ className, children, ref, ...props }: ToastIconProps) {
     return (

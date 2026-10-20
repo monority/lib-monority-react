@@ -13,6 +13,8 @@
     background: var(--mr-bg-surface);
     overflow: hidden;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .component-playground:has(
@@ -160,6 +162,8 @@
 
 .component-playground__code {
     border-top: none;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .component-playground__code .code-viewer {

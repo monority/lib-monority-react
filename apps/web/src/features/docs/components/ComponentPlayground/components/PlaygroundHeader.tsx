@@ -13,7 +13,9 @@ export function PlaygroundHeader({ componentName, onReset }: PlaygroundHeaderPro
                 <Badge variant="default" tone="accent" size="sm">
                     Playground
                 </Badge>
-                <span className="component-playground__component-name">{componentName}</span>
+                <span className="component-playground__component-name docs-preview-label">
+                    {componentName}
+                </span>
             </div>
             <Button
                 type="button"

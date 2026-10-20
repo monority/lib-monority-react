@@ -21,6 +21,7 @@ export function PreCode({
     const preElement = (
         <pre
             ref={ref}
+            tabIndex={0}
             className={cn('mr-pre-code', className)}
             data-size={size}
             data-wrap={wrap ? 'true' : undefined}

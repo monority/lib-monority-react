@@ -27,8 +27,8 @@ function registrySlugs(): string[] {
 }
 
 describe('Step 26 - every public export has docs or a redirect', () => {
-    // Entrées de librairie sans page de composant : helpers purs et script de tête.
-    const NON_COMPONENT_SUBPATHS = new Set(['lib', 'get-theme-script'])
+    // Entrées de librairie sans page de composant : helpers purs, icônes et script de tête.
+    const NON_COMPONENT_SUBPATHS = new Set(['lib', 'get-theme-script', 'icons'])
 
     it('no exported subpath is a dead docs route', () => {
         const pkg = readJson(join(root, 'packages', 'ui', 'package.json'))

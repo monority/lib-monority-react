@@ -353,9 +353,23 @@
     padding: var(--mr-space-3);
 }
 
+@media (max-width: 800px) {
+    .app-header__center {
+        display: none;
+    }
+
+    .app-header__start {
+        gap: var(--mr-space-3);
+    }
+
+    .app-header__inner {
+        padding-inline: var(--mr-space-3);
+    }
+}
+
 @media (max-width: 768px) {
     .app-header__center {
-        max-width: 14rem;
+        display: none;
     }
 
     .app-header__search-placeholder {

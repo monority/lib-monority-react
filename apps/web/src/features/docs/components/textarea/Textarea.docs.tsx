@@ -37,6 +37,7 @@ function TextareaPlaygroundDemo(props: {
                 invalid={props.invalid}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
+                data-testid="textarea-basic"
             />
         </div>
     )

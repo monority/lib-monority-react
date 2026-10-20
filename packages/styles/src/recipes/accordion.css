@@ -133,7 +133,8 @@
 
     :where(.mr-accordion__item)[data-open] :where(.mr-accordion__panel),
     :where(.mr-accordion__item)[data-state='open'] :where(.mr-accordion__panel),
-    :where(.mr-accordion__panel)[data-state='open'] {
+    :where(.mr-accordion__panel)[data-state='open'],
+    :where(.mr-accordion__panel)[aria-hidden='false'] {
         grid-template-rows: 1fr;
     }
 
@@ -156,7 +157,8 @@
 
     :where(.mr-accordion__item)[data-open] :where(.mr-accordion__body),
     :where(.mr-accordion__item)[data-state='open'] :where(.mr-accordion__body),
-    :where(.mr-accordion__panel)[data-state='open'] :where(.mr-accordion__body) {
+    :where(.mr-accordion__panel)[data-state='open'] :where(.mr-accordion__body),
+    :where(.mr-accordion__panel)[aria-hidden='false'] :where(.mr-accordion__body) {
         opacity: 1;
         transform: translateY(0);
     }
@@ -197,10 +199,11 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-accordion__trigger),
-        :where(.mr-accordion__icon),
-        :where(.mr-accordion__panel),
-        :where(.mr-accordion__body) {
+        :where(:root:not([data-motion='always'])) :where(.mr-accordion),
+        :where(:root:not([data-motion='always'])) :where(.mr-accordion__trigger),
+        :where(:root:not([data-motion='always'])) :where(.mr-accordion__icon),
+        :where(:root:not([data-motion='always'])) :where(.mr-accordion__panel),
+        :where(:root:not([data-motion='always'])) :where(.mr-accordion__body) {
             transition: none;
             transform: none;
         }

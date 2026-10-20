@@ -1,3 +1,4 @@
+import { IconCalendar } from '@/icons'
 import { Calendar } from '@/components/forms/calendar/Calendar'
 import { Field } from '@/components/forms/field/Field'
 import { formatDate, parseDate, toISODateString } from '@/internal/date-utils'
@@ -12,14 +13,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { DatePickerProps } from './DatePicker.types'
 
-const CalendarIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M3 8.5H17" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M6.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M13.5 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-)
+const CalendarIcon = () => <IconCalendar size="1em" strokeWidth={1.5} />
 
 export function DatePicker({
     ref,

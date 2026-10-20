@@ -6,7 +6,7 @@ export interface PlaygroundStageProps {
 
 export function PlaygroundStage({ children }: PlaygroundStageProps) {
     return (
-        <div className="component-playground__stage">
+        <div className="component-playground__stage docs-preview-content">
             <div className="component-playground__canvas">{children}</div>
         </div>
     )

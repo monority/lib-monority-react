@@ -562,6 +562,12 @@
             "import": "./dist/lib.js",
             "default": "./dist/lib.js"
         },
+        "./icons": {
+            "types": "./dist/icons.d.ts",
+            "monority-source": "./src/icons/index.ts",
+            "import": "./dist/icons.js",
+            "default": "./dist/icons.js"
+        },
         "./get-theme-script": {
             "types": "./dist/get-theme-script.d.ts",
             "monority-source": "./src/providers/get-theme-script.ts",

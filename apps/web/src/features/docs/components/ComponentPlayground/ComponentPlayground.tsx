@@ -76,7 +76,7 @@ export function ComponentPlayground<T extends Record<string, unknown> = Record<s
     }, [render, children, values])
 
     return (
-        <div className={`component-playground ${className}`.trim()}>
+        <div className={`component-playground docs-preview-card ${className}`.trim()}>
             <PlaygroundHeader componentName={resolvedName} onReset={handleReset} />
 
             {description ? (

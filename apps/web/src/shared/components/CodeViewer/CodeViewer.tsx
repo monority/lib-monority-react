@@ -32,7 +32,7 @@ export function CodeViewer({
                     className="docs-copy-btn"
                 />
             </div>
-            <div className="code-viewer__body">
+            <div className="code-viewer__body" tabIndex={0} role="region" aria-label="Code source">
                 <CodeBlock language={language}>{code}</CodeBlock>
             </div>
         </div>

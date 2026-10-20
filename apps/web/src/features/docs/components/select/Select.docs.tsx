@@ -34,11 +34,15 @@ function SelectPlaygroundDemo(props: {
                 invalid={props.invalid}
                 value={val}
                 onChange={(e) => setVal(e.target.value)}
+                data-testid="select-basic"
             >
                 <option value="dev">Developpement local (dev)</option>
                 <option value="staging">Staging pre-production (stg)</option>
                 <option value="prod-eu">Production Europe (eu-west-1)</option>
                 <option value="prod-us">Production Americas (us-east-1)</option>
+                <option value="long">
+                    A deliberately long country or region option that must stay clear of the chevron
+                </option>
             </Select>
         </div>
     )

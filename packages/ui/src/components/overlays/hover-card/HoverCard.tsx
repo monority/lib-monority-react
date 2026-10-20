@@ -9,6 +9,7 @@ import {
     useEffect,
     useId,
     useLayoutEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react'
@@ -126,12 +127,10 @@ export function HoverCardContent({
                     top: `${position.top}px`,
                     left: `${position.left}px`,
                     visibility: positioned ? undefined : 'hidden',
-                    '--mr-hovercard-arrow-left': arrowPosition.left
-                        ? `${arrowPosition.left}px`
-                        : undefined,
-                    '--mr-hovercard-arrow-top': arrowPosition.top
-                        ? `${arrowPosition.top}px`
-                        : undefined,
+                    '--mr-hovercard-arrow-left':
+                        arrowPosition.left !== undefined ? `${arrowPosition.left}px` : undefined,
+                    '--mr-hovercard-arrow-top':
+                        arrowPosition.top !== undefined ? `${arrowPosition.top}px` : undefined,
                     ...style,
                 } as CSSProperties
             }
@@ -212,27 +211,48 @@ export function HoverCard({
         return () => clearTimeout(timeoutRef.current)
     }, [])
 
-    const contextValue: HoverCardContextValue = {
-        isOpen,
-        isMounted,
-        presenceProps,
-        setOpenState,
-        triggerRef,
-        contentRef,
-        instanceId,
-        position,
-        actualSide,
-        actualAlign,
-        arrowPosition,
-        positioned,
-        arrow,
-        contentClassName,
-        portalTarget,
-        presenceRef,
-        updatePosition,
-        handleMouseEnter,
-        handleMouseLeave,
-    }
+    const contextValue: HoverCardContextValue = useMemo(
+        () => ({
+            isOpen,
+            isMounted,
+            presenceProps,
+            setOpenState,
+            triggerRef,
+            contentRef,
+            instanceId,
+            position,
+            actualSide,
+            actualAlign,
+            arrowPosition,
+            positioned,
+            arrow,
+            contentClassName,
+            portalTarget,
+            presenceRef,
+            updatePosition,
+            handleMouseEnter,
+            handleMouseLeave,
+        }),
+        [
+            isOpen,
+            isMounted,
+            presenceProps,
+            setOpenState,
+            instanceId,
+            position,
+            actualSide,
+            actualAlign,
+            arrowPosition,
+            positioned,
+            arrow,
+            contentClassName,
+            portalTarget,
+            presenceRef,
+            updatePosition,
+            handleMouseEnter,
+            handleMouseLeave,
+        ]
+    )
 
     return (
         <HoverCardContext.Provider value={contextValue}>

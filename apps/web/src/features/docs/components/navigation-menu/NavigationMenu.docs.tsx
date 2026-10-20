@@ -9,9 +9,7 @@ import {
 } from './NavigationMenu.examples'
 
 function NavigationMenuPlayground() {
-    const [activeSection, setActiveSection] = useState<'none' | 'components' | 'solutions'>(
-        'components'
-    )
+    const [activeSection, setActiveSection] = useState<'none' | 'components' | 'solutions'>('none')
 
     const snippet = `<NavigationMenu value="${activeSection === 'none' ? '' : activeSection}">
   <NavigationMenu.List>

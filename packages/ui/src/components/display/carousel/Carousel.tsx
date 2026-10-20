@@ -1,3 +1,11 @@
+import {
+    IconChevronDown,
+    IconChevronLeft,
+    IconChevronRight,
+    IconChevronUp,
+    IconPause,
+    IconPlay,
+} from '@/icons'
 import { cn } from '@/lib/cn'
 import {
     Children,
@@ -13,8 +21,10 @@ import {
 import type {
     CarouselButtonProps,
     CarouselContentProps,
+    CarouselCounterProps,
     CarouselDotsProps,
     CarouselItemProps,
+    CarouselPlayPauseProps,
     CarouselProps,
 } from './Carousel.types'
 
@@ -28,6 +38,8 @@ interface CarouselContextValue {
     loop: boolean
     orientation: 'horizontal' | 'vertical'
     slideClassName?: string
+    isPaused: boolean
+    togglePause: () => void
 }
 
 const CarouselContext = createContext<CarouselContextValue | null>(null)
@@ -130,33 +142,9 @@ export function CarouselPrevious({
         >
             {children ??
                 (orientation === 'vertical' ? (
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                    >
-                        <polyline points="18 15 12 9 6 15" />
-                    </svg>
+                    <IconChevronUp size={18} />
                 ) : (
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                    >
-                        <polyline points="15 18 9 12 15 6" />
-                    </svg>
+                    <IconChevronLeft size={18} />
                 ))}
         </button>
     )
@@ -183,33 +171,9 @@ export function CarouselNext({ ref, className, children, onClick, ...props }: Ca
         >
             {children ??
                 (orientation === 'vertical' ? (
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                    >
-                        <polyline points="6 9 12 15 18 9" />
-                    </svg>
+                    <IconChevronDown size={18} />
                 ) : (
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                    >
-                        <polyline points="9 18 15 12 9 6" />
-                    </svg>
+                    <IconChevronRight size={18} />
                 ))}
         </button>
     )
@@ -244,6 +208,46 @@ export function CarouselDots({ ref, className, ...props }: CarouselDotsProps) {
     )
 }
 
+export function CarouselCounter({ ref, className, format, ...props }: CarouselCounterProps) {
+    const ctx = useContext(CarouselContext)
+    if (!ctx || ctx.total <= 0) return null
+    const { current, total } = ctx
+
+    return (
+        <div
+            ref={ref}
+            className={cn('mr-carousel__counter', className)}
+            aria-live="polite"
+            {...props}
+        >
+            {format ? format(current + 1, total) : `${current + 1} / ${total}`}
+        </div>
+    )
+}
+
+export function CarouselPlayPause({ ref, className, onClick, ...props }: CarouselPlayPauseProps) {
+    const ctx = useContext(CarouselContext)
+    if (!ctx) return null
+    const { isPaused, togglePause } = ctx
+
+    return (
+        <button
+            ref={ref}
+            type="button"
+            onClick={(e) => {
+                onClick?.(e)
+                togglePause()
+            }}
+            className={cn('mr-carousel__play-pause', className)}
+            aria-label={isPaused ? 'Reprendre la lecture' : 'Mettre en pause'}
+            aria-pressed={isPaused}
+            {...props}
+        >
+            {isPaused ? <IconPlay size={14} /> : <IconPause size={14} />}
+        </button>
+    )
+}
+
 export function Carousel({
     slides,
     children,
@@ -251,8 +255,10 @@ export function Carousel({
     interval = 5000,
     showArrows = true,
     showDots = true,
+    showCounter = false,
     loop = false,
     orientation = 'horizontal',
+    arrowsPosition = 'inside',
     slideClassName,
     className,
     ref,
@@ -279,6 +285,39 @@ export function Carousel({
 
     const next = useCallback(() => goTo(current + 1), [current, goTo])
     const prev = useCallback(() => goTo(current - 1), [current, goTo])
+    const togglePause = useCallback(() => setIsPaused((p) => !p), [])
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        props.onKeyDown?.(e)
+        if (e.defaultPrevented) return
+        const target = e.target as HTMLElement
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
+
+        if (orientation === 'horizontal') {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault()
+                prev()
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault()
+                next()
+            }
+        } else {
+            if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                prev()
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                next()
+            }
+        }
+        if (e.key === 'Home') {
+            e.preventDefault()
+            goTo(0)
+        } else if (e.key === 'End') {
+            e.preventDefault()
+            goTo(total - 1)
+        }
+    }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         touchStartX.current = e.touches[0]?.clientX ?? null
@@ -326,6 +365,8 @@ export function Carousel({
         loop,
         orientation,
         slideClassName,
+        isPaused,
+        togglePause,
     }
 
     return (
@@ -334,13 +375,16 @@ export function Carousel({
                 ref={ref}
                 role="region"
                 aria-roledescription="carousel"
-                aria-label="Image carousel"
+                aria-label={props['aria-label'] ?? 'Image carousel'}
+                tabIndex={props.tabIndex ?? 0}
                 className={cn('mr-carousel', className)}
                 data-orientation={orientation}
+                data-arrows-position={arrowsPosition}
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
+                onKeyDown={handleKeyDown}
                 {...props}
             >
                 {slides !== undefined ? (
@@ -374,7 +418,16 @@ export function Carousel({
                             </>
                         )}
 
-                        {showDots && total > 1 && <CarouselDots />}
+                        {showDots && !showCounter && !autoPlay && total > 1 && <CarouselDots />}
+
+                        {(showCounter || (autoPlay && showDots) || (autoPlay && showCounter)) &&
+                            total > 1 && (
+                                <div className="mr-carousel__controls">
+                                    {showDots && <CarouselDots />}
+                                    {showCounter && <CarouselCounter />}
+                                    {autoPlay && <CarouselPlayPause />}
+                                </div>
+                            )}
                     </>
                 ) : (
                     children
@@ -389,6 +442,8 @@ Carousel.Item = CarouselItem
 Carousel.Previous = CarouselPrevious
 Carousel.Next = CarouselNext
 Carousel.Dots = CarouselDots
+Carousel.Counter = CarouselCounter
+Carousel.PlayPause = CarouselPlayPause
 
 export type {
     CarouselProps,
@@ -396,4 +451,6 @@ export type {
     CarouselItemProps,
     CarouselButtonProps,
     CarouselDotsProps,
+    CarouselCounterProps,
+    CarouselPlayPauseProps,
 } from './Carousel.types'

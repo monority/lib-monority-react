@@ -113,8 +113,11 @@ export function useFloatingPosition(
             const maxLeft = viewportWidth - floatingWidth - viewportPadding
             left = Math.min(Math.max(rawLeft, viewportPadding), Math.max(viewportPadding, maxLeft))
 
-            const maxTop = viewportHeight - floatingHeight - viewportPadding
-            top = Math.min(Math.max(top, viewportPadding), Math.max(viewportPadding, maxTop))
+            const isAnchorInVerticalView = anchorRect.bottom > 0 && anchorRect.top < viewportHeight
+            if (isAnchorInVerticalView) {
+                const maxTop = viewportHeight - floatingHeight - viewportPadding
+                top = Math.min(Math.max(top, viewportPadding), Math.max(viewportPadding, maxTop))
+            }
 
             if (arrow) {
                 const rawArrow = anchorRect.left + anchorRect.width / 2 - left
@@ -136,11 +139,19 @@ export function useFloatingPosition(
                 rawTop = anchorRect.bottom - floatingHeight - alignOffset
             }
 
-            const maxTop = viewportHeight - floatingHeight - viewportPadding
-            top = Math.min(Math.max(rawTop, viewportPadding), Math.max(viewportPadding, maxTop))
+            const isAnchorInVerticalView = anchorRect.bottom > 0 && anchorRect.top < viewportHeight
+            if (isAnchorInVerticalView) {
+                const maxTop = viewportHeight - floatingHeight - viewportPadding
+                top = Math.min(Math.max(rawTop, viewportPadding), Math.max(viewportPadding, maxTop))
+            } else {
+                top = rawTop
+            }
 
-            const maxLeft = viewportWidth - floatingWidth - viewportPadding
-            left = Math.min(Math.max(left, viewportPadding), Math.max(viewportPadding, maxLeft))
+            const isAnchorInHorizontalView = anchorRect.right > 0 && anchorRect.left < viewportWidth
+            if (isAnchorInHorizontalView) {
+                const maxLeft = viewportWidth - floatingWidth - viewportPadding
+                left = Math.min(Math.max(left, viewportPadding), Math.max(viewportPadding, maxLeft))
+            }
 
             if (arrow) {
                 const rawArrow = anchorRect.top + anchorRect.height / 2 - top

@@ -261,4 +261,71 @@ describe('Carousel', () => {
         const activeDot = view.querySelector('.mr-carousel__dot[data-active="true"]')
         expect(activeDot?.getAttribute('aria-label')).toBe('Go to slide 2')
     })
+
+    it('supports Carousel.Counter and showCounter', () => {
+        const view = render(<Carousel slides={slides} showCounter />)
+        const counter = view.querySelector('.mr-carousel__counter')
+        expect(counter?.textContent).toBe('1 / 3')
+
+        const nextBtn = getNextArrow(view)
+        act(() => {
+            nextBtn.click()
+        })
+        expect(counter?.textContent).toBe('2 / 3')
+    })
+
+    it('supports keyboard navigation via ArrowLeft, ArrowRight, Home, and End', () => {
+        const view = render(<Carousel slides={slides} />)
+        const root = view.querySelector('.mr-carousel') as HTMLDivElement
+
+        act(() => {
+            root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+        })
+        expect(getActiveDot(view)?.getAttribute('aria-label')).toBe('Go to slide 2')
+
+        act(() => {
+            root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }))
+        })
+        expect(getActiveDot(view)?.getAttribute('aria-label')).toBe('Go to slide 1')
+
+        act(() => {
+            root.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }))
+        })
+        expect(getActiveDot(view)?.getAttribute('aria-label')).toBe('Go to slide 3')
+
+        act(() => {
+            root.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }))
+        })
+        expect(getActiveDot(view)?.getAttribute('aria-label')).toBe('Go to slide 1')
+    })
+
+    it('supports Carousel.PlayPause toggle', () => {
+        const view = render(
+            <Carousel slides={slides} autoPlay>
+                <Carousel.Content>
+                    <Carousel.Item>Slide 1</Carousel.Item>
+                    <Carousel.Item>Slide 2</Carousel.Item>
+                </Carousel.Content>
+                <Carousel.PlayPause />
+            </Carousel>
+        )
+        const playPause = view.querySelector('.mr-carousel__play-pause') as HTMLButtonElement
+        expect(playPause).not.toBeNull()
+        expect(playPause.getAttribute('aria-pressed')).toBe('false')
+
+        act(() => {
+            playPause.click()
+        })
+        expect(playPause.getAttribute('aria-pressed')).toBe('true')
+    })
+
+    it('sets data-arrows-position to inside by default and outside when requested', () => {
+        const viewDefault = render(<Carousel slides={slides} />)
+        const rootDefault = viewDefault.querySelector('.mr-carousel')
+        expect(rootDefault?.getAttribute('data-arrows-position')).toBe('inside')
+
+        const viewOutside = render(<Carousel slides={slides} arrowsPosition="outside" />)
+        const rootOutside = viewOutside.querySelector('.mr-carousel')
+        expect(rootOutside?.getAttribute('data-arrows-position')).toBe('outside')
+    })
 })

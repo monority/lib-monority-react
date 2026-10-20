@@ -1,13 +1,15 @@
 /* Recette du composant Carousel (couche mr.components)
  *
- * Diaporama d'elements defilants avec controle par fleches et points d'etape.
+ * Diaporama d'elements defilants avec controle par fleches aeriennes,
+ * points d'etape morphiques en pilule, et compteur optionnel.
  *
  * Tokens :
- * - Rayon : --mr-radius-md
+ * - Rayon viewport : --mr-radius-lg
+ * - Rayon commandes : --mr-radius-full (boutons circulaires / pilules)
  * - Ecart : --mr-space-3
- * - Commandes : fleches controlees via --mr-size-control-md
- * - Points : --mr-space-2, actif --mr-text-primary
- * - Transition : --mr-duration-panel (200ms)
+ * - Commandes : fleches controlees via --mr-size-control-md (32px)
+ * - Points : --mr-space-2 (repos 8px, actif 24px en pilule)
+ * - Transition : --mr-duration-panel (280ms)
  */
 @layer mr.components {
     :where(.mr-carousel) {
@@ -17,22 +19,56 @@
             'viewport'
             'dots';
         grid-template-columns: minmax(0, 1fr);
+        align-items: center;
         gap: var(--mr-space-3);
         min-inline-size: 0;
         box-sizing: border-box;
-        overflow: hidden;
+        outline: none;
+    }
+
+    :where(.mr-carousel)[data-arrows-position='outside'] {
+        grid-template-areas:
+            'prev viewport next'
+            '.    dots     .';
+        grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'] {
+        grid-template-areas:
+            'viewport'
+            'dots';
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside'] {
+        grid-template-areas:
+            'prev'
+            'viewport'
+            'next'
+            'dots';
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr) auto auto;
+    }
+
+    :where(.mr-carousel:focus-visible) {
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: var(--mr-focus-ring-offset);
+        border-radius: var(--mr-radius-lg);
     }
 
     :where(.mr-carousel__viewport) {
         grid-area: viewport;
+        position: relative;
         inline-size: 100%;
         overflow: hidden;
-        border-radius: var(--mr-radius-md);
+        border-radius: var(--mr-radius-lg);
     }
 
     :where(.mr-carousel__track) {
         display: flex;
-        transition: transform var(--mr-duration-panel);
+        transition: transform var(--mr-duration-panel) var(--mr-ease-out);
+        will-change: transform;
     }
 
     :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__track) {
@@ -43,15 +79,54 @@
         flex: 0 0 100%;
         min-inline-size: 0;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
     }
 
     :where(.mr-carousel__slide)[aria-hidden='true'] {
         visibility: hidden;
     }
 
+    /* Gouttières de protection pour que le contenu ne touche jamais les chevrons */
+    :where(.mr-carousel:not([data-arrows-position='outside']):has(.mr-carousel__arrow))
+        :where(.mr-carousel__slide:not(:has(> .mr-card))) {
+        padding-inline: calc(var(--mr-size-control-md) + var(--mr-space-6));
+    }
+
+    :where(.mr-carousel:not([data-arrows-position='outside']):has(.mr-carousel__arrow))
+        :where(.mr-carousel__slide > .mr-card) {
+        padding-inline: calc(var(--mr-size-control-md) + var(--mr-space-6));
+    }
+
+    :where(
+            .mr-carousel[data-orientation='vertical']:not([data-arrows-position='outside']):has(
+                    .mr-carousel__arrow
+                )
+        )
+        :where(.mr-carousel__slide:not(:has(> .mr-card))) {
+        padding-inline: 0;
+        padding-block: calc(var(--mr-size-control-md) + var(--mr-space-6));
+    }
+
+    :where(
+            .mr-carousel[data-orientation='vertical']:not([data-arrows-position='outside']):has(
+                    .mr-carousel__arrow
+                )
+        )
+        :where(.mr-carousel__slide > .mr-card) {
+        padding-block: calc(var(--mr-size-control-md) + var(--mr-space-6));
+    }
+
+    :where(.mr-carousel[data-arrows-position='outside']) :where(.mr-carousel__slide),
+    :where(.mr-carousel:not(:has(.mr-carousel__arrow))) :where(.mr-carousel__slide) {
+        padding-inline: 0;
+        padding-block: 0;
+    }
+
     :where(.mr-carousel__arrow) {
         grid-area: viewport;
         align-self: center;
+        justify-self: center;
         z-index: var(--mr-z-sticky);
         display: inline-flex;
         align-items: center;
@@ -59,68 +134,123 @@
         inline-size: var(--mr-size-control-md);
         block-size: var(--mr-size-control-md);
         padding: 0;
-        border: 1px solid var(--mr-border-subtle);
-        border-radius: var(--mr-radius-md);
-        background: var(--mr-bg-surface-elevated);
+        border: 1px solid var(--mr-border-control);
+        border-radius: var(--mr-radius-full);
+        background-color: color-mix(in oklch, var(--mr-bg-surface) 90%, transparent);
+        backdrop-filter: blur(var(--mr-space-2));
         box-shadow: var(--mr-shadow-sm);
-        color: var(--mr-text-secondary);
+        color: var(--mr-text-primary);
         cursor: pointer;
         line-height: 1;
-        transition: background-color var(--mr-duration-state), color var(--mr-duration-state);
+        transition:
+            background-color var(--mr-duration-state) var(--mr-ease-out),
+            border-color var(--mr-duration-state) var(--mr-ease-out),
+            color var(--mr-duration-state) var(--mr-ease-out),
+            transform var(--mr-duration-instant) var(--mr-ease-spring),
+            box-shadow var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-carousel__arrow):first-of-type,
     :where(.mr-carousel__arrow[data-direction='prev']) {
+        grid-area: viewport;
         justify-self: start;
-        margin-inline-start: var(--mr-space-2);
+        margin-inline-start: var(--mr-space-3);
     }
 
     :where(.mr-carousel__arrow):last-of-type,
     :where(.mr-carousel__arrow[data-direction='next']) {
+        grid-area: viewport;
         justify-self: end;
-        margin-inline-end: var(--mr-space-2);
+        margin-inline-end: var(--mr-space-3);
     }
 
     :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:first-of-type),
     :where(.mr-carousel)[data-orientation='vertical']
         :where(.mr-carousel__arrow[data-direction='prev']) {
+        grid-area: viewport;
         align-self: start;
         justify-self: center;
-        margin-block-start: var(--mr-space-2);
+        margin-block-start: var(--mr-space-3);
         margin-inline-start: 0;
     }
 
     :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:last-of-type),
     :where(.mr-carousel)[data-orientation='vertical']
         :where(.mr-carousel__arrow[data-direction='next']) {
+        grid-area: viewport;
         align-self: end;
         justify-self: center;
-        margin-block-end: var(--mr-space-2);
+        margin-block-end: var(--mr-space-3);
         margin-inline-end: 0;
     }
 
+    /* Outside layout overrides */
+    :where(.mr-carousel)[data-arrows-position='outside'] :where(.mr-carousel__arrow):first-of-type,
+    :where(.mr-carousel)[data-arrows-position='outside']
+        :where(.mr-carousel__arrow[data-direction='prev']) {
+        grid-area: prev;
+        margin-inline-start: 0;
+    }
+
+    :where(.mr-carousel)[data-arrows-position='outside'] :where(.mr-carousel__arrow):last-of-type,
+    :where(.mr-carousel)[data-arrows-position='outside']
+        :where(.mr-carousel__arrow[data-direction='next']) {
+        grid-area: next;
+        margin-inline-end: 0;
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
+        :where(.mr-carousel__arrow:first-of-type),
+    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
+        :where(.mr-carousel__arrow[data-direction='prev']) {
+        grid-area: prev;
+        align-self: center;
+        margin-block-start: 0;
+    }
+
+    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
+        :where(.mr-carousel__arrow:last-of-type),
+    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
+        :where(.mr-carousel__arrow[data-direction='next']) {
+        grid-area: next;
+        align-self: center;
+        margin-block-end: 0;
+    }
+
     :where(.mr-carousel__arrow):hover:not(:disabled) {
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
+        border-color: var(--mr-border-default);
         color: var(--mr-text-primary);
+        box-shadow: var(--mr-shadow-overlay);
+        transform: scale(1.08);
+    }
+
+    :where(.mr-carousel__arrow):active:not(:disabled) {
+        transform: scale(0.94);
+        background-color: var(--mr-bg-sunken);
     }
 
     :where(.mr-carousel__arrow):focus-visible {
-        outline: 2px solid var(--mr-focus-ring);
-        outline-offset: 2px;
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: var(--mr-focus-ring-offset);
     }
 
     :where(.mr-carousel__arrow):disabled {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
-        opacity: 0.3;
+        opacity: 0.35;
+        box-shadow: none;
+        transform: none;
     }
 
     :where(.mr-carousel__dots) {
         grid-area: dots;
-        display: flex;
+        display: inline-flex;
         justify-content: center;
         align-items: center;
         gap: var(--mr-space-2);
+        margin-inline: auto;
+        padding-block: var(--mr-space-1);
     }
 
     :where(.mr-carousel__dot) {
@@ -129,25 +259,100 @@
         padding: 0;
         border: none;
         border-radius: var(--mr-radius-full);
-        background-color: var(--mr-border-default);
+        background-color: var(--mr-border-control);
         cursor: pointer;
-        opacity: 0.5;
-        transition: background-color var(--mr-duration-state), transform var(--mr-duration-state),
-            opacity var(--mr-duration-state);
+        opacity: 0.45;
+        transition: inline-size var(--mr-duration-panel) var(--mr-ease-spring), background-color
+            var(--mr-duration-state) var(--mr-ease-out), opacity var(--mr-duration-state)
+            var(--mr-ease-out), transform var(--mr-duration-instant) var(--mr-ease-spring);
     }
 
-    :where(.mr-carousel__dot):hover,
+    :where(.mr-carousel__dot):hover {
+        opacity: 0.85;
+        background-color: var(--mr-text-secondary);
+    }
+
     :where(.mr-carousel__dot)[data-active='true'] {
-        background-color: var(--mr-text-primary);
+        inline-size: var(--mr-space-6);
+        background-color: var(--mr-control-accent, var(--mr-text-primary));
         opacity: 1;
-        transform: scale(1.25);
+        transform: none;
+    }
+
+    :where(.mr-carousel__dot):focus-visible {
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: var(--mr-focus-ring-offset);
+    }
+
+    :where(.mr-carousel__controls) {
+        grid-area: dots;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--mr-space-3);
+        margin-inline: auto;
+    }
+
+    :where(.mr-carousel__counter) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--mr-font-size-xs);
+        font-family: var(--mr-font-family-mono);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--mr-font-weight-medium);
+        color: var(--mr-text-secondary);
+        padding-block: var(--mr-space-1);
+        padding-inline: var(--mr-space-2);
+        border-radius: var(--mr-radius-full);
+        background-color: color-mix(in oklch, var(--mr-bg-surface) 90%, transparent);
+        border: 1px solid var(--mr-border-subtle);
+        line-height: 1;
+    }
+
+    :where(.mr-carousel__play-pause) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--mr-size-control-sm);
+        block-size: var(--mr-size-control-sm);
+        padding: 0;
+        border-radius: var(--mr-radius-full);
+        border: 1px solid var(--mr-border-subtle);
+        background-color: color-mix(in oklch, var(--mr-bg-surface) 90%, transparent);
+        color: var(--mr-text-secondary);
+        cursor: pointer;
+        line-height: 1;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring), border-color var(--mr-duration-state) var(--mr-ease-out);
+    }
+
+    :where(.mr-carousel__play-pause):hover:not(:disabled) {
+        color: var(--mr-text-primary);
+        border-color: var(--mr-border-control);
+        background-color: var(--mr-bg-surface);
+        transform: scale(1.08);
+    }
+
+    :where(.mr-carousel__play-pause):active:not(:disabled) {
+        transform: scale(0.92);
+        background-color: var(--mr-bg-sunken);
+    }
+
+    :where(.mr-carousel__play-pause):focus-visible {
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: var(--mr-focus-ring-offset);
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-carousel__track),
-        :where(.mr-carousel__dot),
-        :where(.mr-carousel__arrow) {
+        :where(:root:not([data-motion='always'])) :where(.mr-carousel),
+        :where(:root:not([data-motion='always'])) :where(.mr-carousel__track),
+        :where(:root:not([data-motion='always'])) :where(.mr-carousel__dot),
+        :where(:root:not([data-motion='always'])) :where(.mr-carousel__arrow),
+        :where(:root:not([data-motion='always'])) :where(.mr-carousel__play-pause) {
             transition: none;
+            transform: none;
         }
     }
 }

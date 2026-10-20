@@ -8,6 +8,7 @@ export function MotionToggle({ className }: { className?: string }) {
         if (typeof window === 'undefined') return 'always'
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved === 'always' || saved === 'reduce') return saved
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'reduce'
         return 'always'
     })
 

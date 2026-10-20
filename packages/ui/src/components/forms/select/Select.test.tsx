@@ -200,4 +200,56 @@ describe('Select', () => {
         const select = view.querySelector('select') as HTMLSelectElement
         expect(select.value).toBe('react')
     })
+
+    it('opens and closes animated dropdown and selects option on click', () => {
+        let changedVal = ''
+        const view = render(
+            <Select
+                label="Country"
+                defaultValue="fr"
+                onChange={(e) => {
+                    changedVal = e.target.value
+                }}
+            >
+                <option value="fr">France</option>
+                <option value="de">Germany</option>
+                <option value="es">Spain</option>
+            </Select>
+        )
+        const wrapper = view.querySelector('.mr-select-wrapper')
+        const select = view.querySelector('select') as HTMLSelectElement
+        expect(wrapper?.getAttribute('data-open')).toBeNull()
+        expect(view.querySelector('.mr-select__dropdown')).toBeNull()
+
+        // Mousedown toggles dropdown open
+        act(() => {
+            select.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }))
+        })
+        expect(wrapper?.getAttribute('data-open')).toBe('true')
+        const dropdown = view.querySelector('.mr-select__dropdown')
+        expect(dropdown).toBeTruthy()
+
+        const items = view.querySelectorAll('.mr-select__dropdown-item')
+        expect(items).toHaveLength(3)
+
+        // Click Germany
+        act(() => {
+            ;(items[1] as HTMLButtonElement).click()
+        })
+        expect(wrapper?.getAttribute('data-open')).toBeNull()
+        const closingDropdown = view.querySelector('.mr-select__dropdown')
+        expect(closingDropdown).toBeTruthy()
+        expect(closingDropdown?.hasAttribute('data-closing')).toBe(true)
+        expect(closingDropdown?.getAttribute('data-state')).toBe('closed')
+
+        // Animation end finishes unmounting
+        act(() => {
+            const exitEvent = new Event('animationend', { bubbles: true })
+            Object.defineProperty(exitEvent, 'animationName', { value: 'mr-floating-exit' })
+            closingDropdown?.dispatchEvent(exitEvent)
+        })
+        expect(view.querySelector('.mr-select__dropdown')).toBeNull()
+        expect(select.value).toBe('de')
+        expect(changedVal).toBe('de')
+    })
 })

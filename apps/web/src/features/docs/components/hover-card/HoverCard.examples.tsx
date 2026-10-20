@@ -2,6 +2,7 @@ import { Button } from '@monority/ui/button'
 import { HoverCard } from '@monority/ui/hover-card'
 import { Stack } from '@monority/ui/stack'
 import { Text } from '@monority/ui/text'
+import { useState } from 'react'
 
 export function HoverCardBasicExample() {
     return (
@@ -77,16 +78,22 @@ export function HoverCardSidesExample() {
 }
 
 export function HoverCardControlledExample() {
+    const [open, setOpen] = useState(false)
     return (
-        <HoverCard defaultOpen>
-            <HoverCard.Trigger>
-                <Button variant="ghost">Always open</Button>
-            </HoverCard.Trigger>
-            <HoverCard.Content>
-                <Text.Muted size="sm">
-                    Default open helps preview authored content in docs.
-                </Text.Muted>
-            </HoverCard.Content>
-        </HoverCard>
+        <Stack direction="horizontal" gap="md" align="center">
+            <Button size="sm" variant="secondary" onClick={() => setOpen((prev) => !prev)}>
+                {open ? 'Fermer la carte' : 'Ouvrir la carte'}
+            </Button>
+            <HoverCard open={open} onOpenChange={setOpen}>
+                <HoverCard.Trigger>
+                    <Button variant="ghost">Déclencheur contrôlé</Button>
+                </HoverCard.Trigger>
+                <HoverCard.Content>
+                    <Text.Muted size="sm">
+                        L'état d'ouverture contrôlé permet un pilotage programmatique.
+                    </Text.Muted>
+                </HoverCard.Content>
+            </HoverCard>
+        </Stack>
     )
 }

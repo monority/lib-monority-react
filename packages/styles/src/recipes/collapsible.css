@@ -108,7 +108,8 @@
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__icon),
     :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__icon),
-    :where(.mr-collapsible__trigger)[aria-expanded='true'] :where(.mr-collapsible__icon) {
+    :where(.mr-collapsible__trigger)[aria-expanded='true'] :where(.mr-collapsible__icon),
+    :where(.mr-collapsible__trigger)[data-state='open'] :where(.mr-collapsible__icon) {
         transform: rotate(180deg);
         color: var(--mr-text-primary);
     }
@@ -127,7 +128,8 @@
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__panel),
     :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__panel),
-    :where(.mr-collapsible__panel)[data-state='open'] {
+    :where(.mr-collapsible__panel)[data-state='open'],
+    :where(.mr-collapsible__panel)[aria-hidden='false'] {
         grid-template-rows: 1fr;
     }
 
@@ -150,7 +152,8 @@
 
     :where(.mr-collapsible)[data-open] :where(.mr-collapsible__body),
     :where(.mr-collapsible)[data-state='open'] :where(.mr-collapsible__body),
-    :where(.mr-collapsible__panel)[data-state='open'] :where(.mr-collapsible__body) {
+    :where(.mr-collapsible__panel)[data-state='open'] :where(.mr-collapsible__body),
+    :where(.mr-collapsible__panel)[aria-hidden='false'] :where(.mr-collapsible__body) {
         opacity: 1;
         transform: translateY(0);
     }
@@ -186,11 +189,11 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        :where(.mr-collapsible),
-        :where(.mr-collapsible__trigger),
-        :where(.mr-collapsible__icon),
-        :where(.mr-collapsible__panel),
-        :where(.mr-collapsible__body) {
+        :where(:root:not([data-motion='always'])) :where(.mr-collapsible),
+        :where(:root:not([data-motion='always'])) :where(.mr-collapsible__trigger),
+        :where(:root:not([data-motion='always'])) :where(.mr-collapsible__icon),
+        :where(:root:not([data-motion='always'])) :where(.mr-collapsible__panel),
+        :where(:root:not([data-motion='always'])) :where(.mr-collapsible__body) {
             transition: none;
             transform: none;
         }

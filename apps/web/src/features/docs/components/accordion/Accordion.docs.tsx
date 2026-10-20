@@ -1,4 +1,5 @@
 import { Accordion, type AccordionSize } from '@monority/ui/accordion'
+import { useEffect, useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -38,12 +39,99 @@ const accordionDemoItems = [
     },
 ]
 
+function AccordionPlaygroundContent({
+    apiMode,
+    size,
+    activeItem,
+    collapsible,
+    allowMultiple,
+}: {
+    apiMode: 'compound' | 'items'
+    size: AccordionSize
+    activeItem: string
+    collapsible: boolean
+    allowMultiple: boolean
+}) {
+    const [value, setValue] = useState<string | string[]>(() =>
+        activeItem === 'none' ? [] : [activeItem]
+    )
+
+    useEffect(() => {
+        setValue(activeItem === 'none' ? [] : [activeItem])
+    }, [activeItem])
+
+    if (apiMode === 'items') {
+        return (
+            <div style={{ width: '100%', maxWidth: 540 }}>
+                <Accordion
+                    size={size}
+                    collapsible={collapsible}
+                    allowMultiple={allowMultiple}
+                    value={value}
+                    onValueChange={setValue}
+                    items={accordionDemoItems}
+                />
+            </div>
+        )
+    }
+
+    return (
+        <div style={{ width: '100%', maxWidth: 540 }}>
+            <Accordion
+                size={size}
+                collapsible={collapsible}
+                allowMultiple={allowMultiple}
+                value={value}
+                onValueChange={setValue}
+            >
+                <Accordion.Item value="item-1">
+                    <Accordion.Trigger>Architecture CSS & Tokens</Accordion.Trigger>
+                    <Accordion.Content>
+                        <p style={{ margin: 0 }}>
+                            Les styles reposent sur la couche mr.components avec zéro collision de
+                            spécificité.
+                        </p>
+                    </Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item value="item-2">
+                    <Accordion.Trigger>Accessibilité WAI-ARIA</Accordion.Trigger>
+                    <Accordion.Content>
+                        <p style={{ margin: 0 }}>
+                            Navigation fluide au clavier avec roving tabindex, touches fléchées et
+                            Home/End.
+                        </p>
+                    </Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item value="item-3">
+                    <Accordion.Trigger>Personnalisation & Densité</Accordion.Trigger>
+                    <Accordion.Content>
+                        <p style={{ margin: 0 }}>
+                            Tailles sm, md et lg avec espacements proportionnés et transitions CSS
+                            Grid fluides.
+                        </p>
+                    </Accordion.Content>
+                </Accordion.Item>
+            </Accordion>
+        </div>
+    )
+}
+
 function AccordionPlayground() {
     return (
         <ComponentPlayground
             title="Accordion"
-            description="Personnalisez la taille et le comportement d'ouverture de l'accordéon."
+            description="Personnalisez la structure d'API, la taille et le comportement d'ouverture de l'accordéon."
             controls={[
+                {
+                    type: 'select',
+                    prop: 'apiMode',
+                    label: "Mode d'API",
+                    defaultValue: 'compound',
+                    options: [
+                        { value: 'compound', label: 'Composé (Compound)' },
+                        { value: 'items', label: 'Prop items (Shorthand)' },
+                    ],
+                },
                 {
                     type: 'select',
                     prop: 'size',
@@ -53,6 +141,18 @@ function AccordionPlayground() {
                         { value: 'sm', label: 'Petite (sm)' },
                         { value: 'md', label: 'Moyenne (md)' },
                         { value: 'lg', label: 'Grande (lg)' },
+                    ],
+                },
+                {
+                    type: 'select',
+                    prop: 'activeItem',
+                    label: 'Section ouverte',
+                    defaultValue: 'item-1',
+                    options: [
+                        { value: 'item-1', label: 'Section 1 (Architecture)' },
+                        { value: 'item-2', label: 'Section 2 (Accessibilité)' },
+                        { value: 'item-3', label: 'Section 3 (Densité)' },
+                        { value: 'none', label: 'Aucune (replié)' },
                     ],
                 },
                 {
@@ -68,26 +168,55 @@ function AccordionPlayground() {
                     defaultValue: false,
                 },
             ]}
-            renderCode={(props) => `<Accordion
-  size="${props.size}"${props.collapsible ? '\n  collapsible' : ''}${props.allowMultiple ? '\n  allowMultiple' : ''}
-  defaultValue="item-1"
+            renderCode={(props) => {
+                const sizeAttr = props.size !== 'md' ? `\n  size="${props.size}"` : ''
+                const collAttr = props.collapsible ? '\n  collapsible' : ''
+                const multAttr = props.allowMultiple ? '\n  allowMultiple' : ''
+                const valAttr =
+                    props.activeItem && props.activeItem !== 'none'
+                        ? `\n  defaultValue="${props.activeItem}"`
+                        : ''
+
+                if (props.apiMode === 'items') {
+                    return `<Accordion${sizeAttr}${collAttr}${multAttr}${valAttr}
   items={[
     { value: 'item-1', title: 'Architecture CSS & Tokens', content: '...' },
     { value: 'item-2', title: 'Accessibilité WAI-ARIA', content: '...' },
+    { value: 'item-3', title: 'Personnalisation & Densité', content: '...' },
   ]}
-/>`}
+/>`
+                }
+
+                return `<Accordion${sizeAttr}${collAttr}${multAttr}${valAttr}>
+  <Accordion.Item value="item-1">
+    <Accordion.Trigger>Architecture CSS & Tokens</Accordion.Trigger>
+    <Accordion.Content>
+      Les styles reposent sur la couche mr.components avec zéro collision de spécificité.
+    </Accordion.Content>
+  </Accordion.Item>
+  <Accordion.Item value="item-2">
+    <Accordion.Trigger>Accessibilité WAI-ARIA</Accordion.Trigger>
+    <Accordion.Content>
+      Navigation fluide au clavier avec roving tabindex, touches fléchées et Home/End.
+    </Accordion.Content>
+  </Accordion.Item>
+  <Accordion.Item value="item-3">
+    <Accordion.Trigger>Personnalisation & Densité</Accordion.Trigger>
+    <Accordion.Content>
+      Tailles sm, md et lg avec espacements proportionnés et transitions CSS Grid fluides.
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion>`
+            }}
         >
             {(props) => (
-                <div style={{ width: '100%', maxWidth: 540 }}>
-                    <Accordion
-                        key={`${props.size}-${props.collapsible}-${props.allowMultiple}`}
-                        size={props.size as AccordionSize}
-                        collapsible={props.collapsible as boolean}
-                        allowMultiple={props.allowMultiple as boolean}
-                        defaultValue="item-1"
-                        items={accordionDemoItems}
-                    />
-                </div>
+                <AccordionPlaygroundContent
+                    apiMode={(props.apiMode as 'compound' | 'items') || 'compound'}
+                    size={props.size as AccordionSize}
+                    activeItem={(props.activeItem as string) || 'item-1'}
+                    collapsible={props.collapsible as boolean}
+                    allowMultiple={props.allowMultiple as boolean}
+                />
             )}
         </ComponentPlayground>
     )

@@ -65,7 +65,7 @@ export function SelectRequiredExample() {
 
 export function SelectSizesExample() {
     return (
-        <Stack direction="horizontal" gap="sm" align="start">
+        <Stack direction="horizontal" gap="sm" align="start" style={{ flexWrap: 'wrap' }}>
             <Select label="Small" size="sm">
                 <Select.Option>Small</Select.Option>
             </Select>

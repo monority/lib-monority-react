@@ -1,6 +1,6 @@
 import { useControllableState } from '@/internal/use-controllable-state'
 import { cn } from '@/lib/cn'
-import { createContext, useContext, useId } from 'react'
+import { createContext, useCallback, useContext, useId, useMemo } from 'react'
 import type {
     CollapsibleContentProps,
     CollapsibleProps,
@@ -73,7 +73,7 @@ export function CollapsibleContent({
             aria-labelledby={`${instanceId}-trigger`}
             className={cn('mr-collapsible__panel', className)}
             aria-hidden={!isOpen}
-            hidden={!isOpen ? true : undefined}
+            hidden={!isOpen ? ('until-found' as unknown as boolean) : undefined}
             data-state={state}
             {...props}
         >
@@ -105,19 +105,22 @@ export function Collapsible({
     const instanceId = useId()
     const state = isOpen ? 'open' : 'closed'
 
-    function toggle() {
+    const toggle = useCallback(() => {
         if (disabled) return
         setIsOpen(!isOpen)
-    }
+    }, [disabled, isOpen, setIsOpen])
 
-    const contextValue: CollapsibleContextValue = {
-        isOpen,
-        toggle,
-        disabled,
-        state,
-        size,
-        instanceId,
-    }
+    const contextValue = useMemo<CollapsibleContextValue>(
+        () => ({
+            isOpen,
+            toggle,
+            disabled,
+            state,
+            size,
+            instanceId,
+        }),
+        [isOpen, toggle, disabled, state, size, instanceId]
+    )
 
     return (
         <CollapsibleContext.Provider value={contextValue}>
@@ -157,7 +160,7 @@ export function Collapsible({
                             aria-labelledby={`${instanceId}-trigger`}
                             className="mr-collapsible__panel"
                             aria-hidden={!isOpen}
-                            hidden={!isOpen ? true : undefined}
+                            hidden={!isOpen ? ('until-found' as unknown as boolean) : undefined}
                             data-state={state}
                         >
                             <div className="mr-collapsible__content mr-accordion__content">

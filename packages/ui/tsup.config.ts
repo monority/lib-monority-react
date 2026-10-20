@@ -94,6 +94,7 @@ export default defineConfig({
         providers: 'src/providers/index.ts',
         primitives: 'src/primitives/index.ts',
         lib: 'src/lib/index.ts',
+        icons: 'src/icons/index.ts',
         'get-theme-script': 'src/providers/get-theme-script.ts',
     },
     format: ['esm'],

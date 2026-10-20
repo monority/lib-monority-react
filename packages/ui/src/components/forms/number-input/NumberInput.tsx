@@ -1,21 +1,13 @@
 import { Field } from '@/components/forms/field/Field'
+import { IconMinus, IconPlus } from '@/icons'
 import { cn } from '@/lib/cn'
 import { FormControl } from '@/primitives/form-control'
 import { InputBase } from '@/primitives/input-base'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import type { NumberInputProps } from './NumberInput.types'
 
-const MinusIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-)
-
-const PlusIcon = () => (
-    <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M3 8H13M8 3V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-)
+const MinusIcon = () => <IconMinus size="1em" strokeWidth={2} />
+const PlusIcon = () => <IconPlus size="1em" strokeWidth={2} />
 
 function parseNumeric(value: string): number | null {
     if (value === '' || value === '-' || value === '.') return null
