@@ -116,7 +116,13 @@
         cursor: pointer;
         text-overflow: ellipsis;
         white-space: nowrap;
-        transition: border-color var(--mr-duration-state);
+        transition: border-color var(--mr-duration-state) var(--mr-ease-out), background-color
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring), box-shadow var(--mr-duration-state) var(--mr-ease-out);
+    }
+
+    :where(.mr-select):active:where(:not(:disabled)) {
+        transform: scale(0.995);
     }
 
     /* Option par defaut non selectionnee (placeholder avec value vide) */
@@ -155,11 +161,13 @@
         border-color: var(--mr-text-secondary);
         outline: 1px solid var(--mr-text-secondary);
         outline-offset: 0;
+        box-shadow: 0 0 0 2px color-mix(in oklch, var(--mr-text-secondary) 25%, transparent);
     }
 
     /* Survol (uniquement avec pointeur survolant) : exclut desactive et invalide */
     @media (hover: hover) {
         :where(.mr-select):hover:where(:not(:disabled, [aria-invalid='true'])) {
+            background-color: var(--mr-bg-muted);
             border-color: color-mix(
                 in oklch,
                 var(--mr-border-control),
@@ -169,16 +177,13 @@
 
         :where(.mr-select-wrapper):hover:where(:not([data-disabled], [data-invalid]))::after {
             border-color: var(--mr-text-primary);
+            transform: translateY(-55%) rotate(45deg);
         }
     }
 
-    /* Chevron lors du focus sur le select */
+    /* Chevron lors du focus, du survol ou de l'ouverture du select */
     :where(.mr-select-wrapper:has(:where(.mr-select:focus-visible)))::after,
-    :where(.mr-select-wrapper:has(:where(.mr-select:focus)))::after {
-        border-color: var(--mr-text-primary);
-    }
-
-    /* Rotation du chevron lorsque le select est actif ou ouvert */
+    :where(.mr-select-wrapper:has(:where(.mr-select:focus)))::after,
     :where(.mr-select-wrapper:has(:where(.mr-select:open)))::after,
     :where(.mr-select-wrapper:has(:where(.mr-select:active)))::after {
         transform: translateY(-30%) rotate(225deg);
@@ -195,6 +200,7 @@
         border-color: var(--mr-danger-solid);
         outline: 2px solid var(--mr-danger-solid);
         outline-offset: 0;
+        box-shadow: 0 0 0 2px color-mix(in oklch, var(--mr-danger-solid) 25%, transparent);
     }
 
     :where(.mr-select-wrapper)[data-invalid]::after {

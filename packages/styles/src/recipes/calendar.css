@@ -88,6 +88,39 @@
         gap: var(--mr-space-1);
     }
 
+    :where(.mr-calendar__select-wrapper) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+    }
+
+    :where(.mr-calendar__select-wrapper)::after {
+        content: '';
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--mr-space-2);
+        inline-size: var(--mr-space-1);
+        block-size: var(--mr-space-1);
+        border-inline-end: 1px solid var(--mr-text-secondary);
+        border-block-end: 1px solid var(--mr-text-secondary);
+        box-sizing: border-box;
+        pointer-events: none;
+        transform: translateY(-70%) rotate(45deg);
+        transition: border-color var(--mr-duration-state) var(--mr-ease-out), transform
+            var(--mr-duration-state) var(--mr-ease-spring);
+    }
+
+    :where(.mr-calendar__select-wrapper:hover)::after {
+        border-color: var(--mr-text-primary);
+        transform: translateY(-55%) rotate(45deg);
+    }
+
+    :where(.mr-calendar__select-wrapper:focus-within)::after {
+        border-color: var(--mr-focus-ring);
+        transform: translateY(-30%) rotate(225deg);
+    }
+
     :where(.mr-calendar__select) {
         box-sizing: border-box;
         appearance: none;
@@ -99,19 +132,25 @@
         line-height: 1;
         block-size: var(--mr-size-control-sm);
         padding-block: 0;
-        padding-inline: var(--mr-space-2);
+        padding-inline-start: var(--mr-space-2);
+        padding-inline-end: calc(var(--mr-space-3) + var(--mr-space-1));
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-sm);
         cursor: pointer;
         outline: none;
         text-align: center;
         transition: background-color var(--mr-duration-state) var(--mr-ease-out), border-color
-            var(--mr-duration-state) var(--mr-ease-out);
+            var(--mr-duration-state) var(--mr-ease-out), transform var(--mr-duration-instant)
+            var(--mr-ease-spring), box-shadow var(--mr-duration-state) var(--mr-ease-out);
     }
 
     :where(.mr-calendar__select:hover) {
         background-color: var(--mr-bg-muted);
         border-color: var(--mr-border-control);
+    }
+
+    :where(.mr-calendar__select:active) {
+        transform: scale(0.98);
     }
 
     :where(.mr-calendar__select:focus-visible) {

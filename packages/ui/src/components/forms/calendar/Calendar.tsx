@@ -94,8 +94,8 @@ export function Calendar({
     })
 
     const currentYear = (selectedDate ?? viewDate ?? today).getFullYear()
-    const defaultStartYear = Math.min(today.getFullYear() - 5, currentYear)
-    const defaultEndYear = Math.max(today.getFullYear() + 5, currentYear)
+    const defaultStartYear = Math.min(today.getFullYear() - 100, currentYear)
+    const defaultEndYear = Math.max(today.getFullYear() + 20, currentYear)
     const startYear = fromYear ?? (minDate ? minDate.getFullYear() : defaultStartYear)
     const endYear = toYear ?? (maxDate ? maxDate.getFullYear() : defaultEndYear)
     const years = Array.from(
@@ -490,9 +490,11 @@ export function CalendarNavButton({
 
 export function CalendarSelect({ ref, className, children, ...props }: CalendarSelectProps) {
     return (
-        <select ref={ref} className={cn('mr-calendar__select', className)} {...props}>
-            {children}
-        </select>
+        <span className="mr-calendar__select-wrapper">
+            <select ref={ref} className={cn('mr-calendar__select', className)} {...props}>
+                {children}
+            </select>
+        </span>
     )
 }
 

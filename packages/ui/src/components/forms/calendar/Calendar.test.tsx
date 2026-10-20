@@ -290,13 +290,14 @@ describe('Calendar', () => {
         expect(view.querySelector('.mr-calendar__header')).not.toBeNull()
     })
 
-    it('renders a compact default year list and supports fromYear and toYear', () => {
+    it('renders scrollable past years in the dropdown and supports fromYear and toYear', () => {
         const view = render(<Calendar showPickers value={new Date(2025, 4, 1)} />)
         const yearSelect = view.querySelector('.mr-calendar__select--year') as HTMLSelectElement
         expect(yearSelect).not.toBeNull()
-        // Default range is currentYear - 5 to currentYear + 5 (11 options)
-        expect(yearSelect.options.length).toBeLessThanOrEqual(15)
-        expect(yearSelect.options.length).toBeGreaterThanOrEqual(10)
+        expect(view.querySelector('.mr-calendar__select-wrapper')).not.toBeNull()
+        // Allows selecting past years up to 100 years back
+        expect(yearSelect.options.length).toBeGreaterThanOrEqual(100)
+        expect(yearSelect.textContent).toContain('1950')
 
         const customView = render(
             <Calendar showPickers value={new Date(2025, 4, 1)} fromYear={2020} toYear={2026} />
