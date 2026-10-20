@@ -1,4 +1,4 @@
-﻿import { SidebarLayout } from '@monority/ui/sidebar-layout'
+import { SidebarLayout } from '@monority/ui/sidebar-layout'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
@@ -91,20 +91,13 @@ function SidebarLayoutPlayground() {
                     }
                     header={
                         showHeader ? (
-                            <div
-                                style={{
-                                    padding: '8px 16px',
-                                    fontWeight: 600,
-                                    borderBottom: '1px solid var(--mr-border-subtle, #e2e8f0)',
-                                    fontSize: '0.875rem',
-                                }}
-                            >
+                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
                                 En-tête applicatif
                             </div>
                         ) : undefined
                     }
                 >
-                    <div style={{ padding: 16 }}>
+                    <div>
                         <h4 style={{ margin: '0 0 8px' }}>Zone de travail principale</h4>
                         <p
                             style={{

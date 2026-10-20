@@ -523,6 +523,7 @@
 }
 
 .docs-example-content {
+    box-sizing: border-box;
     padding: var(--mr-space-5);
     background: var(--mr-bg-surface);
 }

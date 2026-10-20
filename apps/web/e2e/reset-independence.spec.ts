@@ -86,11 +86,15 @@ async function collectStyles(page: Page, url: string, withoutReset: boolean) {
         })
     }
     await page.goto(url)
-    await page.waitForSelector('.docs-preview-area [class*="mr-"]')
+    await page.waitForSelector(
+        '.component-playground__canvas [class*="mr-"], .docs-preview-area [class*="mr-"], .docs-example-content [class*="mr-"]'
+    )
     const styles = await page.evaluate(
         (props: string[]) => {
             const scopes = Array.from(
-                document.querySelectorAll('.docs-preview-area, .docs-example-content')
+                document.querySelectorAll(
+                    '.component-playground__canvas, .docs-preview-area, .docs-example-content'
+                )
             )
             const roots = scopes.flatMap((scope) =>
                 Array.from(scope.querySelectorAll('[class*="mr-"]')).concat(

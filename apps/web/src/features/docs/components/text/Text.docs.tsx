@@ -112,7 +112,7 @@ const docData: DocPageData = {
         { name: 'children', type: 'ReactNode', defaultValue: '-', description: 'Text content.' },
     ],
     cssHooks: ['.mr-text', '[data-size]', '[data-tone]'],
-    tokens: ['--mr-text-primary', '--mr-text-secondary', '--mr-text-primary', '--mr-text-*'],
+    tokens: ['--mr-text-primary', '--mr-text-secondary', '--mr-text-*'],
     a11y: [
         'Use concise text.',
         'Tone variants use color -- avoid color-only meaning for critical states.',

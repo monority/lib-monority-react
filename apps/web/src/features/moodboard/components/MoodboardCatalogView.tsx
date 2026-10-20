@@ -304,9 +304,7 @@ export function MoodboardCatalogView() {
 
                                 <HoverCard
                                     content={
-                                        <div
-                                            style={{ padding: 'var(--mr-space-3)', width: '220px' }}
-                                        >
+                                        <div style={{ width: '220px' }}>
                                             <Title as="h4" size="sm">
                                                 Agent de télémétrie
                                             </Title>

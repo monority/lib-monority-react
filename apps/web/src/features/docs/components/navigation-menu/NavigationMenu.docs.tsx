@@ -1,4 +1,4 @@
-﻿import { NavigationMenu } from '@monority/ui/navigation-menu'
+import { NavigationMenu } from '@monority/ui/navigation-menu'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
@@ -67,13 +67,14 @@ function NavigationMenuPlayground() {
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    minHeight: 180,
+                    alignItems: 'flex-start',
+                    minHeight: 260,
                     width: '100%',
                     paddingTop: 8,
                 }}
             >
                 <NavigationMenu
-                    value={activeSection === 'none' ? undefined : activeSection}
+                    value={activeSection === 'none' ? '' : activeSection}
                     onValueChange={(v) =>
                         setActiveSection(v ? (v as 'components' | 'solutions') : 'none')
                     }

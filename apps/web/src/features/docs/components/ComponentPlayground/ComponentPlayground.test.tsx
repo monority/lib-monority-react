@@ -114,4 +114,42 @@ describe('ComponentPlayground', () => {
 
         expect(screen.getByTestId('val')).toHaveTextContent('primary')
     })
+
+    it('resets controlled controls and triggers onReset callback', () => {
+        let externalState = 'active'
+        const handleChange = (v: string) => {
+            externalState = v
+        }
+        let resetCalled = false
+        const handleReset = () => {
+            resetCalled = true
+        }
+
+        render(
+            <ComponentPlayground
+                componentName="Controlled"
+                onReset={handleReset}
+                controls={[
+                    {
+                        type: 'select',
+                        label: 'Status',
+                        value: externalState,
+                        options: ['active', 'inactive'],
+                        onChange: handleChange,
+                    },
+                ]}
+                render={() => <div>Test</div>}
+            />
+        )
+
+        const select = screen.getByLabelText('Status')
+        fireEvent.change(select, { target: { value: 'inactive' } })
+        expect(externalState).toBe('inactive')
+
+        const resetBtn = screen.getByRole('button', { name: /reset/i })
+        fireEvent.click(resetBtn)
+
+        expect(resetCalled).toBe(true)
+        expect(externalState).toBe('active')
+    })
 })

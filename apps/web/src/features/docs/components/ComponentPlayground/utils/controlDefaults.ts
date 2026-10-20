@@ -28,9 +28,15 @@ export function getDefaultValues<T extends Record<string, unknown>>(
 /**
  * Dispatches reset callbacks for controlled items when reset is triggered.
  */
-export function notifyControlResets(controls: PlaygroundControl[]): void {
+export function notifyControlResets(
+    controls: PlaygroundControl[],
+    initialDefaults?: Record<string, unknown>
+): void {
+    let idx = 0
     for (const ctrl of controls) {
-        const fallback = ctrl.defaultValue
+        const key = getControlKey(ctrl, idx)
+        const fallback =
+            ctrl.defaultValue !== undefined ? ctrl.defaultValue : initialDefaults?.[key]
         if (ctrl.type === 'select' && ctrl.onChange && typeof fallback === 'string') {
             ctrl.onChange(fallback)
         } else if (ctrl.type === 'boolean' && ctrl.onChange && typeof fallback === 'boolean') {
@@ -40,5 +46,6 @@ export function notifyControlResets(controls: PlaygroundControl[]): void {
         } else if (ctrl.type === 'number' && ctrl.onChange && typeof fallback === 'number') {
             ctrl.onChange(fallback)
         }
+        idx++
     }
 }

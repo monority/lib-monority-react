@@ -65,5 +65,6 @@ export interface ComponentPlaygroundProps<
     renderCode?: (props: T) => string
     codeSnippet?: string
     initialValues?: Partial<T>
+    onReset?: () => void
     className?: string
 }

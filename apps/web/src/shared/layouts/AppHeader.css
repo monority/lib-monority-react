@@ -365,7 +365,7 @@
 
 @media (max-width: 640px) {
     .app-header__start {
-        gap: var(--mr-space-3);
+        gap: var(--mr-space-2);
     }
 
     .app-header__inner {
@@ -373,6 +373,18 @@
     }
 
     .app-header__center {
+        display: none;
+    }
+
+    .app-header__nav {
+        display: none;
+    }
+
+    .app-header__logo-badge {
+        display: none;
+    }
+
+    .app-header__motion .mr-btn__label {
         display: none;
     }
 }

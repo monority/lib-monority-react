@@ -1,4 +1,4 @@
-﻿import { Button } from '@monority/ui/button'
+import { Button } from '@monority/ui/button'
 import { Topbar } from '@monority/ui/topbar'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
@@ -73,6 +73,7 @@ function TopbarPlayground() {
                     border: '1px solid var(--mr-border-subtle, #e2e8f0)',
                     borderRadius: 8,
                     overflow: 'hidden',
+                    boxSizing: 'border-box',
                 }}
             >
                 <Topbar>

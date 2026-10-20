@@ -1,3 +1,10 @@
+.component-playground,
+.component-playground *,
+.component-playground *::before,
+.component-playground *::after {
+    box-sizing: border-box;
+}
+
 .component-playground {
     display: flex;
     flex-direction: column;
@@ -6,6 +13,18 @@
     background: var(--mr-bg-surface);
     overflow: hidden;
     width: 100%;
+}
+
+.component-playground:has(
+        .mr-menubar,
+        .mr-nav-menu,
+        .mr-dropdown,
+        .mr-popover,
+        .mr-combobox,
+        [data-open],
+        [data-active='true']
+    ) {
+    overflow: visible;
 }
 
 .component-playground__header {
@@ -51,6 +70,19 @@
     /* Subtle dot grid pattern for elevated engineering aesthetic */
     background-image: radial-gradient(var(--mr-border-subtle) 1px, transparent 1px);
     background-size: 16px 16px;
+}
+
+.component-playground__stage:has(
+        .mr-menubar,
+        .mr-nav-menu,
+        .mr-dropdown,
+        .mr-popover,
+        .mr-combobox,
+        [data-open],
+        [data-active='true']
+    ) {
+    overflow: visible;
+    z-index: var(--mr-z-nav-open);
 }
 
 :where(

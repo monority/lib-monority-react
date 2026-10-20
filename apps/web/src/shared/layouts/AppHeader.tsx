@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { docsComponentRegistry } from '@/features/docs/components/registry'
+import { MotionToggle } from './MotionToggle'
 import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
 
@@ -381,6 +382,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                 </Stack>
                             </Popover.Content>
                         </Popover>
+                        <MotionToggle className="app-header__motion" />
                         <ThemeToggle className="app-header__theme" />
                         <a
                             href="https://github.com/monority/lib-monority-react"

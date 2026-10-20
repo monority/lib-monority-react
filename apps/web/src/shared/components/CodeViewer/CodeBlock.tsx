@@ -10,6 +10,7 @@ hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('typescript', typescript)
 hljs.registerLanguage('tsx', typescript)
 hljs.registerLanguage('xml', xml)
+hljs.configure({ ignoreUnescapedHTML: true })
 
 export interface CodeBlockProps {
     children: string

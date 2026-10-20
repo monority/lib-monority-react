@@ -1,5 +1,5 @@
 import { CodeViewer } from '@/shared/components/CodeViewer'
-import { type ReactNode, useId, useMemo, useState } from 'react'
+import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import type { ComponentPlaygroundProps, PlaygroundControl } from './ComponentPlayground.types'
 import { PlaygroundControls, PlaygroundHeader, PlaygroundStage } from './components'
 import { formatCode, getDefaultValues, notifyControlResets } from './utils'
@@ -17,16 +17,22 @@ export function ComponentPlayground<T extends Record<string, unknown> = Record<s
     renderCode,
     codeSnippet,
     initialValues,
+    onReset,
     className = '',
 }: ComponentPlaygroundProps<T>) {
     const baseId = useId()
     const resolvedName = componentName || title || 'Component'
-    const [values, setValues] = useState<T>(() => getDefaultValues<T>(controls, initialValues))
+    const initialDefaultsRef = useRef<T | null>(null)
+    if (!initialDefaultsRef.current) {
+        initialDefaultsRef.current = getDefaultValues<T>(controls, initialValues)
+    }
+    const [values, setValues] = useState<T>(initialDefaultsRef.current)
 
     const handleReset = () => {
-        const defaults = getDefaultValues<T>(controls, initialValues)
+        const defaults = initialDefaultsRef.current ?? getDefaultValues<T>(controls, initialValues)
         setValues(defaults)
-        notifyControlResets(controls)
+        notifyControlResets(controls, defaults)
+        onReset?.()
     }
 
     const handleValueChange = (ctrl: PlaygroundControl, key: string, value: unknown) => {

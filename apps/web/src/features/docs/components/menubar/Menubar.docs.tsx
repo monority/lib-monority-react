@@ -1,4 +1,4 @@
-﻿import { Menubar } from '@monority/ui/menubar'
+import { Menubar } from '@monority/ui/menubar'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
@@ -60,7 +60,8 @@ function MenubarPlayground() {
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    minHeight: 180,
+                    alignItems: 'flex-start',
+                    minHeight: 260,
                     width: '100%',
                     paddingTop: 12,
                 }}
