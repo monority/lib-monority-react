@@ -6,7 +6,7 @@
         align-items: center;
         gap: var(--mr-space-1);
         border-radius: var(--mr-radius-full);
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-weight: var(--mr-font-weight-medium);
         font-variant-numeric: tabular-nums;
         line-height: 1;

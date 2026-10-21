@@ -28,7 +28,7 @@ describe('AppHeader', () => {
         expect(within(nav).queryByRole('link', { name: 'Playground' })).toBeNull()
     })
 
-    it('expose un seul bouton de bascule Light/Dark, sans sélecteur d accent', () => {
+    it('expose un sélecteur de thème dropdown accessible, sans sélecteur d accent', () => {
         renderHeader()
 
         expect(screen.queryByLabelText('Accent')).not.toBeInTheDocument()
@@ -38,18 +38,16 @@ describe('AppHeader', () => {
         expect(toggle).toBeInTheDocument()
     })
 
-    it('bascule entre light et dark au clic', () => {
+    it('permet de changer de thème via le menu déroulant', () => {
         renderHeader()
 
-        // Thème initial : light → le bouton propose de passer en sombre.
         const toggle = screen.getByRole('button', { name: /thème/i })
-        expect(toggle).toHaveTextContent('Dark')
-
         fireEvent.click(toggle)
-        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Light')
 
-        fireEvent.click(screen.getByRole('button', { name: /thème/i }))
-        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Dark')
+        const darkOption = screen.getByRole('menuitem', { name: /sombre/i })
+        fireEvent.click(darkOption)
+
+        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Sombre')
     })
 
     it('conserve la variante home pour la page d accueil', () => {

@@ -68,7 +68,7 @@
         min-inline-size: calc(var(--mr-space-6) * 5);
         margin-block-start: var(--mr-space-1);
         padding: var(--mr-space-1);
-        background-color: var(--mr-bg-raised);
+        background-color: var(--mr-bg-overlay);
         border: 1px solid var(--mr-border-default);
         border-radius: var(--mr-radius-md);
         box-shadow: var(--mr-shadow-overlay);

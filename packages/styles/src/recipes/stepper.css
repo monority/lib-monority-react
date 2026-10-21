@@ -62,9 +62,9 @@
     }
 
     :where(.mr-stepper__item[data-status='completed']) :where(.mr-stepper__indicator) {
-        border-color: var(--mr-status-success-border);
-        background-color: var(--mr-status-success-bg);
-        color: var(--mr-status-success-text);
+        border-color: var(--mr-success-border);
+        background-color: var(--mr-success-subtle);
+        color: var(--mr-success-text);
     }
 
     :where(.mr-stepper__content) {
@@ -80,7 +80,7 @@
         font-size: var(--mr-font-size-sm);
         font-weight: var(--mr-font-weight-medium);
         color: var(--mr-text-secondary);
-        line-height: var(--mr-leading-snug);
+        line-height: var(--mr-line-height-sm);
     }
 
     :where(.mr-stepper__item[data-status='active']) :where(.mr-stepper__title) {
@@ -96,8 +96,8 @@
         margin: 0;
         font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-xs);
-        color: var(--mr-text-muted);
-        line-height: var(--mr-leading-normal);
+        color: var(--mr-text-secondary);
+        line-height: var(--mr-line-height-md);
     }
 
     :where(.mr-stepper__connector) {
@@ -109,7 +109,7 @@
     }
 
     :where(.mr-stepper__item[data-status='completed']) + :where(.mr-stepper__connector) {
-        background-color: var(--mr-status-success-border);
+        background-color: var(--mr-success-border);
     }
 
     :where(.mr-stepper[data-orientation='vertical']) :where(.mr-stepper__connector) {

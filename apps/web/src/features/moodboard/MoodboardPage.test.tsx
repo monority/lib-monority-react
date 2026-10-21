@@ -256,6 +256,9 @@ describe('MoodboardPage', () => {
         const toggle = screen.getByRole('button', { name: /thème/i })
         fireEvent.click(toggle)
 
+        const option = screen.getByRole('menuitem', { name: /clair/i })
+        fireEvent.click(option)
+
         expect(scope).toHaveAttribute('data-design-theme', 'light')
     })
 

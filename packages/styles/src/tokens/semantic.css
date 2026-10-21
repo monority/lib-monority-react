@@ -8,16 +8,17 @@
     /* Valeurs literales, dependantes des neutres, echelles et alias */
     :where(:root, [data-theme]) {
         /* Fonds */
-        --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-surface: oklch(0.985 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-raised: oklch(0.995 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-sunken: var(--mr-bg-canvas);
+        --mr-bg-canvas: oklch(1 0 0);
+        --mr-bg-surface: oklch(1 0 0);
+        --mr-bg-raised: oklch(1 0 0);
+        --mr-bg-sunken: oklch(0.965 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-overlay: var(--mr-bg-raised);
         --mr-bg-inverse: var(--mr-text-primary);
 
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-secondary: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-tertiary: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-on-inverse: var(--mr-bg-canvas);
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
@@ -29,7 +30,7 @@
         --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Statuts et tons de retour (danger 25, succes 155, avertissement 80, info 255) :
-         * Roles : subtle (fond), border (bordure), text (texte, point, icone, rail).
+         * Roles : solid (plein), subtle (fond), border (bordure), text (texte, point, icone, rail).
          * Conformes WCAG AA >= 4.5:1 pour le texte sur subtle et sur canevas. */
         --mr-danger-solid: oklch(0.52 0.2 25);
         --mr-danger-on-solid: var(--mr-bg-canvas);
@@ -37,14 +38,20 @@
         --mr-danger-border: oklch(0.82 0.12 25);
         --mr-danger-text: oklch(0.42 0.18 25);
 
+        --mr-success-solid: oklch(0.52 0.18 155);
+        --mr-success-on-solid: var(--mr-bg-canvas);
         --mr-success-subtle: oklch(0.945 0.065 155);
         --mr-success-border: oklch(0.82 0.12 155);
         --mr-success-text: oklch(0.38 0.15 155);
 
+        --mr-warning-solid: oklch(0.65 0.18 80);
+        --mr-warning-on-solid: var(--mr-bg-canvas);
         --mr-warning-subtle: oklch(0.945 0.07 80);
         --mr-warning-border: oklch(0.82 0.13 80);
         --mr-warning-text: oklch(0.4 0.15 80);
 
+        --mr-info-solid: oklch(0.52 0.18 255);
+        --mr-info-on-solid: var(--mr-bg-canvas);
         --mr-info-subtle: oklch(0.945 0.065 255);
         --mr-info-border: oklch(0.82 0.12 255);
         --mr-info-text: oklch(0.38 0.15 255);

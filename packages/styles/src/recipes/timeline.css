@@ -160,7 +160,7 @@
         margin-inline: calc(-1 * var(--mr-space-2));
         border-radius: var(--mr-radius-md);
         transition: background-color var(--mr-duration-state) ease, transform
-            var(--mr-duration-fast) ease;
+            var(--mr-duration-instant) ease;
     }
 
     :where(.mr-timeline__item)[data-interactive='true']:hover {
@@ -187,15 +187,15 @@
         align-self: start;
         border-radius: var(--mr-radius-full);
         margin-block-start: calc((var(--mr-timeline-rail-width) - var(--mr-timeline-dot-size)) / 2);
-        border: 2px solid var(--mr-border-strong);
-        background-color: var(--mr-bg-canvas);
-        box-shadow: 0 0 0 2px var(--mr-bg-canvas);
+        border: 2px solid var(--mr-border-control);
+        background-color: var(--mr-bg-surface);
+        box-shadow: 0 0 0 2px var(--mr-bg-surface);
         box-sizing: border-box;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         color: var(--mr-text-secondary);
-        transition: transform var(--mr-duration-fast) ease, border-color var(--mr-duration-state)
+        transition: transform var(--mr-duration-instant) ease, border-color var(--mr-duration-state)
             ease, background-color var(--mr-duration-state) ease;
     }
 
@@ -216,8 +216,8 @@
     /* Statuts chromatiques et variantes du point */
     /* Points sans icône (points simples / dots) */
     :where(.mr-timeline__point):not([data-has-icon='true']) {
-        background-color: var(--mr-bg-canvas);
-        border-color: var(--mr-border-strong);
+        background-color: var(--mr-bg-surface);
+        border-color: var(--mr-border-control);
     }
 
     :where(.mr-timeline__point):not([data-has-icon='true'])[data-status='primary'] {
@@ -242,7 +242,7 @@
     }
 
     :where(.mr-timeline__point):not([data-has-icon='true'])[data-status='in-progress'] {
-        background-color: var(--mr-bg-canvas);
+        background-color: var(--mr-bg-surface);
         border-color: var(--mr-accent-solid);
         animation: mr-timeline-pulse var(--mr-duration-pulse) ease-in-out infinite;
     }
@@ -288,7 +288,7 @@
 
     /* Variantes Outline */
     :where(.mr-timeline__point)[data-variant='outline'] {
-        background-color: var(--mr-bg-canvas);
+        background-color: var(--mr-bg-surface);
     }
 
     :where(.mr-timeline__point)[data-variant='outline'][data-status='primary'] {
@@ -328,11 +328,11 @@
     @keyframes mr-timeline-pulse {
         0%,
         100% {
-            box-shadow: 0 0 0 2px var(--mr-bg-canvas), 0 0 0 0
+            box-shadow: 0 0 0 2px var(--mr-bg-surface), 0 0 0 0
                 color-mix(in oklch, var(--mr-accent-solid) 40%, transparent);
         }
         50% {
-            box-shadow: 0 0 0 2px var(--mr-bg-canvas), 0 0 0 var(--mr-space-1)
+            box-shadow: 0 0 0 2px var(--mr-bg-surface), 0 0 0 var(--mr-space-1)
                 color-mix(in oklch, var(--mr-accent-solid) 0%, transparent);
         }
     }
@@ -379,7 +379,7 @@
         display: inline-flex;
         align-items: center;
         gap: var(--mr-space-1);
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-xs);
         color: var(--mr-text-tertiary);
         margin-inline-start: auto;
@@ -392,11 +392,11 @@
 
     :where(.mr-timeline__title) {
         margin: 0;
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-sm);
         font-weight: var(--mr-font-weight-semibold);
         color: var(--mr-text-primary);
-        line-height: var(--mr-line-height-tight);
+        line-height: var(--mr-line-height-sm);
     }
 
     :where(.mr-timeline)[data-size='sm'] :where(.mr-timeline__title) {
@@ -412,16 +412,16 @@
         font-size: var(--mr-font-size-xs);
         font-variant-numeric: tabular-nums;
         color: var(--mr-text-tertiary);
-        line-height: var(--mr-line-height-normal);
+        line-height: var(--mr-line-height-md);
         white-space: nowrap;
     }
 
     :where(.mr-timeline__description) {
         margin: 0;
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-secondary);
-        line-height: var(--mr-line-height-normal);
+        line-height: var(--mr-line-height-md);
         margin-block-start: var(--mr-space-1);
     }
 

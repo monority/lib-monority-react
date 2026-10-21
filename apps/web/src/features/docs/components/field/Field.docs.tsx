@@ -3,6 +3,7 @@ import { Input } from '@monority/ui/input'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
+    FieldCompleteFormExample,
     FieldCompositionExample,
     FieldGroupExample,
     FieldRequiredExample,
@@ -10,6 +11,11 @@ import {
     FieldStandaloneExample,
     FieldWithErrorExample,
     FieldWithHintExample,
+    FieldWithNumberInputExample,
+    FieldWithSelectExample,
+    FieldWithSliderExample,
+    FieldWithSwitchExample,
+    FieldWithTextareaExample,
 } from './Field.examples'
 
 function FieldPlayground() {
@@ -88,6 +94,76 @@ import { Input } from '@monority/ui/input'`,
 </Field>`,
     preview: () => <FieldPlayground />,
     examples: [
+        {
+            title: 'Avec Select',
+            content: <FieldWithSelectExample />,
+            code: `<Field label="Rôle dans l’espace" hint="Détermine le niveau d’accès aux déploiements et aux secrets." required>
+  <Select defaultValue="developer">
+    <Select.Option value="owner">Propriétaire (accès complet)</Select.Option>
+    <Select.Option value="admin">Administrateur</Select.Option>
+    <Select.Option value="developer">Développeur</Select.Option>
+    <Select.Option value="viewer">Observateur (lecture seule)</Select.Option>
+  </Select>
+</Field>`,
+        },
+        {
+            title: 'Avec Textarea',
+            content: <FieldWithTextareaExample />,
+            code: `<Field label="Description du service" hint="Présentez les objectifs de ce composant et son périmètre fonctionnel.">
+  <Textarea rows={3} placeholder="Microservice de gestion des profils et autorisations OAuth2..." />
+</Field>`,
+        },
+        {
+            title: 'Avec NumberInput',
+            content: <FieldWithNumberInputExample />,
+            code: `<Field label="Instances minimales" hint="Nombre d’instances actives maintenues en haute disponibilité." required>
+  <NumberInput defaultValue={3} min={1} max={16} />
+</Field>`,
+        },
+        {
+            title: 'Avec Slider',
+            content: <FieldWithSliderExample />,
+            code: `<Field label="Seuil d’alerte de saturation CPU" hint="Déclenche une notification automatique dès que la consommation dépasse ce seuil.">
+  <Slider defaultValue={[75]} min={10} max={100} step={5} />
+</Field>`,
+        },
+        {
+            title: 'Avec Switch',
+            content: <FieldWithSwitchExample />,
+            code: `<Field label="Déploiement continu" hint="Applique automatiquement chaque commit validé sur la branche de production.">
+  <Switch label="Activer le déploiement continu" defaultChecked />
+</Field>`,
+        },
+        {
+            title: 'Formulaire complet multi-composants',
+            content: <FieldCompleteFormExample />,
+            code: `<Card data-padding="lg">
+  <Card.Header>
+    <Card.Title>Configuration du Service</Card.Title>
+  </Card.Header>
+  <Card.Content>
+    <Stack gap="md">
+      <Field label="Identifiant" hint="Nom unique" required>
+        <Input defaultValue="auth-gateway-service" />
+      </Field>
+      <Field.Group direction="row">
+        <Field label="Environnement" required className="flex-1">
+          <Select defaultValue="staging">...</Select>
+        </Field>
+        <Field label="Répliques" required className="flex-1">
+          <NumberInput defaultValue={2} min={1} max={8} />
+        </Field>
+      </Field.Group>
+      <Field label="Rétention des logs">
+        <Textarea rows={2} defaultValue="..." />
+      </Field>
+      <Field label="Sécurité">
+        <Switch label="Signature obligatoire" defaultChecked />
+      </Field>
+    </Stack>
+  </Card.Content>
+</Card>`,
+        },
         {
             title: 'With hint',
             content: <FieldWithHintExample />,

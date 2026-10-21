@@ -213,19 +213,19 @@
 
     :where(.mr-sheet__title) {
         margin: 0;
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-lg);
         font-weight: var(--mr-font-weight-semibold);
-        line-height: var(--mr-line-height-tight);
+        line-height: var(--mr-line-height-sm);
         color: var(--mr-text-primary);
     }
 
     :where(.mr-sheet__description) {
         margin: 0;
-        font-family: var(--mr-font-family-base);
+        font-family: var(--mr-font-family-sans);
         font-size: var(--mr-font-size-sm);
         color: var(--mr-text-secondary);
-        line-height: var(--mr-line-height-normal);
+        line-height: var(--mr-line-height-md);
     }
 
     :where(.mr-sheet__close) {

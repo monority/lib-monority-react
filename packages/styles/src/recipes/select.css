@@ -98,7 +98,8 @@
         padding-block: 0;
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-md);
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
         color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-font-size-md);
@@ -161,7 +162,6 @@
     /* Survol (uniquement avec pointeur survolant) : exclut desactive et invalide */
     @media (hover: hover) {
         :where(.mr-select):hover:where(:not(:disabled, [aria-invalid='true'])) {
-            background-color: var(--mr-bg-muted);
             border-color: color-mix(
                 in oklch,
                 var(--mr-border-control),
@@ -199,10 +199,12 @@
         border-color: var(--mr-danger-solid);
     }
 
-    /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
+    /* Etat desactive : curseur not-allowed, texte attenue, fond estompe et bordure estompee vers le canevas */
     :where(.mr-select):disabled {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
+        background-color: var(--mr-bg-sunken);
+        box-shadow: none;
         border-color: color-mix(
             in oklch,
             var(--mr-border-control),
@@ -260,8 +262,8 @@
         max-block-size: calc(var(--mr-size-control-md) * 6.5);
         overflow-y: auto;
         overscroll-behavior: contain;
-        background-color: var(--mr-bg-raised);
-        border: 1px solid var(--mr-border-control);
+        background-color: var(--mr-bg-overlay);
+        border: 1px solid var(--mr-border-default);
         border-radius: var(--mr-radius-md);
         box-shadow: var(--mr-shadow-overlay);
         padding: var(--mr-space-1);
@@ -319,19 +321,19 @@
 
     :where(.mr-select__dropdown-item:hover),
     :where(.mr-select__dropdown-item[data-highlighted='true']) {
-        background-color: var(--mr-bg-muted);
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
         color: var(--mr-text-primary);
     }
 
     :where(.mr-select__dropdown-item--selected) {
-        background-color: color-mix(in oklch, var(--mr-accent-solid) 12%, var(--mr-bg-raised));
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
         color: var(--mr-text-primary);
         font-weight: var(--mr-font-weight-medium);
     }
 
     :where(.mr-select__dropdown-item--selected:hover),
     :where(.mr-select__dropdown-item--selected[data-highlighted='true']) {
-        background-color: color-mix(in oklch, var(--mr-accent-solid) 18%, var(--mr-bg-raised));
+        background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));
     }
 
     :where(.mr-select__dropdown-item):disabled,

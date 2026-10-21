@@ -20,6 +20,7 @@
         /* Textes : noir intense (ratio 20.6:1) et secondaire renforce (ratio 13.6:1, AAA) */
         --mr-text-primary: oklch(0.1 0 0);
         --mr-text-secondary: oklch(0.3 0 0);
+        --mr-text-tertiary: oklch(0.4 0 0);
 
         /* Texte desactive : ratio 6.0:1 (superieur au seuil WCAG AA 4.5:1) */
         --mr-text-disabled: oklch(0.5 0 0);
@@ -38,11 +39,20 @@
         --mr-danger-border: oklch(0.45 0 0);
         --mr-danger-text: oklch(0.35 0.2 25);
 
+        --mr-success-solid: oklch(0.35 0.16 155);
         --mr-success-subtle: oklch(0.96 0.04 155);
         --mr-success-border: oklch(0.45 0 0);
         --mr-success-text: oklch(0.3 0.16 155);
 
+        --mr-warning-solid: oklch(0.4 0.16 80);
         --mr-warning-subtle: oklch(0.96 0.04 80);
+        --mr-warning-border: oklch(0.45 0 0);
+        --mr-warning-text: oklch(0.35 0.16 80);
+
+        --mr-info-solid: oklch(0.35 0.16 255);
+        --mr-info-subtle: oklch(0.96 0.04 255);
+        --mr-info-border: oklch(0.45 0 0);
+        --mr-info-text: oklch(0.3 0.16 255);
         --mr-warning-border: oklch(0.45 0 0);
         --mr-warning-text: oklch(0.3 0.14 80);
 

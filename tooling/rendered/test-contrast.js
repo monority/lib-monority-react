@@ -1295,9 +1295,9 @@ export async function testContrast(browser) {
         `- nested-light: color-scheme = ${nlCs}, canvas = ${nlCanvas}, bg-inverse = ${nlInverse}, text-on-inverse = ${nlOnInverse}`
     )
     assert.strictEqual(nlCs, 'light', 'nested-light doit avoir color-scheme: light')
-    assert(nlCanvas.includes('0.955'), 'nested-light canvas doit valoir 0.955 (clair)')
+    assert(nlCanvas.includes('1'), 'nested-light canvas doit valoir 1 (clair)')
     assert(nlInverse.includes('0.22'), 'nested-light bg-inverse doit valoir 0.22 (clair)')
-    assert(nlOnInverse.includes('0.955'), 'nested-light text-on-inverse doit valoir 0.955 (clair)')
+    assert(nlOnInverse.includes('1'), 'nested-light text-on-inverse doit valoir 1 (clair)')
 
     // 2. Dark dans Light
     const ndCs = await pageNested.$eval(

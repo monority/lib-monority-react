@@ -28,7 +28,8 @@
         padding-inline: var(--mr-space-4);
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-md);
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
         color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-font-size-md);
@@ -37,7 +38,7 @@
         margin: 0;
         outline: none;
         resize: vertical;
-        transition: border-color var(--mr-duration-state);
+        transition: border-color var(--mr-duration-state), box-shadow var(--mr-duration-state);
     }
 
     /* Taille sm : padding horizontal 12px (space-3) */
@@ -103,11 +104,13 @@
         outline-offset: 0;
     }
 
-    /* Etat desactive : curseur not-allowed, texte attenue, bordure estompee vers le canevas */
+    /* Etat desactive : curseur not-allowed, texte attenue, fond estompe et bordure estompee vers le canevas */
     :where(.mr-textarea):disabled,
     :where(.mr-textarea)[data-disabled='true'] {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
+        background-color: var(--mr-bg-sunken);
+        box-shadow: none;
         border-color: color-mix(
             in oklch,
             var(--mr-border-control),

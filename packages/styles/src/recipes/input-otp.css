@@ -34,7 +34,8 @@
         align-items: center;
         border: 1px solid var(--mr-border-default);
         border-radius: var(--mr-radius-md);
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
         overflow: hidden;
     }
 

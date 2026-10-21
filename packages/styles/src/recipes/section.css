@@ -45,7 +45,7 @@
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-md);
         padding-inline: var(--mr-space-4);
-        box-shadow: var(--mr-shadow-overlay);
+        box-shadow: var(--mr-shadow-sm);
     }
 
     /* Structure compound interne */

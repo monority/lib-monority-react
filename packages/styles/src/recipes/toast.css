@@ -8,7 +8,7 @@
         flex-direction: row;
         align-items: flex-start;
         gap: var(--mr-space-3);
-        background-color: var(--mr-bg-raised);
+        background-color: var(--mr-bg-overlay);
         border: 1px solid var(--mr-border-default);
         border-radius: var(--mr-radius-lg);
         box-shadow: var(--mr-shadow-overlay);

@@ -26,7 +26,7 @@
         position: fixed;
         z-index: var(--mr-z-popover);
         box-sizing: border-box;
-        background-color: var(--mr-bg-raised);
+        background-color: var(--mr-bg-overlay);
         border: 1px solid var(--mr-border-default);
         border-radius: var(--mr-radius-md);
         box-shadow: var(--mr-shadow-overlay);

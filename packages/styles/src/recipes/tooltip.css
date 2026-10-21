@@ -27,7 +27,7 @@
         font-size: var(--mr-font-size-xs);
         line-height: var(--mr-line-height-sm);
         white-space: nowrap;
-        box-shadow: var(--mr-shadow-overlay);
+        box-shadow: var(--mr-shadow-sm);
     }
 
     :where(.mr-tooltip[data-side='bottom']) :where(.mr-tooltip__content) {
