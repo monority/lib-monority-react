@@ -6,12 +6,17 @@
     max-width: 100%;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-sunken);
+    background-color: var(--mr-bg-sunken);
+    background-image: radial-gradient(
+        color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
+        transparent 1px
+    );
+    background-size: 16px 16px;
     overflow: hidden;
 }
 
 :where([data-theme='light'], :root:not([data-theme])) .code-viewer {
-    background: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
 }
 
 .code-viewer__header {
@@ -48,11 +53,11 @@
     max-width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
-    background-color: var(--mr-bg-sunken);
+    background-color: transparent;
 }
 
 :where([data-theme='light'], :root:not([data-theme])) .code-viewer__body pre {
-    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
+    background-color: transparent;
 }
 
 .code-viewer__body code,

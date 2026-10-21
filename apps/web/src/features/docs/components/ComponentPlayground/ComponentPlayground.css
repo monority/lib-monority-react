@@ -10,11 +10,15 @@
     flex-direction: column;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
+    background-color: var(--mr-bg-sunken);
     overflow: hidden;
     width: 100%;
     min-width: 0;
     max-width: 100%;
+}
+
+:where([data-theme='light'], :root:not([data-theme])) .component-playground {
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
 }
 
 .component-playground:has(
@@ -34,7 +38,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--mr-space-2) var(--mr-space-4);
-    background: var(--mr-bg-raised);
+    background: color-mix(in oklch, var(--mr-bg-surface) 65%, var(--mr-bg-sunken));
     border-bottom: 1px solid var(--mr-border-subtle);
 }
 
@@ -55,8 +59,12 @@
     padding: var(--mr-space-2) var(--mr-space-4);
     font-size: var(--mr-font-size-sm);
     color: var(--mr-text-secondary);
-    background: var(--mr-bg-sunken);
+    background-color: var(--mr-bg-sunken);
     border-bottom: 1px solid var(--mr-border-subtle);
+}
+
+:where([data-theme='light'], :root:not([data-theme])) .component-playground__description {
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
 }
 
 .component-playground__stage {
@@ -70,8 +78,15 @@
     position: relative;
     overflow-x: auto;
     /* Subtle dot grid pattern for elevated engineering aesthetic */
-    background-image: radial-gradient(var(--mr-border-subtle) 1px, transparent 1px);
+    background-image: radial-gradient(
+        color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
+        transparent 1px
+    );
     background-size: 16px 16px;
+}
+
+:where([data-theme='light'], :root:not([data-theme])) .component-playground__stage {
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
 }
 
 .component-playground__stage:has(
@@ -96,9 +111,9 @@
         [data-theme='night']
     )
     .component-playground__stage {
-    background-color: color-mix(in srgb, var(--mr-bg-canvas) 60%, #000);
+    background-color: var(--mr-bg-sunken);
     background-image: radial-gradient(
-        color-mix(in srgb, var(--mr-border-subtle) 35%, transparent) 1px,
+        color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
         transparent 1px
     );
 }
@@ -106,9 +121,9 @@
 @media (prefers-color-scheme: dark) {
     :where(:root:not([data-theme])) .component-playground__stage,
     :where(:root[data-theme='system']) .component-playground__stage {
-        background-color: color-mix(in srgb, var(--mr-bg-canvas) 60%, #000);
+        background-color: var(--mr-bg-sunken);
         background-image: radial-gradient(
-            color-mix(in srgb, var(--mr-border-subtle) 35%, transparent) 1px,
+            color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
             transparent 1px
         );
     }
@@ -126,7 +141,7 @@
     flex-direction: column;
     gap: var(--mr-space-3);
     padding: var(--mr-space-4);
-    background: var(--mr-bg-raised);
+    background: var(--mr-bg-surface);
     border-bottom: 1px solid var(--mr-border-subtle);
 }
 

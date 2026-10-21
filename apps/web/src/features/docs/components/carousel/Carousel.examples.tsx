@@ -211,7 +211,7 @@ const demoSlides = [
 
 export function CarouselBasicExample() {
     return (
-        <div style={{ width: '100%', maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
             <Carousel loop>
                 <Carousel.Content>
                     <Carousel.Item>{demoSlides[0]}</Carousel.Item>
@@ -232,7 +232,7 @@ export function CarouselBasicExample() {
 
 export function CarouselAutoPlayExample() {
     return (
-        <div style={{ width: '100%', maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
             <Carousel slides={demoSlides} autoPlay interval={3500} showCounter loop />
         </div>
     )
@@ -240,7 +240,7 @@ export function CarouselAutoPlayExample() {
 
 export function CarouselLoopExample() {
     return (
-        <div style={{ width: '100%', maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
             <Carousel slides={demoSlides} loop showCounter />
         </div>
     )
@@ -248,7 +248,7 @@ export function CarouselLoopExample() {
 
 export function CarouselNoControlsExample() {
     return (
-        <div style={{ width: '100%', maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
             <Carousel slides={demoSlides} showArrows={false} showDots={false} />
         </div>
     )

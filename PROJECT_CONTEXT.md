@@ -1,7 +1,7 @@
 # Project Technical Context — Monority UI
 
 Memoire technique canonique du projet selon le Verified Technical Memory Framework.
-Derniere mise a jour : 2026-10-13.
+Derniere mise a jour : 2026-10-21.
 
 ---
 
@@ -50,31 +50,36 @@ Derniere mise a jour : 2026-10-13.
 
 ---
 
-## 4. Etat Actuel du Projet (Branche feat/stabilize-draft-components)
+## 4. Etat Actuel du Projet (Branche main)
 
-Branche active : feat/stabilize-draft-components
-Statut Git : 4 commits atomiques validant les 4 lots de stabilisation.
-Dernier commit : fd9284c feat(components): stabiliser les formulaires et overlays complexes (Lot 4)
+Branche active : main
+Statut Git : en phase de consolidation avec verification integrale reussie.
+Dernier commit d'origine : 9c09346 fix(ui): refonte timeline et contraste des apercus de code
 
 Realisations majeures de ce chantier :
-- Certification et stabilisation a 100% du catalogue de composants :
-  - 83 composants au total dans la bibliotheque, desormais 83 composants au statut stable (0 composant draft restant).
-  - Lot 1 (Primitives Fondamentales Layout et Typographie — 12 composants) : Kbd, PreCode, Text, Title, AspectRatio, Container, Divider, Grid, PageHeader, ScrollArea, Stack, Toolbar.
-  - Lot 2 (Feedback et Affichage Visuel — 6 composants) : AsyncStateNotice, Banner, EmptyState, InlineAlert, Collapsible, Carousel.
-  - Lot 3 (Navigation et Donnees — 11 composants) : Pagination, SidebarLayout, Topbar, FilterBar, NavigationMenu, Menubar, DataList, StatCard, MetricGrid, Table, DataTable.
-  - Lot 4 (Formulaires et Overlays Complexes — 12 composants) : Field, FormSection, Calendar, DatePicker, DateRangePicker, Combobox, FileUpload, CommandPalette, ContextMenu, HoverCard, Resizable, InfiniteScroll.
-- Harmonisation documentaire et accessibilite :
-  - Alignement des imports publics canoniques : import { Component } from '@monority/ui'.
-  - Enrichissement systematique des notes d'accessibilite et anatomie (roles ARIA, balisage semantique natif, gestion du focus clavier).
+- Harmonisation de l'elevation et des surfaces flottantes (ADR-028) :
+  - Standardisation de var(--mr-bg-overlay) avec bordure subtle et ombre overlay sur les 16 composants flottants et superposes (Modal, AlertDialog, Drawer, Sheet, Tooltip, CommandPalette, ContextMenu, DropdownMenu, HoverCard, Popover, DatePicker, Select, Combobox, Toast, Menubar, NavigationMenu).
+  - Formalisation de --mr-text-tertiary et du quartet de statuts pleins (--mr-success-solid, --mr-warning-solid, --mr-info-solid, --mr-danger-solid) dans semantic.css et l'ensemble des 7 themes.
+  - Allegenement harmonieux des bordures au repos sur les champs de saisie (Input, Textarea, Select, Combobox, DatePicker, NumberInput, etc.).
+- Selecteur de themes dans l'en-tete :
+  - Remplacement du bouton binaire par un DropdownMenu accessible avec icones et indicateurs actifs pour les 7 themes natifs (Light, Dark, Slate, Ocean, Night, OLED, High Contrast) et le mode Systeme.
+- Surfaces de previsualisation unifiees :
+  - ComponentPlayground et PreCode harmonises sur fond var(--mr-bg-sunken) avec trame de points radiaux subtile (radial-gradient a var(--mr-space-4)).
+- Modernisation de StatCard et MetricGrid :
+  - Tendances en pilule avec pastille color-mix et bordure subtile, typographie haute visibilite (var(--mr-font-size-2xl)), conteneurs d'icones carres arrondis, transitions douces.
+- Correction geometrique du Carousel :
+  - Elimination definitive du chevauchement des fleches de navigation sur le contenu via padding-inline sur le slide, elargissement de la vitrine de documentation a 680-700px.
+- Composition professionnelle de FilterBar et SidebarLayout :
+  - Exemples d'application concrets composant de vrais elements Monority UI (Avatar, Badge, Button, Input, Select, StatCard, Card) avec filtrage dynamique et structure de console moderne.
 - Validation technique ininterrompue :
-  - pnpm verify : 100% succes (108 suites / 1357 tests packages/ui, 15 suites / 86 tests apps/web, Playwright contrastes, Stylelint, Biome format).
-  - pnpm --filter @monority/ui test:dist : 100% succes.
+  - pnpm verify : 100% succes (113 suites / 1474 tests packages/ui, 17 suites / 96 tests apps/web, 1570 tests au total, verifications Playwright de rendu et contrastes WCAG AA, Stylelint 100% vert, Biome format 100% vert).
+  - pnpm --filter @monority/ui test:dist : 100% succes sur le paquet distribue.
 
 ---
 
 ## 5. Prochaines Etapes pour Reprendre le Travail
 
-- Etape 1 : Ouvrir une Pull Request pour fusionner feat/stabilize-draft-components vers main.
+- Etape 1 : Poursuivre le developpement des modules et widgets de la Moodboard Studio (tableaux de bord, vues modulaires metier).
 - Etape 2 : Lancer la Wave 2 de nouveaux composants (TreeView, Toaster sonner-style, ColorPicker).
 - Etape 3 : Audit global d'accessibilite automatise (axe-core integre aux tests Playwright).
 

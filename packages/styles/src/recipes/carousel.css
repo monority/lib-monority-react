@@ -89,13 +89,9 @@
 
     /* Gouttières de protection pour que le contenu ne touche jamais les chevrons */
     :where(.mr-carousel:not([data-arrows-position='outside']):has(.mr-carousel__arrow))
-        :where(.mr-carousel__slide:not(:has(> .mr-card))) {
-        padding-inline: calc(var(--mr-size-control-md) + var(--mr-space-6));
-    }
-
-    :where(.mr-carousel:not([data-arrows-position='outside']):has(.mr-carousel__arrow))
-        :where(.mr-carousel__slide > .mr-card) {
-        padding-inline: calc(var(--mr-size-control-md) + var(--mr-space-6));
+        :where(.mr-carousel__slide) {
+        padding-inline: calc(var(--mr-size-control-md) + var(--mr-space-4));
+        box-sizing: border-box;
     }
 
     :where(
@@ -103,18 +99,10 @@
                     .mr-carousel__arrow
                 )
         )
-        :where(.mr-carousel__slide:not(:has(> .mr-card))) {
+        :where(.mr-carousel__slide) {
         padding-inline: 0;
-        padding-block: calc(var(--mr-size-control-md) + var(--mr-space-6));
-    }
-
-    :where(
-            .mr-carousel[data-orientation='vertical']:not([data-arrows-position='outside']):has(
-                    .mr-carousel__arrow
-                )
-        )
-        :where(.mr-carousel__slide > .mr-card) {
-        padding-block: calc(var(--mr-size-control-md) + var(--mr-space-6));
+        padding-block: calc(var(--mr-size-control-md) + var(--mr-space-4));
+        box-sizing: border-box;
     }
 
     :where(.mr-carousel[data-arrows-position='outside']) :where(.mr-carousel__slide),
@@ -136,7 +124,7 @@
         padding: 0;
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-full);
-        background-color: color-mix(in oklch, var(--mr-bg-surface) 90%, transparent);
+        background-color: color-mix(in oklch, var(--mr-bg-surface) 92%, transparent);
         backdrop-filter: blur(var(--mr-space-2));
         box-shadow: var(--mr-shadow-sm);
         color: var(--mr-text-primary);
@@ -154,14 +142,14 @@
     :where(.mr-carousel__arrow[data-direction='prev']) {
         grid-area: viewport;
         justify-self: start;
-        margin-inline-start: var(--mr-space-3);
+        margin-inline-start: var(--mr-space-2);
     }
 
     :where(.mr-carousel__arrow):last-of-type,
     :where(.mr-carousel__arrow[data-direction='next']) {
         grid-area: viewport;
         justify-self: end;
-        margin-inline-end: var(--mr-space-3);
+        margin-inline-end: var(--mr-space-2);
     }
 
     :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:first-of-type),

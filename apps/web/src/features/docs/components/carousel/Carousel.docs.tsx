@@ -358,7 +358,7 @@ function CarouselPlayground() {
 />`}
         >
             {(props) => (
-                <div style={{ width: '100%', maxWidth: 560, margin: '0 auto' }}>
+                <div style={{ width: '100%', maxWidth: 700, margin: '0 auto' }}>
                     <Carousel
                         slides={playgroundSlides}
                         showArrows={props.showArrows as boolean}

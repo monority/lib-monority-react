@@ -1,38 +1,108 @@
-﻿import { Button } from '@monority/ui/button'
+import { Badge } from '@monority/ui/badge'
+import { Button } from '@monority/ui/button'
 import { FilterBar } from '@monority/ui/filter-bar'
 import { Input } from '@monority/ui/input'
 import { Select } from '@monority/ui/select'
-import { useState } from 'react'
+import { Text } from '@monority/ui/text'
+import { useMemo, useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { FilterBarWithControlsExample, FilterBarWithResetExample } from './FilterBar.examples'
 
+const allComponents = [
+    {
+        name: 'Button',
+        category: 'forms',
+        status: 'stable',
+        desc: 'Déclencheur d’actions accessible',
+    },
+    { name: 'DataTable', category: 'data', status: 'stable', desc: 'Tableau haute performance' },
+    {
+        name: 'Modal',
+        category: 'overlay',
+        status: 'stable',
+        desc: 'Boîte de dialogue modale WAI-ARIA',
+    },
+    {
+        name: 'SidebarLayout',
+        category: 'navigation',
+        status: 'beta',
+        desc: 'Disposition en panneau latéral',
+    },
+    {
+        name: 'Carousel',
+        category: 'data',
+        status: 'stable',
+        desc: 'Diaporama tactile et accessible',
+    },
+    {
+        name: 'FilterBar',
+        category: 'navigation',
+        status: 'stable',
+        desc: 'Barre de filtres multi-critères',
+    },
+]
+
 function FilterBarPlayground() {
     const [search, setSearch] = useState('')
+    const [category, setCategory] = useState('all')
     const [status, setStatus] = useState('all')
     const [showChips, setShowChips] = useState(true)
 
-    const activeCount = (search ? 1 : 0) + (status !== 'all' ? 1 : 0)
+    const activeCount = (search ? 1 : 0) + (category !== 'all' ? 1 : 0) + (status !== 'all' ? 1 : 0)
+
+    const filtered = useMemo(() => {
+        return allComponents.filter((item) => {
+            if (search && !item.name.toLowerCase().includes(search.toLowerCase())) return false
+            if (category !== 'all' && item.category !== category) return false
+            if (status !== 'all' && item.status !== status) return false
+            return true
+        })
+    }, [search, category, status])
+
+    const handleReset = () => {
+        setSearch('')
+        setCategory('all')
+        setStatus('all')
+    }
 
     const snippet = `<FilterBar>
   <FilterBar.Main>
     <FilterBar.Leading>
       <Input
-        placeholder="Rechercher un composant..."
+        size="sm"
+        placeholder="Rechercher par nom..."
         value="${search}"
       />
     </FilterBar.Leading>
-    <Select aria-label="Filtre de statut" value="${status}">
+    <Select size="sm" aria-label="Catégorie" value="${category}">
+      <option value="all">Toutes les catégories</option>
+      <option value="navigation">Navigation</option>
+      <option value="data">Data & Visualisation</option>
+      <option value="forms">Formulaires</option>
+      <option value="overlay">Overlays</option>
+    </Select>
+    <Select size="sm" aria-label="Statut" value="${status}">
       <option value="all">Tous les statuts</option>
       <option value="stable">Stable</option>
       <option value="beta">Beta</option>
-      <option value="deprecated">Obsolète</option>
     </Select>
+    ${activeCount > 0 ? '<Button size="sm" variant="ghost" onClick={handleReset}>Réinitialiser</Button>' : ''}
   </FilterBar.Main>
   <FilterBar.Meta>
-    <span>${activeCount > 0 ? `${activeCount} filtre(s) actif(s)` : '34 résultats'}</span>
+    <Badge variant="outline" size="sm">\${${filtered.length}} résultat(s)</Badge>
+    ${activeCount > 0 ? `<Badge variant="subtle" size="sm">\${${activeCount}} actif(s)</Badge>` : ''}
   </FilterBar.Meta>
-</FilterBar>`
+</FilterBar>
+${
+    showChips && activeCount > 0
+        ? `<FilterBar.Chips>
+  ${search ? `<FilterBar.Chip active onClick={() => setSearch('')}>Nom: "${search}" ✕</FilterBar.Chip>` : ''}
+  ${category !== 'all' ? `<FilterBar.Chip active onClick={() => setCategory('all')}>Catégorie: ${category} ✕</FilterBar.Chip>` : ''}
+  ${status !== 'all' ? `<FilterBar.Chip active onClick={() => setStatus('all')}>Statut: ${status} ✕</FilterBar.Chip>` : ''}
+</FilterBar.Chips>`
+        : ''
+}`
 
     return (
         <ComponentPlayground
@@ -45,19 +115,31 @@ function FilterBarPlayground() {
                 },
                 {
                     type: 'select',
-                    label: 'Filtre de statut',
+                    label: 'Catégorie',
+                    value: category,
+                    options: [
+                        { value: 'all', label: 'Toutes les catégories' },
+                        { value: 'navigation', label: 'Navigation' },
+                        { value: 'data', label: 'Data' },
+                        { value: 'forms', label: 'Formulaires' },
+                        { value: 'overlay', label: 'Overlays' },
+                    ],
+                    onChange: setCategory,
+                },
+                {
+                    type: 'select',
+                    label: 'Statut',
                     value: status,
                     options: [
                         { value: 'all', label: 'Tous les statuts' },
                         { value: 'stable', label: 'Stable' },
                         { value: 'beta', label: 'Beta' },
-                        { value: 'deprecated', label: 'Obsolète' },
                     ],
                     onChange: setStatus,
                 },
                 {
                     type: 'boolean',
-                    label: 'Afficher tags actifs',
+                    label: 'Afficher tags actifs (Chips)',
                     value: showChips,
                     onChange: setShowChips,
                 },
@@ -67,69 +149,140 @@ function FilterBarPlayground() {
             <div
                 style={{
                     width: '100%',
-                    minHeight: 96,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 12,
+                    gap: 'var(--mr-space-3)',
                 }}
             >
                 <FilterBar>
                     <FilterBar.Main>
                         <FilterBar.Leading>
                             <Input
-                                placeholder="Rechercher un composant..."
+                                size="sm"
+                                placeholder="Rechercher par nom..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </FilterBar.Leading>
                         <Select
-                            aria-label="Filtre de statut"
+                            size="sm"
+                            aria-label="Catégorie"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="all">Toutes les catégories</option>
+                            <option value="navigation">Navigation</option>
+                            <option value="data">Data & Visualisation</option>
+                            <option value="forms">Formulaires</option>
+                            <option value="overlay">Overlays</option>
+                        </Select>
+                        <Select
+                            size="sm"
+                            aria-label="Statut"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                         >
                             <option value="all">Tous les statuts</option>
                             <option value="stable">Stable</option>
                             <option value="beta">Beta</option>
-                            <option value="deprecated">Obsolète</option>
                         </Select>
                         {activeCount > 0 && (
-                            <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => {
-                                    setSearch('')
-                                    setStatus('all')
-                                }}
-                            >
+                            <Button size="sm" variant="ghost" onClick={handleReset}>
                                 Réinitialiser
                             </Button>
                         )}
                     </FilterBar.Main>
                     <FilterBar.Meta>
-                        <span
-                            style={{
-                                fontSize: '0.85rem',
-                                color: 'var(--mr-text-secondary, #64748b)',
-                            }}
-                        >
-                            {activeCount > 0 ? `${activeCount} filtre(s) actif(s)` : '34 résultats'}
-                        </span>
+                        <Badge variant="default" tone="neutral" size="sm">
+                            {filtered.length} composant(s)
+                        </Badge>
+                        {activeCount > 0 && (
+                            <Badge variant="default" tone="accent" size="sm">
+                                {activeCount} filtre(s)
+                            </Badge>
+                        )}
                     </FilterBar.Meta>
                 </FilterBar>
+
                 {showChips && activeCount > 0 && (
                     <FilterBar.Chips>
                         {search && (
                             <FilterBar.Chip active onClick={() => setSearch('')}>
-                                Requête: {search} ✕
+                                Nom : &quot;{search}&quot; ✕
+                            </FilterBar.Chip>
+                        )}
+                        {category !== 'all' && (
+                            <FilterBar.Chip active onClick={() => setCategory('all')}>
+                                Catégorie : {category} ✕
                             </FilterBar.Chip>
                         )}
                         {status !== 'all' && (
                             <FilterBar.Chip active onClick={() => setStatus('all')}>
-                                Statut: {status} ✕
+                                Statut : {status} ✕
                             </FilterBar.Chip>
                         )}
                     </FilterBar.Chips>
                 )}
+
+                {/* Live interactive results list demonstrating true professional composition */}
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                        gap: 'var(--mr-space-2)',
+                        marginTop: 'var(--mr-space-1)',
+                    }}
+                >
+                    {filtered.length > 0 ? (
+                        filtered.map((item) => (
+                            <div
+                                key={item.name}
+                                style={{
+                                    padding: 'var(--mr-space-3)',
+                                    borderRadius: 'var(--mr-radius-md)',
+                                    background: 'var(--mr-bg-surface)',
+                                    border: '1px solid var(--mr-border-subtle)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 'var(--mr-space-1)',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Text tone="strong" size="sm">
+                                        {item.name}
+                                    </Text>
+                                    <Badge
+                                        size="sm"
+                                        variant={item.status === 'stable' ? 'success' : 'default'}
+                                    >
+                                        {item.status}
+                                    </Badge>
+                                </div>
+                                <Text tone="muted" size="sm">
+                                    {item.desc}
+                                </Text>
+                            </div>
+                        ))
+                    ) : (
+                        <div
+                            style={{
+                                gridColumn: '1 / -1',
+                                padding: 'var(--mr-space-4)',
+                                textAlign: 'center',
+                                color: 'var(--mr-text-tertiary)',
+                                fontSize: 'var(--mr-font-size-sm)',
+                            }}
+                        >
+                            Aucun composant ne correspond aux filtres actifs.
+                        </div>
+                    )}
+                </div>
             </div>
         </ComponentPlayground>
     )

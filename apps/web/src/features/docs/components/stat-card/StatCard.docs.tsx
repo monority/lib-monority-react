@@ -1,4 +1,4 @@
-﻿import { StatCard } from '@monority/ui/stat-card'
+import { StatCard } from '@monority/ui/stat-card'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
@@ -70,13 +70,29 @@ function StatCardPlayground() {
             ]}
             codeSnippet={snippet}
         >
-            <div style={{ maxWidth: 360, margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: 380, margin: '0 auto', width: '100%' }}>
                 <StatCard
                     label={label}
                     value={value}
                     trend={trend}
                     trendTone={trendTone}
                     description={description}
+                    icon={
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    }
                 />
             </div>
         </ComponentPlayground>

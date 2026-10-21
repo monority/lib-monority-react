@@ -1,4 +1,4 @@
-﻿import { MetricGrid } from '@monority/ui/metric-grid'
+import { MetricGrid } from '@monority/ui/metric-grid'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
@@ -21,6 +21,22 @@ function MetricGridPlayground() {
             trend: '+14.2%',
             trendTone: trendTone,
             description: 'Facturation mensuelle consolidée',
+            icon: (
+                <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+            ),
         },
         {
             key: 'm2',
@@ -29,6 +45,24 @@ function MetricGridPlayground() {
             trend: '+8.1%',
             trendTone: 'success' as const,
             description: 'Souscriptions confirmées',
+            icon: (
+                <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+            ),
         },
         {
             key: 'm3',
@@ -37,6 +71,21 @@ function MetricGridPlayground() {
             trend: '+0.6%',
             trendTone: 'neutral' as const,
             description: 'Moyenne mobile sur 90 jours',
+            icon: (
+                <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+            ),
         },
         {
             key: 'm4',
@@ -45,6 +94,22 @@ function MetricGridPlayground() {
             trend: '-4',
             trendTone: 'success' as const,
             description: 'Délai moyen de résolution : 12 min',
+            icon: (
+                <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="m9 12 2 2 4-4" />
+                    <circle cx="12" cy="12" r="10" />
+                </svg>
+            ),
         },
     ]
 

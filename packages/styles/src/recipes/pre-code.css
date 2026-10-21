@@ -9,6 +9,11 @@
         font-family: var(--mr-font-family-mono);
         color: var(--mr-text-primary);
         background-color: var(--mr-bg-sunken);
+        background-image: radial-gradient(
+            color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
+            transparent 1px
+        );
+        background-size: var(--mr-space-4) var(--mr-space-4);
         border: 1px solid var(--mr-border-subtle);
         border-radius: var(--mr-radius-lg);
         overflow-x: auto;

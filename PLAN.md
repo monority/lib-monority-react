@@ -80,28 +80,37 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 - Indépendance stricte vis-à-vis de `reset.css` : audit et correction des styles autonomes (`topbar.css`, etc.) avec validation Playwright de non-régression sur les 83 composants (83/83 au vert).
 - Durcissement du `ComponentPlayground` : capture des valeurs initiales par référence, réinitialisation dynamique des formulaires contrôlés (`notifyControlResets`), support du callback `onReset`, déverrouillage `overflow: visible` pour les menus et listes déroulantes.
 
+## Chantier terminé — Harmonisation de l'Élévation des Surfaces Flottantes (ADR-028), Bordures Douces et Sélecteur de Thèmes
+
+- ADR-028 : Standardisation de `var(--mr-bg-overlay)` avec bordure `var(--mr-border-subtle)` et ombre `var(--mr-shadow-overlay)` sur les 16 composants flottants et superposés.
+- Formalisation de `--mr-text-tertiary` et des statuts pleins (`--mr-success-solid`, `--mr-warning-solid`, `--mr-info-solid`, `--mr-danger-solid`) dans `semantic.css` et sur l'ensemble des 7 thèmes.
+- Adoucissement des bordures de contrôle au repos (`--mr-border-default` affiné) sur Input, Textarea, Select, Combobox, DatePicker, Stepper, Calendar, NumberInput.
+- Sélecteur de thème dans l'en-tête d'application : bascule vers un `DropdownMenu` accessible gérant les 7 thèmes natifs et le mode Système.
+
+## Chantier terminé — Modernisation StatCard & MetricGrid, Correction Carousel, Trame Playground/Code et Composition FilterBar / SidebarLayout
+
+- Surfaces de code et playground :
+  * Unification de `ComponentPlayground` et `PreCode` sur fond gris `var(--mr-bg-sunken)`.
+  * Intégration d'une trame de points radiaux subtile (`radial-gradient` 16px) sur `pre-code.css` et `CodeViewer.css`.
+- StatCard & MetricGrid :
+  * Tendance sous forme de pilule moderne avec pastille de couleur et fond translucide teinté.
+  * Typographie haute visibilité (`var(--mr-font-size-2xl)` et tracking display), conteneur carré arrondi pour l'icône, transition fluide au survol.
+  * Grille `metric-grid.css` avec gap réactif et auto-fit régulier.
+- Carousel :
+  * Déplacement du `padding-inline` directement sur `.mr-carousel__slide`, éliminant définitivement le chevauchement des flèches sur les cartes.
+  * Élargissement de la vitrine de prévisualisation dans la documentation à 680-700px.
+- FilterBar & SidebarLayout :
+  * Refonte complète des pages de documentation pour composer de vrais composants Monority UI (Avatar, Badge, Button, Input, Select, StatCard, Card, Text).
+  * Filtres interactifs avec puces amovibles et filtrage en temps réel dans `FilterBar`.
+  * Console de production moderne avec statut utilisateur, badges de déploiement et métriques de monitoring dans `SidebarLayout`.
+
 ## Reprise
 
-Dernier commit vert : ee65a8e (sur main).
-Chantier : fusion Accordion / Collapsible, animations complètes, navigation clavier, accessibilité et automatisation CI/CD.
-Contrats et vérifications :
-- GitHub Actions CI (run 39426043471) : 100% vert (9 étapes validées).
-- GitHub Actions Release CD (run 39426043388) : 100% vert.
-- pnpm verify local : 100% vert (exit code 0).
-- Biome lint & format : 0 erreur, 1022 fichiers conformes.
+Dernier état : validation intégrale `pnpm verify` (typecheck, format, lint, lint:css, build, test:rendered, test) et `test:dist` 100% au vert.
+- Biome lint & format : 0 erreur, 1026 fichiers conformes.
 - Stylelint : 0 violation sur les recettes CSS et tokens.
 - Rendu et contrastes : 100% conformes WCAG AA sur les 7 thèmes actifs.
-- Tests unitaires : 112 suites / 1463 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1559 tests au total).
-- Tests E2E Playwright animations : 130 tests 100% passés sur la matrice de viewports et mouvement réduit.
-- Fusion Accordion / Collapsible :
-  * Collapsible sert de primitif de disclosure unique, avec gestion d'état déclaratif/contrôlé, chevrons animés en spring, et grille CSS 0fr -> 1fr.
-  * AccordionItem compose directement Collapsible sans duplication de DOM ni de logique d'état.
-  * Synchronisation parfaite des durées (--mr-duration-panel 280ms) entre rotation du chevron et dépliage du panneau.
-  * Micro-presse active (scale 0.995) sur les déclencheurs.
-  * Attributs data-state ("open" / "closed") et aria-expanded harmonisés.
-  * Playgrounds documentation (Collapsible et Accordion) réactifs et interactifs.
-- Calendar : sélecteurs compacts, sous-composants composés, 100 ans d'historique scrollable, chevron animé.
-- Select & Switch : micro-interactions haptiques, retour tactile, rotation ressort et halos de focus.
-- Menubar & NavigationMenu : navigation clavier WAI-ARIA complète et z-index corrigés.
+- Tests unitaires et d'intégration : 113 suites / 1474 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1570 tests au total).
+- Package distribué (@monority/ui test:dist) : 100% vérifié et conforme.
 
-Prochaine action disponible : suivi des étapes de release (changeset version, tarball dry-run) ou audit ciblé supplémentaire.
+Prochaine action disponible : enrichissement des modules métiers de la Moodboard Studio ou lancement de la Wave 2 de composants.
