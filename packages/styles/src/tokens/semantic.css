@@ -93,22 +93,22 @@
          * space-3 (12px = 0.75rem) pour sm (28px = 1.75rem),
          * space-4 (16px = 1.0rem) pour md (32px = 2.0rem),
          * space-5 (20px = 1.25rem) pour lg (40px = 2.5rem). */
-        --mr-space-1: 0.25rem;
-        --mr-space-2: 0.5rem;
-        --mr-space-3: 0.75rem;
-        --mr-space-4: 1rem;
-        --mr-space-5: 1.25rem;
-        --mr-space-6: 1.5rem;
-        --mr-space-7: 1.75rem;
-        --mr-space-8: 2rem;
+        --mr-space-1: calc(0.25rem * var(--mr-ref-space-scale));
+        --mr-space-2: calc(0.5rem * var(--mr-ref-space-scale));
+        --mr-space-3: calc(0.75rem * var(--mr-ref-space-scale));
+        --mr-space-4: calc(1rem * var(--mr-ref-space-scale));
+        --mr-space-5: calc(1.25rem * var(--mr-ref-space-scale));
+        --mr-space-6: calc(1.5rem * var(--mr-ref-space-scale));
+        --mr-space-7: calc(1.75rem * var(--mr-ref-space-scale));
+        --mr-space-8: calc(2rem * var(--mr-ref-space-scale));
 
-        /* Tailles de controle : N fois 0.25rem (grille de 4px).
+        /* Tailles de controle : N fois 0.25rem (grille de 4px) avec levier de densite.
          * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)
          * md: 2rem (32px = 8x4px)
          * lg: 2.5rem (40px = 10x4px) */
-        --mr-size-control-sm: 1.75rem;
-        --mr-size-control-md: 2rem;
-        --mr-size-control-lg: 2.5rem;
+        --mr-size-control-sm: calc(1.75rem * var(--mr-ref-control-scale));
+        --mr-size-control-md: calc(2rem * var(--mr-ref-control-scale));
+        --mr-size-control-lg: calc(2.5rem * var(--mr-ref-control-scale));
 
         /* Tailles de conteneur (largeurs maximales) */
         --mr-size-container-sm: 40rem;

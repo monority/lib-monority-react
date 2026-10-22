@@ -7,6 +7,7 @@ import {
     type ResolvedThemeName,
     type ThemeNameType,
     ThemeScope,
+    type ThemeScopeDensity,
     designConfigToCSS,
     designConfigToJSON,
     resolveDesignConfig,
@@ -95,7 +96,7 @@ export function MoodboardPage() {
         return () => clearTimeout(timer)
     }, [copiedCss])
 
-    const density = config.density === 'compact' ? 'compact' : 'comfortable'
+    const density: ThemeScopeDensity = config.density
     const resolved = resolveDesignConfig(config)
 
     return (
