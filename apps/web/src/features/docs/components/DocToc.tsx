@@ -104,7 +104,7 @@ export function DocToc() {
     useEffect(() => {
         if (headings.length === 0) return
 
-        const READING_LINE_OFFSET = 120 // Header sticky (56px) + marge confortable
+        const READING_LINE_OFFSET = 120 // Header sticky (56px) + marge de lecture confortable
 
         function updateActive() {
             if (isClickScrollingRef.current) return
@@ -116,76 +116,85 @@ export function DocToc() {
             )
             const windowHeight = window.innerHeight
 
-            // En tout debut de page (HeroHeader visible), activer la premiere section
+            // 1. En tout debut de page (HeroHeader visible), activer la premiere section
             if (scrollY < 60) {
                 setActiveId(headings[0]!.id)
                 return
             }
 
-            // En toute fin de page (bas de document atteint)
-            if (windowHeight + scrollY >= scrollHeight - 20) {
-                for (let i = headings.length - 1; i >= 0; i--) {
-                    const el = document.getElementById(headings[i]!.id)
-                    if (!el) continue
-                    const rect = el.getBoundingClientRect()
-                    if (rect.top <= windowHeight * 0.75) {
-                        setActiveId(headings[i]!.id)
-                        return
-                    }
-                }
-                setActiveId(headings[headings.length - 1]!.id)
-                return
-            }
-
-            // Parcours standard : trouver la section qui intersecte la ligne de lecture
-            let matchedId: string | null = null
+            // 2. Priorite absolue a la zone de lecture : trouver la section qui englobe la ligne de lecture
+            // Cela garantit qu'une section en cours de lecture (notamment l'avant-derniere) n'est jamais sautee
             for (let i = 0; i < headings.length; i++) {
                 const el = document.getElementById(headings[i]!.id)
                 if (!el) continue
 
                 const rect = el.getBoundingClientRect()
-                // La section chevauche la ligne de lecture
                 if (rect.top <= READING_LINE_OFFSET && rect.bottom > READING_LINE_OFFSET) {
-                    matchedId = headings[i]!.id
+                    setActiveId(headings[i]!.id)
+                    return
+                }
+            }
+
+            // 3. Si aucune section n'englobe exactement la ligne (ex: transition inter-cartes),
+            // identifier la derniere section dont le haut est situe au-dessus de la ligne
+            let lastPassedId: string | null = null
+            for (let i = 0; i < headings.length; i++) {
+                const el = document.getElementById(headings[i]!.id)
+                if (!el) continue
+
+                const rect = el.getBoundingClientRect()
+                if (rect.top <= READING_LINE_OFFSET) {
+                    lastPassedId = headings[i]!.id
+                } else {
                     break
                 }
             }
 
-            // Si aucune section ne chevauche exactement la ligne de lecture (ex: marge entre cartes),
-            // prendre la derniere section situee au-dessus de la ligne
-            if (!matchedId) {
-                for (let i = 0; i < headings.length; i++) {
-                    const el = document.getElementById(headings[i]!.id)
-                    if (!el) continue
-
-                    const rect = el.getBoundingClientRect()
-                    if (rect.top <= READING_LINE_OFFSET) {
-                        matchedId = headings[i]!.id
-                    } else {
-                        break
+            // 4. Cas limite : en toute fin de defilement, si la derniere section est visible mais n'a pas
+            // pu monter jusqu'a READING_LINE_OFFSET faute de contenu descendant
+            if (windowHeight + scrollY >= scrollHeight - 30) {
+                const lastHeading = headings[headings.length - 1]
+                const lastEl = lastHeading ? document.getElementById(lastHeading.id) : null
+                if (lastEl) {
+                    const lastRect = lastEl.getBoundingClientRect()
+                    // Si la derniere section occupe la moitie superieure ou le centre de la vue
+                    if (lastRect.top <= windowHeight * 0.5) {
+                        setActiveId(lastHeading!.id)
+                        return
                     }
                 }
             }
 
-            if (matchedId) {
-                setActiveId(matchedId)
+            if (lastPassedId) {
+                setActiveId(lastPassedId)
             }
         }
 
         updateActive()
         window.addEventListener('scroll', updateActive, { passive: true })
 
+        // Interruption immediate du verrouillage de clic si l'utilisateur manipule le defilement
         const unlockScroll = () => {
             isClickScrollingRef.current = false
             if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current)
         }
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (
+                ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)
+            ) {
+                unlockScroll()
+            }
+        }
+
         window.addEventListener('wheel', unlockScroll, { passive: true })
         window.addEventListener('touchstart', unlockScroll, { passive: true })
+        window.addEventListener('keydown', onKeyDown, { passive: true })
 
         return () => {
             window.removeEventListener('scroll', updateActive)
             window.removeEventListener('wheel', unlockScroll)
             window.removeEventListener('touchstart', unlockScroll)
+            window.removeEventListener('keydown', onKeyDown)
             if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current)
         }
     }, [headings])
@@ -205,7 +214,7 @@ export function DocToc() {
             }
             clickTimeoutRef.current = setTimeout(() => {
                 isClickScrollingRef.current = false
-            }, 800)
+            }, 1000)
         }
     }, [])
 

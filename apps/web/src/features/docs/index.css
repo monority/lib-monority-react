@@ -674,6 +674,7 @@
 
 .docs-page-content {
     min-width: 0;
+    padding-bottom: 24vh;
 }
 
 .docs-page-toc {

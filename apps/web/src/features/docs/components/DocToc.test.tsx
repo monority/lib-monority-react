@@ -104,4 +104,68 @@ describe('DocToc', () => {
 
         scrollToSpy.mockRestore()
     })
+
+    it('keeps second-to-last item active when it intersects reading line even near bottom', () => {
+        render(
+            <MemoryRouter initialEntries={['/docs/button']}>
+                <DocToc />
+            </MemoryRouter>
+        )
+
+        act(() => {
+            vi.advanceTimersByTime(100)
+        })
+
+        const overviewEl = document.getElementById('overview')!
+        const examplesEl = document.getElementById('examples')!
+        const apiEl = document.getElementById('api')!
+
+        Object.defineProperty(window, 'scrollY', { value: 300, writable: true, configurable: true })
+
+        vi.spyOn(overviewEl, 'getBoundingClientRect').mockReturnValue({
+            top: -200,
+            bottom: -50,
+            left: 0,
+            right: 100,
+            width: 100,
+            height: 150,
+            x: 0,
+            y: -200,
+            toJSON: () => {},
+        })
+        // Mock bounding client rects:
+        // examples (avant-dernier): top 90px <= 120px, bottom 350px > 120px
+        // api (dernier): top 350px > 120px
+        vi.spyOn(examplesEl, 'getBoundingClientRect').mockReturnValue({
+            top: 90,
+            bottom: 350,
+            left: 0,
+            right: 100,
+            width: 100,
+            height: 260,
+            x: 0,
+            y: 90,
+            toJSON: () => {},
+        })
+        vi.spyOn(apiEl, 'getBoundingClientRect').mockReturnValue({
+            top: 350,
+            bottom: 600,
+            left: 0,
+            right: 100,
+            width: 100,
+            height: 250,
+            x: 0,
+            y: 350,
+            toJSON: () => {},
+        })
+
+        // Simuler un événement de défilement
+        fireEvent.scroll(window)
+
+        const examplesLink = screen.getByRole('link', { name: 'Exemples' })
+        expect(examplesLink).toHaveClass('docs-toc__link--active')
+        expect(screen.getByRole('link', { name: 'Proprietes & API' })).not.toHaveClass(
+            'docs-toc__link--active'
+        )
+    })
 })
