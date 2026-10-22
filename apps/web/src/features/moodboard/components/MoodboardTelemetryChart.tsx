@@ -319,7 +319,7 @@ export function MoodboardTelemetryChart() {
                                     width: 8,
                                     height: 8,
                                     borderRadius: '50%',
-                                    backgroundColor: 'var(--mr-accent-solid)',
+                                    backgroundColor: 'var(--mr-chart-1, var(--mr-accent-solid))',
                                     display: 'inline-block',
                                 }}
                             />
@@ -435,15 +435,24 @@ export function MoodboardTelemetryChart() {
                         onPointerLeave={handlePointerLeave}
                     >
                         <defs>
+                            <style>{`
+                                @keyframes mr-chart-fade {
+                                    from { opacity: 0.35; }
+                                    to { opacity: 1; }
+                                }
+                                .mr-chart-series-group {
+                                    animation: mr-chart-fade 0.28s ease-out;
+                                }
+                            `}</style>
                             <linearGradient id="mr-chart-grad-ingress" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="0%"
-                                    stopColor="var(--mr-accent-solid)"
+                                    stopColor="var(--mr-chart-1, var(--mr-accent-solid))"
                                     stopOpacity="0.25"
                                 />
                                 <stop
                                     offset="100%"
-                                    stopColor="var(--mr-accent-solid)"
+                                    stopColor="var(--mr-chart-1, var(--mr-accent-solid))"
                                     stopOpacity="0.0"
                                 />
                             </linearGradient>
@@ -469,7 +478,8 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="35"
                                 stroke="var(--mr-border-subtle)"
-                                strokeOpacity="0.3"
+                                strokeOpacity="0.25"
+                                strokeDasharray="2 3"
                                 strokeWidth="1"
                             />
                             <text
@@ -489,7 +499,8 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="80"
                                 stroke="var(--mr-border-subtle)"
-                                strokeOpacity="0.3"
+                                strokeOpacity="0.25"
+                                strokeDasharray="2 3"
                                 strokeWidth="1"
                             />
                             <text
@@ -509,7 +520,8 @@ export function MoodboardTelemetryChart() {
                                 x2="790"
                                 y2="125"
                                 stroke="var(--mr-border-subtle)"
-                                strokeOpacity="0.3"
+                                strokeOpacity="0.25"
+                                strokeDasharray="2 3"
                                 strokeWidth="1"
                             />
                             <text
@@ -528,8 +540,8 @@ export function MoodboardTelemetryChart() {
                                 y1="170"
                                 x2="790"
                                 y2="170"
-                                stroke="var(--mr-border-subtle)"
-                                strokeOpacity="0.6"
+                                stroke="var(--mr-border-default)"
+                                strokeOpacity="0.4"
                                 strokeWidth="1"
                             />
                             <text
@@ -544,42 +556,41 @@ export function MoodboardTelemetryChart() {
                             </text>
                         </g>
 
-                        {/* Egress Series (secondary, dashed curve) */}
-                        {egressArea && (
-                            <path
-                                d={egressArea}
-                                fill="url(#mr-chart-grad-egress)"
-                                style={{ transition: 'd 0.35s ease' }}
-                            />
-                        )}
-                        {egressCurve && (
-                            <path
-                                d={egressCurve}
-                                fill="none"
-                                stroke="var(--mr-chart-2)"
-                                strokeWidth="1.75"
-                                strokeDasharray="4 3"
-                                style={{ transition: 'd 0.35s ease' }}
-                            />
-                        )}
+                        {/* Series Curves Group keyed by period for smooth animated entry */}
+                        <g key={period} className="mr-chart-series-group">
+                            {/* Egress Series (secondary, dashed curve) */}
+                            {egressArea && (
+                                <path
+                                    d={egressArea}
+                                    fill="url(#mr-chart-grad-egress)"
+                                />
+                            )}
+                            {egressCurve && (
+                                <path
+                                    d={egressCurve}
+                                    fill="none"
+                                    stroke="var(--mr-chart-2)"
+                                    strokeWidth="1.75"
+                                    strokeDasharray="4 3"
+                                />
+                            )}
 
-                        {/* Ingress Series (primary, smooth area curve) */}
-                        {ingressArea && (
-                            <path
-                                d={ingressArea}
-                                fill="url(#mr-chart-grad-ingress)"
-                                style={{ transition: 'd 0.35s ease' }}
-                            />
-                        )}
-                        {ingressCurve && (
-                            <path
-                                d={ingressCurve}
-                                fill="none"
-                                stroke="var(--mr-accent-solid)"
-                                strokeWidth="2"
-                                style={{ transition: 'd 0.35s ease' }}
-                            />
-                        )}
+                            {/* Ingress Series (primary, smooth area curve) */}
+                            {ingressArea && (
+                                <path
+                                    d={ingressArea}
+                                    fill="url(#mr-chart-grad-ingress)"
+                                />
+                            )}
+                            {ingressCurve && (
+                                <path
+                                    d={ingressCurve}
+                                    fill="none"
+                                    stroke="var(--mr-chart-1, var(--mr-accent-solid))"
+                                    strokeWidth="2"
+                                />
+                            )}
+                        </g>
 
                         {/* Active Scrubber Marker */}
                         <line
@@ -612,34 +623,35 @@ export function MoodboardTelemetryChart() {
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
                             r="7"
-                            fill="var(--mr-accent-solid)"
+                            fill="var(--mr-chart-1, var(--mr-accent-solid))"
                             fillOpacity="0.25"
                         />
                         <circle
                             cx={activePoint.x}
                             cy={activePoint.ingressY}
                             r="4"
-                            fill="var(--mr-accent-solid)"
+                            fill="var(--mr-chart-1, var(--mr-accent-solid))"
                             stroke="var(--mr-bg-surface)"
                             strokeWidth="2"
                         />
 
                         {/* Interactive Tooltip Pin */}
-                        <g transform={`translate(${tooltipX - 75}, ${tooltipY - 24})`}>
+                        <g transform={`translate(${tooltipX - 75}, ${tooltipY - 26})`}>
                             <rect
                                 x="0"
                                 y="0"
                                 width="150"
-                                height="22"
+                                height="24"
                                 rx="4"
-                                fill="var(--mr-bg-surface)"
-                                stroke="var(--mr-border-subtle)"
+                                fill="var(--mr-bg-overlay)"
+                                stroke="var(--mr-border-default)"
+                                strokeWidth="1"
                             />
                             <text
                                 x="75"
-                                y="15"
+                                y="16"
                                 textAnchor="middle"
-                                fontSize="10"
+                                fontSize="11"
                                 fontWeight="600"
                                 fill="var(--mr-text-primary)"
                                 fontFamily="var(--mr-font-family-mono)"
