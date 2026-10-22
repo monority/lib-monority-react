@@ -247,6 +247,7 @@ export function DatePicker({
                           >
                               <Calendar
                                   classPrefix="mr-datepicker"
+                                  data-tone={resolvedTone}
                                   value={selectedDate}
                                   onChange={handleSelect}
                                   minDate={minDate}

@@ -388,6 +388,15 @@
         border-color: transparent;
     }
 
+    /* Jour selectionne (ton danger explicite) */
+    :where(.mr-calendar[data-tone='danger']) :where(.mr-calendar__day[data-selected='true']),
+    :where(.mr-calendar[data-tone='danger']) :where(.mr-calendar__day--selected) {
+        background-color: var(--mr-danger-solid);
+        color: var(--mr-danger-on-solid);
+        font-weight: var(--mr-font-weight-medium);
+        border-color: transparent;
+    }
+
     /* Jours hors du mois courant */
     :where(.mr-calendar__day:not([data-current-month], .mr-calendar__day--current-month)):where(
             :not([data-selected], .mr-calendar__day--selected)
@@ -421,6 +430,11 @@
 
     :where(.mr-calendar[data-tone='accent']) :where(.mr-calendar__day):focus-visible {
         outline: 1px solid var(--mr-accent-solid);
+        outline-offset: 1px;
+    }
+
+    :where(.mr-calendar[data-tone='danger']) :where(.mr-calendar__day):focus-visible {
+        outline: 1px solid var(--mr-danger-solid);
         outline-offset: 1px;
     }
 }
