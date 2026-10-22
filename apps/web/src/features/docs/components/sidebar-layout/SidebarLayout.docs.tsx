@@ -38,19 +38,29 @@ function SidebarLayoutPlayground() {
 
       {/* Navigation principale */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-1)', flex: 1 }}>
-        <Button variant="${activeNav === 'overview' ? 'secondary' : 'ghost'}" size="sm" style={{ justifyContent: 'flex-start' }}>
-          Tableau de bord
+        <Button variant="${activeNav === 'overview' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ justifyContent: 'flex-start', paddingInline: 'var(--mr-space-3)' }}>
+          <span style={{ width: '100%', textAlign: 'left' }}>Tableau de bord</span>
         </Button>
-        <Button variant="${activeNav === 'deploy' ? 'secondary' : 'ghost'}" size="sm" style={{ justifyContent: 'space-between' }}>
-          <span>Déploiements</span>
-          <Badge variant="pill" size="sm">8</Badge>
+        <Button variant="${activeNav === 'deploy' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
+            <span>Déploiements</span>
+            <Badge variant="primary" size="sm">8</Badge>
+          </span>
         </Button>
-        <Button variant="${activeNav === 'analytics' ? 'secondary' : 'ghost'}" size="sm" style={{ justifyContent: 'space-between' }}>
-          <span>Analytique</span>
-          <Badge variant="subtle" size="sm">Live</Badge>
+        <Button variant="${activeNav === 'analytics' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
+            <span>Analytique</span>
+            <Badge variant="default" tone="accent" size="sm">Live</Badge>
+          </span>
         </Button>
-        <Button variant="ghost" size="sm" style={{ justifyContent: 'flex-start' }}>
-          Équipe & Rôles
+        <Button variant="${activeNav === 'alerts' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
+            <span>Alertes & Logs</span>
+            <Badge variant="default" tone="neutral" size="sm">3</Badge>
+          </span>
+        </Button>
+        <Button variant="ghost" size="sm" fullWidth style={{ justifyContent: 'flex-start', paddingInline: 'var(--mr-space-3)' }}>
+          <span style={{ width: '100%', textAlign: 'left' }}>Équipe & Rôles</span>
         </Button>
       </div>
 
@@ -197,39 +207,101 @@ function SidebarLayoutPlayground() {
                                 <Button
                                     variant={activeNav === 'overview' ? 'secondary' : 'ghost'}
                                     size="sm"
+                                    fullWidth
                                     onClick={() => setActiveNav('overview')}
-                                    style={{ justifyContent: 'flex-start', width: '100%' }}
+                                    style={{
+                                        justifyContent: 'flex-start',
+                                        paddingInline: 'var(--mr-space-3)',
+                                    }}
                                 >
-                                    Tableau de bord
+                                    <span style={{ width: '100%', textAlign: 'left' }}>
+                                        Tableau de bord
+                                    </span>
                                 </Button>
                                 <Button
                                     variant={activeNav === 'deploy' ? 'secondary' : 'ghost'}
                                     size="sm"
+                                    fullWidth
                                     onClick={() => setActiveNav('deploy')}
-                                    style={{ justifyContent: 'space-between', width: '100%' }}
+                                    style={{
+                                        paddingInline: 'var(--mr-space-3)',
+                                    }}
                                 >
-                                    <span>Déploiements</span>
-                                    <Badge variant="primary" size="sm">
-                                        8
-                                    </Badge>
+                                    <span
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            width: '100%',
+                                            gap: 'var(--mr-space-3)',
+                                        }}
+                                    >
+                                        <span>Déploiements</span>
+                                        <Badge variant="primary" size="sm">
+                                            8
+                                        </Badge>
+                                    </span>
                                 </Button>
                                 <Button
                                     variant={activeNav === 'analytics' ? 'secondary' : 'ghost'}
                                     size="sm"
+                                    fullWidth
                                     onClick={() => setActiveNav('analytics')}
-                                    style={{ justifyContent: 'space-between', width: '100%' }}
+                                    style={{
+                                        paddingInline: 'var(--mr-space-3)',
+                                    }}
                                 >
-                                    <span>Analytique</span>
-                                    <Badge variant="default" tone="accent" size="sm">
-                                        Live
-                                    </Badge>
+                                    <span
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            width: '100%',
+                                            gap: 'var(--mr-space-3)',
+                                        }}
+                                    >
+                                        <span>Analytique</span>
+                                        <Badge variant="default" tone="accent" size="sm">
+                                            Live
+                                        </Badge>
+                                    </span>
+                                </Button>
+                                <Button
+                                    variant={activeNav === 'alerts' ? 'secondary' : 'ghost'}
+                                    size="sm"
+                                    fullWidth
+                                    onClick={() => setActiveNav('alerts')}
+                                    style={{
+                                        paddingInline: 'var(--mr-space-3)',
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            width: '100%',
+                                            gap: 'var(--mr-space-3)',
+                                        }}
+                                    >
+                                        <span>Alertes & Logs</span>
+                                        <Badge variant="default" tone="neutral" size="sm">
+                                            3
+                                        </Badge>
+                                    </span>
                                 </Button>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    style={{ justifyContent: 'flex-start', width: '100%' }}
+                                    fullWidth
+                                    style={{
+                                        justifyContent: 'flex-start',
+                                        paddingInline: 'var(--mr-space-3)',
+                                    }}
                                 >
-                                    Équipe & Rôles
+                                    <span style={{ width: '100%', textAlign: 'left' }}>
+                                        Équipe & Rôles
+                                    </span>
                                 </Button>
                             </div>
 

@@ -71,8 +71,14 @@ Realisations majeures de ce chantier :
   - Elimination definitive du chevauchement des fleches de navigation sur le contenu via padding-inline sur le slide, elargissement de la vitrine de documentation a 680-700px.
 - Composition professionnelle de FilterBar et SidebarLayout :
   - Exemples d'application concrets composant de vrais elements Monority UI (Avatar, Badge, Button, Input, Select, StatCard, Card) avec filtrage dynamique et structure de console moderne.
+  - Ajustement des espacements texte-badges dans la navigation de SidebarLayout et regles de disposition flexibles :where(.mr-btn__label) et fullWidth dans button.css.
+- Refonte et fiabilisation du scrollspy DocToc (On this page) :
+  - Detection deterministe basee sur l'intersection de la ligne de lecture relative (120px) avec prise en charge propre du haut et du bas de page.
+  - Verrouillage temporaire du scrollspy lors des clics programmatiques pour eviter les sauts ou faux etats actifs pendant le defilement fluide.
+  - Passes multiples a l'initialisation et observation MutationObserver pour fiabiliser la detection des sections.
+  - Mise en valeur visuelle nette du lien actif via var(--mr-accent-subtle).
 - Validation technique ininterrompue :
-  - pnpm verify : 100% succes (113 suites / 1474 tests packages/ui, 17 suites / 96 tests apps/web, 1570 tests au total, verifications Playwright de rendu et contrastes WCAG AA, Stylelint 100% vert, Biome format 100% vert).
+  - pnpm verify : 100% succes (113 suites / 1474 tests packages/ui, 18 suites / 99 tests apps/web, 1573 tests au total, verifications Playwright de rendu et contrastes WCAG AA, Stylelint 100% vert, Biome format 100% vert).
   - pnpm --filter @monority/ui test:dist : 100% succes sur le paquet distribue.
 
 ---

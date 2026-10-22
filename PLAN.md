@@ -103,14 +103,20 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
   * Refonte complète des pages de documentation pour composer de vrais composants Monority UI (Avatar, Badge, Button, Input, Select, StatCard, Card, Text).
   * Filtres interactifs avec puces amovibles et filtrage en temps réel dans `FilterBar`.
   * Console de production moderne avec statut utilisateur, badges de déploiement et métriques de monitoring dans `SidebarLayout`.
+  * Ajustement des espacements entre texte et badges dans la navigation SidebarLayout et support de disposition flexible `:where(.mr-btn__label)` et `[data-full-width]` dans `button.css`.
+- Navigation On this page (DocToc) :
+  * Détection robuste par ligne de lecture (120px) avec gestion des marges inter-cartes et des extrémités de page.
+  * Verrouillage du scrollspy pendant le défilement fluide au clic avec déverrouillage tactile/molette instantané.
+  * Collecte multi-passes et synchronisation dynamique via MutationObserver.
+  * Mise en valeur nette du lien actif avec `var(--mr-accent-subtle)`.
 
 ## Reprise
 
 Dernier état : validation intégrale `pnpm verify` (typecheck, format, lint, lint:css, build, test:rendered, test) et `test:dist` 100% au vert.
-- Biome lint & format : 0 erreur, 1026 fichiers conformes.
+- Biome lint & format : 0 erreur, 1027 fichiers conformes.
 - Stylelint : 0 violation sur les recettes CSS et tokens.
 - Rendu et contrastes : 100% conformes WCAG AA sur les 7 thèmes actifs.
-- Tests unitaires et d'intégration : 113 suites / 1474 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1570 tests au total).
+- Tests unitaires et d'intégration : 113 suites / 1474 tests dans @monority/ui, 18 suites / 99 tests dans @monority/web (1573 tests au total).
 - Package distribué (@monority/ui test:dist) : 100% vérifié et conforme.
 
 Prochaine action disponible : enrichissement des modules métiers de la Moodboard Studio ou lancement de la Wave 2 de composants.
