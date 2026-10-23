@@ -560,10 +560,7 @@ export function MoodboardTelemetryChart() {
                         <g key={period} className="mr-chart-series-group">
                             {/* Egress Series (secondary, dashed curve) */}
                             {egressArea && (
-                                <path
-                                    d={egressArea}
-                                    fill="url(#mr-chart-grad-egress)"
-                                />
+                                <path d={egressArea} fill="url(#mr-chart-grad-egress)" />
                             )}
                             {egressCurve && (
                                 <path
@@ -577,10 +574,7 @@ export function MoodboardTelemetryChart() {
 
                             {/* Ingress Series (primary, smooth area curve) */}
                             {ingressArea && (
-                                <path
-                                    d={ingressArea}
-                                    fill="url(#mr-chart-grad-ingress)"
-                                />
+                                <path d={ingressArea} fill="url(#mr-chart-grad-ingress)" />
                             )}
                             {ingressCurve && (
                                 <path
