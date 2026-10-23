@@ -4,7 +4,6 @@ import bash from 'highlight.js/lib/languages/bash'
 import typescript from 'highlight.js/lib/languages/typescript'
 import xml from 'highlight.js/lib/languages/xml'
 import { useEffect, useRef } from 'react'
-import 'highlight.js/styles/github-dark.css'
 
 hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('typescript', typescript)

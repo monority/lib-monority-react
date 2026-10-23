@@ -22,25 +22,6 @@
     --docs-code-tag: var(--mr-text-secondary);
     --docs-code-comment: var(--mr-text-disabled);
     --docs-code-meta: var(--mr-warning-text);
-    --mr-code-bg: var(--docs-code-bg);
-    --mr-code-fg: var(--docs-code-fg);
-    --mr-code-shadow: var(--docs-code-shadow);
-    --mr-code-scrollbar: color-mix(in srgb, var(--mr-text-secondary) 32%, transparent);
-}
-
-:root[data-theme='dark'] .docs-layout,
-:root[data-theme='oled'] .docs-layout,
-:root[data-theme='dim'] .docs-layout {
-    --docs-code-keyword: var(--mr-accent-solid);
-    --docs-code-string: var(--mr-success-text);
-    --docs-code-number: var(--mr-warning-text);
-    --docs-code-literal: var(--mr-danger-text);
-    --docs-code-type: var(--mr-info-text);
-    --docs-code-property: var(--mr-info-text);
-    --docs-code-name: var(--mr-warning-text);
-    --docs-code-attr: var(--mr-text-secondary);
-    --docs-code-tag: var(--mr-text-secondary);
-    --docs-code-meta: var(--mr-warning-text);
 }
 
 .docs-sidebar {

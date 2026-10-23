@@ -1,38 +1,54 @@
-/* Code syntax theme: inherits docs color tokens, with local fallbacks.
+/* Code syntax theme: single source of truth for hljs colors, inherits docs
+   color tokens (defined in index.css) with valid --mr-* fallbacks so the rules
+   stay safe outside .docs-layout.
    Hierarchy (light + dark): violet keywords, blue types/properties,
-   amber JSX names, green strings, red literals, muted attrs/brackets. */
+   amber JSX names, green strings, red literals, muted attrs/brackets.
+   Every hljs class emitted for the registered languages (bash, tsx, xml) must
+   resolve a color here: with no vendor stylesheet loaded, uncovered classes
+   would otherwise inherit and stay readable, so coverage matters. */
 
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
+    display: block;
     padding: 0;
     color: var(--docs-code-fg, var(--mr-text-primary));
     background: transparent;
 }
 
+/* Base text and markup punctuation */
+.mr-pre-code code .hljs-subst,
+.mr-pre-code code .hljs-variable {
+    color: var(--docs-code-fg, var(--mr-text-primary));
+}
+
+/* Violet keywords, including members that read as keywords. */
 .mr-pre-code code .hljs-keyword,
 .mr-pre-code code .hljs-selector-tag,
 .mr-pre-code code .hljs-selector-class,
 .mr-pre-code code .hljs-selector-id,
-.mr-pre-code code .hljs-selector-pseudo {
-    color: var(--docs-code-keyword, var(--mr-accent));
+.mr-pre-code code .hljs-selector-pseudo,
+.mr-pre-code code .hljs-variable.language_,
+.mr-pre-code code .hljs-doctag {
+    color: var(--docs-code-keyword, var(--mr-accent-solid));
 }
 
 .mr-pre-code code .hljs-string,
+.mr-pre-code code .hljs-regexp,
 .mr-pre-code code .hljs-template-variable,
 .mr-pre-code code .hljs-template-tag {
-    color: var(--docs-code-string, var(--mr-success));
+    color: var(--docs-code-string, var(--mr-success-text));
 }
 
 .mr-pre-code code .hljs-number,
 .mr-pre-code code .hljs-section,
 .mr-pre-code code .hljs-variable.constant_ {
-    color: var(--docs-code-number, var(--mr-warning));
+    color: var(--docs-code-number, var(--mr-warning-text));
 }
 
 /* JSX/TSX element + component names (hljs emits hljs-name, hljs-title). */
 .mr-pre-code code .hljs-name,
 .mr-pre-code code .hljs-title {
-    color: var(--docs-code-name, var(--mr-warning));
+    color: var(--docs-code-name, var(--mr-warning-text));
 }
 
 .mr-pre-code code .hljs-literal {
@@ -40,7 +56,9 @@
 }
 
 /* Attribute names read as structure, not alarms: keep them quiet. */
-.mr-pre-code code .hljs-attr {
+.mr-pre-code code .hljs-attr,
+.mr-pre-code code .hljs-attribute,
+.mr-pre-code code .hljs-selector-attr {
     color: var(--docs-code-attr, var(--mr-text-secondary));
 }
 
@@ -52,16 +70,19 @@
 .mr-pre-code code .hljs-tag .hljs-name,
 .mr-pre-code code .hljs-tag .hljs-title,
 .mr-pre-code code .hljs-tag .hljs-type {
-    color: var(--docs-code-name, var(--mr-warning));
+    color: var(--docs-code-name, var(--mr-warning-text));
 }
 
 .mr-pre-code code .hljs-built_in,
 .mr-pre-code code .hljs-title.function_,
 .mr-pre-code code .hljs-type {
-    color: var(--docs-code-type, var(--mr-info, var(--mr-accent)));
+    color: var(--docs-code-type, var(--mr-info-text));
 }
 
-.mr-pre-code code .hljs-comment {
+.mr-pre-code code .hljs-comment,
+.mr-pre-code code .hljs-quote,
+.mr-pre-code code .hljs-code,
+.mr-pre-code code .hljs-formula {
     color: var(--docs-code-comment, var(--mr-text-secondary));
     font-style: italic;
 }
@@ -72,30 +93,34 @@
 
 .mr-pre-code code .hljs-meta,
 .mr-pre-code code .hljs-meta .hljs-string {
-    color: var(--docs-code-meta, var(--mr-warning));
-}
-
-.mr-pre-code code .hljs-variable {
-    color: var(--docs-code-fg, var(--mr-text-primary));
+    color: var(--docs-code-meta, var(--mr-warning-text));
 }
 
 .mr-pre-code code .hljs-property,
 .mr-pre-code code .hljs-link {
-    color: var(--docs-code-property, var(--mr-accent));
+    color: var(--docs-code-property, var(--mr-info-text));
 }
 
-.mr-pre-code code .hljs-punctuation,
-.mr-pre-code code .hljs-operator {
-    color: var(--docs-code-muted, var(--mr-text-secondary));
-}
-
+/* Diff markup: colored text on its tinted background. */
 .mr-pre-code code .hljs-deletion {
     color: var(--docs-code-deletion, var(--mr-danger-text));
     background: color-mix(in srgb, var(--mr-danger-text) 12%, transparent);
 }
 
 .mr-pre-code code .hljs-addition {
-    background: color-mix(in srgb, var(--mr-success) 12%, transparent);
+    color: var(--docs-code-string, var(--mr-success-text));
+    background: color-mix(in srgb, var(--mr-success-solid) 12%, transparent);
+}
+
+/* Quiet punctuation that carries no meaning of its own. */
+.mr-pre-code code .hljs-punctuation,
+.mr-pre-code code .hljs-operator {
+    color: var(--docs-code-muted, var(--mr-text-secondary));
+}
+
+.mr-pre-code code .hljs-symbol,
+.mr-pre-code code .hljs-bullet {
+    color: var(--docs-code-number, var(--mr-warning-text));
 }
 
 .mr-pre-code code .hljs-link {
