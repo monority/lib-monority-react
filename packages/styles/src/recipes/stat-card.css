@@ -6,12 +6,15 @@
         flex-direction: column;
         box-sizing: border-box;
         gap: var(--mr-space-3);
-        transition: border-color var(--mr-duration-state) ease, box-shadow var(--mr-duration-state)
-            ease;
+        transition: border-color var(--mr-duration-state) var(--mr-ease-out), box-shadow
+            var(--mr-duration-state) var(--mr-ease-out);
     }
 
-    :where(.mr-stat-card:hover) {
-        border-color: var(--mr-border-default);
+    @media (hover: hover) {
+        :where(.mr-stat-card:hover) {
+            border-color: var(--mr-border-default);
+            box-shadow: var(--mr-shadow-sm);
+        }
     }
 
     :where(.mr-stat-card__header) {
@@ -47,6 +50,15 @@
         color: var(--mr-text-secondary);
         border: 1px solid var(--mr-border-subtle);
         flex-shrink: 0;
+        transition: color var(--mr-duration-state) var(--mr-ease-out), border-color
+            var(--mr-duration-state) var(--mr-ease-out);
+    }
+
+    @media (hover: hover) {
+        :where(.mr-stat-card:hover) :where(.mr-stat-card__icon) {
+            color: var(--mr-text-primary);
+            border-color: var(--mr-border-control);
+        }
     }
 
     :where(.mr-stat-card__icon svg) {
@@ -107,6 +119,7 @@
     }
 
     :where(.mr-stat-card__value) {
+        font-family: var(--mr-font-family-mono);
         font-variant-numeric: tabular-nums;
         font-weight: var(--mr-font-weight-bold);
         font-size: var(--mr-font-size-2xl);
