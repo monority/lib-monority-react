@@ -138,21 +138,18 @@
             box-shadow var(--mr-duration-state) var(--mr-ease-out);
     }
 
-    :where(.mr-carousel__arrow):first-of-type,
     :where(.mr-carousel__arrow[data-direction='prev']) {
         grid-area: viewport;
         justify-self: start;
         margin-inline-start: var(--mr-space-2);
     }
 
-    :where(.mr-carousel__arrow):last-of-type,
     :where(.mr-carousel__arrow[data-direction='next']) {
         grid-area: viewport;
         justify-self: end;
         margin-inline-end: var(--mr-space-2);
     }
 
-    :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:first-of-type),
     :where(.mr-carousel)[data-orientation='vertical']
         :where(.mr-carousel__arrow[data-direction='prev']) {
         grid-area: viewport;
@@ -162,7 +159,6 @@
         margin-inline-start: 0;
     }
 
-    :where(.mr-carousel)[data-orientation='vertical'] :where(.mr-carousel__arrow:last-of-type),
     :where(.mr-carousel)[data-orientation='vertical']
         :where(.mr-carousel__arrow[data-direction='next']) {
         grid-area: viewport;
@@ -173,22 +169,18 @@
     }
 
     /* Outside layout overrides */
-    :where(.mr-carousel)[data-arrows-position='outside'] :where(.mr-carousel__arrow):first-of-type,
     :where(.mr-carousel)[data-arrows-position='outside']
         :where(.mr-carousel__arrow[data-direction='prev']) {
         grid-area: prev;
         margin-inline-start: 0;
     }
 
-    :where(.mr-carousel)[data-arrows-position='outside'] :where(.mr-carousel__arrow):last-of-type,
     :where(.mr-carousel)[data-arrows-position='outside']
         :where(.mr-carousel__arrow[data-direction='next']) {
         grid-area: next;
         margin-inline-end: 0;
     }
 
-    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
-        :where(.mr-carousel__arrow:first-of-type),
     :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
         :where(.mr-carousel__arrow[data-direction='prev']) {
         grid-area: prev;
@@ -197,20 +189,20 @@
     }
 
     :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
-        :where(.mr-carousel__arrow:last-of-type),
-    :where(.mr-carousel)[data-orientation='vertical'][data-arrows-position='outside']
         :where(.mr-carousel__arrow[data-direction='next']) {
         grid-area: next;
         align-self: center;
         margin-block-end: 0;
     }
 
-    :where(.mr-carousel__arrow):hover:not(:disabled) {
-        background-color: var(--mr-bg-surface);
-        border-color: var(--mr-border-default);
-        color: var(--mr-text-primary);
-        box-shadow: var(--mr-shadow-overlay);
-        transform: scale(1.08);
+    @media (hover: hover) {
+        :where(.mr-carousel__arrow):hover:not(:disabled) {
+            background-color: var(--mr-bg-surface);
+            border-color: var(--mr-border-default);
+            color: var(--mr-text-primary);
+            box-shadow: var(--mr-shadow-overlay);
+            transform: scale(1.08);
+        }
     }
 
     :where(.mr-carousel__arrow):active:not(:disabled) {
@@ -255,9 +247,11 @@
             var(--mr-ease-out), transform var(--mr-duration-instant) var(--mr-ease-spring);
     }
 
-    :where(.mr-carousel__dot):hover {
-        opacity: 0.85;
-        background-color: var(--mr-text-secondary);
+    @media (hover: hover) {
+        :where(.mr-carousel__dot):hover {
+            opacity: 0.85;
+            background-color: var(--mr-text-secondary);
+        }
     }
 
     :where(.mr-carousel__dot)[data-active='true'] {
@@ -316,11 +310,13 @@
             var(--mr-ease-spring), border-color var(--mr-duration-state) var(--mr-ease-out);
     }
 
-    :where(.mr-carousel__play-pause):hover:not(:disabled) {
-        color: var(--mr-text-primary);
-        border-color: var(--mr-border-control);
-        background-color: var(--mr-bg-surface);
-        transform: scale(1.08);
+    @media (hover: hover) {
+        :where(.mr-carousel__play-pause):hover:not(:disabled) {
+            color: var(--mr-text-primary);
+            border-color: var(--mr-border-control);
+            background-color: var(--mr-bg-surface);
+            transform: scale(1.08);
+        }
     }
 
     :where(.mr-carousel__play-pause):active:not(:disabled) {
