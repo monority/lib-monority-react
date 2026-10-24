@@ -112,11 +112,10 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier commit : fix(docs) distinction et contraste de la syntaxe en theme clair (suite de 326b13f).
-- Constat restant apres 326b13f : marque neutre = accent vaut le texte (chroma 0), keywords indiscernables du texte de base dans les previews de code, surtout en clair.
-- code-theme.css : keywords en demi-gras (var(--mr-font-weight-semibold)), poids et non couleur, vocabulaire des 7 tokens intact, valable tout theme/marque.
-- CodeViewer.css : fond clair sunken+4% noir -> sunken+2% noir ; attrs/tags (text-secondary) 4,44:1 -> 4,70:1 (AA), couleurs regagnent ~0,9 point. Regle flush embed du playground (0,2,0) ecrase toujours cet override sur les snippets integres : fond sunken plein, attrs 4,98:1.
-- Preuves : navigateur getComputedStyle (keyword 400->600 light+dark, fond viewer 0,9266->0,9457), contrastes par tooling/contrast/contrast-checker.js, docs-shell.test 8/8, biome format propre.
-- Signale, non fait : comments 3,4-3,6:1 (ton calme text-tertiary sanctionne par spec pre-code.md) ; keywords violets documentes = marque teintee [data-brand], decision produit ; snapshots audit-baseline opt-in a regenerer.
+Dernier commit : docs(plan) plan d optimisation du chargement des pages (plan-optimisation-chargement-pages.md).
+- Correctif de mesure : le 839 KB annonce en fin de session precedente etait des tailles decomprimees, pas wire. Tailles gzip Vite : CSS 33,18, vendor-react 91,35, entree 27,20, vendor-syntax 13,04, DocsPage 9,11, fonts latin ~59 KB. Total wire /docs/button ~240 KB.
+- Causes mesurees : Google Fonts JetBrains Mono morte (index.html seul usage, grepe) ; CommandPalette + registre dans le chunk d entree (AppHeader import statique) ; polices sans preload. Lazy hljs rejete : toutes les pages docs ont un playground avec code.
+- Plan en 5 phases : 0 baseline wire/LCP, 1 suppression Google Fonts + CSP, 2 lazy CommandPalette (conditionnelle, go si entree -15% gzip), 3 preload fonts (conditionnelle), 4 verification (pnpm verify 7 etapes + e2e cibles + mesure avant/apres).
+- Note du plan : 17/20 (base factuelle 3, risque 4, conformite 4, impact 2, verifiabilite 4).
 
-Prochaine action : pousser la plage locale vers origin (passage par PR a arbitrer) ; fichiers sidebar-layout modifies par une autre session, ne pas les toucher ; apps/web/.tmp-verify-sidebar.mjs est un artefact d une autre session.
+Prochaine action : execution du plan apres accord, un commit par phase ; fichiers sidebar-layout modifies par une autre session, ne pas toucher ; apps/web/.tmp-verify-sidebar.mjs artefact d une autre session.
