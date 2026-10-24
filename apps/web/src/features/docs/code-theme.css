@@ -5,7 +5,11 @@
    amber JSX names, green strings, red literals, muted attrs/brackets.
    Every hljs class emitted for the registered languages (bash, tsx, xml) must
    resolve a color here: with no vendor stylesheet loaded, uncovered classes
-   would otherwise inherit and stay readable, so coverage matters. */
+   would otherwise inherit and stay readable, so coverage matters.
+   Marque neutre par defaut : accent-solid vaut le texte primaire (chroma 0),
+   les keywords ne peuvent donc pas se distinguer par la couleur. Le poids
+   demi-gras porte la hierarchie a leur place, quel que soit le theme ou la
+   marque. */
 
 .mr-pre-code code.hljs,
 .mr-pre-code code .hljs {
@@ -30,6 +34,7 @@
 .mr-pre-code code .hljs-variable.language_,
 .mr-pre-code code .hljs-doctag {
     color: var(--docs-code-keyword, var(--mr-accent-solid));
+    font-weight: var(--mr-font-weight-semibold);
 }
 
 .mr-pre-code code .hljs-string,

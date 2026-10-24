@@ -112,9 +112,11 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 
 ## Reprise
 
-Dernier commit : 326b13f fix(docs) contraste syntaxe de code en theme clair.
-- Cause : import vendeur github-dark.css posait des couleurs claires sur hljs en theme clair (1,4:1 a 3,1:1, sous AA). Import supprime ; code-theme.css reecrit comme source unique avec fallbacks valides et couverture complete des langages enregistres.
-- Dead code supprime : fallbacks undefined (--mr-accent, --mr-success), vars --mr-code-*, bloc dark override redondant, tokens docs PreCode inexistants. Plan detail : plan-contraste-code-preview-clair.md.
-- Preuves : docs-shell.test 8/8, PreCode.test 7/7, typecheck vert, biome et lint:css propres. Navigateur : light keyword 15,64:1, title 8,42:1, string 7,99:1 ; dark non regressif ; aucune couleur #c9d1d9 dans la CSS de page.
+Dernier commit : fix(docs) distinction et contraste de la syntaxe en theme clair (suite de 326b13f).
+- Constat restant apres 326b13f : marque neutre = accent vaut le texte (chroma 0), keywords indiscernables du texte de base dans les previews de code, surtout en clair.
+- code-theme.css : keywords en demi-gras (var(--mr-font-weight-semibold)), poids et non couleur, vocabulaire des 7 tokens intact, valable tout theme/marque.
+- CodeViewer.css : fond clair sunken+4% noir -> sunken+2% noir ; attrs/tags (text-secondary) 4,44:1 -> 4,70:1 (AA), couleurs regagnent ~0,9 point. Regle flush embed du playground (0,2,0) ecrase toujours cet override sur les snippets integres : fond sunken plein, attrs 4,98:1.
+- Preuves : navigateur getComputedStyle (keyword 400->600 light+dark, fond viewer 0,9266->0,9457), contrastes par tooling/contrast/contrast-checker.js, docs-shell.test 8/8, biome format propre.
+- Signale, non fait : comments 3,4-3,6:1 (ton calme text-tertiary sanctionne par spec pre-code.md) ; keywords violets documentes = marque teintee [data-brand], decision produit ; snapshots audit-baseline opt-in a regenerer.
 
-Prochaine action : pousser la plage locale vers origin (branche main, 18 commits d'avance, passage par PR a arbitrer car la branche locale principale avance direct) ; fichiers sidebar-layout restent modifies par une autre session, ne pas les toucher.
+Prochaine action : pousser la plage locale vers origin (passage par PR a arbitrer) ; fichiers sidebar-layout modifies par une autre session, ne pas les toucher ; apps/web/.tmp-verify-sidebar.mjs est un artefact d une autre session.

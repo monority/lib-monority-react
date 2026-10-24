@@ -16,7 +16,10 @@
 }
 
 :where([data-theme='light'], :root:not([data-theme])) .code-viewer {
-    background-color: color-mix(in oklch, var(--mr-bg-sunken) 96%, black);
+    /* 98% : garde le fond distinct du canevas blanc tout en laissant
+       --mr-text-secondary (attrs, tags) au-dessus de WCAG AA 4,5:1
+       (4,70:1 sur le fond rendu L=0,9457) ; a 96% il tombait a 4,44:1. */
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 98%, black);
 }
 
 .code-viewer__header {
