@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { LocaleProvider } from '@/shared/i18n'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DocToc } from './DocToc'
 
@@ -53,7 +54,9 @@ describe('DocToc', () => {
     it('collects headings and renders TOC links', () => {
         render(
             <MemoryRouter initialEntries={['/docs/button']}>
-                <DocToc />
+                <LocaleProvider>
+                    <DocToc />
+                </LocaleProvider>
             </MemoryRouter>
         )
 
@@ -70,7 +73,9 @@ describe('DocToc', () => {
     it('sets initial active item to first heading', () => {
         render(
             <MemoryRouter initialEntries={['/docs/button']}>
-                <DocToc />
+                <LocaleProvider>
+                    <DocToc />
+                </LocaleProvider>
             </MemoryRouter>
         )
 
@@ -88,7 +93,9 @@ describe('DocToc', () => {
 
         render(
             <MemoryRouter initialEntries={['/docs/button']}>
-                <DocToc />
+                <LocaleProvider>
+                    <DocToc />
+                </LocaleProvider>
             </MemoryRouter>
         )
 
@@ -108,7 +115,9 @@ describe('DocToc', () => {
     it('keeps second-to-last item active when it intersects reading line even near bottom', () => {
         render(
             <MemoryRouter initialEntries={['/docs/button']}>
-                <DocToc />
+                <LocaleProvider>
+                    <DocToc />
+                </LocaleProvider>
             </MemoryRouter>
         )
 

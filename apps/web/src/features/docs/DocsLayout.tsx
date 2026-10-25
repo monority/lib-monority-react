@@ -1,3 +1,4 @@
+import { localizePath, useLocale, useMessages } from '@/shared/i18n'
 import { Badge } from '@monority/ui/badge'
 import { Input } from '@monority/ui/input'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
@@ -8,15 +9,15 @@ interface DocsLayoutProps {
     children?: ReactNode
 }
 
-const introductionItem = { label: 'Introduction', path: '/docs', status: 'stable' as const }
+const introductionItem = { path: '/docs', status: 'stable' as const }
 const installationItem = {
-    label: 'Installation',
     path: '/docs/installation',
     status: 'stable' as const,
 }
 
 export function DocsLayout({ children }: DocsLayoutProps) {
     const location = useLocation()
+    const messages = useMessages().docs
     const [query, setQuery] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
     const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -67,12 +68,12 @@ export function DocsLayout({ children }: DocsLayoutProps) {
                     className="docs-mobile-bar__toggle"
                     aria-expanded={menuOpen}
                     aria-controls="docs-mobile-nav"
-                    aria-label={menuOpen ? 'Close documentation menu' : 'Open documentation menu'}
+                    aria-label={menuOpen ? messages.sidebar.closeMenu : messages.sidebar.openMenu}
                     onClick={() => setMenuOpen((open) => !open)}
                 >
                     <span className="docs-mobile-bar__icon" aria-hidden="true" />
                 </button>
-                <span className="docs-mobile-bar__label">Docs</span>
+                <span className="docs-mobile-bar__label">{messages.sidebar.title}</span>
             </div>
             {menuOpen ? (
                 <div className="docs-mobile-nav" id="docs-mobile-nav">
@@ -85,21 +86,21 @@ export function DocsLayout({ children }: DocsLayoutProps) {
                         className="docs-mobile-nav__panel"
                         role="dialog"
                         aria-modal="true"
-                        aria-label="Documentation navigation"
+                        aria-label={messages.sidebar.mobileNavigation}
                     >
                         <div className="docs-mobile-nav__header">
-                            <span className="docs-kicker">Monority UI</span>
+                            <span className="docs-kicker">{messages.sidebar.kicker}</span>
                             <button
                                 ref={closeButtonRef}
                                 type="button"
                                 className="docs-mobile-nav__close"
-                                aria-label="Close documentation menu"
+                                aria-label={messages.sidebar.closeMenu}
                                 onClick={() => {
                                     setMenuOpen(false)
                                     menuButtonRef.current?.focus()
                                 }}
                             >
-                                <span aria-hidden="true">{'×'}</span>
+                                <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div className="docs-mobile-nav__body">
@@ -126,6 +127,9 @@ interface DocsSidebarBodyProps {
 }
 
 function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSidebarBodyProps) {
+    const { locale } = useLocale()
+    const docsMessages = useMessages().docs
+    const messages = docsMessages.sidebar
     const normalizedQuery = query.trim().toLowerCase().replaceAll('-', '')
     const items = docsComponentRegistry.filter((item) =>
         normalizedQuery
@@ -144,11 +148,13 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
         {}
     )
 
+    const isActive = (path: string) => pathname === localizePath(path, locale)
+
     return (
         <>
             <div className="docs-sidebar__header">
-                <span className="docs-kicker">Monority UI</span>
-                <h2>Docs</h2>
+                <span className="docs-kicker">{messages.kicker}</span>
+                <h2>{messages.title}</h2>
             </div>
             <Input
                 className="docs-search"
@@ -159,27 +165,27 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                 onKeyDown={(event) => {
                     if (event.key === 'Escape') onQueryChange('')
                 }}
-                placeholder="Search components"
-                aria-label="Search components"
+                placeholder={messages.searchPlaceholder}
+                aria-label={messages.searchLabel}
             />
             {normalizedQuery && items.length === 0 ? (
                 <p className="docs-nav-empty" role="status">
-                    No components match “{query.trim()}”.{' '}
+                    {messages.empty(query.trim())}{' '}
                     <button
                         type="button"
                         className="docs-text-link"
                         onClick={() => onQueryChange('')}
                     >
-                        Clear search
+                        {messages.clearSearch}
                     </button>
                 </p>
             ) : null}
-            <nav className="docs-nav" aria-label="Documentation" onClick={onLinkClick}>
+            <nav className="docs-nav" aria-label={messages.navigation} onClick={onLinkClick}>
                 <Link
-                    to={introductionItem.path}
-                    className={`docs-nav-link ${pathname === introductionItem.path ? 'active' : ''}`}
+                    to={localizePath(introductionItem.path, locale)}
+                    className={`docs-nav-link ${isActive(introductionItem.path) ? 'active' : ''}`}
                 >
-                    <span className="docs-nav-label">{introductionItem.label}</span>
+                    <span className="docs-nav-label">{docsMessages.guides.introduction}</span>
                     {introductionItem.status !== 'stable' ? (
                         <Badge
                             size="sm"
@@ -193,10 +199,10 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                 </Link>
 
                 <Link
-                    to={installationItem.path}
-                    className={`docs-nav-link ${pathname === installationItem.path ? 'active' : ''}`}
+                    to={localizePath(installationItem.path, locale)}
+                    className={`docs-nav-link ${isActive(installationItem.path) ? 'active' : ''}`}
                 >
-                    <span className="docs-nav-label">{installationItem.label}</span>
+                    <span className="docs-nav-label">{docsMessages.guides.installation}</span>
                     {installationItem.status !== 'stable' ? (
                         <Badge
                             size="sm"
@@ -215,8 +221,8 @@ function DocsSidebarBody({ query, onQueryChange, pathname, onLinkClick }: DocsSi
                         {categoryItems.map((item) => (
                             <Link
                                 key={item.path}
-                                to={item.path}
-                                className={`docs-nav-link ${pathname === item.path ? 'active' : ''}`}
+                                to={localizePath(item.path, locale)}
+                                className={`docs-nav-link ${isActive(item.path) ? 'active' : ''}`}
                             >
                                 <span className="docs-nav-label">{item.label}</span>
                                 {item.status !== 'stable' ? (

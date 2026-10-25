@@ -1,3 +1,4 @@
+import { LocaleProvider } from '@/shared/i18n'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
@@ -6,9 +7,11 @@ import { DocsLayout } from './DocsLayout'
 function renderDocsLayout(initialEntries = ['/docs']) {
     return render(
         <MemoryRouter initialEntries={initialEntries}>
-            <DocsLayout>
-                <div>Documentation content</div>
-            </DocsLayout>
+            <LocaleProvider>
+                <DocsLayout>
+                    <div>Documentation content</div>
+                </DocsLayout>
+            </LocaleProvider>
         </MemoryRouter>
     )
 }

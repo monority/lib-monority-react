@@ -1,29 +1,37 @@
+import { LocaleProvider } from '@/shared/i18n'
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { DocKeyboardTable } from './DocKeyboardTable'
 
+function renderTable(shortcuts: Parameters<typeof DocKeyboardTable>[0]['shortcuts']) {
+    return render(
+        <MemoryRouter>
+            <LocaleProvider>
+                <DocKeyboardTable shortcuts={shortcuts} />
+            </LocaleProvider>
+        </MemoryRouter>
+    )
+}
+
 describe('DocKeyboardTable', () => {
     it('returns null when shortcuts array is empty', () => {
-        const { container } = render(<DocKeyboardTable shortcuts={[]} />)
+        const { container } = renderTable([])
         expect(container.firstChild).toBeNull()
     })
 
     it('renders shortcuts, action descriptions and context', () => {
-        render(
-            <DocKeyboardTable
-                shortcuts={[
-                    {
-                        key: ['Control', 'k'],
-                        action: 'Ouvre la palette',
-                        context: 'Raccourci global',
-                    },
-                    {
-                        key: 'Escape',
-                        action: 'Ferme la vue',
-                    },
-                ]}
-            />
-        )
+        renderTable([
+            {
+                key: ['Control', 'k'],
+                action: 'Ouvre la palette',
+                context: 'Raccourci global',
+            },
+            {
+                key: 'Escape',
+                action: 'Ferme la vue',
+            },
+        ])
 
         expect(screen.getByText('Control')).toBeInTheDocument()
         expect(screen.getByText('k')).toBeInTheDocument()

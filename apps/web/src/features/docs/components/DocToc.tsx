@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useMessages } from '@/shared/i18n'
 
 interface HeadingInfo {
     id: string
@@ -53,6 +54,7 @@ function collectHeadings(): HeadingInfo[] {
 }
 
 export function DocToc() {
+    const messages = useMessages().docs.toc
     const [headings, setHeadings] = useState<HeadingInfo[]>([])
     const [activeId, setActiveId] = useState<string>('')
     const isClickScrollingRef = useRef(false)
@@ -221,8 +223,8 @@ export function DocToc() {
     if (headings.length === 0) return null
 
     return (
-        <nav className="docs-toc" aria-label="Table of contents">
-            <h4 className="docs-toc__title">On this page</h4>
+        <nav className="docs-toc" aria-label={messages.label}>
+            <h4 className="docs-toc__title">{messages.title}</h4>
             <ul className="docs-toc__list">
                 {headings.map((h) => (
                     <li key={h.id} data-level={h.level}>

@@ -1,10 +1,21 @@
+import { LocaleProvider } from '@/shared/i18n'
 import { fireEvent, render, screen } from '@testing-library/react'
+import type { ReactElement } from 'react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { ComponentPlayground } from './ComponentPlayground'
 
+function renderPlayground(ui: ReactElement) {
+    return render(
+        <MemoryRouter>
+            <LocaleProvider>{ui}</LocaleProvider>
+        </MemoryRouter>
+    )
+}
+
 describe('ComponentPlayground', () => {
     it('renders stage, controls and generated code snippet', () => {
-        render(
+        renderPlayground(
             <ComponentPlayground<{ variant: string; disabled: boolean }>
                 componentName="Button"
                 importCode="import { Button } from '@monority/ui/button'"
@@ -48,7 +59,7 @@ describe('ComponentPlayground', () => {
     })
 
     it('updates component rendering and code when controls change', () => {
-        render(
+        renderPlayground(
             <ComponentPlayground<{ variant: string; disabled: boolean }>
                 componentName="Button"
                 controls={[
@@ -89,7 +100,7 @@ describe('ComponentPlayground', () => {
     })
 
     it('resets controls to default when reset button is clicked', () => {
-        render(
+        renderPlayground(
             <ComponentPlayground<{ variant: string }>
                 componentName="Button"
                 controls={[
@@ -125,7 +136,7 @@ describe('ComponentPlayground', () => {
             resetCalled = true
         }
 
-        render(
+        renderPlayground(
             <ComponentPlayground
                 componentName="Controlled"
                 onReset={handleReset}
