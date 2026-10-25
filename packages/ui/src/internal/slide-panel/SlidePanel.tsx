@@ -58,7 +58,7 @@ export function SlidePanel({
     onClose,
     className,
     classPrefix,
-    closeLabel = 'Fermer',
+    closeLabel = 'Close',
     wrapBodyWhenNoHeader = false,
     panelClassName,
     ...props
@@ -155,7 +155,7 @@ export function SlidePanel({
                             onClick={onClose}
                             aria-label={closeLabel}
                         >
-                            Fermer
+                            Close
                         </Button>
                     </header>
                 ) : null}

@@ -239,7 +239,7 @@ export function CarouselPlayPause({ ref, className, onClick, ...props }: Carouse
                 togglePause()
             }}
             className={cn('mr-carousel__play-pause', className)}
-            aria-label={isPaused ? 'Reprendre la lecture' : 'Mettre en pause'}
+            aria-label={isPaused ? 'Resume slideshow' : 'Pause slideshow'}
             aria-pressed={isPaused}
             {...props}
         >

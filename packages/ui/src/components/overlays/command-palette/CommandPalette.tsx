@@ -65,8 +65,8 @@ export function CommandPalette({
     onClose,
     items = [],
     title = 'Command palette',
-    placeholder = 'Rechercher une action…',
-    emptyLabel = 'Aucun résultat.',
+    placeholder = 'Search for an action…',
+    emptyLabel = 'No results.',
     className,
     children,
     ...props
@@ -309,7 +309,7 @@ function CommandPaletteInput({
     className,
     value,
     onChange,
-    placeholder = 'Rechercher une action…',
+    placeholder = 'Search for an action…',
     ...props
 }: CommandPaletteInputProps) {
     const ctx = useCommandPaletteContext()

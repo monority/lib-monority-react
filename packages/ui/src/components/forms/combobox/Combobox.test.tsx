@@ -218,7 +218,7 @@ describe('Combobox', () => {
         const input = view.querySelector('input')
 
         expect(clearBtn).toBeTruthy()
-        expect(clearBtn?.getAttribute('aria-label')).toBe('Effacer la sélection')
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Clear selection')
         expect(wrapper?.getAttribute('data-has-clear')).toBe('true')
         expect(input?.getAttribute('data-has-clear')).toBe('true')
     })

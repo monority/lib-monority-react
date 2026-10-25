@@ -198,7 +198,7 @@ const items = [
         {
             name: 'clearAriaLabel',
             type: `string`,
-            defaultValue: `'Effacer la sélection'`,
+            defaultValue: `'Clear selection'`,
             description: "Libellé accessible (aria-label) pour le bouton d'effacement.",
         },
         {

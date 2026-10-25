@@ -78,7 +78,7 @@ function ToastClose({ className, children, ref, onClick, ...props }: ToastCloseP
             type="button"
             className={cn('mr-toast__close', className)}
             onClick={onClick}
-            aria-label="Fermer la notification"
+            aria-label="Close notification"
             {...props}
         >
             {children ?? defaultCloseIcon}

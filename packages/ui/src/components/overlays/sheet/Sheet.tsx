@@ -9,7 +9,7 @@ import type {
     SheetTitleProps,
 } from './Sheet.types'
 
-const subcomponents = createSlideSubcomponents('mr-sheet', 'Fermer le volet')
+const subcomponents = createSlideSubcomponents('mr-sheet', 'Close panel')
 
 export function Sheet({
     ref,
@@ -34,7 +34,7 @@ export function Sheet({
             onClose={onClose}
             className={className}
             classPrefix="mr-sheet"
-            closeLabel="Fermer le volet"
+            closeLabel="Close panel"
             wrapBodyWhenNoHeader={true}
             {...props}
         >

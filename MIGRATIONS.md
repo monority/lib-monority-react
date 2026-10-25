@@ -78,6 +78,35 @@ Version courante de `@monority/ui` : **0.1.0** (aucun changeset en attente dans
 - **Commits** : `e012fdd` (8 fichiers `stepNN*` renommés d'après leur sujet, 0
   ligne de contenu modifiée) · `e7bc3e1` (contrat d'exports unifié)
 
+### Libellés par défaut en anglais
+
+- **Statut** : terminé
+- **Contenu** : les libellés et noms accessibles fournis par défaut par la
+  librairie passent du français à l'anglais. La librairie reste sans i18n : tout
+  libellé reste remplaçable par une prop.
+
+Avant vers après, pour les composants concernés :
+
+- `Banner` : `Fermer l'annonce` vers `Dismiss announcement` (`closeLabel`).
+- `Toast` : `Fermer la notification` vers `Close notification` (`closeLabel`).
+- `Combobox` : `Rechercher…` vers `Search...` (`placeholder`), `Aucun résultat`
+  vers `No results` (`emptyLabel`), `Effacer la sélection` vers
+  `Clear selection` (`clearAriaLabel`).
+- `Input` : `Effacer le texte` vers `Clear text` (`clearAriaLabel`).
+- `AlertDialog` : `Confirmer` vers `Confirm`, `Annuler` vers `Cancel`
+  (`confirmLabel`, `cancelLabel`, enfants par défaut).
+- `Drawer`, `Sheet` : `Fermer le panneau` vers `Close panel`.
+- `SlidePanel` : `Fermer` vers `Close`.
+- `Modal` : `Fermer la fenêtre` vers `Close window`.
+- `Topbar` : `Navigation principale` vers `Main navigation`.
+- `Carousel` : `Reprendre le diaporama` vers `Resume slideshow`, `Mettre en
+  pause le diaporama` vers `Pause slideshow`.
+- `CommandPalette` : `Rechercher une action…` vers `Search for an action…`,
+  `Aucun résultat.` vers `No results.`.
+
+Migrer consiste à passer explicitement l'ancien libellé, ou le libellé traduit
+attendu par l'application.
+
 ---
 
 ## Sans objet (prémisse du plan invalidée)

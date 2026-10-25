@@ -138,13 +138,13 @@ return (
         {
             name: 'confirmLabel',
             type: `string`,
-            defaultValue: "'Confirmer'",
+            defaultValue: "'Confirm'",
             description: 'Confirm button label.',
         },
         {
             name: 'cancelLabel',
             type: `string`,
-            defaultValue: "'Annuler'",
+            defaultValue: "'Cancel'",
             description: 'Cancel button label.',
         },
         {

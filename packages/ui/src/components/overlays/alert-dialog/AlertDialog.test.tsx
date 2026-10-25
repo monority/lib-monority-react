@@ -54,8 +54,8 @@ describe('AlertDialog', () => {
         render(<AlertDialog open title="Delete?" />)
         const buttons = document.body.querySelectorAll<HTMLButtonElement>('button')
         expect(buttons).toHaveLength(2)
-        expect(buttons[0].textContent).toBe('Annuler')
-        expect(buttons[1].textContent).toBe('Confirmer')
+        expect(buttons[0].textContent).toBe('Cancel')
+        expect(buttons[1].textContent).toBe('Confirm')
     })
 
     it('renders custom labels', () => {

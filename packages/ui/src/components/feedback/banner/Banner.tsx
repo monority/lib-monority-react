@@ -74,7 +74,7 @@ function BannerClose({ className, children, ref, onClick, ...props }: BannerClos
             ref={ref}
             type="button"
             className={cn('mr-banner__close', className)}
-            aria-label="Fermer l'annonce"
+            aria-label="Dismiss announcement"
             onClick={onClick}
             {...props}
         >

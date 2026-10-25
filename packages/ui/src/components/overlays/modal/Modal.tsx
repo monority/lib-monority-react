@@ -92,7 +92,7 @@ export function Modal({
                             variant="ghost"
                             size="sm"
                             onClick={onClose}
-                            aria-label="Fermer la fenetre"
+                            aria-label="Close window"
                         >
                             <IconClose size={16} strokeWidth={1.5} />
                         </Button>
@@ -158,7 +158,7 @@ function ModalClose({ ref, className, children, onClose, ...props }: ModalCloseP
             variant="ghost"
             size="sm"
             onClick={onClose}
-            aria-label="Fermer la fenetre"
+            aria-label="Close window"
             {...props}
         >
             {children ?? <IconClose size={16} strokeWidth={1.5} />}

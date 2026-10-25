@@ -214,7 +214,7 @@ describe('Input', () => {
         const clearBtn = view.querySelector('.mr-input__clear')
         const input = view.querySelector('input')
         expect(clearBtn).toBeTruthy()
-        expect(clearBtn?.getAttribute('aria-label')).toBe('Effacer le texte')
+        expect(clearBtn?.getAttribute('aria-label')).toBe('Clear text')
         expect(input?.hasAttribute('data-has-trailing-icon')).toBe(true)
         expect(view.querySelector('.mr-input__wrapper')).toBeTruthy()
     })
