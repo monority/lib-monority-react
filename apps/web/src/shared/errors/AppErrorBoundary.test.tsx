@@ -19,7 +19,7 @@ describe('AppErrorBoundary', () => {
 
         expect(
             screen.getByRole('heading', {
-                name: /une erreur a interrompu le rendu de l'application/i,
+                name: /an error interrupted the application rendering/i,
             })
         ).toBeInTheDocument()
 
@@ -40,7 +40,7 @@ describe('AppErrorBoundary', () => {
             </AppErrorBoundary>
         )
 
-        fireEvent.click(screen.getByRole('button', { name: /recharger/i }))
+        fireEvent.click(screen.getByRole('button', { name: /reload/i }))
 
         expect(reloadSpy).toHaveBeenCalledTimes(1)
 

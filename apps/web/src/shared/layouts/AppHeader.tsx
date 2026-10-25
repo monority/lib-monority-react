@@ -8,20 +8,36 @@ import {
     Stack,
     Text,
     ThemeName,
+    type ThemeNameType,
     useTheme,
 } from '@monority/ui'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { docsComponentRegistry } from '@/features/docs/components/registry'
+import { localizePath, useLocale, useMessages, type Messages } from '@/shared/i18n'
+import { LocaleSwitcher } from './LocaleSwitcher'
 import { MotionToggle } from './MotionToggle'
 import { ThemeToggle } from './ThemeToggle'
 import './AppHeader.css'
 
-const headerLinks = [
-    { label: 'Docs', to: '/docs' },
-    { label: 'Moodboard', to: '/moodboard' },
+const THEME_COMMAND_KEYS: (keyof Messages['nav']['theme']['commands'])[] = [
+    'light',
+    'dark',
+    'slate',
+    'oled',
+    'ocean',
+    'night',
 ]
+
+const THEME_BY_COMMAND: Record<(typeof THEME_COMMAND_KEYS)[number], ThemeNameType> = {
+    light: ThemeName.LIGHT,
+    dark: ThemeName.DARK,
+    slate: ThemeName.SLATE,
+    oled: ThemeName.OLED,
+    ocean: ThemeName.OCEAN,
+    night: ThemeName.NIGHT,
+}
 
 interface AppHeaderProps {
     homeNav?: boolean
@@ -29,6 +45,8 @@ interface AppHeaderProps {
 
 export function AppHeader({ homeNav = false }: AppHeaderProps) {
     const navigate = useNavigate()
+    const { locale } = useLocale()
+    const messages = useMessages().nav
     const { setTheme } = useTheme()
     const [searchOpen, setSearchOpen] = useState(false)
     const [changelogOpen, setChangelogOpen] = useState(false)
@@ -45,45 +63,47 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
         return () => window.removeEventListener('keydown', onKeyDown)
     }, [])
 
+    const componentCount = docsComponentRegistry.length
+
     const commandItems = useMemo<CommandItem[]>(() => {
         const pages: CommandItem[] = [
             {
                 value: 'page-intro',
-                label: 'Introduction',
-                description: 'Principes fondateurs, architecture CSS et installation',
-                group: 'Guides & Vues',
+                label: messages.commands.introduction.label,
+                description: messages.commands.introduction.description,
+                group: messages.commandGroups.pages,
                 onSelect: () => {
-                    navigate('/docs')
+                    navigate(localizePath('/docs', locale))
                     setSearchOpen(false)
                 },
             },
             {
                 value: 'page-install',
-                label: 'Installation',
-                description: 'Configuration du package npm et des couches CSS',
-                group: 'Guides & Vues',
+                label: messages.commands.installation.label,
+                description: messages.commands.installation.description,
+                group: messages.commandGroups.pages,
                 onSelect: () => {
-                    navigate('/docs/installation')
+                    navigate(localizePath('/docs/installation', locale))
                     setSearchOpen(false)
                 },
             },
             {
                 value: 'page-moodboard',
-                label: 'Moodboard (Studio)',
-                description: 'Tableau de bord interactif et bac à sable de personnalisation',
-                group: 'Guides & Vues',
+                label: messages.commands.moodboard.label,
+                description: messages.commands.moodboard.description,
+                group: messages.commandGroups.pages,
                 onSelect: () => {
-                    navigate('/moodboard')
+                    navigate(localizePath('/moodboard', locale))
                     setSearchOpen(false)
                 },
             },
             {
                 value: 'page-home',
-                label: 'Accueil Monority UI',
-                description: "Page d'accueil et manifeste de la bibliothèque",
-                group: 'Guides & Vues',
+                label: messages.commands.home.label,
+                description: messages.commands.home.description,
+                group: messages.commandGroups.pages,
                 onSelect: () => {
-                    navigate('/')
+                    navigate(localizePath('/', locale))
                     setSearchOpen(false)
                 },
             },
@@ -92,80 +112,28 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
         const components: CommandItem[] = docsComponentRegistry.map((comp) => ({
             value: `comp-${comp.slug}`,
             label: comp.label,
-            description: `Composant ${comp.category}`,
-            group: `Composants (${comp.category})`,
+            description: messages.commands.component(comp.category),
+            group: messages.commandGroups.components(comp.category),
             keywords: `${comp.slug} ${comp.category}`,
             onSelect: () => {
-                navigate(comp.path)
+                navigate(localizePath(comp.path, locale))
                 setSearchOpen(false)
             },
         }))
 
-        const themeActions: CommandItem[] = [
-            {
-                value: 'theme-light',
-                label: 'Thème Clair (Light)',
-                description: 'Bascule vers le thème clair pur',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.LIGHT)
-                    setSearchOpen(false)
-                },
+        const themeActions: CommandItem[] = THEME_COMMAND_KEYS.map((key) => ({
+            value: `theme-${key}`,
+            label: messages.theme.commands[key].label,
+            description: messages.theme.commands[key].description,
+            group: messages.commandGroups.themes,
+            onSelect: () => {
+                setTheme(THEME_BY_COMMAND[key])
+                setSearchOpen(false)
             },
-            {
-                value: 'theme-dark',
-                label: 'Thème Sombre (Dark)',
-                description: 'Bascule vers le thème sombre neutre',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.DARK)
-                    setSearchOpen(false)
-                },
-            },
-            {
-                value: 'theme-slate',
-                label: 'Thème Ardoise (Slate)',
-                description: 'Bascule vers le thème bleuté technique',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.SLATE)
-                    setSearchOpen(false)
-                },
-            },
-            {
-                value: 'theme-oled',
-                label: 'Thème OLED (Noir absolu)',
-                description: 'Bascule vers le contraste infini 0 nit',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.OLED)
-                    setSearchOpen(false)
-                },
-            },
-            {
-                value: 'theme-ocean',
-                label: 'Thème Océan (Deep blue)',
-                description: 'Bascule vers le thème aquatique',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.OCEAN)
-                    setSearchOpen(false)
-                },
-            },
-            {
-                value: 'theme-night',
-                label: 'Thème Nuit (Warm violet)',
-                description: 'Bascule vers le thème nocturne chaleureux',
-                group: 'Thèmes & Atmosphères',
-                onSelect: () => {
-                    setTheme(ThemeName.NIGHT)
-                    setSearchOpen(false)
-                },
-            },
-        ]
+        }))
 
         return [...pages, ...components, ...themeActions]
-    }, [navigate, setTheme])
+    }, [locale, messages, navigate, setTheme])
 
     return (
         <>
@@ -177,10 +145,9 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                         onDismiss={() => setShowBanner(false)}
                         className="app-header__announcement-banner"
                     >
-                        <Banner.Eyebrow>Vague 7</Banner.Eyebrow>
+                        <Banner.Eyebrow>{messages.banner.eyebrow}</Banner.Eyebrow>
                         <Banner.Description>
-                            Système de mouvement, focus rings calibrés, documentation interactive
-                            sur 72 composants et conformité WCAG 2.1 AA.
+                            {messages.banner.description(componentCount)}
                         </Banner.Description>
                         <Banner.Actions>
                             <button
@@ -188,7 +155,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                 className="app-header__announcement-details-btn"
                                 onClick={() => setChangelogOpen(true)}
                             >
-                                Voir le journal
+                                {messages.banner.cta}
                             </button>
                         </Banner.Actions>
                     </Banner>
@@ -198,7 +165,11 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
             <header className={homeNav ? 'app-header app-header--home' : 'app-header'}>
                 <div className="app-header__inner">
                     <div className="app-header__start">
-                        <Link className="app-header__brand" to="/" aria-label="Monority">
+                        <Link
+                            className="app-header__brand"
+                            to={localizePath('/', locale)}
+                            aria-label={messages.brand}
+                        >
                             <span className="app-header__logo-mark" aria-hidden="true">
                                 <svg
                                     width="18"
@@ -233,20 +204,27 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                             <span className="app-header__logo-text">Monority</span>
                             <span className="app-header__logo-badge">v0.1</span>
                         </Link>
-                        <nav className="app-header__nav" aria-label="Navigation principale">
-                            {headerLinks.map((link) => (
-                                <NavLink
-                                    key={link.to}
-                                    to={link.to}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? 'app-header__link app-header__link--active'
-                                            : 'app-header__link'
-                                    }
-                                >
-                                    {link.label}
-                                </NavLink>
-                            ))}
+                        <nav className="app-header__nav" aria-label={messages.primaryNavigation}>
+                            <NavLink
+                                to={localizePath('/docs', locale)}
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'app-header__link app-header__link--active'
+                                        : 'app-header__link'
+                                }
+                            >
+                                {messages.links.docs}
+                            </NavLink>
+                            <NavLink
+                                to={localizePath('/moodboard', locale)}
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'app-header__link app-header__link--active'
+                                        : 'app-header__link'
+                                }
+                            >
+                                {messages.links.moodboard}
+                            </NavLink>
                         </nav>
                     </div>
 
@@ -255,7 +233,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                             type="button"
                             className="app-header__search-trigger"
                             onClick={() => setSearchOpen(true)}
-                            aria-label="Rechercher des composants ou actions (Ctrl+K)"
+                            aria-label={messages.search.open}
                         >
                             <svg
                                 className="app-header__search-icon"
@@ -273,7 +251,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
                             </svg>
                             <span className="app-header__search-placeholder">
-                                Rechercher des composants…
+                                {messages.search.placeholder}
                             </span>
                             <kbd className="app-header__search-shortcut">
                                 <span className="app-header__search-modifier">⌘</span>K
@@ -290,20 +268,24 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                         >
                             <Popover.Trigger
                                 className="app-header__changes-btn"
-                                aria-label="Journal des derniers changements"
+                                aria-label={messages.changelog.trigger}
                             >
                                 <span className="app-header__changes-dot" aria-hidden="true" />
-                                <span className="app-header__changes-title">Log</span>
-                                <span className="app-header__changes-tag">V7</span>
+                                <span className="app-header__changes-title">
+                                    {messages.changelog.trigger}
+                                </span>
+                                <span className="app-header__changes-tag">
+                                    {messages.changelog.tag}
+                                </span>
                             </Popover.Trigger>
                             <Popover.Content className="app-header__changes-popover">
                                 <Stack gap="sm">
                                     <Stack direction="horizontal" justify="between" align="center">
                                         <Text.Strong size="sm">
-                                            Journal des modifications
+                                            {messages.changelog.title}
                                         </Text.Strong>
                                         <Badge tone="accent" size="sm">
-                                            Vague 7
+                                            {messages.changelog.badge}
                                         </Badge>
                                     </Stack>
                                     <Separator />
@@ -311,77 +293,22 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                         gap="xs"
                                         style={{ maxHeight: '280px', overflowY: 'auto' }}
                                     >
-                                        <Text.Small tone="strong">
-                                            Vague 7 — Mouvement, Focus & Documentation :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Playgrounds interactifs dynamiques sur 72 composants
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Système de mouvement tokenisé et anneaux de focus
-                                            calibrés
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Certification accessibilité WCAG 2.1 AA (0 violation
-                                            Axe)
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 6 — Composants avancés & Qualité :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • CommandPalette, FileUpload, SidebarLayout, Combobox
-                                            compound
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Composition déclarative et rétro-compatibilité totale
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Purge intégrale des emojis Unicode dans tout le dépôt
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • AppHeader : intégration Banner compound
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 5 — Fenêtres modales & Tiroirs :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Modal, Dialog, Sheet, Drawer : architecture compound
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 4 — Données & Collections :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Table, Tabs, Pagination : architecture compound
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 3 — Overlays & Dynamique :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Calendar, Popover, HoverCard, Tooltip, Collapsible,
-                                            Avatar, Carousel compound
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 2 — Menus & Navigation :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • NavigationMenu, Menubar et Stepper compound
-                                        </Text.Small>
-                                        <Separator />
-                                        <Text.Small tone="strong">
-                                            Vague 1 — Formulaires & Données :
-                                        </Text.Small>
-                                        <Text.Small tone="muted">
-                                            • Select, DropdownMenu, ContextMenu, Accordion compound
-                                        </Text.Small>
+                                        {messages.changelog.waves.map((wave) => (
+                                            <Stack gap="xs" key={wave.title}>
+                                                <Text.Small tone="strong">{wave.title}</Text.Small>
+                                                {wave.items.map((item) => (
+                                                    <Text.Small tone="muted" key={item}>
+                                                        • {item}
+                                                    </Text.Small>
+                                                ))}
+                                                <Separator />
+                                            </Stack>
+                                        ))}
                                     </Stack>
                                 </Stack>
                             </Popover.Content>
                         </Popover>
+                        <LocaleSwitcher className="app-header__locale" />
                         <MotionToggle className="app-header__motion" />
                         <ThemeToggle className="app-header__theme" />
                         <a
@@ -389,7 +316,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="app-header__github"
-                            aria-label="GitHub Repository"
+                            aria-label={messages.github}
                         >
                             <svg
                                 width="16"
@@ -413,8 +340,8 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                 open={searchOpen}
                 onClose={() => setSearchOpen(false)}
                 items={commandItems}
-                placeholder="Rechercher un composant, un guide, un thème…"
-                emptyLabel="Aucun composant ou action ne correspond à votre recherche."
+                placeholder={messages.search.dialogPlaceholder}
+                emptyLabel={messages.search.empty}
             />
         </>
     )

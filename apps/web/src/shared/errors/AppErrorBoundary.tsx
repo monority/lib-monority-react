@@ -1,5 +1,7 @@
 import { Button, Container, Section, Stack, Text, Title } from '@monority/ui'
 import { Component } from 'react'
+import { getLocaleFromPath } from '@/shared/i18n/locales'
+import { messages } from '@/shared/i18n/messages'
 
 interface AppErrorBoundaryState {
     hasError: boolean
@@ -36,23 +38,24 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
             return this.props.children
         }
 
+        const pathname = typeof window === 'undefined' ? '' : (window.location?.pathname ?? '')
+        const locale = getLocaleFromPath(pathname)
+        const copy = messages[locale].common.error
+
         return (
             <Container size="md">
                 <Section spacing="lg" className="mr-stack-m">
                     <div className="mr-surface mr-app-error">
                         <Stack gap="md">
                             <Text tone="strong" className="eyebrow">
-                                Application error
+                                {copy.eyebrow}
                             </Text>
                             <Title as="h1" size="lg">
-                                Une erreur a interrompu le rendu de l&apos;application.
+                                {copy.title}
                             </Title>
-                            <Text tone="base">
-                                Le starter reste maintenant capable d&apos;afficher un etat
-                                d&apos;erreur propre plutot qu&apos;un ecran casse.
-                            </Text>
+                            <Text tone="base">{copy.description}</Text>
                             <div className="mr-cluster">
-                                <Button onClick={this.handleReload}>Recharger</Button>
+                                <Button onClick={this.handleReload}>{copy.reload}</Button>
                             </div>
                         </Stack>
                     </div>

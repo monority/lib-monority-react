@@ -6,22 +6,21 @@ import {
     type ThemeNameType,
     useTheme,
 } from '@monority/ui'
+import { useMessages, type Messages } from '../i18n'
 
-interface ThemeDefinition {
-    value: ThemeNameType
-    label: string
+type ThemeLabelKey = keyof Messages['nav']['theme']['names']
+
+const THEME_LABEL_KEYS: Record<ThemeNameType, ThemeLabelKey> = {
+    [ThemeName.LIGHT]: 'light',
+    [ThemeName.DARK]: 'dark',
+    [ThemeName.DIM]: 'dark',
+    [ThemeName.SLATE]: 'slate',
+    [ThemeName.OCEAN]: 'ocean',
+    [ThemeName.NIGHT]: 'night',
+    [ThemeName.OLED]: 'oled',
+    [ThemeName.HIGH_CONTRAST]: 'highContrast',
+    [ThemeName.SYSTEM]: 'system',
 }
-
-const THEME_OPTIONS: ThemeDefinition[] = [
-    { value: ThemeName.LIGHT, label: 'Clair' },
-    { value: ThemeName.DARK, label: 'Sombre' },
-    { value: ThemeName.SLATE, label: 'Slate' },
-    { value: ThemeName.OCEAN, label: 'Océan' },
-    { value: ThemeName.NIGHT, label: 'Night (Tokyo)' },
-    { value: ThemeName.OLED, label: 'OLED (Noir pur)' },
-    { value: ThemeName.HIGH_CONTRAST, label: 'Contraste élevé' },
-    { value: ThemeName.SYSTEM, label: 'Système' },
-]
 
 function getThemeIcon(theme: string) {
     if (theme === ThemeName.LIGHT) {
@@ -108,77 +107,37 @@ function getThemeIcon(theme: string) {
 
 export function ThemeToggle({ className }: { className?: string }) {
     const { theme, resolvedTheme, setTheme } = useTheme()
+    const messages = useMessages().nav.theme
 
-    const currentMatch =
-        theme === ThemeName.SYSTEM
-            ? THEME_OPTIONS.find((t) => t.value === ThemeName.SYSTEM)
-            : THEME_OPTIONS.find((t) => t.value === resolvedTheme)
-    const currentLabel = currentMatch ? currentMatch.label : 'Thème'
+    const labelFor = (value: ThemeNameType) => messages.names[THEME_LABEL_KEYS[value]]
 
-    const isCurrent = (val: ThemeNameType) => {
-        if (theme === ThemeName.SYSTEM) return val === ThemeName.SYSTEM
-        return resolvedTheme === val
+    const activeTheme = theme === ThemeName.SYSTEM ? ThemeName.SYSTEM : resolvedTheme
+    const currentLabel = labelFor(activeTheme)
+
+    const isCurrent = (value: ThemeNameType) => {
+        if (theme === ThemeName.SYSTEM) return value === ThemeName.SYSTEM
+        return resolvedTheme === value
     }
 
+    const item = (value: ThemeNameType): DropdownMenuItemData => ({
+        value,
+        label: labelFor(value),
+        icon: getThemeIcon(value),
+        shortcut: isCurrent(value) ? messages.active : undefined,
+        onSelect: () => setTheme(value),
+    })
+
     const items: DropdownMenuItemData[] = [
-        {
-            value: ThemeName.LIGHT,
-            label: 'Clair',
-            icon: getThemeIcon(ThemeName.LIGHT),
-            shortcut: isCurrent(ThemeName.LIGHT) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.LIGHT),
-        },
-        {
-            value: ThemeName.DARK,
-            label: 'Sombre',
-            icon: getThemeIcon(ThemeName.DARK),
-            shortcut: isCurrent(ThemeName.DARK) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.DARK),
-        },
+        item(ThemeName.LIGHT),
+        item(ThemeName.DARK),
         { value: 'sep-1', label: '', type: 'separator' },
-        {
-            value: ThemeName.SLATE,
-            label: 'Slate',
-            icon: getThemeIcon(ThemeName.SLATE),
-            shortcut: isCurrent(ThemeName.SLATE) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.SLATE),
-        },
-        {
-            value: ThemeName.OCEAN,
-            label: 'Océan',
-            icon: getThemeIcon(ThemeName.OCEAN),
-            shortcut: isCurrent(ThemeName.OCEAN) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.OCEAN),
-        },
-        {
-            value: ThemeName.NIGHT,
-            label: 'Night (Tokyo)',
-            icon: getThemeIcon(ThemeName.NIGHT),
-            shortcut: isCurrent(ThemeName.NIGHT) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.NIGHT),
-        },
-        {
-            value: ThemeName.OLED,
-            label: 'OLED (Noir pur)',
-            icon: getThemeIcon(ThemeName.OLED),
-            shortcut: isCurrent(ThemeName.OLED) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.OLED),
-        },
+        item(ThemeName.SLATE),
+        item(ThemeName.OCEAN),
+        item(ThemeName.NIGHT),
+        item(ThemeName.OLED),
         { value: 'sep-2', label: '', type: 'separator' },
-        {
-            value: ThemeName.HIGH_CONTRAST,
-            label: 'Contraste élevé (AAA)',
-            icon: getThemeIcon(ThemeName.HIGH_CONTRAST),
-            shortcut: isCurrent(ThemeName.HIGH_CONTRAST) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.HIGH_CONTRAST),
-        },
-        {
-            value: ThemeName.SYSTEM,
-            label: 'Système',
-            icon: getThemeIcon(ThemeName.SYSTEM),
-            shortcut: isCurrent(ThemeName.SYSTEM) ? 'Actif' : undefined,
-            onSelect: () => setTheme(ThemeName.SYSTEM),
-        },
+        item(ThemeName.HIGH_CONTRAST),
+        item(ThemeName.SYSTEM),
     ]
 
     return (
@@ -191,10 +150,8 @@ export function ThemeToggle({ className }: { className?: string }) {
                     size="sm"
                     variant="ghost"
                     className={className}
-                    aria-label={`Thème : ${currentLabel}`}
-                    iconLeading={getThemeIcon(
-                        theme === ThemeName.SYSTEM ? ThemeName.SYSTEM : resolvedTheme
-                    )}
+                    aria-label={messages.current(currentLabel)}
+                    iconLeading={getThemeIcon(activeTheme)}
                     iconTrailing={
                         <svg
                             width="10"

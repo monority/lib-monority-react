@@ -1,3 +1,4 @@
+import { docsComponentRegistry } from '@/features/docs/components/registry'
 import { renderWithProviders } from '@/shared/test/test-utils'
 import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
@@ -7,23 +8,22 @@ describe('HomePage', () => {
     it('renders header, hero, sections and footer without error', () => {
         renderWithProviders(<HomePage />, { initialEntries: ['/'] })
 
-        // Hero header
         expect(screen.getByRole('heading', { level: 1, name: 'Monority UI' })).toBeInTheDocument()
-        expect(screen.getByText('Documentation (84 Composants)')).toBeInTheDocument()
+        expect(
+            screen.getByText(`Documentation (${docsComponentRegistry.length} components)`)
+        ).toBeInTheDocument()
         expect(screen.getAllByText('Design Studio').length).toBeGreaterThanOrEqual(2)
 
-        // Sections
         expect(
-            screen.getByRole('heading', { level: 2, name: 'Live Design Tokens' })
+            screen.getByRole('heading', { level: 2, name: 'Live design tokens' })
         ).toBeInTheDocument()
         expect(
-            screen.getByRole('heading', { level: 2, name: 'Architectural Foundation' })
+            screen.getByRole('heading', { level: 2, name: 'Architectural foundation' })
         ).toBeInTheDocument()
         expect(
-            screen.getByRole('heading', { level: 2, name: 'Component Ecosystem' })
+            screen.getByRole('heading', { level: 2, name: 'Component ecosystem' })
         ).toBeInTheDocument()
 
-        // Contentinfo footer
         expect(screen.getByRole('contentinfo')).toBeInTheDocument()
         expect(screen.getByText('Monority UI — MIT License')).toBeInTheDocument()
     })

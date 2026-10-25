@@ -1,3 +1,5 @@
+import { docsComponentRegistry } from '@/features/docs/components/registry'
+import { useMessages } from '@/shared/i18n'
 import {
     Callout,
     Card,
@@ -11,39 +13,39 @@ import {
 } from '@monority/ui'
 
 export function HomeShowcaseGrid() {
+    const messages = useMessages().home.showcase
+    const componentCount = docsComponentRegistry.length
+
     return (
         <Section aria-labelledby="home-showcase-title" spacing="lg">
             <Stack gap="xs" style={{ marginBottom: 'var(--mr-space-5)' }}>
                 <Title id="home-showcase-title" size="lg">
-                    Component Ecosystem
+                    {messages.title}
                 </Title>
                 <Text tone="muted" size="md">
-                    From high-density operational telemetry dashboards to calm, accessible
-                    configuration forms.
+                    {messages.description}
                 </Text>
             </Stack>
 
             <Grid columns={2}>
                 <Card padding="md">
                     <Card.Header>
-                        <Card.Title>Live Telemetry</Card.Title>
-                        <Card.Description>
-                            MetricGrid and StatCard primitives in action
-                        </Card.Description>
+                        <Card.Title>{messages.telemetry.title}</Card.Title>
+                        <Card.Description>{messages.telemetry.description}</Card.Description>
                     </Card.Header>
                     <Card.Content>
                         <MetricGrid
                             items={[
                                 {
                                     key: 'uptime',
-                                    label: 'UPTIME (30D)',
+                                    label: messages.telemetry.uptime,
                                     value: '99.99%',
                                     trend: '+0.02%',
                                     trendTone: 'success',
                                 },
                                 {
                                     key: 'latency',
-                                    label: 'P99 LATENCY',
+                                    label: messages.telemetry.latency,
                                     value: '18 ms',
                                     trend: '-4 ms',
                                     trendTone: 'success',
@@ -55,18 +57,18 @@ export function HomeShowcaseGrid() {
 
                 <Card padding="md">
                     <Card.Header>
-                        <Card.Title>Feedback & Notices</Card.Title>
-                        <Card.Description>Callout and status feedback</Card.Description>
+                        <Card.Title>{messages.feedback.title}</Card.Title>
+                        <Card.Description>{messages.feedback.description}</Card.Description>
                     </Card.Header>
                     <Card.Content>
                         <Stack gap="sm">
-                            <Callout tone="success" title="All systems operational">
-                                84 components tested and passing across the verification matrix.
+                            <Callout tone="success" title={messages.feedback.calloutTitle}>
+                                {messages.feedback.calloutBody(componentCount)}
                             </Callout>
                             <StatCard
-                                label="PRODUCTION BUNDLE"
-                                value="Tree-shakable"
-                                description="Modular entrypoints and zero unnecessary side-effects."
+                                label={messages.feedback.statLabel}
+                                value={messages.feedback.statValue}
+                                description={messages.feedback.statDescription}
                             />
                         </Stack>
                     </Card.Content>

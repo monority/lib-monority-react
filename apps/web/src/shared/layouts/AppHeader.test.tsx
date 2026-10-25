@@ -1,4 +1,5 @@
 import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
+import { LocaleProvider } from '@/shared/i18n'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
@@ -7,18 +8,20 @@ import { AppHeader } from './AppHeader'
 function renderHeader(homeNav = false) {
     return render(
         <MemoryRouter>
-            <ThemeProvider>
-                <AppHeader homeNav={homeNav} />
-            </ThemeProvider>
+            <LocaleProvider>
+                <ThemeProvider>
+                    <AppHeader homeNav={homeNav} />
+                </ThemeProvider>
+            </LocaleProvider>
         </MemoryRouter>
     )
 }
 
 describe('AppHeader', () => {
-    it('expose le moodboard dans la navigation principale', () => {
+    it('exposes the moodboard in the main navigation', () => {
         renderHeader()
 
-        const nav = screen.getByRole('navigation', { name: 'Navigation principale' })
+        const nav = screen.getByRole('navigation', { name: 'Main navigation' })
         expect(within(nav).getByRole('link', { name: 'Moodboard' })).toHaveAttribute(
             'href',
             '/moodboard'
@@ -28,35 +31,35 @@ describe('AppHeader', () => {
         expect(within(nav).queryByRole('link', { name: 'Playground' })).toBeNull()
     })
 
-    it('expose un sélecteur de thème dropdown accessible, sans sélecteur d accent', () => {
+    it('exposes an accessible theme dropdown without an accent selector', () => {
         renderHeader()
 
         expect(screen.queryByLabelText('Accent')).not.toBeInTheDocument()
         expect(screen.queryByRole('group', { name: 'Theme' })).not.toBeInTheDocument()
 
-        const toggle = screen.getByRole('button', { name: /thème/i })
+        const toggle = screen.getByRole('button', { name: /theme/i })
         expect(toggle).toBeInTheDocument()
     })
 
-    it('permet de changer de thème via le menu déroulant', () => {
+    it('changes theme through the dropdown menu', () => {
         renderHeader()
 
-        const toggle = screen.getByRole('button', { name: /thème/i })
+        const toggle = screen.getByRole('button', { name: /theme/i })
         fireEvent.click(toggle)
 
-        const darkOption = screen.getByRole('menuitem', { name: /sombre/i })
+        const darkOption = screen.getByRole('menuitem', { name: /dark/i })
         fireEvent.click(darkOption)
 
-        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Sombre')
+        expect(screen.getByRole('button', { name: /theme/i })).toHaveTextContent('Dark')
     })
 
-    it('conserve la variante home pour la page d accueil', () => {
+    it('keeps the home variant on the landing page', () => {
         const { container } = renderHeader(true)
         expect(container.querySelector('.app-header--home')).toBeInTheDocument()
         expect(container.querySelector('.app-header__theme')).toBeInTheDocument()
     })
 
-    it('nomme chaque thème du preset plutôt que de retomber sur un label générique', () => {
+    it('names every preset theme instead of falling back to a generic label', () => {
         for (const { label } of DESIGN_PRESETS.themes) {
             expect(label).not.toBe('')
             expect(`Theme: ${label}`).not.toBe('Theme: Systeme')
@@ -65,12 +68,10 @@ describe('AppHeader', () => {
         expect(DESIGN_PRESETS.themes.map((t) => t.label)).toContain('Slate')
     })
 
-    it('affiche la section temporaire des changements et le déclencheur de log', () => {
+    it('shows the temporary changes section and the changelog trigger', () => {
         renderHeader()
 
-        expect(screen.getByText(/Vague 7/i)).toBeInTheDocument()
-        expect(
-            screen.getByRole('button', { name: /journal des derniers changements/i })
-        ).toBeInTheDocument()
+        expect(screen.getByText(/Wave 7/i)).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /latest changes/i })).toBeInTheDocument()
     })
 })

@@ -1,9 +1,11 @@
 import { Button } from '@monority/ui'
 import { useEffect, useState } from 'react'
+import { useMessages } from '../i18n'
 
 const STORAGE_KEY = 'monority-motion'
 
 export function MotionToggle({ className }: { className?: string }) {
+    const messages = useMessages().nav.motion
     const [motionMode, setMotionMode] = useState<'always' | 'reduce'>(() => {
         if (typeof window === 'undefined') return 'always'
         const saved = localStorage.getItem(STORAGE_KEY)
@@ -34,11 +36,7 @@ export function MotionToggle({ className }: { className?: string }) {
             variant="ghost"
             className={className}
             onClick={toggleMotion}
-            aria-label={
-                isAlways
-                    ? 'Animations actives. Cliquer pour reduire le mouvement.'
-                    : 'Animations reduites. Cliquer pour activer le mouvement.'
-            }
+            aria-label={isAlways ? messages.disable : messages.enable}
             iconLeading={
                 isAlways ? (
                     <svg
@@ -72,7 +70,7 @@ export function MotionToggle({ className }: { className?: string }) {
                 )
             }
         >
-            {isAlways ? 'Motion: On' : 'Motion: Off'}
+            {isAlways ? messages.on : messages.off}
         </Button>
     )
 }

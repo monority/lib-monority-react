@@ -1,4 +1,5 @@
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { localizePath, useLocale, useMessages } from '@/shared/i18n'
 import { usePageSeo } from '@/shared/seo/usePageSeo'
 import { Container, Separator, Stack, Text } from '@monority/ui'
 import { Link } from 'react-router-dom'
@@ -8,10 +9,12 @@ import { HomeLiveTokens } from './components/HomeLiveTokens'
 import { HomeShowcaseGrid } from './components/HomeShowcaseGrid'
 
 export function HomePage() {
+    const { locale } = useLocale()
+    const messages = useMessages()
+
     usePageSeo({
-        title: 'Home',
-        description:
-            'Monority UI — A React 19 component system built around calm tokens, accessible primitives, and CSS @layer architecture.',
+        title: messages.home.seo.title,
+        description: messages.home.seo.description,
     })
 
     return (
@@ -56,31 +59,31 @@ export function HomePage() {
                             }}
                         >
                             <Text tone="muted" size="sm">
-                                Monority UI — MIT License
+                                {messages.common.footer.license}
                             </Text>
                             <nav
-                                aria-label="Footer Navigation"
+                                aria-label={messages.common.footer.navigation}
                                 style={{ display: 'flex', gap: 'var(--mr-space-4)' }}
                             >
                                 <Link
-                                    to="/docs"
+                                    to={localizePath('/docs', locale)}
                                     style={{
                                         color: 'var(--mr-text-secondary)',
                                         textDecoration: 'none',
                                         fontSize: 'var(--mr-font-size-sm)',
                                     }}
                                 >
-                                    Documentation
+                                    {messages.common.footer.documentation}
                                 </Link>
                                 <Link
-                                    to="/moodboard"
+                                    to={localizePath('/moodboard', locale)}
                                     style={{
                                         color: 'var(--mr-text-secondary)',
                                         textDecoration: 'none',
                                         fontSize: 'var(--mr-font-size-sm)',
                                     }}
                                 >
-                                    Design Studio
+                                    {messages.common.footer.designStudio}
                                 </Link>
                             </nav>
                         </footer>

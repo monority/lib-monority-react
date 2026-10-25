@@ -1,26 +1,44 @@
 import { HeroHeader } from '@/shared/components/HeroHeader'
 import { ButtonLink } from '@monority/ui/button-link'
 import { Section } from '@monority/ui/section'
+import { useLocale, useMessages } from '@/shared/i18n'
+import { localizePath } from '@/shared/i18n/locales'
+import { docsComponentRegistry } from '@/features/docs/components/registry'
 
 export function HomeHero() {
+    const { locale } = useLocale()
+    const messages = useMessages().home.hero
+
     return (
-        <Section spacing="lg" aria-label="Introduction Monority UI">
+        <Section spacing="lg" aria-label={messages.ariaLabel}>
             <HeroHeader
-                kicker="React 19 Component Library"
-                title="Monority UI"
-                description="A precision component system for modern web products. Driven by CSS @layer architecture, runtime design tokens, strict contracts and accessible primitives."
+                kicker={messages.kicker}
+                title={messages.title}
+                description={messages.description}
                 align="center"
                 size="lg"
                 actions={
                     <>
-                        <ButtonLink href="/docs" variant="primary" size="md">
-                            Documentation (84 Composants)
+                        <ButtonLink
+                            href={localizePath('/docs', locale)}
+                            variant="primary"
+                            size="md"
+                        >
+                            {messages.docsCta(docsComponentRegistry.length)}
                         </ButtonLink>
-                        <ButtonLink href="/moodboard" variant="secondary" size="md">
-                            Design Studio
+                        <ButtonLink
+                            href={localizePath('/moodboard', locale)}
+                            variant="secondary"
+                            size="md"
+                        >
+                            {messages.studio}
                         </ButtonLink>
-                        <ButtonLink href="/docs/installation" variant="ghost" size="md">
-                            Installation
+                        <ButtonLink
+                            href={localizePath('/docs/installation', locale)}
+                            variant="ghost"
+                            size="md"
+                        >
+                            {messages.installation}
                         </ButtonLink>
                     </>
                 }

@@ -31,7 +31,7 @@ describe('AppPage SEO', () => {
         )
 
         expect(screen.getByText('Page docs')).toBeInTheDocument()
-        expect(document.title).toBe('Documentation UI | Model Starter')
+        expect(document.title).toBe('Documentation UI | Monority UI')
         expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
             'content',
             'Une doc complete pour la librairie UI.'
@@ -46,7 +46,7 @@ describe('AppPage SEO', () => {
         )
         expect(document.head.querySelector('meta[property="og:title"]')).toHaveAttribute(
             'content',
-            'Documentation UI | Model Starter'
+            'Documentation UI | Monority UI'
         )
     })
 })

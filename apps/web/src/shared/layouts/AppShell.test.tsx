@@ -18,10 +18,10 @@ describe('AppShell', () => {
         const header = container.querySelector('.app-header')
         expect(header).toBeInTheDocument()
         expect(
-            within(header as HTMLElement).getByRole('link', { name: 'Monority' })
+            within(header as HTMLElement).getByRole('link', { name: 'Monority UI home' })
         ).toHaveAttribute('href', '/')
         expect(
-            within(header as HTMLElement).getByRole('navigation', { name: 'Navigation principale' })
+            within(header as HTMLElement).getByRole('navigation', { name: 'Main navigation' })
         ).toBeInTheDocument()
 
         // No secondary chrome bar.
@@ -37,7 +37,7 @@ describe('AppShell', () => {
             { initialEntries: ['/moodboard'] }
         )
 
-        expect(screen.getByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute(
+        expect(screen.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute(
             'href',
             '#main-content'
         )
@@ -52,6 +52,6 @@ describe('AppShell', () => {
             { initialEntries: ['/dashboard'] }
         )
 
-        expect(screen.getByRole('button', { name: /thème/i })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /theme/i })).toBeInTheDocument()
     })
 })

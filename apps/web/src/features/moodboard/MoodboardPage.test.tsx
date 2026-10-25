@@ -32,11 +32,9 @@ describe('MoodboardPage', () => {
     it('renders the shared app header above the studio', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        expect(screen.getByRole('link', { name: 'Monority' })).toHaveAttribute('href', '/')
-        expect(
-            screen.getByRole('navigation', { name: 'Navigation principale' })
-        ).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: /thème/i })).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Monority UI home' })).toHaveAttribute('href', '/')
+        expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: /theme/i })).toBeInTheDocument()
     })
 
     it('preview contains real components: topbar, metrics, chart, table, forms, buttons', () => {
@@ -253,10 +251,10 @@ describe('MoodboardPage', () => {
         const scope = screen.getByTestId('moodboard-preview-scope')
         expect(scope).toHaveAttribute('data-design-theme', 'dark')
 
-        const toggle = screen.getByRole('button', { name: /thème/i })
+        const toggle = screen.getByRole('button', { name: /theme/i })
         fireEvent.click(toggle)
 
-        const option = screen.getByRole('menuitem', { name: /clair/i })
+        const option = screen.getByRole('menuitem', { name: /light/i })
         fireEvent.click(option)
 
         expect(scope).toHaveAttribute('data-design-theme', 'light')

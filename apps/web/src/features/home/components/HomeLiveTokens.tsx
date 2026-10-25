@@ -1,3 +1,4 @@
+import { useMessages, type Messages } from '@/shared/i18n'
 import {
     Badge,
     Button,
@@ -13,24 +14,28 @@ import {
 } from '@monority/ui'
 import { type CSSProperties, useState } from 'react'
 
-const ACCENTS = [
-    { value: 'neutral', label: 'Neutral', hue: '0', chroma: '0' },
-    { value: 'violet', label: 'Violet', hue: '295', chroma: '0.18' },
-    { value: 'emerald', label: 'Emerald', hue: '152', chroma: '0.14' },
-    { value: 'sky', label: 'Sky', hue: '230', chroma: '0.16' },
-    { value: 'amber', label: 'Amber', hue: '75', chroma: '0.16' },
+type AccentKey = keyof Messages['home']['liveTokens']['accents']
+type RadiusKey = keyof Messages['home']['liveTokens']['radii']
+
+const ACCENTS: { value: AccentKey; hue: string; chroma: string }[] = [
+    { value: 'neutral', hue: '0', chroma: '0' },
+    { value: 'violet', hue: '295', chroma: '0.18' },
+    { value: 'emerald', hue: '152', chroma: '0.14' },
+    { value: 'sky', hue: '230', chroma: '0.16' },
+    { value: 'amber', hue: '75', chroma: '0.16' },
 ]
 
-const RADII = [
-    { value: 'none', label: 'Sharp', val: '0px' },
-    { value: 'sm', label: 'Subtle', val: '0.25rem' },
-    { value: 'md', label: 'Balanced', val: '0.5rem' },
-    { value: 'lg', label: 'Round', val: '1rem' },
+const RADII: { value: RadiusKey; val: string }[] = [
+    { value: 'none', val: '0px' },
+    { value: 'sm', val: '0.25rem' },
+    { value: 'md', val: '0.5rem' },
+    { value: 'lg', val: '1rem' },
 ]
 
 export function HomeLiveTokens() {
-    const [accent, setAccent] = useState('violet')
-    const [radius, setRadius] = useState('md')
+    const messages = useMessages().home.liveTokens
+    const [accent, setAccent] = useState<AccentKey>('violet')
+    const [radius, setRadius] = useState<RadiusKey>('md')
 
     const currentAccent = ACCENTS.find((a) => a.value === accent) ?? ACCENTS[1]!
     const currentRadius = RADII.find((r) => r.value === radius) ?? RADII[2]!
@@ -54,11 +59,10 @@ export function HomeLiveTokens() {
         <Section aria-labelledby="home-tokens-title" spacing="lg">
             <Stack gap="xs" style={{ marginBottom: 'var(--mr-space-5)' }}>
                 <Title id="home-tokens-title" size="lg">
-                    Live Design Tokens
+                    {messages.title}
                 </Title>
                 <Text tone="muted" size="md">
-                    Tweak system parameters in real time. Notice how every control, surface, and
-                    feedback state inherits changes coherently.
+                    {messages.description}
                 </Text>
             </Stack>
 
@@ -77,16 +81,20 @@ export function HomeLiveTokens() {
                                     display: 'block',
                                 }}
                             >
-                                Accent Palette
+                                {messages.accentPalette}
                             </Text>
                             <ToggleGroup
                                 value={accent}
                                 onValueChange={(val) => {
                                     const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
-                                    if (v) setAccent(v)
+                                    const match = ACCENTS.find((a) => a.value === v)
+                                    if (match) setAccent(match.value)
                                 }}
-                                items={ACCENTS.map((a) => ({ value: a.value, label: a.label }))}
-                                aria-label="Accent switcher"
+                                items={ACCENTS.map((a) => ({
+                                    value: a.value,
+                                    label: messages.accents[a.value],
+                                }))}
+                                aria-label={messages.accentSwitcher}
                             />
                         </div>
 
@@ -102,16 +110,20 @@ export function HomeLiveTokens() {
                                     display: 'block',
                                 }}
                             >
-                                Geometry (Corner Radius)
+                                {messages.geometry}
                             </Text>
                             <ToggleGroup
                                 value={radius}
                                 onValueChange={(val) => {
                                     const v = Array.isArray(val) ? (val[0] ?? '') : String(val)
-                                    if (v) setRadius(v)
+                                    const match = RADII.find((r) => r.value === v)
+                                    if (match) setRadius(match.value)
                                 }}
-                                items={RADII.map((r) => ({ value: r.value, label: r.label }))}
-                                aria-label="Radius switcher"
+                                items={RADII.map((r) => ({
+                                    value: r.value,
+                                    label: messages.radii[r.value],
+                                }))}
+                                aria-label={messages.radiusSwitcher}
                             />
                         </div>
                     </Stack>
@@ -127,30 +139,35 @@ export function HomeLiveTokens() {
                             }}
                         >
                             <Title size="sm" as="h3">
-                                Live Component Preview
+                                {messages.previewTitle}
                             </Title>
-                            <Badge variant="primary">Active Theme</Badge>
+                            <Badge variant="primary">{messages.activeTheme}</Badge>
                         </div>
 
                         <Input
-                            label="Email Address"
-                            placeholder="jane@company.com"
+                            label={messages.inputLabel}
+                            placeholder={messages.inputPlaceholder}
                             defaultValue="design@monority.dev"
                         />
 
-                        <Progress value={82} label="Deployment pipeline" showValue tone="success" />
+                        <Progress
+                            value={82}
+                            label={messages.progressLabel}
+                            showValue
+                            tone="success"
+                        />
 
                         <div
                             style={{ display: 'flex', gap: 'var(--mr-space-2)', flexWrap: 'wrap' }}
                         >
                             <Button variant="primary" size="sm">
-                                Primary Action
+                                {messages.primaryAction}
                             </Button>
                             <Button variant="secondary" size="sm">
-                                Secondary
+                                {messages.secondaryAction}
                             </Button>
                             <Button variant="ghost" size="sm">
-                                Subtle
+                                {messages.subtleAction}
                             </Button>
                         </div>
                     </Stack>
