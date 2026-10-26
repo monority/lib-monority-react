@@ -9,6 +9,7 @@ import { DocKeyboardTable, type KeyboardShortcutRow } from './DocKeyboardTable'
 import { DocPropTable } from './DocPropTable'
 import { DocSection } from './DocSection'
 import { DocTagList } from './DocTagList'
+import { useLocalizedDoc, type DocI18n } from './doc-messages'
 
 export interface PropRow extends Record<string, unknown> {
     name: string
@@ -38,10 +39,12 @@ export interface DocPageData {
     tokens?: string[]
     a11y?: string[]
     examples?: DocExample[]
+    i18n?: DocI18n
 }
 
-export function DocPage({ doc }: { doc: DocPageData }) {
+export function DocPage({ doc: rawDoc }: { doc: DocPageData }) {
     const messages = useMessages().docs
+    const doc = useLocalizedDoc(rawDoc)
     const Preview = doc.preview
 
     return (

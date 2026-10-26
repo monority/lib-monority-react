@@ -2,8 +2,19 @@ import { CodeViewer } from '@/shared/components/CodeViewer'
 import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import type { ComponentPlaygroundProps, PlaygroundControl } from './ComponentPlayground.types'
 import { PlaygroundControls, PlaygroundHeader, PlaygroundStage } from './components'
-import { formatCode, getDefaultValues, notifyControlResets } from './utils'
+import { formatCode, getDefaultValues, getControlKey, notifyControlResets } from './utils'
 import './ComponentPlayground.css'
+
+function applyLabelOverrides(
+    controls: PlaygroundControl[],
+    labelOverrides: Record<string, string> | undefined
+): PlaygroundControl[] {
+    if (!labelOverrides) return controls
+    return controls.map((ctrl, index) => {
+        const label = labelOverrides[getControlKey(ctrl, index)]
+        return label === undefined ? ctrl : { ...ctrl, label }
+    })
+}
 
 export function ComponentPlayground<T extends Record<string, unknown> = Record<string, unknown>>({
     componentName,
@@ -19,8 +30,10 @@ export function ComponentPlayground<T extends Record<string, unknown> = Record<s
     initialValues,
     onReset,
     className = '',
+    labelOverrides,
 }: ComponentPlaygroundProps<T>) {
     const baseId = useId()
+    const localizedControls = applyLabelOverrides(controls, labelOverrides)
     const resolvedName = componentName || title || 'Component'
     const initialDefaultsRef = useRef<T | null>(null)
     if (!initialDefaultsRef.current) {
@@ -86,7 +99,7 @@ export function ComponentPlayground<T extends Record<string, unknown> = Record<s
             <PlaygroundStage>{stageContent}</PlaygroundStage>
 
             <PlaygroundControls
-                controls={controls}
+                controls={localizedControls}
                 values={values}
                 baseId={baseId}
                 onChange={handleValueChange}

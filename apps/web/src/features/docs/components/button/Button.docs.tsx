@@ -1,6 +1,7 @@
 import { Button, type ButtonSize, type ButtonVariant } from '@monority/ui/button'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { buttonI18n } from './Button.messages'
 import {
     ButtonBasicPreview,
     ButtonCopyExample,
@@ -26,34 +27,34 @@ const buttonPlayground = (
             {
                 name: 'variant',
                 type: 'select',
-                label: 'Variante',
+                label: 'Variant',
                 options: ['primary', 'secondary', 'muted', 'ghost', 'subtle', 'danger', 'warning'],
                 defaultValue: 'primary',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Taille',
+                label: 'Size',
                 options: ['sm', 'md', 'lg'],
                 defaultValue: 'md',
             },
             {
                 name: 'loading',
                 type: 'boolean',
-                label: 'Chargement (loading)',
+                label: 'Loading',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
             {
                 name: 'children',
                 type: 'text',
-                label: 'Libelle du bouton',
-                defaultValue: 'Executer une action',
+                label: 'Button label',
+                defaultValue: 'Run an action',
             },
         ]}
         render={(props) => (
@@ -206,18 +207,18 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Space',
-            action: 'Active le bouton lors du relachement de la touche.',
-            context: 'Focus sur le bouton',
+            action: 'Activates the button on key release.',
+            context: 'Focus on the button',
         },
         {
             key: 'Enter',
-            action: 'Declenche immediatement l action associee au bouton.',
-            context: 'Focus sur le bouton',
+            action: 'Triggers the action associated with the button immediately.',
+            context: 'Focus on the button',
         },
         {
             key: 'Tab',
-            action: 'Deplace le focus sequentiel vers ou hors du bouton.',
-            context: 'Navigation globale',
+            action: 'Moves focus sequentially into or out of the button.',
+            context: 'Global navigation',
         },
     ],
     a11y: [
@@ -226,6 +227,7 @@ const docData: DocPageData = {
         'Icon-only mode REQUIRES an aria-label for screen readers.',
         'Visible focus ring via shared focus tokens.',
     ],
+    i18n: buttonI18n,
 }
 
 export function ButtonDocs() {
