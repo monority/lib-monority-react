@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn'
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type {
     SidebarLayoutContentProps,
     SidebarLayoutHeaderProps,
@@ -113,11 +113,11 @@ export function SidebarLayout({
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
     const isOpen = isControlled ? controlledOpen : internalOpen
 
-    const handleToggle = useCallback(() => {
+    const handleToggle = () => {
         const next = !isOpen
         if (!isControlled) setInternalOpen(next)
         onOpenChange?.(next)
-    }, [isControlled, isOpen, onOpenChange])
+    }
 
     const contextValue: SidebarLayoutContextValue = {
         isOpen,

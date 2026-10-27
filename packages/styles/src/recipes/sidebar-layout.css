@@ -19,7 +19,8 @@
         background-color: var(--mr-bg-surface);
         overflow-y: auto;
         align-self: stretch;
-        transition: inline-size var(--mr-duration-panel) ease, opacity var(--mr-duration-panel) ease;
+        transition: inline-size var(--mr-duration-panel) var(--mr-ease-out), opacity
+            var(--mr-duration-panel) var(--mr-ease-out), visibility var(--mr-duration-panel);
     }
 
     /* Largeurs de barre laterale */
@@ -70,7 +71,7 @@
         opacity: 0;
         border-inline-end-color: transparent;
         overflow: hidden;
-        pointer-events: none;
+        visibility: hidden;
     }
 
     /* Bouton de bascule */
@@ -87,18 +88,27 @@
         background-color: var(--mr-bg-surface);
         color: var(--mr-text-secondary);
         cursor: pointer;
-        transition: background-color var(--mr-duration-state) ease, color var(--mr-duration-state)
-            ease;
+        transition: background-color var(--mr-duration-state) var(--mr-ease-out), color
+            var(--mr-duration-state) var(--mr-ease-out);
         flex-shrink: 0;
     }
 
-    :where(.mr-sidebar-layout__toggle):hover {
-        background-color: var(--mr-bg-sunken);
-        color: var(--mr-text-primary);
+    @media (hover: hover) {
+        :where(.mr-sidebar-layout__toggle):hover {
+            background-color: var(--mr-bg-sunken);
+            color: var(--mr-text-primary);
+        }
     }
 
     :where(.mr-sidebar-layout__toggle):focus-visible {
-        outline: 2px solid var(--mr-focus-ring);
-        outline-offset: 1px;
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: var(--mr-focus-ring-offset);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(:root:not([data-motion='always'])) :where(.mr-sidebar-layout__sidebar),
+        :where(:root:not([data-motion='always'])) :where(.mr-sidebar-layout__toggle) {
+            transition: none;
+        }
     }
 }

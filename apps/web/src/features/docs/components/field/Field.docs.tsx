@@ -2,6 +2,7 @@ import { Field } from '@monority/ui/field'
 import { Input } from '@monority/ui/input'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { fieldI18n } from './Field.messages'
 import {
     FieldCompleteFormExample,
     FieldCompositionExample,
@@ -22,41 +23,41 @@ function FieldPlayground() {
     return (
         <ComponentPlayground
             title="Field"
-            description="Configurez les métadonnées de champ de formulaire : libellé, indice, astérisque obligatoire et message d'erreur."
+            description="Configure form field metadata: label, hint, required asterisk, and error message."
             controls={[
                 {
                     type: 'text',
                     prop: 'label',
-                    label: 'Libellé (label)',
-                    defaultValue: 'Nom du projet',
+                    label: 'Label (label)',
+                    defaultValue: 'Project name',
                 },
                 {
                     type: 'boolean',
                     prop: 'required',
-                    label: 'Champ obligatoire (required)',
+                    label: 'Required field (required)',
                     defaultValue: true,
                 },
                 {
                     type: 'text',
                     prop: 'hint',
-                    label: 'Indice d’aide (hint)',
-                    defaultValue: 'Utilisez un identifiant unique en minuscules.',
+                    label: 'Hint (hint)',
+                    defaultValue: 'Use a unique lowercase identifier.',
                 },
                 {
                     type: 'select',
                     prop: 'state',
-                    label: 'État de validation',
+                    label: 'Validation state',
                     defaultValue: 'default',
                     options: [
-                        { value: 'default', label: 'Normal / Valide' },
-                        { value: 'error', label: 'Erreur de saisie' },
+                        { value: 'default', label: 'Normal / Valid' },
+                        { value: 'error', label: 'Input error' },
                     ],
                 },
             ]}
             renderCode={(props) => {
                 const hasError = props.state === 'error'
                 return `<Field
-  label="${props.label}"${props.required ? '\n  required' : ''}${props.hint ? `\n  hint="${props.hint}"` : ''}${hasError ? '\n  error="Ce nom de projet est déjà réservé."' : ''}
+  label="${props.label}"${props.required ? '\n  required' : ''}${props.hint ? `\n  hint="${props.hint}"` : ''}${hasError ? '\n  error="This project name is already taken."' : ''}
 >
   <Input
     defaultValue="lib-monority"${hasError ? '\n    invalid' : ''}
@@ -72,7 +73,7 @@ function FieldPlayground() {
                             label={props.label as string}
                             required={props.required as boolean}
                             hint={props.hint ? (props.hint as string) : undefined}
-                            error={hasError ? 'Ce nom de projet est déjà réservé.' : undefined}
+                            error={hasError ? 'This project name is already taken.' : undefined}
                         >
                             <Input defaultValue="lib-monority" invalid={hasError} />
                         </Field>
@@ -95,70 +96,70 @@ import { Input } from '@monority/ui/input'`,
     preview: () => <FieldPlayground />,
     examples: [
         {
-            title: 'Avec Select',
+            title: 'With Select',
             content: <FieldWithSelectExample />,
-            code: `<Field label="Rôle dans l’espace" hint="Détermine le niveau d’accès aux déploiements et aux secrets." required>
+            code: `<Field label="Space role" hint="Determines the level of access to deployments and secrets." required>
   <Select defaultValue="developer">
-    <Select.Option value="owner">Propriétaire (accès complet)</Select.Option>
-    <Select.Option value="admin">Administrateur</Select.Option>
-    <Select.Option value="developer">Développeur</Select.Option>
-    <Select.Option value="viewer">Observateur (lecture seule)</Select.Option>
+    <Select.Option value="owner">Owner (full access)</Select.Option>
+    <Select.Option value="admin">Administrator</Select.Option>
+    <Select.Option value="developer">Developer</Select.Option>
+    <Select.Option value="viewer">Viewer (read only)</Select.Option>
   </Select>
 </Field>`,
         },
         {
-            title: 'Avec Textarea',
+            title: 'With Textarea',
             content: <FieldWithTextareaExample />,
-            code: `<Field label="Description du service" hint="Présentez les objectifs de ce composant et son périmètre fonctionnel.">
-  <Textarea rows={3} placeholder="Microservice de gestion des profils et autorisations OAuth2..." />
+            code: `<Field label="Service description" hint="Describe the goals of this component and its functional scope.">
+  <Textarea rows={3} placeholder="Microservice managing profiles and OAuth2 authorizations..." />
 </Field>`,
         },
         {
-            title: 'Avec NumberInput',
+            title: 'With NumberInput',
             content: <FieldWithNumberInputExample />,
-            code: `<Field label="Instances minimales" hint="Nombre d’instances actives maintenues en haute disponibilité." required>
+            code: `<Field label="Minimum instances" hint="Number of active instances kept in high availability." required>
   <NumberInput defaultValue={3} min={1} max={16} />
 </Field>`,
         },
         {
-            title: 'Avec Slider',
+            title: 'With Slider',
             content: <FieldWithSliderExample />,
-            code: `<Field label="Seuil d’alerte de saturation CPU" hint="Déclenche une notification automatique dès que la consommation dépasse ce seuil.">
+            code: `<Field label="CPU saturation alert threshold" hint="Triggers an automatic notification as soon as usage exceeds this threshold.">
   <Slider defaultValue={[75]} min={10} max={100} step={5} />
 </Field>`,
         },
         {
-            title: 'Avec Switch',
+            title: 'With Switch',
             content: <FieldWithSwitchExample />,
-            code: `<Field label="Déploiement continu" hint="Applique automatiquement chaque commit validé sur la branche de production.">
-  <Switch label="Activer le déploiement continu" defaultChecked />
+            code: `<Field label="Continuous deployment" hint="Automatically applies every validated commit on the production branch.">
+  <Switch label="Enable continuous deployment" defaultChecked />
 </Field>`,
         },
         {
-            title: 'Formulaire complet multi-composants',
+            title: 'Complete multi-component form',
             content: <FieldCompleteFormExample />,
             code: `<Card data-padding="lg">
   <Card.Header>
-    <Card.Title>Configuration du Service</Card.Title>
+    <Card.Title>Service configuration</Card.Title>
   </Card.Header>
   <Card.Content>
     <Stack gap="md">
-      <Field label="Identifiant" hint="Nom unique" required>
+      <Field label="Identifier" hint="Unique name" required>
         <Input defaultValue="auth-gateway-service" />
       </Field>
       <Field.Group direction="row">
-        <Field label="Environnement" required className="flex-1">
+        <Field label="Environment" required className="flex-1">
           <Select defaultValue="staging">...</Select>
         </Field>
-        <Field label="Répliques" required className="flex-1">
+        <Field label="Replicas" required className="flex-1">
           <NumberInput defaultValue={2} min={1} max={8} />
         </Field>
       </Field.Group>
-      <Field label="Rétention des logs">
+      <Field label="Log retention">
         <Textarea rows={2} defaultValue="..." />
       </Field>
-      <Field label="Sécurité">
-        <Switch label="Signature obligatoire" defaultChecked />
+      <Field label="Security">
+        <Switch label="Mandatory signature" defaultChecked />
       </Field>
     </Stack>
   </Card.Content>
@@ -306,6 +307,7 @@ import { Input } from '@monority/ui/input'`,
         'Hint/error IDs feed aria-describedby.',
         'Errors set aria-invalid on controlled input.',
     ],
+    i18n: fieldI18n,
 }
 
 export function FieldDocs() {

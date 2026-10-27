@@ -5,31 +5,32 @@ import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { sheetI18n } from './Sheet.messages'
 import { SheetCompoundExample, SheetSidesExample } from './Sheet.examples'
 
 function SheetPlayground() {
     const [open, setOpen] = useState(false)
     const [side, setSide] = useState<'right' | 'left' | 'top' | 'bottom'>('right')
-    const [title, setTitle] = useState('Édition du profil utilisateur')
+    const [title, setTitle] = useState('User profile editing')
 
     const snippet = `const [open, setOpen] = useState(false)
 
-<Button onClick={() => setOpen(true)}>Ouvrir le volet (${side})</Button>
+<Button onClick={() => setOpen(true)}>Open sheet (${side})</Button>
 
 <Sheet
   open={open}
   title="${title}"
   side="${side}"
-  description="Modifiez vos préférences et enregistrez."
+  description="Edit your preferences and save."
   onClose={() => setOpen(false)}
   footer={
     <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-      <Button variant="ghost" onClick={() => setOpen(false)}>Annuler</Button>
-      <Button variant="primary" onClick={() => setOpen(false)}>Sauvegarder</Button>
+      <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button variant="primary" onClick={() => setOpen(false)}>Save</Button>
     </div>
   }
 >
-  <p>Contenu principal du volet...</p>
+  <p>Main content of the sheet...</p>
 </Sheet>`
 
     return (
@@ -37,19 +38,19 @@ function SheetPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Côté d’ouverture (side)',
+                    label: 'Side',
                     value: side,
                     options: [
-                        { value: 'right', label: 'Droite (right)' },
-                        { value: 'left', label: 'Gauche (left)' },
-                        { value: 'top', label: 'Haut (top)' },
-                        { value: 'bottom', label: 'Bas (bottom)' },
+                        { value: 'right', label: 'Right' },
+                        { value: 'left', label: 'Left' },
+                        { value: 'top', label: 'Top' },
+                        { value: 'bottom', label: 'Bottom' },
                     ],
                     onChange: (v) => setSide(v as 'right' | 'left' | 'top' | 'bottom'),
                 },
                 {
                     type: 'text',
-                    label: 'Titre du volet',
+                    label: 'Sheet title',
                     value: title,
                     onChange: setTitle,
                 },
@@ -65,13 +66,13 @@ function SheetPlayground() {
                 }}
             >
                 <Button variant="primary" onClick={() => setOpen(true)}>
-                    Ouvrir le volet ({side})
+                    Open sheet ({side})
                 </Button>
                 <Sheet
                     open={open}
                     title={title}
                     side={side}
-                    description="Modifiez vos préférences et enregistrez."
+                    description="Edit your preferences and save."
                     onClose={() => setOpen(false)}
                     footer={
                         <div
@@ -83,18 +84,18 @@ function SheetPlayground() {
                             }}
                         >
                             <Button variant="ghost" onClick={() => setOpen(false)}>
-                                Annuler
+                                Cancel
                             </Button>
                             <Button variant="primary" onClick={() => setOpen(false)}>
-                                Sauvegarder
+                                Save
                             </Button>
                         </div>
                     }
                 >
                     <Stack gap="md">
                         <Text tone="muted">
-                            Le volet Sheet permet des flux secondaires approfondis sans perdre le
-                            contexte visuel de la page hôte.
+                            The Sheet component supports deep secondary flows without losing the
+                            host page context.
                         </Text>
                     </Stack>
                 </Sheet>
@@ -106,7 +107,7 @@ function SheetPlayground() {
 const docData: DocPageData = {
     title: 'Sheet',
     description:
-        "Volet coulissant ancrable sur les 4 cotes de l'ecran pour les flux secondaires denses, formulaires d'edition ou panneaux d'inspection.",
+        'Slide-in panel anchorable on all 4 screen edges for dense secondary flows, editing forms, or inspection panels.',
     importCode: "import { Sheet } from '@monority/ui/sheet'",
     usageCode: `const [open, setOpen] = useState(false)
 
@@ -140,45 +141,45 @@ return (
 )`,
     preview: () => <SheetPlayground />,
     examples: [
-        { title: 'Ancrage sur les 4 cotes (Sides)', content: <SheetSidesExample /> },
-        { title: 'Composition avec sous-composants', content: <SheetCompoundExample /> },
+        { title: 'Anchorable on all 4 sides (Sides)', content: <SheetSidesExample /> },
+        { title: 'Composition with subcomponents', content: <SheetCompoundExample /> },
     ],
     props: [
         {
             name: 'open',
             type: 'boolean',
             defaultValue: '-',
-            description: "Etat d'ouverture du volet.",
+            description: 'Sheet open state.',
         },
         {
             name: 'title',
             type: 'string',
             defaultValue: '-',
-            description: 'Titre accessible du volet.',
+            description: 'Accessible sheet title.',
         },
         {
             name: 'description',
             type: 'string',
             defaultValue: '-',
-            description: 'Sous-titre explicatif.',
+            description: 'Explaining subtitle.',
         },
         {
             name: 'side',
             type: "'right' | 'left' | 'top' | 'bottom'",
             defaultValue: "'right'",
-            description: "Bord de l'ecran depuis lequel le volet glisse.",
+            description: 'Screen edge the sheet slides from.',
         },
         {
             name: 'footer',
             type: 'ReactNode',
             defaultValue: '-',
-            description: 'Actions de pied de page.',
+            description: 'Footer actions.',
         },
         {
             name: 'onClose',
             type: '() => void',
             defaultValue: '-',
-            description: 'Fonction de rappel a la fermeture.',
+            description: 'Close callback.',
         },
     ],
     cssHooks: [
@@ -206,15 +207,16 @@ return (
         '--mr-space-6',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Navigue cycliquement dans les éléments du volet (focus trap)' },
-        { key: 'Escape', action: 'Ferme le volet et replace le focus sur le bouton d’ouverture' },
+        { key: 'Tab', action: 'Cycles focus through the focusable elements of the sheet (focus trap)' },
+        { key: 'Escape', action: 'Closes the sheet and returns focus to the open button' },
     ],
     a11y: [
-        'Conforme au motif WAI-ARIA Dialog avec role="dialog" et aria-modal="true".',
-        "Piege de focus actif pendant toute la duree d'ouverture.",
-        "La touche Escape et le clic sur l'arriere-plan declenchent la fermeture avec animation.",
-        'Titre lie automatiquement par aria-labelledby et description par aria-describedby.',
+        'Follows the WAI-ARIA Dialog pattern with role="dialog" and aria-modal="true".',
+        'Focus trap active for the entire open duration.',
+        'Escape and backdrop click both trigger the animated close.',
+        'Title automatically linked by aria-labelledby and description by aria-describedby.',
     ],
+    i18n: sheetI18n,
 }
 
 export function SheetDocs() {

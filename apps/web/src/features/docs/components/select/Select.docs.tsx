@@ -2,6 +2,7 @@ import { Select } from '@monority/ui/select'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { selectI18n } from './Select.messages'
 import {
     SelectBasicExample,
     SelectDisabledExample,
@@ -36,10 +37,10 @@ function SelectPlaygroundDemo(props: {
                 onChange={(e) => setVal(e.target.value)}
                 data-testid="select-basic"
             >
-                <option value="dev">Developpement local (dev)</option>
-                <option value="staging">Staging pre-production (stg)</option>
-                <option value="prod-eu">Production Europe (eu-west-1)</option>
-                <option value="prod-us">Production Americas (us-east-1)</option>
+                <option value="dev">Local development (dev)</option>
+                <option value="staging">Pre-production staging (stg)</option>
+                <option value="prod-eu">Europe production (eu-west-1)</option>
+                <option value="prod-us">Americas production (us-east-1)</option>
                 <option value="long">
                     A deliberately long country or region option that must stay clear of the chevron
                 </option>
@@ -75,25 +76,25 @@ const selectPlayground = (
                 .filter(Boolean)
                 .join('\n')
 
-            return `import { useState } from 'react'\nimport { Select } from '@monority/ui/select'\n\nconst [value, setValue] = useState('prod-eu')\n\n<Select\n${propsStr}\n>\n  <option value="dev">Developpement local (dev)</option>\n  <option value="staging">Staging pre-production (stg)</option>\n  <option value="prod-eu">Production Europe (eu-west-1)</option>\n  <option value="prod-us">Production Americas (us-east-1)</option>\n</Select>`
+            return `import { useState } from 'react'\nimport { Select } from '@monority/ui/select'\n\nconst [value, setValue] = useState('prod-eu')\n\n<Select\n${propsStr}\n>\n  <option value="dev">Local development (dev)</option>\n  <option value="staging">Pre-production staging (stg)</option>\n  <option value="prod-eu">Europe production (eu-west-1)</option>\n  <option value="prod-us">Americas production (us-east-1)</option>\n</Select>`
         }}
         controls={[
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Environnement cible',
+                label: 'Label (label)',
+                defaultValue: 'Target environment',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Choisissez la zone de deploiement',
+                label: 'Hint (hint)',
+                defaultValue: 'Choose the deployment region',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -104,7 +105,7 @@ const selectPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'neutral',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -115,19 +116,19 @@ const selectPlayground = (
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
             {
                 name: 'loading',
                 type: 'boolean',
-                label: 'Chargement (loading)',
+                label: 'Loading (loading)',
                 defaultValue: false,
             },
             {
                 name: 'invalid',
                 type: 'boolean',
-                label: 'Invalide (invalid)',
+                label: 'Invalid (invalid)',
                 defaultValue: false,
             },
         ]}
@@ -201,7 +202,7 @@ const docData: DocPageData = {
             type: `boolean`,
             defaultValue: 'false',
             description:
-                'Indicateur de chargement asynchrone qui remplace le chevron par un spinner et active aria-busy.',
+                'Async loading indicator that replaces the chevron with a spinner and sets aria-busy.',
         },
         { name: 'invalid', type: `boolean`, defaultValue: 'false', description: 'Invalid state' },
         {
@@ -247,23 +248,23 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['Space', 'Enter'],
-            action: 'Ouvre le menu contextuel natif de selection des options.',
-            context: 'Select focalise',
+            action: 'Opens the native options selection menu.',
+            context: 'Focused select',
         },
         {
             key: ['ArrowDown', 'ArrowUp'],
-            action: 'Fait defiler les options disponibles et modifie la valeur selectionnee.',
-            context: 'Select focalise ou menu deroulant',
+            action: 'Scrolls through the available options and changes the selected value.',
+            context: 'Focused select or dropdown menu',
         },
         {
             key: 'Tab',
-            action: 'Valide l option active et deplace le focus au champ suivant du formulaire.',
-            context: 'Select focalise',
+            action: 'Confirms the active option and moves focus to the next form field.',
+            context: 'Focused select',
         },
         {
             key: 'Escape',
-            action: 'Referme la liste d options native sans modifier la selection.',
-            context: 'Menu d options ouvert',
+            action: 'Closes the native options list without changing the selection.',
+            context: 'Open options menu',
         },
     ],
     a11y: [
@@ -273,6 +274,7 @@ const docData: DocPageData = {
         'Associated label for screen readers.',
         'Opened option presentation is controlled by the browser and operating system.',
     ],
+    i18n: selectI18n,
 }
 
 export function SelectDocs() {

@@ -2,6 +2,7 @@ import { Textarea } from '@monority/ui/textarea'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { textareaI18n } from './Textarea.messages'
 import {
     TextareaBasicExample,
     TextareaDisabledExample,
@@ -80,25 +81,25 @@ const textareaPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Description du ticket',
+                label: 'Label (label)',
+                defaultValue: 'Ticket description',
             },
             {
                 name: 'placeholder',
                 type: 'text',
                 label: 'Placeholder',
-                defaultValue: 'Decrivez precisement le probleme ou la requete...',
+                defaultValue: 'Describe the issue or request precisely...',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Formatage Markdown pris en charge.',
+                label: 'Hint (hint)',
+                defaultValue: 'Markdown formatting is supported.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -109,7 +110,7 @@ const textareaPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'neutral',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -120,25 +121,25 @@ const textareaPlayground = (
             {
                 name: 'rows',
                 type: 'number',
-                label: 'Lignes initiales (rows)',
+                label: 'Initial rows (rows)',
                 defaultValue: 4,
             },
             {
                 name: 'maxLength',
                 type: 'number',
-                label: 'Limite caracteres (maxLength)',
+                label: 'Character limit (maxLength)',
                 defaultValue: 200,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
             {
                 name: 'invalid',
                 type: 'boolean',
-                label: 'Invalide (invalid)',
+                label: 'Invalid (invalid)',
                 defaultValue: false,
             },
         ]}
@@ -274,13 +275,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Navigue vers ou hors de la zone de texte multi-lignes.',
-            context: 'Zone de texte',
+            action: 'Navigates into or out of the multi-line text area.',
+            context: 'Text area',
         },
         {
             key: 'Enter',
-            action: 'Insere un retour chariot au sein du texte.',
-            context: 'Zone de texte',
+            action: 'Inserts a line break within the text.',
+            context: 'Text area',
         },
     ],
     a11y: [
@@ -293,6 +294,7 @@ const docData: DocPageData = {
         'Disabled state: native disabled attribute is used.',
         'Color is not the only indicator — invalid state also uses aria-invalid.',
     ],
+    i18n: textareaI18n,
 }
 
 export function TextareaDocs() {

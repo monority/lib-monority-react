@@ -52,15 +52,15 @@ export function FieldStandaloneExample() {
 export function FieldWithSelectExample() {
     return (
         <Field
-            label="Rôle dans l’espace"
-            hint="Détermine le niveau d’accès aux déploiements et aux secrets."
+            label="Space role"
+            hint="Determines the level of access to deployments and secrets."
             required
         >
             <Select defaultValue="developer">
-                <Select.Option value="owner">Propriétaire (accès complet)</Select.Option>
-                <Select.Option value="admin">Administrateur</Select.Option>
-                <Select.Option value="developer">Développeur</Select.Option>
-                <Select.Option value="viewer">Observateur (lecture seule)</Select.Option>
+                <Select.Option value="owner">Owner (full access)</Select.Option>
+                <Select.Option value="admin">Administrator</Select.Option>
+                <Select.Option value="developer">Developer</Select.Option>
+                <Select.Option value="viewer">Viewer (read only)</Select.Option>
             </Select>
         </Field>
     )
@@ -69,12 +69,12 @@ export function FieldWithSelectExample() {
 export function FieldWithTextareaExample() {
     return (
         <Field
-            label="Description du service"
-            hint="Présentez les objectifs de ce composant et son périmètre fonctionnel."
+            label="Service description"
+            hint="Describe the goals of this component and its functional scope."
         >
             <Textarea
                 rows={3}
-                placeholder="Microservice de gestion des profils et autorisations OAuth2..."
+                placeholder="Microservice managing profiles and OAuth2 authorizations..."
             />
         </Field>
     )
@@ -83,8 +83,8 @@ export function FieldWithTextareaExample() {
 export function FieldWithNumberInputExample() {
     return (
         <Field
-            label="Instances minimales"
-            hint="Nombre d’instances actives maintenues en haute disponibilité."
+            label="Minimum instances"
+            hint="Number of active instances kept in high availability."
             required
         >
             <NumberInput defaultValue={3} min={1} max={16} />
@@ -95,8 +95,8 @@ export function FieldWithNumberInputExample() {
 export function FieldWithSliderExample() {
     return (
         <Field
-            label="Seuil d’alerte de saturation CPU"
-            hint="Déclenche une notification automatique dès que la consommation dépasse ce seuil."
+            label="CPU saturation alert threshold"
+            hint="Triggers an automatic notification as soon as usage exceeds this threshold."
         >
             <Slider defaultValue={75} min={10} max={100} step={5} />
         </Field>
@@ -106,10 +106,10 @@ export function FieldWithSliderExample() {
 export function FieldWithSwitchExample() {
     return (
         <Field
-            label="Déploiement continu"
-            hint="Applique automatiquement chaque commit validé sur la branche de production."
+            label="Continuous deployment"
+            hint="Automatically applies every validated commit on the production branch."
         >
-            <Switch label="Activer le déploiement continu" defaultChecked />
+            <Switch label="Enable continuous deployment" defaultChecked />
         </Field>
     )
 }
@@ -164,61 +164,57 @@ export function FieldCompleteFormExample() {
     return (
         <Card data-padding="lg">
             <Card.Header>
-                <Card.Title>Configuration du Service</Card.Title>
+                <Card.Title>Service configuration</Card.Title>
                 <Card.Description>
-                    Formulaire orchestré avec le composant Field combinant divers contrôles de
-                    saisie.
+                    A form orchestrated with the Field component combining various input controls.
                 </Card.Description>
             </Card.Header>
             <Card.Content>
                 <Stack gap="md">
                     <Field
-                        label="Identifiant de l’application"
-                        hint="Nom technique unique en minuscules."
+                        label="Application identifier"
+                        hint="Unique technical name in lowercase."
                         required
                     >
                         <Input defaultValue="auth-gateway-service" />
                     </Field>
 
                     <Field.Group direction="row">
-                        <Field label="Environnement" required className="flex-1">
+                        <Field label="Environment" required className="flex-1">
                             <Select defaultValue="staging">
                                 <Select.Option value="production">Production</Select.Option>
                                 <Select.Option value="staging">Staging</Select.Option>
-                                <Select.Option value="development">Développement</Select.Option>
+                                <Select.Option value="development">Development</Select.Option>
                             </Select>
                         </Field>
 
-                        <Field label="Répliques" required className="flex-1">
+                        <Field label="Replicas" required className="flex-1">
                             <NumberInput defaultValue={2} min={1} max={8} />
                         </Field>
                     </Field.Group>
 
                     <Field
-                        label="Politique de rétention des logs"
-                        hint="Précisez la durée de conservation et les règles d’archivage."
+                        label="Log retention policy"
+                        hint="Specify the retention period and archiving rules."
                     >
                         <Textarea
                             rows={2}
-                            defaultValue="Conservation 30 jours sur stockage froid S3 avec chiffrement KMS."
+                            defaultValue="30-day retention on cold S3 storage with KMS encryption."
                         />
                     </Field>
 
                     <Field
-                        label="Sécurité renforcée"
-                        hint="Exige une double signature cryptographique pour chaque livraison."
+                        label="Enhanced security"
+                        hint="Requires a dual cryptographic signature for every delivery."
                     >
-                        <Switch
-                            label="Activer la signature obligatoire des images"
-                            defaultChecked
-                        />
+                        <Switch label="Enable mandatory image signing" defaultChecked />
                     </Field>
                 </Stack>
             </Card.Content>
             <Card.Footer>
                 <Stack direction="horizontal" gap="sm">
-                    <Button variant="primary">Enregistrer les paramètres</Button>
-                    <Button variant="secondary">Annuler</Button>
+                    <Button variant="primary">Save settings</Button>
+                    <Button variant="secondary">Cancel</Button>
                 </Stack>
             </Card.Footer>
         </Card>

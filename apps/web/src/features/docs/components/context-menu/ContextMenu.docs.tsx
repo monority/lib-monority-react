@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { contextMenuI18n } from './ContextMenu.messages'
 import {
     ContextMenuWithDangerExample,
     ContextMenuWithDisabledExample,
@@ -13,30 +14,30 @@ function ContextMenuPlayground() {
     const [hasDisabled, setHasDisabled] = useState(true)
 
     const items = [
-        { value: 'view', label: 'Afficher les détails' },
-        { value: 'edit', label: 'Modifier les propriétés' },
-        { value: 'duplicate', label: 'Dupliquer l’élément' },
+        { value: 'view', label: 'View details' },
+        { value: 'edit', label: 'Edit properties' },
+        { value: 'duplicate', label: 'Duplicate item' },
         ...(hasDisabled
-            ? [{ value: 'archive', label: 'Archiver (accès restreint)', disabled: true }]
+            ? [{ value: 'archive', label: 'Archive (restricted access)', disabled: true }]
             : []),
         { value: 'sep-1', label: '', type: 'separator' as const },
         ...(hasDanger
-            ? [{ value: 'delete', label: 'Supprimer définitivement', danger: true }]
+            ? [{ value: 'delete', label: 'Delete permanently', danger: true }]
             : []),
     ]
 
     const snippet = `<ContextMenu
   trigger={
     <div style={{ padding: '32px 16px', textAlign: 'center', border: '2px dashed var(--mr-border-default)', borderRadius: 8 }}>
-      Faites un clic droit sur cette zone
+      Right-click this area
     </div>
   }
   items={[
-    { value: 'view', label: 'Afficher les détails' },
-    { value: 'edit', label: 'Modifier les propriétés' },
-    { value: 'duplicate', label: 'Dupliquer l’élément' },
-${hasDisabled ? "    { value: 'archive', label: 'Archiver (accès restreint)', disabled: true },\n" : ''}    { value: 'sep-1', label: '', type: 'separator' },
-${hasDanger ? "    { value: 'delete', label: 'Supprimer définitivement', danger: true },\n" : ''}  ]}
+    { value: 'view', label: 'View details' },
+    { value: 'edit', label: 'Edit properties' },
+    { value: 'duplicate', label: 'Duplicate item' },
+${hasDisabled ? "    { value: 'archive', label: 'Archive (restricted access)', disabled: true },\n" : ''}    { value: 'sep-1', label: '', type: 'separator' },
+${hasDanger ? "    { value: 'delete', label: 'Delete permanently', danger: true },\n" : ''}  ]}
 />`
 
     return (
@@ -44,13 +45,13 @@ ${hasDanger ? "    { value: 'delete', label: 'Supprimer définitivement', danger
             controls={[
                 {
                     type: 'boolean',
-                    label: 'Action destructrice (danger)',
+                    label: 'Destructive action (danger)',
                     value: hasDanger,
                     onChange: setHasDanger,
                 },
                 {
                     type: 'boolean',
-                    label: 'Action désactivée (disabled)',
+                    label: 'Disabled action (disabled)',
                     value: hasDisabled,
                     onChange: setHasDisabled,
                 },
@@ -82,7 +83,7 @@ ${hasDanger ? "    { value: 'delete', label: 'Supprimer définitivement', danger
                                 userSelect: 'none',
                             }}
                         >
-                            Faites un clic droit ici (ou Shift + F10)
+                            Right-click here (or Shift + F10)
                         </div>
                     }
                     items={items}
@@ -169,10 +170,10 @@ const docData: DocPageData = {
         '--mr-danger',
     ],
     keyboardNavigation: [
-        { key: 'Shift + F10', action: 'Ouvre le menu contextuel sur le déclencheur' },
-        { key: 'Flèche Bas / Flèche Haut', action: 'Navigue entre les actions du menu' },
-        { key: 'Entrée / Espace', action: 'Exécute l’action sélectionnée' },
-        { key: 'Échap', action: 'Ferme le menu contextuel et replace le focus sur la zone' },
+        { key: 'Shift + F10', action: 'Opens the context menu on the trigger' },
+        { key: 'Arrow Down / Arrow Up', action: 'Navigates between the menu actions' },
+        { key: 'Enter / Space', action: 'Runs the selected action' },
+        { key: 'Escape', action: 'Closes the context menu and returns focus to the zone' },
     ],
     a11y: [
         'Trigger sets role="button", tabindex="0", aria-expanded, and aria-haspopup="menu".',
@@ -184,6 +185,7 @@ const docData: DocPageData = {
         'Clicking outside closes the menu.',
         'Menu is positioned at cursor coordinates on right-click.',
     ],
+    i18n: contextMenuI18n,
 }
 
 export function ContextMenuDocs() {

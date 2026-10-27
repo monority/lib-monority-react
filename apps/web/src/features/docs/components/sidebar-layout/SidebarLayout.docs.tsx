@@ -14,95 +14,104 @@ import {
     SidebarLayoutWithContentExample,
 } from './SidebarLayout.examples'
 
+type NavItem = {
+    id: string
+    label: string
+    badge?: { label: string; variant?: 'primary' | 'default'; tone?: 'accent' | 'neutral' }
+}
+
+const NAV_ITEMS: NavItem[] = [
+    { id: 'overview', label: 'Tableau de bord' },
+    { id: 'deploy', label: 'Déploiements', badge: { label: '8', variant: 'primary' } },
+    { id: 'analytics', label: 'Analytique', badge: { label: 'Live', tone: 'accent' } },
+    { id: 'alerts', label: 'Alertes & Logs', badge: { label: '3', tone: 'neutral' } },
+    { id: 'team', label: 'Équipe & Rôles' },
+]
+
+const rowStyle = { display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' } as const
+
+function WorkspaceNavItem({
+    item,
+    active,
+    onSelect,
+}: {
+    item: NavItem
+    active: boolean
+    onSelect: (id: string) => void
+}) {
+    return (
+        <Button
+            variant={active ? 'secondary' : 'ghost'}
+            size="sm"
+            fullWidth
+            aria-current={active ? 'page' : undefined}
+            onClick={() => onSelect(item.id)}
+            style={{ paddingInline: 'var(--mr-space-3)' }}
+        >
+            <span
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    inlineSize: '100%',
+                    gap: 'var(--mr-space-3)',
+                }}
+            >
+                <span>{item.label}</span>
+                {item.badge ? (
+                    <Badge
+                        variant={item.badge.variant ?? 'default'}
+                        tone={item.badge.tone}
+                        size="sm"
+                    >
+                        {item.badge.label}
+                    </Badge>
+                ) : null}
+            </span>
+        </Button>
+    )
+}
+
 function SidebarLayoutPlayground() {
     const [sidebarWidth, setSidebarWidth] = useState<'sm' | 'md' | 'lg'>('md')
     const [showHeader, setShowHeader] = useState(true)
     const [activeNav, setActiveNav] = useState('overview')
 
-    const snippet = `<SidebarLayout
+    const snippet = `// collapsible insere automatiquement le bouton de bascule en tete du header.
+<SidebarLayout
   sidebarWidth="${sidebarWidth}"
   collapsible
   sidebar={
-    <nav aria-label="Espace de travail" style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 'var(--mr-space-3)' }}>
-      {/* En-tête d'organisation */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' }}>
-        <Avatar fallback="MC" size="sm" />
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <Text tone="strong" size="sm" style={{ display: 'block', lineHeight: 1.2 }}>Monority Cloud</Text>
-          <Text tone="muted" size="xs">Workspace Pro</Text>
-        </div>
-        <Badge variant="subtle" size="sm">v2.4</Badge>
-      </div>
-
+    <nav aria-label="Espace de travail">
       <Input size="sm" placeholder="Rechercher..." />
-
-      {/* Navigation principale */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-1)', flex: 1 }}>
-        <Button variant="${activeNav === 'overview' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ justifyContent: 'flex-start', paddingInline: 'var(--mr-space-3)' }}>
-          <span style={{ width: '100%', textAlign: 'left' }}>Tableau de bord</span>
+      {items.map((item) => (
+        <Button
+          key={item.id}
+          variant={item.id === active ? 'secondary' : 'ghost'}
+          size="sm"
+          fullWidth
+          aria-current={item.id === active ? 'page' : undefined}
+          onClick={() => setActive(item.id)}
+        >
+          {item.label}
+          {item.badge ? <Badge size="sm">{item.badge}</Badge> : null}
         </Button>
-        <Button variant="${activeNav === 'deploy' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
-          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
-            <span>Déploiements</span>
-            <Badge variant="primary" size="sm">8</Badge>
-          </span>
-        </Button>
-        <Button variant="${activeNav === 'analytics' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
-          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
-            <span>Analytique</span>
-            <Badge variant="default" tone="accent" size="sm">Live</Badge>
-          </span>
-        </Button>
-        <Button variant="${activeNav === 'alerts' ? 'secondary' : 'ghost'}" size="sm" fullWidth style={{ paddingInline: 'var(--mr-space-3)' }}>
-          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 'var(--mr-space-3)' }}>
-            <span>Alertes & Logs</span>
-            <Badge variant="default" tone="neutral" size="sm">3</Badge>
-          </span>
-        </Button>
-        <Button variant="ghost" size="sm" fullWidth style={{ justifyContent: 'flex-start', paddingInline: 'var(--mr-space-3)' }}>
-          <span style={{ width: '100%', textAlign: 'left' }}>Équipe & Rôles</span>
-        </Button>
-      </div>
-
-      {/* Profil utilisateur en pied de colonne */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)', paddingTop: 'var(--mr-space-2)', borderTop: '1px solid var(--mr-border-subtle)' }}>
-        <Avatar fallback="JD" size="sm" status="online" />
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <Text size="xs" tone="strong" style={{ display: 'block' }}>Jane Doe</Text>
-          <Text size="xs" tone="muted">Lead Engineer</Text>
-        </div>
-      </div>
+      ))}
     </nav>
   }${
       showHeader
-          ? `\n  header={
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' }}>
-        <SidebarLayout.Toggle />
-        <Text size="sm" tone="strong">Infrastructure / Télémétrie Edge</Text>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' }}>
-        <Badge variant="outline" size="sm">Opérationnel</Badge>
-        <Button variant="primary" size="sm">Déployer</Button>
-      </div>
-    </div>
+          ? `
+  header={
+    <>
+      <Text size="sm" tone="strong">Infrastructure / Télémétrie Edge</Text>
+      <Badge tone="success" size="sm">Opérationnel</Badge>
+      <Button variant="primary" size="sm">Déployer</Button>
+    </>
   }`
           : ''
   }
 >
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mr-space-4)' }}>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--mr-space-3)' }}>
-      <StatCard label="Trafic Réseau" value="14.8 GB/s" trend="+12.4%" trendTone="success" />
-      <StatCard label="Temps Réponse" value="18 ms" trend="-2.1 ms" trendTone="success" />
-      <StatCard label="Taux d'Erreurs" value="0.002%" trend="Stable" trendTone="neutral" />
-    </div>
-    <Card padding="md">
-      <Text tone="strong" size="sm">Services de Bordure (Edge Clusters)</Text>
-      <Text tone="muted" size="xs" style={{ display: 'block', marginTop: 'var(--mr-space-1)' }}>
-        Tous les nœuds de distribution de contenu répondent avec une latence inférieure à 25 ms.
-      </Text>
-    </Card>
-  </div>
+  <StatCard label="Trafic Réseau" value="14.8 GB/s" trend="+12.4%" trendTone="success" />
 </SidebarLayout>`
 
     return (
@@ -153,14 +162,7 @@ function SidebarLayoutPlayground() {
                                 boxSizing: 'border-box',
                             }}
                         >
-                            {/* Organisation Header */}
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 'var(--mr-space-2)',
-                                }}
-                            >
+                            <div style={rowStyle}>
                                 <Avatar name="Monority Cloud" size="sm">
                                     MC
                                 </Avatar>
@@ -183,7 +185,6 @@ function SidebarLayoutPlayground() {
 
                             <Input size="sm" placeholder="Rechercher..." />
 
-                            {/* Section Items */}
                             <div
                                 style={{
                                     display: 'flex',
@@ -194,123 +195,29 @@ function SidebarLayoutPlayground() {
                             >
                                 <div
                                     style={{
-                                        fontSize: '0.7rem',
+                                        fontSize: 'var(--mr-font-size-xs)',
                                         textTransform: 'uppercase',
-                                        letterSpacing: '0.05em',
+                                        letterSpacing: 'var(--mr-tracking-label)',
                                         color: 'var(--mr-text-tertiary)',
-                                        fontWeight: 600,
+                                        fontWeight: 'var(--mr-font-weight-semibold)',
                                         marginBlock: 'var(--mr-space-1)',
                                     }}
                                 >
                                     Plateforme
                                 </div>
-                                <Button
-                                    variant={activeNav === 'overview' ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    fullWidth
-                                    onClick={() => setActiveNav('overview')}
-                                    style={{
-                                        justifyContent: 'flex-start',
-                                        paddingInline: 'var(--mr-space-3)',
-                                    }}
-                                >
-                                    <span style={{ width: '100%', textAlign: 'left' }}>
-                                        Tableau de bord
-                                    </span>
-                                </Button>
-                                <Button
-                                    variant={activeNav === 'deploy' ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    fullWidth
-                                    onClick={() => setActiveNav('deploy')}
-                                    style={{
-                                        paddingInline: 'var(--mr-space-3)',
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                            gap: 'var(--mr-space-3)',
-                                        }}
-                                    >
-                                        <span>Déploiements</span>
-                                        <Badge variant="primary" size="sm">
-                                            8
-                                        </Badge>
-                                    </span>
-                                </Button>
-                                <Button
-                                    variant={activeNav === 'analytics' ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    fullWidth
-                                    onClick={() => setActiveNav('analytics')}
-                                    style={{
-                                        paddingInline: 'var(--mr-space-3)',
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                            gap: 'var(--mr-space-3)',
-                                        }}
-                                    >
-                                        <span>Analytique</span>
-                                        <Badge variant="default" tone="accent" size="sm">
-                                            Live
-                                        </Badge>
-                                    </span>
-                                </Button>
-                                <Button
-                                    variant={activeNav === 'alerts' ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    fullWidth
-                                    onClick={() => setActiveNav('alerts')}
-                                    style={{
-                                        paddingInline: 'var(--mr-space-3)',
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                            gap: 'var(--mr-space-3)',
-                                        }}
-                                    >
-                                        <span>Alertes & Logs</span>
-                                        <Badge variant="default" tone="neutral" size="sm">
-                                            3
-                                        </Badge>
-                                    </span>
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    fullWidth
-                                    style={{
-                                        justifyContent: 'flex-start',
-                                        paddingInline: 'var(--mr-space-3)',
-                                    }}
-                                >
-                                    <span style={{ width: '100%', textAlign: 'left' }}>
-                                        Équipe & Rôles
-                                    </span>
-                                </Button>
+                                {NAV_ITEMS.map((item) => (
+                                    <WorkspaceNavItem
+                                        key={item.id}
+                                        item={item}
+                                        active={item.id === activeNav}
+                                        onSelect={setActiveNav}
+                                    />
+                                ))}
                             </div>
 
-                            {/* Profile footer */}
                             <div
                                 style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 'var(--mr-space-2)',
+                                    ...rowStyle,
                                     paddingTop: 'var(--mr-space-2)',
                                     borderTop: '1px solid var(--mr-border-subtle)',
                                 }}
@@ -333,31 +240,16 @@ function SidebarLayoutPlayground() {
                         showHeader ? (
                             <div
                                 style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
+                                    ...rowStyle,
                                     justifyContent: 'space-between',
-                                    width: '100%',
+                                    flex: 1,
+                                    minWidth: 0,
                                 }}
                             >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 'var(--mr-space-2)',
-                                    }}
-                                >
-                                    <SidebarLayout.Toggle />
-                                    <Text size="sm" tone="strong">
-                                        Infrastructure / Télémétrie Edge
-                                    </Text>
-                                </div>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 'var(--mr-space-2)',
-                                    }}
-                                >
+                                <Text size="sm" tone="strong">
+                                    Infrastructure / Télémétrie Edge
+                                </Text>
+                                <div style={rowStyle}>
                                     <Badge variant="default" tone="success" size="sm">
                                         Opérationnel
                                     </Badge>

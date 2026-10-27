@@ -2,6 +2,7 @@ import { InputOTP } from '@monority/ui/input-otp'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { inputOtpI18n } from './InputOtp.messages'
 import {
     InputOtpBasicExample,
     InputOtpCompoundExample,
@@ -37,11 +38,11 @@ function InputOtpPlaygroundDemo(props: {
             <div style={{ fontSize: 'var(--mr-font-size-sm)', color: 'var(--mr-text-primary)' }}>
                 {completed ? (
                     <span>
-                        Code confirme : <strong>{completed}</strong>
+                        Code confirmed: <strong>{completed}</strong>
                     </span>
                 ) : (
                     <span>
-                        Saisie en cours ({value.length} / {props.maxLength})
+                        Entry in progress ({value.length} / {props.maxLength})
                     </span>
                 )}
             </div>
@@ -73,13 +74,13 @@ const inputOtpPlayground = (
             {
                 name: 'maxLength',
                 type: 'number',
-                label: 'Nombre de chiffres (maxLength)',
+                label: 'Number of digits (maxLength)',
                 defaultValue: 6,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
         ]}
@@ -90,7 +91,7 @@ const inputOtpPlayground = (
 const docData: DocPageData = {
     title: 'InputOTP',
     description:
-        'Champ de saisie segmente pour codes One-Time Password, verification double facteur (2FA) et codes PIN avec support transparent du collage.',
+        'Segmented input for One-Time Password codes, two-factor authentication (2FA), and PIN codes with transparent paste support.',
     importCode: "import { InputOTP } from '@monority/ui/input-otp'",
     usageCode: `const [value, setValue] = useState('')
 
@@ -103,57 +104,57 @@ const docData: DocPageData = {
     preview: () => <InputOtpBasicExample />,
     playground: inputOtpPlayground,
     examples: [
-        { title: 'Composition manuelle avec separateur', content: <InputOtpCompoundExample /> },
-        { title: 'Etat desactive', content: <InputOtpDisabledExample /> },
+        { title: 'Manual composition with separator', content: <InputOtpCompoundExample /> },
+        { title: 'Disabled state', content: <InputOtpDisabledExample /> },
     ],
     props: [
         {
             name: 'value',
             type: 'string',
             defaultValue: '-',
-            description: 'Valeur controlee du code.',
+            description: 'Controlled code value.',
         },
         {
             name: 'defaultValue',
             type: 'string',
             defaultValue: "''",
-            description: 'Valeur initiale incontrolee.',
+            description: 'Initial uncontrolled value.',
         },
         {
             name: 'maxLength',
             type: 'number',
             defaultValue: '6',
-            description: 'Nombre total de caracteres requis.',
+            description: 'Total number of required characters.',
         },
         {
             name: 'pattern',
             type: 'string',
             defaultValue: "'^[0-9]*$'",
-            description: 'Expression reguliere de filtrage des caracteres.',
+            description: 'Regular expression used to filter characters.',
         },
         {
             name: 'inputMode',
             type: "'numeric' | 'text'",
             defaultValue: "'numeric'",
-            description: 'Type de clavier virtuel affiche sur mobile.',
+            description: 'Virtual keyboard type shown on mobile.',
         },
         {
             name: 'disabled',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Desactive toute interaction.',
+            description: 'Disables all interaction.',
         },
         {
             name: 'onChange',
             type: '(value: string) => void',
             defaultValue: '-',
-            description: 'Rappel declenche a chaque saisie.',
+            description: 'Callback fired on every input.',
         },
         {
             name: 'onComplete',
             type: '(value: string) => void',
             defaultValue: '-',
-            description: 'Rappel declenche lorsque tous les slots sont remplis.',
+            description: 'Callback fired when all slots are filled.',
         },
     ],
     cssHooks: [
@@ -180,31 +181,32 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: '0-9',
-            action: 'Saisie du caractere numerique et deplacement automatique vers la case suivante.',
-            context: 'Case de saisie (slot OTP)',
+            action: 'Enters the numeric character and automatically moves to the next slot.',
+            context: 'Input slot (OTP slot)',
         },
         {
             key: 'Backspace',
-            action: 'Efface le caractere courant et recule le focus d une case.',
-            context: 'Case de saisie (slot OTP)',
+            action: 'Clears the current character and moves focus back one slot.',
+            context: 'Input slot (OTP slot)',
         },
         {
             key: ['ArrowLeft', 'ArrowRight'],
-            action: 'Deplace manuellement la position du focus entre les differentes cases.',
-            context: 'Case de saisie (slot OTP)',
+            action: 'Manually moves the focus position between the slots.',
+            context: 'Input slot (OTP slot)',
         },
         {
             key: ['Control', 'v'],
-            action: 'Colle un code a usage unique complet et remplit automatiquement les cases.',
-            context: 'Case de saisie (slot OTP)',
+            action: 'Pastes a complete one-time code and fills the slots automatically.',
+            context: 'Input slot (OTP slot)',
         },
     ],
     a11y: [
-        'Utilise un champ natif sous-jacent avec inputMode="numeric" et autoComplete="one-time-code".',
-        'Permet la saisie clavier standard, les raccourcis copier/coller et la touche retour arriere.',
-        'Curseur visuel clignotant simule respectant la preference prefers-reduced-motion.',
-        "Accessible aux lecteurs d'ecran avec libelle clair.",
+        'Uses an underlying native input with inputMode="numeric" and autoComplete="one-time-code".',
+        'Supports standard keyboard input, copy/paste shortcuts, and the backspace key.',
+        'Simulated blinking visual caret respecting the prefers-reduced-motion preference.',
+        'Accessible to screen readers with a clear label.',
     ],
+    i18n: inputOtpI18n,
 }
 
 export function InputOtpDocs() {

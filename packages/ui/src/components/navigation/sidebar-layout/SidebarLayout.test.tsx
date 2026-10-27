@@ -94,6 +94,17 @@ describe('SidebarLayout', () => {
         expect(onOpenChange).toHaveBeenCalledWith(false)
     })
 
+    it('renders exactly one toggle in prop mode, even with header content', () => {
+        const view = render(
+            <SidebarLayout collapsible sidebar={<nav>Nav</nav>} header={<span>Title</span>}>
+                Main
+            </SidebarLayout>
+        )
+        const toggles = view.querySelectorAll('.mr-sidebar-layout__toggle')
+        expect(toggles).toHaveLength(1)
+        expect(toggles[0]?.getAttribute('aria-expanded')).toBe('true')
+    })
+
     it('renders and operates via compound subcomponents (Sidebar, Main, Header, Toggle, Content)', () => {
         const onOpenChange = vi.fn()
         const view = render(

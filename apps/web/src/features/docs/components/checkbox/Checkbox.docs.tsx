@@ -2,6 +2,7 @@ import { Checkbox } from '@monority/ui/checkbox'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { checkboxI18n } from './Checkbox.messages'
 import {
     CheckboxBasicExample,
     CheckboxDisabledExample,
@@ -66,19 +67,19 @@ const checkboxPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Recevoir le resume hebdomadaire',
+                label: 'Label (label)',
+                defaultValue: 'Receive the weekly summary',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Synthese envoyee chaque lundi matin par email.',
+                label: 'Hint (hint)',
+                defaultValue: 'Summary emailed every Monday morning.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -89,7 +90,7 @@ const checkboxPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'accent',
                 options: [
                     { value: 'accent', label: 'Accent' },
@@ -100,13 +101,13 @@ const checkboxPlayground = (
             {
                 name: 'indeterminate',
                 type: 'boolean',
-                label: 'Etat indetermine (dash)',
+                label: 'Indeterminate state (dash)',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
         ]}
@@ -220,13 +221,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Space',
-            action: 'Bascule l etat coche / decoche de la case.',
-            context: 'Case a cocher focalisee',
+            action: 'Toggles the checked / unchecked state of the checkbox.',
+            context: 'Focused checkbox',
         },
         {
             key: 'Tab',
-            action: 'Passe le focus au champ de formulaire suivant.',
-            context: 'Case a cocher focalisee',
+            action: 'Moves focus to the next form field.',
+            context: 'Focused checkbox',
         },
     ],
     a11y: [
@@ -236,6 +237,7 @@ const docData: DocPageData = {
         'invalid/error sets aria-invalid.',
         'Visible focus ring on the control via focus-visible.',
     ],
+    i18n: checkboxI18n,
 }
 
 export function CheckboxDocs() {

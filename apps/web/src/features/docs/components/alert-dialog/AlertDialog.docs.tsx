@@ -3,6 +3,7 @@ import { Button } from '@monority/ui/button'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { alertDialogI18n } from './AlertDialog.messages'
 import {
     AlertDialogBasicExample,
     AlertDialogCompoundExample,
@@ -31,7 +32,7 @@ function AlertDialogPlaygroundDemo(props: {
                 onClick={() => setOpen(true)}
                 variant={props.tone === 'danger' ? 'danger' : 'primary'}
             >
-                Declencher l alerte
+                Trigger the alert
             </Button>
             <AlertDialog
                 open={open}
@@ -58,40 +59,40 @@ const alertDialogPlayground = (
         componentName="AlertDialog"
         importCode="import { AlertDialog } from '@monority/ui/alert-dialog'"
         getCode={(p) => {
-            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { AlertDialog } from '@monority/ui/alert-dialog'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)} variant="${p.tone === 'danger' ? 'danger' : 'primary'}">\n    Declencher l alerte\n  </Button>\n  <AlertDialog\n    open={open}\n    tone="${p.tone}"\n    title="${p.title}"\n    description="${p.description}"\n    confirmLabel="${p.confirmLabel}"\n    cancelLabel="${p.cancelLabel}"\n    onConfirm={() => setOpen(false)}\n    onCancel={() => setOpen(false)}\n  />\n</>`
+            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { AlertDialog } from '@monority/ui/alert-dialog'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)} variant="${p.tone === 'danger' ? 'danger' : 'primary'}">\n    Trigger the alert\n  </Button>\n  <AlertDialog\n    open={open}\n    tone="${p.tone}"\n    title="${p.title}"\n    description="${p.description}"\n    confirmLabel="${p.confirmLabel}"\n    cancelLabel="${p.cancelLabel}"\n    onConfirm={() => setOpen(false)}\n    onCancel={() => setOpen(false)}\n  />\n</>`
         }}
         controls={[
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite',
+                label: 'Tone',
                 options: ['danger', 'default'],
                 defaultValue: 'danger',
             },
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre de l alerte',
-                defaultValue: 'Supprimer cette ressource ?',
+                label: 'Alert title',
+                defaultValue: 'Delete this resource?',
             },
             {
                 name: 'description',
                 type: 'text',
-                label: 'Description des consequences',
+                label: 'Consequences description',
                 defaultValue:
-                    'Cette action est irreversible et supprimera definitivement les donnees.',
+                    'This action is irreversible and will permanently delete the data.',
             },
             {
                 name: 'confirmLabel',
                 type: 'text',
-                label: 'Libelle de confirmation',
-                defaultValue: 'Supprimer',
+                label: 'Confirm label',
+                defaultValue: 'Delete',
             },
             {
                 name: 'cancelLabel',
                 type: 'text',
-                label: 'Libelle d annulation',
-                defaultValue: 'Annuler',
+                label: 'Cancel label',
+                defaultValue: 'Cancel',
             },
         ]}
         render={(props) => <AlertDialogPlaygroundDemo {...props} />}
@@ -190,18 +191,18 @@ return (
     keyboardNavigation: [
         {
             key: 'Escape',
-            action: 'Annule l action et referme la boite d alerte sans appliquer de changement.',
-            context: 'Dialogue d alerte ouvert',
+            action: 'Cancels the action and closes the alert dialog without applying any change.',
+            context: 'Alert dialog open',
         },
         {
             key: 'Tab',
-            action: 'Bascule le focus entre le bouton d annulation et le bouton de confirmation.',
-            context: 'Dialogue d alerte ouvert',
+            action: 'Toggles focus between the cancel button and the confirm button.',
+            context: 'Alert dialog open',
         },
         {
             key: 'Enter',
-            action: 'Declenche le bouton actuellement actif sous le focus (Annulation ou Confirmation).',
-            context: 'Bouton d action actif',
+            action: 'Activates the currently focused action button (Cancel or Confirm).',
+            context: 'Active action button',
         },
     ],
     a11y: [
@@ -211,6 +212,7 @@ return (
         'Destructive actions stay clearly labelled and visually distinct.',
         'Default button labels are in French; override confirmLabel/cancelLabel for other locales.',
     ],
+    i18n: alertDialogI18n,
 }
 
 export function AlertDialogDocs() {

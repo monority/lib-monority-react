@@ -1,6 +1,7 @@
 import { FileUpload } from '@monority/ui/file-upload'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { fileUploadI18n } from './FileUpload.messages'
 import {
     DropZoneBasicExample,
     DropZoneWithHandlerExample,
@@ -38,31 +39,31 @@ const fileUploadPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle principal',
-                defaultValue: 'Fichiers joints',
+                label: 'Main label',
+                defaultValue: 'Attachments',
             },
             {
                 name: 'actionLabel',
                 type: 'text',
-                label: 'Texte du bouton declencheur',
-                defaultValue: 'Selectionner un fichier',
+                label: 'Trigger button text',
+                defaultValue: 'Select a file',
             },
             {
                 name: 'description',
                 type: 'text',
-                label: 'Description d aide',
-                defaultValue: 'Glissez-deposez vos documents ou cliquez pour parcourir',
+                label: 'Helper description',
+                defaultValue: 'Drag and drop your documents or click to browse',
             },
             {
                 name: 'multiple',
                 type: 'boolean',
-                label: 'Fichiers multiples',
+                label: 'Multiple files',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -229,23 +230,23 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Fait entrer ou sortir le focus sur la zone de depot ou le bouton de selection.',
-            context: 'Navigation globale',
+            action: 'Moves focus into or out of the drop zone or the select button.',
+            context: 'Global navigation',
         },
         {
             key: 'Enter',
-            action: 'Ouvre le selecteur de fichiers natif du systeme d exploitation.',
-            context: 'Declencheur actif',
+            action: 'Opens the native operating system file picker.',
+            context: 'Active trigger',
         },
         {
             key: 'Space',
-            action: 'Ouvre le selecteur de fichiers natif du systeme d exploitation.',
-            context: 'Declencheur actif',
+            action: 'Opens the native operating system file picker.',
+            context: 'Active trigger',
         },
         {
             key: 'Escape',
-            action: 'Annule la selection ou referme le selecteur natif.',
-            context: 'Dialogue systeme actif',
+            action: 'Cancels the selection or closes the native picker.',
+            context: 'System dialog open',
         },
     ],
     a11y: [
@@ -257,6 +258,7 @@ const docData: DocPageData = {
         'FileList has role="list" with aria-label="Selected files".',
         'Remove buttons have aria-label with file name.',
     ],
+    i18n: fileUploadI18n,
 }
 
 // ─── Sub-component docs ──────────────────────────────────────────────────────

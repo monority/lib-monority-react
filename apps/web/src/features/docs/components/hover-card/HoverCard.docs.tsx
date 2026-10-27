@@ -5,6 +5,7 @@ import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { hoverCardI18n } from './HoverCard.messages'
 import {
     HoverCardControlledExample,
     HoverCardCustomDelayExample,
@@ -24,7 +25,7 @@ function HoverCardPlayground() {
     <Stack gap="xs">
       <Text.Strong size="sm">Monority UI</Text.Strong>
       <Text.Muted size="sm">
-        Bibliothèque de composants React 19 pilotée par les design tokens CSS natifs.
+        A React 19 component library driven by native CSS design tokens.
       </Text.Muted>
     </Stack>
   </HoverCard.Content>
@@ -38,27 +39,27 @@ function HoverCardPlayground() {
                     label: 'Position (side)',
                     value: side,
                     options: [
-                        { value: 'bottom', label: 'Bas (bottom)' },
-                        { value: 'top', label: 'Haut (top)' },
-                        { value: 'left', label: 'Gauche (left)' },
-                        { value: 'right', label: 'Droite (right)' },
+                        { value: 'bottom', label: 'Bottom' },
+                        { value: 'top', label: 'Top' },
+                        { value: 'left', label: 'Left' },
+                        { value: 'right', label: 'Right' },
                     ],
                     onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
                 },
                 {
                     type: 'select',
-                    label: 'Alignement (align)',
+                    label: 'Align',
                     value: align,
                     options: [
-                        { value: 'center', label: 'Centre (center)' },
-                        { value: 'start', label: 'Début (start)' },
-                        { value: 'end', label: 'Fin (end)' },
+                        { value: 'center', label: 'Center' },
+                        { value: 'start', label: 'Start' },
+                        { value: 'end', label: 'End' },
                     ],
                     onChange: (v) => setAlign(v as 'start' | 'center' | 'end'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Flèche indicatrice (arrow)',
+                    label: 'Arrow indicator',
                     value: arrow,
                     onChange: setArrow,
                 },
@@ -81,8 +82,7 @@ function HoverCardPlayground() {
                         <Stack gap="xs" style={{ maxWidth: 240 }}>
                             <Text.Strong size="sm">Monority UI</Text.Strong>
                             <Text.Muted size="sm">
-                                Bibliothèque de composants React 19 pilotée par les design tokens
-                                CSS natifs.
+                                A React 19 component library driven by native CSS design tokens.
                             </Text.Muted>
                         </Stack>
                     </HoverCard.Content>
@@ -205,6 +205,7 @@ const docData: DocPageData = {
         'Closes on mouse leave from trigger or card.',
         'Positioning recalculates on scroll and resize.',
     ],
+    i18n: hoverCardI18n,
 }
 
 export function HoverCardDocs() {

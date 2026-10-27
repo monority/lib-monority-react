@@ -2,6 +2,7 @@ import { Combobox } from '@monority/ui/combobox'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { comboboxI18n } from './Combobox.messages'
 import {
     ComboboxAsyncAndClearableExample,
     ComboboxBasicExample,
@@ -69,38 +70,38 @@ const comboboxPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Taille',
+                label: 'Size',
                 options: ['sm', 'md', 'lg'],
                 defaultValue: 'md',
             },
             {
                 name: 'clearable',
                 type: 'boolean',
-                label: 'Effacable (clearable)',
+                label: 'Clearable (clearable)',
                 defaultValue: true,
             },
             {
                 name: 'loading',
                 type: 'boolean',
-                label: 'Chargement asynchrone',
+                label: 'Async loading',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive',
+                label: 'Disabled',
                 defaultValue: false,
             },
             {
                 name: 'placeholder',
                 type: 'text',
                 label: 'Placeholder',
-                defaultValue: 'Rechercher un framework...',
+                defaultValue: 'Search a framework...',
             },
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle du champ',
+                label: 'Field label',
                 defaultValue: 'Framework',
             },
         ]}
@@ -186,26 +187,25 @@ const items = [
             type: `boolean`,
             defaultValue: 'false',
             description:
-                'Indicateur de chargement asynchrone qui remplace le chevron par un spinner et active aria-busy.',
+                'Async loading indicator that replaces the chevron with a spinner and sets aria-busy.',
         },
         {
             name: 'clearable',
             type: `boolean`,
             defaultValue: 'false',
-            description:
-                "Affiche un bouton d'effacement rapide lorsque le champ contient une sélection ou une saisie.",
+            description: 'Shows a quick clear button when the field contains a selection or input.',
         },
         {
             name: 'clearAriaLabel',
             type: `string`,
             defaultValue: `'Clear selection'`,
-            description: "Libellé accessible (aria-label) pour le bouton d'effacement.",
+            description: 'Accessible label (aria-label) for the clear button.',
         },
         {
             name: 'onClear',
             type: `() => void`,
             defaultValue: `'-'`,
-            description: "Rappel déclenché lors du clic sur le bouton d'effacement.",
+            description: 'Callback fired when the clear button is clicked.',
         },
     ],
     cssHooks: [
@@ -237,38 +237,38 @@ const items = [
     keyboardNavigation: [
         {
             key: 'ArrowDown',
-            action: "Ouvre le menu deroulant ou deplace la surbrillance sur l'option suivante.",
-            context: 'Focus sur le champ ou menu ouvert',
+            action: 'Opens the dropdown or moves the highlight to the next option.',
+            context: 'Focus on the field or open menu',
         },
         {
             key: 'ArrowUp',
-            action: "Deplace la surbrillance sur l'option precedente.",
-            context: 'Menu deroulant ouvert',
+            action: 'Moves the highlight to the previous option.',
+            context: 'Open dropdown',
         },
         {
             key: 'Enter',
-            action: "Valide l'option actuellement mise en surbrillance et referme le menu.",
-            context: 'Option active',
+            action: 'Confirms the currently highlighted option and closes the menu.',
+            context: 'Active option',
         },
         {
             key: 'Escape',
-            action: 'Referme le menu deroulant et conserve la valeur actuelle.',
-            context: 'Menu deroulant ouvert',
+            action: 'Closes the dropdown and keeps the current value.',
+            context: 'Open dropdown',
         },
         {
             key: 'Home',
-            action: 'Navigue directement vers la premiere option de la liste.',
-            context: 'Menu deroulant ouvert',
+            action: 'Jumps directly to the first option in the list.',
+            context: 'Open dropdown',
         },
         {
             key: 'End',
-            action: 'Navigue directement vers la derniere option de la liste.',
-            context: 'Menu deroulant ouvert',
+            action: 'Jumps directly to the last option in the list.',
+            context: 'Open dropdown',
         },
         {
             key: 'Tab',
-            action: 'Ferme la liste deroulante et deplace le focus vers le champ interactif suivant.',
-            context: 'Navigation globale',
+            action: 'Closes the dropdown and moves focus to the next interactive field.',
+            context: 'Global navigation',
         },
     ],
     a11y: [
@@ -277,6 +277,7 @@ const items = [
         'Listbox role for options menu.',
         'Visible focus ring.',
     ],
+    i18n: comboboxI18n,
 }
 
 export function ComboboxDocs() {

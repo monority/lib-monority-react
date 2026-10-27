@@ -2,6 +2,7 @@ import { Button } from '@monority/ui/button'
 import { DropdownMenu } from '@monority/ui/dropdown-menu'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { dropdownMenuI18n } from './DropdownMenu.messages'
 import {
     DropdownMenuBasicExample,
     DropdownMenuWithCallbacksExample,
@@ -15,13 +16,13 @@ function DropdownMenuPlaygroundDemo(props: {
     includeDanger: boolean
 }) {
     const items = [
-        { value: 'preview', label: 'Apercu du projet' },
-        { value: 'export', label: 'Exporter en PDF' },
-        { value: 'share', label: 'Partager le lien' },
+        { value: 'preview', label: 'Preview project' },
+        { value: 'export', label: 'Export to PDF' },
+        { value: 'share', label: 'Share link' },
         ...(props.includeDanger
             ? [
                   { value: 'sep-1', label: '', type: 'separator' as const },
-                  { value: 'delete', label: 'Supprimer definitivement', danger: true },
+                  { value: 'delete', label: 'Delete permanently', danger: true },
               ]
             : []),
     ]
@@ -55,15 +56,15 @@ const dropdownMenuPlayground = (
         importCode="import { DropdownMenu } from '@monority/ui/dropdown-menu'"
         getCode={(p) => {
             const dangerItem = p.includeDanger
-                ? `\n    { value: 'sep-1', label: '', type: 'separator' as const },\n    { value: 'delete', label: 'Supprimer definitivement', danger: true }`
+                ? `\n    { value: 'sep-1', label: '', type: 'separator' as const },\n    { value: 'delete', label: 'Delete permanently', danger: true }`
                 : ''
-            return `import { Button } from '@monority/ui/button'\nimport { DropdownMenu } from '@monority/ui/dropdown-menu'\n\n<DropdownMenu\n  align="${p.align}"\n  side="${p.side}"\n  trigger={<Button variant="secondary">${p.triggerLabel}</Button>}\n  items={[\n    { value: 'preview', label: 'Apercu du projet' },\n    { value: 'export', label: 'Exporter en PDF' },\n    { value: 'share', label: 'Partager le lien' },${dangerItem}\n  ]}\n/>`
+            return `import { Button } from '@monority/ui/button'\nimport { DropdownMenu } from '@monority/ui/dropdown-menu'\n\n<DropdownMenu\n  align="${p.align}"\n  side="${p.side}"\n  trigger={<Button variant="secondary">${p.triggerLabel}</Button>}\n  items={[\n    { value: 'preview', label: 'Preview project' },\n    { value: 'export', label: 'Export to PDF' },\n    { value: 'share', label: 'Share link' },${dangerItem}\n  ]}\n/>`
         }}
         controls={[
             {
                 name: 'align',
                 type: 'select',
-                label: 'Alignement',
+                label: 'Alignment',
                 defaultValue: 'end',
                 options: [
                     { value: 'start', label: 'Start' },
@@ -74,7 +75,7 @@ const dropdownMenuPlayground = (
             {
                 name: 'side',
                 type: 'select',
-                label: 'Position (cote)',
+                label: 'Side',
                 defaultValue: 'bottom',
                 options: [
                     { value: 'bottom', label: 'Bottom' },
@@ -86,13 +87,13 @@ const dropdownMenuPlayground = (
             {
                 name: 'triggerLabel',
                 type: 'text',
-                label: 'Texte du declencheur',
+                label: 'Trigger text',
                 defaultValue: 'Actions',
             },
             {
                 name: 'includeDanger',
                 type: 'boolean',
-                label: 'Inclure une action critique',
+                label: 'Include destructive action',
                 defaultValue: true,
             },
         ]}
@@ -185,38 +186,38 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['Enter', 'Space'],
-            action: 'Ouvre le menu si focus sur le declencheur, ou active l element de menu cible.',
-            context: 'Declencheur ou item du menu',
+            action: 'Opens the menu when focus is on the trigger, or activates the targeted menu item.',
+            context: 'Trigger or menu item',
         },
         {
             key: 'ArrowDown',
-            action: 'Deplace le focus sur le menuitem suivant. Ouvre le menu depuis le declencheur.',
-            context: 'Declencheur ou menu ouvert',
+            action: 'Moves focus to the next menuitem. Opens the menu from the trigger.',
+            context: 'Trigger or open menu',
         },
         {
             key: 'ArrowUp',
-            action: 'Deplace le focus sur le menuitem precedent. Ouvre le menu depuis le declencheur.',
-            context: 'Declencheur ou menu ouvert',
+            action: 'Moves focus to the previous menuitem. Opens the menu from the trigger.',
+            context: 'Trigger or open menu',
         },
         {
             key: 'Home',
-            action: 'Positionne le focus sur le premier menuitem interactif.',
-            context: 'Menu ouvert',
+            action: 'Moves focus to the first interactive menuitem.',
+            context: 'Menu open',
         },
         {
             key: 'End',
-            action: 'Positionne le focus sur le dernier menuitem interactif.',
-            context: 'Menu ouvert',
+            action: 'Moves focus to the last interactive menuitem.',
+            context: 'Menu open',
         },
         {
             key: 'Escape',
-            action: 'Ferme le menu contextuel et replace le focus sur le declencheur.',
-            context: 'Menu ouvert',
+            action: 'Closes the menu and returns focus to the trigger.',
+            context: 'Menu open',
         },
         {
             key: 'Tab',
-            action: 'Ferme le menu et deplace le focus sur l element suivant dans l ordre de tabulation.',
-            context: 'Menu ouvert',
+            action: 'Closes the menu and moves focus to the next element in tab order.',
+            context: 'Menu open',
         },
     ],
     a11y: [
@@ -228,6 +229,7 @@ const docData: DocPageData = {
         'Escape closes the menu and returns focus to the trigger.',
         'Clicking outside closes the menu.',
     ],
+    i18n: dropdownMenuI18n,
 }
 
 export function DropdownMenuDocs() {
