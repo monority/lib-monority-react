@@ -1,14 +1,22 @@
-﻿import { Stack } from '@monority/ui/stack'
+import { Stack } from '@monority/ui/stack'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { StackGapExample, StackHorizontalExample } from './Stack.examples'
+import { stackI18n } from './Stack.messages'
 
 function StackPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [direction, setDirection] = useState<'vertical' | 'horizontal'>('horizontal')
     const [gap, setGap] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md')
     const [align, setAlign] = useState<'stretch' | 'start' | 'center' | 'end'>('center')
     const [justify, setJustify] = useState<'start' | 'center' | 'end' | 'between'>('center')
+
+    const block1 = isFr ? 'Bloc 1' : 'Block 1'
+    const block2 = isFr ? 'Bloc 2' : 'Block 2'
+    const block3 = isFr ? 'Bloc 3' : 'Block 3'
 
     const snippet = `<Stack
   direction="${direction}"
@@ -16,9 +24,9 @@ function StackPlayground() {
   align="${align}"
   justify="${justify}"
 >
-  <div className="box">Bloc 1</div>
-  <div className="box">Bloc 2</div>
-  <div className="box">Bloc 3</div>
+  <div className="box">${block1}</div>
+  <div className="box">${block2}</div>
+  <div className="box">${block3}</div>
 </Stack>`
 
     const itemStyle = {
@@ -39,45 +47,56 @@ function StackPlayground() {
                     label: 'Direction',
                     value: direction,
                     options: [
-                        { value: 'horizontal', label: 'Horizontal (ligne)' },
-                        { value: 'vertical', label: 'Vertical (colonne)' },
+                        {
+                            value: 'horizontal',
+                            label: isFr ? 'Horizontal (ligne)' : 'Horizontal (row)',
+                        },
+                        {
+                            value: 'vertical',
+                            label: isFr ? 'Vertical (colonne)' : 'Vertical (column)',
+                        },
                     ],
                     onChange: (v) => setDirection(v as 'vertical' | 'horizontal'),
                 },
                 {
                     type: 'select',
-                    label: 'Espacement (gap)',
+                    label: isFr ? 'Espacement (gap)' : 'Spacing (gap)',
                     value: gap,
                     options: [
-                        { value: 'xs', label: 'Très compact (xs)' },
-                        { value: 'sm', label: 'Compact (sm)' },
-                        { value: 'md', label: 'Normal (md)' },
-                        { value: 'lg', label: 'Généreux (lg)' },
-                        { value: 'xl', label: 'Très spacieux (xl)' },
+                        { value: 'xs', label: isFr ? 'Très compact (xs)' : 'Extra small (xs)' },
+                        { value: 'sm', label: isFr ? 'Compact (sm)' : 'Small (sm)' },
+                        { value: 'md', label: isFr ? 'Normal (md)' : 'Medium (md)' },
+                        { value: 'lg', label: isFr ? 'Généreux (lg)' : 'Large (lg)' },
+                        { value: 'xl', label: isFr ? 'Très spacieux (xl)' : 'Extra large (xl)' },
                     ],
                     onChange: (v) => setGap(v as 'xs' | 'sm' | 'md' | 'lg' | 'xl'),
                 },
                 {
                     type: 'select',
-                    label: 'Alignement secondaire (align)',
+                    label: isFr ? 'Alignement secondaire (align)' : 'Cross-axis alignment (align)',
                     value: align,
                     options: [
-                        { value: 'center', label: 'Centre (center)' },
-                        { value: 'start', label: 'Début (start)' },
-                        { value: 'end', label: 'Fin (end)' },
-                        { value: 'stretch', label: 'Étiré (stretch)' },
+                        { value: 'center', label: isFr ? 'Centre (center)' : 'Center' },
+                        { value: 'start', label: isFr ? 'Début (start)' : 'Start' },
+                        { value: 'end', label: isFr ? 'Fin (end)' : 'End' },
+                        { value: 'stretch', label: isFr ? 'Étiré (stretch)' : 'Stretch' },
                     ],
                     onChange: (v) => setAlign(v as 'stretch' | 'start' | 'center' | 'end'),
                 },
                 {
                     type: 'select',
-                    label: 'Distribution principale (justify)',
+                    label: isFr
+                        ? 'Distribution principale (justify)'
+                        : 'Main-axis distribution (justify)',
                     value: justify,
                     options: [
-                        { value: 'center', label: 'Centre (center)' },
-                        { value: 'start', label: 'Début (start)' },
-                        { value: 'end', label: 'Fin (end)' },
-                        { value: 'between', label: 'Espace réparti (between)' },
+                        { value: 'center', label: isFr ? 'Centre (center)' : 'Center' },
+                        { value: 'start', label: isFr ? 'Début (start)' : 'Start' },
+                        { value: 'end', label: isFr ? 'Fin (end)' : 'End' },
+                        {
+                            value: 'between',
+                            label: isFr ? 'Espace réparti (between)' : 'Space between (between)',
+                        },
                     ],
                     onChange: (v) => setJustify(v as 'start' | 'center' | 'end' | 'between'),
                 },
@@ -101,9 +120,9 @@ function StackPlayground() {
                     justify={justify}
                     style={{ width: '100%' }}
                 >
-                    <div style={itemStyle}>Bloc 1</div>
-                    <div style={itemStyle}>Bloc 2</div>
-                    <div style={itemStyle}>Bloc 3</div>
+                    <div style={itemStyle}>{block1}</div>
+                    <div style={itemStyle}>{block2}</div>
+                    <div style={itemStyle}>{block3}</div>
                 </Stack>
             </div>
         </ComponentPlayground>
@@ -114,7 +133,7 @@ const docData: DocPageData = {
     title: 'Stack',
     description:
         'Flex layout primitive for vertical or horizontal grouping, spacing, alignment, and framed content blocks.',
-    importCode: "import { Stack } from '@monority/ui'",
+    importCode: "import { Stack } from '@monority/ui/stack'",
     usageCode: `<Stack gap="md" direction="vertical">
   <div>Item 1</div>
   <div>Item 2</div>
@@ -153,6 +172,7 @@ const docData: DocPageData = {
     cssHooks: ['.mr-stack', '[data-gap]', '[data-align]', '[data-justify]'],
     tokens: ['--mr-space-*'],
     a11y: ['Structural layout component.', 'No interactive semantics by default.'],
+    i18n: stackI18n,
 }
 
 export function StackDocs() {

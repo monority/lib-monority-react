@@ -1,34 +1,44 @@
 import { Button } from '@monority/ui/button'
 import { Topbar } from '@monority/ui/topbar'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { TopbarWithContentExample } from './Topbar.examples'
+import { topbarI18n } from './Topbar.messages'
 
 function TopbarPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [activeTab, setActiveTab] = useState<'docs' | 'components' | 'themes'>('docs')
     const [statusTone, setStatusTone] = useState<'success' | 'warning' | 'danger'>('success')
     const [showStatus, setShowStatus] = useState(true)
 
     const statusLabel =
         statusTone === 'success'
-            ? 'Opérationnel'
+            ? isFr
+                ? 'Opérationnel'
+                : 'Operational'
             : statusTone === 'warning'
-              ? 'Maintenance'
-              : 'Incident'
+              ? isFr
+                  ? 'Maintenance'
+                  : 'Maintenance'
+              : isFr
+                ? 'Incident'
+                : 'Incident'
 
     const snippet = `<Topbar>
   <Topbar.Brand>
     <Topbar.BrandMark>M</Topbar.BrandMark>
     <span>Monority UI</span>
   </Topbar.Brand>
-  <Topbar.Nav aria-label="Navigation principale">
+  <Topbar.Nav aria-label="${isFr ? 'Navigation principale' : 'Primary navigation'}">
     <Topbar.Link href="#" active={${activeTab === 'docs'}}>Documentation</Topbar.Link>
-    <Topbar.Link href="#" active={${activeTab === 'components'}}>Composants</Topbar.Link>
-    <Topbar.Link href="#" active={${activeTab === 'themes'}}>Thèmes</Topbar.Link>
+    <Topbar.Link href="#" active={${activeTab === 'components'}}>${isFr ? 'Composants' : 'Components'}</Topbar.Link>
+    <Topbar.Link href="#" active={${activeTab === 'themes'}}>${isFr ? 'Thèmes' : 'Themes'}</Topbar.Link>
   </Topbar.Nav>${showStatus ? `\n  <Topbar.Status tone="${statusTone}">${statusLabel}</Topbar.Status>` : ''}
   <Topbar.Actions>
-    <Button size="sm" variant="primary">Nouveau</Button>
+    <Button size="sm" variant="primary">${isFr ? 'Nouveau' : 'New'}</Button>
   </Topbar.Actions>
 </Topbar>`
 
@@ -37,29 +47,38 @@ function TopbarPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Onglet actif',
+                    label: isFr ? 'Onglet actif' : 'Active tab',
                     value: activeTab,
                     options: [
                         { value: 'docs', label: 'Documentation' },
-                        { value: 'components', label: 'Composants' },
-                        { value: 'themes', label: 'Thèmes' },
+                        { value: 'components', label: isFr ? 'Composants' : 'Components' },
+                        { value: 'themes', label: isFr ? 'Thèmes' : 'Themes' },
                     ],
                     onChange: (v) => setActiveTab(v as 'docs' | 'components' | 'themes'),
                 },
                 {
                     type: 'select',
-                    label: 'Statut système',
+                    label: isFr ? 'Statut système' : 'System status',
                     value: statusTone,
                     options: [
-                        { value: 'success', label: 'Opérationnel (success)' },
-                        { value: 'warning', label: 'Maintenance (warning)' },
-                        { value: 'danger', label: 'Incident (danger)' },
+                        {
+                            value: 'success',
+                            label: isFr ? 'Opérationnel (success)' : 'Operational (success)',
+                        },
+                        {
+                            value: 'warning',
+                            label: isFr ? 'Maintenance (warning)' : 'Maintenance (warning)',
+                        },
+                        {
+                            value: 'danger',
+                            label: isFr ? 'Incident (danger)' : 'Incident (danger)',
+                        },
                     ],
                     onChange: (v) => setStatusTone(v as 'success' | 'warning' | 'danger'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Afficher le statut',
+                    label: isFr ? 'Afficher le statut' : 'Show status',
                     value: showStatus,
                     onChange: setShowStatus,
                 },
@@ -81,7 +100,7 @@ function TopbarPlayground() {
                         <Topbar.BrandMark>M</Topbar.BrandMark>
                         <span>Monority UI</span>
                     </Topbar.Brand>
-                    <Topbar.Nav aria-label="Navigation principale">
+                    <Topbar.Nav aria-label={isFr ? 'Navigation principale' : 'Primary navigation'}>
                         <Topbar.Link
                             href="#"
                             active={activeTab === 'docs'}
@@ -100,7 +119,7 @@ function TopbarPlayground() {
                                 setActiveTab('components')
                             }}
                         >
-                            Composants
+                            {isFr ? 'Composants' : 'Components'}
                         </Topbar.Link>
                         <Topbar.Link
                             href="#"
@@ -110,13 +129,13 @@ function TopbarPlayground() {
                                 setActiveTab('themes')
                             }}
                         >
-                            Thèmes
+                            {isFr ? 'Thèmes' : 'Themes'}
                         </Topbar.Link>
                     </Topbar.Nav>
                     {showStatus && <Topbar.Status tone={statusTone}>{statusLabel}</Topbar.Status>}
                     <Topbar.Actions>
                         <Button size="sm" variant="primary">
-                            Nouveau
+                            {isFr ? 'Nouveau' : 'New'}
                         </Button>
                     </Topbar.Actions>
                 </Topbar>
@@ -128,31 +147,30 @@ function TopbarPlayground() {
 const docData: DocPageData = {
     title: 'Topbar',
     description:
-        "Barre supérieure de navigation et d'état persistante collée en haut d'écran avec marque, navigation avec rail actif, indicateur de statut et actions.",
+        'Persistent top navigation and status bar anchored to viewport top with branding, rail-aligned navigation, status indicator, and action buttons.',
     importCode: "import { Topbar } from '@monority/ui/topbar'",
     usageCode: `<Topbar>
   <Topbar.Brand>
     <Topbar.BrandMark>M</Topbar.BrandMark>
     <span>Monority UI</span>
   </Topbar.Brand>
-  <Topbar.Nav aria-label="Navigation principale">
+  <Topbar.Nav aria-label="Primary navigation">
     <Topbar.Link href="#" active>Documentation</Topbar.Link>
-    <Topbar.Link href="#">Composants</Topbar.Link>
+    <Topbar.Link href="#">Components</Topbar.Link>
   </Topbar.Nav>
-  <Topbar.Status tone="success">Opérationnel</Topbar.Status>
+  <Topbar.Status tone="success">Operational</Topbar.Status>
   <Topbar.Actions>
-    <Button size="sm">Nouveau</Button>
+    <Button size="sm">New</Button>
   </Topbar.Actions>
 </Topbar>`,
     preview: () => <TopbarPlayground />,
-    examples: [{ title: 'Avec statut et actions', content: <TopbarWithContentExample /> }],
+    examples: [{ title: 'With status and actions', content: <TopbarWithContentExample /> }],
     props: [
         {
             name: 'children',
             type: 'ReactNode',
             defaultValue: '-',
-            description:
-                'Contenu de la barre supérieure (Topbar.Brand, Topbar.Nav, Topbar.Actions, etc.).',
+            description: 'Topbar content (Topbar.Brand, Topbar.Nav, Topbar.Actions, etc.).',
         },
     ],
     cssHooks: [
@@ -181,11 +199,12 @@ const docData: DocPageData = {
         '--mr-space-6',
     ],
     a11y: [
-        'Élément sémantique <header> avec repère structurel banner.',
-        'Conteneur de navigation balisé avec <nav aria-label="...">.',
-        'Lien actif annoté avec aria-current="page".',
-        "Indicateur de statut accompagné d'un libellé textuel explicite.",
+        'Semantic <header> element with banner landmark role.',
+        'Navigation container marked with <nav aria-label="...">.',
+        'Active link annotated with aria-current="page".',
+        'Status indicator accompanied by explicit text label.',
     ],
+    i18n: topbarI18n,
 }
 
 export function TopbarDocs() {

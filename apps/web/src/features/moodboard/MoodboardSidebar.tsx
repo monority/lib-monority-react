@@ -11,6 +11,7 @@ import {
     designConfigToJSON,
 } from '@monority/ui'
 import { useState } from 'react'
+import { useMessages } from '@/shared/i18n'
 import { MoodboardSidebarControls } from './components/MoodboardSidebarControls'
 
 export interface MoodboardSidebarProps {
@@ -33,12 +34,13 @@ export function MoodboardSidebar({
     copiedCss = false,
 }: MoodboardSidebarProps) {
     const [previewFormat, setPreviewFormat] = useState<'json' | 'css'>('json')
+    const t = useMessages().moodboard
 
     return (
         <Stack
             gap="lg"
             role="region"
-            aria-label="Design configuration"
+            aria-label={t.sidebar.ariaLabel}
             style={{
                 padding: 'var(--mr-space-4)',
                 boxSizing: 'border-box',
@@ -57,13 +59,13 @@ export function MoodboardSidebar({
                         fontSize: '0.6875rem',
                     }}
                 >
-                    MONORITY UI
+                    {t.sidebar.kicker}
                 </Text>
                 <Title as="h2" size="md">
-                    Design Studio
+                    {t.sidebar.title}
                 </Title>
                 <Text tone="muted" size="sm">
-                    Configure tokens live and inspect the resolved design contracts.
+                    {t.sidebar.subtitle}
                 </Text>
             </Stack>
 
@@ -75,7 +77,7 @@ export function MoodboardSidebar({
                     data-testid="moodboard-reset"
                     style={{ flex: 1 }}
                 >
-                    Reset
+                    {t.sidebar.reset}
                 </Button>
                 {onCopyCss && (
                     <Button
@@ -85,7 +87,7 @@ export function MoodboardSidebar({
                         data-testid="moodboard-copy-css"
                         style={{ flex: 1 }}
                     >
-                        {copiedCss ? 'Copied CSS!' : 'Copy CSS'}
+                        {copiedCss ? t.sidebar.copiedCss : t.sidebar.copyCss}
                     </Button>
                 )}
                 <Button
@@ -95,7 +97,7 @@ export function MoodboardSidebar({
                     data-testid="moodboard-copy"
                     style={{ flex: 1 }}
                 >
-                    {copied ? 'Copied!' : 'Copy JSON'}
+                    {copied ? t.sidebar.copiedJson : t.sidebar.copyJson}
                 </Button>
             </Stack>
 
@@ -122,7 +124,7 @@ export function MoodboardSidebar({
                         userSelect: 'none',
                     }}
                 >
-                    Token Details
+                    {t.sidebar.tokenDetails}
                 </summary>
                 <div
                     style={{

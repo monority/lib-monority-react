@@ -196,4 +196,17 @@ describe('DateRangePicker', () => {
         expect(onEndChange).toHaveBeenCalledTimes(1)
         expect(onEndChange).toHaveBeenCalledWith(null)
     })
+
+    it('passes locale through to sub DatePicker inputs', () => {
+        const view = render(
+            <DateRangePicker
+                locale="fr-FR"
+                fromProps={{ defaultValue: new Date(2026, 9, 27) }}
+                toProps={{ defaultValue: new Date(2026, 9, 28) }}
+            />
+        )
+        const inputs = view.querySelectorAll('input[type="text"]')
+        expect(inputs[0]?.value).toBe('27/10/2026')
+        expect(inputs[1]?.value).toBe('28/10/2026')
+    })
 })

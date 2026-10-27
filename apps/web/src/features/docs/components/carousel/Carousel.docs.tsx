@@ -3,6 +3,7 @@ import { Carousel } from '@monority/ui/carousel'
 import { Text } from '@monority/ui/text'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { carouselI18n } from './Carousel.messages'
 import {
     CarouselAutoPlayExample,
     CarouselBasicExample,
@@ -61,8 +62,8 @@ const playgroundSlides = [
                 CSS Cascade Layers (@layer)
             </Text>
             <Text size="sm" tone="muted">
-                Fondation ordonnée en 6 couches déterministes prévenant les conflits de spécificité
-                avec les styles applicatifs.
+                Structured foundation organized into 6 deterministic layers preventing specificity
+                conflicts with host applications.
             </Text>
         </div>
         <div
@@ -113,7 +114,7 @@ const playgroundSlides = [
                         color: 'var(--mr-accent-solid)',
                     }}
                 >
-                    Accessibilité
+                    Accessibility
                 </span>
                 <span
                     style={{
@@ -130,11 +131,11 @@ const playgroundSlides = [
                 size="lg"
                 style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}
             >
-                Contrôles Clavier & Lecteurs d'Écran
+                WAI-ARIA Pattern & Focus Management
             </Text>
             <Text size="sm" tone="muted">
-                Prise en charge complète de la spécification WAI-ARIA 1.2 : touches fléchées, Home,
-                End, région rotative et annonces en direct.
+                Native keyboard support with Arrow keys, Home/End navigation, live region updates,
+                and automatic hover/focus pause.
             </Text>
         </div>
         <div
@@ -148,11 +149,11 @@ const playgroundSlides = [
                 color: 'var(--mr-text-muted)',
             }}
         >
-            <span>role=&quot;region&quot;</span>
+            <span>roving tabindex</span>
             <span>•</span>
-            <span>focus-visible</span>
+            <span>aria-roledescription</span>
             <span>•</span>
-            <span>pause on hover</span>
+            <span>screen readers</span>
         </div>
     </Card>,
     <Card
@@ -202,11 +203,11 @@ const playgroundSlides = [
                 size="lg"
                 style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}
             >
-                Indicateurs Morphing & Glassmorphism
+                Morphing Indicators & Glassmorphic Arrows
             </Text>
             <Text size="sm" tone="muted">
-                Points de pagination fluides s'étirant dynamiquement en pilules actives, boutons de
-                navigation circulaires en élévation subtile.
+                Fluid pagination dots expanding into active pill shapes, floating circular
+                navigation buttons with subtle elevation.
             </Text>
         </div>
         <div
@@ -257,7 +258,7 @@ const playgroundSlides = [
                         color: 'var(--mr-accent-solid)',
                     }}
                 >
-                    Composabilité
+                    Composability
                 </span>
                 <span
                     style={{
@@ -274,11 +275,11 @@ const playgroundSlides = [
                 size="lg"
                 style={{ display: 'block', marginBottom: 'var(--mr-space-2)' }}
             >
-                Composants Composables & Mode Shorthand
+                Composable Subcomponents & Shorthand Mode
             </Text>
             <Text size="sm" tone="muted">
-                Utilisation rapide via la prop slides ou architecture compound avec
-                Carousel.Content, Carousel.Item, Carousel.Counter et Carousel.PlayPause.
+                Fast setup via the slides prop or compound architecture using Carousel.Content,
+                Carousel.Item, Carousel.Counter, and Carousel.PlayPause.
             </Text>
         </div>
         <div
@@ -305,55 +306,61 @@ function CarouselPlayground() {
     return (
         <ComponentPlayground
             title="Carousel"
-            description="Diaporama interactif avec flèches circulaires flottantes, indicateurs morphiques et compteur dynamique."
+            description="Interactive slideshow with floating circular arrows, morphing pill dots, and dynamic slide counter."
             controls={[
                 {
                     type: 'boolean',
+                    name: 'showArrows',
                     prop: 'showArrows',
-                    label: 'Flèches de navigation (showArrows)',
+                    label: 'Navigation arrows (showArrows)',
                     defaultValue: true,
                 },
                 {
                     type: 'select',
+                    name: 'arrowsPosition',
                     prop: 'arrowsPosition',
-                    label: 'Position des flèches (arrowsPosition)',
+                    label: 'Arrows position (arrowsPosition)',
                     defaultValue: 'inside',
                     options: [
-                        { value: 'inside', label: 'Intérieur (inside - dans le carrousel)' },
-                        { value: 'outside', label: 'Extérieur (outside - flanqué)' },
+                        { value: 'inside', label: 'Inside (overlaid on slides)' },
+                        { value: 'outside', label: 'Outside (flanking the sides)' },
                     ],
                 },
                 {
                     type: 'boolean',
+                    name: 'showDots',
                     prop: 'showDots',
-                    label: 'Indicateurs à points (showDots)',
+                    label: 'Pagination dots (showDots)',
                     defaultValue: true,
                 },
                 {
                     type: 'boolean',
+                    name: 'showCounter',
                     prop: 'showCounter',
-                    label: 'Compteur de diapositive (showCounter)',
+                    label: 'Slide counter (showCounter)',
                     defaultValue: true,
                 },
                 {
                     type: 'boolean',
+                    name: 'loop',
                     prop: 'loop',
-                    label: 'Bouclage infini (loop)',
+                    label: 'Infinite loop (loop)',
                     defaultValue: true,
                 },
                 {
                     type: 'boolean',
+                    name: 'autoPlay',
                     prop: 'autoPlay',
-                    label: 'Lecture auto (autoPlay)',
+                    label: 'Auto-play (autoPlay)',
                     defaultValue: false,
                 },
             ]}
             renderCode={(props) => `<Carousel
   slides={[
-    <Card padding="lg">Architecture CSS @layer</Card>,
-    <Card padding="lg">Accessibilité WAI-ARIA</Card>,
-    <Card padding="lg">Indicateurs Morphing</Card>,
-    <Card padding="lg">Composabilité React 19</Card>,
+    <Card padding="lg">CSS Architecture @layer</Card>,
+    <Card padding="lg">WAI-ARIA Accessibility</Card>,
+    <Card padding="lg">Morphing Indicators</Card>,
+    <Card padding="lg">React 19 Composability</Card>,
   ]}${props.loop ? '\n  loop' : ''}${!props.showArrows ? '\n  showArrows={false}' : ''}${props.arrowsPosition === 'outside' ? '\n  arrowsPosition="outside"' : ''}${!props.showDots ? '\n  showDots={false}' : ''}${props.showCounter ? '\n  showCounter' : ''}${props.autoPlay ? '\n  autoPlay\n  interval={4000}' : ''}
 />`}
         >
@@ -378,7 +385,7 @@ function CarouselPlayground() {
 const docData: DocPageData = {
     title: 'Carousel',
     description:
-        'Diaporama accessible avec flèches aériennes glassmorphic, indicateurs morphiques en pilule et compteur de défilement.',
+        'Accessible slideshow with glassmorphic arrows, morphing pill indicators, and live slide counter.',
     importCode: "import { Carousel } from '@monority/ui/carousel'",
     usageCode: `<Carousel loop showCounter>
   <Carousel.Content>
@@ -397,13 +404,13 @@ const docData: DocPageData = {
     preview: () => <CarouselPlayground />,
     examples: [
         {
-            title: 'Composition Compound',
+            title: 'Compound composition',
             content: <CarouselBasicExample />,
         },
-        { title: 'Lecture automatique (Auto-play)', content: <CarouselAutoPlayExample /> },
-        { title: 'Mode boucle continue (Loop)', content: <CarouselLoopExample /> },
+        { title: 'Automatic playback (Auto-play)', content: <CarouselAutoPlayExample /> },
+        { title: 'Infinite loop mode', content: <CarouselLoopExample /> },
         {
-            title: 'Sans contrôles de navigation',
+            title: 'Without navigation controls',
             content: <CarouselNoControlsExample />,
         },
     ],
@@ -412,101 +419,102 @@ const docData: DocPageData = {
             name: 'slides',
             type: 'ReactNode[]',
             defaultValue: '-',
-            description:
-                'Tableau des éléments enfants à projeter comme diapositives (mode shorthand).',
+            description: 'Array of child elements projected as slides in shorthand mode.',
         },
         {
             name: 'children',
             type: 'ReactNode',
             defaultValue: '-',
             description:
-                'Sous-composants compound : Carousel.Content, Carousel.Previous, Carousel.Next, etc.',
+                'Compound subcomponents: Carousel.Content, Carousel.Previous, Carousel.Next, etc.',
         },
         {
             name: 'autoPlay',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Active le défilement automatique cadencé.',
+            description: 'Enables timed automatic slide transitions.',
         },
         {
             name: 'interval',
             type: 'number',
             defaultValue: '5000',
-            description: 'Délai en millisecondes entre deux transitions automatiques.',
+            description: 'Delay in milliseconds between automatic slide transitions.',
         },
         {
             name: 'showArrows',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Affiche les flèches de navigation circulaire (mode shorthand).',
+            description: 'Displays floating circular navigation arrows in shorthand mode.',
         },
         {
             name: 'arrowsPosition',
             type: `'outside' | 'inside'`,
             defaultValue: `'outside'`,
             description:
-                'Positionnement des flèches : extérieur (flanqué à gauche et droite sans chevauchement) ou intérieur (superposé en overlay).',
+                'Arrow positioning: outside (flanking on sides without overlap) or inside (overlaid on top of slides).',
         },
         {
             name: 'showDots',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Affiche les indicateurs morphiques de pagination (mode shorthand).',
+            description: 'Displays morphing pagination dot indicators in shorthand mode.',
         },
         {
             name: 'showCounter',
             type: 'boolean',
             defaultValue: 'false',
             description:
-                'Affiche le badge compteur indiquant la diapositive active / totale (mode shorthand).',
+                'Displays badge counter indicating active slide / total count in shorthand mode.',
         },
         {
             name: 'loop',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Autorise le bouclage circulaire infini sans blocage aux extrémités.',
+            description: 'Allows circular looping without edge boundaries.',
         },
         {
             name: 'orientation',
             type: `'horizontal' | 'vertical'`,
             defaultValue: "'horizontal'",
-            description: 'Axe de défilement du carrousel.',
+            description: 'Slide scroll axis.',
         },
         {
             name: 'slideClassName',
             type: 'string',
             defaultValue: '-',
-            description: 'Classe CSS additionnelle injectée sur chaque conteneur de diapositive.',
+            description: 'Additional CSS class injected on each slide container.',
         },
     ],
     keyboardNavigation: [
         {
-            key: 'Flèche Gauche / Flèche Droite',
-            description:
-                'Navigue vers la diapositive précédente ou suivante en orientation horizontale.',
+            key: 'ArrowLeft / ArrowRight',
+            action: 'Navigates to the previous or next slide in horizontal orientation.',
+            context: 'Focus on carousel or controls',
         },
         {
-            key: 'Flèche Haut / Flèche Bas',
-            description:
-                'Navigue vers la diapositive précédente ou suivante en orientation verticale.',
+            key: 'ArrowUp / ArrowDown',
+            action: 'Navigates to the previous or next slide in vertical orientation.',
+            context: 'Focus on carousel or controls',
         },
         {
-            key: 'Home / Début',
-            description: 'Revient immédiatement à la première diapositive.',
+            key: 'Home',
+            action: 'Jumps immediately to the first slide.',
+            context: 'Focus on carousel or controls',
         },
         {
-            key: 'End / Fin',
-            description: 'Avance immédiatement à la dernière diapositive.',
+            key: 'End',
+            action: 'Advances immediately to the last slide.',
+            context: 'Focus on carousel or controls',
         },
         {
             key: 'Tab',
-            description:
-                'Déplace le focus séquentiellement entre le carrousel, les flèches, le bouton lecture/pause et les points de pagination.',
+            action: 'Sequentially moves focus between carousel, arrow buttons, play/pause, and pagination dots.',
+            context: 'Global navigation',
         },
         {
-            key: 'Enter / Espace',
-            description:
-                'Active le bouton fléché, le bouton lecture/pause ou sélectionne le point de pagination ciblé.',
+            key: 'Enter / Space',
+            action: 'Activates the focused arrow, play/pause button, or selects the targeted dot.',
+            context: 'Focus on targeted control',
         },
     ],
     cssHooks: [
@@ -552,13 +560,14 @@ const docData: DocPageData = {
         '--mr-duration-instant',
     ],
     a11y: [
-        'Conteneur racine doté de role="region" et aria-roledescription="carousel".',
-        'Chaque diapositive expose role="group", aria-roledescription="slide" et un libellé accessible dynamique.',
-        'Les diapositives inactives hors champ sont masquées aux technologies d\'assistance via aria-hidden="true".',
-        'La pagination expose role="tablist" avec boutons dotés de role="tab" et aria-selected synchronisé.',
-        'Support complet des raccourcis clavier (flèches directionnelles, touches Home et End).',
-        'Suspension automatique de la rotation lors du survol de la souris ou de la prise de focus clavier.',
+        'Root container has role="region" and aria-roledescription="carousel".',
+        'Each slide exposes role="group", aria-roledescription="slide", and a dynamic accessible label.',
+        'Inactive off-screen slides are hidden from assistive technologies with aria-hidden="true".',
+        'Pagination exposes role="tablist" with buttons using role="tab" and synchronized aria-selected.',
+        'Full keyboard navigation support with Arrow keys, Home, and End.',
+        'Automatic pause on mouse hover or keyboard focus.',
     ],
+    i18n: carouselI18n,
 }
 
 export function CarouselDocs() {

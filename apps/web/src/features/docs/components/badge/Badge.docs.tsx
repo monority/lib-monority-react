@@ -1,6 +1,7 @@
 import { Badge } from '@monority/ui/badge'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { badgeI18n } from './Badge.messages'
 import {
     BadgeDangerExample,
     BadgeDefaultExample,
@@ -43,13 +44,13 @@ const badgePlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Texte du badge',
-                defaultValue: 'En production',
+                label: 'Badge label',
+                defaultValue: 'In production',
             },
             {
                 name: 'variant',
                 type: 'select',
-                label: 'Variante visuelle',
+                label: 'Visual variant',
                 defaultValue: 'primary',
                 options: [
                     { value: 'default', label: 'Default' },
@@ -102,6 +103,7 @@ const docData: DocPageData = {
         '--mr-danger-soft',
     ],
     a11y: ['Use concise text.', 'Avoid color-only meaning for critical states.'],
+    i18n: badgeI18n,
 }
 
 export function BadgeDocs() {

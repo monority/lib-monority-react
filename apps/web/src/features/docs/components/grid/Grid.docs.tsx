@@ -1,7 +1,8 @@
-﻿import { Grid } from '@monority/ui/grid'
+import { Grid } from '@monority/ui/grid'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { gridI18n } from './Grid.messages'
 import { GridColumnsExample } from './Grid.examples'
 
 function GridPlayground() {
@@ -12,7 +13,7 @@ function GridPlayground() {
     const count = Number(itemCount)
 
     const snippet = `<Grid columns={${colsValue}}>
-${Array.from({ length: count }, (_, i) => `  <div className="card">Élément ${i + 1}</div>`).join('\n')}
+${Array.from({ length: count }, (_, i) => `  <div className="card">Item ${i + 1}</div>`).join('\n')}
 </Grid>`
 
     const itemStyle = {
@@ -31,24 +32,26 @@ ${Array.from({ length: count }, (_, i) => `  <div className="card">Élément ${i
             controls={[
                 {
                     type: 'select',
-                    label: 'Nombre de colonnes',
+                    name: 'columns',
+                    label: 'Columns',
                     value: columns,
                     options: [
-                        { value: '1', label: '1 colonne' },
-                        { value: '2', label: '2 colonnes' },
-                        { value: '3', label: '3 colonnes' },
-                        { value: '4', label: '4 colonnes' },
+                        { value: '1', label: '1 column' },
+                        { value: '2', label: '2 columns' },
+                        { value: '3', label: '3 columns' },
+                        { value: '4', label: '4 columns' },
                     ],
                     onChange: (v) => setColumns(v as '1' | '2' | '3' | '4'),
                 },
                 {
                     type: 'select',
-                    label: 'Nombre de blocs',
+                    name: 'itemCount',
+                    label: 'Item count',
                     value: itemCount,
                     options: [
-                        { value: '4', label: '4 blocs' },
-                        { value: '6', label: '6 blocs' },
-                        { value: '8', label: '8 blocs' },
+                        { value: '4', label: '4 items' },
+                        { value: '6', label: '6 items' },
+                        { value: '8', label: '8 items' },
                     ],
                     onChange: (v) => setItemCount(v as '4' | '6' | '8'),
                 },
@@ -67,7 +70,7 @@ ${Array.from({ length: count }, (_, i) => `  <div className="card">Élément ${i
                 <Grid columns={colsValue}>
                     {Array.from({ length: count }, (_, i) => (
                         <div key={i} style={itemStyle}>
-                            Élément {i + 1}
+                            Item {i + 1}
                         </div>
                     ))}
                 </Grid>
@@ -79,7 +82,7 @@ ${Array.from({ length: count }, (_, i) => `  <div className="card">Élément ${i
 const docData: DocPageData = {
     title: 'Grid',
     description: 'CSS grid container with configurable column count.',
-    importCode: "import { Grid } from '@monority/ui'",
+    importCode: "import { Grid } from '@monority/ui/grid'",
     usageCode: `<Grid columns={2}>
   <div>Item 1</div>
   <div>Item 2</div>
@@ -99,6 +102,7 @@ const docData: DocPageData = {
     cssHooks: ['.mr-grid', '[data-cols]', '[data-gap]'],
     tokens: ['--mr-space-*'],
     a11y: ['Structural layout component.', 'No interactive semantics by default.'],
+    i18n: gridI18n,
 }
 
 export function GridDocs() {

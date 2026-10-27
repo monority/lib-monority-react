@@ -5,6 +5,10 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
     page?: number
     totalPages?: number
     onPageChange?: (page: number) => void
+    previousLabel?: ReactNode
+    nextLabel?: ReactNode
+    previousAriaLabel?: string
+    nextAriaLabel?: string
     children?: ReactNode
 }
 

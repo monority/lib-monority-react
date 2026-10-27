@@ -1,7 +1,8 @@
-﻿import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@monority/ui/resizable'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@monority/ui/resizable'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { resizableI18n } from './Resizable.messages'
 import {
     ResizableThreePanelsExample,
     ResizableVerticalExample,
@@ -14,11 +15,11 @@ function ResizablePlayground() {
 
     const snippet = `<ResizablePanelGroup direction="${direction}">
   <ResizablePanel defaultSize={35}>
-    <div>Panneau 1 (35%)</div>
+    <div>Panel 1 (35%)</div>
   </ResizablePanel>
   <ResizableHandle${withHandle ? ' withHandle' : ''} />
   <ResizablePanel defaultSize={65}>
-    <div>Panneau 2 (65%)</div>
+    <div>Panel 2 (65%)</div>
   </ResizablePanel>
 </ResizablePanelGroup>`
 
@@ -27,6 +28,7 @@ function ResizablePlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'direction',
                     label: 'Orientation',
                     value: direction,
                     options: [
@@ -37,7 +39,8 @@ function ResizablePlayground() {
                 },
                 {
                     type: 'boolean',
-                    label: 'Poignée visuelle (withHandle)',
+                    name: 'withHandle',
+                    label: 'Grip handle indicator (withHandle)',
                     value: withHandle,
                     onChange: setWithHandle,
                 },
@@ -63,14 +66,14 @@ function ResizablePlayground() {
                                 fontSize: '0.875rem',
                             }}
                         >
-                            <strong>Panneau A</strong>
+                            <strong>Panel A</strong>
                             <p
                                 style={{
                                     margin: '8px 0 0',
                                     color: 'var(--mr-text-secondary, #64748b)',
                                 }}
                             >
-                                Redimensionnez avec la souris ou au clavier (flèches).
+                                Resize using the mouse cursor or arrow keys.
                             </p>
                         </div>
                     </ResizablePanel>
@@ -84,14 +87,14 @@ function ResizablePlayground() {
                                 fontSize: '0.875rem',
                             }}
                         >
-                            <strong>Panneau B</strong>
+                            <strong>Panel B</strong>
                             <p
                                 style={{
                                     margin: '8px 0 0',
                                     color: 'var(--mr-text-secondary, #64748b)',
                                 }}
                             >
-                                Zone de contenu adaptative.
+                                Flexible responsive content area.
                             </p>
                         </div>
                     </ResizablePanel>
@@ -106,7 +109,7 @@ const docData: DocPageData = {
     description:
         'Panels with draggable resize handles, allowing users to resize horizontal or vertical panels.',
     importCode:
-        "import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@monority/ui'",
+        "import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@monority/ui/resizable'",
     usageCode: `<ResizablePanelGroup direction="horizontal">
   <ResizablePanel defaultSize={30}>
     <div>Left panel</div>
@@ -176,9 +179,9 @@ const docData: DocPageData = {
         '--mr-text-secondary',
     ],
     keyboardNavigation: [
-        { key: 'Flèche Gauche / Haut', action: 'Diminue la taille du panneau précédent de 1%' },
-        { key: 'Flèche Droite / Bas', action: 'Augmente la taille du panneau précédent de 1%' },
-        { key: 'Shift + Flèche', action: 'Ajuste la taille par pas de 10%' },
+        { key: 'ArrowLeft / ArrowUp', action: 'Decreases the preceding panel size by 1%' },
+        { key: 'ArrowRight / ArrowDown', action: 'Increases the preceding panel size by 1%' },
+        { key: 'Shift + Arrow', action: 'Adjusts panel size in 10% steps' },
     ],
     a11y: [
         'Handles use role="separator" with aria-orientation matching the group direction.',
@@ -187,6 +190,7 @@ const docData: DocPageData = {
         'aria-valuenow reflects the current size percentage of the preceding panel.',
         'Dragging disables text selection on the group via mr-resizable--dragging class.',
     ],
+    i18n: resizableI18n,
 }
 
 export function ResizableDocs() {

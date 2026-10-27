@@ -136,4 +136,25 @@ describe('Pagination', () => {
         expect(activeLink?.getAttribute('aria-current')).toBe('page')
         expect(view.querySelector('.mr-pagination__ellipsis')?.textContent?.trim()).toBe('...')
     })
+
+    it('supports custom previous/next labels and aria-labels for localization', () => {
+        const view = render(
+            <Pagination
+                page={2}
+                totalPages={5}
+                previousLabel="Précédent"
+                nextLabel="Suivant"
+                previousAriaLabel="Page précédente"
+                nextAriaLabel="Page suivante"
+            />
+        )
+        const buttons = view.querySelectorAll('button.mr-pagination__btn')
+        const prevBtn = buttons[0] as HTMLButtonElement
+        const nextBtn = buttons[buttons.length - 1] as HTMLButtonElement
+
+        expect(prevBtn.textContent).toContain('Précédent')
+        expect(prevBtn.getAttribute('aria-label')).toBe('Page précédente')
+        expect(nextBtn.textContent).toContain('Suivant')
+        expect(nextBtn.getAttribute('aria-label')).toBe('Page suivante')
+    })
 })

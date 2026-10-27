@@ -7,26 +7,20 @@ import { SidebarLayout } from '@monority/ui/sidebar-layout'
 import { StatCard } from '@monority/ui/stat-card'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SidebarLayoutWidthsExample,
     SidebarLayoutWithContentExample,
 } from './SidebarLayout.examples'
+import { sidebarLayoutI18n } from './SidebarLayout.messages'
 
 type NavItem = {
     id: string
     label: string
     badge?: { label: string; variant?: 'primary' | 'default'; tone?: 'accent' | 'neutral' }
 }
-
-const NAV_ITEMS: NavItem[] = [
-    { id: 'overview', label: 'Tableau de bord' },
-    { id: 'deploy', label: 'Déploiements', badge: { label: '8', variant: 'primary' } },
-    { id: 'analytics', label: 'Analytique', badge: { label: 'Live', tone: 'accent' } },
-    { id: 'alerts', label: 'Alertes & Logs', badge: { label: '3', tone: 'neutral' } },
-    { id: 'team', label: 'Équipe & Rôles' },
-]
 
 const rowStyle = { display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' } as const
 
@@ -73,17 +67,35 @@ function WorkspaceNavItem({
 }
 
 function SidebarLayoutPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [sidebarWidth, setSidebarWidth] = useState<'sm' | 'md' | 'lg'>('md')
     const [showHeader, setShowHeader] = useState(true)
     const [activeNav, setActiveNav] = useState('overview')
 
-    const snippet = `// collapsible insere automatiquement le bouton de bascule en tete du header.
+    const navItems: NavItem[] = isFr
+        ? [
+              { id: 'overview', label: 'Tableau de bord' },
+              { id: 'deploy', label: 'Déploiements', badge: { label: '8', variant: 'primary' } },
+              { id: 'analytics', label: 'Analytique', badge: { label: 'Live', tone: 'accent' } },
+              { id: 'alerts', label: 'Alertes & Logs', badge: { label: '3', tone: 'neutral' } },
+              { id: 'team', label: 'Équipe & Rôles' },
+          ]
+        : [
+              { id: 'overview', label: 'Dashboard' },
+              { id: 'deploy', label: 'Deployments', badge: { label: '8', variant: 'primary' } },
+              { id: 'analytics', label: 'Analytics', badge: { label: 'Live', tone: 'accent' } },
+              { id: 'alerts', label: 'Alerts & Logs', badge: { label: '3', tone: 'neutral' } },
+              { id: 'team', label: 'Team & Roles' },
+          ]
+
+    const snippet = `// collapsible automatically inserts a toggle button in the header.
 <SidebarLayout
   sidebarWidth="${sidebarWidth}"
   collapsible
   sidebar={
-    <nav aria-label="Espace de travail">
-      <Input size="sm" placeholder="Rechercher..." />
+    <nav aria-label="${isFr ? 'Espace de travail' : 'Workspace'}">
+      <Input size="sm" placeholder="${isFr ? 'Rechercher...' : 'Search...'}" />
       {items.map((item) => (
         <Button
           key={item.id}
@@ -103,15 +115,15 @@ function SidebarLayoutPlayground() {
           ? `
   header={
     <>
-      <Text size="sm" tone="strong">Infrastructure / Télémétrie Edge</Text>
-      <Badge tone="success" size="sm">Opérationnel</Badge>
-      <Button variant="primary" size="sm">Déployer</Button>
+      <Text size="sm" tone="strong">${isFr ? 'Infrastructure / Télémétrie Edge' : 'Infrastructure / Edge Telemetry'}</Text>
+      <Badge tone="success" size="sm">${isFr ? 'Opérationnel' : 'Operational'}</Badge>
+      <Button variant="primary" size="sm">${isFr ? 'Déployer' : 'Deploy'}</Button>
     </>
   }`
           : ''
   }
 >
-  <StatCard label="Trafic Réseau" value="14.8 GB/s" trend="+12.4%" trendTone="success" />
+  <StatCard label="${isFr ? 'Trafic Réseau' : 'Network Traffic'}" value="14.8 GB/s" trend="+12.4%" trendTone="success" />
 </SidebarLayout>`
 
     return (
@@ -119,18 +131,18 @@ function SidebarLayoutPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Largeur barre latérale',
+                    label: isFr ? 'Largeur barre latérale' : 'Sidebar width',
                     value: sidebarWidth,
                     options: [
-                        { value: 'sm', label: 'Étroite (sm)' },
-                        { value: 'md', label: 'Standard (md)' },
-                        { value: 'lg', label: 'Large (lg)' },
+                        { value: 'sm', label: isFr ? 'Étroite (sm)' : 'Narrow (sm)' },
+                        { value: 'md', label: isFr ? 'Standard (md)' : 'Standard (md)' },
+                        { value: 'lg', label: isFr ? 'Large (lg)' : 'Wide (lg)' },
                     ],
                     onChange: (v) => setSidebarWidth(v as 'sm' | 'md' | 'lg'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Afficher en-tête',
+                    label: isFr ? 'Afficher en-tête' : 'Show header',
                     value: showHeader,
                     onChange: setShowHeader,
                 },
@@ -152,7 +164,7 @@ function SidebarLayoutPlayground() {
                     collapsible
                     sidebar={
                         <nav
-                            aria-label="Espace de travail"
+                            aria-label={isFr ? 'Espace de travail' : 'Workspace'}
                             style={{
                                 padding: 'var(--mr-space-3)',
                                 display: 'flex',
@@ -183,7 +195,7 @@ function SidebarLayoutPlayground() {
                                 </Badge>
                             </div>
 
-                            <Input size="sm" placeholder="Rechercher..." />
+                            <Input size="sm" placeholder={isFr ? 'Rechercher...' : 'Search...'} />
 
                             <div
                                 style={{
@@ -203,9 +215,9 @@ function SidebarLayoutPlayground() {
                                         marginBlock: 'var(--mr-space-1)',
                                     }}
                                 >
-                                    Plateforme
+                                    {isFr ? 'Plateforme' : 'Platform'}
                                 </div>
-                                {NAV_ITEMS.map((item) => (
+                                {navItems.map((item) => (
                                     <WorkspaceNavItem
                                         key={item.id}
                                         item={item}
@@ -247,14 +259,16 @@ function SidebarLayoutPlayground() {
                                 }}
                             >
                                 <Text size="sm" tone="strong">
-                                    Infrastructure / Télémétrie Edge
+                                    {isFr
+                                        ? 'Infrastructure / Télémétrie Edge'
+                                        : 'Infrastructure / Edge Telemetry'}
                                 </Text>
                                 <div style={rowStyle}>
                                     <Badge variant="default" tone="success" size="sm">
-                                        Opérationnel
+                                        {isFr ? 'Opérationnel' : 'Operational'}
                                     </Badge>
                                     <Button variant="primary" size="sm">
-                                        Déployer
+                                        {isFr ? 'Déployer' : 'Deploy'}
                                     </Button>
                                 </div>
                             </div>
@@ -277,19 +291,19 @@ function SidebarLayoutPlayground() {
                             }}
                         >
                             <StatCard
-                                label="Trafic Réseau"
+                                label={isFr ? 'Trafic Réseau' : 'Network Traffic'}
                                 value="14.8 GB/s"
                                 trend="+12.4%"
                                 trendTone="success"
                             />
                             <StatCard
-                                label="Temps Réponse"
+                                label={isFr ? 'Temps Réponse' : 'Response Time'}
                                 value="18 ms"
                                 trend="-2.1 ms"
                                 trendTone="success"
                             />
                             <StatCard
-                                label="Taux d'Erreurs"
+                                label={isFr ? 'Taux d’Erreurs' : 'Error Rate'}
                                 value="0.002%"
                                 trend="Stable"
                                 trendTone="neutral"
@@ -297,15 +311,16 @@ function SidebarLayoutPlayground() {
                         </div>
                         <Card padding="md">
                             <Text tone="strong" size="sm">
-                                Services de Bordure (Edge Clusters)
+                                {isFr ? 'Services de Bordure (Edge Clusters)' : 'Edge Clusters'}
                             </Text>
                             <Text
                                 tone="muted"
                                 size="sm"
                                 style={{ display: 'block', marginTop: 'var(--mr-space-1)' }}
                             >
-                                Tous les nœuds de distribution de contenu répondent avec une latence
-                                inférieure à 25 ms.
+                                {isFr
+                                    ? 'Tous les nœuds de distribution de contenu répondent avec une latence inférieure à 25 ms.'
+                                    : 'All content delivery edge nodes are responding with sub-25ms latency.'}
                             </Text>
                         </Card>
                     </div>
@@ -319,7 +334,7 @@ const docData: DocPageData = {
     title: 'SidebarLayout',
     description:
         'Two-column app-shell layout with framed sidebar rail, optional header, and readable content panel.',
-    importCode: "import { SidebarLayout } from '@monority/ui'",
+    importCode: "import { SidebarLayout } from '@monority/ui/sidebar-layout'",
     usageCode: `<SidebarLayout
   collapsible
   sidebar={
@@ -378,6 +393,7 @@ const docData: DocPageData = {
         'Keyboard focus preservation during toggle animations.',
         'Native responsive collapse support.',
     ],
+    i18n: sidebarLayoutI18n,
 }
 
 export function SidebarLayoutDocs() {

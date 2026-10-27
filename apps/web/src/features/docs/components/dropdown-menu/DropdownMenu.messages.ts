@@ -10,10 +10,7 @@ export const dropdownMenuI18n: DocI18n = {
             triggerLabel: 'Texte du déclencheur',
             includeDanger: 'Inclure une action critique',
         },
-        examples: [
-            { title: 'Avec éléments désactivés' },
-            { title: 'Avec rappels' },
-        ],
+        examples: [{ title: 'Avec éléments désactivés' }, { title: 'Avec rappels' }],
         propDescriptions: {
             trigger: 'Élément qui ouvre le menu.',
             items: 'Éléments de menu.',

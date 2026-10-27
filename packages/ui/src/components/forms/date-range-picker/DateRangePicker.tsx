@@ -8,6 +8,7 @@ export function DateRangePicker({
     ref,
     size,
     className,
+    locale,
     fromLabel = 'From',
     toLabel = 'To',
     fromProps,
@@ -97,6 +98,7 @@ export function DateRangePicker({
             <DatePicker
                 {...fromProps}
                 label={fromLabel}
+                locale={fromProps?.locale ?? locale}
                 size={size}
                 error={error}
                 hint={hint}
@@ -110,6 +112,7 @@ export function DateRangePicker({
             <DatePicker
                 {...toProps}
                 label={toLabel}
+                locale={toProps?.locale ?? locale}
                 size={size}
                 error={error}
                 hint={hint}

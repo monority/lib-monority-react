@@ -1,10 +1,13 @@
-﻿import { Separator } from '@monority/ui/separator'
+import { Separator } from '@monority/ui/separator'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { SeparatorDecorativeExample, SeparatorVerticalExample } from './Separator.examples'
+import { separatorI18n } from './Separator.messages'
 
 function SeparatorPlayground() {
+    const { locale } = useLocale()
     const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')
     const [decorative, setDecorative] = useState(false)
 
@@ -12,22 +15,26 @@ function SeparatorPlayground() {
   orientation="${orientation}"${decorative ? '\n  decorative' : ''}
 />`
 
+    const isFr = locale === 'fr'
+
     return (
         <ComponentPlayground
             controls={[
                 {
                     type: 'select',
-                    label: 'Orientation',
+                    label: isFr ? 'Orientation' : 'Orientation',
                     value: orientation,
                     options: [
-                        { value: 'horizontal', label: 'Horizontal' },
-                        { value: 'vertical', label: 'Vertical' },
+                        { value: 'horizontal', label: isFr ? 'Horizontale' : 'Horizontal' },
+                        { value: 'vertical', label: isFr ? 'Verticale' : 'Vertical' },
                     ],
                     onChange: (v) => setOrientation(v as 'horizontal' | 'vertical'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Purement décoratif (decorative)',
+                    label: isFr
+                        ? 'Purement décoratif (decorative)'
+                        : 'Purely decorative (decorative)',
                     value: decorative,
                     onChange: setDecorative,
                 },
@@ -53,15 +60,19 @@ function SeparatorPlayground() {
                             gap: 16,
                         }}
                     >
-                        <span style={{ fontSize: '0.875rem' }}>Section supérieure</span>
+                        <span style={{ fontSize: '0.875rem' }}>
+                            {isFr ? 'Section supérieure' : 'Upper section'}
+                        </span>
                         <Separator orientation="horizontal" decorative={decorative} />
-                        <span style={{ fontSize: '0.875rem' }}>Section inférieure</span>
+                        <span style={{ fontSize: '0.875rem' }}>
+                            {isFr ? 'Section inférieure' : 'Lower section'}
+                        </span>
                     </div>
                 ) : (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: 60 }}>
-                        <span style={{ fontSize: '0.875rem' }}>Gauche</span>
+                        <span style={{ fontSize: '0.875rem' }}>{isFr ? 'Gauche' : 'Left'}</span>
                         <Separator orientation="vertical" decorative={decorative} />
-                        <span style={{ fontSize: '0.875rem' }}>Droite</span>
+                        <span style={{ fontSize: '0.875rem' }}>{isFr ? 'Droite' : 'Right'}</span>
                     </div>
                 )}
             </div>
@@ -107,6 +118,7 @@ const docData: DocPageData = {
         'Use decorative={true} for purely visual grouping.',
         'Do not rely on separators as the only indication of section meaning.',
     ],
+    i18n: separatorI18n,
 }
 
 export function SeparatorDocs() {

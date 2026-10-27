@@ -2,6 +2,7 @@ import { MetricGrid } from '@monority/ui/metric-grid'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { metricGridI18n } from './MetricGrid.messages'
 import {
     MetricGridChildrenExample,
     MetricGridHealthExample,
@@ -16,11 +17,11 @@ function MetricGridPlayground() {
     const allItems = [
         {
             key: 'm1',
-            label: 'Chiffre d’affaires',
-            value: '45 680 €',
+            label: 'Monthly Revenue',
+            value: '$45,680',
             trend: '+14.2%',
             trendTone: trendTone,
-            description: 'Facturation mensuelle consolidée',
+            description: 'Consolidated monthly billing',
             icon: (
                 <svg
                     width="15"
@@ -40,11 +41,11 @@ function MetricGridPlayground() {
         },
         {
             key: 'm2',
-            label: 'Nouveaux clients',
-            value: '1 240',
+            label: 'New Customers',
+            value: '1,240',
             trend: '+8.1%',
             trendTone: 'success' as const,
-            description: 'Souscriptions confirmées',
+            description: 'Confirmed subscriptions',
             icon: (
                 <svg
                     width="15"
@@ -66,11 +67,11 @@ function MetricGridPlayground() {
         },
         {
             key: 'm3',
-            label: 'Taux de rétention',
+            label: 'Retention Rate',
             value: '98.4%',
             trend: '+0.6%',
             trendTone: 'neutral' as const,
-            description: 'Moyenne mobile sur 90 jours',
+            description: '90-day rolling average',
             icon: (
                 <svg
                     width="15"
@@ -89,11 +90,11 @@ function MetricGridPlayground() {
         },
         {
             key: 'm4',
-            label: 'Tickets ouverts',
+            label: 'Open Tickets',
             value: '18',
             trend: '-4',
             trendTone: 'success' as const,
-            description: 'Délai moyen de résolution : 12 min',
+            description: 'Average resolution time: 12 min',
             icon: (
                 <svg
                     width="15"
@@ -126,23 +127,25 @@ ${selectedItems.map((item) => `    { key: '${item.key}', label: '${item.label}',
             controls={[
                 {
                     type: 'select',
-                    label: 'Nombre d’indicateurs',
+                    name: 'count',
+                    label: 'Metric count',
                     value: count,
                     options: [
-                        { value: '2', label: '2 colonnes' },
-                        { value: '3', label: '3 colonnes' },
-                        { value: '4', label: '4 colonnes' },
+                        { value: '2', label: '2 columns' },
+                        { value: '3', label: '3 columns' },
+                        { value: '4', label: '4 columns' },
                     ],
                     onChange: (v) => setCount(v as '2' | '3' | '4'),
                 },
                 {
                     type: 'select',
-                    label: 'Tendance KPI 1',
+                    name: 'trendTone',
+                    label: 'KPI 1 trend tone',
                     value: trendTone,
                     options: [
                         { value: 'success', label: 'Positive (success)' },
-                        { value: 'warning', label: 'Alerte (warning)' },
-                        { value: 'danger', label: 'Négative (danger)' },
+                        { value: 'warning', label: 'Warning (warning)' },
+                        { value: 'danger', label: 'Negative (danger)' },
                     ],
                     onChange: (v) => setTrendTone(v as 'success' | 'warning' | 'danger'),
                 },
@@ -159,7 +162,7 @@ ${selectedItems.map((item) => `    { key: '${item.key}', label: '${item.label}',
 const docData: DocPageData = {
     title: 'MetricGrid',
     description: 'Grid layout for StatCard items — renders a responsive grid of KPI cards.',
-    importCode: "import { MetricGrid } from '@monority/ui'",
+    importCode: "import { MetricGrid } from '@monority/ui/metric-grid'",
     usageCode: `<MetricGrid items={[
   { label: 'Revenue', value: '$12,340', trend: '+12%', trendTone: 'success' },
   { label: 'Users', value: '1,234', trend: '+8%', trendTone: 'success' },
@@ -218,6 +221,7 @@ const docData: DocPageData = {
         'aria-label for metric groups.',
         'Trend direction announced via text (not just color).',
     ],
+    i18n: metricGridI18n,
 }
 
 export function MetricGridDocs() {

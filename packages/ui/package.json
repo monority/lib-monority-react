@@ -1,7 +1,7 @@
 {
     "name": "@monority/ui",
     "version": "0.3.0",
-    "description": "A React component library with design system, dark mode, and 75 publicly exported components",
+    "description": "A React 19 component library with design tokens, runtime theming, and 83 accessible production-ready components",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -578,7 +578,7 @@
     "files": ["dist", "README.md"],
     "scripts": {
         "dev": "tsup --watch",
-        "build": "tsup",
+        "build": "node --max-old-space-size=8192 ./node_modules/tsup/dist/cli-default.js",
         "typecheck": "tsc --noEmit",
         "test": "vitest run",
         "test:dist": "pnpm build && vitest run src/__tests__/dist-exports.test.ts src/__tests__/dist-form-context.test.tsx",

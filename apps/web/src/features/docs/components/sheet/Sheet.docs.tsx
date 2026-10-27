@@ -207,7 +207,10 @@ return (
         '--mr-space-6',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Cycles focus through the focusable elements of the sheet (focus trap)' },
+        {
+            key: 'Tab',
+            action: 'Cycles focus through the focusable elements of the sheet (focus trap)',
+        },
         { key: 'Escape', action: 'Closes the sheet and returns focus to the open button' },
     ],
     a11y: [

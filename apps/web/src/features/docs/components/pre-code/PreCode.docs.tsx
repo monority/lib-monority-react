@@ -1,6 +1,7 @@
 import { PreCode } from '@monority/ui/pre-code'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { preCodeI18n } from './PreCode.messages'
 import { PreCodeScrollExample, PreCodeSizesExample, PreCodeWrapExample } from './PreCode.examples'
 
 const demoSnippet = `import { Button } from '@monority/ui/button'
@@ -8,7 +9,7 @@ const demoSnippet = `import { Button } from '@monority/ui/button'
 export function App() {
   return (
     <Button variant="primary" size="md">
-      Commander le composant
+      Order component
     </Button>
   )
 }`
@@ -20,18 +21,20 @@ function PreCodePlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'size',
                     prop: 'size',
-                    label: 'Taille (size)',
+                    label: 'Size',
                     defaultValue: 'md',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
                     ],
                 },
                 {
                     type: 'boolean',
+                    name: 'wrap',
                     prop: 'wrap',
-                    label: 'Retour à la ligne (wrap)',
+                    label: 'Line wrap (wrap)',
                     defaultValue: false,
                 },
             ]}
@@ -118,6 +121,7 @@ const docData: DocPageData = {
         'Default mode scrolls long lines horizontally without widening the page.',
         'Use wrap when line wrapping is preferred.',
     ],
+    i18n: preCodeI18n,
 }
 
 export function PreCodeDocs() {

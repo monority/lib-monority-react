@@ -58,17 +58,19 @@ function SidebarLayoutToggle({
     className,
     children,
     onClick,
+    'aria-label': ariaLabel,
     ...props
 }: SidebarLayoutToggleProps) {
     const ctx = useContext(SidebarLayoutContext)
     const isOpen = ctx ? ctx.isOpen : true
+    const fallbackAriaLabel = isOpen ? 'Close sidebar' : 'Open sidebar'
 
     return (
         <button
             ref={ref}
             type="button"
             className={cn('mr-sidebar-layout__toggle', className)}
-            aria-label={isOpen ? 'Fermer la barre latérale' : 'Ouvrir la barre latérale'}
+            aria-label={ariaLabel ?? fallbackAriaLabel}
             aria-expanded={isOpen}
             onClick={(e) => {
                 ctx?.handleToggle()

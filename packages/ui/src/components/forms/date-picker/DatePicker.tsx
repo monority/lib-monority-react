@@ -30,6 +30,8 @@ export function DatePicker({
     value,
     defaultValue,
     onChange,
+    locale,
+    dialogAriaLabel = 'Choose date',
     minDate,
     maxDate,
     disabledDates,
@@ -139,7 +141,7 @@ export function DatePicker({
         [disabled]
     )
 
-    const displayValue = selectedDate ? formatDate(selectedDate) : ''
+    const displayValue = selectedDate ? formatDate(selectedDate, locale) : ''
     const isInvalid = Boolean(invalid || error)
     const resolvedSize = size ?? 'md'
     const resolvedTone = tone ?? 'neutral'
@@ -231,7 +233,7 @@ export function DatePicker({
                               data-positioned={positioned ? '' : undefined}
                               role="dialog"
                               aria-modal="false"
-                              aria-label="Choose date"
+                              aria-label={dialogAriaLabel}
                               aria-hidden={!open ? 'true' : undefined}
                               tabIndex={-1}
                               style={{
@@ -250,6 +252,7 @@ export function DatePicker({
                                   data-tone={resolvedTone}
                                   value={selectedDate}
                                   onChange={handleSelect}
+                                  locale={locale}
                                   minDate={minDate}
                                   maxDate={maxDate}
                                   disabledDates={disabledDates}

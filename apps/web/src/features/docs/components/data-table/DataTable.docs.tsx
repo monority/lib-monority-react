@@ -1,6 +1,7 @@
-﻿import { Badge } from '@monority/ui/badge'
+import { Badge } from '@monority/ui/badge'
 import { DataTable } from '@monority/ui/data-table'
 import { type ReactNode, useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -8,71 +9,113 @@ import {
     DataTableSelectableExample,
     DataTableWithCaptionExample,
 } from './DataTable.examples'
+import { dataTableI18n } from './DataTable.messages'
 
 function DataTablePlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [selectable, setSelectable] = useState(true)
     const [rowCount, setRowCount] = useState<'3' | '5' | '0'>('3')
     const [hasCaption, setHasCaption] = useState(false)
 
-    const allRows = [
-        {
-            issue: 'Synchronisation CSS tokens',
-            severity: 'Critique',
-            owner: 'Core Team',
-            status: 'En cours',
-        },
-        {
-            issue: 'Amélioration focus visible',
-            severity: 'Normal',
-            owner: 'Accessibilité',
-            status: 'Validé',
-        },
-        {
-            issue: 'Refonte documentation Form',
-            severity: 'Faible',
-            owner: 'Docs Team',
-            status: 'En attente',
-        },
-        {
-            issue: 'Support React 19 forwardRef removal',
-            severity: 'Critique',
-            owner: 'Architecture',
-            status: 'Validé',
-        },
-        {
-            issue: 'Optimisation bundle tree-shaking',
-            severity: 'Normal',
-            owner: 'Infra',
-            status: 'Validé',
-        },
-    ]
+    const allRows = isFr
+        ? [
+              {
+                  issue: 'Synchronisation CSS tokens',
+                  severity: 'Critique',
+                  owner: 'Core Team',
+                  status: 'En cours',
+              },
+              {
+                  issue: 'Amélioration focus visible',
+                  severity: 'Normal',
+                  owner: 'Accessibilité',
+                  status: 'Validé',
+              },
+              {
+                  issue: 'Refonte documentation Form',
+                  severity: 'Faible',
+                  owner: 'Docs Team',
+                  status: 'En attente',
+              },
+              {
+                  issue: 'Support React 19 forwardRef removal',
+                  severity: 'Critique',
+                  owner: 'Architecture',
+                  status: 'Validé',
+              },
+              {
+                  issue: 'Optimisation bundle tree-shaking',
+                  severity: 'Normal',
+                  owner: 'Infra',
+                  status: 'Validé',
+              },
+          ]
+        : [
+              {
+                  issue: 'CSS tokens synchronization',
+                  severity: 'Critical',
+                  owner: 'Core Team',
+                  status: 'In progress',
+              },
+              {
+                  issue: 'Visible focus improvements',
+                  severity: 'Normal',
+                  owner: 'Accessibility',
+                  status: 'Approved',
+              },
+              {
+                  issue: 'Form documentation overhaul',
+                  severity: 'Low',
+                  owner: 'Docs Team',
+                  status: 'Pending',
+              },
+              {
+                  issue: 'React 19 forwardRef removal support',
+                  severity: 'Critical',
+                  owner: 'Architecture',
+                  status: 'Approved',
+              },
+              {
+                  issue: 'Bundle tree-shaking optimization',
+                  severity: 'Normal',
+                  owner: 'Infra',
+                  status: 'Approved',
+              },
+          ]
 
     const columns = [
-        { key: 'issue', header: 'Ticket / Anomalie', sortable: true },
+        { key: 'issue', header: isFr ? 'Ticket / Anomalie' : 'Issue / Ticket', sortable: true },
         {
             key: 'severity',
-            header: 'Sévérité',
+            header: isFr ? 'Sévérité' : 'Severity',
             sortable: true,
             render: (value: ReactNode) => {
                 const s = String(value)
-                const variant = s === 'Critique' ? 'danger' : s === 'Normal' ? 'primary' : 'default'
+                const variant =
+                    s === 'Critique' || s === 'Critical'
+                        ? 'danger'
+                        : s === 'Normal'
+                          ? 'primary'
+                          : 'default'
                 return <Badge variant={variant}>{s}</Badge>
             },
         },
-        { key: 'owner', header: 'Responsable' },
-        { key: 'status', header: 'Statut' },
+        { key: 'owner', header: isFr ? 'Responsable' : 'Owner' },
+        { key: 'status', header: isFr ? 'Statut' : 'Status' },
     ]
 
     const rows = rowCount === '0' ? [] : allRows.slice(0, Number(rowCount))
+    const captionText = isFr ? 'Suivi des anomalies en production' : 'Production anomaly tracker'
 
     const snippet = `<DataTable
   columns={[
-    { key: 'issue', header: 'Ticket / Anomalie', sortable: true },
-    { key: 'severity', header: 'Sévérité', sortable: true },
-    { key: 'owner', header: 'Responsable' },
-    { key: 'status', header: 'Statut' },
+    { key: 'issue', header: '${isFr ? 'Ticket / Anomalie' : 'Issue / Ticket'}', sortable: true },
+    { key: 'severity', header: '${isFr ? 'Sévérité' : 'Severity'}', sortable: true },
+    { key: 'owner', header: '${isFr ? 'Responsable' : 'Owner'}' },
+    { key: 'status', header: '${isFr ? 'Statut' : 'Status'}' },
   ]}
-  rows={...}${selectable ? '\n  selectable' : ''}${hasCaption ? '\n  caption="Suivi des anomalies en production"' : ''}
+  rows={...}${selectable ? '\n  selectable' : ''}${hasCaption ? `\n  caption="${captionText}"` : ''}
 />`
 
     return (
@@ -80,24 +123,24 @@ function DataTablePlayground() {
             controls={[
                 {
                     type: 'boolean',
-                    label: 'Selectable (sélection lignes)',
+                    label: isFr ? 'Sélectionnable (selectable)' : 'Selectable (row selection)',
                     value: selectable,
                     onChange: setSelectable,
                 },
                 {
                     type: 'select',
-                    label: 'Nombre de lignes',
+                    label: isFr ? 'Nombre de lignes' : 'Row count',
                     value: rowCount,
                     options: [
-                        { value: '3', label: '3 lignes' },
-                        { value: '5', label: '5 lignes' },
-                        { value: '0', label: 'Vide (0 ligne)' },
+                        { value: '3', label: isFr ? '3 lignes' : '3 rows' },
+                        { value: '5', label: isFr ? '5 lignes' : '5 rows' },
+                        { value: '0', label: isFr ? 'Vide (0 ligne)' : 'Empty (0 rows)' },
                     ],
                     onChange: (v) => setRowCount(v as '3' | '5' | '0'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Légende (caption)',
+                    label: isFr ? 'Légende (caption)' : 'Caption',
                     value: hasCaption,
                     onChange: setHasCaption,
                 },
@@ -109,7 +152,7 @@ function DataTablePlayground() {
                     columns={columns}
                     rows={rows}
                     selectable={selectable}
-                    caption={hasCaption ? 'Suivi des anomalies en production' : undefined}
+                    caption={hasCaption ? captionText : undefined}
                 />
             </div>
         </ComponentPlayground>
@@ -120,7 +163,7 @@ const docData: DocPageData = {
     title: 'DataTable',
     description:
         'An interactive operational table with sorting, selection, caption support, and stronger row states.',
-    importCode: "import { DataTable } from '@monority/ui'",
+    importCode: "import { DataTable } from '@monority/ui/data-table'",
     usageCode: `<DataTable
   columns={[
     { key: 'name', header: 'Name', sortable: true },
@@ -193,6 +236,7 @@ const docData: DocPageData = {
         'Caption for context if needed.',
         'Sortable columns announce sort direction.',
     ],
+    i18n: dataTableI18n,
 }
 
 export function DataTableDocs() {

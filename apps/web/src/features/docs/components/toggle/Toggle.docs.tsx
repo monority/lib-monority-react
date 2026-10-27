@@ -1,5 +1,6 @@
 import { Toggle } from '@monority/ui/toggle'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -9,6 +10,7 @@ import {
     ToggleSizesExample,
     ToggleVariantsExample,
 } from './Toggle.examples'
+import { toggleI18n } from './Toggle.messages'
 
 function TogglePlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -16,7 +18,10 @@ function TogglePlaygroundDemo(props: {
     disabled: boolean
     label: string
 }) {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [pressed, setPressed] = useState(false)
+
     return (
         <div
             style={{
@@ -37,7 +42,16 @@ function TogglePlaygroundDemo(props: {
                 {props.label}
             </Toggle>
             <span style={{ fontSize: 'var(--mr-font-size-sm)', color: 'var(--mr-text-primary)' }}>
-                Etat : <strong>{pressed ? 'Active (on)' : 'Inactif (off)'}</strong>
+                {isFr ? 'État : ' : 'State: '}
+                <strong>
+                    {pressed
+                        ? isFr
+                            ? 'Activé (on)'
+                            : 'Active (on)'
+                        : isFr
+                          ? 'Inactif (off)'
+                          : 'Inactive (off)'}
+                </strong>
             </span>
         </div>
     )
@@ -70,13 +84,13 @@ const togglePlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle du bouton',
-                defaultValue: 'Mode discret',
+                label: 'Button label',
+                defaultValue: 'Quiet mode',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -87,7 +101,7 @@ const togglePlayground = (
             {
                 name: 'variant',
                 type: 'select',
-                label: 'Variante de style',
+                label: 'Style variant',
                 defaultValue: 'default',
                 options: [
                     { value: 'default', label: 'Default' },
@@ -97,7 +111,7 @@ const togglePlayground = (
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -172,13 +186,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['Space', 'Enter'],
-            action: 'Bascule l etat active/inactif (aria-pressed).',
-            context: 'Bouton Toggle focalise',
+            action: 'Toggles active/inactive state (aria-pressed).',
+            context: 'Focused Toggle button',
         },
         {
             key: 'Tab',
-            action: 'Deplace le focus vers le composant suivant.',
-            context: 'Bouton Toggle focalise',
+            action: 'Moves focus to next component.',
+            context: 'Focused Toggle button',
         },
     ],
     a11y: [
@@ -187,6 +201,7 @@ const docData: DocPageData = {
         'Visible focus ring via focus-visible.',
         'Use clear labels that describe the enabled option.',
     ],
+    i18n: toggleI18n,
 }
 
 export function ToggleDocs() {

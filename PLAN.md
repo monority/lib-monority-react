@@ -110,12 +110,27 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
   * Collecte multi-passes et synchronisation dynamique via MutationObserver.
   * Mise en valeur nette du lien actif avec `var(--mr-accent-subtle)`.
 
+## Chantier terminé — Internationalisation Intégrale (EN/FR) & Polissage Bibliothèque 10/10
+
+Branche `feat/i18n`.
+Plan d'action : artéfact `plan-i18n-master.md`.
+- 83/83 pages de documentation en anglais technique canonique avec surcouches dynamiques françaises `.messages.ts` via `useLocalizedDoc`.
+- Test de contrat automatisé `docs-coverage-contract.test.ts` garantissant la couverture i18n à 100% sur les 83 composants du registre.
+- Studio Moodboard internationalisé (`en/moodboard.ts`, `fr/moodboard.ts`) avec maintien des sélecteurs de test `axis.ariaLabel`.
+- Standardisation des libellés par défaut dans `@monority/ui` en anglais canonique (`InputOTP`, `SidebarLayout`, `Pagination`, `DatePicker`, `DateRangePicker`) avec support d'échappement par props et localisation `Intl` native.
+- README.md de `@monority/ui` réécrit en anglais technique de référence (architecture `@layer mr.*`, intégration Tailwind v3/v4, FOUC `getThemeScript`, catalogue complet par catégories).
+- Allocation mémoire `tsup` pérennisée (`--max-old-space-size=8192`) dans `packages/ui/package.json` évitant tout dépassement de tas sur les 96 points d'entrée.
+- 100% de passage sur l'ensemble des portes de contrôle :
+  * `pnpm format:check` : 1 131 fichiers conformes (0 erreur).
+  * `pnpm lint` : 1 131 fichiers vérifiés (0 erreur, 0 avertissement).
+  * `pnpm lint:css` : 0 erreur Stylelint.
+  * `pnpm typecheck` : 0 erreur TypeScript.
+  * `pnpm test:rendered` : contrastes WCAG AA, isolation hôte et dimensions validés sur les 7 thèmes.
+  * `pnpm test` : 113 suites / 1 480 tests `@monority/ui`, 20 suites / 111 tests `@monority/web` (1 591 tests au total).
+  * `pnpm --filter @monority/ui test:dist` : exports dist et contextes validés.
+
 ## Reprise
 
-Dernier commit : docs(plan) plan d optimisation du chargement des pages (plan-optimisation-chargement-pages.md).
-- Correctif de mesure : le 839 KB annonce en fin de session precedente etait des tailles decomprimees, pas wire. Tailles gzip Vite : CSS 33,18, vendor-react 91,35, entree 27,20, vendor-syntax 13,04, DocsPage 9,11, fonts latin ~59 KB. Total wire /docs/button ~240 KB.
-- Causes mesurees : Google Fonts JetBrains Mono morte (index.html seul usage, grepe) ; CommandPalette + registre dans le chunk d entree (AppHeader import statique) ; polices sans preload. Lazy hljs rejete : toutes les pages docs ont un playground avec code.
-- Plan en 5 phases : 0 baseline wire/LCP, 1 suppression Google Fonts + CSP, 2 lazy CommandPalette (conditionnelle, go si entree -15% gzip), 3 preload fonts (conditionnelle), 4 verification (pnpm verify 7 etapes + e2e cibles + mesure avant/apres).
-- Note du plan : 17/20 (base factuelle 3, risque 4, conformite 4, impact 2, verifiabilite 4).
-
-Prochaine action : execution du plan apres accord, un commit par phase ; fichiers sidebar-layout modifies par une autre session, ne pas toucher ; apps/web/.tmp-verify-sidebar.mjs artefact d une autre session.
+Branche actuelle : `feat/i18n`.
+Statut : Chantier i18n & polissage 10/10 achevé et validé sur toutes les portes de contrôle.
+Prochaine action : commit git des modifications de la branche `feat/i18n`, fusion ou publication changeset selon les directives utilisateur.

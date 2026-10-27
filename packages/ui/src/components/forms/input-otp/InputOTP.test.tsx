@@ -153,4 +153,17 @@ describe('InputOTP', () => {
         expect(ref.current).toBeInstanceOf(HTMLDivElement)
         expect(ref.current?.classList.contains('mr-input-otp')).toBe(true)
     })
+
+    it('sets default accessible name and supports custom aria-label override', () => {
+        render(<InputOTP />)
+        const defaultInput = document.body.querySelector('input') as HTMLInputElement
+        expect(defaultInput.getAttribute('aria-label')).toBe('Verification code')
+
+        act(() => {
+            root?.unmount()
+        })
+        render(<InputOTP aria-label="One-time password" />)
+        const customInput = document.body.querySelector('input') as HTMLInputElement
+        expect(customInput.getAttribute('aria-label')).toBe('One-time password')
+    })
 })

@@ -2,6 +2,7 @@ import { Badge } from '@monority/ui/badge'
 import { Button } from '@monority/ui/button'
 import { FormSection } from '@monority/ui/form-section'
 import { Input } from '@monority/ui/input'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -9,8 +10,20 @@ import {
     FormSectionWithMetaExample,
     FormSectionWithoutActionsExample,
 } from './FormSection.examples'
+import { formSectionI18n } from './FormSection.messages'
 
 function FormSectionPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
+
+    const titleDefault = isFr ? 'Paramètres de sécurité' : 'Security settings'
+    const descText = isFr
+        ? 'Configurez les clés d’API et autorisations d’accès aux services.'
+        : 'Configure API keys and access permissions for services.'
+    const metaLabel = isFr ? 'Recommandé' : 'Recommended'
+    const actionLabel = isFr ? 'Enregistrer' : 'Save changes'
+    const inputLabel = isFr ? 'Clé API principale' : 'Primary API key'
+
     return (
         <ComponentPlayground
             componentName="FormSection"
@@ -18,46 +31,48 @@ function FormSectionPlayground() {
                 {
                     type: 'text',
                     prop: 'title',
-                    label: 'Titre de la section',
-                    defaultValue: 'Paramètres de sécurité',
+                    label: isFr ? 'Titre de la section' : 'Section title',
+                    defaultValue: titleDefault,
                 },
                 {
                     type: 'boolean',
                     prop: 'showMeta',
-                    label: 'Afficher le badge méta',
+                    label: isFr ? 'Afficher le badge méta' : 'Show meta badge',
                     defaultValue: true,
                 },
                 {
                     type: 'boolean',
                     prop: 'showActions',
-                    label: 'Afficher les actions',
+                    label: isFr ? 'Afficher les actions' : 'Show actions',
                     defaultValue: true,
                 },
             ]}
             renderCode={(props) => `<FormSection
   title="${props.title}"
-  description="Configurez les clés d'API et autorisations d'accès aux services."${props.showMeta ? '\n  meta={<Badge variant="default">Recommandé</Badge>}' : ''}${props.showActions ? '\n  actions={<Button variant="primary">Enregistrer</Button>}' : ''}
+  description="${descText}"${props.showMeta ? `\n  meta={<Badge variant="default">${metaLabel}</Badge>}` : ''}${props.showActions ? `\n  actions={<Button variant="primary">${actionLabel}</Button>}` : ''}
 >
-  <Input label="Clé API principale" defaultValue="pk_live_9482710394" />
+  <Input label="${inputLabel}" defaultValue="pk_live_9482710394" />
 </FormSection>`}
         >
             {(props) => (
                 <div style={{ width: '100%', maxWidth: 520 }}>
                     <FormSection
                         title={props.title as string}
-                        description="Configurez les clés d'API et autorisations d'accès aux services."
+                        description={descText}
                         meta={
-                            props.showMeta ? <Badge variant="default">Recommandé</Badge> : undefined
+                            props.showMeta ? (
+                                <Badge variant="default">{metaLabel}</Badge>
+                            ) : undefined
                         }
                         actions={
                             props.showActions ? (
                                 <Button variant="primary" size="sm">
-                                    Enregistrer
+                                    {actionLabel}
                                 </Button>
                             ) : undefined
                         }
                     >
-                        <Input label="Clé API principale" defaultValue="pk_live_9482710394" />
+                        <Input label={inputLabel} defaultValue="pk_live_9482710394" />
                     </FormSection>
                 </div>
             )}
@@ -164,13 +179,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab / Shift + Tab',
-            description:
-                "Navigue séquentiellement à travers les champs de saisie et les boutons d'action.",
+            action: 'Navigates sequentially through input fields and action buttons.',
+            context: 'Form section',
         },
         {
             key: 'Enter',
-            description:
-                "Valide l'action de formulaire primaire lorsque le focus est sur un contrôle ou un bouton.",
+            action: 'Submits primary form action when focused on a control or button.',
+            context: 'Form section',
         },
     ],
     cssHooks: [
@@ -191,6 +206,7 @@ const docData: DocPageData = {
         'Grouped actions stay in a consistent footer region.',
         'Keyboard behavior relies on native form controls inside the section.',
     ],
+    i18n: formSectionI18n,
 }
 
 export function FormSectionDocs() {

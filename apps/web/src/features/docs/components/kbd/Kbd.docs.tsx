@@ -2,6 +2,7 @@ import { Kbd } from '@monority/ui/kbd'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { KbdKeysExample, KbdSizesExample } from './Kbd.examples'
+import { kbdI18n } from './Kbd.messages'
 
 function KbdPlayground() {
     return (
@@ -11,24 +12,24 @@ function KbdPlayground() {
                 {
                     type: 'select',
                     prop: 'size',
-                    label: 'Taille (size)',
+                    label: 'Size',
                     defaultValue: 'md',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
-                        { value: 'lg', label: 'Grande (lg)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
                     ],
                 },
                 {
                     type: 'select',
                     prop: 'shortcut',
-                    label: 'Combinaison de touches',
+                    label: 'Keyboard shortcut',
                     defaultValue: 'command-k',
                     options: [
                         { value: 'command-k', label: '⌘ + K' },
                         { value: 'ctrl-shift-p', label: 'Ctrl + Shift + P' },
-                        { value: 'escape', label: 'Échap (Esc)' },
-                        { value: 'enter', label: 'Entrée (↵)' },
+                        { value: 'escape', label: 'Esc (Escape)' },
+                        { value: 'enter', label: 'Enter (↵)' },
                     ],
                 },
             ]}
@@ -119,6 +120,7 @@ const docData: DocPageData = {
         'Renders native <kbd> markup.',
         'Use keys for multi-key shortcuts so combinations stay consistently separated.',
     ],
+    i18n: kbdI18n,
 }
 
 export function KbdDocs() {

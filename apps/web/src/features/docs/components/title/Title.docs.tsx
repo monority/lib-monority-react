@@ -1,6 +1,7 @@
 import { Title, type TitleSize } from '@monority/ui/title'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { titleI18n } from './Title.messages'
 import { TitleLevelsExample, TitleSizesExample } from './Title.examples'
 
 function TitlePlayground() {
@@ -10,28 +11,31 @@ function TitlePlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'size',
                     prop: 'size',
-                    label: 'Taille visuelle (size)',
+                    label: 'Visual scale (size)',
                     defaultValue: 'lg',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
-                        { value: 'lg', label: 'Grande (lg)' },
-                        { value: 'display', label: 'Affichage monumental (display)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
+                        { value: 'display', label: 'Display (display)' },
                     ],
                 },
                 {
                     type: 'select',
+                    name: 'as',
                     prop: 'as',
-                    label: 'Balise sémantique (as)',
+                    label: 'Semantic heading tag (as)',
                     defaultValue: 'h2',
                     options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
                 },
                 {
                     type: 'text',
+                    name: 'content',
                     prop: 'content',
-                    label: 'Texte du titre',
-                    defaultValue: 'Rigueur & Équilibre Typographique',
+                    label: 'Heading text',
+                    defaultValue: 'Typographic Rigor & Balance',
                 },
             ]}
             renderCode={(props) => `<Title
@@ -91,6 +95,7 @@ const docData: DocPageData = {
         'Choose `as` from document hierarchy, not visual size.',
         'Avoid skipping heading levels inside docs and application pages.',
     ],
+    i18n: titleI18n,
 }
 
 export function TitleDocs() {

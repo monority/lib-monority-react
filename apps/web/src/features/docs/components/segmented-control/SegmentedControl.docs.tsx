@@ -1,5 +1,6 @@
 import { SegmentedControl } from '@monority/ui/segmented-control'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -7,19 +8,29 @@ import {
     SegmentedControlCompoundExample,
     SegmentedControlSizesExample,
 } from './SegmentedControl.examples'
+import { segmentedControlI18n } from './SegmentedControl.messages'
 
 function SegmentedControlPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
     fullWidth: boolean
     disabled: boolean
 }) {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [view, setView] = useState('monthly')
-    const options = [
-        { value: 'daily', label: 'Journalier' },
-        { value: 'weekly', label: 'Hebdo' },
-        { value: 'monthly', label: 'Mensuel' },
-        { value: 'yearly', label: 'Annuel' },
-    ]
+    const options = isFr
+        ? [
+              { value: 'daily', label: 'Journalier' },
+              { value: 'weekly', label: 'Hebdo' },
+              { value: 'monthly', label: 'Mensuel' },
+              { value: 'yearly', label: 'Annuel' },
+          ]
+        : [
+              { value: 'daily', label: 'Daily' },
+              { value: 'weekly', label: 'Weekly' },
+              { value: 'monthly', label: 'Monthly' },
+              { value: 'yearly', label: 'Yearly' },
+          ]
 
     return (
         <div
@@ -40,7 +51,7 @@ function SegmentedControlPlaygroundDemo(props: {
                 size={props.size}
                 fullWidth={props.fullWidth}
                 disabled={props.disabled}
-                aria-label="Frequence des rapports"
+                aria-label={isFr ? 'Fréquence des rapports' : 'Report frequency'}
             />
             <div
                 style={{
@@ -54,7 +65,8 @@ function SegmentedControlPlaygroundDemo(props: {
                     width: props.fullWidth ? '100%' : 'auto',
                 }}
             >
-                Selection active : <strong>{view}</strong>
+                {isFr ? 'Sélection active : ' : 'Active selection: '}
+                <strong>{view}</strong>
             </div>
         </div>
     )
@@ -70,13 +82,13 @@ const segmentedControlPlayground = (
         importCode="import { SegmentedControl } from '@monority/ui/segmented-control'"
         getCode={(p) => {
             const propsStr = [
-                `  options={[\n    { value: 'daily', label: 'Journalier' },\n    { value: 'weekly', label: 'Hebdo' },\n    { value: 'monthly', label: 'Mensuel' },\n    { value: 'yearly', label: 'Annuel' }\n  ]}`,
+                `  options={[\n    { value: 'daily', label: 'Daily' },\n    { value: 'weekly', label: 'Weekly' },\n    { value: 'monthly', label: 'Monthly' },\n    { value: 'yearly', label: 'Yearly' }\n  ]}`,
                 '  value={view}',
                 '  onChange={setView}',
                 p.size !== 'md' ? `  size="${p.size}"` : '',
                 p.fullWidth ? '  fullWidth' : '',
                 p.disabled ? '  disabled' : '',
-                '  aria-label="Frequence des rapports"',
+                '  aria-label="Report frequency"',
             ]
                 .filter(Boolean)
                 .join('\n')
@@ -87,7 +99,7 @@ const segmentedControlPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -98,13 +110,13 @@ const segmentedControlPlayground = (
             {
                 name: 'fullWidth',
                 type: 'boolean',
-                label: 'Pleine largeur (fullWidth)',
+                label: 'Full width (fullWidth)',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -114,14 +126,13 @@ const segmentedControlPlayground = (
 
 const docData: DocPageData = {
     title: 'SegmentedControl',
-    description:
-        'Controle compact a segments multiples permettant de basculer instantanement entre des vues ou modes exclusifs.',
+    description: 'Compact multi-segment control for switching between exclusive views or modes.',
     importCode: "import { SegmentedControl } from '@monority/ui/segmented-control'",
     usageCode: `<SegmentedControl
   options={[
-    { value: 'grid', label: 'Vue Grille' },
-    { value: 'list', label: 'Vue Liste' },
-    { value: 'table', label: 'Vue Tableau' },
+    { value: 'grid', label: 'Grid view' },
+    { value: 'list', label: 'List view' },
+    { value: 'table', label: 'Table view' },
   ]}
   value={view}
   onChange={setView}
@@ -129,9 +140,9 @@ const docData: DocPageData = {
     preview: () => <SegmentedControlBasicExample />,
     playground: segmentedControlPlayground,
     examples: [
-        { title: 'Tailles standardisees (sm, md, lg)', content: <SegmentedControlSizesExample /> },
+        { title: 'Standard sizes (sm, md, lg)', content: <SegmentedControlSizesExample /> },
         {
-            title: 'Composition declarative (SegmentedControl.Item)',
+            title: 'Declarative compound composition (SegmentedControl.Item)',
             content: <SegmentedControlCompoundExample />,
         },
     ],
@@ -140,43 +151,43 @@ const docData: DocPageData = {
             name: 'options',
             type: 'SegmentedControlOption[]',
             defaultValue: '-',
-            description: 'Liste des options avec value, label, disabled.',
+            description: 'List of options with value, label, disabled.',
         },
         {
             name: 'value',
             type: 'string',
             defaultValue: '-',
-            description: 'Valeur controlee de l option active.',
+            description: 'Controlled active value.',
         },
         {
             name: 'defaultValue',
             type: 'string',
             defaultValue: '-',
-            description: 'Valeur initiale par defaut en mode incontrole.',
+            description: 'Initial default value in uncontrolled mode.',
         },
         {
             name: 'onChange',
             type: '(value: string) => void',
             defaultValue: '-',
-            description: 'Rappel declenche lors de la selection d une option.',
+            description: 'Callback fired on option selection.',
         },
         {
             name: 'size',
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
-            description: 'Hauteur et echelle de densite du controle.',
+            description: 'Height and density scale of the control.',
         },
         {
             name: 'fullWidth',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Occupe toute la largeur disponible du conteneur.',
+            description: 'Expands to fill available container width.',
         },
         {
             name: 'disabled',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Desactive l ensemble du controle.',
+            description: 'Disables the entire control.',
         },
     ],
     cssHooks: [
@@ -201,40 +212,41 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['ArrowRight', 'ArrowDown'],
-            action: 'Deplace la selection et le focus vers le segment suivant dans le groupe.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Moves selection and focus to next segment in group.',
+            context: 'Radio group',
         },
         {
             key: ['ArrowLeft', 'ArrowUp'],
-            action: 'Deplace la selection et le focus vers le segment precedent dans le groupe.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Moves selection and focus to previous segment in group.',
+            context: 'Radio group',
         },
         {
             key: 'Home',
-            action: 'Selectionne et active le premier segment non desactive.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Selects and activates first non-disabled segment.',
+            context: 'Radio group',
         },
         {
             key: 'End',
-            action: 'Selectionne et active le dernier segment non desactive.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Selects and activates last non-disabled segment.',
+            context: 'Radio group',
         },
         {
             key: 'Space',
-            action: 'Active le segment focalise.',
-            context: 'Segment cible',
+            action: 'Activates focused segment.',
+            context: 'Target segment',
         },
         {
             key: 'Tab',
-            action: 'Transfere le focus au prochain element interactif hors du groupe radio.',
-            context: 'Segment actif',
+            action: 'Moves focus to next interactive element outside the radio group.',
+            context: 'Active segment',
         },
     ],
     a11y: [
-        'Conforme au motif WAI-ARIA Radio Group avec role="radiogroup".',
-        'Chaque segment possede role="radio" et aria-checked="true|false".',
-        'Support complet de la navigation par fleches du clavier (Left/Right/Up/Down) avec roving tabindex.',
+        'Complies with WAI-ARIA Radio Group pattern using role="radiogroup".',
+        'Each segment has role="radio" and aria-checked="true|false".',
+        'Full keyboard navigation support via arrows (Left/Right/Up/Down) with roving tabindex.',
     ],
+    i18n: segmentedControlI18n,
 }
 
 export function SegmentedControlDocs() {

@@ -276,7 +276,7 @@ describe('MoodboardPage', () => {
 
         expect(screen.getByText('Release control')).toBeInTheDocument()
 
-        const catalogTab = screen.getByRole('tab', { name: /catalogue complet/i })
+        const catalogTab = screen.getByRole('tab', { name: /full catalog|catalogue complet/i })
         fireEvent.click(catalogTab)
 
         expect(screen.getByText('Catalogue exhaustif des composants')).toBeInTheDocument()
@@ -286,7 +286,7 @@ describe('MoodboardPage', () => {
     it('catalog view displays interactive async simulation controls and enriched components', () => {
         renderWithProviders(<MoodboardPage />, { initialEntries: ['/moodboard'] })
 
-        const catalogTab = screen.getByRole('tab', { name: /catalogue complet/i })
+        const catalogTab = screen.getByRole('tab', { name: /full catalog|catalogue complet/i })
         fireEvent.click(catalogTab)
 
         expect(screen.getByText('Simuler requêtes réseau asynchrones')).toBeInTheDocument()

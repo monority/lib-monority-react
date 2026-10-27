@@ -7,6 +7,7 @@ import { Text } from '@monority/ui/text'
 import { useMemo, useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { filterBarI18n } from './FilterBar.messages'
 import { FilterBarWithControlsExample, FilterBarWithResetExample } from './FilterBar.examples'
 
 const allComponents = [
@@ -14,32 +15,32 @@ const allComponents = [
         name: 'Button',
         category: 'forms',
         status: 'stable',
-        desc: 'Déclencheur d’actions accessible',
+        desc: 'Accessible action trigger',
     },
-    { name: 'DataTable', category: 'data', status: 'stable', desc: 'Tableau haute performance' },
+    { name: 'DataTable', category: 'data', status: 'stable', desc: 'High-performance data table' },
     {
         name: 'Modal',
         category: 'overlay',
         status: 'stable',
-        desc: 'Boîte de dialogue modale WAI-ARIA',
+        desc: 'WAI-ARIA modal dialog',
     },
     {
         name: 'SidebarLayout',
         category: 'navigation',
         status: 'beta',
-        desc: 'Disposition en panneau latéral',
+        desc: 'Collapsible sidebar layout',
     },
     {
         name: 'Carousel',
         category: 'data',
         status: 'stable',
-        desc: 'Diaporama tactile et accessible',
+        desc: 'Accessible touch slideshow',
     },
     {
         name: 'FilterBar',
         category: 'navigation',
         status: 'stable',
-        desc: 'Barre de filtres multi-critères',
+        desc: 'Multi-criteria filter control rail',
     },
 ]
 
@@ -71,35 +72,35 @@ function FilterBarPlayground() {
     <FilterBar.Leading>
       <Input
         size="sm"
-        placeholder="Rechercher par nom..."
+        placeholder="Search by name..."
         value="${search}"
       />
     </FilterBar.Leading>
-    <Select size="sm" aria-label="Catégorie" value="${category}">
-      <option value="all">Toutes les catégories</option>
+    <Select size="sm" aria-label="Category" value="${category}">
+      <option value="all">All categories</option>
       <option value="navigation">Navigation</option>
-      <option value="data">Data & Visualisation</option>
-      <option value="forms">Formulaires</option>
+      <option value="data">Data & Visualization</option>
+      <option value="forms">Forms</option>
       <option value="overlay">Overlays</option>
     </Select>
-    <Select size="sm" aria-label="Statut" value="${status}">
-      <option value="all">Tous les statuts</option>
+    <Select size="sm" aria-label="Status" value="${status}">
+      <option value="all">All statuses</option>
       <option value="stable">Stable</option>
       <option value="beta">Beta</option>
     </Select>
-    ${activeCount > 0 ? '<Button size="sm" variant="ghost" onClick={handleReset}>Réinitialiser</Button>' : ''}
+    ${activeCount > 0 ? '<Button size="sm" variant="ghost" onClick={handleReset}>Reset</Button>' : ''}
   </FilterBar.Main>
   <FilterBar.Meta>
-    <Badge variant="outline" size="sm">\${${filtered.length}} résultat(s)</Badge>
-    ${activeCount > 0 ? `<Badge variant="subtle" size="sm">\${${activeCount}} actif(s)</Badge>` : ''}
+    <Badge variant="outline" size="sm">\${${filtered.length}} result(s)</Badge>
+    ${activeCount > 0 ? `<Badge variant="subtle" size="sm">\${${activeCount}} active</Badge>` : ''}
   </FilterBar.Meta>
 </FilterBar>
 ${
     showChips && activeCount > 0
         ? `<FilterBar.Chips>
-  ${search ? `<FilterBar.Chip active onClick={() => setSearch('')}>Nom: "${search}" ✕</FilterBar.Chip>` : ''}
-  ${category !== 'all' ? `<FilterBar.Chip active onClick={() => setCategory('all')}>Catégorie: ${category} ✕</FilterBar.Chip>` : ''}
-  ${status !== 'all' ? `<FilterBar.Chip active onClick={() => setStatus('all')}>Statut: ${status} ✕</FilterBar.Chip>` : ''}
+  ${search ? `<FilterBar.Chip active onClick={() => setSearch('')}>Name: "${search}" ✕</FilterBar.Chip>` : ''}
+  ${category !== 'all' ? `<FilterBar.Chip active onClick={() => setCategory('all')}>Category: ${category} ✕</FilterBar.Chip>` : ''}
+  ${status !== 'all' ? `<FilterBar.Chip active onClick={() => setStatus('all')}>Status: ${status} ✕</FilterBar.Chip>` : ''}
 </FilterBar.Chips>`
         : ''
 }`
@@ -108,50 +109,47 @@ ${
         <ComponentPlayground
             controls={[
                 {
-                    type: 'text',
-                    label: 'Recherche texte',
-                    value: search,
-                    onChange: setSearch,
+                    type: 'boolean',
+                    name: 'showChips',
+                    label: 'Active filter chips',
+                    value: showChips,
+                    onChange: setShowChips,
                 },
                 {
                     type: 'select',
-                    label: 'Catégorie',
+                    name: 'category',
+                    label: 'Category',
                     value: category,
                     options: [
-                        { value: 'all', label: 'Toutes les catégories' },
+                        { value: 'all', label: 'All categories' },
                         { value: 'navigation', label: 'Navigation' },
-                        { value: 'data', label: 'Data' },
-                        { value: 'forms', label: 'Formulaires' },
+                        { value: 'data', label: 'Data & Visualization' },
+                        { value: 'forms', label: 'Forms' },
                         { value: 'overlay', label: 'Overlays' },
                     ],
                     onChange: setCategory,
                 },
                 {
                     type: 'select',
-                    label: 'Statut',
+                    name: 'status',
+                    label: 'Status',
                     value: status,
                     options: [
-                        { value: 'all', label: 'Tous les statuts' },
+                        { value: 'all', label: 'All statuses' },
                         { value: 'stable', label: 'Stable' },
                         { value: 'beta', label: 'Beta' },
                     ],
                     onChange: setStatus,
-                },
-                {
-                    type: 'boolean',
-                    label: 'Afficher tags actifs (Chips)',
-                    value: showChips,
-                    onChange: setShowChips,
                 },
             ]}
             codeSnippet={snippet}
         >
             <div
                 style={{
-                    width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 'var(--mr-space-3)',
+                    width: '100%',
                 }}
             >
                 <FilterBar>
@@ -159,46 +157,47 @@ ${
                         <FilterBar.Leading>
                             <Input
                                 size="sm"
-                                placeholder="Rechercher par nom..."
+                                placeholder="Search by name..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
+                                style={{ minWidth: 180 }}
                             />
                         </FilterBar.Leading>
                         <Select
                             size="sm"
-                            aria-label="Catégorie"
+                            aria-label="Category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                         >
-                            <option value="all">Toutes les catégories</option>
+                            <option value="all">All categories</option>
                             <option value="navigation">Navigation</option>
-                            <option value="data">Data & Visualisation</option>
-                            <option value="forms">Formulaires</option>
+                            <option value="data">Data & Visualization</option>
+                            <option value="forms">Forms</option>
                             <option value="overlay">Overlays</option>
                         </Select>
                         <Select
                             size="sm"
-                            aria-label="Statut"
+                            aria-label="Status"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                         >
-                            <option value="all">Tous les statuts</option>
+                            <option value="all">All statuses</option>
                             <option value="stable">Stable</option>
                             <option value="beta">Beta</option>
                         </Select>
                         {activeCount > 0 && (
                             <Button size="sm" variant="ghost" onClick={handleReset}>
-                                Réinitialiser
+                                Reset
                             </Button>
                         )}
                     </FilterBar.Main>
                     <FilterBar.Meta>
-                        <Badge variant="default" tone="neutral" size="sm">
-                            {filtered.length} composant(s)
+                        <Badge variant="default" size="sm">
+                            {filtered.length} result(s)
                         </Badge>
                         {activeCount > 0 && (
                             <Badge variant="default" tone="accent" size="sm">
-                                {activeCount} filtre(s)
+                                {activeCount} filter(s)
                             </Badge>
                         )}
                     </FilterBar.Meta>
@@ -208,23 +207,22 @@ ${
                     <FilterBar.Chips>
                         {search && (
                             <FilterBar.Chip active onClick={() => setSearch('')}>
-                                Nom : &quot;{search}&quot; ✕
+                                Name: &quot;{search}&quot; ✕
                             </FilterBar.Chip>
                         )}
                         {category !== 'all' && (
                             <FilterBar.Chip active onClick={() => setCategory('all')}>
-                                Catégorie : {category} ✕
+                                Category: {category} ✕
                             </FilterBar.Chip>
                         )}
                         {status !== 'all' && (
                             <FilterBar.Chip active onClick={() => setStatus('all')}>
-                                Statut : {status} ✕
+                                Status: {status} ✕
                             </FilterBar.Chip>
                         )}
                     </FilterBar.Chips>
                 )}
 
-                {/* Live interactive results list demonstrating true professional composition */}
                 <div
                     style={{
                         display: 'grid',
@@ -279,7 +277,7 @@ ${
                                 fontSize: 'var(--mr-font-size-sm)',
                             }}
                         >
-                            Aucun composant ne correspond aux filtres actifs.
+                            No components match the active filters.
                         </div>
                     )}
                 </div>
@@ -406,6 +404,7 @@ const docData: DocPageData = {
         'Keep each child control independently labeled with an accessible name.',
         'Use the meta area for passive status or clear/reset actions.',
     ],
+    i18n: filterBarI18n,
 }
 
 export function FilterBarDocs() {

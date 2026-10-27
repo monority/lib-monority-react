@@ -9,11 +9,7 @@ export const hoverCardI18n: DocI18n = {
             control_1: 'Alignement (align)',
             control_2: 'Flèche indicatrice (arrow)',
         },
-        examples: [
-            { title: 'Délai personnalisé' },
-            { title: 'Côtés' },
-            { title: 'Contrôlé' },
-        ],
+        examples: [{ title: 'Délai personnalisé' }, { title: 'Côtés' }, { title: 'Contrôlé' }],
         propDescriptions: {
             children: 'Élément déclencheur ou sous-composants composés.',
             content: 'Contenu de la carte rendu dans un portail (mode abrégé).',

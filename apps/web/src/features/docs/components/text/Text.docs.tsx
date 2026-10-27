@@ -1,6 +1,7 @@
 import { Text, type TextSize, type TextTone } from '@monority/ui/text'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { textI18n } from './Text.messages'
 import { TextAsExample, TextSizesExample, TextTonesExample } from './Text.examples'
 
 function TextPlayground() {
@@ -10,43 +11,47 @@ function TextPlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'size',
                     prop: 'size',
-                    label: 'Taille (size)',
+                    label: 'Size',
                     defaultValue: 'md',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
-                        { value: 'lg', label: 'Grande (lg)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
                     ],
                 },
                 {
                     type: 'select',
+                    name: 'tone',
                     prop: 'tone',
-                    label: 'Nuance (tone)',
+                    label: 'Tone',
                     defaultValue: 'base',
                     options: [
-                        { value: 'base', label: 'Base (défaut)' },
-                        { value: 'muted', label: 'Atténuée (muted)' },
-                        { value: 'strong', label: 'Accentuation (strong)' },
-                        { value: 'accent', label: 'Accent primaire (accent)' },
-                        { value: 'success', label: 'Succès (success)' },
-                        { value: 'warning', label: 'Avertissement (warning)' },
-                        { value: 'danger', label: 'Danger (danger)' },
+                        { value: 'base', label: 'Base (default)' },
+                        { value: 'muted', label: 'Muted' },
+                        { value: 'strong', label: 'Strong' },
+                        { value: 'accent', label: 'Primary accent' },
+                        { value: 'success', label: 'Success' },
+                        { value: 'warning', label: 'Warning' },
+                        { value: 'danger', label: 'Danger' },
                     ],
                 },
                 {
                     type: 'select',
+                    name: 'as',
                     prop: 'as',
-                    label: 'Élément HTML (as)',
+                    label: 'HTML element (as)',
                     defaultValue: 'p',
                     options: ['p', 'span', 'div'],
                 },
                 {
                     type: 'text',
+                    name: 'content',
                     prop: 'content',
-                    label: 'Contenu textuel',
+                    label: 'Text content',
                     defaultValue:
-                        'Le design system Monority unifie tokens CSS, fluidité et rigueur typographique.',
+                        'The Monority design system unifies CSS tokens, fluid motion, and typographic rigor.',
                 },
             ]}
             renderCode={(props) => `<Text
@@ -117,6 +122,7 @@ const docData: DocPageData = {
         'Use concise text.',
         'Tone variants use color -- avoid color-only meaning for critical states.',
     ],
+    i18n: textI18n,
 }
 
 export function TextDocs() {

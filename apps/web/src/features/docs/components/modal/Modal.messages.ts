@@ -9,10 +9,7 @@ export const modalI18n: DocI18n = {
             description: 'Description du dialogue',
             confirmLabel: 'Bouton de confirmation',
         },
-        examples: [
-            { title: 'Avec formulaire' },
-            { title: 'Contenu défilable' },
-        ],
+        examples: [{ title: 'Avec formulaire' }, { title: 'Contenu défilable' }],
         propDescriptions: {
             open: 'Toujours contrôlé : passez un useState, pas de mode non contrôlé.',
             title: 'Libellé du dialogue.',

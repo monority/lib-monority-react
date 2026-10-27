@@ -1,6 +1,7 @@
 import { ButtonLink } from '@monority/ui/button-link'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { buttonLinkI18n } from './ButtonLink.messages'
 import {
     ButtonLinkBasicPreview,
     ButtonLinkFullWidthExample,
@@ -67,13 +68,13 @@ const buttonLinkPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle du lien',
-                defaultValue: 'Consulter le guide',
+                label: 'Link label',
+                defaultValue: 'Explore guide',
             },
             {
                 name: 'variant',
                 type: 'select',
-                label: 'Variante visuelle',
+                label: 'Visual variant',
                 defaultValue: 'primary',
                 options: [
                     { value: 'primary', label: 'Primary' },
@@ -85,7 +86,7 @@ const buttonLinkPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -96,13 +97,13 @@ const buttonLinkPlayground = (
             {
                 name: 'fullWidth',
                 type: 'boolean',
-                label: 'Pleine largeur (fullWidth)',
+                label: 'Full width (fullWidth)',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
         ]}
@@ -186,13 +187,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Enter',
-            action: 'Active le lien hypertexte et declenche la navigation.',
-            context: 'Lien focalise',
+            action: 'Activates the hyperlink and triggers navigation.',
+            context: 'Focused link',
         },
         {
             key: 'Tab',
-            action: 'Deplace le focus vers le lien ou element interactif suivant.',
-            context: 'Navigation au clavier',
+            action: 'Moves focus to the next link or interactive element.',
+            context: 'Keyboard navigation',
         },
     ],
     a11y: [
@@ -200,6 +201,7 @@ const docData: DocPageData = {
         'Uses aria-disabled="true" when disabled to keep it in focus order.',
         'Visible focus indicator via focus-visible.',
     ],
+    i18n: buttonLinkI18n,
 }
 
 export function ButtonLinkDocs() {

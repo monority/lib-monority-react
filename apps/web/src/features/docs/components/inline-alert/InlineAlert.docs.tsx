@@ -6,6 +6,7 @@ import {
     InlineAlertTonesExample,
     InlineAlertWithActionExample,
 } from './InlineAlert.examples'
+import { inlineAlertI18n } from './InlineAlert.messages'
 
 function InlineAlertPlaygroundDemo(props: {
     tone: 'info' | 'success' | 'warning' | 'danger'
@@ -20,7 +21,7 @@ function InlineAlertPlaygroundDemo(props: {
                 title={props.title}
                 description={props.description}
                 actionLabel={props.actionLabel || undefined}
-                onAction={props.actionLabel ? () => alert('Action declenchee') : undefined}
+                onAction={props.actionLabel ? () => alert('Action triggered') : undefined}
             />
         </div>
     )
@@ -52,19 +53,19 @@ const inlineAlertPlayground = (
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre de l alerte',
-                defaultValue: 'Validation requise',
+                label: 'Alert title',
+                defaultValue: 'Validation required',
             },
             {
                 name: 'description',
                 type: 'text',
                 label: 'Description',
-                defaultValue: 'Une approbation supplementaire est attendue avant deploiment.',
+                defaultValue: 'Additional approval is required before deployment.',
             },
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'warning',
                 options: [
                     { value: 'info', label: 'Info' },
@@ -76,8 +77,8 @@ const inlineAlertPlayground = (
             {
                 name: 'actionLabel',
                 type: 'text',
-                label: 'Bouton d action (optionnel)',
-                defaultValue: 'Verifier',
+                label: 'Action button (optional)',
+                defaultValue: 'Verify',
             },
         ]}
         render={(props) => <InlineAlertPlaygroundDemo {...props} />}
@@ -147,6 +148,7 @@ const docData: DocPageData = {
         'Other tones use role="status".',
         'Ensure descriptive text so color is not the only differentiator.',
     ],
+    i18n: inlineAlertI18n,
 }
 
 export function InlineAlertDocs() {

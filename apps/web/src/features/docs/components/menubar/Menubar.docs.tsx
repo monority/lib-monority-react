@@ -2,6 +2,7 @@ import { Menubar } from '@monority/ui/menubar'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { menubarI18n } from './Menubar.messages'
 import {
     MenubarDangerExample,
     MenubarDisabledExample,
@@ -12,30 +13,30 @@ function MenubarPlayground() {
     const [density, setDensity] = useState<'standard' | 'compact'>('standard')
 
     const snippet = `<Menubar>
-  <Menubar.Menu value="fichier">
-    <Menubar.Trigger>Fichier</Menubar.Trigger>
+  <Menubar.Menu value="file">
+    <Menubar.Trigger>File</Menubar.Trigger>
     <Menubar.Content>
-      <Menubar.Item shortcut="Ctrl+N">Nouveau document</Menubar.Item>
-      <Menubar.Item shortcut="Ctrl+O">Ouvrir...</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+N">New document</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+O">Open...</Menubar.Item>
       <Menubar.Separator />
-      <Menubar.Item shortcut="Ctrl+S">Enregistrer</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+S">Save</Menubar.Item>
     </Menubar.Content>
   </Menubar.Menu>
-  <Menubar.Menu value="edition">
-    <Menubar.Trigger>Édition</Menubar.Trigger>
+  <Menubar.Menu value="edit">
+    <Menubar.Trigger>Edit</Menubar.Trigger>
     <Menubar.Content>
-      <Menubar.Item shortcut="Ctrl+Z">Annuler</Menubar.Item>
-      <Menubar.Item shortcut="Ctrl+Y">Rétablir</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+Z">Undo</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+Y">Redo</Menubar.Item>
       <Menubar.Separator />
-      <Menubar.Item shortcut="Ctrl+X">Couper</Menubar.Item>
-      <Menubar.Item shortcut="Ctrl+C">Copier</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+X">Cut</Menubar.Item>
+      <Menubar.Item shortcut="Ctrl+C">Copy</Menubar.Item>
     </Menubar.Content>
   </Menubar.Menu>
-  <Menubar.Menu value="affichage">
-    <Menubar.Trigger>Affichage</Menubar.Trigger>
+  <Menubar.Menu value="view">
+    <Menubar.Trigger>View</Menubar.Trigger>
     <Menubar.Content>
-      <Menubar.Item shortcut="Alt+1">Densité normale</Menubar.Item>
-      <Menubar.Item shortcut="Alt+2">Densité compacte</Menubar.Item>
+      <Menubar.Item shortcut="Alt+1">Standard density</Menubar.Item>
+      <Menubar.Item shortcut="Alt+2">Compact density</Menubar.Item>
     </Menubar.Content>
   </Menubar.Menu>
 </Menubar>`
@@ -45,7 +46,8 @@ function MenubarPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Affichage par défaut',
+                    name: 'density',
+                    label: 'Default density',
                     value: density,
                     options: [
                         { value: 'standard', label: 'Standard' },
@@ -67,30 +69,30 @@ function MenubarPlayground() {
                 }}
             >
                 <Menubar>
-                    <Menubar.Menu value="fichier">
-                        <Menubar.Trigger>Fichier</Menubar.Trigger>
+                    <Menubar.Menu value="file">
+                        <Menubar.Trigger>File</Menubar.Trigger>
                         <Menubar.Content>
-                            <Menubar.Item shortcut="Ctrl+N">Nouveau document</Menubar.Item>
-                            <Menubar.Item shortcut="Ctrl+O">Ouvrir...</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+N">New document</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+O">Open...</Menubar.Item>
                             <Menubar.Separator />
-                            <Menubar.Item shortcut="Ctrl+S">Enregistrer</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+S">Save</Menubar.Item>
                         </Menubar.Content>
                     </Menubar.Menu>
-                    <Menubar.Menu value="edition">
-                        <Menubar.Trigger>Édition</Menubar.Trigger>
+                    <Menubar.Menu value="edit">
+                        <Menubar.Trigger>Edit</Menubar.Trigger>
                         <Menubar.Content>
-                            <Menubar.Item shortcut="Ctrl+Z">Annuler</Menubar.Item>
-                            <Menubar.Item shortcut="Ctrl+Y">Rétablir</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+Z">Undo</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+Y">Redo</Menubar.Item>
                             <Menubar.Separator />
-                            <Menubar.Item shortcut="Ctrl+X">Couper</Menubar.Item>
-                            <Menubar.Item shortcut="Ctrl+C">Copier</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+X">Cut</Menubar.Item>
+                            <Menubar.Item shortcut="Ctrl+C">Copy</Menubar.Item>
                         </Menubar.Content>
                     </Menubar.Menu>
-                    <Menubar.Menu value="affichage">
-                        <Menubar.Trigger>Affichage</Menubar.Trigger>
+                    <Menubar.Menu value="view">
+                        <Menubar.Trigger>View</Menubar.Trigger>
                         <Menubar.Content>
-                            <Menubar.Item shortcut="Alt+1">Densité normale</Menubar.Item>
-                            <Menubar.Item shortcut="Alt+2">Densité compacte</Menubar.Item>
+                            <Menubar.Item shortcut="Alt+1">Standard density</Menubar.Item>
+                            <Menubar.Item shortcut="Alt+2">Compact density</Menubar.Item>
                         </Menubar.Content>
                     </Menubar.Menu>
                 </Menubar>
@@ -274,11 +276,11 @@ const docData: DocPageData = {
         '--mr-font-mono',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Navigue entre les déclencheurs de menus' },
-        { key: 'Enter', action: 'Ouvre le menu ou exécute l’action sélectionnée' },
-        { key: 'Space', action: 'Ouvre le menu' },
-        { key: 'Flèches directionnelles', action: 'Navigue entre les items du menu déroulant' },
-        { key: 'Escape', action: 'Ferme le menu déroulant actif' },
+        { key: 'Tab', action: 'Navigates between menu triggers' },
+        { key: 'Enter', action: 'Opens the menu or executes the selected action' },
+        { key: 'Space', action: 'Opens the menu' },
+        { key: 'Arrow keys', action: 'Navigates between dropdown menu items' },
+        { key: 'Escape', action: 'Closes the active dropdown menu' },
     ],
     a11y: [
         'Root uses role="menubar".',
@@ -291,6 +293,7 @@ const docData: DocPageData = {
         'Click outside closes open menus.',
         'Focus-visible outlines are provided for keyboard navigation.',
     ],
+    i18n: menubarI18n,
 }
 
 export function MenubarDocs() {

@@ -1,7 +1,8 @@
-﻿import { Pagination } from '@monority/ui/pagination'
+import { Pagination } from '@monority/ui/pagination'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { paginationI18n } from './Pagination.messages'
 import {
     PaginationCompoundExample,
     PaginationFewPagesExample,
@@ -27,7 +28,8 @@ function PaginationPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Nombre total de pages',
+                    name: 'totalPages',
+                    label: 'Total pages',
                     value: totalPages,
                     options: [
                         { value: '5', label: '5 pages' },
@@ -56,7 +58,7 @@ function PaginationPlayground() {
             >
                 <Pagination page={activePage} totalPages={totalPagesNum} onPageChange={setPage} />
                 <span style={{ fontSize: '0.85rem', color: 'var(--mr-text-secondary, #64748b)' }}>
-                    Page active : {activePage} sur {totalPagesNum}
+                    Active page: {activePage} of {totalPagesNum}
                 </span>
             </div>
         </ComponentPlayground>
@@ -67,7 +69,7 @@ const docData: DocPageData = {
     title: 'Pagination',
     description:
         'A compact page navigator with directional actions, condensed page ranges, and a stronger active state. Supports both shorthand (page/totalPages) and composable compound subcomponents.',
-    importCode: "import { Pagination } from '@monority/ui'",
+    importCode: "import { Pagination } from '@monority/ui/pagination'",
     usageCode: `<Pagination>
   <Pagination.Content>
     <Pagination.Item><Pagination.Previous href="#prev" /></Pagination.Item>
@@ -119,15 +121,16 @@ const docData: DocPageData = {
         '--mr-text-secondary',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Navigue entre les numéros de page et boutons précédent / suivant' },
-        { key: 'Enter', action: 'Active la page sélectionnée' },
-        { key: 'Space', action: 'Active la page sélectionnée' },
+        { key: 'Tab', action: 'Navigates between page numbers and previous/next buttons' },
+        { key: 'Enter', action: 'Activates the selected page' },
+        { key: 'Space', action: 'Activates the selected page' },
     ],
     a11y: [
         'Uses nav semantics with an explicit pagination label.',
         'The active page exposes aria-current="page".',
         'Previous and next actions include clear labels.',
     ],
+    i18n: paginationI18n,
 }
 
 export function PaginationDocs() {

@@ -36,6 +36,10 @@ export function Pagination({
     page = 1,
     totalPages = 1,
     onPageChange,
+    previousLabel = 'Previous',
+    nextLabel = 'Next',
+    previousAriaLabel = 'Previous page',
+    nextAriaLabel = 'Next page',
     className,
     children,
     ...props
@@ -69,10 +73,10 @@ export function Pagination({
                     data-variant="nav"
                     disabled={page <= 1}
                     onClick={() => onPageChange?.(page - 1)}
-                    aria-label="Previous page"
+                    aria-label={previousAriaLabel}
                 >
                     <span aria-hidden="true">←</span>
-                    <span>Previous</span>
+                    <span>{previousLabel}</span>
                 </button>
             </div>
             <div className="mr-pagination__pages" role="list" aria-label="Page list">
@@ -110,9 +114,9 @@ export function Pagination({
                     data-variant="nav"
                     disabled={page >= totalPages}
                     onClick={() => onPageChange?.(page + 1)}
-                    aria-label="Next page"
+                    aria-label={nextAriaLabel}
                 >
-                    <span>Next</span>
+                    <span>{nextLabel}</span>
                     <span aria-hidden="true">→</span>
                 </button>
             </div>

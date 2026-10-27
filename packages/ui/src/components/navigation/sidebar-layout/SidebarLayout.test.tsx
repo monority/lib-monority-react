@@ -142,4 +142,36 @@ describe('SidebarLayout', () => {
         )
         expect(onOpenChange).toHaveBeenCalledWith(false)
     })
+
+    it('sets default accessible name and supports custom aria-label override on toggle', () => {
+        const view = render(
+            <SidebarLayout collapsible defaultOpen={true}>
+                <SidebarLayout.Header>
+                    <SidebarLayout.Toggle />
+                </SidebarLayout.Header>
+            </SidebarLayout>
+        )
+        const toggleBtn = view.querySelector('.mr-sidebar-layout__toggle') as HTMLButtonElement
+        expect(toggleBtn.getAttribute('aria-label')).toBe('Close sidebar')
+
+        act(() => {
+            toggleBtn.click()
+        })
+        expect(toggleBtn.getAttribute('aria-label')).toBe('Open sidebar')
+
+        act(() => {
+            root?.unmount()
+        })
+        const customView = render(
+            <SidebarLayout collapsible>
+                <SidebarLayout.Header>
+                    <SidebarLayout.Toggle aria-label="Basculer le panneau" />
+                </SidebarLayout.Header>
+            </SidebarLayout>
+        )
+        const customBtn = customView.querySelector(
+            '.mr-sidebar-layout__toggle'
+        ) as HTMLButtonElement
+        expect(customBtn.getAttribute('aria-label')).toBe('Basculer le panneau')
+    })
 })

@@ -7,6 +7,7 @@ import {
     SpinnerTonesExample,
     SpinnerWithTextExample,
 } from './Spinner.examples'
+import { spinnerI18n } from './Spinner.messages'
 
 function SpinnerPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -49,7 +50,7 @@ const spinnerPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -60,12 +61,12 @@ const spinnerPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'base',
                 options: [
                     { value: 'base', label: 'Base (accent)' },
-                    { value: 'muted', label: 'Muted (atténué)' },
-                    { value: 'inverse', label: 'Inverse (sur fond sombre)' },
+                    { value: 'muted', label: 'Muted' },
+                    { value: 'inverse', label: 'Inverse' },
                 ],
             },
         ]}
@@ -119,6 +120,7 @@ const docData: DocPageData = {
         'The component exposes role="status" with an accessible loading label.',
         'Add visible text nearby when the operation needs extra context.',
     ],
+    i18n: spinnerI18n,
 }
 
 export function SpinnerDocs() {

@@ -79,8 +79,7 @@ const alertDialogPlayground = (
                 name: 'description',
                 type: 'text',
                 label: 'Consequences description',
-                defaultValue:
-                    'This action is irreversible and will permanently delete the data.',
+                defaultValue: 'This action is irreversible and will permanently delete the data.',
             },
             {
                 name: 'confirmLabel',

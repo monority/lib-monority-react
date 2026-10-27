@@ -1,16 +1,17 @@
-﻿import { Button } from '@monority/ui/button'
+import { Button } from '@monority/ui/button'
 import { PageHeader } from '@monority/ui/page-header'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { pageHeaderI18n } from './PageHeader.messages'
 import { PageHeaderWithActionsExample, PageHeaderWithTitleExample } from './PageHeader.examples'
 
 function PageHeaderPlayground() {
-    const [kicker, setKicker] = useState('Espace de travail')
-    const [title, setTitle] = useState('Projets & Livrables')
+    const [kicker, setKicker] = useState('Workspace')
+    const [title, setTitle] = useState('Projects & Deliverables')
     const [description, setDescription] = useState(
-        'Suivez l’avancement et la santé des déploiements en cours.'
+        'Track real-time progress and health across active deployments.'
     )
     const [showActions, setShowActions] = useState(true)
 
@@ -20,10 +21,10 @@ function PageHeaderPlayground() {
     <PageHeader.Title>${title}</PageHeader.Title>
     <PageHeader.Description>${description}</PageHeader.Description>
     <PageHeader.Meta>
-      <Text size="sm" tone="muted">Mis à jour il y a 5 min</Text>
-      <Text size="sm" tone="muted">14 projets actifs</Text>
+      <Text size="sm" tone="muted">Updated 5 min ago</Text>
+      <Text size="sm" tone="muted">14 active projects</Text>
     </PageHeader.Meta>
-  </PageHeader.Main>${showActions ? `\n  <PageHeader.Actions>\n    <Button variant="secondary" size="sm">Exporter</Button>\n    <Button variant="primary" size="sm">Nouveau projet</Button>\n  </PageHeader.Actions>` : ''}
+  </PageHeader.Main>${showActions ? `\n  <PageHeader.Actions>\n    <Button variant="secondary" size="sm">Export</Button>\n    <Button variant="primary" size="sm">New project</Button>\n  </PageHeader.Actions>` : ''}
 </PageHeader>`
 
     return (
@@ -31,25 +32,29 @@ function PageHeaderPlayground() {
             controls={[
                 {
                     type: 'text',
-                    label: 'Surtitre (kicker)',
+                    name: 'kicker',
+                    label: 'Eyebrow (kicker)',
                     value: kicker,
                     onChange: setKicker,
                 },
                 {
                     type: 'text',
-                    label: 'Titre principal',
+                    name: 'title',
+                    label: 'Primary title',
                     value: title,
                     onChange: setTitle,
                 },
                 {
                     type: 'text',
+                    name: 'description',
                     label: 'Description',
                     value: description,
                     onChange: setDescription,
                 },
                 {
                     type: 'boolean',
-                    label: 'Boutons d’action',
+                    name: 'showActions',
+                    label: 'Action buttons',
                     value: showActions,
                     onChange: setShowActions,
                 },
@@ -64,20 +69,20 @@ function PageHeaderPlayground() {
                         <PageHeader.Description>{description}</PageHeader.Description>
                         <PageHeader.Meta>
                             <Text size="sm" tone="muted">
-                                Mis à jour il y a 5 min
+                                Updated 5 min ago
                             </Text>
                             <Text size="sm" tone="muted">
-                                14 projets actifs
+                                14 active projects
                             </Text>
                         </PageHeader.Meta>
                     </PageHeader.Main>
                     {showActions && (
                         <PageHeader.Actions>
                             <Button variant="secondary" size="sm">
-                                Exporter
+                                Export
                             </Button>
                             <Button variant="primary" size="sm">
-                                Nouveau projet
+                                New project
                             </Button>
                         </PageHeader.Actions>
                     )}
@@ -160,6 +165,7 @@ const docData: DocPageData = {
         'Use one h1 inside the page header for the page title.',
         'Keep actions after the title copy in DOM order.',
     ],
+    i18n: pageHeaderI18n,
 }
 
 export function PageHeaderDocs() {

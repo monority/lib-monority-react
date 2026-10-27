@@ -11,6 +11,7 @@ import {
     ProgressValuesExample,
     ProgressWithoutValueExample,
 } from './Progress.examples'
+import { progressI18n } from './Progress.messages'
 
 function ProgressPlaygroundDemo(props: {
     value: number
@@ -67,13 +68,13 @@ const progressPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle accessible',
-                defaultValue: 'Deploiement de l application',
+                label: 'Accessible label',
+                defaultValue: 'Application deployment',
             },
             {
                 name: 'value',
                 type: 'number',
-                label: 'Progression (%)',
+                label: 'Progress (%)',
                 defaultValue: 68,
                 min: 0,
                 max: 100,
@@ -81,7 +82,7 @@ const progressPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'accent',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -95,29 +96,29 @@ const progressPlayground = (
             {
                 name: 'mode',
                 type: 'select',
-                label: 'Mode de progression',
+                label: 'Progress mode',
                 defaultValue: 'determinate',
                 options: [
-                    { value: 'determinate', label: 'Determine' },
-                    { value: 'indeterminate', label: 'Indetermine' },
+                    { value: 'determinate', label: 'Determinate' },
+                    { value: 'indeterminate', label: 'Indeterminate' },
                 ],
             },
             {
                 name: 'striped',
                 type: 'boolean',
-                label: 'Motif strie (striped)',
+                label: 'Striped pattern (striped)',
                 defaultValue: true,
             },
             {
                 name: 'animated',
                 type: 'boolean',
-                label: 'Animation continue',
+                label: 'Continuous animation',
                 defaultValue: true,
             },
             {
                 name: 'showValue',
                 type: 'boolean',
-                label: 'Afficher le pourcentage',
+                label: 'Show percentage',
                 defaultValue: true,
             },
         ]}
@@ -135,26 +136,26 @@ const docData: DocPageData = {
     playground: progressPlayground,
     examples: [
         {
-            title: 'Flux asynchrone réaliste (Règle d’or)',
+            title: 'Realistic async flow (Golden rule)',
             content: <ProgressRealisticServerExample />,
-            code: `// 1. Démarrage instantané pour valider l'action utilisateur
-// 2. Montée rapide puis décélération vers 85%
-// 3. Stagnation vers 85-88% en attente serveur (stries animées)
-// 4. Téléportation directe de 88% à 100% au tout dernier moment
+            code: `// 1. Instant start to acknowledge user action
+// 2. Fast ramp then deceleration toward 85%
+// 3. Stagnation around 85-88% waiting for server response (animated stripes)
+// 4. Direct jump from 88% to 100% at the final moment
 <Progress
   value={progress}
-  label={status === 'done' ? 'Déploiement achevé avec succès' : 'Synchronisation en cours...'}
+  label={status === 'done' ? 'Deployment completed successfully' : 'Container synchronization in progress...'}
   tone={status === 'done' ? 'success' : 'accent'}
   striped={status === 'running'}
   animated={status === 'running'}
 />`,
         },
-        { title: 'Stries et animation continue', content: <ProgressStripedExample /> },
-        { title: 'Animation cyclique', content: <ProgressAnimatedExample /> },
-        { title: 'Valeurs et échelons', content: <ProgressValuesExample /> },
-        { title: 'Tonalités', content: <ProgressTonesExample /> },
-        { title: 'Sans affichage de valeur', content: <ProgressWithoutValueExample /> },
-        { title: 'Mode indéterminé', content: <ProgressIndeterminateExample /> },
+        { title: 'Stripes and continuous animation', content: <ProgressStripedExample /> },
+        { title: 'Cyclic animation', content: <ProgressAnimatedExample /> },
+        { title: 'Values and steps', content: <ProgressValuesExample /> },
+        { title: 'Tones', content: <ProgressTonesExample /> },
+        { title: 'Without value display', content: <ProgressWithoutValueExample /> },
+        { title: 'Indeterminate mode', content: <ProgressIndeterminateExample /> },
     ],
     props: [
         {
@@ -232,6 +233,7 @@ const docData: DocPageData = {
         'aria-valuenow, aria-valuemin, and aria-valuemax are provided in determinate mode.',
         'Indeterminate mode omits aria-valuenow.',
     ],
+    i18n: progressI18n,
 }
 
 export function ProgressDocs() {

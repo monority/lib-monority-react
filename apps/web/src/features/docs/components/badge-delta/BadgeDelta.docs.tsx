@@ -1,6 +1,7 @@
 import { BadgeDelta } from '@monority/ui/badge-delta'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { badgeDeltaI18n } from './BadgeDelta.messages'
 import {
     BadgeDeltaBasicExample,
     BadgeDeltaInvertedExample,
@@ -57,37 +58,37 @@ const badgeDeltaPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Valeur de variation',
+                label: 'Delta value',
                 defaultValue: '+24.5%',
             },
             {
                 name: 'deltaType',
                 type: 'select',
-                label: 'Type de variation',
+                label: 'Delta type',
                 defaultValue: 'increase',
                 options: [
-                    { value: 'increase', label: 'Hausse forte (increase)' },
-                    { value: 'moderate-increase', label: 'Hausse moderee' },
-                    { value: 'unchanged', label: 'Inchange' },
-                    { value: 'moderate-decrease', label: 'Baisse moderee' },
-                    { value: 'decrease', label: 'Baisse forte (decrease)' },
+                    { value: 'increase', label: 'Strong increase (increase)' },
+                    { value: 'moderate-increase', label: 'Moderate increase' },
+                    { value: 'unchanged', label: 'Unchanged' },
+                    { value: 'moderate-decrease', label: 'Moderate decrease' },
+                    { value: 'decrease', label: 'Strong decrease (decrease)' },
                 ],
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
-                    { value: 'sm', label: 'Small' },
-                    { value: 'md', label: 'Medium' },
-                    { value: 'lg', label: 'Large' },
+                    { value: 'sm', label: 'Small (sm)' },
+                    { value: 'md', label: 'Medium (md)' },
+                    { value: 'lg', label: 'Large (lg)' },
                 ],
             },
             {
                 name: 'isIncreasePositive',
                 type: 'boolean',
-                label: 'Hausse favorable (vert)',
+                label: 'Increase is positive (green)',
                 defaultValue: true,
             },
         ]}
@@ -98,15 +99,15 @@ const badgeDeltaPlayground = (
 const docData: DocPageData = {
     title: 'BadgeDelta',
     description:
-        'Indicateur compact de variation statistique / tendance avec iconographie directionnelle et couleurs sémantiques.',
+        'Compact statistical variation badge displaying trend direction with arrows and semantic color indicators.',
     importCode: "import { BadgeDelta } from '@monority/ui/badge-delta'",
     usageCode: `<BadgeDelta deltaType="increase">+18.4%</BadgeDelta>`,
     preview: () => <BadgeDeltaBasicExample />,
     playground: badgeDeltaPlayground,
     examples: [
-        { title: 'Toutes les tailles (sm, md, lg)', content: <BadgeDeltaSizesExample /> },
+        { title: 'All sizes (sm, md, lg)', content: <BadgeDeltaSizesExample /> },
         {
-            title: 'Sens de variation inverse (ex: latence)',
+            title: 'Inverted trend polarity (e.g. latency)',
             content: <BadgeDeltaInvertedExample />,
         },
     ],
@@ -115,25 +116,25 @@ const docData: DocPageData = {
             name: 'deltaType',
             type: "'increase' | 'moderate-increase' | 'decrease' | 'moderate-decrease' | 'unchanged'",
             defaultValue: "'increase'",
-            description: 'Type de variation a representer.',
+            description: 'Type of variation to represent.',
         },
         {
             name: 'size',
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
-            description: 'Taille du badge.',
+            description: 'Badge size and density.',
         },
         {
             name: 'isIncreasePositive',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Definit si une hausse est favorable (vert) ou defavorable (rouge).',
+            description: 'Defines whether an increase is positive (green) or negative (red).',
         },
         {
             name: 'children',
             type: 'ReactNode',
             defaultValue: '-',
-            description: 'Libelle ou pourcentage affiche.',
+            description: 'Displayed metric change or percentage.',
         },
     ],
     cssHooks: ['.mr-badge-delta', '.mr-badge-delta__icon', '[data-type]', '[data-size]'],
@@ -147,9 +148,10 @@ const docData: DocPageData = {
         '--mr-space-2',
     ],
     a11y: [
-        "Iconographie directionnelle integree masquée aux lecteurs d'ecran (aria-hidden).",
-        'Prend en charge aria-label sur le badge pour une restitution textuelle explicite.',
+        'Integrated directional icons are hidden from screen readers (aria-hidden).',
+        'Supports aria-label on the badge for an explicit spoken representation of trend and value.',
     ],
+    i18n: badgeDeltaI18n,
 }
 
 export function BadgeDeltaDocs() {

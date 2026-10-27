@@ -21,9 +21,7 @@ function ContextMenuPlayground() {
             ? [{ value: 'archive', label: 'Archive (restricted access)', disabled: true }]
             : []),
         { value: 'sep-1', label: '', type: 'separator' as const },
-        ...(hasDanger
-            ? [{ value: 'delete', label: 'Delete permanently', danger: true }]
-            : []),
+        ...(hasDanger ? [{ value: 'delete', label: 'Delete permanently', danger: true }] : []),
     ]
 
     const snippet = `<ContextMenu

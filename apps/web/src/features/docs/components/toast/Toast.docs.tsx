@@ -2,6 +2,7 @@ import { Toast } from '@monority/ui/toast'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { ToastBasicExample, ToastProviderExample, ToastTonesExample } from './Toast.examples'
+import { toastI18n } from './Toast.messages'
 
 function ToastPlaygroundDemo(props: {
     tone: 'neutral' | 'success' | 'danger'
@@ -36,19 +37,19 @@ const toastPlayground = (
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre de la notification',
-                defaultValue: 'Projet sauvegarde',
+                label: 'Notification title',
+                defaultValue: 'Project saved',
             },
             {
                 name: 'description',
                 type: 'text',
                 label: 'Description',
-                defaultValue: 'Toutes les modifications ont ete synchronisees sur le cloud.',
+                defaultValue: 'All changes have been synced to the cloud.',
             },
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'success',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -75,7 +76,7 @@ import { useToast } from '@monority/ui'`,
         { title: 'Provider queue', content: <ToastProviderExample /> },
     ],
     props: [
-        { name: 'title', type: `ReactNode`, defaultValue: '-', description: 'Toast title' },
+        { name: 'title', type: `ReactNode`, defaultValue: '-', description: 'Toast title.' },
         {
             name: 'description',
             type: `ReactNode`,
@@ -86,7 +87,7 @@ import { useToast } from '@monority/ui'`,
             name: 'tone',
             type: `'neutral' | 'success' | 'danger'`,
             defaultValue: "'neutral'",
-            description: 'Visual tone of the toast',
+            description: 'Visual tone of the toast.',
         },
         {
             name: 'onClose',
@@ -120,6 +121,7 @@ import { useToast } from '@monority/ui'`,
         'Dismiss buttons expose an explicit aria-label.',
         'Queued toasts auto-dismiss after duration (default 3600ms); duration Infinity stays until dismissed.',
     ],
+    i18n: toastI18n,
 }
 
 export function ToastDocs() {

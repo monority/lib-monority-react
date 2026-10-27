@@ -1,5 +1,6 @@
 import { Calendar } from '@monority/ui/calendar'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     CalendarBasicPreview,
@@ -9,6 +10,7 @@ import {
     CalendarMultipleMonthsExample,
     CalendarPickersExample,
 } from './Calendar.examples'
+import { calendarI18n } from './Calendar.messages'
 
 function CalendarInteractivePlayground(props: {
     showPickers: boolean
@@ -16,6 +18,8 @@ function CalendarInteractivePlayground(props: {
     fixedWeeks: boolean
     numberOfMonths: number
 }) {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
 
     return (
@@ -29,8 +33,12 @@ function CalendarInteractivePlayground(props: {
                 numberOfMonths={props.numberOfMonths}
             />
             <div style={{ fontSize: '0.875rem', color: 'var(--mr-text-secondary)' }}>
-                Date sélectionnée :{' '}
-                {selectedDate ? selectedDate.toLocaleDateString('fr-FR') : 'aucune'}
+                {isFr ? 'Date sélectionnée : ' : 'Selected date: '}
+                {selectedDate
+                    ? selectedDate.toLocaleDateString(isFr ? 'fr-FR' : 'en-US')
+                    : isFr
+                      ? 'aucune'
+                      : 'none'}
             </div>
         </div>
     )
@@ -48,29 +56,29 @@ const docData: DocPageData = {
             {
                 name: 'showPickers',
                 type: 'boolean',
-                label: 'Sélecteurs mois/année (showPickers)',
+                label: 'Month & year selectors (showPickers)',
                 defaultValue: true,
             },
             {
                 name: 'showOutsideDays',
                 type: 'boolean',
-                label: 'Jours hors mois (showOutsideDays)',
+                label: 'Outside days (showOutsideDays)',
                 defaultValue: true,
             },
             {
                 name: 'fixedWeeks',
                 type: 'boolean',
-                label: '6 semaines fixes (fixedWeeks)',
+                label: '6 fixed weeks (fixedWeeks)',
                 defaultValue: false,
             },
             {
                 name: 'numberOfMonths',
                 type: 'select',
-                label: 'Nombre de mois',
+                label: 'Number of months',
                 defaultValue: '1',
                 options: [
-                    { value: '1', label: '1 mois' },
-                    { value: '2', label: '2 mois (côte à côte)' },
+                    { value: '1', label: '1 month' },
+                    { value: '2', label: '2 months (side-by-side)' },
                 ],
             },
         ],
@@ -216,34 +224,34 @@ const docData: DocPageData = {
     ],
     keyboardNavigation: [
         {
-            key: 'Flèche Gauche / Flèche Droite',
-            action: 'Déplace le focus vers le jour précédent ou suivant.',
-            context: 'Grille des jours',
+            key: 'Left / Right Arrow',
+            action: 'Moves focus to previous or next day.',
+            context: 'Day grid',
         },
         {
-            key: 'Flèche Haut / Flèche Bas',
-            action: 'Déplace le focus vers le même jour de la semaine précédente ou suivante.',
-            context: 'Grille des jours',
+            key: 'Up / Down Arrow',
+            action: 'Moves focus to the same day of previous or next week.',
+            context: 'Day grid',
         },
         {
             key: 'PageUp / PageDown',
-            action: 'Recule ou avance d’un mois.',
-            context: 'Grille des jours',
+            action: 'Moves backward or forward by one month.',
+            context: 'Day grid',
         },
         {
             key: ['Shift', 'PageUp / PageDown'],
-            action: 'Recule ou avance d’une année complète.',
-            context: 'Grille des jours',
+            action: 'Moves backward or forward by one full year.',
+            context: 'Day grid',
         },
         {
-            key: 'Origine (Home) / Fin (End)',
-            action: 'Déplace le focus vers le premier ou dernier jour du mois en cours.',
-            context: 'Grille des jours',
+            key: 'Home / End',
+            action: 'Moves focus to the first or last day of the current month.',
+            context: 'Day grid',
         },
         {
-            key: 'Enter / Espace',
-            action: 'Sélectionne la date ciblée.',
-            context: 'Grille des jours',
+            key: 'Enter / Space',
+            action: 'Selects the focused date.',
+            context: 'Day grid',
         },
     ],
     cssHooks: [
@@ -295,6 +303,7 @@ const docData: DocPageData = {
         'aria-label on each day with full date (weekday, month, day, year).',
         'Navigation buttons have aria-label="Previous month" / "Next month".',
     ],
+    i18n: calendarI18n,
 }
 
 export function CalendarDocs() {

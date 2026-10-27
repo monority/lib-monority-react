@@ -6,32 +6,33 @@ import {
     DateRangePickerWithErrorExample,
     DateRangePickerWithHintExample,
 } from './DateRangePicker.examples'
+import { dateRangePickerI18n } from './DateRangePicker.messages'
 
 const docData: DocPageData = {
     title: 'DateRangePicker',
     description:
         'Two custom DatePicker components with calendar popovers. End must be strictly after Start; invalid controlled ends clear once through onChange.',
     importCode: "import { DateRangePicker } from '@monority/ui/date-range-picker'",
-    usageCode: `<DateRangePicker fromLabel="Début" toLabel="Fin" />`,
+    usageCode: `<DateRangePicker fromLabel="Start" toLabel="End" />`,
     preview: () => <DateRangePickerBasicExample />,
     playgroundConfig: {
         controls: [
             {
                 name: 'fromLabel',
                 type: 'text',
-                label: 'Libellé départ',
-                defaultValue: 'Date d’arrivée',
+                label: 'Start label',
+                defaultValue: 'Check-in date',
             },
             {
                 name: 'toLabel',
                 type: 'text',
-                label: 'Libellé retour',
-                defaultValue: 'Date de départ',
+                label: 'End label',
+                defaultValue: 'Check-out date',
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Désactivé (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ],
@@ -113,23 +114,23 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab / Shift + Tab',
-            action: 'Navigue entre les champs de date début et fin et leurs déclencheurs.',
-            context: 'Formulaire de plage',
+            action: 'Navigates between start and end date fields and triggers.',
+            context: 'Date range form',
         },
         {
-            key: 'Enter / Espace',
-            action: 'Ouvre le popover du calendrier pour le champ ciblé.',
-            context: 'Champs de saisie',
+            key: 'Enter / Space',
+            action: 'Opens calendar popover for focused field.',
+            context: 'Input fields',
         },
         {
-            key: 'Flèches directionnelles',
-            action: 'Navigue entre les jours de la grille du calendrier.',
-            context: 'Calendrier popover',
+            key: 'Arrow Keys',
+            action: 'Navigates days in calendar grid.',
+            context: 'Calendar popover',
         },
         {
             key: 'Escape',
-            action: 'Ferme le calendrier et retourne le focus sur le champ actif.',
-            context: 'Calendrier popover',
+            action: 'Closes calendar and returns focus to active field.',
+            context: 'Calendar popover',
         },
     ],
     cssHooks: ['.mr-date-range-picker', '.mr-date-range-picker__separator', '.mr-datepicker'],
@@ -149,6 +150,7 @@ const docData: DocPageData = {
         'Visible focus ring.',
         'Associated labels for screen readers.',
     ],
+    i18n: dateRangePickerI18n,
 }
 
 export function DateRangePickerDocs() {

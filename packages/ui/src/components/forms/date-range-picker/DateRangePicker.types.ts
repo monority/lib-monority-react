@@ -7,6 +7,7 @@ export interface DateRangePickerProps {
     ref?: Ref<HTMLDivElement>
     size?: DateRangePickerSize
     className?: string
+    locale?: string
     fromLabel?: string
     toLabel?: string
     fromProps?: Omit<Partial<DatePickerProps>, 'label'>

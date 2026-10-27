@@ -103,6 +103,8 @@ Avant vers après, pour les composants concernés :
   pause le diaporama` vers `Pause slideshow`.
 - `CommandPalette` : `Rechercher une action…` vers `Search for an action…`,
   `Aucun résultat.` vers `No results.`.
+- `InputOTP` : `Code de verification` vers `Verification code`.
+- `SidebarLayout` : `Fermer la barre latérale` / `Ouvrir la barre latérale` vers `Close sidebar` / `Open sidebar`.
 
 Migrer consiste à passer explicitement l'ancien libellé, ou le libellé traduit
 attendu par l'application.

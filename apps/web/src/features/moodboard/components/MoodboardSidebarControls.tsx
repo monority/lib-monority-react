@@ -1,9 +1,10 @@
 import { DESIGN_PRESETS, type DesignConfig, Select, Stack } from '@monority/ui'
 import type { ChangeEvent } from 'react'
+import { useMessages } from '@/shared/i18n'
 
 interface AxisDefinition {
     key: keyof DesignConfig
-    label: string
+    labelKey: 'theme' | 'accent' | 'radius' | 'spacing' | 'density' | 'chartPalette'
     ariaLabel: string
     items: readonly { value: string; label: string }[]
 }
@@ -11,37 +12,37 @@ interface AxisDefinition {
 const AXES: readonly AxisDefinition[] = [
     {
         key: 'theme',
-        label: 'Theme',
+        labelKey: 'theme',
         ariaLabel: 'Theme axis',
         items: DESIGN_PRESETS.themes,
     },
     {
         key: 'accent',
-        label: 'Accent',
+        labelKey: 'accent',
         ariaLabel: 'Accent axis',
         items: DESIGN_PRESETS.accents,
     },
     {
         key: 'radius',
-        label: 'Corner Radius',
+        labelKey: 'radius',
         ariaLabel: 'Radius axis',
         items: DESIGN_PRESETS.radii,
     },
     {
         key: 'spacing',
-        label: 'Spacing Scale',
+        labelKey: 'spacing',
         ariaLabel: 'Spacing axis',
         items: DESIGN_PRESETS.spacings,
     },
     {
         key: 'density',
-        label: 'Layout Density',
+        labelKey: 'density',
         ariaLabel: 'Layout density axis',
         items: DESIGN_PRESETS.densities,
     },
     {
         key: 'chartPalette',
-        label: 'Chart Palette',
+        labelKey: 'chartPalette',
         ariaLabel: 'Chart palette axis',
         items: DESIGN_PRESETS.chartPalettes,
     },
@@ -53,6 +54,7 @@ export interface MoodboardSidebarControlsProps {
 }
 
 export function MoodboardSidebarControls({ config, onConfig }: MoodboardSidebarControlsProps) {
+    const t = useMessages().moodboard
     const handleSelectChange = (key: keyof DesignConfig) => (e: ChangeEvent<HTMLSelectElement>) => {
         const val = e.target.value
         if (!val) return
@@ -65,7 +67,7 @@ export function MoodboardSidebarControls({ config, onConfig }: MoodboardSidebarC
                 <div key={axis.key} role="group" aria-label={axis.ariaLabel}>
                     <Select
                         size="sm"
-                        label={axis.label}
+                        label={t.axes[axis.labelKey]}
                         aria-label={axis.ariaLabel}
                         value={config[axis.key]}
                         onChange={handleSelectChange(axis.key)}
