@@ -148,10 +148,10 @@ return (
         <CommandPalette.ItemDescription>Browse guides and components</CommandPalette.ItemDescription>
         <CommandPalette.Shortcut>Ctrl+D</CommandPalette.Shortcut>
       </CommandPalette.Item>
-      <CommandPalette.Item value="moodboard" onSelect={() => setOpen(false)}>
-        <CommandPalette.ItemLabel>Moodboard Studio</CommandPalette.ItemLabel>
-        <CommandPalette.ItemDescription>Customization and themes</CommandPalette.ItemDescription>
-        <CommandPalette.Shortcut>Ctrl+M</CommandPalette.Shortcut>
+      <CommandPalette.Item value="installation" onSelect={() => setOpen(false)}>
+        <CommandPalette.ItemLabel>Installation</CommandPalette.ItemLabel>
+        <CommandPalette.ItemDescription>Get started with @monority/ui</CommandPalette.ItemDescription>
+        <CommandPalette.Shortcut>Ctrl+I</CommandPalette.Shortcut>
       </CommandPalette.Item>
     </CommandPalette.Group>
     <CommandPalette.Separator />

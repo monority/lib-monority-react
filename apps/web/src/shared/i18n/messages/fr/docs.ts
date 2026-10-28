@@ -63,7 +63,7 @@ export const docs = {
         global: 'Global',
     },
     playground: {
-        badge: 'Playground',
+        badge: 'Aperçu',
         properties: 'Propriétés dynamiques',
         reset: 'Réinitialiser',
         resetLabel: 'Réinitialiser les propriétés',

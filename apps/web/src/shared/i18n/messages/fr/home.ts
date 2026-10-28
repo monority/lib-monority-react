@@ -4,107 +4,131 @@ export const home = {
     seo: {
         title: 'Accueil',
         description:
-            'Monority UI — un système de composants React 19 bâti autour de tokens sobres, de primitives accessibles et d’une architecture CSS @layer.',
+            'Monority UI — La bibliothèque de composants React 19 accessible conçue pour la production à haute densité. Portée par CSS @layer, la thématisation OKLCH au runtime et zéro overhead CSS.',
     },
     hero: {
-        ariaLabel: 'Introduction de Monority UI',
-        kicker: 'Bibliothèque de composants React 19',
-        title: 'Monority UI',
+        ariaLabel: 'Hero Monority UI',
+        kicker: 'v0.3 • Design System React 19',
+        title: 'La bibliothèque de composants conçue pour la production à haute densité.',
         description:
-            'Un système de composants de précision pour les produits web modernes. Porté par une architecture CSS @layer, des tokens de conception au runtime, des contrats stricts et des primitives accessibles.',
-        docsCta: (componentCount: number) => `Documentation (${componentCount} composants)`,
-        studio: 'Design Studio',
-        installation: 'Installation',
+            '83 primitives accessibles, isolation native par couches CSS @layer et thématisation OKLCH au runtime. Conçue pour les tableaux de bord complexes et les logiciels exigeants.',
+        docsCta: 'Explorer les composants',
+        githubCta: 'GitHub',
+        installCommand: 'npm i @monority/ui',
+        copied: 'Copié dans le presse-papier !',
+        matrixAriaLabel:
+            'Matrice de développement 3D interactive représentant Monority UI relié à React 19, TypeScript, CSS @layer, OKLCH, Vite et Next.js',
+    },
+    frameworks: {
+        label: 'Écosystème et Stack supportée',
+        items: [
+            { name: 'React 19', note: 'Prop ref native' },
+            { name: 'TypeScript 5', note: 'Typage strict' },
+            { name: 'Vite 6', note: 'HMR instantané' },
+            { name: 'Next.js 15', note: 'App Router' },
+            { name: 'CSS @layer', note: 'Zéro conflit de spécificité' },
+            { name: 'Thématisation OKLCH', note: 'Uniformité perceptuelle' },
+        ],
+    },
+    pillars: {
+        title: 'Fondations Architecturales',
+        description:
+            'Conçu dès le départ pour les logiciels d’entreprise à haute densité. Zéro surcoût CSS au runtime, absence totale de friction de spécificité et conformité d’accessibilité intégrale.',
+        layerCard: {
+            title: 'Isolation CSS @layer Native',
+            badge: 'Zéro Conflit de Spécificité',
+            description:
+                'Les 84 primitives sont isolées au sein des cascades standard @layer mr.*. Les feuilles de styles de votre application hôte priment naturellement sans !important ni contournements.',
+            layers: [
+                'Styles Applicatifs Consommateur',
+                'mr.utilities',
+                'mr.components',
+                'mr.themes',
+                'mr.tokens',
+                'mr.base',
+                'mr.reset',
+            ],
+        },
+        themingCard: {
+            title: 'Moteur de Thématisation OKLCH',
+            badge: '0ms Recalcul du DOM',
+            description:
+                'Basculez instantanément entre 7 thèmes ou personnalisez les teintes d’accentuation. Pilotage 100% via variables CSS dans l’espace OKLCH sans re-rendu du DOM virtuel React.',
+            accentLabel: 'Nuancier d’accentuation en direct :',
+        },
+        primitivesCard: {
+            title: '84 Primitives Accessibles',
+            badge: 'Production Ready',
+            description:
+                'Calibré pour les logiciels critiques, les consoles de télémétrie et les flux denses. 100% typé sous TypeScript, support de ref natif React 19 et conformité WCAG 2.1 AA.',
+            primitives: [
+                'Button',
+                'Select',
+                'Switch',
+                'Dialog',
+                'CommandPalette',
+                'DataTable',
+                'Tabs',
+                'DropdownMenu',
+                'Tooltip',
+                'Badge',
+            ],
+        },
     },
     features: {
-        title: 'Fondation architecturale',
+        title: 'Excellence architecturale',
         description:
-            'Conçue pour servir d’infrastructure fiable aux design systems modernes et aux applications web de production.',
+            'Conçue comme une infrastructure fiable pour les logiciels professionnels les plus exigeants. Aucun compromis entre expérience développeur, fidélité visuelle et performance.',
         items: [
             {
-                title: (componentCount: number) => `${componentCount} primitives stables`,
-                badge: 'Prêt pour la production',
-                badgeVariant: 'success',
-                description:
-                    'Chaque concept d’interface significatif est componentisé. Des simples boutons aux tableaux de données riches, overlays et contrôles de formulaire, avec une parité totale.',
-            },
-            {
                 title: 'Architecture CSS @layer',
-                badge: 'Zéro collision',
+                badge: 'Zéro conflit de spécificité',
                 badgeVariant: 'primary',
                 description:
-                    'Des couches écrites à la main (reset, base, tokens, thèmes, composants, utilitaires). Des surcharges propres côté consommateur, sans astuces de spécificité ni !important.',
+                    'Tous les styles sont ordonnés dans les couches @layer mr.* standard. Les styles applicatifs hôtes gagnent naturellement sans !important ni sur-spécificité.',
             },
             {
-                title: 'Tokens de conception au runtime',
-                badge: 'Multi-thème',
+                title: 'Espace couleur OKLCH & Thèmes',
+                badge: '7 thèmes natifs',
                 badgeVariant: 'default',
                 description:
-                    'Thèmes dynamiques (clair, sombre, nuit, oled), accents personnalisables, rayons et densités commutables au runtime sans recompilation CSS.',
+                    'Basculez entre Clair, Sombre, OLED, Océan, Ardoise, Nuit et Contraste Élevé en 0ms sans déclencher de re-rendu du DOM virtuel React.',
             },
             {
-                title: 'Contrat d’accessibilité',
-                badge: 'WCAG 2.2 AA',
+                title: '83 primitives de production',
+                badge: 'Conforme WCAG 2.1 AA',
+                badgeVariant: 'success',
+                description:
+                    'Des boutons élémentaires aux tables de données virtualisées, palettes de commandes et tiroirs animés, chaque composant dispose d’une parité de typage à 100%.',
+            },
+            {
+                title: 'React 19 Natif',
+                badge: 'Prop ref directe',
                 badgeVariant: 'primary',
                 description:
-                    'Navigation clavier, rôles ARIA corrects, gestion du focus, anneaux de focus visibles et comportement des lecteurs d’écran traités comme des contrats fermes.',
+                    'Spécifiquement conçu pour React 19 avec passage direct des refs (zéro wrapper forwardRef déprécié), compatibilité Server Components et frontières "use client" soignées.',
             },
-        ] satisfies {
-            title: string | ((componentCount: number) => string)
-            badge: string
-            badgeVariant: 'default' | 'primary' | 'success'
-            description: string
-        }[],
+            {
+                title: 'Ergonomie haute densité',
+                badge: 'Compact & Normal',
+                badgeVariant: 'default',
+                description:
+                    'Calibré pour les consoles de télémétrie, les tableaux de données et les outils métier où l’espace à l’écran et la hiérarchie visuelle sont cruciaux.',
+            },
+            {
+                title: 'Zéro surcharge CSS au runtime',
+                badge: 'CSS statique pur',
+                badgeVariant: 'success',
+                description:
+                    'Aucun injecteur dynamique runtime comme Emotion ou styled-components. Les feuilles CSS sont pré-compilées et tree-shakeables pour une hydratation instantanée.',
+            },
+        ],
     },
-    liveTokens: {
-        title: 'Tokens de conception en direct',
-        description:
-            'Ajustez les paramètres du système en temps réel. Observez comment chaque contrôle, surface et état de retour hérite des changements de façon cohérente.',
-        accentPalette: 'Palette d’accent',
-        geometry: 'Géométrie (rayon des angles)',
-        accentSwitcher: 'Sélecteur d’accent',
-        radiusSwitcher: 'Sélecteur de rayon',
-        accents: {
-            neutral: 'Neutre',
-            violet: 'Violet',
-            emerald: 'Émeraude',
-            sky: 'Ciel',
-            amber: 'Ambre',
-        },
-        radii: {
-            none: 'Net',
-            sm: 'Subtil',
-            md: 'Équilibré',
-            lg: 'Arrondi',
-        },
-        previewTitle: 'Aperçu des composants en direct',
-        activeTheme: 'Thème actif',
-        inputLabel: 'Adresse e-mail',
-        inputPlaceholder: 'jane@company.com',
-        progressLabel: 'Pipeline de déploiement',
-        primaryAction: 'Action principale',
-        secondaryAction: 'Secondaire',
-        subtleAction: 'Discret',
-    },
-    showcase: {
-        title: 'Écosystème de composants',
-        description:
-            'Des tableaux de bord de télémétrie opérationnelle à haute densité aux formulaires de configuration sobres et accessibles.',
-        telemetry: {
-            title: 'Télémétrie en direct',
-            description: 'Les primitives MetricGrid et StatCard en action',
-            uptime: 'DISPONIBILITÉ (30 J)',
-            latency: 'LATENCE P99',
-        },
-        feedback: {
-            title: 'Retours et notifications',
-            description: 'Callout et retours d’état',
-            calloutTitle: 'Tous les systèmes sont opérationnels',
-            calloutBody: (componentCount: number) =>
-                `${componentCount} composants testés et validés sur la matrice de vérification.`,
-            statLabel: 'BUNDLE DE PRODUCTION',
-            statValue: 'Tree-shakable',
-            statDescription: 'Points d’entrée modulaires et aucun effet de bord inutile.',
-        },
+    codeExperience: {
+        title: 'Expérience Développeur',
+        description: 'Composition limpide, typage strict et zéro code superflu.',
+        tabComponent: 'Dashboard.tsx',
+        tabTheme: 'theme.config.ts',
+        tabHtml: 'index.html',
     },
 } satisfies typeof enHome

@@ -34,7 +34,7 @@ describe('AppShell', () => {
             <AppShell>
                 <div>Content</div>
             </AppShell>,
-            { initialEntries: ['/moodboard'] }
+            { initialEntries: ['/docs'] }
         )
 
         expect(screen.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute(

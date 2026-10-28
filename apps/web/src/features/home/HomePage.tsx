@@ -1,15 +1,15 @@
 import { AppHeader } from '@/shared/layouts/AppHeader'
-import { localizePath, useLocale, useMessages } from '@/shared/i18n'
+import { useMessages } from '@/shared/i18n'
 import { usePageSeo } from '@/shared/seo/usePageSeo'
-import { Container, Separator, Stack, Text } from '@monority/ui'
-import { Link } from 'react-router-dom'
-import { HomeFeatures } from './components/HomeFeatures'
+import { Container, Stack } from '@monority/ui'
+import { Home3DMatrix } from './components/Home3DMatrix'
+import { HomeCodeExperience } from './components/HomeCodeExperience'
+import { HomeFooter } from './components/HomeFooter'
+import { HomeFrameworksStrip } from './components/HomeFrameworksStrip'
 import { HomeHero } from './components/HomeHero'
-import { HomeLiveTokens } from './components/HomeLiveTokens'
-import { HomeShowcaseGrid } from './components/HomeShowcaseGrid'
+import { HomePillars } from './components/HomePillars'
 
 export function HomePage() {
-    const { locale } = useLocale()
     const messages = useMessages()
 
     usePageSeo({
@@ -27,7 +27,7 @@ export function HomePage() {
                 color: 'var(--mr-text-primary)',
             }}
         >
-            <AppHeader />
+            <AppHeader homeNav />
 
             <main
                 id="main-content"
@@ -41,52 +41,11 @@ export function HomePage() {
                 <Container size="xl">
                     <Stack gap="xl">
                         <HomeHero />
-                        <HomeLiveTokens />
-                        <HomeFeatures />
-                        <HomeShowcaseGrid />
-
-                        <Separator />
-
-                        <footer
-                            role="contentinfo"
-                            style={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                gap: 'var(--mr-space-4)',
-                                paddingBlockStart: 'var(--mr-space-2)',
-                            }}
-                        >
-                            <Text tone="muted" size="sm">
-                                {messages.common.footer.license}
-                            </Text>
-                            <nav
-                                aria-label={messages.common.footer.navigation}
-                                style={{ display: 'flex', gap: 'var(--mr-space-4)' }}
-                            >
-                                <Link
-                                    to={localizePath('/docs', locale)}
-                                    style={{
-                                        color: 'var(--mr-text-secondary)',
-                                        textDecoration: 'none',
-                                        fontSize: 'var(--mr-font-size-sm)',
-                                    }}
-                                >
-                                    {messages.common.footer.documentation}
-                                </Link>
-                                <Link
-                                    to={localizePath('/moodboard', locale)}
-                                    style={{
-                                        color: 'var(--mr-text-secondary)',
-                                        textDecoration: 'none',
-                                        fontSize: 'var(--mr-font-size-sm)',
-                                    }}
-                                >
-                                    {messages.common.footer.designStudio}
-                                </Link>
-                            </nav>
-                        </footer>
+                        <Home3DMatrix />
+                        <HomeFrameworksStrip />
+                        <HomePillars />
+                        <HomeCodeExperience />
+                        <HomeFooter />
                     </Stack>
                 </Container>
             </main>

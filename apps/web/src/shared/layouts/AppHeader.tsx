@@ -1,12 +1,6 @@
 import {
-    Badge,
-    Banner,
     type CommandItem,
     CommandPalette,
-    Popover,
-    Separator,
-    Stack,
-    Text,
     ThemeName,
     type ThemeNameType,
     useTheme,
@@ -49,8 +43,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
     const messages = useMessages().nav
     const { setTheme } = useTheme()
     const [searchOpen, setSearchOpen] = useState(false)
-    const [changelogOpen, setChangelogOpen] = useState(false)
-    const [showBanner, setShowBanner] = useState(true)
 
     useEffect(() => {
         function onKeyDown(e: KeyboardEvent) {
@@ -62,8 +54,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
         window.addEventListener('keydown', onKeyDown)
         return () => window.removeEventListener('keydown', onKeyDown)
     }, [])
-
-    const componentCount = docsComponentRegistry.length
 
     const commandItems = useMemo<CommandItem[]>(() => {
         const pages: CommandItem[] = [
@@ -84,16 +74,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                 group: messages.commandGroups.pages,
                 onSelect: () => {
                     navigate(localizePath('/docs/installation', locale))
-                    setSearchOpen(false)
-                },
-            },
-            {
-                value: 'page-moodboard',
-                label: messages.commands.moodboard.label,
-                description: messages.commands.moodboard.description,
-                group: messages.commandGroups.pages,
-                onSelect: () => {
-                    navigate(localizePath('/moodboard', locale))
                     setSearchOpen(false)
                 },
             },
@@ -137,31 +117,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
 
     return (
         <>
-            {showBanner && (
-                <div className="app-header__announcement">
-                    <Banner
-                        tone="accent"
-                        dismissible
-                        onDismiss={() => setShowBanner(false)}
-                        className="app-header__announcement-banner"
-                    >
-                        <Banner.Eyebrow>{messages.banner.eyebrow}</Banner.Eyebrow>
-                        <Banner.Description>
-                            {messages.banner.description(componentCount)}
-                        </Banner.Description>
-                        <Banner.Actions>
-                            <button
-                                type="button"
-                                className="app-header__announcement-details-btn"
-                                onClick={() => setChangelogOpen(true)}
-                            >
-                                {messages.banner.cta}
-                            </button>
-                        </Banner.Actions>
-                    </Banner>
-                </div>
-            )}
-
             <header className={homeNav ? 'app-header app-header--home' : 'app-header'}>
                 <div className="app-header__inner">
                     <div className="app-header__start">
@@ -202,7 +157,7 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                 </svg>
                             </span>
                             <span className="app-header__logo-text">Monority</span>
-                            <span className="app-header__logo-badge">v0.1</span>
+                            <span className="app-header__logo-badge">v0.3</span>
                         </Link>
                         <nav className="app-header__nav" aria-label={messages.primaryNavigation}>
                             <NavLink
@@ -214,16 +169,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                                 }
                             >
                                 {messages.links.docs}
-                            </NavLink>
-                            <NavLink
-                                to={localizePath('/moodboard', locale)}
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? 'app-header__link app-header__link--active'
-                                        : 'app-header__link'
-                                }
-                            >
-                                {messages.links.moodboard}
                             </NavLink>
                         </nav>
                     </div>
@@ -260,54 +205,6 @@ export function AppHeader({ homeNav = false }: AppHeaderProps) {
                     </div>
 
                     <div className="app-header__controls">
-                        <Popover
-                            open={changelogOpen}
-                            onOpenChange={setChangelogOpen}
-                            align="end"
-                            side="bottom"
-                        >
-                            <Popover.Trigger
-                                className="app-header__changes-btn"
-                                aria-label={messages.changelog.trigger}
-                            >
-                                <span className="app-header__changes-dot" aria-hidden="true" />
-                                <span className="app-header__changes-title">
-                                    {messages.changelog.trigger}
-                                </span>
-                                <span className="app-header__changes-tag">
-                                    {messages.changelog.tag}
-                                </span>
-                            </Popover.Trigger>
-                            <Popover.Content className="app-header__changes-popover">
-                                <Stack gap="sm">
-                                    <Stack direction="horizontal" justify="between" align="center">
-                                        <Text.Strong size="sm">
-                                            {messages.changelog.title}
-                                        </Text.Strong>
-                                        <Badge tone="accent" size="sm">
-                                            {messages.changelog.badge}
-                                        </Badge>
-                                    </Stack>
-                                    <Separator />
-                                    <Stack
-                                        gap="xs"
-                                        style={{ maxHeight: '280px', overflowY: 'auto' }}
-                                    >
-                                        {messages.changelog.waves.map((wave) => (
-                                            <Stack gap="xs" key={wave.title}>
-                                                <Text.Small tone="strong">{wave.title}</Text.Small>
-                                                {wave.items.map((item) => (
-                                                    <Text.Small tone="muted" key={item}>
-                                                        • {item}
-                                                    </Text.Small>
-                                                ))}
-                                                <Separator />
-                                            </Stack>
-                                        ))}
-                                    </Stack>
-                                </Stack>
-                            </Popover.Content>
-                        </Popover>
                         <LocaleSwitcher className="app-header__locale" />
                         <MotionToggle className="app-header__motion" />
                         <ThemeToggle className="app-header__theme" />

@@ -126,9 +126,7 @@ export const guides = {
             title: 'Next steps',
             description: 'Explore the ecosystem and start designing.',
             docsLabel: 'component documentation',
-            moodboardLabel: 'Design Studio',
             browsePrefix: 'Browse the',
-            testPrefix: 'Try your token combinations in the',
         },
     },
 }

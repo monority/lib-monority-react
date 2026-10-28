@@ -134,9 +134,7 @@ export const guides = {
             title: 'Prochaines étapes',
             description: 'Explorez l’écosystème et commencez à concevoir.',
             docsLabel: 'documentation des composants',
-            moodboardLabel: 'Design Studio',
             browsePrefix: 'Consultez la',
-            testPrefix: 'Testez vos combinaisons de tokens dans le',
         },
     },
 } satisfies typeof enGuides

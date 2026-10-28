@@ -5,66 +5,12 @@ export const nav = {
     primaryNavigation: 'Navigation principale',
     links: {
         docs: 'Docs',
-        moodboard: 'Moodboard',
     },
     search: {
         open: 'Rechercher des composants ou des actions (Ctrl+K)',
         placeholder: 'Rechercher des composants…',
         dialogPlaceholder: 'Rechercher un composant, un guide, un thème…',
         empty: 'Aucun composant ou action ne correspond à votre recherche.',
-    },
-    banner: {
-        eyebrow: 'Vague 7',
-        description: (componentCount: number) =>
-            `Système de mouvement, anneaux de focus calibrés, documentation interactive sur ${componentCount} composants et conformité WCAG 2.1 AA.`,
-        cta: 'Voir le journal',
-    },
-    changelog: {
-        trigger: 'Derniers changements',
-        title: 'Journal des modifications',
-        tag: 'V7',
-        badge: 'Vague 7',
-        waves: [
-            {
-                title: 'Vague 7 — Mouvement, focus et documentation',
-                items: [
-                    'Playgrounds interactifs dynamiques',
-                    'Système de mouvement tokenisé et anneaux de focus calibrés',
-                    'Certification accessibilité WCAG 2.1 AA (0 violation Axe)',
-                ],
-            },
-            {
-                title: 'Vague 6 — Composants avancés et qualité',
-                items: [
-                    'CommandPalette, FileUpload, SidebarLayout, Combobox compound',
-                    'Composition déclarative et rétro-compatibilité totale',
-                    'Purge intégrale des emojis Unicode dans tout le dépôt',
-                    'AppHeader : intégration Banner compound',
-                ],
-            },
-            {
-                title: 'Vague 5 — Fenêtres modales et tiroirs',
-                items: ['Modal, Dialog, Sheet, Drawer : architecture compound'],
-            },
-            {
-                title: 'Vague 4 — Données et collections',
-                items: ['Table, Tabs, Pagination : architecture compound'],
-            },
-            {
-                title: 'Vague 3 — Overlays et interface dynamique',
-                items: [
-                    'Calendar, Popover, HoverCard, Tooltip, Collapsible, Avatar, Carousel compound',
-                ],
-            },
-            {
-                title: 'Vague 2 — Menus et navigation',
-                items: ['NavigationMenu, Menubar et Stepper compound'],
-            },
-            {
-                title: 'Vague 1 — Formulaires et données',
-                items: ['Select, DropdownMenu, ContextMenu, Accordion compound'],
-            },
-        ],
     },
     commandGroups: {
         pages: 'Guides et vues',
@@ -79,10 +25,6 @@ export const nav = {
         installation: {
             label: 'Installation',
             description: 'Configuration du paquet npm et des couches CSS',
-        },
-        moodboard: {
-            label: 'Moodboard (Studio)',
-            description: 'Tableau de bord interactif et bac à sable de personnalisation',
         },
         home: {
             label: 'Accueil Monority UI',

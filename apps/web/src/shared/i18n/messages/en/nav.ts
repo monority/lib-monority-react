@@ -3,66 +3,12 @@ export const nav = {
     primaryNavigation: 'Main navigation',
     links: {
         docs: 'Docs',
-        moodboard: 'Moodboard',
     },
     search: {
         open: 'Search components or actions (Ctrl+K)',
         placeholder: 'Search components…',
         dialogPlaceholder: 'Search a component, a guide, a theme…',
         empty: 'No component or action matches your search.',
-    },
-    banner: {
-        eyebrow: 'Wave 7',
-        description: (componentCount: number) =>
-            `Motion system, calibrated focus rings, interactive documentation across ${componentCount} components, and WCAG 2.1 AA conformance.`,
-        cta: 'View the changelog',
-    },
-    changelog: {
-        trigger: 'Latest changes',
-        title: 'Changelog',
-        tag: 'V7',
-        badge: 'Wave 7',
-        waves: [
-            {
-                title: 'Wave 7 — Motion, Focus & Documentation',
-                items: [
-                    'Dynamic interactive playgrounds',
-                    'Tokenized motion system and calibrated focus rings',
-                    'WCAG 2.1 AA accessibility certification (0 Axe violations)',
-                ],
-            },
-            {
-                title: 'Wave 6 — Advanced Components & Quality',
-                items: [
-                    'CommandPalette, FileUpload, SidebarLayout, Combobox compound',
-                    'Declarative composition with full backwards compatibility',
-                    'Complete removal of Unicode emojis across the repository',
-                    'AppHeader: Banner compound integration',
-                ],
-            },
-            {
-                title: 'Wave 5 — Modal Windows & Drawers',
-                items: ['Modal, Dialog, Sheet, Drawer: compound architecture'],
-            },
-            {
-                title: 'Wave 4 — Data & Collections',
-                items: ['Table, Tabs, Pagination: compound architecture'],
-            },
-            {
-                title: 'Wave 3 — Overlays & Dynamic UI',
-                items: [
-                    'Calendar, Popover, HoverCard, Tooltip, Collapsible, Avatar, Carousel compound',
-                ],
-            },
-            {
-                title: 'Wave 2 — Menus & Navigation',
-                items: ['NavigationMenu, Menubar and Stepper compound'],
-            },
-            {
-                title: 'Wave 1 — Forms & Data',
-                items: ['Select, DropdownMenu, ContextMenu, Accordion compound'],
-            },
-        ],
     },
     commandGroups: {
         pages: 'Guides & views',
@@ -77,10 +23,6 @@ export const nav = {
         installation: {
             label: 'Installation',
             description: 'npm package and CSS layer configuration',
-        },
-        moodboard: {
-            label: 'Moodboard (Studio)',
-            description: 'Interactive dashboard and customization sandbox',
         },
         home: {
             label: 'Monority UI home',

@@ -176,10 +176,17 @@
     }
 
     /* Chevron lors de l'ouverture du select */
-    :where(.mr-select-wrapper[data-open='true'])::after,
+    :where(.mr-select-wrapper:is([data-open], [data-open='true']))::after,
     :where(.mr-select-wrapper:has(:where(.mr-select:open)))::after {
         transform: translateY(-30%) rotate(225deg);
         border-color: var(--mr-focus-ring);
+    }
+
+    /* Halo actif lors de l'ouverture du select */
+    :where(.mr-select-wrapper:is([data-open], [data-open='true'])) :where(.mr-select) {
+        border-color: var(--mr-focus-ring);
+        outline: 2px solid var(--mr-focus-ring);
+        outline-offset: 0;
     }
 
     /* Etat invalide : bordure de statut danger */
@@ -273,6 +280,7 @@
         z-index: var(--mr-z-popover);
         scrollbar-width: thin;
         scrollbar-color: var(--mr-border-default) transparent;
+        transform-origin: top center;
         animation: mr-floating-enter var(--mr-duration-state) var(--mr-ease-default);
     }
 

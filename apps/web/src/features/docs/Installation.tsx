@@ -100,15 +100,6 @@ export function Installation() {
                                 {messages.nextSteps.docsLabel}
                             </Link>
                         </li>
-                        <li>
-                            {messages.nextSteps.testPrefix}{' '}
-                            <Link
-                                to={localizePath('/moodboard', locale)}
-                                className="docs-text-link"
-                            >
-                                {messages.nextSteps.moodboardLabel}
-                            </Link>
-                        </li>
                     </ul>
                 </Card>
             </DocSection>

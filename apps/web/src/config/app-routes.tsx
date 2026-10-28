@@ -29,18 +29,19 @@ function createLocaleRoutes(prefix: '' | '/fr'): RouteObject[] {
             element: prefix ? <HomePage /> : <EnglishHomeRoute />,
         },
         {
-            path: path('/moodboard'),
-            lazy: async () => {
-                const { MoodboardPage } = await import('@/features/moodboard/MoodboardPage')
-                return { Component: MoodboardPage }
-            },
-        },
-        {
             path: path('/docs/*'),
             lazy: async () => {
                 const { DocsPage } = await import('@/features/docs/DocsPage')
                 return { Component: DocsPage }
             },
+        },
+        {
+            path: path('/playground'),
+            element: <Navigate to={path('/docs')} replace />,
+        },
+        {
+            path: path('/moodboard'),
+            element: <Navigate to={path('/docs')} replace />,
         },
         {
             path: path('/*'),

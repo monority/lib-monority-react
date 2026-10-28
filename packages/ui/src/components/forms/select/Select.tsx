@@ -69,7 +69,7 @@ export function Select({
     const internalSelectRef = useRef<HTMLSelectElement | null>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
-    const { isMounted, presenceProps, ref: presenceRef } = usePresence(isOpen, { durationMs: 150 })
+    const { isMounted, presenceProps, ref: presenceRef } = usePresence(isOpen, { durationMs: 260 })
 
     const currentValue = value !== undefined ? value : internalValue
 

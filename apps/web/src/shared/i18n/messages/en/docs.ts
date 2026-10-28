@@ -61,7 +61,7 @@ export const docs = {
         global: 'Global',
     },
     playground: {
-        badge: 'Playground',
+        badge: 'Preview',
         properties: 'Dynamic properties',
         reset: 'Reset',
         resetLabel: 'Reset properties',

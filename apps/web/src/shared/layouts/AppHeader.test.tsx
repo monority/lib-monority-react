@@ -18,17 +18,13 @@ function renderHeader(homeNav = false) {
 }
 
 describe('AppHeader', () => {
-    it('exposes the moodboard in the main navigation', () => {
+    it('exposes docs in the main navigation', () => {
         renderHeader()
 
         const nav = screen.getByRole('navigation', { name: 'Main navigation' })
-        expect(within(nav).getByRole('link', { name: 'Moodboard' })).toHaveAttribute(
-            'href',
-            '/moodboard'
-        )
         expect(within(nav).getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/docs')
-        expect(within(nav).queryByRole('link', { name: 'Showcase' })).toBeNull()
         expect(within(nav).queryByRole('link', { name: 'Playground' })).toBeNull()
+        expect(within(nav).queryByRole('link', { name: 'Showcase' })).toBeNull()
     })
 
     it('exposes an accessible theme dropdown without an accent selector', () => {
@@ -68,10 +64,10 @@ describe('AppHeader', () => {
         expect(DESIGN_PRESETS.themes.map((t) => t.label)).toContain('Slate')
     })
 
-    it('shows the temporary changes section and the changelog trigger', () => {
+    it('does not display temporary changes or changelog logs in the clean header', () => {
         renderHeader()
 
-        expect(screen.getByText(/Wave 7/i)).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: /latest changes/i })).toBeInTheDocument()
+        expect(screen.queryByText(/Wave 7/i)).not.toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: /latest changes/i })).not.toBeInTheDocument()
     })
 })
