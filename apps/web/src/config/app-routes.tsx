@@ -1,7 +1,7 @@
 import { HomePage } from '@/features/home/HomePage'
 import { NotFoundPage } from '@/shared/NotFoundPage'
-import { getBrowserLocale, LocaleProvider, readStoredLocale } from '@/shared/i18n'
-import { Outlet, Navigate, type RouteObject } from 'react-router-dom'
+import { LocaleProvider, getBrowserLocale, readStoredLocale } from '@/shared/i18n'
+import { Navigate, Outlet, type RouteObject } from 'react-router-dom'
 
 function LocaleRoot() {
     return (
@@ -33,6 +33,13 @@ function createLocaleRoutes(prefix: '' | '/fr'): RouteObject[] {
             lazy: async () => {
                 const { DocsPage } = await import('@/features/docs/DocsPage')
                 return { Component: DocsPage }
+            },
+        },
+        {
+            path: path('/logo3d'),
+            lazy: async () => {
+                const { Logo3DPage } = await import('@/features/logo3d/Logo3DPage')
+                return { Component: Logo3DPage }
             },
         },
         {

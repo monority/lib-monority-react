@@ -17,6 +17,7 @@
         "@fontsource-variable/geist": "^5.2.0",
         "@fontsource-variable/geist-mono": "^5.2.0",
         "@monority/ui": "workspace:*",
+        "@monority/logo3d": "workspace:*",
         "highlight.js": "^11.11.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",

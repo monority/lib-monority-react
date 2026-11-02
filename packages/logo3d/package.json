@@ -1,0 +1,61 @@
+{
+    "name": "@monority/logo3d",
+    "version": "0.0.1",
+    "description": "Monority logo in 3D — a dependency-light three.js point cloud, importable anywhere",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/monority/lib-monority-react.git"
+    },
+    "type": "module",
+    "sideEffects": false,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./react": {
+            "types": "./dist/react.d.ts",
+            "import": "./dist/react.js",
+            "default": "./dist/react.js"
+        },
+        "./data": {
+            "types": "./dist/data.d.ts",
+            "import": "./dist/data.js",
+            "default": "./dist/data.js"
+        }
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "typecheck": "tsc --noEmit",
+        "test": "node --test test/*.test.mjs",
+        "bake": "node scripts/bake.mjs"
+    },
+    "peerDependencies": {
+        "three": ">=0.170.0",
+        "react": ">=19.0.0"
+    },
+    "peerDependenciesMeta": {
+        "react": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@types/react": "^19",
+        "@types/three": "^0.180.0",
+        "react": "^19.0.0",
+        "three": "^0.180.0",
+        "tsup": "^8.0.0",
+        "typescript": "^5.0.0"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
