@@ -20,7 +20,7 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: 0,
         speed: 0.005,
         radius: 195,
-        yOffset: -22,
+        yOffset: -18,
     },
     {
         id: 'ts',
@@ -29,7 +29,7 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: (Math.PI * 1) / 3,
         speed: 0.005,
         radius: 200,
-        yOffset: 25,
+        yOffset: 22,
     },
     {
         id: 'layer',
@@ -38,7 +38,7 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: (Math.PI * 2) / 3,
         speed: 0.005,
         radius: 190,
-        yOffset: -30,
+        yOffset: -26,
     },
     {
         id: 'oklch',
@@ -47,7 +47,7 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: Math.PI,
         speed: 0.005,
         radius: 195,
-        yOffset: 18,
+        yOffset: 16,
     },
     {
         id: 'next',
@@ -56,7 +56,7 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: (Math.PI * 4) / 3,
         speed: 0.005,
         radius: 205,
-        yOffset: -18,
+        yOffset: -16,
     },
     {
         id: 'vite',
@@ -65,48 +65,40 @@ const NODES_CONFIG: OrbitalNodeConfig[] = [
         angle: (Math.PI * 5) / 3,
         speed: 0.005,
         radius: 190,
-        yOffset: 28,
+        yOffset: 24,
     },
 ]
 
-interface ProjectedNode {
-    id: string
-    label: string
-    subLabel: string
-    x: number
-    y: number
-    scale: number
-    opacity: number
-    zIndex: number
-}
-
 // Mappage instantané des teintes d'accentuation standard de Monority
 const ACCENT_HEX_MAP: Record<string, number> = {
-    '290': 0x8b5cf6, // Violet
+    '290': 0x8b5cf6, // Violet / Iris
     '215': 0x06b6d4, // Cyan
     '70': 0xf59e0b, // Amber
     '155': 0x10b981, // Emerald
 }
 
+const SIGNATURE_VIOLET = 0x8b5cf6
+const ELECTRIC_CYAN = 0x06b6d4
+
 let helperCanvas: HTMLCanvasElement | null = null
 let helperCtx: CanvasRenderingContext2D | null = null
 
-function resolveCssColor(cssColor: string, defaultHex = 0x8b5cf6): number {
+function resolveCssColor(cssColor: string, defaultHex = SIGNATURE_VIOLET): number {
     if (!cssColor) return defaultHex
     const trimmed = cssColor.trim()
 
-    // 1. Détection rapide hexadécimale
+    // 1. Détection hexadécimale directe
     if (trimmed.startsWith('#')) {
         const parsed = Number.parseInt(trimmed.slice(1), 16)
         if (!Number.isNaN(parsed)) return parsed
     }
 
-    // 2. Détection rapide des teintes OKLCH de Monority
+    // 2. Détection rapide des teintes OKLCH standard de Monority
     for (const [hue, hex] of Object.entries(ACCENT_HEX_MAP)) {
         if (trimmed.includes(hue)) return hex
     }
 
-    // 3. Résolution Canvas 2D sans altération du DOM
+    // 3. Résolution Canvas 2D
     if (typeof document !== 'undefined') {
         try {
             if (!helperCanvas) {
@@ -121,8 +113,15 @@ function resolveCssColor(cssColor: string, defaultHex = 0x8b5cf6): number {
                 helperCtx.fillStyle = trimmed
                 helperCtx.fillRect(0, 0, 1, 1)
                 const data = helperCtx.getImageData(0, 0, 1, 1).data
-                if (data[3] !== 0) {
-                    return ((data[0] ?? 0) << 16) | ((data[1] ?? 0) << 8) | (data[2] ?? 0)
+                const r = data[0] ?? 0
+                const g = data[1] ?? 0
+                const b = data[2] ?? 0
+                const a = data[3] ?? 0
+
+                // Si la couleur est achromatique (gris/blanc neutre) ou quasi noire, préserver le violet signature
+                const isNearNeutral = Math.abs(r - g) < 15 && Math.abs(g - b) < 15
+                if (a !== 0 && !isNearNeutral && (r > 30 || g > 30 || b > 30)) {
+                    return (r << 16) | (g << 8) | b
                 }
             }
         } catch {
@@ -139,7 +138,9 @@ function isWebGLSupported(): boolean {
         const canvas = document.createElement('canvas')
         return !!(
             window.WebGLRenderingContext &&
-            (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+            (canvas.getContext('webgl2') ||
+                canvas.getContext('webgl') ||
+                canvas.getContext('experimental-webgl'))
         )
     } catch {
         return false
@@ -149,17 +150,20 @@ function isWebGLSupported(): boolean {
 export function Home3DMatrix() {
     const messages = useMessages()
     const containerRef = useRef<HTMLElement | null>(null)
-    const canvasRef = useRef<HTMLCanvasElement | null>(null)
+    const mountRef = useRef<HTMLDivElement | null>(null)
 
     const [isHovered, setIsHovered] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
-    const [projectedNodes, setProjectedNodes] = useState<ProjectedNode[]>([])
     const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
+    const [webglAvailable, setWebglAvailable] = useState<boolean>(true)
 
     useEffect(() => {
         const container = containerRef.current
-        const canvas = canvasRef.current
-        if (!container || !canvas || !isWebGLSupported()) {
+        const mount = mountRef.current
+        if (!container || !mount) return
+
+        if (!isWebGLSupported()) {
+            setWebglAvailable(false)
             return
         }
 
@@ -181,23 +185,29 @@ export function Home3DMatrix() {
         // Configuration Three.js de base
         const scene = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1500)
-        camera.position.set(0, 30, 440)
+        camera.position.set(0, 22, 500)
         camera.lookAt(0, 0, 0)
 
         let renderer: THREE.WebGLRenderer
         try {
             renderer = new THREE.WebGLRenderer({
-                canvas,
                 antialias: true,
                 alpha: true,
                 powerPreference: 'high-performance',
             })
             renderer.setClearColor(0x000000, 0)
             renderer.toneMapping = THREE.ACESFilmicToneMapping
-            renderer.toneMappingExposure = 1.2
+            renderer.toneMappingExposure = 1.25
         } catch {
+            setWebglAvailable(false)
             return
         }
+
+        const canvasEl = renderer.domElement
+        canvasEl.style.display = 'block'
+        canvasEl.style.width = '100%'
+        canvasEl.style.height = '100%'
+        mount.appendChild(canvasEl)
 
         const resizeRenderer = () => {
             const rect = container.getBoundingClientRect()
@@ -226,33 +236,34 @@ export function Home3DMatrix() {
         // Récupération de la couleur d'accentuation initiale
         const computedStyle = getComputedStyle(container)
         const initialAccentStr = computedStyle.getPropertyValue('--mr-accent-solid').trim()
-        let currentAccentHex = resolveCssColor(initialAccentStr, 0x8b5cf6)
+        let currentAccentHex = resolveCssColor(initialAccentStr, SIGNATURE_VIOLET)
         let lastAccentStr = initialAccentStr
 
         // Lumières Three.js
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9)
         scene.add(ambientLight)
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.5)
-        keyLight.position.set(160, 240, 200)
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.8)
+        keyLight.position.set(160, 240, 220)
         scene.add(keyLight)
 
-        const rimLight = new THREE.DirectionalLight(currentAccentHex, 2.2)
-        rimLight.position.set(-180, -120, -180)
+        // Lumière rasante cyan contrastée
+        const rimLight = new THREE.DirectionalLight(ELECTRIC_CYAN, 2.6)
+        rimLight.position.set(-200, -140, -180)
         scene.add(rimLight)
 
-        const coreLight = new THREE.PointLight(currentAccentHex, 3.8, 350, 1.2)
+        const coreLight = new THREE.PointLight(currentAccentHex, 4.5, 400, 1.2)
         coreLight.position.set(0, 0, 0)
         rootGroup.add(coreLight)
 
         // 1. Cœur central : Hypercube translucide (PBR avec double face)
-        const outerBoxGeo = new THREE.BoxGeometry(82, 82, 82)
+        const outerBoxGeo = new THREE.BoxGeometry(86, 86, 86)
         const outerGlassMat = new THREE.MeshStandardMaterial({
             color: currentAccentHex,
-            roughness: 0.15,
+            roughness: 0.12,
             metalness: 0.25,
             transparent: true,
-            opacity: 0.28,
+            opacity: 0.35,
             side: THREE.DoubleSide,
             depthWrite: false,
         })
@@ -270,13 +281,13 @@ export function Home3DMatrix() {
         rootGroup.add(outerEdges)
 
         // 2. Gyroscope intérieur : Octaèdre métallique pulsant
-        const octaGeo = new THREE.OctahedronGeometry(42, 0)
+        const octaGeo = new THREE.OctahedronGeometry(44, 0)
         const octaMat = new THREE.MeshStandardMaterial({
-            color: currentAccentHex,
-            roughness: 0.2,
-            metalness: 0.8,
+            color: 0xffffff,
+            roughness: 0.18,
+            metalness: 0.85,
             emissive: currentAccentHex,
-            emissiveIntensity: 0.8,
+            emissiveIntensity: 0.95,
         })
         const innerOcta = new THREE.Mesh(octaGeo, octaMat)
         rootGroup.add(innerOcta)
@@ -301,13 +312,13 @@ export function Home3DMatrix() {
             currentAngle: number
         }[] = []
 
-        const satelliteGeo = new THREE.IcosahedronGeometry(8, 1)
+        const satelliteGeo = new THREE.IcosahedronGeometry(9, 1)
 
         NODES_CONFIG.forEach((config) => {
             const satMat = new THREE.MeshStandardMaterial({
                 color: 0xffffff,
                 emissive: currentAccentHex,
-                emissiveIntensity: 1.1,
+                emissiveIntensity: 1.2,
                 roughness: 0.15,
                 metalness: 0.6,
             })
@@ -321,7 +332,7 @@ export function Home3DMatrix() {
             const lineMat = new THREE.LineBasicMaterial({
                 color: currentAccentHex,
                 transparent: true,
-                opacity: 0.65,
+                opacity: 0.75,
             })
             const line = new THREE.Line(lineGeo, lineMat)
             rootGroup.add(line)
@@ -338,12 +349,12 @@ export function Home3DMatrix() {
         })
 
         // 4. Poussière d'étoiles / particules d'ambiance
-        const particleCount = 50
+        const particleCount = 60
         const particlePositions = new Float32Array(particleCount * 3)
         for (let i = 0; i < particleCount; i++) {
-            particlePositions[i * 3] = (Math.random() - 0.5) * 650
+            particlePositions[i * 3] = (Math.random() - 0.5) * 680
             particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 480
-            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 450
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 480
         }
         const particleGeo = new THREE.BufferGeometry()
         particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
@@ -351,7 +362,7 @@ export function Home3DMatrix() {
             color: currentAccentHex,
             size: 3,
             transparent: true,
-            opacity: 0.45,
+            opacity: 0.5,
         })
         const particles = new THREE.Points(particleGeo, particleMat)
         rootGroup.add(particles)
@@ -359,10 +370,10 @@ export function Home3DMatrix() {
         // État de cinématique et d'interaction
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         const startTime = performance.now()
-        let targetRotX = 0.2
-        let targetRotY = -0.3
-        let curRotX = 0.2
-        let curRotY = -0.3
+        let targetRotX = 0.22
+        let targetRotY = -0.32
+        let curRotX = 0.22
+        let curRotY = -0.32
         let dragLastX = 0
         let dragLastY = 0
         let dragging = false
@@ -370,10 +381,10 @@ export function Home3DMatrix() {
         let pointerTargetY = 0
 
         const onPointerDown = (e: MouseEvent | TouchEvent) => {
-            dragging = true
-            setIsDragging(true)
             const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
             const clientY = 'touches' in e ? (e.touches[0]?.clientY ?? 0) : e.clientY
+            dragging = true
+            setIsDragging(true)
             dragLastX = clientX
             dragLastY = clientY
         }
@@ -412,6 +423,13 @@ export function Home3DMatrix() {
         window.addEventListener('touchmove', onPointerMove, { passive: true })
         window.addEventListener('touchend', onPointerUp)
 
+        // Cache des éléments DOM des badges pour éviter toute réconciliation React à 60fps
+        const badgeEls = new Map<string, HTMLElement>()
+        container.querySelectorAll<HTMLElement>('[data-node-badge]').forEach((el) => {
+            const id = el.getAttribute('data-node-badge')
+            if (id) badgeEls.set(id, el)
+        })
+
         const tempV = new THREE.Vector3()
 
         // Boucle d'animation principale
@@ -421,26 +439,23 @@ export function Home3DMatrix() {
                 return
             }
 
-            // Vérification de sécurité de taille si initialisation tardive
-            if (canvas.width === 0 || canvas.height === 0) {
+            if (canvasEl.width === 0 || canvasEl.height === 0) {
                 resizeRenderer()
             }
 
             const elapsed = time - startTime
             const introDuration = 1400
             const introRaw = prefersReducedMotion ? 1 : Math.min(1, elapsed / introDuration)
-            const introEased = 1 - Math.pow(1 - introRaw, 3)
+            const introEased = 1 - (1 - introRaw) ** 3
 
-            // Détection du changement de couleur d'accentuation en temps réel (0ms)
+            // Détection du changement de couleur d'accentuation en temps réel
             const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
             if (currentAccent && currentAccent !== lastAccentStr) {
                 lastAccentStr = currentAccent
-                currentAccentHex = resolveCssColor(currentAccent)
-                rimLight.color.setHex(currentAccentHex)
+                currentAccentHex = resolveCssColor(currentAccent, SIGNATURE_VIOLET)
                 coreLight.color.setHex(currentAccentHex)
                 edgesMat.color.setHex(currentAccentHex)
                 outerGlassMat.color.setHex(currentAccentHex)
-                octaMat.color.setHex(currentAccentHex)
                 octaMat.emissive.setHex(currentAccentHex)
                 particleMat.color.setHex(currentAccentHex)
 
@@ -471,13 +486,20 @@ export function Home3DMatrix() {
             innerOcta.scale.set(octaScale, octaScale, octaScale)
 
             // Pulsation du cœur lumineux
-            coreLight.intensity = (3.2 + 0.8 * Math.sin(time * 0.004)) * introEased
+            coreLight.intensity = (4.0 + 1.0 * Math.sin(time * 0.004)) * introEased
 
-            // Calcul de la projection 2D des nœuds satellites
+            // Calcul de la projection 2D des nœuds satellites directement sur le DOM
             const rect = container.getBoundingClientRect()
             const width = rect.width || 700
             const height = rect.height || 440
-            const nextProjected: ProjectedNode[] = []
+
+            // Récupération tardive des badges si le montage DOM n'était pas achevé
+            if (badgeEls.size === 0) {
+                container.querySelectorAll<HTMLElement>('[data-node-badge]').forEach((el) => {
+                    const id = el.getAttribute('data-node-badge')
+                    if (id) badgeEls.set(id, el)
+                })
+            }
 
             satelliteMeshes.forEach((satItem, idx) => {
                 const { config, mesh, lineGeo } = satItem
@@ -507,29 +529,30 @@ export function Home3DMatrix() {
                 arr[5] = z
                 posAttr.needsUpdate = true
 
-                // Projection de la coordonnée 3D vers l'écran 2D
+                // Projection exacte de la coordonnée 3D
                 mesh.getWorldPosition(tempV)
-                tempV.project(camera)
+                // Profondeur spatiale absolue dans le monde
+                const worldZ = tempV.z
+                const normalizedDepth = Math.max(-1, Math.min(1, worldZ / config.radius))
 
+                // Projection caméra 2D
+                tempV.project(camera)
                 const screenX = (tempV.x * 0.5 + 0.5) * width
                 const screenY = (-tempV.y * 0.5 + 0.5) * height
-                const isBehind = tempV.z > 0.8
-                const depthScale = Math.max(0.75, Math.min(1.15, 1 - (tempV.z - 0.5) * 0.6))
-                const opacity = isBehind ? 0.45 : 0.95
 
-                nextProjected.push({
-                    id: config.id,
-                    label: config.label,
-                    subLabel: config.subLabel,
-                    x: screenX,
-                    y: screenY,
-                    scale: depthScale,
-                    opacity: opacity * Math.max(0.5, introEased),
-                    zIndex: Math.round((1 - tempV.z) * 100),
-                })
+                // Échelle et opacité basées sur la profondeur réelle
+                const isBehind = normalizedDepth < -0.15
+                const depthScale = 1.0 + normalizedDepth * 0.15
+                const opacity = (isBehind ? 0.65 : 1.0) * Math.max(0.4, introEased)
+                const zIndex = Math.round(50 + normalizedDepth * 40)
+
+                const badgeEl = badgeEls.get(config.id)
+                if (badgeEl) {
+                    badgeEl.style.transform = `translate(-50%, -50%) translate3d(${screenX.toFixed(1)}px, ${screenY.toFixed(1)}px, 0) scale(${depthScale.toFixed(3)})`
+                    badgeEl.style.opacity = `${opacity.toFixed(2)}`
+                    badgeEl.style.zIndex = `${zIndex}`
+                }
             })
-
-            setProjectedNodes(nextProjected)
 
             // Rotation lente de l'atmosphère stellaire
             particles.rotation.y += 0.0006
@@ -570,8 +593,10 @@ export function Home3DMatrix() {
                 mat.dispose()
             })
 
+            if (mount.contains(canvasEl)) {
+                mount.removeChild(canvasEl)
+            }
             renderer.dispose()
-            renderer.forceContextLoss()
         }
     }, [])
 
@@ -600,14 +625,60 @@ export function Home3DMatrix() {
                 backgroundColor: 'transparent',
             }}
         >
-            <canvas
-                ref={canvasRef}
+            {/* Conteneur d'injection dynamique du canvas WebGL */}
+            <div
+                ref={mountRef}
                 style={{
-                    display: 'block',
-                    width: '100%',
-                    height: '100%',
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none',
                 }}
             />
+
+            {/* Rendu de secours SVG élégant si WebGL n'est pas disponible */}
+            {!webglAvailable && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        pointerEvents: 'none',
+                    }}
+                >
+                    <svg
+                        width="320"
+                        height="320"
+                        viewBox="0 0 320 320"
+                        fill="none"
+                        style={{ opacity: 0.8 }}
+                    >
+                        <circle
+                            cx="160"
+                            cy="160"
+                            r="110"
+                            stroke="var(--mr-accent-solid)"
+                            strokeWidth="1.5"
+                            strokeDasharray="4 6"
+                            opacity="0.4"
+                        />
+                        <polygon
+                            points="160,80 230,125 230,205 160,250 90,205 90,125"
+                            stroke="var(--mr-accent-solid)"
+                            strokeWidth="2"
+                            fill="color-mix(in oklch, var(--mr-accent-solid) 12%, transparent)"
+                        />
+                        <polygon
+                            points="160,110 205,138 205,188 160,215 115,188 115,138"
+                            stroke="#ffffff"
+                            strokeWidth="1.5"
+                            opacity="0.9"
+                            fill="none"
+                        />
+                    </svg>
+                </div>
+            )}
 
             {/* Badges HTML projetés en 3D avec typographie nette et netteté Retina */}
             <div
@@ -618,22 +689,24 @@ export function Home3DMatrix() {
                     overflow: 'hidden',
                 }}
             >
-                {projectedNodes.map((node) => {
+                {NODES_CONFIG.map((node) => {
                     const isNodeHovered = hoveredNodeId === node.id
                     return (
                         <div
                             key={node.id}
+                            data-node-badge={node.id}
                             style={{
                                 position: 'absolute',
-                                left: `${node.x}px`,
-                                top: `${node.y}px`,
-                                transform: `translate(-50%, -50%) scale(${node.scale * (isNodeHovered ? 1.15 : 1)})`,
-                                opacity: node.opacity,
-                                zIndex: node.zIndex,
+                                left: 0,
+                                top: 0,
+                                transform:
+                                    'translate(-50%, -50%) translate3d(384px, 220px, 0) scale(0)',
+                                opacity: 0,
                                 pointerEvents: 'auto',
                                 cursor: 'pointer',
                                 transition:
-                                    'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms ease',
+                                    'box-shadow 150ms ease, border-color 150ms ease, scale 150ms ease',
+                                willChange: 'transform, opacity',
                             }}
                             onMouseEnter={() => setHoveredNodeId(node.id)}
                             onMouseLeave={() => setHoveredNodeId(null)}
@@ -642,28 +715,32 @@ export function Home3DMatrix() {
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
-                                    gap: '6px',
-                                    padding: '4px 10px',
+                                    gap: '7px',
+                                    padding: '5px 12px',
                                     borderRadius: 'var(--mr-radius-full)',
                                     backgroundColor:
-                                        'color-mix(in oklch, var(--mr-bg-surface), black 25%)',
-                                    backdropFilter: 'blur(12px)',
-                                    WebkitBackdropFilter: 'blur(12px)',
+                                        'color-mix(in oklch, var(--mr-bg-surface), black 30%)',
+                                    backdropFilter: 'blur(14px)',
+                                    WebkitBackdropFilter: 'blur(14px)',
                                     border: isNodeHovered
                                         ? '1px solid var(--mr-accent-solid)'
-                                        : '1px solid var(--mr-border-subtle)',
+                                        : '1px solid color-mix(in oklch, var(--mr-border-default), transparent 30%)',
                                     boxShadow: isNodeHovered
-                                        ? '0 0 16px var(--mr-accent-subtle)'
-                                        : '0 4px 12px rgba(0, 0, 0, 0.25)',
+                                        ? '0 0 18px color-mix(in oklch, var(--mr-accent-solid) 40%, transparent)'
+                                        : '0 4px 16px rgba(0, 0, 0, 0.35)',
+                                    transform: isNodeHovered ? 'scale(1.12)' : 'scale(1)',
+                                    transition:
+                                        'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease, border-color 150ms ease',
                                 }}
                             >
                                 <span
                                     style={{
-                                        width: '6px',
-                                        height: '6px',
+                                        width: '7px',
+                                        height: '7px',
                                         borderRadius: '50%',
                                         backgroundColor: 'var(--mr-accent-solid)',
-                                        boxShadow: '0 0 8px var(--mr-accent-solid)',
+                                        boxShadow: '0 0 10px var(--mr-accent-solid)',
+                                        flexShrink: 0,
                                     }}
                                 />
                                 <span
@@ -672,6 +749,7 @@ export function Home3DMatrix() {
                                         fontWeight: 600,
                                         color: 'var(--mr-text-primary)',
                                         letterSpacing: '-0.01em',
+                                        whiteSpace: 'nowrap',
                                     }}
                                 >
                                     {node.label}
@@ -681,6 +759,7 @@ export function Home3DMatrix() {
                                         fontSize: '10px',
                                         color: 'var(--mr-text-muted)',
                                         fontWeight: 400,
+                                        whiteSpace: 'nowrap',
                                     }}
                                 >
                                     {node.subLabel}
@@ -708,7 +787,20 @@ export function Home3DMatrix() {
                 Drag to orbit 3D
             </div>
 
-            <figcaption className="sr-only">
+            {/* Texte accessible réservé aux lecteurs d'écran (masqué visuellement sans dépendance CSS) */}
+            <figcaption
+                style={{
+                    position: 'absolute',
+                    width: '1px',
+                    height: '1px',
+                    padding: 0,
+                    margin: '-1px',
+                    overflow: 'hidden',
+                    clip: 'rect(0, 0, 0, 0)',
+                    whiteSpace: 'nowrap',
+                    border: 0,
+                }}
+            >
                 Interactive 3D vector matrix demonstrating the Monority UI component core connected
                 to React 19, TypeScript, CSS @layer, OKLCH runtime theming, Next.js, and Vite.
             </figcaption>
