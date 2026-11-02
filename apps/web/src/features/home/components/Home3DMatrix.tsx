@@ -1,33 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import * as THREE from 'three'
 import { useMessages } from '@/shared/i18n'
-
-interface LayerSpec {
-    id: string
-    label: string
-    role: string
-    index: number // 0 (bottom) to 5 (top)
-}
-
-const LAYERS_SPEC: LayerSpec[] = [
-    { id: 'utilities', label: 'mr.utilities', role: 'Overrides', index: 5 },
-    { id: 'components', label: 'mr.components', role: '83 Primitives', index: 4 },
-    { id: 'themes', label: 'mr.themes', role: 'Runtime OKLCH', index: 3 },
-    { id: 'tokens', label: 'mr.tokens', role: 'Design Tokens', index: 2 },
-    { id: 'base', label: 'mr.base', role: 'Typography & Layout', index: 1 },
-    { id: 'reset', label: 'mr.reset', role: 'CSS Clean Slate', index: 0 },
-]
 
 // Mappage instantané des teintes d'accentuation standard de Monority
 const ACCENT_HEX_MAP: Record<string, number> = {
-    '290': 0x8b5cf6, // Violet / Iris
+    '290': 0x8b5cf6, // Violet / Iris (défaut)
     '215': 0x06b6d4, // Cyan
     '70': 0xf59e0b, // Amber
     '155': 0x10b981, // Emerald
 }
 
 const SIGNATURE_VIOLET = 0x8b5cf6
-const ELECTRIC_CYAN = 0x06b6d4
+
+const LAYER_STAMPS = [
+    'mr.utilities',
+    'mr.components',
+    'mr.themes',
+    'mr.tokens',
+    'mr.base',
+    'mr.reset',
+]
 
 let helperCanvas: HTMLCanvasElement | null = null
 let helperCtx: CanvasRenderingContext2D | null = null
@@ -36,18 +27,15 @@ function resolveCssColor(cssColor: string, defaultHex = SIGNATURE_VIOLET): numbe
     if (!cssColor) return defaultHex
     const trimmed = cssColor.trim()
 
-    // 1. Détection hexadécimale directe
     if (trimmed.startsWith('#')) {
         const parsed = Number.parseInt(trimmed.slice(1), 16)
         if (!Number.isNaN(parsed)) return parsed
     }
 
-    // 2. Détection rapide des teintes OKLCH standard de Monority
     for (const [hue, hex] of Object.entries(ACCENT_HEX_MAP)) {
         if (trimmed.includes(hue)) return hex
     }
 
-    // 3. Résolution Canvas 2D
     if (typeof document !== 'undefined') {
         try {
             if (!helperCanvas) {
@@ -80,68 +68,41 @@ function resolveCssColor(cssColor: string, defaultHex = SIGNATURE_VIOLET): numbe
     return defaultHex
 }
 
-function isWebGLSupported(): boolean {
-    if (typeof window === 'undefined') return false
-    try {
-        const canvas = document.createElement('canvas')
-        return !!(
-            window.WebGLRenderingContext &&
-            (canvas.getContext('webgl2') ||
-                canvas.getContext('webgl') ||
-                canvas.getContext('experimental-webgl'))
-        )
-    } catch {
-        return false
+function hexToRgb(hex: number): { r: number; g: number; b: number } {
+    return {
+        r: (hex >> 16) & 255,
+        g: (hex >> 8) & 255,
+        b: hex & 255,
     }
-}
-
-function createRoundedRectShape(width: number, height: number, radius: number): THREE.Shape {
-    const shape = new THREE.Shape()
-    const x = -width / 2
-    const y = -height / 2
-    shape.moveTo(x + radius, y)
-    shape.lineTo(x + width - radius, y)
-    shape.quadraticCurveTo(x + width, y, x + width, y + radius)
-    shape.lineTo(x + width, y + height - radius)
-    shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
-    shape.lineTo(x + radius, y + height)
-    shape.quadraticCurveTo(x, y + height, x, y + height - radius)
-    shape.lineTo(x, y + radius)
-    shape.quadraticCurveTo(x, y, x + radius, y)
-    return shape
 }
 
 export function Home3DMatrix() {
     const messages = useMessages()
     const containerRef = useRef<HTMLElement | null>(null)
-    const mountRef = useRef<HTMLDivElement | null>(null)
+    const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
     const [isHovered, setIsHovered] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
-    const [activeLayerId, setActiveLayerId] = useState<string | null>(null)
-    const [webglAvailable, setWebglAvailable] = useState<boolean>(true)
-
-    // Synchronisation du calque actif pour la boucle d'animation
-    const activeLayerIdRef = useRef<string | null>(null)
-    activeLayerIdRef.current = activeLayerId
 
     const isHoveredRef = useRef(false)
     isHoveredRef.current = isHovered
 
     useEffect(() => {
         const container = containerRef.current
-        const mount = mountRef.current
-        if (!container || !mount) return
+        const canvas = canvasRef.current
+        if (!container || !canvas) return
 
-        if (!isWebGLSupported()) {
-            setWebglAvailable(false)
+        let ctx: CanvasRenderingContext2D | null = null
+        try {
+            ctx = canvas.getContext('2d', { alpha: true })
+        } catch {
             return
         }
+        if (!ctx) return
 
         let animationFrameId: number
         let isVisible = true
         let intersectionObs: IntersectionObserver | null = null
-        let resizeObs: ResizeObserver | null = null
 
         if (typeof IntersectionObserver !== 'undefined') {
             intersectionObs = new IntersectionObserver(
@@ -153,262 +114,52 @@ export function Home3DMatrix() {
             intersectionObs.observe(container)
         }
 
-        // Configuration de la scène
-        const scene = new THREE.Scene()
-        const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 1500)
-        camera.position.set(0, 85, 460)
-        camera.lookAt(0, 0, 0)
+        // Configuration de la résolution et Retina Display
+        let width = 768
+        let height = 440
+        let dpr = 1
 
-        let renderer: THREE.WebGLRenderer
-        try {
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true,
-                powerPreference: 'high-performance',
-            })
-            renderer.setClearColor(0x000000, 0)
-            renderer.toneMapping = THREE.ACESFilmicToneMapping
-            renderer.toneMappingExposure = 1.3
-        } catch {
-            setWebglAvailable(false)
-            return
-        }
-
-        const canvasEl = renderer.domElement
-        canvasEl.style.display = 'block'
-        canvasEl.style.width = '100%'
-        canvasEl.style.height = '100%'
-        mount.appendChild(canvasEl)
-
-        const resizeRenderer = () => {
+        const resize = () => {
             const rect = container.getBoundingClientRect()
-            const w = rect.width || container.clientWidth || 700
-            const h = rect.height || container.clientHeight || 440
-            const dpr = Math.min(window.devicePixelRatio || 1, 2)
-            renderer.setPixelRatio(dpr)
-            renderer.setSize(w, h, false)
-            camera.aspect = w / h
-            camera.updateProjectionMatrix()
+            width = rect.width || container.clientWidth || 768
+            height = rect.height || container.clientHeight || 440
+            dpr = Math.min(window.devicePixelRatio || 1, 2.5)
+
+            canvas.width = Math.round(width * dpr)
+            canvas.height = Math.round(height * dpr)
+            canvas.style.width = `${width}px`
+            canvas.style.height = `${height}px`
         }
-        resizeRenderer()
+        resize()
 
-        if (typeof ResizeObserver !== 'undefined') {
-            resizeObs = new ResizeObserver(() => {
-                resizeRenderer()
-            })
-            resizeObs.observe(container)
-        }
-        window.addEventListener('resize', resizeRenderer)
+        const resizeObs =
+            typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => resize()) : null
+        if (resizeObs) resizeObs.observe(container)
+        window.addEventListener('resize', resize)
 
-        // Groupe racine pivotant (légèrement décalé pour centrage visuel avec le HUD)
-        const rootGroup = new THREE.Group()
-        rootGroup.position.x = 42
-        scene.add(rootGroup)
-
-        // Récupération de la couleur d'accentuation initiale
+        // Gestion de la couleur d'accentuation en temps réel
         const computedStyle = getComputedStyle(container)
         const initialAccentStr = computedStyle.getPropertyValue('--mr-accent-solid').trim()
         let currentAccentHex = resolveCssColor(initialAccentStr, SIGNATURE_VIOLET)
         let lastAccentStr = initialAccentStr
 
-        // Éclairage studio architectural
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.95)
-        scene.add(ambientLight)
-
-        // Key light principale (mise en valeur des biseaux et du chanfrein de verre)
-        const keyLight = new THREE.DirectionalLight(0xffffff, 3.5)
-        keyLight.position.set(160, 260, 200)
-        scene.add(keyLight)
-
-        // Lumière zénithale directe pour faire briller la surface des dalles
-        const topLight = new THREE.DirectionalLight(0xffffff, 2.8)
-        topLight.position.set(0, 340, 100)
-        scene.add(topLight)
-
-        // Rim light rasante électrique (contraste cyan)
-        const rimLight = new THREE.DirectionalLight(ELECTRIC_CYAN, 2.6)
-        rimLight.position.set(-200, -140, -180)
-        scene.add(rimLight)
-
-        // Lumière interne diffuse placée au cœur de l'empilement (irradie entre les couches)
-        const coreLight = new THREE.PointLight(currentAccentHex, 6.0, 420, 1.0)
-        coreLight.position.set(0, 0, 0)
-        rootGroup.add(coreLight)
-
-        // Prisme central intérieur (émetteur optique entre mr.tokens et mr.themes)
-        const prismGeo = new THREE.OctahedronGeometry(18, 0)
-        const prismMat = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            roughness: 0.1,
-            metalness: 0.9,
-            emissive: currentAccentHex,
-            emissiveIntensity: 1.2,
-        })
-        const prismMesh = new THREE.Mesh(prismGeo, prismMat)
-        prismMesh.position.set(0, 0, 0)
-        rootGroup.add(prismMesh)
-
-        const prismEdgesGeo = new THREE.EdgesGeometry(prismGeo)
-        const prismEdgesMat = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.9,
-        })
-        prismMesh.add(new THREE.LineSegments(prismEdgesGeo, prismEdgesMat))
-
-        // Création de la géométrie de plaque de verre biseautée chanfreinée
-        const slabWidth = 224
-        const slabDepth = 138
-        const slabRadius = 8
-        const slabShape = createRoundedRectShape(slabWidth, slabDepth, slabRadius)
-        const slabGeo = new THREE.ExtrudeGeometry(slabShape, {
-            depth: 4.5,
-            bevelEnabled: true,
-            bevelSegments: 4,
-            steps: 1,
-            bevelSize: 1.8,
-            bevelThickness: 1.4,
-        })
-        // Poser la plaque à plat sur le plan XZ
-        slabGeo.rotateX(Math.PI / 2)
-        slabGeo.center()
-
-        // Arêtes néon chanfreinées (détection de l'angle seuil de biseau)
-        const slabEdgesGeo = new THREE.EdgesGeometry(slabGeo, 24)
-
-        // Création d'un fil intérieur gravé
-        const innerShape = createRoundedRectShape(slabWidth - 28, slabDepth - 28, slabRadius - 2)
-        const innerPoints = innerShape.getPoints(32)
-        const innerLinePositions = new Float32Array((innerPoints.length + 1) * 3)
-        innerPoints.forEach((pt, i) => {
-            innerLinePositions[i * 3] = pt.x
-            innerLinePositions[i * 3 + 1] = 0.5
-            innerLinePositions[i * 3 + 2] = -pt.y
-        })
-        // Fermer le tracé
-        const firstPt = innerPoints[0]
-        if (firstPt) {
-            const lastIdx = innerPoints.length
-            innerLinePositions[lastIdx * 3] = firstPt.x
-            innerLinePositions[lastIdx * 3 + 1] = 0.5
-            innerLinePositions[lastIdx * 3 + 2] = -firstPt.y
-        }
-        const innerLineGeo = new THREE.BufferGeometry()
-        innerLineGeo.setAttribute('position', new THREE.BufferAttribute(innerLinePositions, 3))
-
-        // Création des 6 plaques d'empilement
-        interface PlateRuntime {
-            spec: LayerSpec
-            group: THREE.Group
-            mesh: THREE.Mesh
-            mat: THREE.MeshPhysicalMaterial
-            edgesMat: THREE.LineBasicMaterial
-            innerLineMat: THREE.LineBasicMaterial
-            baseRelIndex: number
-        }
-
-        const plates: PlateRuntime[] = []
-
-        LAYERS_SPEC.forEach((spec) => {
-            const plateGroup = new THREE.Group()
-            rootGroup.add(plateGroup)
-
-            // Verre physique architectural translucide
-            const glassMat = new THREE.MeshPhysicalMaterial({
-                color: 0x22273a,
-                roughness: 0.1,
-                metalness: 0.22,
-                transmission: 0.72,
-                ior: 1.5,
-                thickness: 4.5,
-                clearcoat: 1.0,
-                clearcoatRoughness: 0.05,
-                transparent: true,
-                opacity: 0.82,
-                depthWrite: false,
-                attenuationColor: new THREE.Color(currentAccentHex),
-                attenuationDistance: 32,
-            })
-
-            const mesh = new THREE.Mesh(slabGeo, glassMat)
-            plateGroup.add(mesh)
-
-            // Bords chanfreinés lumineux
-            const edgesMat = new THREE.LineBasicMaterial({
-                color: currentAccentHex,
-                transparent: true,
-                opacity: 0.85,
-            })
-            const edgesLine = new THREE.LineSegments(slabEdgesGeo, edgesMat)
-            plateGroup.add(edgesLine)
-
-            // Filigrane architectural gravé en creux
-            const innerLineMat = new THREE.LineBasicMaterial({
-                color: currentAccentHex,
-                transparent: true,
-                opacity: 0.4,
-            })
-            const innerLine = new THREE.Line(innerLineGeo, innerLineMat)
-            plateGroup.add(innerLine)
-
-            // Relatif au centre de l'empilement (spec.index varie de 0 à 5, centre à 2.5)
-            const baseRelIndex = spec.index - 2.5
-
-            plates.push({
-                spec,
-                group: plateGroup,
-                mesh,
-                mat: glassMat,
-                edgesMat,
-                innerLineMat,
-                baseRelIndex,
-            })
-        })
-
-        // Particules d'ambiance stellaire discrètes
-        const particleCount = 45
-        const particlePositions = new Float32Array(particleCount * 3)
-        for (let i = 0; i < particleCount; i++) {
-            particlePositions[i * 3] = (Math.random() - 0.5) * 650
-            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 350
-            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 450
-        }
-        const particleGeo = new THREE.BufferGeometry()
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
-        const particleMat = new THREE.PointsMaterial({
-            color: currentAccentHex,
-            size: 2.5,
-            transparent: true,
-            opacity: 0.35,
-        })
-        const particles = new THREE.Points(particleGeo, particleMat)
-        rootGroup.add(particles)
-
-        // État de cinématique et d'interaction
+        // Cinématique d'interaction
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         const startTime = performance.now()
 
-        // Angles isométriques nobles par défaut (inclinaison accentuée pour voir la surface du verre)
-        const defaultRotX = 0.62
-        const defaultRotY = -0.42
-        let targetRotX = defaultRotX
-        let targetRotY = defaultRotY
-        let curRotX = defaultRotX
-        let curRotY = defaultRotY
-        let currentGap = 13
+        let tiltX = 0
+        let tiltY = 0
+        let targetTiltX = 0
+        let targetTiltY = 0
+        let bezelAngle = 0
         let dragLastX = 0
-        let dragLastY = 0
         let dragging = false
-        let pointerTargetX = 0
-        let pointerTargetY = 0
 
         const onPointerDown = (e: MouseEvent | TouchEvent) => {
             const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
-            const clientY = 'touches' in e ? (e.touches[0]?.clientY ?? 0) : e.clientY
             dragging = true
             setIsDragging(true)
             dragLastX = clientX
-            dragLastY = clientY
         }
 
         const onPointerMove = (e: MouseEvent | TouchEvent) => {
@@ -417,18 +168,15 @@ export function Home3DMatrix() {
 
             if (dragging) {
                 const deltaX = clientX - dragLastX
-                const deltaY = clientY - dragLastY
                 dragLastX = clientX
-                dragLastY = clientY
-                targetRotY += deltaX * 0.007
-                targetRotX += deltaY * 0.007
+                bezelAngle += deltaX * 0.012
             } else {
                 const rect = container.getBoundingClientRect()
                 if (rect.width > 0 && rect.height > 0) {
-                    const relX = (clientX - rect.left) / rect.width - 0.5
-                    const relY = (clientY - rect.top) / rect.height - 0.5
-                    pointerTargetX = relY * 0.25
-                    pointerTargetY = relX * 0.32
+                    const normX = (clientX - rect.left) / rect.width - 0.5
+                    const normY = (clientY - rect.top) / rect.height - 0.5
+                    targetTiltX = normX * 22
+                    targetTiltY = normY * 18
                 }
             }
         }
@@ -445,15 +193,29 @@ export function Home3DMatrix() {
         window.addEventListener('touchmove', onPointerMove, { passive: true })
         window.addEventListener('touchend', onPointerUp)
 
-        // Boucle d'animation principale
-        const animate = (time: number) => {
+        // Boucle de rendu haute précision 60fps / 120fps
+        const render = (time: number) => {
             if (!isVisible) {
-                animationFrameId = requestAnimationFrame(animate)
+                animationFrameId = requestAnimationFrame(render)
                 return
             }
 
-            if (canvasEl.width === 0 || canvasEl.height === 0) {
-                resizeRenderer()
+            // Détection du changement de thème en direct
+            const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
+            if (currentAccent && currentAccent !== lastAccentStr) {
+                lastAccentStr = currentAccent
+                currentAccentHex = resolveCssColor(currentAccent, SIGNATURE_VIOLET)
+            }
+
+            const accentRgb = hexToRgb(currentAccentHex)
+            const accentCss = `rgb(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b})`
+
+            // Amortissement de l'inclinaison par ressort
+            tiltX += (targetTiltX - tiltX) * 0.08
+            tiltY += (targetTiltY - tiltY) * 0.08
+
+            if (!dragging && !prefersReducedMotion) {
+                bezelAngle += 0.0018
             }
 
             const elapsed = time - startTime
@@ -461,72 +223,367 @@ export function Home3DMatrix() {
             const introRaw = prefersReducedMotion ? 1 : Math.min(1, elapsed / introDuration)
             const introEased = 1 - (1 - introRaw) ** 3
 
-            // Synchronisation de la couleur d'accentuation en temps réel
-            const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
-            if (currentAccent && currentAccent !== lastAccentStr) {
-                lastAccentStr = currentAccent
-                currentAccentHex = resolveCssColor(currentAccent, SIGNATURE_VIOLET)
-                coreLight.color.setHex(currentAccentHex)
-                prismMat.emissive.setHex(currentAccentHex)
-                particleMat.color.setHex(currentAccentHex)
+            // Initialisation de la surface de dessin Retina
+            ctx.save()
+            ctx.scale(dpr, dpr)
+            ctx.clearRect(0, 0, width, height)
 
-                plates.forEach(({ mat, edgesMat }) => {
-                    mat.attenuationColor.setHex(currentAccentHex)
-                    edgesMat.color.setHex(currentAccentHex)
+            const cx = width / 2 + tiltX * 0.35
+            const cy = height / 2 + tiltY * 0.35
+            const dialRadius = Math.min(width * 0.42, 175)
+
+            // 1. Halo volumétrique d'arrière-plan doux
+            const haloGrad = ctx.createRadialGradient(
+                cx,
+                cy,
+                dialRadius * 0.35,
+                cx,
+                cy,
+                dialRadius * 1.55
+            )
+            haloGrad.addColorStop(
+                0,
+                `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, ${0.16 * introEased})`
+            )
+            haloGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+            ctx.fillStyle = haloGrad
+            ctx.beginPath()
+            ctx.arc(cx, cy, dialRadius * 1.55, 0, Math.PI * 2)
+            ctx.fill()
+
+            // 2. Châssis métallique extérieur et anneaux concentriques
+            ctx.save()
+            ctx.beginPath()
+            ctx.arc(cx, cy, dialRadius + 14, 0, Math.PI * 2)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)'
+            ctx.lineWidth = 1
+            ctx.stroke()
+
+            ctx.beginPath()
+            ctx.arc(cx, cy, dialRadius + 8, 0, Math.PI * 2)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'
+            ctx.lineWidth = 1.5
+            ctx.stroke()
+
+            // 3. 180 Graduations laser de précision du cadran (Tachymètre télémétrique)
+            const tickCount = 180
+            for (let i = 0; i < tickCount; i++) {
+                const angle = (i * Math.PI * 2) / tickCount + bezelAngle
+                const isMajor = i % 30 === 0
+                const isMedium = i % 5 === 0 && !isMajor
+                const tickLen = isMajor ? 11 : isMedium ? 6.5 : 3.5
+
+                const innerR = dialRadius - tickLen
+                const outerR = dialRadius
+
+                const x1 = cx + Math.cos(angle) * innerR
+                const y1 = cy + Math.sin(angle) * innerR
+                const x2 = cx + Math.cos(angle) * outerR
+                const y2 = cy + Math.sin(angle) * outerR
+
+                ctx.beginPath()
+                ctx.moveTo(x1, y1)
+                ctx.lineTo(x2, y2)
+
+                if (isMajor) {
+                    ctx.strokeStyle = accentCss
+                    ctx.lineWidth = 1.8
+                } else if (isMedium) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)'
+                    ctx.lineWidth = 1.0
+                } else {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)'
+                    ctx.lineWidth = 0.65
+                }
+                ctx.stroke()
+
+                // Numérotation télémétrique cardinale sur les graduations majeures
+                if (isMajor && dialRadius > 130) {
+                    const labelR = dialRadius - 20
+                    const lx = cx + Math.cos(angle) * labelR
+                    const ly = cy + Math.sin(angle) * labelR
+                    ctx.save()
+                    ctx.font = '8px var(--mr-font-family-mono, monospace)'
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+                    ctx.textAlign = 'center'
+                    ctx.textBaseline = 'middle'
+                    const deg = ((i * 2) % 360).toString().padStart(3, '0')
+                    ctx.fillText(`${deg}°`, lx, ly)
+                    ctx.restore()
+                }
+            }
+            ctx.restore()
+
+            // 4. Arcs segmentés du spectre OKLCH (Teintes natives Monority avec lueur néon)
+            ctx.save()
+            ctx.lineWidth = 4.5
+            ctx.lineCap = 'round'
+
+            const oklchArcs = [
+                { color: 'oklch(0.65 0.24 290)', start: 0.05, end: 0.38 }, // Iris
+                { color: 'oklch(0.70 0.18 215)', start: 0.43, end: 0.76 }, // Cyan
+                { color: 'oklch(0.68 0.18 155)', start: 0.81, end: 1.14 }, // Emerald
+                { color: 'oklch(0.72 0.18 70)', start: 1.19, end: 1.52 }, // Amber
+                { color: 'oklch(0.65 0.22 25)', start: 1.57, end: 1.9 }, // Coral / Rose
+            ]
+
+            const arcRadius = dialRadius + 1
+            oklchArcs.forEach((item) => {
+                const sAngle = item.start * Math.PI + bezelAngle * 0.7
+                const eAngle = item.end * Math.PI + bezelAngle * 0.7
+
+                ctx.shadowBlur = 8
+                ctx.shadowColor = item.color
+                ctx.beginPath()
+                ctx.arc(cx, cy, arcRadius, sAngle, eAngle)
+                ctx.strokeStyle = item.color
+                ctx.stroke()
+            })
+            ctx.restore()
+
+            // 5. Anneau vernier intermédiaire gravé avec les 6 couches CSS @layer
+            const layerRingR = dialRadius - 30
+            ctx.save()
+            ctx.beginPath()
+            ctx.arc(cx, cy, layerRingR, 0, Math.PI * 2)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'
+            ctx.lineWidth = 1
+            ctx.stroke()
+
+            // Gravure des noms de couches autour de l'anneau vernier
+            if (dialRadius > 140) {
+                LAYER_STAMPS.forEach((stamp, sIdx) => {
+                    const stampAngle = (sIdx * Math.PI * 2) / 6 + bezelAngle * 0.35
+                    const sx = cx + Math.cos(stampAngle) * (layerRingR - 5)
+                    const sy = cy + Math.sin(stampAngle) * (layerRingR - 5)
+
+                    ctx.save()
+                    ctx.translate(sx, sy)
+                    ctx.rotate(stampAngle + Math.PI / 2)
+                    ctx.font = '7px var(--mr-font-family-mono, monospace)'
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)'
+                    ctx.textAlign = 'center'
+                    ctx.textBaseline = 'middle'
+                    ctx.fillText(stamp, 0, 0)
+                    ctx.restore()
                 })
             }
+            ctx.restore()
 
-            // Rotation douce et amortissement
-            if (!dragging && !prefersReducedMotion) {
-                targetRotY += 0.0018
+            // 6. Chambre intérieure de l'oscilloscope (Masque circulaire de profondeur)
+            const chamberR = dialRadius - 40
+            ctx.save()
+            ctx.beginPath()
+            ctx.arc(cx, cy, chamberR, 0, Math.PI * 2)
+            ctx.clip()
+
+            // Fond radial sombre de l'oscilloscope
+            const chamberGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, chamberR)
+            chamberGrad.addColorStop(
+                0,
+                `rgba(${Math.round(accentRgb.r * 0.14)}, ${Math.round(accentRgb.g * 0.14)}, ${Math.round(accentRgb.b * 0.22)}, 0.96)`
+            )
+            chamberGrad.addColorStop(0.72, 'rgba(8, 10, 16, 0.98)')
+            chamberGrad.addColorStop(1, 'rgba(4, 5, 8, 1)')
+            ctx.fillStyle = chamberGrad
+            ctx.fill()
+
+            // Réticule de visée cartésien central fin
+            ctx.beginPath()
+            ctx.moveTo(cx - chamberR, cy)
+            ctx.lineTo(cx + chamberR, cy)
+            ctx.moveTo(cx, cy - chamberR)
+            ctx.lineTo(cx, cy + chamberR)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'
+            ctx.lineWidth = 0.8
+            ctx.setLineDash([3, 4])
+            ctx.stroke()
+            ctx.setLineDash([])
+
+            // Cercles de visée concentriques
+            ctx.beginPath()
+            ctx.arc(cx, cy, chamberR * 0.35, 0, Math.PI * 2)
+            ctx.arc(cx, cy, chamberR * 0.7, 0, Math.PI * 2)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)'
+            ctx.lineWidth = 0.8
+            ctx.stroke()
+
+            // 7. Matrice dense de scanlines horizontales (Raster oscilloscopique inspiré d'Anime.js)
+            const scanlineCount = 38
+            const scanlineStep = (chamberR * 2) / (scanlineCount + 1)
+            const waveFreq = isHoveredRef.current ? 0.005 : 0.003
+            const waveSpeed = time * waveFreq
+
+            for (let k = 1; k <= scanlineCount; k++) {
+                const sy = cy - chamberR + k * scanlineStep
+                const distFromCenter = Math.abs(sy - cy) / chamberR
+                const maxHalfWidth = Math.sqrt(Math.max(0, chamberR * chamberR - (sy - cy) ** 2))
+
+                // Modulation de largeur harmonique multi-fréquences
+                const harmonic =
+                    Math.sin(waveSpeed + k * 0.32) * 0.55 +
+                    Math.cos(waveSpeed * 0.7 + k * 0.18) * 0.45
+                const lineWidthFactor = 0.2 + 0.72 * Math.abs(harmonic)
+                const currentHalfWidth = maxHalfWidth * lineWidthFactor * introEased
+
+                if (currentHalfWidth > 3) {
+                    ctx.beginPath()
+                    ctx.moveTo(cx - currentHalfWidth, sy)
+                    ctx.lineTo(cx + currentHalfWidth, sy)
+
+                    const lineAlpha = (1 - distFromCenter * 0.4) * (0.22 + 0.6 * Math.abs(harmonic))
+                    ctx.strokeStyle = `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, ${lineAlpha})`
+                    ctx.lineWidth = 1.4
+                    ctx.lineCap = 'round'
+                    ctx.stroke()
+                }
             }
-            curRotX += (targetRotX + pointerTargetX - curRotX) * 0.06
-            curRotY += (targetRotY + pointerTargetY - curRotY) * 0.06
-            rootGroup.rotation.x = curRotX
-            rootGroup.rotation.y = curRotY
-            rootGroup.rotation.z = 0.06
 
-            // Respiration verticale douce du monolithe
-            const breathe = Math.sin(time * 0.0018) * 3
+            // 8. Courbe d'interpolation cinématique et traceurs lumineux (Nodes Anime.js)
+            const nodeCount = 20
+            const curvePoints: { x: number; y: number }[] = []
 
-            // Espacement des couches : 14px au repos, 34px en vue éclatée au survol
-            const activeId = activeLayerIdRef.current
-            const isExploded = isHoveredRef.current || dragging || activeId !== null
-            const targetGap = isExploded ? 34 : 14
-            currentGap += (targetGap * introEased - currentGap) * 0.08
+            for (let j = 0; j < nodeCount; j++) {
+                const normX = (j / (nodeCount - 1) - 0.5) * 2 // de -1 à +1
+                const px = cx + normX * (chamberR * 0.84)
 
-            // Prisme optique central tournoyant
-            prismMesh.rotation.y += 0.012
-            prismMesh.rotation.x += 0.006
-            const prismScale = 0.8 + 0.2 * Math.sin(time * 0.003)
-            prismMesh.scale.set(prismScale, prismScale, prismScale)
-            coreLight.intensity = (4.2 + 1.2 * Math.sin(time * 0.004)) * introEased
+                // Double harmonique avec amortissement gaussien
+                const env = Math.exp(-(normX * normX) * 2.2)
+                const waveY =
+                    Math.sin(time * 0.0035 + j * 0.42) * 0.7 +
+                    Math.cos(time * 0.002 + j * 0.25) * 0.3
+                const py = cy + waveY * (chamberR * 0.44) * env
 
-            // Positionnement physique de chaque plaque
-            plates.forEach((plate) => {
-                const isSelected = activeId === plate.spec.id
-                const targetY = plate.baseRelIndex * currentGap + breathe + (isSelected ? 6 : 0)
+                curvePoints.push({ x: px, y: py })
+            }
 
-                plate.group.position.y += (targetY - plate.group.position.y) * 0.12
+            // Tracé du faisceau laser connectant les nœuds
+            if (curvePoints.length > 1) {
+                ctx.beginPath()
+                const firstPt = curvePoints[0]
+                if (firstPt) ctx.moveTo(firstPt.x, firstPt.y)
 
-                // Mise en exergue du calque actif ou survolé
-                plate.edgesMat.opacity = isSelected ? 0.95 : isExploded ? 0.65 : 0.45
-                plate.innerLineMat.opacity = isSelected ? 0.45 : 0.18
-                plate.mat.roughness = isSelected ? 0.08 : 0.14
+                for (let j = 1; j < curvePoints.length; j++) {
+                    const pt = curvePoints[j]
+                    if (pt) ctx.lineTo(pt.x, pt.y)
+                }
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)'
+                ctx.lineWidth = 1.3
+                ctx.stroke()
+            }
+
+            // Traceurs particulaires brillants le long du faisceau
+            curvePoints.forEach((pt, idx) => {
+                const pulse = Math.sin(time * 0.005 + idx * 0.55) * 0.5 + 0.5
+                const dotR = 2.4 + pulse * 1.6
+
+                // Lueur néon
+                const glow = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, dotR * 3)
+                glow.addColorStop(0, accentCss)
+                glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
+                ctx.fillStyle = glow
+                ctx.beginPath()
+                ctx.arc(pt.x, pt.y, dotR * 3, 0, Math.PI * 2)
+                ctx.fill()
+
+                // Cœur blanc éclatant
+                ctx.beginPath()
+                ctx.arc(pt.x, pt.y, dotR * 0.85, 0, Math.PI * 2)
+                ctx.fillStyle = '#ffffff'
+                ctx.fill()
             })
 
-            // Mouvement très lent de l'atmosphère stellaire
-            particles.rotation.y += 0.0004
+            ctx.restore() // Fin du clip de la chambre intérieure
 
-            renderer.render(scene, camera)
-            animationFrameId = requestAnimationFrame(animate)
+            // 9. Dôme de verre optique et reflets spéculaires caustiques en croissant
+            // C'est ce détail précis qui confère le relief 3D saisissant de https://animejs.com/
+            ctx.save()
+            const glareShiftX = -tiltX * 0.4
+            const glareShiftY = -tiltY * 0.4
+
+            // Reflet principal supérieur gauche (Croissant de verre courbé)
+            const glassGlareR = chamberR + 2
+            const glareGrad = ctx.createLinearGradient(
+                cx + glareShiftX - glassGlareR * 0.8,
+                cy + glareShiftY - glassGlareR * 0.8,
+                cx + glareShiftX,
+                cy + glareShiftY
+            )
+            glareGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)')
+            glareGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.18)')
+            glareGrad.addColorStop(1, 'rgba(255, 255, 255, 0)')
+
+            ctx.beginPath()
+            ctx.arc(
+                cx + glareShiftX,
+                cy + glareShiftY,
+                glassGlareR,
+                Math.PI * 0.88,
+                Math.PI * 1.72,
+                false
+            )
+            ctx.strokeStyle = glareGrad
+            ctx.lineWidth = 9
+            ctx.lineCap = 'round'
+            ctx.stroke()
+
+            // Reflet secondaire rasant inférieur droit
+            const subGlareGrad = ctx.createLinearGradient(
+                cx + glareShiftX,
+                cy + glareShiftY,
+                cx + glareShiftX + glassGlareR * 0.7,
+                cy + glareShiftY + glassGlareR * 0.7
+            )
+            subGlareGrad.addColorStop(
+                0,
+                `rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.35)`
+            )
+            subGlareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+
+            ctx.beginPath()
+            ctx.arc(
+                cx + glareShiftX,
+                cy + glareShiftY,
+                glassGlareR - 1,
+                Math.PI * 0.12,
+                Math.PI * 0.38,
+                false
+            )
+            ctx.strokeStyle = subGlareGrad
+            ctx.lineWidth = 4
+            ctx.lineCap = 'round'
+            ctx.stroke()
+
+            ctx.restore()
+
+            // 10. Micro-typographie télémétrique discrète sur le cadran
+            ctx.save()
+            ctx.font = '9px var(--mr-font-family-mono, monospace)'
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)'
+
+            // Label supérieur
+            ctx.textAlign = 'center'
+            ctx.fillText('MONORITY UI // TELEMETRY ENGINE', cx, cy - dialRadius - 24 + tiltY * 0.15)
+
+            // Label inférieur centré
+            ctx.font = '8px var(--mr-font-family-mono, monospace)'
+            ctx.fillText(
+                'CSS @LAYER CASCADE // PERCEPTUAL OKLCH',
+                cx,
+                cy + dialRadius + 26 + tiltY * 0.15
+            )
+
+            ctx.restore()
+            ctx.restore() // Fin de l'échelle Retina
+
+            animationFrameId = requestAnimationFrame(render)
         }
 
-        animationFrameId = requestAnimationFrame(animate)
+        animationFrameId = requestAnimationFrame(render)
 
         return () => {
             cancelAnimationFrame(animationFrameId)
-            window.removeEventListener('resize', resizeRenderer)
+            window.removeEventListener('resize', resize)
             container.removeEventListener('mousedown', onPointerDown)
             window.removeEventListener('mousemove', onPointerMove)
             window.removeEventListener('mouseup', onPointerUp)
@@ -535,27 +592,6 @@ export function Home3DMatrix() {
             window.removeEventListener('touchend', onPointerUp)
             if (intersectionObs) intersectionObs.disconnect()
             if (resizeObs) resizeObs.disconnect()
-
-            slabGeo.dispose()
-            slabEdgesGeo.dispose()
-            innerLineGeo.dispose()
-            prismGeo.dispose()
-            prismMat.dispose()
-            prismEdgesGeo.dispose()
-            prismEdgesMat.dispose()
-            particleGeo.dispose()
-            particleMat.dispose()
-
-            plates.forEach(({ mat, edgesMat, innerLineMat }) => {
-                mat.dispose()
-                edgesMat.dispose()
-                innerLineMat.dispose()
-            })
-
-            if (mount.contains(canvasEl)) {
-                mount.removeChild(canvasEl)
-            }
-            renderer.dispose()
         }
     }, [])
 
@@ -568,7 +604,6 @@ export function Home3DMatrix() {
             onMouseLeave={() => {
                 setIsHovered(false)
                 setIsDragging(false)
-                setActiveLayerId(null)
             }}
             style={{
                 position: 'relative',
@@ -583,141 +618,19 @@ export function Home3DMatrix() {
                 userSelect: 'none',
                 touchAction: 'none',
                 backgroundColor: 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}
         >
-            {/* Conteneur d'injection dynamique du canvas WebGL */}
-            <div
-                ref={mountRef}
+            <canvas
+                ref={canvasRef}
                 style={{
-                    position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
+                    display: 'block',
+                    width: '100%',
+                    height: '100%',
                 }}
             />
-
-            {/* Rendu de secours SVG si WebGL est désactivé */}
-            {!webglAvailable && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        pointerEvents: 'none',
-                    }}
-                >
-                    <svg
-                        width="300"
-                        height="260"
-                        viewBox="0 0 300 260"
-                        fill="none"
-                        style={{ opacity: 0.85 }}
-                    >
-                        {[0, 1, 2, 3, 4, 5].map((idx) => {
-                            const y = 50 + idx * 28
-                            return (
-                                <g key={idx}>
-                                    <polygon
-                                        points={`150,${y} 250,${y + 40} 150,${y + 80} 50,${y + 40}`}
-                                        stroke="var(--mr-accent-solid)"
-                                        strokeWidth="1.5"
-                                        fill="color-mix(in oklch, var(--mr-bg-surface), transparent 50%)"
-                                        opacity={0.4 + idx * 0.1}
-                                    />
-                                </g>
-                            )
-                        })}
-                    </svg>
-                </div>
-            )}
-
-            {/* Sélecteur architectural discret de strates (HUD élégant en haut à gauche) */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '1rem',
-                    left: '1.25rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    pointerEvents: 'auto',
-                    zIndex: 2,
-                }}
-            >
-                <div
-                    style={{
-                        fontSize: '9px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.1em',
-                        color: 'var(--mr-text-muted)',
-                        fontFamily: 'var(--mr-font-family-mono)',
-                        marginBottom: '4px',
-                    }}
-                >
-                    CSS @layer Architecture
-                </div>
-                {LAYERS_SPEC.map((layer) => {
-                    const isActive = activeLayerId === layer.id
-                    return (
-                        <button
-                            key={layer.id}
-                            type="button"
-                            onMouseEnter={() => setActiveLayerId(layer.id)}
-                            onMouseLeave={() => setActiveLayerId(null)}
-                            onClick={() =>
-                                setActiveLayerId((prev) => (prev === layer.id ? null : layer.id))
-                            }
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: '3px 8px',
-                                borderRadius: 'var(--mr-radius-sm, 4px)',
-                                border: isActive
-                                    ? '1px solid var(--mr-accent-solid)'
-                                    : '1px solid transparent',
-                                backgroundColor: isActive
-                                    ? 'color-mix(in oklch, var(--mr-accent-solid) 16%, transparent)'
-                                    : 'transparent',
-                                color: isActive
-                                    ? 'var(--mr-text-primary)'
-                                    : 'var(--mr-text-secondary)',
-                                fontFamily: 'var(--mr-font-family-mono)',
-                                fontSize: '11px',
-                                cursor: 'pointer',
-                                transition:
-                                    'background-color 150ms ease, border-color 150ms ease, color 150ms ease',
-                                textAlign: 'left',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    width: '5px',
-                                    height: '5px',
-                                    borderRadius: '50%',
-                                    backgroundColor: isActive
-                                        ? 'var(--mr-accent-solid)'
-                                        : 'var(--mr-border-default)',
-                                    boxShadow: isActive ? '0 0 8px var(--mr-accent-solid)' : 'none',
-                                    transition:
-                                        'background-color 150ms ease, box-shadow 150ms ease',
-                                }}
-                            />
-                            <span style={{ fontWeight: isActive ? 600 : 400 }}>{layer.label}</span>
-                            <span
-                                style={{
-                                    fontSize: '9px',
-                                    color: 'var(--mr-text-muted)',
-                                    opacity: 0.8,
-                                }}
-                            >
-                                {layer.role}
-                            </span>
-                        </button>
-                    )
-                })}
-            </div>
 
             {/* Légende discrète d'interaction en bas à droite */}
             <div
@@ -736,11 +649,11 @@ export function Home3DMatrix() {
                     gap: '6px',
                 }}
             >
-                <span>Hover to expand •</span>
+                <span>Interactive Dial •</span>
                 <span>Drag to orbit 3D</span>
             </div>
 
-            {/* Texte accessible réservé aux lecteurs d'écran (masqué visuellement sans dépendance CSS) */}
+            {/* Texte accessible réservé aux lecteurs d'écran */}
             <figcaption
                 style={{
                     position: 'absolute',
