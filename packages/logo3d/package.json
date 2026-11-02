@@ -28,10 +28,7 @@
             "default": "./dist/data.js"
         }
     },
-    "files": [
-        "dist",
-        "README.md"
-    ],
+    "files": ["dist", "README.md"],
     "scripts": {
         "build": "tsup",
         "typecheck": "tsc --noEmit",
