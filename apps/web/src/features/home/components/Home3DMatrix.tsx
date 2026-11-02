@@ -2,71 +2,20 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { useMessages } from '@/shared/i18n'
 
-interface OrbitalNodeConfig {
+interface LayerSpec {
     id: string
     label: string
-    subLabel: string
-    angle: number
-    speed: number
-    radius: number
-    yOffset: number
+    role: string
+    index: number // 0 (bottom) to 5 (top)
 }
 
-const NODES_CONFIG: OrbitalNodeConfig[] = [
-    {
-        id: 'react',
-        label: 'React 19',
-        subLabel: 'Native ref',
-        angle: 0,
-        speed: 0.005,
-        radius: 195,
-        yOffset: -18,
-    },
-    {
-        id: 'ts',
-        label: 'TypeScript',
-        subLabel: 'Strict types',
-        angle: (Math.PI * 1) / 3,
-        speed: 0.005,
-        radius: 200,
-        yOffset: 22,
-    },
-    {
-        id: 'layer',
-        label: 'CSS @layer',
-        subLabel: 'Isolation',
-        angle: (Math.PI * 2) / 3,
-        speed: 0.005,
-        radius: 190,
-        yOffset: -26,
-    },
-    {
-        id: 'oklch',
-        label: 'OKLCH',
-        subLabel: 'Runtime theme',
-        angle: Math.PI,
-        speed: 0.005,
-        radius: 195,
-        yOffset: 16,
-    },
-    {
-        id: 'next',
-        label: 'Next.js',
-        subLabel: 'App Router',
-        angle: (Math.PI * 4) / 3,
-        speed: 0.005,
-        radius: 205,
-        yOffset: -16,
-    },
-    {
-        id: 'vite',
-        label: 'Vite',
-        subLabel: 'Instant HMR',
-        angle: (Math.PI * 5) / 3,
-        speed: 0.005,
-        radius: 190,
-        yOffset: 24,
-    },
+const LAYERS_SPEC: LayerSpec[] = [
+    { id: 'utilities', label: 'mr.utilities', role: 'Overrides', index: 5 },
+    { id: 'components', label: 'mr.components', role: '83 Primitives', index: 4 },
+    { id: 'themes', label: 'mr.themes', role: 'Runtime OKLCH', index: 3 },
+    { id: 'tokens', label: 'mr.tokens', role: 'Design Tokens', index: 2 },
+    { id: 'base', label: 'mr.base', role: 'Typography & Layout', index: 1 },
+    { id: 'reset', label: 'mr.reset', role: 'CSS Clean Slate', index: 0 },
 ]
 
 // Mappage instantané des teintes d'accentuation standard de Monority
@@ -118,7 +67,6 @@ function resolveCssColor(cssColor: string, defaultHex = SIGNATURE_VIOLET): numbe
                 const b = data[2] ?? 0
                 const a = data[3] ?? 0
 
-                // Si la couleur est achromatique (gris/blanc neutre) ou quasi noire, préserver le violet signature
                 const isNearNeutral = Math.abs(r - g) < 15 && Math.abs(g - b) < 15
                 if (a !== 0 && !isNearNeutral && (r > 30 || g > 30 || b > 30)) {
                     return (r << 16) | (g << 8) | b
@@ -147,6 +95,22 @@ function isWebGLSupported(): boolean {
     }
 }
 
+function createRoundedRectShape(width: number, height: number, radius: number): THREE.Shape {
+    const shape = new THREE.Shape()
+    const x = -width / 2
+    const y = -height / 2
+    shape.moveTo(x + radius, y)
+    shape.lineTo(x + width - radius, y)
+    shape.quadraticCurveTo(x + width, y, x + width, y + radius)
+    shape.lineTo(x + width, y + height - radius)
+    shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+    shape.lineTo(x + radius, y + height)
+    shape.quadraticCurveTo(x, y + height, x, y + height - radius)
+    shape.lineTo(x, y + radius)
+    shape.quadraticCurveTo(x, y, x + radius, y)
+    return shape
+}
+
 export function Home3DMatrix() {
     const messages = useMessages()
     const containerRef = useRef<HTMLElement | null>(null)
@@ -154,8 +118,15 @@ export function Home3DMatrix() {
 
     const [isHovered, setIsHovered] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
-    const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
+    const [activeLayerId, setActiveLayerId] = useState<string | null>(null)
     const [webglAvailable, setWebglAvailable] = useState<boolean>(true)
+
+    // Synchronisation du calque actif pour la boucle d'animation
+    const activeLayerIdRef = useRef<string | null>(null)
+    activeLayerIdRef.current = activeLayerId
+
+    const isHoveredRef = useRef(false)
+    isHoveredRef.current = isHovered
 
     useEffect(() => {
         const container = containerRef.current
@@ -182,10 +153,10 @@ export function Home3DMatrix() {
             intersectionObs.observe(container)
         }
 
-        // Configuration Three.js de base
+        // Configuration de la scène
         const scene = new THREE.Scene()
-        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1500)
-        camera.position.set(0, 22, 500)
+        const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 1500)
+        camera.position.set(0, 85, 460)
         camera.lookAt(0, 0, 0)
 
         let renderer: THREE.WebGLRenderer
@@ -197,7 +168,7 @@ export function Home3DMatrix() {
             })
             renderer.setClearColor(0x000000, 0)
             renderer.toneMapping = THREE.ACESFilmicToneMapping
-            renderer.toneMappingExposure = 1.25
+            renderer.toneMappingExposure = 1.3
         } catch {
             setWebglAvailable(false)
             return
@@ -229,8 +200,9 @@ export function Home3DMatrix() {
         }
         window.addEventListener('resize', resizeRenderer)
 
-        // Groupe racine
+        // Groupe racine pivotant (légèrement décalé pour centrage visuel avec le HUD)
         const rootGroup = new THREE.Group()
+        rootGroup.position.x = 42
         scene.add(rootGroup)
 
         // Récupération de la couleur d'accentuation initiale
@@ -239,130 +211,175 @@ export function Home3DMatrix() {
         let currentAccentHex = resolveCssColor(initialAccentStr, SIGNATURE_VIOLET)
         let lastAccentStr = initialAccentStr
 
-        // Lumières Three.js
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9)
+        // Éclairage studio architectural
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.95)
         scene.add(ambientLight)
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.8)
-        keyLight.position.set(160, 240, 220)
+        // Key light principale (mise en valeur des biseaux et du chanfrein de verre)
+        const keyLight = new THREE.DirectionalLight(0xffffff, 3.5)
+        keyLight.position.set(160, 260, 200)
         scene.add(keyLight)
 
-        // Lumière rasante cyan contrastée
+        // Lumière zénithale directe pour faire briller la surface des dalles
+        const topLight = new THREE.DirectionalLight(0xffffff, 2.8)
+        topLight.position.set(0, 340, 100)
+        scene.add(topLight)
+
+        // Rim light rasante électrique (contraste cyan)
         const rimLight = new THREE.DirectionalLight(ELECTRIC_CYAN, 2.6)
         rimLight.position.set(-200, -140, -180)
         scene.add(rimLight)
 
-        const coreLight = new THREE.PointLight(currentAccentHex, 4.5, 400, 1.2)
+        // Lumière interne diffuse placée au cœur de l'empilement (irradie entre les couches)
+        const coreLight = new THREE.PointLight(currentAccentHex, 6.0, 420, 1.0)
         coreLight.position.set(0, 0, 0)
         rootGroup.add(coreLight)
 
-        // 1. Cœur central : Hypercube translucide (PBR avec double face)
-        const outerBoxGeo = new THREE.BoxGeometry(86, 86, 86)
-        const outerGlassMat = new THREE.MeshStandardMaterial({
-            color: currentAccentHex,
-            roughness: 0.12,
-            metalness: 0.25,
-            transparent: true,
-            opacity: 0.35,
-            side: THREE.DoubleSide,
-            depthWrite: false,
-        })
-        const outerCube = new THREE.Mesh(outerBoxGeo, outerGlassMat)
-        rootGroup.add(outerCube)
-
-        // Arêtes néon lumineuses de l'hypercube
-        const edgesGeo = new THREE.EdgesGeometry(outerBoxGeo)
-        const edgesMat = new THREE.LineBasicMaterial({
-            color: currentAccentHex,
-            transparent: true,
-            opacity: 0.95,
-        })
-        const outerEdges = new THREE.LineSegments(edgesGeo, edgesMat)
-        rootGroup.add(outerEdges)
-
-        // 2. Gyroscope intérieur : Octaèdre métallique pulsant
-        const octaGeo = new THREE.OctahedronGeometry(44, 0)
-        const octaMat = new THREE.MeshStandardMaterial({
+        // Prisme central intérieur (émetteur optique entre mr.tokens et mr.themes)
+        const prismGeo = new THREE.OctahedronGeometry(18, 0)
+        const prismMat = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            roughness: 0.18,
-            metalness: 0.85,
+            roughness: 0.1,
+            metalness: 0.9,
             emissive: currentAccentHex,
-            emissiveIntensity: 0.95,
+            emissiveIntensity: 1.2,
         })
-        const innerOcta = new THREE.Mesh(octaGeo, octaMat)
-        rootGroup.add(innerOcta)
+        const prismMesh = new THREE.Mesh(prismGeo, prismMat)
+        prismMesh.position.set(0, 0, 0)
+        rootGroup.add(prismMesh)
 
-        const octaEdgesGeo = new THREE.EdgesGeometry(octaGeo)
-        const octaEdgesMat = new THREE.LineBasicMaterial({
+        const prismEdgesGeo = new THREE.EdgesGeometry(prismGeo)
+        const prismEdgesMat = new THREE.LineBasicMaterial({
             color: 0xffffff,
             transparent: true,
-            opacity: 0.95,
+            opacity: 0.9,
         })
-        const innerOctaEdges = new THREE.LineSegments(octaEdgesGeo, octaEdgesMat)
-        innerOcta.add(innerOctaEdges)
+        prismMesh.add(new THREE.LineSegments(prismEdgesGeo, prismEdgesMat))
 
-        // 3. Nœuds satellites orbitaux & faisceaux laser
-        const satelliteMeshes: {
-            config: OrbitalNodeConfig
+        // Création de la géométrie de plaque de verre biseautée chanfreinée
+        const slabWidth = 224
+        const slabDepth = 138
+        const slabRadius = 8
+        const slabShape = createRoundedRectShape(slabWidth, slabDepth, slabRadius)
+        const slabGeo = new THREE.ExtrudeGeometry(slabShape, {
+            depth: 4.5,
+            bevelEnabled: true,
+            bevelSegments: 4,
+            steps: 1,
+            bevelSize: 1.8,
+            bevelThickness: 1.4,
+        })
+        // Poser la plaque à plat sur le plan XZ
+        slabGeo.rotateX(Math.PI / 2)
+        slabGeo.center()
+
+        // Arêtes néon chanfreinées (détection de l'angle seuil de biseau)
+        const slabEdgesGeo = new THREE.EdgesGeometry(slabGeo, 24)
+
+        // Création d'un fil intérieur gravé
+        const innerShape = createRoundedRectShape(slabWidth - 28, slabDepth - 28, slabRadius - 2)
+        const innerPoints = innerShape.getPoints(32)
+        const innerLinePositions = new Float32Array((innerPoints.length + 1) * 3)
+        innerPoints.forEach((pt, i) => {
+            innerLinePositions[i * 3] = pt.x
+            innerLinePositions[i * 3 + 1] = 0.5
+            innerLinePositions[i * 3 + 2] = -pt.y
+        })
+        // Fermer le tracé
+        const firstPt = innerPoints[0]
+        if (firstPt) {
+            const lastIdx = innerPoints.length
+            innerLinePositions[lastIdx * 3] = firstPt.x
+            innerLinePositions[lastIdx * 3 + 1] = 0.5
+            innerLinePositions[lastIdx * 3 + 2] = -firstPt.y
+        }
+        const innerLineGeo = new THREE.BufferGeometry()
+        innerLineGeo.setAttribute('position', new THREE.BufferAttribute(innerLinePositions, 3))
+
+        // Création des 6 plaques d'empilement
+        interface PlateRuntime {
+            spec: LayerSpec
+            group: THREE.Group
             mesh: THREE.Mesh
-            mat: THREE.MeshStandardMaterial
-            line: THREE.Line
-            lineGeo: THREE.BufferGeometry
-            lineMat: THREE.LineBasicMaterial
-            currentAngle: number
-        }[] = []
+            mat: THREE.MeshPhysicalMaterial
+            edgesMat: THREE.LineBasicMaterial
+            innerLineMat: THREE.LineBasicMaterial
+            baseRelIndex: number
+        }
 
-        const satelliteGeo = new THREE.IcosahedronGeometry(9, 1)
+        const plates: PlateRuntime[] = []
 
-        NODES_CONFIG.forEach((config) => {
-            const satMat = new THREE.MeshStandardMaterial({
-                color: 0xffffff,
-                emissive: currentAccentHex,
-                emissiveIntensity: 1.2,
-                roughness: 0.15,
-                metalness: 0.6,
+        LAYERS_SPEC.forEach((spec) => {
+            const plateGroup = new THREE.Group()
+            rootGroup.add(plateGroup)
+
+            // Verre physique architectural translucide
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: 0x22273a,
+                roughness: 0.1,
+                metalness: 0.22,
+                transmission: 0.72,
+                ior: 1.5,
+                thickness: 4.5,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.05,
+                transparent: true,
+                opacity: 0.82,
+                depthWrite: false,
+                attenuationColor: new THREE.Color(currentAccentHex),
+                attenuationDistance: 32,
             })
-            const satMesh = new THREE.Mesh(satelliteGeo, satMat)
-            rootGroup.add(satMesh)
 
-            // Faisceau reliant le noyau au satellite
-            const linePositions = new Float32Array([0, 0, 0, 0, 0, 0])
-            const lineGeo = new THREE.BufferGeometry()
-            lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3))
-            const lineMat = new THREE.LineBasicMaterial({
+            const mesh = new THREE.Mesh(slabGeo, glassMat)
+            plateGroup.add(mesh)
+
+            // Bords chanfreinés lumineux
+            const edgesMat = new THREE.LineBasicMaterial({
                 color: currentAccentHex,
                 transparent: true,
-                opacity: 0.75,
+                opacity: 0.85,
             })
-            const line = new THREE.Line(lineGeo, lineMat)
-            rootGroup.add(line)
+            const edgesLine = new THREE.LineSegments(slabEdgesGeo, edgesMat)
+            plateGroup.add(edgesLine)
 
-            satelliteMeshes.push({
-                config,
-                mesh: satMesh,
-                mat: satMat,
-                line,
-                lineGeo,
-                lineMat,
-                currentAngle: config.angle,
+            // Filigrane architectural gravé en creux
+            const innerLineMat = new THREE.LineBasicMaterial({
+                color: currentAccentHex,
+                transparent: true,
+                opacity: 0.4,
+            })
+            const innerLine = new THREE.Line(innerLineGeo, innerLineMat)
+            plateGroup.add(innerLine)
+
+            // Relatif au centre de l'empilement (spec.index varie de 0 à 5, centre à 2.5)
+            const baseRelIndex = spec.index - 2.5
+
+            plates.push({
+                spec,
+                group: plateGroup,
+                mesh,
+                mat: glassMat,
+                edgesMat,
+                innerLineMat,
+                baseRelIndex,
             })
         })
 
-        // 4. Poussière d'étoiles / particules d'ambiance
-        const particleCount = 60
+        // Particules d'ambiance stellaire discrètes
+        const particleCount = 45
         const particlePositions = new Float32Array(particleCount * 3)
         for (let i = 0; i < particleCount; i++) {
-            particlePositions[i * 3] = (Math.random() - 0.5) * 680
-            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 480
-            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 480
+            particlePositions[i * 3] = (Math.random() - 0.5) * 650
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 350
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 450
         }
         const particleGeo = new THREE.BufferGeometry()
         particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
         const particleMat = new THREE.PointsMaterial({
             color: currentAccentHex,
-            size: 3,
+            size: 2.5,
             transparent: true,
-            opacity: 0.5,
+            opacity: 0.35,
         })
         const particles = new THREE.Points(particleGeo, particleMat)
         rootGroup.add(particles)
@@ -370,10 +387,15 @@ export function Home3DMatrix() {
         // État de cinématique et d'interaction
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         const startTime = performance.now()
-        let targetRotX = 0.22
-        let targetRotY = -0.32
-        let curRotX = 0.22
-        let curRotY = -0.32
+
+        // Angles isométriques nobles par défaut (inclinaison accentuée pour voir la surface du verre)
+        const defaultRotX = 0.62
+        const defaultRotY = -0.42
+        let targetRotX = defaultRotX
+        let targetRotY = defaultRotY
+        let curRotX = defaultRotX
+        let curRotY = defaultRotY
+        let currentGap = 13
         let dragLastX = 0
         let dragLastY = 0
         let dragging = false
@@ -398,15 +420,15 @@ export function Home3DMatrix() {
                 const deltaY = clientY - dragLastY
                 dragLastX = clientX
                 dragLastY = clientY
-                targetRotY += deltaX * 0.008
-                targetRotX += deltaY * 0.008
+                targetRotY += deltaX * 0.007
+                targetRotX += deltaY * 0.007
             } else {
                 const rect = container.getBoundingClientRect()
                 if (rect.width > 0 && rect.height > 0) {
                     const relX = (clientX - rect.left) / rect.width - 0.5
                     const relY = (clientY - rect.top) / rect.height - 0.5
-                    pointerTargetX = relY * 0.35
-                    pointerTargetY = relX * 0.45
+                    pointerTargetX = relY * 0.25
+                    pointerTargetY = relX * 0.32
                 }
             }
         }
@@ -423,15 +445,6 @@ export function Home3DMatrix() {
         window.addEventListener('touchmove', onPointerMove, { passive: true })
         window.addEventListener('touchend', onPointerUp)
 
-        // Cache des éléments DOM des badges pour éviter toute réconciliation React à 60fps
-        const badgeEls = new Map<string, HTMLElement>()
-        container.querySelectorAll<HTMLElement>('[data-node-badge]').forEach((el) => {
-            const id = el.getAttribute('data-node-badge')
-            if (id) badgeEls.set(id, el)
-        })
-
-        const tempV = new THREE.Vector3()
-
         // Boucle d'animation principale
         const animate = (time: number) => {
             if (!isVisible) {
@@ -444,118 +457,66 @@ export function Home3DMatrix() {
             }
 
             const elapsed = time - startTime
-            const introDuration = 1400
+            const introDuration = 1200
             const introRaw = prefersReducedMotion ? 1 : Math.min(1, elapsed / introDuration)
             const introEased = 1 - (1 - introRaw) ** 3
 
-            // Détection du changement de couleur d'accentuation en temps réel
+            // Synchronisation de la couleur d'accentuation en temps réel
             const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
             if (currentAccent && currentAccent !== lastAccentStr) {
                 lastAccentStr = currentAccent
                 currentAccentHex = resolveCssColor(currentAccent, SIGNATURE_VIOLET)
                 coreLight.color.setHex(currentAccentHex)
-                edgesMat.color.setHex(currentAccentHex)
-                outerGlassMat.color.setHex(currentAccentHex)
-                octaMat.emissive.setHex(currentAccentHex)
+                prismMat.emissive.setHex(currentAccentHex)
                 particleMat.color.setHex(currentAccentHex)
 
-                satelliteMeshes.forEach(({ mat, lineMat }) => {
-                    mat.emissive.setHex(currentAccentHex)
-                    lineMat.color.setHex(currentAccentHex)
+                plates.forEach(({ mat, edgesMat }) => {
+                    mat.attenuationColor.setHex(currentAccentHex)
+                    edgesMat.color.setHex(currentAccentHex)
                 })
             }
 
-            // Rotation douce et amortissement LERP
+            // Rotation douce et amortissement
             if (!dragging && !prefersReducedMotion) {
-                targetRotY += 0.003
+                targetRotY += 0.0018
             }
             curRotX += (targetRotX + pointerTargetX - curRotX) * 0.06
             curRotY += (targetRotY + pointerTargetY - curRotY) * 0.06
             rootGroup.rotation.x = curRotX
             rootGroup.rotation.y = curRotY
+            rootGroup.rotation.z = 0.06
 
-            // Échelle du cœur (animation d'intro)
-            const coreScale = prefersReducedMotion ? 1 : 0.2 + 0.8 * introEased
-            outerCube.scale.set(coreScale, coreScale, coreScale)
-            outerEdges.scale.set(coreScale, coreScale, coreScale)
+            // Respiration verticale douce du monolithe
+            const breathe = Math.sin(time * 0.0018) * 3
 
-            // Contre-rotation du gyroscope interne
-            innerOcta.rotation.y -= 0.008
-            innerOcta.rotation.x += 0.004
-            const octaScale = coreScale * (1 + 0.04 * Math.sin(time * 0.003))
-            innerOcta.scale.set(octaScale, octaScale, octaScale)
+            // Espacement des couches : 14px au repos, 34px en vue éclatée au survol
+            const activeId = activeLayerIdRef.current
+            const isExploded = isHoveredRef.current || dragging || activeId !== null
+            const targetGap = isExploded ? 34 : 14
+            currentGap += (targetGap * introEased - currentGap) * 0.08
 
-            // Pulsation du cœur lumineux
-            coreLight.intensity = (4.0 + 1.0 * Math.sin(time * 0.004)) * introEased
+            // Prisme optique central tournoyant
+            prismMesh.rotation.y += 0.012
+            prismMesh.rotation.x += 0.006
+            const prismScale = 0.8 + 0.2 * Math.sin(time * 0.003)
+            prismMesh.scale.set(prismScale, prismScale, prismScale)
+            coreLight.intensity = (4.2 + 1.2 * Math.sin(time * 0.004)) * introEased
 
-            // Calcul de la projection 2D des nœuds satellites directement sur le DOM
-            const rect = container.getBoundingClientRect()
-            const width = rect.width || 700
-            const height = rect.height || 440
+            // Positionnement physique de chaque plaque
+            plates.forEach((plate) => {
+                const isSelected = activeId === plate.spec.id
+                const targetY = plate.baseRelIndex * currentGap + breathe + (isSelected ? 6 : 0)
 
-            // Récupération tardive des badges si le montage DOM n'était pas achevé
-            if (badgeEls.size === 0) {
-                container.querySelectorAll<HTMLElement>('[data-node-badge]').forEach((el) => {
-                    const id = el.getAttribute('data-node-badge')
-                    if (id) badgeEls.set(id, el)
-                })
-            }
+                plate.group.position.y += (targetY - plate.group.position.y) * 0.12
 
-            satelliteMeshes.forEach((satItem, idx) => {
-                const { config, mesh, lineGeo } = satItem
-                if (!prefersReducedMotion) {
-                    satItem.currentAngle += config.speed
-                }
-                const currentAngle = satItem.currentAngle
-
-                // Dispersion spatiale durant l'assemblage
-                const dispersion = prefersReducedMotion ? 1 : 2.5 - 1.5 * introEased
-                const currentRadius = config.radius * dispersion
-
-                const x = Math.cos(currentAngle) * currentRadius
-                const z = Math.sin(currentAngle) * currentRadius
-                const y = config.yOffset + Math.sin(time * 0.002 + idx) * 8
-
-                mesh.position.set(x, y, z)
-
-                // Faisceau reliant le centre au satellite
-                const posAttr = lineGeo.attributes.position as THREE.BufferAttribute
-                const arr = posAttr.array as Float32Array
-                arr[0] = 0
-                arr[1] = 0
-                arr[2] = 0
-                arr[3] = x
-                arr[4] = y
-                arr[5] = z
-                posAttr.needsUpdate = true
-
-                // Projection exacte de la coordonnée 3D
-                mesh.getWorldPosition(tempV)
-                // Profondeur spatiale absolue dans le monde
-                const worldZ = tempV.z
-                const normalizedDepth = Math.max(-1, Math.min(1, worldZ / config.radius))
-
-                // Projection caméra 2D
-                tempV.project(camera)
-                const screenX = (tempV.x * 0.5 + 0.5) * width
-                const screenY = (-tempV.y * 0.5 + 0.5) * height
-
-                // Échelle et opacité basées sur la profondeur réelle
-                const isBehind = normalizedDepth < -0.15
-                const depthScale = 1.0 + normalizedDepth * 0.15
-                const opacity = (isBehind ? 0.65 : 1.0) * Math.max(0.4, introEased)
-                const zIndex = Math.round(50 + normalizedDepth * 40)
-
-                const badgeEl = badgeEls.get(config.id)
-                if (badgeEl) {
-                    badgeEl.style.transform = `translate(-50%, -50%) translate3d(${screenX.toFixed(1)}px, ${screenY.toFixed(1)}px, 0) scale(${depthScale.toFixed(3)})`
-                    badgeEl.style.opacity = `${opacity.toFixed(2)}`
-                    badgeEl.style.zIndex = `${zIndex}`
-                }
+                // Mise en exergue du calque actif ou survolé
+                plate.edgesMat.opacity = isSelected ? 0.95 : isExploded ? 0.65 : 0.45
+                plate.innerLineMat.opacity = isSelected ? 0.45 : 0.18
+                plate.mat.roughness = isSelected ? 0.08 : 0.14
             })
 
-            // Rotation lente de l'atmosphère stellaire
-            particles.rotation.y += 0.0006
+            // Mouvement très lent de l'atmosphère stellaire
+            particles.rotation.y += 0.0004
 
             renderer.render(scene, camera)
             animationFrameId = requestAnimationFrame(animate)
@@ -575,22 +536,20 @@ export function Home3DMatrix() {
             if (intersectionObs) intersectionObs.disconnect()
             if (resizeObs) resizeObs.disconnect()
 
-            outerBoxGeo.dispose()
-            outerGlassMat.dispose()
-            edgesGeo.dispose()
-            edgesMat.dispose()
-            octaGeo.dispose()
-            octaMat.dispose()
-            octaEdgesGeo.dispose()
-            octaEdgesMat.dispose()
-            satelliteGeo.dispose()
+            slabGeo.dispose()
+            slabEdgesGeo.dispose()
+            innerLineGeo.dispose()
+            prismGeo.dispose()
+            prismMat.dispose()
+            prismEdgesGeo.dispose()
+            prismEdgesMat.dispose()
             particleGeo.dispose()
             particleMat.dispose()
 
-            satelliteMeshes.forEach(({ lineGeo, lineMat, mat }) => {
-                lineGeo.dispose()
-                lineMat.dispose()
+            plates.forEach(({ mat, edgesMat, innerLineMat }) => {
                 mat.dispose()
+                edgesMat.dispose()
+                innerLineMat.dispose()
             })
 
             if (mount.contains(canvasEl)) {
@@ -609,6 +568,7 @@ export function Home3DMatrix() {
             onMouseLeave={() => {
                 setIsHovered(false)
                 setIsDragging(false)
+                setActiveLayerId(null)
             }}
             style={{
                 position: 'relative',
@@ -635,7 +595,7 @@ export function Home3DMatrix() {
                 }}
             />
 
-            {/* Rendu de secours SVG élégant si WebGL n'est pas disponible */}
+            {/* Rendu de secours SVG si WebGL est désactivé */}
             {!webglAvailable && (
                 <div
                     style={{
@@ -648,143 +608,136 @@ export function Home3DMatrix() {
                     }}
                 >
                     <svg
-                        width="320"
-                        height="320"
-                        viewBox="0 0 320 320"
+                        width="300"
+                        height="260"
+                        viewBox="0 0 300 260"
                         fill="none"
-                        style={{ opacity: 0.8 }}
+                        style={{ opacity: 0.85 }}
                     >
-                        <circle
-                            cx="160"
-                            cy="160"
-                            r="110"
-                            stroke="var(--mr-accent-solid)"
-                            strokeWidth="1.5"
-                            strokeDasharray="4 6"
-                            opacity="0.4"
-                        />
-                        <polygon
-                            points="160,80 230,125 230,205 160,250 90,205 90,125"
-                            stroke="var(--mr-accent-solid)"
-                            strokeWidth="2"
-                            fill="color-mix(in oklch, var(--mr-accent-solid) 12%, transparent)"
-                        />
-                        <polygon
-                            points="160,110 205,138 205,188 160,215 115,188 115,138"
-                            stroke="#ffffff"
-                            strokeWidth="1.5"
-                            opacity="0.9"
-                            fill="none"
-                        />
+                        {[0, 1, 2, 3, 4, 5].map((idx) => {
+                            const y = 50 + idx * 28
+                            return (
+                                <g key={idx}>
+                                    <polygon
+                                        points={`150,${y} 250,${y + 40} 150,${y + 80} 50,${y + 40}`}
+                                        stroke="var(--mr-accent-solid)"
+                                        strokeWidth="1.5"
+                                        fill="color-mix(in oklch, var(--mr-bg-surface), transparent 50%)"
+                                        opacity={0.4 + idx * 0.1}
+                                    />
+                                </g>
+                            )
+                        })}
                     </svg>
                 </div>
             )}
 
-            {/* Badges HTML projetés en 3D avec typographie nette et netteté Retina */}
+            {/* Sélecteur architectural discret de strates (HUD élégant en haut à gauche) */}
             <div
                 style={{
                     position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    overflow: 'hidden',
+                    top: '1rem',
+                    left: '1.25rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px',
+                    pointerEvents: 'auto',
+                    zIndex: 2,
                 }}
             >
-                {NODES_CONFIG.map((node) => {
-                    const isNodeHovered = hoveredNodeId === node.id
+                <div
+                    style={{
+                        fontSize: '9px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        color: 'var(--mr-text-muted)',
+                        fontFamily: 'var(--mr-font-family-mono)',
+                        marginBottom: '4px',
+                    }}
+                >
+                    CSS @layer Architecture
+                </div>
+                {LAYERS_SPEC.map((layer) => {
+                    const isActive = activeLayerId === layer.id
                     return (
-                        <div
-                            key={node.id}
-                            data-node-badge={node.id}
+                        <button
+                            key={layer.id}
+                            type="button"
+                            onMouseEnter={() => setActiveLayerId(layer.id)}
+                            onMouseLeave={() => setActiveLayerId(null)}
+                            onClick={() =>
+                                setActiveLayerId((prev) => (prev === layer.id ? null : layer.id))
+                            }
                             style={{
-                                position: 'absolute',
-                                left: 0,
-                                top: 0,
-                                transform:
-                                    'translate(-50%, -50%) translate3d(384px, 220px, 0) scale(0)',
-                                opacity: 0,
-                                pointerEvents: 'auto',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '3px 8px',
+                                borderRadius: 'var(--mr-radius-sm, 4px)',
+                                border: isActive
+                                    ? '1px solid var(--mr-accent-solid)'
+                                    : '1px solid transparent',
+                                backgroundColor: isActive
+                                    ? 'color-mix(in oklch, var(--mr-accent-solid) 16%, transparent)'
+                                    : 'transparent',
+                                color: isActive
+                                    ? 'var(--mr-text-primary)'
+                                    : 'var(--mr-text-secondary)',
+                                fontFamily: 'var(--mr-font-family-mono)',
+                                fontSize: '11px',
                                 cursor: 'pointer',
                                 transition:
-                                    'box-shadow 150ms ease, border-color 150ms ease, scale 150ms ease',
-                                willChange: 'transform, opacity',
+                                    'background-color 150ms ease, border-color 150ms ease, color 150ms ease',
+                                textAlign: 'left',
                             }}
-                            onMouseEnter={() => setHoveredNodeId(node.id)}
-                            onMouseLeave={() => setHoveredNodeId(null)}
                         >
-                            <div
+                            <span
                                 style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '7px',
-                                    padding: '5px 12px',
-                                    borderRadius: 'var(--mr-radius-full)',
-                                    backgroundColor:
-                                        'color-mix(in oklch, var(--mr-bg-surface), black 30%)',
-                                    backdropFilter: 'blur(14px)',
-                                    WebkitBackdropFilter: 'blur(14px)',
-                                    border: isNodeHovered
-                                        ? '1px solid var(--mr-accent-solid)'
-                                        : '1px solid color-mix(in oklch, var(--mr-border-default), transparent 30%)',
-                                    boxShadow: isNodeHovered
-                                        ? '0 0 18px color-mix(in oklch, var(--mr-accent-solid) 40%, transparent)'
-                                        : '0 4px 16px rgba(0, 0, 0, 0.35)',
-                                    transform: isNodeHovered ? 'scale(1.12)' : 'scale(1)',
+                                    width: '5px',
+                                    height: '5px',
+                                    borderRadius: '50%',
+                                    backgroundColor: isActive
+                                        ? 'var(--mr-accent-solid)'
+                                        : 'var(--mr-border-default)',
+                                    boxShadow: isActive ? '0 0 8px var(--mr-accent-solid)' : 'none',
                                     transition:
-                                        'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease, border-color 150ms ease',
+                                        'background-color 150ms ease, box-shadow 150ms ease',
+                                }}
+                            />
+                            <span style={{ fontWeight: isActive ? 600 : 400 }}>{layer.label}</span>
+                            <span
+                                style={{
+                                    fontSize: '9px',
+                                    color: 'var(--mr-text-muted)',
+                                    opacity: 0.8,
                                 }}
                             >
-                                <span
-                                    style={{
-                                        width: '7px',
-                                        height: '7px',
-                                        borderRadius: '50%',
-                                        backgroundColor: 'var(--mr-accent-solid)',
-                                        boxShadow: '0 0 10px var(--mr-accent-solid)',
-                                        flexShrink: 0,
-                                    }}
-                                />
-                                <span
-                                    style={{
-                                        fontSize: 'var(--mr-font-size-xs)',
-                                        fontWeight: 600,
-                                        color: 'var(--mr-text-primary)',
-                                        letterSpacing: '-0.01em',
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    {node.label}
-                                </span>
-                                <span
-                                    style={{
-                                        fontSize: '10px',
-                                        color: 'var(--mr-text-muted)',
-                                        fontWeight: 400,
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    {node.subLabel}
-                                </span>
-                            </div>
-                        </div>
+                                {layer.role}
+                            </span>
+                        </button>
                     )
                 })}
             </div>
 
-            {/* Légende discrète d'interaction */}
+            {/* Légende discrète d'interaction en bas à droite */}
             <div
                 style={{
                     position: 'absolute',
-                    bottom: '0.75rem',
-                    right: '1rem',
+                    bottom: '0.85rem',
+                    right: '1.25rem',
                     fontSize: '0.75rem',
                     color: 'var(--mr-text-muted)',
                     pointerEvents: 'none',
-                    opacity: isHovered ? 0.9 : 0.4,
+                    opacity: isHovered ? 0.9 : 0.45,
                     transition: 'opacity var(--mr-duration-state) ease',
                     fontFamily: 'var(--mr-font-family-mono)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
                 }}
             >
-                Drag to orbit 3D
+                <span>Hover to expand •</span>
+                <span>Drag to orbit 3D</span>
             </div>
 
             {/* Texte accessible réservé aux lecteurs d'écran (masqué visuellement sans dépendance CSS) */}
