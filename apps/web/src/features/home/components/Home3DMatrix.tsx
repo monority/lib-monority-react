@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import * as THREE from 'three'
 import { useMessages } from '@/shared/i18n'
 
-interface Point3D {
-    x: number
-    y: number
-    z: number
-}
-
-interface OrbitalNode {
+interface OrbitalNodeConfig {
     id: string
     label: string
     subLabel: string
@@ -17,23 +12,23 @@ interface OrbitalNode {
     yOffset: number
 }
 
-const NODES_CONFIG: OrbitalNode[] = [
+const NODES_CONFIG: OrbitalNodeConfig[] = [
     {
         id: 'react',
         label: 'React 19',
         subLabel: 'Native ref',
         angle: 0,
-        speed: 0.006,
-        radius: 190,
-        yOffset: -20,
+        speed: 0.005,
+        radius: 195,
+        yOffset: -22,
     },
     {
         id: 'ts',
         label: 'TypeScript',
         subLabel: 'Strict types',
         angle: (Math.PI * 1) / 3,
-        speed: 0.006,
-        radius: 195,
+        speed: 0.005,
+        radius: 200,
         yOffset: 25,
     },
     {
@@ -41,8 +36,8 @@ const NODES_CONFIG: OrbitalNode[] = [
         label: 'CSS @layer',
         subLabel: 'Isolation',
         angle: (Math.PI * 2) / 3,
-        speed: 0.006,
-        radius: 185,
+        speed: 0.005,
+        radius: 190,
         yOffset: -30,
     },
     {
@@ -50,158 +45,93 @@ const NODES_CONFIG: OrbitalNode[] = [
         label: 'OKLCH',
         subLabel: 'Runtime theme',
         angle: Math.PI,
-        speed: 0.006,
-        radius: 190,
-        yOffset: 15,
+        speed: 0.005,
+        radius: 195,
+        yOffset: 18,
     },
     {
         id: 'next',
         label: 'Next.js',
         subLabel: 'App Router',
         angle: (Math.PI * 4) / 3,
-        speed: 0.006,
-        radius: 200,
-        yOffset: -15,
+        speed: 0.005,
+        radius: 205,
+        yOffset: -18,
     },
     {
         id: 'vite',
         label: 'Vite',
         subLabel: 'Instant HMR',
         angle: (Math.PI * 5) / 3,
-        speed: 0.006,
-        radius: 185,
-        yOffset: 30,
+        speed: 0.005,
+        radius: 190,
+        yOffset: 28,
     },
 ]
 
-// Sommets d'un cube central modulaire (taille 65)
-const CUBE_SIZE = 65
-const CUBE_VERTICES: Point3D[] = [
-    { x: -CUBE_SIZE, y: -CUBE_SIZE, z: -CUBE_SIZE },
-    { x: CUBE_SIZE, y: -CUBE_SIZE, z: -CUBE_SIZE },
-    { x: CUBE_SIZE, y: CUBE_SIZE, z: -CUBE_SIZE },
-    { x: -CUBE_SIZE, y: CUBE_SIZE, z: -CUBE_SIZE },
-    { x: -CUBE_SIZE, y: -CUBE_SIZE, z: CUBE_SIZE },
-    { x: CUBE_SIZE, y: -CUBE_SIZE, z: CUBE_SIZE },
-    { x: CUBE_SIZE, y: CUBE_SIZE, z: CUBE_SIZE },
-    { x: -CUBE_SIZE, y: CUBE_SIZE, z: CUBE_SIZE },
-]
-
-// Arêtes reliant les sommets du cube
-const CUBE_EDGES: [number, number][] = [
-    [0, 1],
-    [1, 2],
-    [2, 3],
-    [3, 0], // face arrière
-    [4, 5],
-    [5, 6],
-    [6, 7],
-    [7, 4], // face avant
-    [0, 4],
-    [1, 5],
-    [2, 6],
-    [3, 7], // arêtes longitudinales
-]
-
-// Sommets d'un octaèdre interne (noyau de tokens)
-const OCTA_SIZE = 38
-const OCTA_VERTICES: Point3D[] = [
-    { x: 0, y: -OCTA_SIZE * 1.3, z: 0 },
-    { x: 0, y: OCTA_SIZE * 1.3, z: 0 },
-    { x: -OCTA_SIZE, y: 0, z: 0 },
-    { x: OCTA_SIZE, y: 0, z: 0 },
-    { x: 0, y: 0, z: -OCTA_SIZE },
-    { x: 0, y: 0, z: OCTA_SIZE },
-]
-
-const OCTA_EDGES: [number, number][] = [
-    [0, 2],
-    [0, 3],
-    [0, 4],
-    [0, 5],
-    [1, 2],
-    [1, 3],
-    [1, 4],
-    [1, 5],
-    [2, 4],
-    [4, 3],
-    [3, 5],
-    [5, 2],
-]
-
-function rotateX(point: Point3D, angle: number): Point3D {
-    const cos = Math.cos(angle)
-    const sin = Math.sin(angle)
-    return {
-        x: point.x,
-        y: point.y * cos - point.z * sin,
-        z: point.y * sin + point.z * cos,
-    }
+interface ProjectedNode {
+    id: string
+    label: string
+    subLabel: string
+    x: number
+    y: number
+    scale: number
+    opacity: number
+    zIndex: number
 }
 
-function rotateY(point: Point3D, angle: number): Point3D {
-    const cos = Math.cos(angle)
-    const sin = Math.sin(angle)
-    return {
-        x: point.x * cos + point.z * sin,
-        y: point.y,
-        z: -point.x * sin + point.z * cos,
+function resolveCssColor(cssColor: string, defaultHex = 0x8b5cf6): number {
+    if (typeof document === 'undefined') return defaultHex
+    try {
+        const dummy = document.createElement('div')
+        dummy.style.color = cssColor
+        document.body.appendChild(dummy)
+        const computed = getComputedStyle(dummy).color
+        document.body.removeChild(dummy)
+        const match = computed.match(/\d+/g)
+        if (match && match.length >= 3) {
+            return (Number(match[0]) << 16) | (Number(match[1]) << 8) | Number(match[2])
+        }
+    } catch {
+        /* fallback */
     }
+    return defaultHex
 }
 
-function project(
-    point: Point3D,
-    width: number,
-    height: number,
-    focal = 440
-): { x: number; y: number; scale: number; z: number } {
-    const scale = focal / (focal + point.z + 120)
-    return {
-        x: width / 2 + point.x * scale,
-        y: height / 2 + point.y * scale,
-        scale,
-        z: point.z,
+function isWebGLSupported(): boolean {
+    if (typeof window === 'undefined') return false
+    try {
+        const canvas = document.createElement('canvas')
+        return !!(
+            window.WebGLRenderingContext &&
+            (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+        )
+    } catch {
+        return false
     }
 }
 
 export function Home3DMatrix() {
-    const messages = useMessages().home.hero
+    const messages = useMessages()
+    const containerRef = useRef<HTMLElement | null>(null)
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
-    const containerRef = useRef<HTMLDivElement | null>(null)
+
     const [isHovered, setIsHovered] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
-
-    // États de rotation
-    const rotationRef = useRef({
-        rotX: -0.25,
-        rotY: 0.45,
-        targetRotX: -0.25,
-        targetRotY: 0.45,
-        velX: 0,
-        velY: 0.003,
-        lastMouseX: 0,
-        lastMouseY: 0,
-        isDragging: false,
-    })
-
-    const orbitalAngleRef = useRef(0)
+    const [projectedNodes, setProjectedNodes] = useState<ProjectedNode[]>([])
+    const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
 
     useEffect(() => {
-        const canvas = canvasRef.current
         const container = containerRef.current
-        if (!canvas || !container) return
+        const canvas = canvasRef.current
+        if (!container || !canvas || !isWebGLSupported()) {
+            return
+        }
 
         let animationFrameId: number
         let isVisible = true
-
-        // Respect de prefers-reduced-motion
-        const prefersReducedMotion =
-            typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-                ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                : false
-
-        // Observer d'intersection pour suspendre le CPU hors viewport
         let observer: IntersectionObserver | null = null
+
         if (typeof IntersectionObserver !== 'undefined') {
             observer = new IntersectionObserver(
                 ([entry]) => {
@@ -209,285 +139,401 @@ export function Home3DMatrix() {
                 },
                 { threshold: 0.05 }
             )
-            observer.observe(canvas)
+            observer.observe(container)
         }
 
-        const isJsdom = typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent)
+        // Configuration Three.js
+        const scene = new THREE.Scene()
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1500)
+        camera.position.set(0, 30, 480)
 
-        const resizeCanvas = () => {
-            try {
+        let renderer: THREE.WebGLRenderer
+        try {
+            renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                alpha: true,
+                powerPreference: 'high-performance',
+            })
+            renderer.setClearColor(0x000000, 0)
+            renderer.toneMapping = THREE.ACESFilmicToneMapping
+            renderer.toneMappingExposure = 1.15
+        } catch {
+            return
+        }
+
+        const resizeRenderer = () => {
+            const rect = container.getBoundingClientRect()
+            if (rect.width === 0 || rect.height === 0) return
+            const dpr = Math.min(window.devicePixelRatio || 1, 2)
+            renderer.setPixelRatio(dpr)
+            renderer.setSize(rect.width, rect.height, false)
+            camera.aspect = rect.width / rect.height
+            camera.updateProjectionMatrix()
+        }
+        resizeRenderer()
+        window.addEventListener('resize', resizeRenderer)
+
+        // Groupe racine
+        const rootGroup = new THREE.Group()
+        scene.add(rootGroup)
+
+        // Récupération dynamique de la couleur d'accentuation
+        const computedStyle = getComputedStyle(container)
+        const initialAccentHex = resolveCssColor(
+            computedStyle.getPropertyValue('--mr-accent-solid').trim() || '#8b5cf6'
+        )
+
+        // Lumières
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+        scene.add(ambientLight)
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2)
+        keyLight.position.set(160, 240, 200)
+        scene.add(keyLight)
+
+        const rimLight = new THREE.DirectionalLight(initialAccentHex, 2.0)
+        rimLight.position.set(-180, -120, -180)
+        scene.add(rimLight)
+
+        const coreLight = new THREE.PointLight(initialAccentHex, 3.2, 320, 1.4)
+        coreLight.position.set(0, 0, 0)
+        rootGroup.add(coreLight)
+
+        // Cœur central monolithique en verre dépoli (PBR Physical Material)
+        const outerBoxGeo = new THREE.BoxGeometry(82, 82, 82)
+        const outerGlassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0.05,
+            roughness: 0.12,
+            transmission: 0.72,
+            thickness: 1.6,
+            ior: 1.5,
+            transparent: true,
+            opacity: 0.78,
+            reflectivity: 0.5,
+        })
+        const outerCube = new THREE.Mesh(outerBoxGeo, outerGlassMat)
+        rootGroup.add(outerCube)
+
+        // Arêtes lumineuses du cube
+        const edgesGeo = new THREE.EdgesGeometry(outerBoxGeo)
+        const edgesMat = new THREE.LineBasicMaterial({
+            color: initialAccentHex,
+            transparent: true,
+            opacity: 0.85,
+        })
+        const outerEdges = new THREE.LineSegments(edgesGeo, edgesMat)
+        rootGroup.add(outerEdges)
+
+        // Noyau gyroscopique intérieur (Octaèdre)
+        const octaGeo = new THREE.OctahedronGeometry(42, 0)
+        const octaMat = new THREE.MeshStandardMaterial({
+            color: initialAccentHex,
+            roughness: 0.25,
+            metalness: 0.75,
+            emissive: initialAccentHex,
+            emissiveIntensity: 0.55,
+        })
+        const innerOcta = new THREE.Mesh(octaGeo, octaMat)
+        rootGroup.add(innerOcta)
+
+        const octaEdgesGeo = new THREE.EdgesGeometry(octaGeo)
+        const octaEdgesMat = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.95,
+        })
+        const innerOctaEdges = new THREE.LineSegments(octaEdgesGeo, octaEdgesMat)
+        innerOcta.add(innerOctaEdges)
+
+        // Nœuds satellites et faisceaux laser
+        const satelliteMeshes: {
+            config: OrbitalNodeConfig
+            mesh: THREE.Mesh
+            line: THREE.Line
+            lineGeo: THREE.BufferGeometry
+            currentAngle: number
+        }[] = []
+
+        const satelliteGeo = new THREE.IcosahedronGeometry(7.5, 1)
+
+        NODES_CONFIG.forEach((config) => {
+            const satMat = new THREE.MeshStandardMaterial({
+                color: initialAccentHex,
+                emissive: initialAccentHex,
+                emissiveIntensity: 0.9,
+                roughness: 0.2,
+                metalness: 0.5,
+            })
+            const satMesh = new THREE.Mesh(satelliteGeo, satMat)
+            rootGroup.add(satMesh)
+
+            // Ligne de faisceau reliant le centre au satellite
+            const linePositions = new Float32Array([0, 0, 0, 0, 0, 0])
+            const lineGeo = new THREE.BufferGeometry()
+            lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3))
+            const lineMat = new THREE.LineBasicMaterial({
+                color: initialAccentHex,
+                transparent: true,
+                opacity: 0.45,
+            })
+            const line = new THREE.Line(lineGeo, lineMat)
+            rootGroup.add(line)
+
+            satelliteMeshes.push({
+                config,
+                mesh: satMesh,
+                line,
+                lineGeo,
+                currentAngle: config.angle,
+            })
+        })
+
+        // Particules flottantes d'ambiance (poussière stellaire en arrière-plan)
+        const particleCount = 45
+        const particlePositions = new Float32Array(particleCount * 3)
+        for (let i = 0; i < particleCount; i++) {
+            particlePositions[i * 3] = (Math.random() - 0.5) * 600
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 450
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 400
+        }
+        const particleGeo = new THREE.BufferGeometry()
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
+        const particleMat = new THREE.PointsMaterial({
+            color: initialAccentHex,
+            size: 2.5,
+            transparent: true,
+            opacity: 0.35,
+        })
+        const particles = new THREE.Points(particleGeo, particleMat)
+        rootGroup.add(particles)
+
+        // État de cinématique et d'interaction
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const startTime = performance.now()
+        let targetRotX = 0.2
+        let targetRotY = -0.3
+        let curRotX = 0.2
+        let curRotY = -0.3
+        let dragLastX = 0
+        let dragLastY = 0
+        let dragging = false
+        let pointerTargetX = 0
+        let pointerTargetY = 0
+
+        // Gestionnaires d'interaction souris
+        const onPointerDown = (e: MouseEvent | TouchEvent) => {
+            dragging = true
+            setIsDragging(true)
+            const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
+            const clientY = 'touches' in e ? (e.touches[0]?.clientY ?? 0) : e.clientY
+            dragLastX = clientX
+            dragLastY = clientY
+        }
+
+        const onPointerMove = (e: MouseEvent | TouchEvent) => {
+            const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
+            const clientY = 'touches' in e ? (e.touches[0]?.clientY ?? 0) : e.clientY
+
+            if (dragging) {
+                const deltaX = clientX - dragLastX
+                const deltaY = clientY - dragLastY
+                dragLastX = clientX
+                dragLastY = clientY
+                targetRotY += deltaX * 0.008
+                targetRotX += deltaY * 0.008
+            } else {
                 const rect = container.getBoundingClientRect()
-                const dpr = Math.min(window.devicePixelRatio || 1, 2)
-                canvas.width = rect.width * dpr
-                canvas.height = rect.height * dpr
-                canvas.style.width = `${rect.width}px`
-                canvas.style.height = `${rect.height}px`
-                if (!isJsdom) {
-                    const ctx = canvas.getContext?.('2d')
-                    if (ctx) {
-                        ctx.scale(dpr, dpr)
-                    }
-                }
-            } catch {
-                /* jsdom fallback */
+                const relX = (clientX - rect.left) / rect.width - 0.5
+                const relY = (clientY - rect.top) / rect.height - 0.5
+                pointerTargetX = relY * 0.35
+                pointerTargetY = relX * 0.45
             }
         }
 
-        resizeCanvas()
-        window.addEventListener('resize', resizeCanvas)
+        const onPointerUp = () => {
+            dragging = false
+            setIsDragging(false)
+        }
 
-        const render = () => {
-            if (!isVisible || isJsdom) {
-                animationFrameId = requestAnimationFrame(render)
+        container.addEventListener('mousedown', onPointerDown)
+        window.addEventListener('mousemove', onPointerMove)
+        window.addEventListener('mouseup', onPointerUp)
+        container.addEventListener('touchstart', onPointerDown, { passive: true })
+        window.addEventListener('touchmove', onPointerMove, { passive: true })
+        window.addEventListener('touchend', onPointerUp)
+
+        // Vecteur temporaire pour projection écran
+        const tempV = new THREE.Vector3()
+
+        // Boucle d'animation
+        const animate = (time: number) => {
+            if (!isVisible) {
+                animationFrameId = requestAnimationFrame(animate)
                 return
             }
 
-            let ctx: CanvasRenderingContext2D | null = null
-            try {
-                ctx = canvas.getContext?.('2d') ?? null
-            } catch {
-                /* jsdom fallback */
-            }
-            if (!ctx) return
+            const elapsed = time - startTime
+            const introDuration = 1400
+            const introRaw = prefersReducedMotion ? 1 : Math.min(1, elapsed / introDuration)
+            // Lissage exponentiel (courbe cubic-bezier 0.16, 1, 0.3, 1)
+            const introEased = 1 - Math.pow(1 - introRaw, 3)
 
+            // Mise à jour de la couleur d'accentuation en temps réel si modifiée
+            const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
+            if (currentAccent) {
+                const currentHex = resolveCssColor(currentAccent)
+                rimLight.color.setHex(currentHex)
+                coreLight.color.setHex(currentHex)
+                edgesMat.color.setHex(currentHex)
+                octaMat.color.setHex(currentHex)
+                octaMat.emissive.setHex(currentHex)
+                particleMat.color.setHex(currentHex)
+            }
+
+            // LERP de rotation
+            if (!dragging && !prefersReducedMotion) {
+                targetRotY += 0.003
+            }
+            curRotX += (targetRotX + pointerTargetX - curRotX) * 0.06
+            curRotY += (targetRotY + pointerTargetY - curRotY) * 0.06
+            rootGroup.rotation.x = curRotX
+            rootGroup.rotation.y = curRotY
+
+            // Échelle et animation du cœur
+            const coreScale = prefersReducedMotion ? 1 : 0.15 + 0.85 * introEased
+            outerCube.scale.set(coreScale, coreScale, coreScale)
+            outerEdges.scale.set(coreScale, coreScale, coreScale)
+
+            // Rotation inverse du gyroscope interne
+            innerOcta.rotation.y -= 0.008
+            innerOcta.rotation.x += 0.004
+            const octaScale = coreScale * (1 + 0.05 * Math.sin(time * 0.003))
+            innerOcta.scale.set(octaScale, octaScale, octaScale)
+
+            // Pulsation du cœur lumineux
+            coreLight.intensity = (2.8 + 0.8 * Math.sin(time * 0.004)) * introEased
+
+            // Mise à jour des satellites
             const rect = container.getBoundingClientRect()
             const width = rect.width
             const height = rect.height
+            const nextProjected: ProjectedNode[] = []
 
-            // Lecture des tokens de style dynamiques
-            const computedStyle = getComputedStyle(canvas)
-            const accentColor =
-                computedStyle.getPropertyValue('--mr-accent-solid').trim() || '#8b5cf6'
-            const textColor =
-                computedStyle.getPropertyValue('--mr-text-primary').trim() || '#f8fafc'
-            const textMuted = computedStyle.getPropertyValue('--mr-text-muted').trim() || '#94a3b8'
-            const borderSubtle =
-                computedStyle.getPropertyValue('--mr-border-subtle').trim() ||
-                'rgba(255,255,255,0.08)'
-
-            ctx.clearRect(0, 0, width, height)
-
-            // Dégradé radial d'arrière-plan discret
-            const radialGlow = ctx.createRadialGradient(
-                width / 2,
-                height / 2,
-                20,
-                width / 2,
-                height / 2,
-                width * 0.45
-            )
-            radialGlow.addColorStop(0, 'rgba(139, 92, 246, 0.12)')
-            radialGlow.addColorStop(0.6, 'rgba(139, 92, 246, 0.02)')
-            radialGlow.addColorStop(1, 'transparent')
-            ctx.fillStyle = radialGlow
-            ctx.fillRect(0, 0, width, height)
-
-            const state = rotationRef.current
-
-            // Mise à jour de la physique de rotation
-            if (!prefersReducedMotion) {
-                if (!state.isDragging) {
-                    state.targetRotY += state.velY
+            satelliteMeshes.forEach((satItem, idx) => {
+                const { config, mesh, lineGeo } = satItem
+                if (!prefersReducedMotion) {
+                    satItem.currentAngle += config.speed
                 }
-                // Amortissement LERP
-                state.rotX += (state.targetRotX - state.rotX) * 0.08
-                state.rotY += (state.targetRotY - state.rotY) * 0.08
-                orbitalAngleRef.current += 0.005
-            }
+                const currentAngle = satItem.currentAngle
 
-            const curRotX = state.rotX
-            const curRotY = state.rotY
+                // Dispersion spatiale durant l'intro (commence à 2.5x le rayon)
+                const dispersion = prefersReducedMotion ? 1 : 2.5 - 1.5 * introEased
+                const currentRadius = config.radius * dispersion
 
-            // 1. Transformation du cube central
-            const transCube = CUBE_VERTICES.map((v) => {
-                const r = rotateX(rotateY(v, curRotY), curRotX)
-                return project(r, width, height)
+                const x = Math.cos(currentAngle) * currentRadius
+                const z = Math.sin(currentAngle) * currentRadius
+                const y = config.yOffset + Math.sin(time * 0.002 + idx) * 8
+
+                mesh.position.set(x, y, z)
+
+                // Mise à jour des coordonnées du faisceau laser
+                const posAttr = lineGeo.attributes.position as THREE.BufferAttribute
+                const arr = posAttr.array as Float32Array
+                arr[0] = 0
+                arr[1] = 0
+                arr[2] = 0
+                arr[3] = x
+                arr[4] = y
+                arr[5] = z
+                posAttr.needsUpdate = true
+
+                // Calcul de la projection 2D sur l'écran
+                mesh.getWorldPosition(tempV)
+                tempV.project(camera)
+
+                const screenX = (tempV.x * 0.5 + 0.5) * width
+                const screenY = (-tempV.y * 0.5 + 0.5) * height
+                const isBehind = tempV.z > 0.8
+                const depthScale = Math.max(0.75, Math.min(1.15, 1 - (tempV.z - 0.5) * 0.6))
+                const opacity = isBehind ? 0.35 : 0.95
+
+                nextProjected.push({
+                    id: config.id,
+                    label: config.label,
+                    subLabel: config.subLabel,
+                    x: screenX,
+                    y: screenY,
+                    scale: depthScale,
+                    opacity: opacity * introEased,
+                    zIndex: Math.round((1 - tempV.z) * 100),
+                })
             })
 
-            // 2. Transformation de l'octaèdre interne (pulsation douce)
-            const pulse = 1 + Math.sin(orbitalAngleRef.current * 2) * 0.08
-            const transOcta = OCTA_VERTICES.map((v) => {
-                const scaled = { x: v.x * pulse, y: v.y * pulse, z: v.z * pulse }
-                const r = rotateX(rotateY(scaled, -curRotY * 1.5), -curRotX * 1.5)
-                return project(r, width, height)
-            })
+            setProjectedNodes(nextProjected)
 
-            // 3. Transformation des nœuds satellites orbitaux
-            const transNodes = NODES_CONFIG.map((node, i) => {
-                const totalAngle = node.angle + orbitalAngleRef.current
-                const orbitPoint: Point3D = {
-                    x: Math.cos(totalAngle) * node.radius,
-                    y: node.yOffset + Math.sin(totalAngle * 2) * 15,
-                    z: Math.sin(totalAngle) * (node.radius * 0.85),
-                }
-                const r = rotateX(rotateY(orbitPoint, curRotY * 0.3), curRotX * 0.3)
-                const proj = project(r, width, height)
-                return {
-                    node,
-                    index: i,
-                    proj,
-                    z: r.z,
-                }
-            })
+            // Rotation lente des particules d'ambiance
+            particles.rotation.y += 0.0006
 
-            // 4. Tri par profondeur pour Z-sorting
-            transNodes.sort((a, b) => a.z - b.z)
-
-            // 5. Rendu des rayons laser de connexion (vers les nœuds à l'arrière)
-            transNodes.forEach((item) => {
-                if (item.z < 0) {
-                    drawLaser(
-                        ctx,
-                        width / 2,
-                        height / 2,
-                        item.proj.x,
-                        item.proj.y,
-                        item.proj.scale,
-                        accentColor,
-                        false
-                    )
-                }
-            })
-
-            // 6. Rendu des arêtes de l'octaèdre interne
-            ctx.save()
-            ctx.strokeStyle = accentColor
-            ctx.lineWidth = 1.2
-            ctx.globalAlpha = 0.55
-            OCTA_EDGES.forEach(([i, j]) => {
-                const p1 = transOcta[i]!
-                const p2 = transOcta[j]!
-                ctx.beginPath()
-                ctx.moveTo(p1.x, p1.y)
-                ctx.lineTo(p2.x, p2.y)
-                ctx.stroke()
-            })
-            ctx.restore()
-
-            // 7. Rendu des faces semi-transparentes du cube central
-            drawCubeFacets(ctx, transCube, accentColor)
-
-            // 8. Rendu des arêtes du cube central
-            ctx.save()
-            ctx.strokeStyle = accentColor
-            ctx.lineWidth = 1.6
-            ctx.globalAlpha = 0.85
-            CUBE_EDGES.forEach(([i, j]) => {
-                const p1 = transCube[i]!
-                const p2 = transCube[j]!
-                ctx.beginPath()
-                ctx.moveTo(p1.x, p1.y)
-                ctx.lineTo(p2.x, p2.y)
-                ctx.stroke()
-            })
-
-            // 9. Rendu des sommets brillants du cube
-            transCube.forEach((p) => {
-                ctx.fillStyle = '#ffffff'
-                ctx.beginPath()
-                ctx.arc(p.x, p.y, 2.5 * p.scale, 0, Math.PI * 2)
-                ctx.fill()
-            })
-            ctx.restore()
-
-            // 10. Rendu des rayons laser (vers les nœuds à l'avant)
-            transNodes.forEach((item) => {
-                if (item.z >= 0) {
-                    drawLaser(
-                        ctx,
-                        width / 2,
-                        height / 2,
-                        item.proj.x,
-                        item.proj.y,
-                        item.proj.scale,
-                        accentColor,
-                        true
-                    )
-                }
-            })
-
-            // 11. Rendu des badges de nœuds orbitaux
-            transNodes.forEach((item) => {
-                drawNodeBadge(
-                    ctx,
-                    item.proj.x,
-                    item.proj.y,
-                    item.proj.scale,
-                    item.node.label,
-                    item.node.subLabel,
-                    accentColor,
-                    textColor,
-                    textMuted,
-                    borderSubtle
-                )
-            })
-
-            animationFrameId = requestAnimationFrame(render)
+            renderer.render(scene, camera)
+            animationFrameId = requestAnimationFrame(animate)
         }
 
-        animationFrameId = requestAnimationFrame(render)
+        animationFrameId = requestAnimationFrame(animate)
 
+        // Nettoyage complet des ressources WebGL selon threejs-performance
         return () => {
             cancelAnimationFrame(animationFrameId)
-            window.removeEventListener('resize', resizeCanvas)
-            observer?.disconnect()
+            window.removeEventListener('resize', resizeRenderer)
+            container.removeEventListener('mousedown', onPointerDown)
+            window.removeEventListener('mousemove', onPointerMove)
+            window.removeEventListener('mouseup', onPointerUp)
+            container.removeEventListener('touchstart', onPointerDown)
+            window.removeEventListener('touchmove', onPointerMove)
+            window.removeEventListener('touchend', onPointerUp)
+            if (observer) observer.disconnect()
+
+            outerBoxGeo.dispose()
+            outerGlassMat.dispose()
+            edgesGeo.dispose()
+            edgesMat.dispose()
+            octaGeo.dispose()
+            octaMat.dispose()
+            octaEdgesGeo.dispose()
+            octaEdgesMat.dispose()
+            satelliteGeo.dispose()
+            particleGeo.dispose()
+            particleMat.dispose()
+
+            satelliteMeshes.forEach(({ lineGeo, line, mesh }) => {
+                lineGeo.dispose()
+                ;(line.material as THREE.Material).dispose()
+                ;(mesh.material as THREE.Material).dispose()
+            })
+
+            renderer.dispose()
+            renderer.forceContextLoss()
         }
     }, [])
-
-    // Gestion du glisser-déposer pour la rotation 3D
-    const handleMouseDown = (e: React.MouseEvent) => {
-        setIsDragging(true)
-        rotationRef.current.isDragging = true
-        rotationRef.current.lastMouseX = e.clientX
-        rotationRef.current.lastMouseY = e.clientY
-    }
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const state = rotationRef.current
-        if (state.isDragging) {
-            const dx = e.clientX - state.lastMouseX
-            const dy = e.clientY - state.lastMouseY
-            state.targetRotY += dx * 0.007
-            state.targetRotX += dy * 0.007
-            state.lastMouseX = e.clientX
-            state.lastMouseY = e.clientY
-        } else if (containerRef.current) {
-            // Parallaxe subtile au survol
-            const rect = containerRef.current.getBoundingClientRect()
-            const nx = (e.clientX - rect.left) / rect.width - 0.5
-            const ny = (e.clientY - rect.top) / rect.height - 0.5
-            state.targetRotX = -0.25 + ny * 0.35
-            state.targetRotY += nx * 0.003
-        }
-    }
-
-    const handleMouseUp = () => {
-        setIsDragging(false)
-        rotationRef.current.isDragging = false
-    }
 
     return (
         <figure
             ref={containerRef}
-            aria-label={
-                messages.matrixAriaLabel ||
-                '3D Development Matrix showing Monority UI connected with React 19, TypeScript, CSS @layer, OKLCH, Vite, and Next.js'
-            }
+            role="figure"
+            aria-label={messages.home.hero.matrixAriaLabel}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => {
                 setIsHovered(false)
-                handleMouseUp()
+                setIsDragging(false)
             }}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
             style={{
                 position: 'relative',
                 width: '100%',
-                maxWidth: '46rem',
-                height: '420px',
+                maxWidth: '48rem',
+                height: '440px',
                 marginInline: 'auto',
-                marginBlock: 'var(--mr-space-4) var(--mr-space-2)',
+                marginBlock: 'var(--mr-space-2) var(--mr-space-4)',
                 borderRadius: 'var(--mr-radius-xl, 1rem)',
                 overflow: 'hidden',
                 cursor: isDragging ? 'grabbing' : 'grab',
@@ -503,6 +549,87 @@ export function Home3DMatrix() {
                     height: '100%',
                 }}
             />
+
+            {/* Badges HTML projetés en 3D avec typographie nette et netteté Retina */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    overflow: 'hidden',
+                }}
+            >
+                {projectedNodes.map((node) => {
+                    const isNodeHovered = hoveredNodeId === node.id
+                    return (
+                        <div
+                            key={node.id}
+                            style={{
+                                position: 'absolute',
+                                left: `${node.x}px`,
+                                top: `${node.y}px`,
+                                transform: `translate(-50%, -50%) scale(${node.scale * (isNodeHovered ? 1.15 : 1)})`,
+                                opacity: node.opacity,
+                                zIndex: node.zIndex,
+                                pointerEvents: 'auto',
+                                cursor: 'pointer',
+                                transition:
+                                    'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms ease',
+                            }}
+                            onMouseEnter={() => setHoveredNodeId(node.id)}
+                            onMouseLeave={() => setHoveredNodeId(null)}
+                        >
+                            <div
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: '4px 10px',
+                                    borderRadius: 'var(--mr-radius-full)',
+                                    backgroundColor:
+                                        'color-mix(in oklch, var(--mr-bg-surface), black 25%)',
+                                    backdropFilter: 'blur(12px)',
+                                    border: isNodeHovered
+                                        ? '1px solid var(--mr-accent-solid)'
+                                        : '1px solid var(--mr-border-subtle)',
+                                    boxShadow: isNodeHovered
+                                        ? '0 0 16px var(--mr-accent-subtle)'
+                                        : '0 4px 12px rgba(0, 0, 0, 0.25)',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        width: '6px',
+                                        height: '6px',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'var(--mr-accent-solid)',
+                                        boxShadow: '0 0 8px var(--mr-accent-solid)',
+                                    }}
+                                />
+                                <span
+                                    style={{
+                                        fontSize: 'var(--mr-font-size-xs)',
+                                        fontWeight: 600,
+                                        color: 'var(--mr-text-primary)',
+                                        letterSpacing: '-0.01em',
+                                    }}
+                                >
+                                    {node.label}
+                                </span>
+                                <span
+                                    style={{
+                                        fontSize: '10px',
+                                        color: 'var(--mr-text-muted)',
+                                        fontWeight: 400,
+                                    }}
+                                >
+                                    {node.subLabel}
+                                </span>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
 
             {/* Légende discrète d'interaction */}
             <div
@@ -527,127 +654,4 @@ export function Home3DMatrix() {
             </figcaption>
         </figure>
     )
-}
-
-function drawLaser(
-    ctx: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
-    endX: number,
-    endY: number,
-    scale: number,
-    color: string,
-    isFront: boolean
-) {
-    ctx.save()
-    ctx.strokeStyle = color
-    ctx.lineWidth = isFront ? 1.4 : 0.8
-    ctx.globalAlpha = Math.max(0.15, Math.min(0.65, 0.45 * scale))
-    ctx.setLineDash([4, 6])
-    ctx.beginPath()
-    ctx.moveTo(startX, startY)
-    ctx.lineTo(endX, endY)
-    ctx.stroke()
-    ctx.restore()
-}
-
-function drawCubeFacets(
-    ctx: CanvasRenderingContext2D,
-    pts: { x: number; y: number; scale: number }[],
-    accentColor: string
-) {
-    ctx.save()
-    ctx.fillStyle = accentColor
-    ctx.globalAlpha = 0.05
-
-    // Face supérieure (0, 1, 5, 4)
-    if (pts[0] && pts[1] && pts[5] && pts[4]) {
-        ctx.beginPath()
-        ctx.moveTo(pts[0].x, pts[0].y)
-        ctx.lineTo(pts[1].x, pts[1].y)
-        ctx.lineTo(pts[5].x, pts[5].y)
-        ctx.lineTo(pts[4].x, pts[4].y)
-        ctx.closePath()
-        ctx.fill()
-    }
-
-    // Face avant (4, 5, 6, 7)
-    if (pts[4] && pts[5] && pts[6] && pts[7]) {
-        ctx.beginPath()
-        ctx.moveTo(pts[4].x, pts[4].y)
-        ctx.lineTo(pts[5].x, pts[5].y)
-        ctx.lineTo(pts[6].x, pts[6].y)
-        ctx.lineTo(pts[7].x, pts[7].y)
-        ctx.closePath()
-        ctx.fill()
-    }
-    ctx.restore()
-}
-
-function drawNodeBadge(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    scale: number,
-    label: string,
-    subLabel: string,
-    accentColor: string,
-    textColor: string,
-    textMuted: string,
-    borderSubtle: string
-) {
-    ctx.save()
-
-    const s = Math.max(0.7, Math.min(1.2, scale))
-    const padX = 10 * s
-    const padY = 5 * s
-    const radius = 6 * s
-
-    ctx.font = `600 ${Math.round(11 * s)}px system-ui, -apple-system, sans-serif`
-    const labelMetrics = ctx.measureText(label)
-    const labelW = labelMetrics.width
-
-    ctx.font = `400 ${Math.round(9 * s)}px system-ui, -apple-system, sans-serif`
-    const subMetrics = ctx.measureText(subLabel)
-    const subW = subMetrics.width
-
-    const totalW = Math.max(labelW, subW) + padX * 2
-    const totalH = 34 * s
-
-    const boxX = x - totalW / 2
-    const boxY = y - totalH / 2
-
-    // Fond du badge (sombre / flouté)
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.88)'
-    ctx.strokeStyle = scale > 1 ? accentColor : borderSubtle
-    ctx.lineWidth = scale > 1 ? 1.5 : 1
-
-    ctx.beginPath()
-    if (typeof ctx.roundRect === 'function') {
-        ctx.roundRect(boxX, boxY, totalW, totalH, radius)
-    } else {
-        ctx.rect(boxX, boxY, totalW, totalH)
-    }
-    ctx.fill()
-    ctx.stroke()
-
-    // Petit point indicateur actif
-    ctx.fillStyle = accentColor
-    ctx.beginPath()
-    ctx.arc(boxX + 9 * s, boxY + 11 * s, 2.5 * s, 0, Math.PI * 2)
-    ctx.fill()
-
-    // Texte principal (label)
-    ctx.fillStyle = textColor
-    ctx.font = `600 ${Math.round(11 * s)}px system-ui, -apple-system, sans-serif`
-    ctx.textAlign = 'left'
-    ctx.textBaseline = 'middle'
-    ctx.fillText(label, boxX + 16 * s, boxY + 11 * s)
-
-    // Sous-titre descriptif
-    ctx.fillStyle = textMuted
-    ctx.font = `400 ${Math.round(9 * s)}px system-ui, -apple-system, sans-serif`
-    ctx.fillText(subLabel, boxX + 16 * s, boxY + 23 * s)
-
-    ctx.restore()
 }

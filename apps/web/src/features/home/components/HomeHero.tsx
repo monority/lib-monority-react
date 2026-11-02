@@ -25,14 +25,23 @@ export function HomeHero() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
-                paddingBlock: 'var(--mr-space-8) var(--mr-space-6)',
+                paddingBlock: 'var(--mr-space-6) var(--mr-space-2)',
                 maxWidth: '56rem',
                 marginInline: 'auto',
             }}
         >
             <Stack gap="md" align="center">
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Badge variant="primary" size="md">
+                    <Badge
+                        variant="primary"
+                        size="md"
+                        style={{
+                            boxShadow:
+                                '0 0 16px color-mix(in oklch, var(--mr-accent-solid) 22%, transparent)',
+                            borderColor:
+                                'color-mix(in oklch, var(--mr-accent-solid) 40%, transparent)',
+                        }}
+                    >
                         {messages.kicker}
                     </Badge>
                 </div>
@@ -40,7 +49,7 @@ export function HomeHero() {
                 <Title
                     as="h1"
                     style={{
-                        fontSize: 'clamp(2.25rem, 5vw, 3.75rem)',
+                        fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
                         fontWeight: 700,
                         lineHeight: 1.1,
                         letterSpacing: '-0.035em',
