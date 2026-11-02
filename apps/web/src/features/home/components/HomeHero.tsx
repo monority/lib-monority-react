@@ -1,6 +1,8 @@
-import { useState } from 'react'
-import { Badge, ButtonLink, Stack, Text, Title } from '@monority/ui'
 import { localizePath, useLocale, useMessages } from '@/shared/i18n'
+import { Badge, ButtonLink, Text, Title } from '@monority/ui'
+import { useState } from 'react'
+import { HeroMonolith3D } from './monolith/HeroMonolith3D'
+import './HomeHero.css'
 
 export function HomeHero() {
     const { locale } = useLocale()
@@ -18,73 +20,23 @@ export function HomeHero() {
     }
 
     return (
-        <section
-            aria-label={messages.ariaLabel}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                paddingBlock: 'var(--mr-space-6) var(--mr-space-2)',
-                maxWidth: '56rem',
-                marginInline: 'auto',
-            }}
-        >
-            <Stack gap="md" align="center">
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Badge
-                        variant="primary"
-                        size="md"
-                        style={{
-                            boxShadow:
-                                '0 0 16px color-mix(in oklch, var(--mr-accent-solid) 22%, transparent)',
-                            borderColor:
-                                'color-mix(in oklch, var(--mr-accent-solid) 40%, transparent)',
-                        }}
-                    >
+        <section aria-label={messages.ariaLabel} className="mr-hero">
+            <div className="mr-hero__content">
+                <div className="mr-hero__kicker">
+                    <Badge variant="primary" size="md" className="mr-hero__badge">
                         {messages.kicker}
                     </Badge>
                 </div>
 
-                <Title
-                    as="h1"
-                    style={{
-                        fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
-                        fontWeight: 700,
-                        lineHeight: 1.1,
-                        letterSpacing: '-0.035em',
-                        color: 'var(--mr-text-primary)',
-                        maxWidth: '48rem',
-                        textWrap: 'balance',
-                        margin: 0,
-                    }}
-                >
+                <Title as="h1" className="mr-hero__title">
                     {messages.title}
                 </Title>
 
-                <Text
-                    tone="muted"
-                    style={{
-                        fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-                        lineHeight: 1.6,
-                        maxWidth: '42rem',
-                        margin: 0,
-                        textWrap: 'balance',
-                    }}
-                >
+                <Text tone="muted" className="mr-hero__description">
                     {messages.description}
                 </Text>
 
-                <div
-                    style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 'var(--mr-space-3)',
-                        paddingTop: 'var(--mr-space-3)',
-                    }}
-                >
+                <div className="mr-hero__actions">
                     <ButtonLink href={localizePath('/docs', locale)} variant="primary" size="lg">
                         {messages.docsCta}
                     </ButtonLink>
@@ -103,33 +55,18 @@ export function HomeHero() {
                         type="button"
                         onClick={handleCopy}
                         aria-label={copied ? messages.copied : messages.installCommand}
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.625rem',
-                            height: '2.75rem',
-                            paddingInline: '1rem',
-                            borderRadius: 'var(--mr-radius-control)',
-                            border: '1px solid var(--mr-border-control)',
-                            background: 'var(--mr-bg-sunken)',
-                            color: 'var(--mr-text-primary)',
-                            fontFamily: 'var(--mr-font-family-mono)',
-                            fontSize: '0.875rem',
-                            cursor: 'pointer',
-                            transition: 'all var(--mr-duration-state) ease',
-                        }}
+                        className="mr-hero__install-btn"
                     >
-                        <span style={{ color: 'var(--mr-text-muted)' }} aria-hidden="true">
+                        <span className="mr-hero__install-prompt" aria-hidden="true">
                             $
                         </span>
                         <span>{messages.installCommand}</span>
                         <span
-                            style={{
-                                color: copied ? 'var(--mr-success-solid)' : 'var(--mr-text-muted)',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                transition: 'color var(--mr-duration-state) ease',
-                            }}
+                            className={
+                                copied
+                                    ? 'mr-hero__install-icon mr-hero__install-icon--copied'
+                                    : 'mr-hero__install-icon'
+                            }
                             aria-hidden="true"
                         >
                             {copied ? (
@@ -163,7 +100,11 @@ export function HomeHero() {
                         </span>
                     </button>
                 </div>
-            </Stack>
+            </div>
+
+            <div className="mr-hero__visual">
+                <HeroMonolith3D />
+            </div>
         </section>
     )
 }

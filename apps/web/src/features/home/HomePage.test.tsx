@@ -19,7 +19,8 @@ describe('HomePage', () => {
         expect(screen.getByText('npm i @monority/ui')).toBeInTheDocument()
 
         expect(screen.getByRole('figure')).toBeInTheDocument()
-        expect(screen.getByText('Drag to orbit 3D')).toBeInTheDocument()
+        expect(screen.getByText('Cluster Performance')).toBeInTheDocument()
+        expect(screen.getByText('Routing Policy')).toBeInTheDocument()
 
         expect(
             screen.getByRole('heading', { level: 2, name: 'Architectural Foundations' })
