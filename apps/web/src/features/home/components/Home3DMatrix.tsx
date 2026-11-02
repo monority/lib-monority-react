@@ -80,21 +80,56 @@ interface ProjectedNode {
     zIndex: number
 }
 
+// Mappage instantané des teintes d'accentuation standard de Monority
+const ACCENT_HEX_MAP: Record<string, number> = {
+    '290': 0x8b5cf6, // Violet
+    '215': 0x06b6d4, // Cyan
+    '70': 0xf59e0b, // Amber
+    '155': 0x10b981, // Emerald
+}
+
+let helperCanvas: HTMLCanvasElement | null = null
+let helperCtx: CanvasRenderingContext2D | null = null
+
 function resolveCssColor(cssColor: string, defaultHex = 0x8b5cf6): number {
-    if (typeof document === 'undefined') return defaultHex
-    try {
-        const dummy = document.createElement('div')
-        dummy.style.color = cssColor
-        document.body.appendChild(dummy)
-        const computed = getComputedStyle(dummy).color
-        document.body.removeChild(dummy)
-        const match = computed.match(/\d+/g)
-        if (match && match.length >= 3) {
-            return (Number(match[0]) << 16) | (Number(match[1]) << 8) | Number(match[2])
-        }
-    } catch {
-        /* fallback */
+    if (!cssColor) return defaultHex
+    const trimmed = cssColor.trim()
+
+    // 1. Détection rapide hexadécimale
+    if (trimmed.startsWith('#')) {
+        const parsed = Number.parseInt(trimmed.slice(1), 16)
+        if (!Number.isNaN(parsed)) return parsed
     }
+
+    // 2. Détection rapide des teintes OKLCH de Monority
+    for (const [hue, hex] of Object.entries(ACCENT_HEX_MAP)) {
+        if (trimmed.includes(hue)) return hex
+    }
+
+    // 3. Résolution Canvas 2D sans altération du DOM
+    if (typeof document !== 'undefined') {
+        try {
+            if (!helperCanvas) {
+                helperCanvas = document.createElement('canvas')
+                helperCanvas.width = 1
+                helperCanvas.height = 1
+                helperCtx = helperCanvas.getContext('2d', { willReadFrequently: true })
+            }
+            if (helperCtx) {
+                helperCtx.clearRect(0, 0, 1, 1)
+                helperCtx.fillStyle = '#000000'
+                helperCtx.fillStyle = trimmed
+                helperCtx.fillRect(0, 0, 1, 1)
+                const data = helperCtx.getImageData(0, 0, 1, 1).data
+                if (data[3] !== 0) {
+                    return ((data[0] ?? 0) << 16) | ((data[1] ?? 0) << 8) | (data[2] ?? 0)
+                }
+            }
+        } catch {
+            /* noop */
+        }
+    }
+
     return defaultHex
 }
 
@@ -130,22 +165,24 @@ export function Home3DMatrix() {
 
         let animationFrameId: number
         let isVisible = true
-        let observer: IntersectionObserver | null = null
+        let intersectionObs: IntersectionObserver | null = null
+        let resizeObs: ResizeObserver | null = null
 
         if (typeof IntersectionObserver !== 'undefined') {
-            observer = new IntersectionObserver(
+            intersectionObs = new IntersectionObserver(
                 ([entry]) => {
                     isVisible = entry?.isIntersecting ?? true
                 },
                 { threshold: 0.05 }
             )
-            observer.observe(container)
+            intersectionObs.observe(container)
         }
 
-        // Configuration Three.js
+        // Configuration Three.js de base
         const scene = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1500)
-        camera.position.set(0, 30, 480)
+        camera.position.set(0, 30, 440)
+        camera.lookAt(0, 0, 0)
 
         let renderer: THREE.WebGLRenderer
         try {
@@ -157,83 +194,89 @@ export function Home3DMatrix() {
             })
             renderer.setClearColor(0x000000, 0)
             renderer.toneMapping = THREE.ACESFilmicToneMapping
-            renderer.toneMappingExposure = 1.15
+            renderer.toneMappingExposure = 1.2
         } catch {
             return
         }
 
         const resizeRenderer = () => {
             const rect = container.getBoundingClientRect()
-            if (rect.width === 0 || rect.height === 0) return
+            const w = rect.width || container.clientWidth || 700
+            const h = rect.height || container.clientHeight || 440
             const dpr = Math.min(window.devicePixelRatio || 1, 2)
             renderer.setPixelRatio(dpr)
-            renderer.setSize(rect.width, rect.height, false)
-            camera.aspect = rect.width / rect.height
+            renderer.setSize(w, h, false)
+            camera.aspect = w / h
             camera.updateProjectionMatrix()
         }
         resizeRenderer()
+
+        if (typeof ResizeObserver !== 'undefined') {
+            resizeObs = new ResizeObserver(() => {
+                resizeRenderer()
+            })
+            resizeObs.observe(container)
+        }
         window.addEventListener('resize', resizeRenderer)
 
         // Groupe racine
         const rootGroup = new THREE.Group()
         scene.add(rootGroup)
 
-        // Récupération dynamique de la couleur d'accentuation
+        // Récupération de la couleur d'accentuation initiale
         const computedStyle = getComputedStyle(container)
-        const initialAccentHex = resolveCssColor(
-            computedStyle.getPropertyValue('--mr-accent-solid').trim() || '#8b5cf6'
-        )
+        const initialAccentStr = computedStyle.getPropertyValue('--mr-accent-solid').trim()
+        let currentAccentHex = resolveCssColor(initialAccentStr, 0x8b5cf6)
+        let lastAccentStr = initialAccentStr
 
-        // Lumières
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+        // Lumières Three.js
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85)
         scene.add(ambientLight)
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2)
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.5)
         keyLight.position.set(160, 240, 200)
         scene.add(keyLight)
 
-        const rimLight = new THREE.DirectionalLight(initialAccentHex, 2.0)
+        const rimLight = new THREE.DirectionalLight(currentAccentHex, 2.2)
         rimLight.position.set(-180, -120, -180)
         scene.add(rimLight)
 
-        const coreLight = new THREE.PointLight(initialAccentHex, 3.2, 320, 1.4)
+        const coreLight = new THREE.PointLight(currentAccentHex, 3.8, 350, 1.2)
         coreLight.position.set(0, 0, 0)
         rootGroup.add(coreLight)
 
-        // Cœur central monolithique en verre dépoli (PBR Physical Material)
+        // 1. Cœur central : Hypercube translucide (PBR avec double face)
         const outerBoxGeo = new THREE.BoxGeometry(82, 82, 82)
-        const outerGlassMat = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
-            metalness: 0.05,
-            roughness: 0.12,
-            transmission: 0.72,
-            thickness: 1.6,
-            ior: 1.5,
+        const outerGlassMat = new THREE.MeshStandardMaterial({
+            color: currentAccentHex,
+            roughness: 0.15,
+            metalness: 0.25,
             transparent: true,
-            opacity: 0.78,
-            reflectivity: 0.5,
+            opacity: 0.28,
+            side: THREE.DoubleSide,
+            depthWrite: false,
         })
         const outerCube = new THREE.Mesh(outerBoxGeo, outerGlassMat)
         rootGroup.add(outerCube)
 
-        // Arêtes lumineuses du cube
+        // Arêtes néon lumineuses de l'hypercube
         const edgesGeo = new THREE.EdgesGeometry(outerBoxGeo)
         const edgesMat = new THREE.LineBasicMaterial({
-            color: initialAccentHex,
+            color: currentAccentHex,
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.95,
         })
         const outerEdges = new THREE.LineSegments(edgesGeo, edgesMat)
         rootGroup.add(outerEdges)
 
-        // Noyau gyroscopique intérieur (Octaèdre)
+        // 2. Gyroscope intérieur : Octaèdre métallique pulsant
         const octaGeo = new THREE.OctahedronGeometry(42, 0)
         const octaMat = new THREE.MeshStandardMaterial({
-            color: initialAccentHex,
-            roughness: 0.25,
-            metalness: 0.75,
-            emissive: initialAccentHex,
-            emissiveIntensity: 0.55,
+            color: currentAccentHex,
+            roughness: 0.2,
+            metalness: 0.8,
+            emissive: currentAccentHex,
+            emissiveIntensity: 0.8,
         })
         const innerOcta = new THREE.Mesh(octaGeo, octaMat)
         rootGroup.add(innerOcta)
@@ -247,36 +290,38 @@ export function Home3DMatrix() {
         const innerOctaEdges = new THREE.LineSegments(octaEdgesGeo, octaEdgesMat)
         innerOcta.add(innerOctaEdges)
 
-        // Nœuds satellites et faisceaux laser
+        // 3. Nœuds satellites orbitaux & faisceaux laser
         const satelliteMeshes: {
             config: OrbitalNodeConfig
             mesh: THREE.Mesh
+            mat: THREE.MeshStandardMaterial
             line: THREE.Line
             lineGeo: THREE.BufferGeometry
+            lineMat: THREE.LineBasicMaterial
             currentAngle: number
         }[] = []
 
-        const satelliteGeo = new THREE.IcosahedronGeometry(7.5, 1)
+        const satelliteGeo = new THREE.IcosahedronGeometry(8, 1)
 
         NODES_CONFIG.forEach((config) => {
             const satMat = new THREE.MeshStandardMaterial({
-                color: initialAccentHex,
-                emissive: initialAccentHex,
-                emissiveIntensity: 0.9,
-                roughness: 0.2,
-                metalness: 0.5,
+                color: 0xffffff,
+                emissive: currentAccentHex,
+                emissiveIntensity: 1.1,
+                roughness: 0.15,
+                metalness: 0.6,
             })
             const satMesh = new THREE.Mesh(satelliteGeo, satMat)
             rootGroup.add(satMesh)
 
-            // Ligne de faisceau reliant le centre au satellite
+            // Faisceau reliant le noyau au satellite
             const linePositions = new Float32Array([0, 0, 0, 0, 0, 0])
             const lineGeo = new THREE.BufferGeometry()
             lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3))
             const lineMat = new THREE.LineBasicMaterial({
-                color: initialAccentHex,
+                color: currentAccentHex,
                 transparent: true,
-                opacity: 0.45,
+                opacity: 0.65,
             })
             const line = new THREE.Line(lineGeo, lineMat)
             rootGroup.add(line)
@@ -284,27 +329,29 @@ export function Home3DMatrix() {
             satelliteMeshes.push({
                 config,
                 mesh: satMesh,
+                mat: satMat,
                 line,
                 lineGeo,
+                lineMat,
                 currentAngle: config.angle,
             })
         })
 
-        // Particules flottantes d'ambiance (poussière stellaire en arrière-plan)
-        const particleCount = 45
+        // 4. Poussière d'étoiles / particules d'ambiance
+        const particleCount = 50
         const particlePositions = new Float32Array(particleCount * 3)
         for (let i = 0; i < particleCount; i++) {
-            particlePositions[i * 3] = (Math.random() - 0.5) * 600
-            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 450
-            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 400
+            particlePositions[i * 3] = (Math.random() - 0.5) * 650
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 480
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 450
         }
         const particleGeo = new THREE.BufferGeometry()
         particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
         const particleMat = new THREE.PointsMaterial({
-            color: initialAccentHex,
-            size: 2.5,
+            color: currentAccentHex,
+            size: 3,
             transparent: true,
-            opacity: 0.35,
+            opacity: 0.45,
         })
         const particles = new THREE.Points(particleGeo, particleMat)
         rootGroup.add(particles)
@@ -322,7 +369,6 @@ export function Home3DMatrix() {
         let pointerTargetX = 0
         let pointerTargetY = 0
 
-        // Gestionnaires d'interaction souris
         const onPointerDown = (e: MouseEvent | TouchEvent) => {
             dragging = true
             setIsDragging(true)
@@ -345,10 +391,12 @@ export function Home3DMatrix() {
                 targetRotX += deltaY * 0.008
             } else {
                 const rect = container.getBoundingClientRect()
-                const relX = (clientX - rect.left) / rect.width - 0.5
-                const relY = (clientY - rect.top) / rect.height - 0.5
-                pointerTargetX = relY * 0.35
-                pointerTargetY = relX * 0.45
+                if (rect.width > 0 && rect.height > 0) {
+                    const relX = (clientX - rect.left) / rect.width - 0.5
+                    const relY = (clientY - rect.top) / rect.height - 0.5
+                    pointerTargetX = relY * 0.35
+                    pointerTargetY = relX * 0.45
+                }
             }
         }
 
@@ -364,35 +412,45 @@ export function Home3DMatrix() {
         window.addEventListener('touchmove', onPointerMove, { passive: true })
         window.addEventListener('touchend', onPointerUp)
 
-        // Vecteur temporaire pour projection écran
         const tempV = new THREE.Vector3()
 
-        // Boucle d'animation
+        // Boucle d'animation principale
         const animate = (time: number) => {
             if (!isVisible) {
                 animationFrameId = requestAnimationFrame(animate)
                 return
             }
 
+            // Vérification de sécurité de taille si initialisation tardive
+            if (canvas.width === 0 || canvas.height === 0) {
+                resizeRenderer()
+            }
+
             const elapsed = time - startTime
             const introDuration = 1400
             const introRaw = prefersReducedMotion ? 1 : Math.min(1, elapsed / introDuration)
-            // Lissage exponentiel (courbe cubic-bezier 0.16, 1, 0.3, 1)
             const introEased = 1 - Math.pow(1 - introRaw, 3)
 
-            // Mise à jour de la couleur d'accentuation en temps réel si modifiée
+            // Détection du changement de couleur d'accentuation en temps réel (0ms)
             const currentAccent = computedStyle.getPropertyValue('--mr-accent-solid').trim()
-            if (currentAccent) {
-                const currentHex = resolveCssColor(currentAccent)
-                rimLight.color.setHex(currentHex)
-                coreLight.color.setHex(currentHex)
-                edgesMat.color.setHex(currentHex)
-                octaMat.color.setHex(currentHex)
-                octaMat.emissive.setHex(currentHex)
-                particleMat.color.setHex(currentHex)
+            if (currentAccent && currentAccent !== lastAccentStr) {
+                lastAccentStr = currentAccent
+                currentAccentHex = resolveCssColor(currentAccent)
+                rimLight.color.setHex(currentAccentHex)
+                coreLight.color.setHex(currentAccentHex)
+                edgesMat.color.setHex(currentAccentHex)
+                outerGlassMat.color.setHex(currentAccentHex)
+                octaMat.color.setHex(currentAccentHex)
+                octaMat.emissive.setHex(currentAccentHex)
+                particleMat.color.setHex(currentAccentHex)
+
+                satelliteMeshes.forEach(({ mat, lineMat }) => {
+                    mat.emissive.setHex(currentAccentHex)
+                    lineMat.color.setHex(currentAccentHex)
+                })
             }
 
-            // LERP de rotation
+            // Rotation douce et amortissement LERP
             if (!dragging && !prefersReducedMotion) {
                 targetRotY += 0.003
             }
@@ -401,24 +459,24 @@ export function Home3DMatrix() {
             rootGroup.rotation.x = curRotX
             rootGroup.rotation.y = curRotY
 
-            // Échelle et animation du cœur
-            const coreScale = prefersReducedMotion ? 1 : 0.15 + 0.85 * introEased
+            // Échelle du cœur (animation d'intro)
+            const coreScale = prefersReducedMotion ? 1 : 0.2 + 0.8 * introEased
             outerCube.scale.set(coreScale, coreScale, coreScale)
             outerEdges.scale.set(coreScale, coreScale, coreScale)
 
-            // Rotation inverse du gyroscope interne
+            // Contre-rotation du gyroscope interne
             innerOcta.rotation.y -= 0.008
             innerOcta.rotation.x += 0.004
-            const octaScale = coreScale * (1 + 0.05 * Math.sin(time * 0.003))
+            const octaScale = coreScale * (1 + 0.04 * Math.sin(time * 0.003))
             innerOcta.scale.set(octaScale, octaScale, octaScale)
 
             // Pulsation du cœur lumineux
-            coreLight.intensity = (2.8 + 0.8 * Math.sin(time * 0.004)) * introEased
+            coreLight.intensity = (3.2 + 0.8 * Math.sin(time * 0.004)) * introEased
 
-            // Mise à jour des satellites
+            // Calcul de la projection 2D des nœuds satellites
             const rect = container.getBoundingClientRect()
-            const width = rect.width
-            const height = rect.height
+            const width = rect.width || 700
+            const height = rect.height || 440
             const nextProjected: ProjectedNode[] = []
 
             satelliteMeshes.forEach((satItem, idx) => {
@@ -428,7 +486,7 @@ export function Home3DMatrix() {
                 }
                 const currentAngle = satItem.currentAngle
 
-                // Dispersion spatiale durant l'intro (commence à 2.5x le rayon)
+                // Dispersion spatiale durant l'assemblage
                 const dispersion = prefersReducedMotion ? 1 : 2.5 - 1.5 * introEased
                 const currentRadius = config.radius * dispersion
 
@@ -438,7 +496,7 @@ export function Home3DMatrix() {
 
                 mesh.position.set(x, y, z)
 
-                // Mise à jour des coordonnées du faisceau laser
+                // Faisceau reliant le centre au satellite
                 const posAttr = lineGeo.attributes.position as THREE.BufferAttribute
                 const arr = posAttr.array as Float32Array
                 arr[0] = 0
@@ -449,7 +507,7 @@ export function Home3DMatrix() {
                 arr[5] = z
                 posAttr.needsUpdate = true
 
-                // Calcul de la projection 2D sur l'écran
+                // Projection de la coordonnée 3D vers l'écran 2D
                 mesh.getWorldPosition(tempV)
                 tempV.project(camera)
 
@@ -457,7 +515,7 @@ export function Home3DMatrix() {
                 const screenY = (-tempV.y * 0.5 + 0.5) * height
                 const isBehind = tempV.z > 0.8
                 const depthScale = Math.max(0.75, Math.min(1.15, 1 - (tempV.z - 0.5) * 0.6))
-                const opacity = isBehind ? 0.35 : 0.95
+                const opacity = isBehind ? 0.45 : 0.95
 
                 nextProjected.push({
                     id: config.id,
@@ -466,14 +524,14 @@ export function Home3DMatrix() {
                     x: screenX,
                     y: screenY,
                     scale: depthScale,
-                    opacity: opacity * introEased,
+                    opacity: opacity * Math.max(0.5, introEased),
                     zIndex: Math.round((1 - tempV.z) * 100),
                 })
             })
 
             setProjectedNodes(nextProjected)
 
-            // Rotation lente des particules d'ambiance
+            // Rotation lente de l'atmosphère stellaire
             particles.rotation.y += 0.0006
 
             renderer.render(scene, camera)
@@ -482,7 +540,6 @@ export function Home3DMatrix() {
 
         animationFrameId = requestAnimationFrame(animate)
 
-        // Nettoyage complet des ressources WebGL selon threejs-performance
         return () => {
             cancelAnimationFrame(animationFrameId)
             window.removeEventListener('resize', resizeRenderer)
@@ -492,7 +549,8 @@ export function Home3DMatrix() {
             container.removeEventListener('touchstart', onPointerDown)
             window.removeEventListener('touchmove', onPointerMove)
             window.removeEventListener('touchend', onPointerUp)
-            if (observer) observer.disconnect()
+            if (intersectionObs) intersectionObs.disconnect()
+            if (resizeObs) resizeObs.disconnect()
 
             outerBoxGeo.dispose()
             outerGlassMat.dispose()
@@ -506,10 +564,10 @@ export function Home3DMatrix() {
             particleGeo.dispose()
             particleMat.dispose()
 
-            satelliteMeshes.forEach(({ lineGeo, line, mesh }) => {
+            satelliteMeshes.forEach(({ lineGeo, lineMat, mat }) => {
                 lineGeo.dispose()
-                ;(line.material as THREE.Material).dispose()
-                ;(mesh.material as THREE.Material).dispose()
+                lineMat.dispose()
+                mat.dispose()
             })
 
             renderer.dispose()
@@ -539,6 +597,7 @@ export function Home3DMatrix() {
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none',
                 touchAction: 'none',
+                backgroundColor: 'transparent',
             }}
         >
             <canvas
@@ -589,6 +648,7 @@ export function Home3DMatrix() {
                                     backgroundColor:
                                         'color-mix(in oklch, var(--mr-bg-surface), black 25%)',
                                     backdropFilter: 'blur(12px)',
+                                    WebkitBackdropFilter: 'blur(12px)',
                                     border: isNodeHovered
                                         ? '1px solid var(--mr-accent-solid)'
                                         : '1px solid var(--mr-border-subtle)',
