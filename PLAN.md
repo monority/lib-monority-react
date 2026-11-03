@@ -29,7 +29,7 @@ Plan d'action : `plan-nouveaux-composants.md`.
 ## Chantier terminé — Restructuration Documentation, Harmonisation Bordures et Moodboard Studio
 
 Branche `feat/cleanup-and-redesign-docs-moodboard`. PR #18 fusionnee dans `main` (commit c2accd8).
-Plan d'action et memoire : `PROJECT_CONTEXT.md` et artéfact `plan-refactor-moodboard-tokens-grid.md`.
+Plan d'action et memoire : `docs/archive/PROJECT_CONTEXT.md` et artéfact `plan-refactor-moodboard-tokens-grid.md`.
 - Phase 1 a 8 terminees avec succes.
 
 ## Chantier terminé — Stabilisation et Certification des 41 Composants Draft vers Stable
