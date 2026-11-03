@@ -131,9 +131,9 @@ Plan d'action : artéfact `plan-i18n-master.md`.
 
 ## Reprise
 
-Branche actuelle : `feat/i18n`.
-Statut : Chantiers 3D Logo, Guides Documentation (/docs, /docs/installation) et navigation DocPager 100% achevés et validés.
-Prochaine action : Fusion de la branche `feat/i18n` vers la branche cible (`refactor/css-foundation` ou `main`) ou publication changeset.
+Branche actuelle : `main`.
+Statut : Branche `feat/i18n` fusionnée avec succès dans `main` (commit `b9ad981`). Toutes les branches obsolètes nettoyées.
+Prochaine action : Surveillance de la release automatique changeset (`origin/changeset-release/main`).
 
 ## Chantier terminé — Monolithe 3D Accueil & Logo de marque
 
