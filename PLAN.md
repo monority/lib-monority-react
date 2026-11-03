@@ -132,8 +132,8 @@ Plan d'action : artéfact `plan-i18n-master.md`.
 ## Reprise
 
 Branche actuelle : `main`.
-Statut : Branche `feat/i18n` fusionnée avec succès dans `main` (commit `b9ad981`). Toutes les branches obsolètes nettoyées.
-Prochaine action : Surveillance de la release automatique changeset (`origin/changeset-release/main`).
+Statut : Version 1.0.0 de `@monority/ui` intégrée dans `main` (commit `dae2057`), branches nettoyées, arbre de travail propre.
+Prochaine action : Publication npm (`pnpm release`) ou démarrage du prochain chantier.
 
 ## Chantier terminé — Monolithe 3D Accueil & Logo de marque
 
