@@ -4,6 +4,7 @@ import { defineConfig } from 'tsup'
 export default defineConfig({
     entry: {
         index: 'src/index.ts',
+        logoMark: 'src/components/brand/logo/index.ts',
         button: 'src/components/actions/button/index.ts',
         buttonLink: 'src/components/actions/button-link/index.ts',
         input: 'src/components/forms/input/index.ts',

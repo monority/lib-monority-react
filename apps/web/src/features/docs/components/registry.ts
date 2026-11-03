@@ -7,6 +7,13 @@ export interface DocsComponentRegistryItem {
 }
 
 export const docsComponentRegistry: DocsComponentRegistryItem[] = [
+    {
+        category: 'brand',
+        label: 'LogoMark',
+        path: '/docs/logo-mark',
+        slug: 'logo-mark',
+        status: 'stable',
+    },
     // Actions
     {
         category: 'actions',

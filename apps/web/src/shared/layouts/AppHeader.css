@@ -59,12 +59,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     color: var(--mr-accent-solid);
     transition: transform var(--mr-duration-state) ease;
 }
 
 .app-header__brand:hover .app-header__logo-mark {
-    transform: rotate(15deg);
+    transform: rotate(-8deg);
 }
 
 .app-header__logo-text {
