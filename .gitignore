@@ -63,9 +63,9 @@ playwright-report
 blob-report
 apps/web/e2e/audit-baseline.spec.ts-snapshots/
 # AI instructions, rules, plans & internal decisions
-AGENTS.md
-PLAN.md
-DECISIONS.md
+/AGENTS.md
+/PLAN.md
+/DECISIONS.md
 
 # Internal documentation & architecture specifications
-docs/
+/docs/
