@@ -132,5 +132,35 @@ Plan d'action : artéfact `plan-i18n-master.md`.
 ## Reprise
 
 Branche actuelle : `feat/i18n`.
-Statut : Chantier i18n & polissage 10/10 achevé et validé sur toutes les portes de contrôle.
-Prochaine action : commit git des modifications de la branche `feat/i18n`, fusion ou publication changeset selon les directives utilisateur.
+Statut : Chantiers 3D Logo, Guides Documentation (/docs, /docs/installation) et navigation DocPager 100% achevés et validés.
+Prochaine action : Fusion de la branche `feat/i18n` vers la branche cible (`refactor/css-foundation` ou `main`) ou publication changeset.
+
+## Chantier terminé — Monolithe 3D Accueil & Logo de marque
+
+Branche `feat/i18n`. Commits `6d900a0`, `cf85e8b`, `e56c3c3`.
+- Intégration du nouveau composant `LogoMark` dans l'en-tête d'application.
+- Adaptation de la pièce maîtresse 3D (`HeroMonolith3D`) avec modélisation géométrique Three.js directe reprenant fidèlement le glyphe du logo officiel.
+- Rotation continue, matériau dynamique OKLCH et éclairage équilibré sur les 7 thèmes (`light`, `dark`, `oled`, `slate`, `ocean`, `night`, `high-contrast`).
+- Poster SVG réactif en fallback et suspension d'animation sous `prefers-reduced-motion`.
+
+## Chantier terminé — Refonte Architecturale des Guides Introduction & Installation (/docs)
+
+Branche `feat/i18n`. Commits `378fe95` et suite.
+- Page `/docs` (Introduction) :
+  * Élimination des badges décoratifs au profit de 4 piliers d'ingénierie réels (`@layer mr.*`, moteur OKLCH 3 niveaux, React 19 / WAI-ARIA, architecture sous-chemins sans effet de bord).
+  * Bandeau télémétrique dynamique (84 composants, 7 thèmes, 6 couches, React 19).
+  * Bac à sable interactif `<ThemeScope />` synchronisé en temps réel avec le bloc de code JSX.
+  * Annuaire dynamique des 84 composants du registre répartis sur 11 catégories.
+  * Prise en charge SEO dédiée via `usePageSeo`.
+- Page `/docs/installation` :
+  * Composant `PackageManagerTabs` (`pnpm`, `npm`, `yarn`, `bun`) avec copie en un clic et mémoire `localStorage`.
+  * Découpage en 6 sections indexées et suivies par `DocToc`.
+  * Documentation des 4 exports CSS, de l'anti-FOUC SSR `getThemeScript()`, et de `tsconfig.json`.
+  * Modèles d'intégration avec onglets pour Vite (React 19) et Next.js (App Router).
+- Généralisation de `DocPager` :
+  * Chaînage séquentiel complet : `/docs` -> `/docs/installation` -> `/docs/button` -> catalogue des 84 composants via `DocPage`.
+- Validation 100% verte :
+  * 1 137 fichiers conformes Biome format et lint (0 erreur).
+  * 0 erreur TypeScript, 0 erreur Stylelint.
+  * 1 593 tests unitaires et contrats passés.
+  * 30 tests E2E Playwright passés sur 10 viewports et thèmes.

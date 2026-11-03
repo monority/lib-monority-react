@@ -1,15 +1,18 @@
-import { useMessages } from '@/shared/i18n'
+import { stripLocaleFromPath, useMessages } from '@/shared/i18n'
 import { HeroHeader } from '@/shared/components/HeroHeader'
 import type { ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
 import { ComponentPlayground } from './ComponentPlayground'
 import type { DocPlaygroundConfig } from './ComponentPlayground/ComponentPlayground.types'
 import { DocContainer } from './DocContainer'
 import { DocExampleCard } from './DocExampleCard'
 import { DocKeyboardTable, type KeyboardShortcutRow } from './DocKeyboardTable'
+import { DocPager, type DocPagerTarget } from './DocPager'
 import { DocPropTable } from './DocPropTable'
 import { DocSection } from './DocSection'
 import { DocTagList } from './DocTagList'
 import { useLocalizedDoc, type DocI18n } from './doc-messages'
+import { docsComponentRegistry } from './registry'
 
 export interface PropRow extends Record<string, unknown> {
     name: string
@@ -43,9 +46,46 @@ export interface DocPageData {
 }
 
 export function DocPage({ doc: rawDoc }: { doc: DocPageData }) {
+    const location = useLocation()
     const messages = useMessages().docs
     const doc = useLocalizedDoc(rawDoc)
     const Preview = doc.preview
+
+    const slug = stripLocaleFromPath(location.pathname).replace(/^\/docs\/?/, '')
+    const currentIndex = docsComponentRegistry.findIndex(
+        (item) => item.slug === slug || item.label.toLowerCase() === rawDoc.title.toLowerCase()
+    )
+
+    let prevTarget: DocPagerTarget | undefined
+    let nextTarget: DocPagerTarget | undefined
+
+    if (currentIndex !== -1) {
+        if (currentIndex === 0 || slug === 'button') {
+            prevTarget = {
+                title: 'Installation',
+                description: messages.pager.previous,
+                to: '/docs/installation',
+            }
+        } else if (currentIndex > 0) {
+            const prevItem = docsComponentRegistry[currentIndex - 1]
+            if (prevItem) {
+                prevTarget = {
+                    title: prevItem.label,
+                    to: prevItem.path,
+                }
+            }
+        }
+
+        if (currentIndex < docsComponentRegistry.length - 1) {
+            const nextItem = docsComponentRegistry[currentIndex + 1]
+            if (nextItem) {
+                nextTarget = {
+                    title: nextItem.label,
+                    to: nextItem.path,
+                }
+            }
+        }
+    }
 
     return (
         <DocContainer className="docs-page">
@@ -140,6 +180,8 @@ export function DocPage({ doc: rawDoc }: { doc: DocPageData }) {
                     </ul>
                 </DocSection>
             )}
+
+            {(prevTarget || nextTarget) && <DocPager prev={prevTarget} next={nextTarget} />}
         </DocContainer>
     )
 }

@@ -115,6 +115,19 @@ test.describe('Docs Guides — Introduction and Installation', () => {
         const nextPager = page.locator('.docs-pager__link--next')
         await expect(prevPager).toHaveAttribute('href', '/docs')
         await expect(nextPager).toHaveAttribute('href', '/docs/button')
+
+        // Navigate to /docs/button and verify component DocPager
+        await nextPager.click()
+        await expect(page).toHaveURL('/docs/button')
+        await expect(page.locator('h1')).toHaveText('Button')
+        await expect(page.locator('.docs-pager__link--prev')).toHaveAttribute(
+            'href',
+            '/docs/installation'
+        )
+        await expect(page.locator('.docs-pager__link--next')).toHaveAttribute(
+            'href',
+            '/docs/button-link'
+        )
     })
 
     test('supports French localization on /fr/docs and /fr/docs/installation', async ({ page }) => {

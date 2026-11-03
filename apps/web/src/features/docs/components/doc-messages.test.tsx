@@ -4,8 +4,8 @@ import type { ReactElement } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { ComponentPlayground } from './ComponentPlayground'
+import { DocPage, type DocPageData } from './DocPage'
 import { localizeDoc, type DocI18n, type DocMessagesOverlay } from './doc-messages'
-import type { DocPageData } from './DocPage'
 
 const baseDoc: DocPageData = {
     title: 'Button',
@@ -116,5 +116,21 @@ describe('localizeDoc', () => {
         )
 
         expect(screen.getByRole('button', { name: 'Trigger' })).toBeInTheDocument()
+    })
+
+    it('renders DocPager navigation with previous and next targets when rendered in DocPage', () => {
+        render(
+            <MemoryRouter initialEntries={['/docs/button']}>
+                <LocaleProvider>
+                    <DocPage doc={baseDoc} />
+                </LocaleProvider>
+            </MemoryRouter>
+        )
+
+        const prevLink = screen.getByRole('link', { name: /Previous.*Installation/i })
+        expect(prevLink).toHaveAttribute('href', '/docs/installation')
+
+        const nextLink = screen.getByRole('link', { name: /Next.*ButtonLink/i })
+        expect(nextLink).toHaveAttribute('href', '/docs/button-link')
     })
 })
