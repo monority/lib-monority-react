@@ -17,7 +17,7 @@ export const home = {
         installCommand: 'npm i @monority/ui',
         copied: 'Copied to clipboard!',
         monolithAriaLabel:
-            'Interactive 3D machined monolith reacting to live OKLCH theme tokens and pointer movement',
+            'Interactive 3D Monority logo reacting to live OKLCH theme tokens and pointer movement',
         matrixAriaLabel:
             'Interactive Monority UI component showcase demonstrating live ThemeScope theming, density scaling, and accessible React 19 primitives',
     },

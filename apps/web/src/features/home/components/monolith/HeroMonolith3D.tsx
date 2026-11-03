@@ -1,8 +1,8 @@
 import { useMessages } from '@/shared/i18n'
 import { useEffect, useRef, useState } from 'react'
 import { MonolithPoster } from './MonolithPoster'
-import { readMonolithTokens } from './monolith-tokens'
 import type { MonolithSceneController } from './monolith-scene'
+import { readMonolithTokens } from './monolith-tokens'
 import './HeroMonolith3D.css'
 
 export function HeroMonolith3D() {

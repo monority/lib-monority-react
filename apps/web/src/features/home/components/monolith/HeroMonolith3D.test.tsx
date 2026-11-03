@@ -16,7 +16,7 @@ describe('HeroMonolith3D', () => {
         })
 
         const monolith = screen.getByRole('img', {
-            name: /Interactive 3D machined monolith/i,
+            name: /Interactive 3D Monority logo/i,
         })
         expect(monolith).toBeInTheDocument()
         expect(monolith).toHaveAttribute('data-webgl-ready', 'false')
@@ -33,7 +33,7 @@ describe('HeroMonolith3D', () => {
 
         expect(
             screen.getByRole('img', {
-                name: /Monolithe 3D usiné interactif/i,
+                name: /Logo Monority 3D interactif/i,
             })
         ).toBeInTheDocument()
     })
