@@ -7,7 +7,7 @@ export function DataListBasicExample() {
         <DataList
             items={[
                 { key: 'package', label: 'Package', value: '@monority/ui' },
-                { key: 'version', label: 'Version', value: '0.1.0' },
+                { key: 'version', label: 'Version', value: '1.0.0' },
                 { key: 'license', label: 'License', value: 'MIT' },
                 { key: 'runtime', label: 'Runtime', value: 'React 19+' },
             ]}

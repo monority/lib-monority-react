@@ -8,7 +8,7 @@ export const home = {
     },
     hero: {
         ariaLabel: 'Hero Monority UI',
-        kicker: 'v0.3 • Design System React 19',
+        kicker: 'v1.0 • Design System React 19',
         title: 'La bibliothèque de composants conçue pour la production à haute densité.',
         description:
             '83 primitives accessibles, isolation native par couches CSS @layer et thématisation OKLCH au runtime. Conçue pour les tableaux de bord complexes et les logiciels exigeants.',

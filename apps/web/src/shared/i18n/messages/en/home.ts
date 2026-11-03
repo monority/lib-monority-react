@@ -8,7 +8,7 @@ export const home = {
     },
     hero: {
         ariaLabel: 'Monority UI hero',
-        kicker: 'v0.3 • React 19 Design System',
+        kicker: 'v1.0 • React 19 Design System',
         title: 'The component library engineered for high-density production.',
         description:
             '83 accessible primitives, native CSS @layer isolation, and runtime OKLCH theming. Built for complex dashboards, data-dense interfaces, and software that scales.',

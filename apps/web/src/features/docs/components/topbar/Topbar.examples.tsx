@@ -19,7 +19,7 @@ export function TopbarBasicExample() {
                 <Topbar.Link href="#">{isFr ? 'Composants' : 'Components'}</Topbar.Link>
                 <Topbar.Link href="#">{isFr ? 'Thèmes' : 'Themes'}</Topbar.Link>
             </Topbar.Nav>
-            <Topbar.Meta>v0.1.0</Topbar.Meta>
+            <Topbar.Meta>v1.0.0</Topbar.Meta>
         </Topbar>
     )
 }
