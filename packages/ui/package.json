@@ -1,6 +1,6 @@
 {
     "name": "@monority/ui",
-    "version": "0.3.0",
+    "version": "1.0.0",
     "description": "A React 19 component library with design tokens, runtime theming, and 83 accessible production-ready components",
     "license": "MIT",
     "repository": {
@@ -27,7 +27,9 @@
         "registry": "https://registry.npmjs.org/"
     },
     "type": "module",
-    "sideEffects": ["**/*.css"],
+    "sideEffects": [
+        "**/*.css"
+    ],
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -581,7 +583,10 @@
             "default": "./dist/get-theme-script.js"
         }
     },
-    "files": ["dist", "README.md"],
+    "files": [
+        "dist",
+        "README.md"
+    ],
     "scripts": {
         "dev": "tsup --watch",
         "build": "node --max-old-space-size=8192 ./node_modules/tsup/dist/cli-default.js",
