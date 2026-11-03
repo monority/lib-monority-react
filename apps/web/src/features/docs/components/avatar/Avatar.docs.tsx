@@ -1,7 +1,8 @@
-﻿import { Avatar } from '@monority/ui/avatar'
+import { Avatar } from '@monority/ui/avatar'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { avatarI18n } from './Avatar.messages'
 import { AvatarGroupExample, AvatarSizesExample, AvatarWithImageExample } from './Avatar.examples'
 
 function AvatarPlayground() {
@@ -17,7 +18,7 @@ function AvatarPlayground() {
         )
 
     const snippet = `<Avatar size="${size}">
-${showImage ? `  <Avatar.Image src="..." alt="Utilisateur" />\n` : ''}  <Avatar.Fallback>${initials}</Avatar.Fallback>${status !== 'none' ? `\n  <Avatar.Status status="${status}" />` : ''}
+${showImage ? `  <Avatar.Image src="..." alt="User" />\n` : ''}  <Avatar.Fallback>${initials}</Avatar.Fallback>${status !== 'none' ? `\n  <Avatar.Status status="${status}" />` : ''}
 </Avatar>`
 
     return (
@@ -25,6 +26,7 @@ ${showImage ? `  <Avatar.Image src="..." alt="Utilisateur" />\n` : ''}  <Avatar.
             controls={[
                 {
                     type: 'select',
+                    name: 'size',
                     label: 'Size',
                     value: size,
                     options: [
@@ -36,24 +38,27 @@ ${showImage ? `  <Avatar.Image src="..." alt="Utilisateur" />\n` : ''}  <Avatar.
                 },
                 {
                     type: 'select',
-                    label: 'Statut',
+                    name: 'status',
+                    label: 'Status',
                     value: status,
                     options: [
-                        { value: 'none', label: 'Aucun' },
-                        { value: 'online', label: 'En ligne (online)' },
-                        { value: 'offline', label: 'Hors ligne (offline)' },
+                        { value: 'none', label: 'None' },
+                        { value: 'online', label: 'Online' },
+                        { value: 'offline', label: 'Offline' },
                     ],
                     onChange: (v) => setStatus(v as 'none' | 'online' | 'offline'),
                 },
                 {
                     type: 'text',
-                    label: 'Initiales',
+                    name: 'initials',
+                    label: 'Initials',
                     value: initials,
                     onChange: setInitials,
                 },
                 {
                     type: 'boolean',
-                    label: 'Avec image',
+                    name: 'showImage',
+                    label: 'With image',
                     value: showImage,
                     onChange: setShowImage,
                 },
@@ -69,7 +74,7 @@ ${showImage ? `  <Avatar.Image src="..." alt="Utilisateur" />\n` : ''}  <Avatar.
                 }}
             >
                 <Avatar size={size}>
-                    {showImage && <Avatar.Image src={placeholderAvatar} alt="Utilisateur" />}
+                    {showImage && <Avatar.Image src={placeholderAvatar} alt="User" />}
                     <Avatar.Fallback>{initials}</Avatar.Fallback>
                     {status !== 'none' && <Avatar.Status status={status} />}
                 </Avatar>
@@ -155,6 +160,7 @@ const docData: DocPageData = {
         'Avatars without name, alt, or aria-label stay decorative (no role).',
         'The fallback (initials or children) is hidden from the accessibility tree.',
     ],
+    i18n: avatarI18n,
 }
 
 export function AvatarDocs() {

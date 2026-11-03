@@ -5,6 +5,7 @@ export * from './hooks'
 export * from './providers'
 export * from './lib'
 export * from './primitives'
+export * from './icons'
 
 /**
  * Utilitaire impératif historique de positionnement d'overlay.

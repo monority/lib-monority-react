@@ -1,3 +1,4 @@
+import { IconChevronDown, IconChevronLeft, IconChevronRight } from '@/icons'
 import {
     addDays,
     addMonths,
@@ -13,7 +14,18 @@ import {
     startOfWeek,
 } from '@/internal/date-utils'
 import { cn } from '@/lib/cn'
-import { useCallback, useEffect, useState } from 'react'
+import {
+    Children,
+    isValidElement,
+    type MutableRefObject,
+    type ReactNode,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
 import type {
     CalendarDayNamesProps,
     CalendarDayProps,
@@ -25,32 +37,6 @@ import type {
     CalendarProps,
     CalendarSelectProps,
 } from './Calendar.types'
-
-// ─── Chevron icons ────────────────────────────────────────────────────
-
-const ChevronLeftIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-            d="M13 4L7 10L13 16"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-)
-
-const ChevronRightIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-            d="M7 4L13 10L7 16"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-)
 
 // ─── Main component ───────────────────────────────────────────────────
 
@@ -483,15 +469,191 @@ export function CalendarNavButton({
             aria-label={direction === 'prev' ? 'Previous month' : 'Next month'}
             {...props}
         >
-            {children ?? (direction === 'prev' ? <ChevronLeftIcon /> : <ChevronRightIcon />)}
+            {children ??
+                (direction === 'prev' ? (
+                    <IconChevronLeft size={20} />
+                ) : (
+                    <IconChevronRight size={20} />
+                ))}
         </button>
     )
 }
 
-export function CalendarSelect({ ref, className, children, ...props }: CalendarSelectProps) {
+export function CalendarSelect({
+    ref,
+    className,
+    children,
+    value,
+    defaultValue,
+    onChange,
+    disabled,
+    'aria-label': ariaLabel,
+    ...props
+}: CalendarSelectProps) {
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedValue, setSelectedValue] = useState(value ?? defaultValue ?? '')
+    const wrapperRef = useRef<HTMLSpanElement>(null)
+    const listRef = useRef<HTMLDivElement>(null)
+    const selectRef = useRef<HTMLSelectElement | null>(null)
+
+    useEffect(() => {
+        if (value !== undefined) {
+            setSelectedValue(value)
+        }
+    }, [value])
+
+    const optionList = useMemo(() => {
+        const list: { value: string | number; label: ReactNode }[] = []
+        Children.forEach(children, (child) => {
+            if (isValidElement(child) && child.type === 'option') {
+                const optProps = child.props as { value?: string | number; children?: ReactNode }
+                list.push({
+                    value: optProps.value ?? '',
+                    label: optProps.children ?? String(optProps.value),
+                })
+            }
+        })
+        return list
+    }, [children])
+
+    const selectedOption = useMemo(() => {
+        return (
+            optionList.find((opt) => String(opt.value) === String(selectedValue)) ?? optionList[0]
+        )
+    }, [optionList, selectedValue])
+
+    useLayoutEffect(() => {
+        if (!isOpen || !listRef.current) return
+        const activeItem = listRef.current.querySelector<HTMLElement>('[data-selected="true"]')
+        if (activeItem) {
+            activeItem.scrollIntoView({ block: 'nearest' })
+        }
+    }, [isOpen])
+
+    useEffect(() => {
+        if (!isOpen) return
+        function handlePointerDown(e: MouseEvent) {
+            if (!wrapperRef.current?.contains(e.target as Node)) {
+                setIsOpen(false)
+            }
+        }
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key === 'Escape') {
+                setIsOpen(false)
+            }
+        }
+        window.addEventListener('pointerdown', handlePointerDown)
+        window.addEventListener('keydown', handleKeyDown)
+        return () => {
+            window.removeEventListener('pointerdown', handlePointerDown)
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [isOpen])
+
+    const handleSelectOption = (optVal: string | number) => {
+        setSelectedValue(optVal)
+        setIsOpen(false)
+        if (selectRef.current) {
+            selectRef.current.value = String(optVal)
+            const event = new Event('change', { bubbles: true })
+            selectRef.current.dispatchEvent(event)
+        }
+        if (onChange) {
+            const syntheticEvent = {
+                target: { value: String(optVal) },
+                currentTarget: { value: String(optVal) },
+            } as React.ChangeEvent<HTMLSelectElement>
+            onChange(syntheticEvent)
+        }
+    }
+
     return (
-        <span className="mr-calendar__select-wrapper">
-            <select ref={ref} className={cn('mr-calendar__select', className)} {...props}>
+        <span
+            ref={wrapperRef}
+            className="mr-calendar__select-wrapper"
+            data-open={isOpen ? true : undefined}
+        >
+            <button
+                type="button"
+                className="mr-calendar__select-btn"
+                onClick={() => !disabled && setIsOpen(!isOpen)}
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+                aria-label={ariaLabel}
+                disabled={disabled}
+            >
+                <span className="mr-calendar__select-label">{selectedOption?.label}</span>
+                <IconChevronDown
+                    size={12}
+                    className={cn(
+                        'mr-calendar__select-chevron',
+                        isOpen && 'mr-calendar__select-chevron--open'
+                    )}
+                />
+            </button>
+            {isOpen && (
+                <div
+                    ref={listRef}
+                    className="mr-calendar__dropdown"
+                    role="listbox"
+                    aria-label={ariaLabel}
+                    tabIndex={-1}
+                >
+                    {optionList.map((opt) => {
+                        const isSelected = String(opt.value) === String(selectedValue)
+                        return (
+                            <button
+                                key={String(opt.value)}
+                                type="button"
+                                role="option"
+                                aria-selected={isSelected}
+                                data-selected={isSelected ? true : undefined}
+                                className={cn(
+                                    'mr-calendar__dropdown-item',
+                                    isSelected && 'mr-calendar__dropdown-item--selected'
+                                )}
+                                onClick={() => handleSelectOption(opt.value)}
+                            >
+                                {opt.label}
+                            </button>
+                        )
+                    })}
+                </div>
+            )}
+            <select
+                ref={(node) => {
+                    if (typeof ref === 'function') ref(node)
+                    else if (ref) (ref as MutableRefObject<HTMLSelectElement | null>).current = node
+                    selectRef.current = node
+                }}
+                className={cn('mr-calendar__select', className)}
+                value={
+                    value !== undefined
+                        ? String(value)
+                        : selectedValue !== ''
+                          ? String(selectedValue)
+                          : undefined
+                }
+                onChange={(e) => {
+                    setSelectedValue(e.target.value)
+                    onChange?.(e)
+                }}
+                disabled={disabled}
+                aria-label={ariaLabel}
+                aria-hidden="true"
+                tabIndex={-1}
+                style={{
+                    position: 'absolute',
+                    opacity: 0,
+                    pointerEvents: 'none',
+                    inlineSize: 0,
+                    blockSize: 0,
+                    margin: 0,
+                    padding: 0,
+                    border: 0,
+                }}
+                {...props}
+            >
                 {children}
             </select>
         </span>

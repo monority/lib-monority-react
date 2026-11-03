@@ -21,9 +21,9 @@
 @import './recipes/rating.css';
 @import './recipes/number-input.css';
 @import './recipes/input-otp.css';
-@import './recipes/date-picker.css';
 @import './recipes/spinner.css';
 @import './recipes/calendar.css';
+@import './recipes/date-picker.css';
 @import './recipes/combobox.css';
 @import './recipes/date-range-picker.css';
 @import './recipes/file-upload.css';

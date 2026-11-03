@@ -1,12 +1,13 @@
-﻿import { Divider } from '@monority/ui/divider'
+import { Divider } from '@monority/ui/divider'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { dividerI18n } from './Divider.messages'
 import { DividerVerticalExample, DividerWithLabelExample } from './Divider.examples'
 
 function DividerPlayground() {
     const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')
-    const [label, setLabel] = useState('OU')
+    const [label, setLabel] = useState('OR')
 
     const snippet = `<Divider
   orientation="${orientation}"${label ? `\n  label="${label}"` : ''}
@@ -17,6 +18,7 @@ function DividerPlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'orientation',
                     label: 'Orientation',
                     value: orientation,
                     options: [
@@ -27,7 +29,8 @@ function DividerPlayground() {
                 },
                 {
                     type: 'text',
-                    label: 'Étiquette centrale (label)',
+                    name: 'label',
+                    label: 'Centered label',
                     value: label,
                     onChange: setLabel,
                 },
@@ -53,9 +56,9 @@ function DividerPlayground() {
                             gap: 16,
                         }}
                     >
-                        <span style={{ fontSize: '0.875rem' }}>Connexion par mot de passe</span>
+                        <span style={{ fontSize: '0.875rem' }}>Sign in with password</span>
                         <Divider orientation="horizontal" label={label || undefined} />
-                        <span style={{ fontSize: '0.875rem' }}>Connexion avec Google</span>
+                        <span style={{ fontSize: '0.875rem' }}>Sign in with Google</span>
                     </div>
                 ) : (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: 60 }}>
@@ -72,7 +75,7 @@ function DividerPlayground() {
 const docData: DocPageData = {
     title: 'Divider',
     description: 'Labeled or unlabeled rule for separating adjacent product content.',
-    importCode: "import { Divider } from '@monority/ui'",
+    importCode: "import { Divider } from '@monority/ui/divider'",
     usageCode: '<Divider />',
     preview: () => <DividerPlayground />,
     examples: [
@@ -104,6 +107,7 @@ const docData: DocPageData = {
         'Uses role="separator" with aria-orientation.',
         'Keep labels short and avoid using dividers as the only section label.',
     ],
+    i18n: dividerI18n,
 }
 
 export function DividerDocs() {

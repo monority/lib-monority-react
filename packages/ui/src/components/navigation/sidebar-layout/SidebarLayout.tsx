@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn'
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type {
     SidebarLayoutContentProps,
     SidebarLayoutHeaderProps,
@@ -58,17 +58,19 @@ function SidebarLayoutToggle({
     className,
     children,
     onClick,
+    'aria-label': ariaLabel,
     ...props
 }: SidebarLayoutToggleProps) {
     const ctx = useContext(SidebarLayoutContext)
     const isOpen = ctx ? ctx.isOpen : true
+    const fallbackAriaLabel = isOpen ? 'Close sidebar' : 'Open sidebar'
 
     return (
         <button
             ref={ref}
             type="button"
             className={cn('mr-sidebar-layout__toggle', className)}
-            aria-label={isOpen ? 'Fermer la barre latérale' : 'Ouvrir la barre latérale'}
+            aria-label={ariaLabel ?? fallbackAriaLabel}
             aria-expanded={isOpen}
             onClick={(e) => {
                 ctx?.handleToggle()
@@ -113,11 +115,11 @@ export function SidebarLayout({
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
     const isOpen = isControlled ? controlledOpen : internalOpen
 
-    const handleToggle = useCallback(() => {
+    const handleToggle = () => {
         const next = !isOpen
         if (!isControlled) setInternalOpen(next)
         onOpenChange?.(next)
-    }, [isControlled, isOpen, onOpenChange])
+    }
 
     const contextValue: SidebarLayoutContextValue = {
         isOpen,

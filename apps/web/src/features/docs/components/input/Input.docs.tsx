@@ -2,6 +2,7 @@ import { Input } from '@monority/ui/input'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { inputI18n } from './Input.messages'
 import {
     InputBasicExample,
     InputClearableExample,
@@ -76,8 +77,8 @@ const inputPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Adresse email',
+                label: 'Label',
+                defaultValue: 'Email address',
             },
             {
                 name: 'placeholder',
@@ -88,13 +89,13 @@ const inputPlayground = (
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Utilisez votre adresse professionnelle.',
+                label: 'Hint',
+                defaultValue: 'Use your work address.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -105,7 +106,7 @@ const inputPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'neutral',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -116,19 +117,19 @@ const inputPlayground = (
             {
                 name: 'clearable',
                 type: 'boolean',
-                label: 'Effacable (clearable)',
+                label: 'Clearable',
                 defaultValue: true,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
             {
                 name: 'invalid',
                 type: 'boolean',
-                label: 'Invalide (invalid)',
+                label: 'Invalid',
                 defaultValue: false,
             },
         ]}
@@ -269,13 +270,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Deplace le focus vers ou depuis le champ de saisie.',
-            context: 'Champ de saisie',
+            action: 'Moves focus into or out of the input field.',
+            context: 'Input field',
         },
         {
             key: 'Escape',
-            action: 'Reinitialise la saisie textuelle si le champ est effacable (clearable).',
-            context: 'Champ avec bouton d effacement',
+            action: 'Resets the text input when the field is clearable.',
+            context: 'Field with a clear button',
         },
     ],
     a11y: [
@@ -285,6 +286,7 @@ const docData: DocPageData = {
         'Search inputs use type="search".',
         'data-invalid, data-required, data-disabled as helper hooks.',
     ],
+    i18n: inputI18n,
 }
 
 export function InputDocs() {

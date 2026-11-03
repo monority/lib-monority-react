@@ -12,6 +12,11 @@
         overflow-x: hidden;
     }
 
+    :where(.mr-scroll-area:focus-visible) {
+        outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+        outline-offset: -2px;
+    }
+
     :where(.mr-scroll-area)[data-orientation='vertical'] {
         overflow-y: auto;
         overflow-x: hidden;

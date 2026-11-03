@@ -80,28 +80,87 @@ Plan d'action et référence : artéfact `plan-animations-globales-actions.md`.
 - Indépendance stricte vis-à-vis de `reset.css` : audit et correction des styles autonomes (`topbar.css`, etc.) avec validation Playwright de non-régression sur les 83 composants (83/83 au vert).
 - Durcissement du `ComponentPlayground` : capture des valeurs initiales par référence, réinitialisation dynamique des formulaires contrôlés (`notifyControlResets`), support du callback `onReset`, déverrouillage `overflow: visible` pour les menus et listes déroulantes.
 
+## Chantier terminé — Harmonisation de l'Élévation des Surfaces Flottantes (ADR-028), Bordures Douces et Sélecteur de Thèmes
+
+- ADR-028 : Standardisation de `var(--mr-bg-overlay)` avec bordure `var(--mr-border-subtle)` et ombre `var(--mr-shadow-overlay)` sur les 16 composants flottants et superposés.
+- Formalisation de `--mr-text-tertiary` et des statuts pleins (`--mr-success-solid`, `--mr-warning-solid`, `--mr-info-solid`, `--mr-danger-solid`) dans `semantic.css` et sur l'ensemble des 7 thèmes.
+- Adoucissement des bordures de contrôle au repos (`--mr-border-default` affiné) sur Input, Textarea, Select, Combobox, DatePicker, Stepper, Calendar, NumberInput.
+- Sélecteur de thème dans l'en-tête d'application : bascule vers un `DropdownMenu` accessible gérant les 7 thèmes natifs et le mode Système.
+
+## Chantier terminé — Modernisation StatCard & MetricGrid, Correction Carousel, Trame Playground/Code et Composition FilterBar / SidebarLayout
+
+- Surfaces de code et playground :
+  * Unification de `ComponentPlayground` et `PreCode` sur fond gris `var(--mr-bg-sunken)`.
+  * Intégration d'une trame de points radiaux subtile (`radial-gradient` 16px) sur `pre-code.css` et `CodeViewer.css`.
+- StatCard & MetricGrid :
+  * Tendance sous forme de pilule moderne avec pastille de couleur et fond translucide teinté.
+  * Typographie haute visibilité (`var(--mr-font-size-2xl)` et tracking display), conteneur carré arrondi pour l'icône, transition fluide au survol.
+  * Grille `metric-grid.css` avec gap réactif et auto-fit régulier.
+- Carousel :
+  * Déplacement du `padding-inline` directement sur `.mr-carousel__slide`, éliminant définitivement le chevauchement des flèches sur les cartes.
+  * Élargissement de la vitrine de prévisualisation dans la documentation à 680-700px.
+- FilterBar & SidebarLayout :
+  * Refonte complète des pages de documentation pour composer de vrais composants Monority UI (Avatar, Badge, Button, Input, Select, StatCard, Card, Text).
+  * Filtres interactifs avec puces amovibles et filtrage en temps réel dans `FilterBar`.
+  * Console de production moderne avec statut utilisateur, badges de déploiement et métriques de monitoring dans `SidebarLayout`.
+  * Ajustement des espacements entre texte et badges dans la navigation SidebarLayout et support de disposition flexible `:where(.mr-btn__label)` et `[data-full-width]` dans `button.css`.
+- Navigation On this page (DocToc) :
+  * Détection robuste par ligne de lecture (120px) avec gestion des marges inter-cartes et des extrémités de page.
+  * Verrouillage du scrollspy pendant le défilement fluide au clic avec déverrouillage tactile/molette instantané.
+  * Collecte multi-passes et synchronisation dynamique via MutationObserver.
+  * Mise en valeur nette du lien actif avec `var(--mr-accent-subtle)`.
+
+## Chantier terminé — Internationalisation Intégrale (EN/FR) & Polissage Bibliothèque 10/10
+
+Branche `feat/i18n`.
+Plan d'action : artéfact `plan-i18n-master.md`.
+- 83/83 pages de documentation en anglais technique canonique avec surcouches dynamiques françaises `.messages.ts` via `useLocalizedDoc`.
+- Test de contrat automatisé `docs-coverage-contract.test.ts` garantissant la couverture i18n à 100% sur les 83 composants du registre.
+- Studio Moodboard internationalisé (`en/moodboard.ts`, `fr/moodboard.ts`) avec maintien des sélecteurs de test `axis.ariaLabel`.
+- Standardisation des libellés par défaut dans `@monority/ui` en anglais canonique (`InputOTP`, `SidebarLayout`, `Pagination`, `DatePicker`, `DateRangePicker`) avec support d'échappement par props et localisation `Intl` native.
+- README.md de `@monority/ui` réécrit en anglais technique de référence (architecture `@layer mr.*`, intégration Tailwind v3/v4, FOUC `getThemeScript`, catalogue complet par catégories).
+- Allocation mémoire `tsup` pérennisée (`--max-old-space-size=8192`) dans `packages/ui/package.json` évitant tout dépassement de tas sur les 96 points d'entrée.
+- 100% de passage sur l'ensemble des portes de contrôle :
+  * `pnpm format:check` : 1 131 fichiers conformes (0 erreur).
+  * `pnpm lint` : 1 131 fichiers vérifiés (0 erreur, 0 avertissement).
+  * `pnpm lint:css` : 0 erreur Stylelint.
+  * `pnpm typecheck` : 0 erreur TypeScript.
+  * `pnpm test:rendered` : contrastes WCAG AA, isolation hôte et dimensions validés sur les 7 thèmes.
+  * `pnpm test` : 113 suites / 1 480 tests `@monority/ui`, 20 suites / 111 tests `@monority/web` (1 591 tests au total).
+  * `pnpm --filter @monority/ui test:dist` : exports dist et contextes validés.
+
 ## Reprise
 
-Dernier commit vert : ee65a8e (sur main).
-Chantier : fusion Accordion / Collapsible, animations complètes, navigation clavier, accessibilité et automatisation CI/CD.
-Contrats et vérifications :
-- GitHub Actions CI (run 39426043471) : 100% vert (9 étapes validées).
-- GitHub Actions Release CD (run 39426043388) : 100% vert.
-- pnpm verify local : 100% vert (exit code 0).
-- Biome lint & format : 0 erreur, 1022 fichiers conformes.
-- Stylelint : 0 violation sur les recettes CSS et tokens.
-- Rendu et contrastes : 100% conformes WCAG AA sur les 7 thèmes actifs.
-- Tests unitaires : 112 suites / 1463 tests dans @monority/ui, 17 suites / 96 tests dans @monority/web (1559 tests au total).
-- Tests E2E Playwright animations : 130 tests 100% passés sur la matrice de viewports et mouvement réduit.
-- Fusion Accordion / Collapsible :
-  * Collapsible sert de primitif de disclosure unique, avec gestion d'état déclaratif/contrôlé, chevrons animés en spring, et grille CSS 0fr -> 1fr.
-  * AccordionItem compose directement Collapsible sans duplication de DOM ni de logique d'état.
-  * Synchronisation parfaite des durées (--mr-duration-panel 280ms) entre rotation du chevron et dépliage du panneau.
-  * Micro-presse active (scale 0.995) sur les déclencheurs.
-  * Attributs data-state ("open" / "closed") et aria-expanded harmonisés.
-  * Playgrounds documentation (Collapsible et Accordion) réactifs et interactifs.
-- Calendar : sélecteurs compacts, sous-composants composés, 100 ans d'historique scrollable, chevron animé.
-- Select & Switch : micro-interactions haptiques, retour tactile, rotation ressort et halos de focus.
-- Menubar & NavigationMenu : navigation clavier WAI-ARIA complète et z-index corrigés.
+Branche actuelle : `feat/i18n`.
+Statut : Chantiers 3D Logo, Guides Documentation (/docs, /docs/installation) et navigation DocPager 100% achevés et validés.
+Prochaine action : Fusion de la branche `feat/i18n` vers la branche cible (`refactor/css-foundation` ou `main`) ou publication changeset.
 
-Prochaine action disponible : suivi des étapes de release (changeset version, tarball dry-run) ou audit ciblé supplémentaire.
+## Chantier terminé — Monolithe 3D Accueil & Logo de marque
+
+Branche `feat/i18n`. Commits `6d900a0`, `cf85e8b`, `e56c3c3`.
+- Intégration du nouveau composant `LogoMark` dans l'en-tête d'application.
+- Adaptation de la pièce maîtresse 3D (`HeroMonolith3D`) avec modélisation géométrique Three.js directe reprenant fidèlement le glyphe du logo officiel.
+- Rotation continue, matériau dynamique OKLCH et éclairage équilibré sur les 7 thèmes (`light`, `dark`, `oled`, `slate`, `ocean`, `night`, `high-contrast`).
+- Poster SVG réactif en fallback et suspension d'animation sous `prefers-reduced-motion`.
+
+## Chantier terminé — Refonte Architecturale des Guides Introduction & Installation (/docs)
+
+Branche `feat/i18n`. Commits `378fe95` et suite.
+- Page `/docs` (Introduction) :
+  * Élimination des badges décoratifs au profit de 4 piliers d'ingénierie réels (`@layer mr.*`, moteur OKLCH 3 niveaux, React 19 / WAI-ARIA, architecture sous-chemins sans effet de bord).
+  * Bandeau télémétrique dynamique (84 composants, 7 thèmes, 6 couches, React 19).
+  * Bac à sable interactif `<ThemeScope />` synchronisé en temps réel avec le bloc de code JSX.
+  * Annuaire dynamique des 84 composants du registre répartis sur 11 catégories.
+  * Prise en charge SEO dédiée via `usePageSeo`.
+- Page `/docs/installation` :
+  * Composant `PackageManagerTabs` (`pnpm`, `npm`, `yarn`, `bun`) avec copie en un clic et mémoire `localStorage`.
+  * Découpage en 6 sections indexées et suivies par `DocToc`.
+  * Documentation des 4 exports CSS, de l'anti-FOUC SSR `getThemeScript()`, et de `tsconfig.json`.
+  * Modèles d'intégration avec onglets pour Vite (React 19) et Next.js (App Router).
+- Généralisation de `DocPager` :
+  * Chaînage séquentiel complet : `/docs` -> `/docs/installation` -> `/docs/button` -> catalogue des 84 composants via `DocPage`.
+- Validation 100% verte :
+  * 1 137 fichiers conformes Biome format et lint (0 erreur).
+  * 0 erreur TypeScript, 0 erreur Stylelint.
+  * 1 593 tests unitaires et contrats passés.
+  * 30 tests E2E Playwright passés sur 10 viewports et thèmes.

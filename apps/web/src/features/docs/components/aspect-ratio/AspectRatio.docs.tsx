@@ -1,7 +1,8 @@
-﻿import { AspectRatio } from '@monority/ui/aspect-ratio'
+import { AspectRatio } from '@monority/ui/aspect-ratio'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { aspectRatioI18n } from './AspectRatio.messages'
 import { AspectRatioSquareExample, AspectRatioVideoExample } from './AspectRatio.examples'
 
 function AspectRatioPlayground() {
@@ -18,7 +19,7 @@ function AspectRatioPlayground() {
 
     const snippet = `<AspectRatio ratio={${ratioType}}>
   <div style={{ background: 'var(--mr-accent-subtle)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    Format ${ratioType}
+    Ratio ${ratioType}
   </div>
 </AspectRatio>`
 
@@ -27,13 +28,14 @@ function AspectRatioPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Format (ratio)',
+                    name: 'ratio',
+                    label: 'Aspect ratio',
                     value: ratioType,
                     options: [
-                        { value: '16/9', label: '16:9 (Vidéo standard)' },
-                        { value: '4/3', label: '4:3 (Photo classique)' },
-                        { value: '1/1', label: '1:1 (Carré)' },
-                        { value: '21/9', label: '21:9 (Panoramique cinéma)' },
+                        { value: '16/9', label: '16:9 (Standard video)' },
+                        { value: '4/3', label: '4:3 (Classic photo)' },
+                        { value: '1/1', label: '1:1 (Square)' },
+                        { value: '21/9', label: '21:9 (Cinema ultrawide)' },
                     ],
                     onChange: (v) => setRatioType(v as '16/9' | '4/3' | '1/1' | '21/9'),
                 },
@@ -76,7 +78,7 @@ const docData: DocPageData = {
     title: 'AspectRatio',
     description:
         'Maintains a fixed aspect ratio for child content using the CSS padding-bottom trick.',
-    importCode: "import { AspectRatio } from '@monority/ui'",
+    importCode: "import { AspectRatio } from '@monority/ui/aspect-ratio'",
     usageCode: `<AspectRatio ratio={16 / 9}>
   <img src="/image.jpg" alt="Content" />
 </AspectRatio>`,
@@ -100,6 +102,7 @@ const docData: DocPageData = {
         'No interactive semantics by default.',
         'Ensure child content has appropriate accessible names.',
     ],
+    i18n: aspectRatioI18n,
 }
 
 export function AspectRatioDocs() {

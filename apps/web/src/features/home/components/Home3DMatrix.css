@@ -1,0 +1,390 @@
+/* Scène interactive de composants @monority/ui — Hero d'accueil.
+ * Construite à 100 % sur les tokens CSS Monority UI et <ThemeScope>,
+ * sans couleurs codées en dur, sans flou verrier, ni !important. */
+
+.mr-showcase {
+    position: relative;
+    inline-size: 100%;
+    max-inline-size: var(--mr-size-container-lg);
+    margin-inline: auto;
+    margin-block: var(--mr-space-2) var(--mr-space-4);
+    padding: 6px;
+    border-radius: calc(var(--mr-radius-lg) + 6px);
+    border: 1px solid var(--mr-border-subtle);
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 72%, var(--mr-bg-canvas));
+    box-shadow: var(--mr-shadow-overlay);
+    box-sizing: border-box;
+    transition: background-color var(--mr-duration-state) var(--mr-ease-default), border-color
+        var(--mr-duration-state) var(--mr-ease-default);
+}
+
+:where([data-theme='high-contrast']) .mr-showcase {
+    background-color: var(--mr-bg-canvas);
+    border-color: var(--mr-border-default);
+}
+
+/* Surface interne pilotée en direct par <ThemeScope theme={...} density={...}> */
+.mr-showcase__surface {
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    border-radius: var(--mr-radius-lg);
+    border: 1px solid var(--mr-border-subtle);
+    background-color: var(--mr-bg-canvas);
+    color: var(--mr-text-primary);
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: start;
+    transition: background-color var(--mr-duration-state) var(--mr-ease-default), border-color
+        var(--mr-duration-state) var(--mr-ease-default), color var(--mr-duration-state)
+        var(--mr-ease-default);
+}
+
+/* Garantit des neutres purs lorsque Dark / Light / OLED / High-Contrast
+ * sont prévisualisés à l'intérieur d'une page hôte teintée (Ocean, Slate, Night). */
+.mr-showcase__surface[data-theme='dark'],
+.mr-showcase__surface[data-theme='light'],
+.mr-showcase__surface[data-theme='oled'],
+.mr-showcase__surface[data-theme='high-contrast'] {
+    --mr-ref-neutral-chroma: 0;
+    --mr-ref-brand-chroma: 0;
+}
+
+/* Barre supérieure d'instrumentation du ThemeScope */
+.mr-showcase__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--mr-space-3);
+    padding-block: var(--mr-space-3);
+    padding-inline: var(--mr-space-5);
+    background-color: var(--mr-bg-surface);
+    border-block-end: 1px solid var(--mr-border-subtle);
+}
+
+.mr-showcase__scope-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    min-inline-size: 0;
+    font-family: var(--mr-font-family-mono);
+    font-size: var(--mr-font-size-xs);
+    line-height: var(--mr-line-height-sm);
+}
+
+.mr-showcase__scope-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    min-inline-size: 0;
+}
+
+.mr-showcase__scope-dot {
+    inline-size: 7px;
+    block-size: 7px;
+    border-radius: var(--mr-radius-full);
+    background-color: var(--mr-accent-solid);
+    flex-shrink: 0;
+    transition: background-color var(--mr-duration-instant) var(--mr-ease-default);
+}
+
+.mr-showcase__scope-tag {
+    font-weight: var(--mr-font-weight-semibold);
+    color: var(--mr-text-primary);
+    white-space: nowrap;
+}
+
+.mr-showcase__scope-sep {
+    color: var(--mr-border-default);
+    user-select: none;
+}
+
+.mr-showcase__scope-attrs {
+    color: var(--mr-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mr-showcase__controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--mr-space-2);
+}
+
+/* Grille principale à 2 panneaux équilibrés */
+.mr-showcase__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.24fr) minmax(0, 1fr);
+    gap: var(--mr-space-5);
+    padding: var(--mr-space-5);
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 48%, var(--mr-bg-canvas));
+}
+
+.mr-showcase__panel {
+    height: 100%;
+}
+
+.mr-showcase__card-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-inline-size: 0;
+}
+
+/* Duo de StatCard compacté par surcharge consommateur sans !important */
+.mr-showcase__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mr-space-3);
+}
+
+.mr-showcase__stat {
+    padding: var(--mr-space-4);
+    gap: var(--mr-space-2);
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 52%, var(--mr-bg-surface));
+}
+
+.mr-showcase__stat .mr-stat-card__value {
+    font-size: var(--mr-font-size-xl);
+    font-weight: var(--mr-font-weight-semibold);
+    line-height: 1.15;
+}
+
+/* Liste interactive de régions edge avec rail d'accent latéral de 2px */
+.mr-showcase__regions {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--mr-border-subtle);
+    border-radius: var(--mr-radius-md);
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 42%, var(--mr-bg-surface));
+    overflow: hidden;
+}
+
+.mr-showcase__region-row {
+    appearance: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(4.5rem, 0.85fr) auto;
+    align-items: center;
+    gap: var(--mr-space-3);
+    inline-size: 100%;
+    min-block-size: calc(var(--mr-size-control-md) + var(--mr-space-2));
+    padding-block: var(--mr-space-2);
+    padding-inline: var(--mr-space-3);
+    margin: 0;
+    border: 0;
+    border-block-end: 1px solid var(--mr-border-subtle);
+    border-inline-start: 2px solid transparent;
+    background-color: transparent;
+    color: var(--mr-text-primary);
+    font-family: var(--mr-font-family-sans);
+    text-align: start;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color var(--mr-duration-instant) var(--mr-ease-default), border-color
+        var(--mr-duration-instant) var(--mr-ease-default);
+}
+
+.mr-showcase__region-row:last-child {
+    border-block-end: 0;
+}
+
+.mr-showcase__region-row[data-active='true'] {
+    background-color: var(--mr-bg-surface);
+    border-inline-start-color: var(--mr-accent-solid);
+}
+
+.mr-showcase__region-row:focus-visible {
+    outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+    outline-offset: -2px;
+}
+
+.mr-showcase__region-id {
+    display: flex;
+    align-items: baseline;
+    gap: var(--mr-space-2);
+    min-inline-size: 0;
+}
+
+.mr-showcase__region-code {
+    font-family: var(--mr-font-family-mono);
+    font-size: var(--mr-font-size-xs);
+    font-weight: var(--mr-font-weight-semibold);
+    color: var(--mr-text-primary);
+    white-space: nowrap;
+}
+
+.mr-showcase__region-city {
+    font-size: var(--mr-font-size-sm);
+    color: var(--mr-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mr-showcase__region-progress {
+    inline-size: 100%;
+}
+
+.mr-showcase__region-latency {
+    font-family: var(--mr-font-family-mono);
+    font-size: var(--mr-font-size-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--mr-text-secondary);
+    white-space: nowrap;
+    text-align: end;
+}
+
+.mr-showcase__region-row[data-active='true'] .mr-showcase__region-latency {
+    color: var(--mr-text-primary);
+    font-weight: var(--mr-font-weight-medium);
+}
+
+.mr-showcase__empty {
+    padding-block: var(--mr-space-4);
+    padding-inline: var(--mr-space-3);
+    font-size: var(--mr-font-size-sm);
+    color: var(--mr-text-tertiary);
+    text-align: center;
+}
+
+/* Panneau droit : contrôles de politique de routage */
+.mr-showcase__field-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-2);
+}
+
+.mr-showcase__field-label {
+    font-size: var(--mr-font-size-sm);
+    font-weight: var(--mr-font-weight-medium);
+    color: var(--mr-text-primary);
+    line-height: var(--mr-line-height-sm);
+}
+
+.mr-showcase__divider {
+    inline-size: 100%;
+    block-size: 1px;
+    background-color: var(--mr-border-subtle);
+    border: 0;
+    margin: 0;
+}
+
+.mr-showcase__switches {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mr-space-3);
+}
+
+.mr-showcase__panel .mr-card__footer {
+    flex-wrap: wrap;
+}
+
+.mr-showcase__footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    font-family: var(--mr-font-family-mono);
+    font-size: var(--mr-font-size-xs);
+    color: var(--mr-text-secondary);
+    white-space: nowrap;
+    min-inline-size: 0;
+}
+
+.mr-showcase__footer-dot {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: var(--mr-radius-full);
+    background-color: var(--mr-border-control);
+    flex-shrink: 0;
+    transition: background-color var(--mr-duration-instant) var(--mr-ease-default);
+}
+
+.mr-showcase__footer-dot[data-synced='true'] {
+    background-color: var(--mr-success-solid);
+}
+
+.mr-showcase__footer-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+    margin-inline-start: auto;
+    flex-shrink: 0;
+}
+
+.mr-showcase__sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .mr-showcase__region-row:hover {
+        background-color: color-mix(in oklch, var(--mr-bg-raised) 65%, transparent);
+    }
+
+    .mr-showcase__region-row[data-active='true']:hover {
+        background-color: var(--mr-bg-surface);
+    }
+}
+
+@media (max-width: 880px) {
+    .mr-showcase__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .mr-showcase {
+        padding: 4px;
+        border-radius: calc(var(--mr-radius-lg) + 4px);
+    }
+
+    .mr-showcase__toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding-inline: var(--mr-space-4);
+    }
+
+    .mr-showcase__scope-meta {
+        justify-content: space-between;
+        inline-size: 100%;
+    }
+
+    .mr-showcase__scope-sep {
+        display: none;
+    }
+
+    .mr-showcase__controls {
+        flex-direction: column;
+        align-items: stretch;
+        inline-size: 100%;
+    }
+
+    .mr-showcase__controls .mr-segmented-control {
+        display: flex;
+        inline-size: 100%;
+    }
+
+    .mr-showcase__grid {
+        padding: var(--mr-space-3);
+        gap: var(--mr-space-3);
+    }
+
+    .mr-showcase__stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .mr-showcase__region-row {
+        grid-template-columns: minmax(0, 1fr) minmax(3.25rem, 0.55fr) auto;
+        gap: var(--mr-space-2);
+    }
+}

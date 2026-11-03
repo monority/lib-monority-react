@@ -96,19 +96,19 @@ export function ComboboxAsyncAndClearableExample() {
     return (
         <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
             <Combobox
-                label="Effacement rapide (clearable)"
+                label="Quick clear (clearable)"
                 items={items}
                 value={value}
                 onChange={setValue}
                 clearable
-                hint="Le bouton d'effacement apparaît dès qu'un élément est sélectionné ou saisi."
+                hint="The clear button appears as soon as an item is selected or typed."
             />
             <Combobox
-                label="Chargement asynchrone des options"
+                label="Asynchronous options loading"
                 items={[]}
                 loading
-                placeholder="Chargement des services..."
-                hint="Le chevron est remplacé par un indicateur d'activité discret et le champ est en aria-busy."
+                placeholder="Loading services..."
+                hint="The chevron is replaced by a discreet activity indicator and the field is aria-busy."
             />
         </div>
     )

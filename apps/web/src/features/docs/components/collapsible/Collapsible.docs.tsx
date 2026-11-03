@@ -3,6 +3,7 @@ import { Text } from '@monority/ui/text'
 import { useEffect, useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { collapsibleI18n } from './Collapsible.messages'
 import {
     CollapsibleControlledExample,
     CollapsibleDefaultOpenExample,
@@ -10,10 +11,12 @@ import {
 } from './Collapsible.examples'
 
 function CollapsiblePlaygroundContent({
+    apiMode,
     size,
     open: propOpen,
     disabled,
 }: {
+    apiMode: 'compound' | 'shorthand'
     size: 'sm' | 'md' | 'lg'
     open: boolean
     disabled: boolean
@@ -23,14 +26,33 @@ function CollapsiblePlaygroundContent({
         setIsOpen(propOpen)
     }, [propOpen])
 
+    if (apiMode === 'shorthand') {
+        return (
+            <div style={{ width: '100%', maxWidth: 480 }}>
+                <Collapsible
+                    size={size}
+                    title="Configuration details"
+                    open={isOpen}
+                    onOpenChange={setIsOpen}
+                    disabled={disabled}
+                >
+                    <Text size="sm" color="secondary">
+                        This animated disclosure panel displays contextual details with fluid CSS
+                        Grid transitions.
+                    </Text>
+                </Collapsible>
+            </div>
+        )
+    }
+
     return (
         <div style={{ width: '100%', maxWidth: 480 }}>
             <Collapsible size={size} open={isOpen} onOpenChange={setIsOpen} disabled={disabled}>
-                <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
+                <Collapsible.Trigger>Configuration details</Collapsible.Trigger>
                 <Collapsible.Content>
                     <Text size="sm" color="secondary">
-                        Ce panneau animé affiche des informations contextuelles avec une transition
-                        fluide en CSS Grid sans résidu de hauteur.
+                        This animated disclosure panel displays contextual details with fluid CSS
+                        Grid transitions.
                     </Text>
                 </Collapsible.Content>
             </Collapsible>
@@ -42,45 +64,74 @@ function CollapsiblePlayground() {
     return (
         <ComponentPlayground
             title="Collapsible"
-            description="Contrôlez l'état ouvert/fermé, la taille et le mode désactivé du panneau dépliable."
+            description="Control open/closed state, API mode, size, and disabled mode of the collapsible panel."
             controls={[
                 {
                     type: 'select',
+                    name: 'apiMode',
+                    prop: 'apiMode',
+                    label: 'API mode',
+                    defaultValue: 'compound',
+                    options: [
+                        { value: 'compound', label: 'Compound API' },
+                        { value: 'shorthand', label: 'Shorthand API' },
+                    ],
+                },
+                {
+                    type: 'select',
+                    name: 'size',
                     prop: 'size',
-                    label: 'Taille (size)',
+                    label: 'Size',
                     defaultValue: 'md',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
-                        { value: 'lg', label: 'Grande (lg)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
+                        { value: 'lg', label: 'Large (lg)' },
                     ],
                 },
                 {
                     type: 'boolean',
+                    name: 'open',
                     prop: 'open',
-                    label: 'Ouvert (open)',
+                    label: 'Open',
                     defaultValue: true,
                 },
                 {
                     type: 'boolean',
+                    name: 'disabled',
                     prop: 'disabled',
-                    label: 'Désactivé (disabled)',
+                    label: 'Disabled',
                     defaultValue: false,
                 },
             ]}
-            renderCode={(props) => `<Collapsible
-  size="${props.size}"${props.open ? '\n  open' : ''}${props.disabled ? '\n  disabled' : ''}
+            renderCode={(props) => {
+                const sizeAttr = props.size !== 'md' ? `\n  size="${props.size}"` : ''
+                const openAttr = props.open ? '\n  open' : ''
+                const disAttr = props.disabled ? '\n  disabled' : ''
+
+                if (props.apiMode === 'shorthand') {
+                    return `<Collapsible
+  title="Configuration details"${sizeAttr}${openAttr}${disAttr}
 >
-  <Collapsible.Trigger>Détails de configuration</Collapsible.Trigger>
+  <Text size="sm" color="secondary">
+    This animated disclosure panel displays contextual details with fluid CSS Grid transitions.
+  </Text>
+</Collapsible>`
+                }
+
+                return `<Collapsible${sizeAttr}${openAttr}${disAttr}>
+  <Collapsible.Trigger>Configuration details</Collapsible.Trigger>
   <Collapsible.Content>
     <Text size="sm" color="secondary">
-      Ce panneau animé affiche des informations contextuelles avec une transition fluide en CSS Grid.
+      This animated disclosure panel displays contextual details with fluid CSS Grid transitions.
     </Text>
   </Collapsible.Content>
-</Collapsible>`}
+</Collapsible>`
+            }}
         >
             {(props) => (
                 <CollapsiblePlaygroundContent
+                    apiMode={(props.apiMode as 'compound' | 'shorthand') || 'compound'}
                     size={props.size as 'sm' | 'md' | 'lg'}
                     open={props.open as boolean}
                     disabled={props.disabled as boolean}
@@ -148,11 +199,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab / Shift + Tab',
-            description: 'Déplace le focus vers le bouton de déclenchement du panneau.',
+            action: 'Moves focus to the collapsible trigger button.',
+            context: 'Global navigation',
         },
         {
-            key: 'Enter / Espace',
-            description: "Bascule le panneau entre l'état replié et développé.",
+            key: 'Enter / Space',
+            action: 'Toggles the panel between expanded and collapsed states.',
+            context: 'Focus on trigger button',
         },
     ],
     cssHooks: [
@@ -180,6 +233,7 @@ const docData: DocPageData = {
         'Keyboard access works with Enter and Space through the native button.',
         'Fluid expansion is animated using CSS Grid (grid-template-rows: 0fr -> 1fr) with zero residual height when closed.',
     ],
+    i18n: collapsibleI18n,
 }
 
 export function CollapsibleDocs() {

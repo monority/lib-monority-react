@@ -50,6 +50,7 @@ HANDOFF.md
 .continue/config.json
 .opencode/skills/frontend-design/SKILL.md
 opencode.json
+.agents/
 
 # Playwright
 test-results

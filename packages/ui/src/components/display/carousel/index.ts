@@ -5,6 +5,8 @@ export {
     CarouselPrevious,
     CarouselNext,
     CarouselDots,
+    CarouselCounter,
+    CarouselPlayPause,
 } from './Carousel'
 export type {
     CarouselProps,
@@ -12,4 +14,6 @@ export type {
     CarouselItemProps,
     CarouselButtonProps,
     CarouselDotsProps,
+    CarouselCounterProps,
+    CarouselPlayPauseProps,
 } from './Carousel.types'

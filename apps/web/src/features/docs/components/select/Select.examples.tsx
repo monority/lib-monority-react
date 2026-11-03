@@ -28,10 +28,10 @@ export function SelectWithHintExample() {
 export function SelectLoadingExample() {
     return (
         <Select
-            label="Région de déploiement"
+            label="Deployment region"
             loading
             options={[{ value: 'eu-west', label: 'Europe (Paris)' }]}
-            hint="Le chevron est remplacé par un indicateur de chargement discret."
+            hint="The chevron is replaced by a discreet loading indicator."
         />
     )
 }
@@ -65,7 +65,7 @@ export function SelectRequiredExample() {
 
 export function SelectSizesExample() {
     return (
-        <Stack direction="horizontal" gap="sm" align="start">
+        <Stack direction="horizontal" gap="sm" align="start" style={{ flexWrap: 'wrap' }}>
             <Select label="Small" size="sm">
                 <Select.Option>Small</Select.Option>
             </Select>
@@ -81,8 +81,8 @@ export function SelectSizesExample() {
 
 export function SelectGroupExample() {
     return (
-        <Select label="Technologie frontend" defaultValue="react">
-            <Select.Group label="Ecosysteme React">
+        <Select label="Frontend technology" defaultValue="react">
+            <Select.Group label="React ecosystem">
                 <Select.Option value="react">React 19</Select.Option>
                 <Select.Option value="next">Next.js</Select.Option>
                 <Select.Option value="remix">Remix</Select.Option>

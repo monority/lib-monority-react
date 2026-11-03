@@ -1,12 +1,18 @@
+import type { Locale } from '@/shared/i18n/locales'
+
 export const siteConfig = {
-    name: 'Model Starter',
-    defaultTitle: 'Model Starter | React + Vite starter senior dev',
-    titleSuffix: 'Model Starter',
+    name: 'Monority UI',
+    defaultTitle: 'Monority UI | React component library',
+    titleSuffix: 'Monority UI',
     defaultDescription:
-        'Starter React + Vite oriente senior dev avec design system, composants UI, dark mode, tests et architecture feature-first.',
+        'Monority UI is a React 19 component library driven by CSS design tokens, with runtime themes, accessible primitives and a layered CSS foundation.',
     defaultImage: '/favicon.svg',
-    locale: 'fr_FR',
     type: 'website',
+}
+
+export const ogLocales: Record<Locale, string> = {
+    en: 'en_US',
+    fr: 'fr_FR',
 }
 
 export function getSiteUrl() {

@@ -1,5 +1,6 @@
 import { ToggleGroup } from '@monority/ui/toggle-group'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -10,6 +11,7 @@ import {
     ToggleGroupVariantsExample,
     ToggleGroupVerticalExample,
 } from './ToggleGroup.examples'
+import { toggleGroupI18n } from './ToggleGroup.messages'
 
 function ToggleGroupPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -18,13 +20,22 @@ function ToggleGroupPlaygroundDemo(props: {
     orientation: 'horizontal' | 'vertical'
     disabled: boolean
 }) {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [valSingle, setValSingle] = useState<string>('list')
     const [valMulti, setValMulti] = useState<string[]>(['list'])
-    const items = [
-        { value: 'grid', label: 'Grille' },
-        { value: 'list', label: 'Liste' },
-        { value: 'compact', label: 'Compact' },
-    ]
+
+    const items = isFr
+        ? [
+              { value: 'grid', label: 'Grille' },
+              { value: 'list', label: 'Liste' },
+              { value: 'compact', label: 'Compact' },
+          ]
+        : [
+              { value: 'grid', label: 'Grid' },
+              { value: 'list', label: 'List' },
+              { value: 'compact', label: 'Compact' },
+          ]
 
     return (
         <div
@@ -59,11 +70,11 @@ function ToggleGroupPlaygroundDemo(props: {
                 />
             )}
             <span style={{ fontSize: 'var(--mr-font-size-sm)', color: 'var(--mr-text-primary)' }}>
-                Selection :{' '}
+                {isFr ? 'Sélection : ' : 'Selection: '}
                 <strong>
                     {props.type === 'single'
-                        ? valSingle || 'aucune'
-                        : valMulti.join(', ') || 'aucune'}
+                        ? valSingle || (isFr ? 'aucune' : 'none')
+                        : valMulti.join(', ') || (isFr ? 'aucune' : 'none')}
                 </strong>
             </span>
         </div>
@@ -82,7 +93,7 @@ const toggleGroupPlayground = (
         importCode="import { ToggleGroup } from '@monority/ui/toggle-group'"
         getCode={(p) => {
             const propsStr = [
-                `  items={[\n    { value: 'grid', label: 'Grille' },\n    { value: 'list', label: 'Liste' },\n    { value: 'compact', label: 'Compact' }\n  ]}`,
+                `  items={[\n    { value: 'grid', label: 'Grid' },\n    { value: 'list', label: 'List' },\n    { value: 'compact', label: 'Compact' }\n  ]}`,
                 `  type="${p.type}"`,
                 p.variant !== 'default' ? `  variant="${p.variant}"` : '',
                 p.size !== 'md' ? `  size="${p.size}"` : '',
@@ -100,17 +111,17 @@ const toggleGroupPlayground = (
             {
                 name: 'type',
                 type: 'select',
-                label: 'Mode de selection',
+                label: 'Selection mode',
                 defaultValue: 'single',
                 options: [
-                    { value: 'single', label: 'Unique (single)' },
+                    { value: 'single', label: 'Single' },
                     { value: 'multiple', label: 'Multiple' },
                 ],
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -121,7 +132,7 @@ const toggleGroupPlayground = (
             {
                 name: 'variant',
                 type: 'select',
-                label: 'Variante de style',
+                label: 'Style variant',
                 defaultValue: 'default',
                 options: [
                     { value: 'default', label: 'Default' },
@@ -131,17 +142,17 @@ const toggleGroupPlayground = (
             {
                 name: 'orientation',
                 type: 'select',
-                label: 'Disposition',
+                label: 'Orientation',
                 defaultValue: 'horizontal',
                 options: [
-                    { value: 'horizontal', label: 'Horizontale' },
-                    { value: 'vertical', label: 'Verticale' },
+                    { value: 'horizontal', label: 'Horizontal' },
+                    { value: 'vertical', label: 'Vertical' },
                 ],
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -231,13 +242,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Fait circuler le focus entre les options actives du groupe.',
-            context: 'Groupe de bascules',
+            action: 'Cycles focus between active options in group.',
+            context: 'Toggle group',
         },
         {
             key: ['Space', 'Enter'],
-            action: 'Active ou desactive l option focalisee.',
-            context: 'Option cible du groupe',
+            action: 'Toggles focused option.',
+            context: 'Target option in group',
         },
     ],
     a11y: [
@@ -246,6 +257,7 @@ const docData: DocPageData = {
         'Each item uses Toggle with aria-pressed.',
         'Keep item labels short enough to scan as a set.',
     ],
+    i18n: toggleGroupI18n,
 }
 
 export function ToggleGroupDocs() {

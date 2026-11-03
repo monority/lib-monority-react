@@ -94,6 +94,17 @@ describe('SidebarLayout', () => {
         expect(onOpenChange).toHaveBeenCalledWith(false)
     })
 
+    it('renders exactly one toggle in prop mode, even with header content', () => {
+        const view = render(
+            <SidebarLayout collapsible sidebar={<nav>Nav</nav>} header={<span>Title</span>}>
+                Main
+            </SidebarLayout>
+        )
+        const toggles = view.querySelectorAll('.mr-sidebar-layout__toggle')
+        expect(toggles).toHaveLength(1)
+        expect(toggles[0]?.getAttribute('aria-expanded')).toBe('true')
+    })
+
     it('renders and operates via compound subcomponents (Sidebar, Main, Header, Toggle, Content)', () => {
         const onOpenChange = vi.fn()
         const view = render(
@@ -130,5 +141,37 @@ describe('SidebarLayout', () => {
             'true'
         )
         expect(onOpenChange).toHaveBeenCalledWith(false)
+    })
+
+    it('sets default accessible name and supports custom aria-label override on toggle', () => {
+        const view = render(
+            <SidebarLayout collapsible defaultOpen={true}>
+                <SidebarLayout.Header>
+                    <SidebarLayout.Toggle />
+                </SidebarLayout.Header>
+            </SidebarLayout>
+        )
+        const toggleBtn = view.querySelector('.mr-sidebar-layout__toggle') as HTMLButtonElement
+        expect(toggleBtn.getAttribute('aria-label')).toBe('Close sidebar')
+
+        act(() => {
+            toggleBtn.click()
+        })
+        expect(toggleBtn.getAttribute('aria-label')).toBe('Open sidebar')
+
+        act(() => {
+            root?.unmount()
+        })
+        const customView = render(
+            <SidebarLayout collapsible>
+                <SidebarLayout.Header>
+                    <SidebarLayout.Toggle aria-label="Basculer le panneau" />
+                </SidebarLayout.Header>
+            </SidebarLayout>
+        )
+        const customBtn = customView.querySelector(
+            '.mr-sidebar-layout__toggle'
+        ) as HTMLButtonElement
+        expect(customBtn.getAttribute('aria-label')).toBe('Basculer le panneau')
     })
 })

@@ -5,16 +5,17 @@ import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { drawerI18n } from './Drawer.messages'
 import { DrawerSidesExample, DrawerWithFooterExample } from './Drawer.examples'
 
 function DrawerPlayground() {
     const [open, setOpen] = useState(false)
     const [side, setSide] = useState<'left' | 'right' | 'top' | 'bottom'>('right')
-    const [title, setTitle] = useState('Détails du déploiement')
+    const [title, setTitle] = useState('Deployment details')
 
     const snippet = `const [open, setOpen] = useState(false)
 
-<Button onClick={() => setOpen(true)}>Ouvrir le panneau (${side})</Button>
+<Button onClick={() => setOpen(true)}>Open panel (${side})</Button>
 
 <Drawer
   open={open}
@@ -24,9 +25,9 @@ function DrawerPlayground() {
 >
   <Stack gap="md">
     <Text tone="muted">
-      Consultez les détails opérationnels et modifiez les variables d'environnement associées.
+      Review the operational details and edit the related environment variables.
     </Text>
-    <Button variant="primary" onClick={() => setOpen(false)}>Fermer</Button>
+    <Button variant="primary" onClick={() => setOpen(false)}>Close</Button>
   </Stack>
 </Drawer>`
 
@@ -35,19 +36,19 @@ function DrawerPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Côté d’ouverture (side)',
+                    label: 'Side',
                     value: side,
                     options: [
-                        { value: 'right', label: 'Droite (right)' },
-                        { value: 'left', label: 'Gauche (left)' },
-                        { value: 'top', label: 'Haut (top)' },
-                        { value: 'bottom', label: 'Bas (bottom)' },
+                        { value: 'right', label: 'Right' },
+                        { value: 'left', label: 'Left' },
+                        { value: 'top', label: 'Top' },
+                        { value: 'bottom', label: 'Bottom' },
                     ],
                     onChange: (v) => setSide(v as 'left' | 'right' | 'top' | 'bottom'),
                 },
                 {
                     type: 'text',
-                    label: 'Titre du drawer',
+                    label: 'Drawer title',
                     value: title,
                     onChange: setTitle,
                 },
@@ -63,16 +64,16 @@ function DrawerPlayground() {
                 }}
             >
                 <Button variant="primary" onClick={() => setOpen(true)}>
-                    Ouvrir le panneau ({side})
+                    Open panel ({side})
                 </Button>
                 <Drawer open={open} title={title} side={side} onClose={() => setOpen(false)}>
                     <Stack gap="md">
                         <Text tone="muted">
-                            Consultez les détails opérationnels et modifiez les variables
-                            d'environnement associées.
+                            Review the operational details and edit the related environment
+                            variables.
                         </Text>
                         <Button variant="primary" onClick={() => setOpen(false)}>
-                            Fermer
+                            Close
                         </Button>
                     </Stack>
                 </Drawer>
@@ -136,9 +137,9 @@ return (
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Navigue cycliquement dans les éléments focalisables du tiroir (focus trap)',
+            action: 'Cycles focus through the focusable elements of the drawer (focus trap)',
         },
-        { key: 'Escape', action: 'Ferme le tiroir et replace le focus sur le bouton d’ouverture' },
+        { key: 'Escape', action: 'Closes the drawer and returns focus to the open button' },
     ],
     a11y: [
         'The panel follows the dialog ARIA pattern with aria-modal="true".',
@@ -146,6 +147,7 @@ return (
         'The title is exposed with aria-labelledby.',
         'Escape and the close button both dismiss the panel.',
     ],
+    i18n: drawerI18n,
 }
 
 export function DrawerDocs() {

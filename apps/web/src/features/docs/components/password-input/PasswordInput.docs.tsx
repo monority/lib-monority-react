@@ -2,6 +2,7 @@ import { PasswordInput } from '@monority/ui/password-input'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { passwordInputI18n } from './PasswordInput.messages'
 import {
     PasswordInputBasicPreview,
     PasswordInputSizesExample,
@@ -65,19 +66,19 @@ const passwordInputPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Mot de passe',
+                label: 'Label (label)',
+                defaultValue: 'Password',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: '8 caracteres minimum avec chiffres et symboles.',
+                label: 'Hint (hint)',
+                defaultValue: 'At least 8 characters with digits and symbols.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -88,19 +89,19 @@ const passwordInputPlayground = (
             {
                 name: 'showToggle',
                 type: 'boolean',
-                label: 'Bouton afficher/masquer',
+                label: 'Show/hide toggle',
                 defaultValue: true,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
             {
                 name: 'required',
                 type: 'boolean',
-                label: 'Requis (required)',
+                label: 'Required (required)',
                 defaultValue: false,
             },
         ]}
@@ -177,13 +178,13 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab',
-            action: 'Deplace le focus vers le champ ou vers le bouton de visibilite.',
-            context: 'Champ mot de passe',
+            action: 'Moves focus to the field or to the visibility toggle button.',
+            context: 'Password field',
         },
         {
             key: ['Space', 'Enter'],
-            action: 'Bascule la visibilite du mot de passe entre texte en clair et masque.',
-            context: 'Bouton d affichage du mot de passe',
+            action: 'Toggles password visibility between plain text and masked.',
+            context: 'Password visibility button',
         },
     ],
     a11y: [
@@ -191,6 +192,7 @@ const docData: DocPageData = {
         'Proper autocomplete default for password managers.',
         'Field labels and error messages connected via aria-describedby.',
     ],
+    i18n: passwordInputI18n,
 }
 
 export function PasswordInputDocs() {

@@ -1,7 +1,8 @@
-﻿import { StatCard } from '@monority/ui/stat-card'
+import { StatCard } from '@monority/ui/stat-card'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { statCardI18n } from './StatCard.messages'
 import {
     StatCardCompoundExample,
     StatCardLongTextExample,
@@ -11,13 +12,13 @@ import {
 } from './StatCard.examples'
 
 function StatCardPlayground() {
-    const [label, setLabel] = useState('Revenu net')
-    const [value, setValue] = useState('128 420 €')
-    const [trend, setTrend] = useState('+8.4% vs mois dernier')
+    const [label, setLabel] = useState('Net revenue')
+    const [value, setValue] = useState('$128,420')
+    const [trend, setTrend] = useState('+8.4% vs last month')
     const [trendTone, setTrendTone] = useState<'success' | 'neutral' | 'warning' | 'danger'>(
         'success'
     )
-    const [description, setDescription] = useState('Chiffre d’affaires récurrent après déductions.')
+    const [description, setDescription] = useState('Recurring revenue after standard deductions.')
 
     const snippet = `<StatCard
   label="${label}"
@@ -32,37 +33,42 @@ function StatCardPlayground() {
             controls={[
                 {
                     type: 'text',
+                    name: 'label',
                     label: 'Label',
                     value: label,
                     onChange: setLabel,
                 },
                 {
                     type: 'text',
-                    label: 'Valeur',
+                    name: 'value',
+                    label: 'Value',
                     value: value,
                     onChange: setValue,
                 },
                 {
                     type: 'text',
-                    label: 'Tendance',
+                    name: 'trend',
+                    label: 'Trend',
                     value: trend,
                     onChange: setTrend,
                 },
                 {
                     type: 'select',
-                    label: 'Ton de tendance',
+                    name: 'trendTone',
+                    label: 'Trend tone',
                     value: trendTone,
                     options: [
-                        { value: 'success', label: 'Success (positif)' },
+                        { value: 'success', label: 'Success (positive)' },
                         { value: 'neutral', label: 'Neutral' },
-                        { value: 'warning', label: 'Warning (alerte)' },
-                        { value: 'danger', label: 'Danger (négatif)' },
+                        { value: 'warning', label: 'Warning (alert)' },
+                        { value: 'danger', label: 'Danger (negative)' },
                     ],
                     onChange: (v) =>
                         setTrendTone(v as 'success' | 'neutral' | 'warning' | 'danger'),
                 },
                 {
                     type: 'text',
+                    name: 'description',
                     label: 'Description',
                     value: description,
                     onChange: setDescription,
@@ -70,13 +76,29 @@ function StatCardPlayground() {
             ]}
             codeSnippet={snippet}
         >
-            <div style={{ maxWidth: 360, margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: 380, margin: '0 auto', width: '100%' }}>
                 <StatCard
                     label={label}
                     value={value}
                     trend={trend}
                     trendTone={trendTone}
                     description={description}
+                    icon={
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    }
                 />
             </div>
         </ComponentPlayground>
@@ -178,6 +200,7 @@ const docData: DocPageData = {
         'aria-label for metric groups.',
         'Trend direction announced via text (not just color).',
     ],
+    i18n: statCardI18n,
 }
 
 export function StatCardDocs() {

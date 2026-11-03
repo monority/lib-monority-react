@@ -215,6 +215,19 @@ Alternatives écartées :
 - Introduire un token contextuel `--mr-text-secondary-on-surface` (violait le principe d'un vocabulaire fermé et minimal).
 Conséquences : Le contraste sur `--mr-bg-surface` atteint désormais au moins 4,72:1 sur l'ensemble des thèmes sombres, garantissant 0 violation Axe et le respect strict du critère WCAG 1.4.3.
 
+### ADR-028 : harmonisation de l'élévation des surfaces flottantes sur `--mr-bg-overlay` et formalisation de `--mr-text-tertiary`
+Statut : Acceptée.
+Contexte : L'audit des 78 recettes a révélé une scission artificielle : les modales utilisaient `--mr-bg-overlay` tandis que les popovers, menus déroulants, selects et comboboxes utilisaient `--mr-bg-raised` malgré un indice z élevé et une ombre de calque (`--mr-shadow-overlay`). De plus, 14 recettes consommaient `--mr-text-tertiary` sans déclaration formelle dans le socle de tokens, et certains composants utilisaient des tokens non définis (`--mr-bg-muted`).
+Décision :
+1. Unifier l'ensemble des 16 composants flottants et superposés sur `background-color: var(--mr-bg-overlay);` avec bordure `1px solid var(--mr-border-default)` et ombre `var(--mr-shadow-overlay)` (incluant le liseré spéculaire inset en mode sombre).
+2. Réserver `var(--mr-bg-raised)` exclusivement aux éléments élevés à l'intérieur d'une surface (pastille active de segmented control, carte interactive survolée).
+3. Déclarer officiellement `--mr-text-tertiary` et le quartet des statuts pleins (`--mr-success-solid`, `--mr-warning-solid`, `--mr-info-solid`, `--mr-danger-solid`) dans `semantic.css` et dans l'ensemble des 6 thèmes sombres et contrastés.
+4. Normaliser le survol et la sélection des items de menus et de listes sur la formule universelle `background-color: var(--mr-accent-subtle, var(--mr-bg-sunken));`.
+Alternatives écartées :
+- Conserver `--mr-bg-raised` pour les menus et `--mr-bg-overlay` pour les modales (rompait la cohérence lors du thémage ou du rebranding client).
+- Créer un token dédié `--mr-bg-menu` (aurait fragmenté inutilement le vocabulaire clos).
+Conséquences : Zéro token fantôme dans toute la bibliothèque, cohérence spatiale parfaite à 5 tiers (canevas, creux, surface, relief, superposition), liseré spéculaire haut de gamme garanti sur tous les calques flottants en thème sombre.
+
 ## Décisions ouvertes
 
 Ces décisions sont marquées `[DÉCISION]`. Tant qu'elles ne sont pas tranchées, personne ne les contourne : on s'arrête et on demande.

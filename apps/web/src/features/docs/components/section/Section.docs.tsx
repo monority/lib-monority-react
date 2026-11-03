@@ -1,14 +1,15 @@
-﻿import { Section } from '@monority/ui/section'
+import { Section } from '@monority/ui/section'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { sectionI18n } from './Section.messages'
 import { SectionCompoundExample, SectionSpacingExample } from './Section.examples'
 
 function SectionPlayground() {
     const [variant, setVariant] = useState<'default' | 'bordered' | 'muted' | 'card'>('card')
     const [spacing, setSpacing] = useState<'sm' | 'md' | 'lg' | 'xl'>('md')
-    const [title, setTitle] = useState('Vue d’ensemble de l’architecture')
+    const [title, setTitle] = useState('Architecture overview')
 
     const snippet = `<Section
   variant="${variant}"
@@ -16,7 +17,7 @@ function SectionPlayground() {
   title="${title}"
 >
   <Text>
-    Les sections structurent le rythme vertical des pages et fournissent une hiérarchie de titres sémantique.
+    Sections structure the vertical rhythm of pages and provide semantic heading hierarchy.
   </Text>
 </Section>`
 
@@ -25,31 +26,34 @@ function SectionPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Variante visuelle',
+                    name: 'variant',
+                    label: 'Visual variant',
                     value: variant,
                     options: [
-                        { value: 'card', label: 'Carte (card)' },
-                        { value: 'default', label: 'Défaut (transparent)' },
-                        { value: 'bordered', label: 'Bordé (bordered)' },
-                        { value: 'muted', label: 'Atténué (muted)' },
+                        { value: 'card', label: 'Card (card)' },
+                        { value: 'default', label: 'Default (transparent)' },
+                        { value: 'bordered', label: 'Bordered (bordered)' },
+                        { value: 'muted', label: 'Muted (muted)' },
                     ],
                     onChange: (v) => setVariant(v as 'default' | 'bordered' | 'muted' | 'card'),
                 },
                 {
                     type: 'select',
-                    label: 'Espacement (spacing)',
+                    name: 'spacing',
+                    label: 'Spacing',
                     value: spacing,
                     options: [
                         { value: 'sm', label: 'Compact (sm)' },
                         { value: 'md', label: 'Normal (md)' },
-                        { value: 'lg', label: 'Généreux (lg)' },
-                        { value: 'xl', label: 'Spacieux (xl)' },
+                        { value: 'lg', label: 'Generous (lg)' },
+                        { value: 'xl', label: 'Spacious (xl)' },
                     ],
                     onChange: (v) => setSpacing(v as 'sm' | 'md' | 'lg' | 'xl'),
                 },
                 {
                     type: 'text',
-                    label: 'Titre de la section',
+                    name: 'title',
+                    label: 'Section title',
                     value: title,
                     onChange: setTitle,
                 },
@@ -59,8 +63,8 @@ function SectionPlayground() {
             <div style={{ width: '100%', minHeight: 140 }}>
                 <Section variant={variant} spacing={spacing} title={title}>
                     <Text>
-                        Les sections structurent le rythme vertical des pages et fournissent une
-                        hiérarchie de titres sémantique.
+                        Sections structure the vertical rhythm of pages and provide semantic heading
+                        hierarchy.
                     </Text>
                 </Section>
             </div>
@@ -149,6 +153,7 @@ const docData: DocPageData = {
         'Pass as="div" to remove the landmark when inappropriate.',
         'The title uses an appropriate heading level (default h2, configurable via titleAs).',
     ],
+    i18n: sectionI18n,
 }
 
 export function SectionDocs() {

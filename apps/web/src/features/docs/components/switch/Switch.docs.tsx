@@ -2,6 +2,7 @@ import { Switch } from '@monority/ui/switch'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { switchI18n } from './Switch.messages'
 import {
     SwitchBasicExample,
     SwitchSizesExample,
@@ -62,19 +63,19 @@ const switchPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Notifications d analyse',
+                label: 'Label',
+                defaultValue: 'Analytics notifications',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Recevoir les alertes d execution par email',
+                label: 'Hint',
+                defaultValue: 'Receive execution alerts by email',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -85,7 +86,7 @@ const switchPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'accent',
                 options: [
                     { value: 'accent', label: 'Accent' },
@@ -96,7 +97,7 @@ const switchPlayground = (
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -236,18 +237,18 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Space',
-            action: 'Bascule l interrupteur entre l etat active et desactive.',
-            context: 'Switch focalise',
+            action: 'Toggles the switch between the on and off states.',
+            context: 'Focused switch',
         },
         {
             key: 'Enter',
-            action: 'Bascule l interrupteur (si pris en charge par le navigateur ou formulaire).',
-            context: 'Switch focalise',
+            action: 'Toggles the switch (when supported by the browser or the form).',
+            context: 'Focused switch',
         },
         {
             key: 'Tab',
-            action: 'Transfere le focus vers le composant interactif suivant.',
-            context: 'Switch focalise',
+            action: 'Moves focus to the next interactive component.',
+            context: 'Focused switch',
         },
     ],
     a11y: [
@@ -256,6 +257,7 @@ const docData: DocPageData = {
         'Visible focus ring.',
         'Use switches only when the change can apply immediately.',
     ],
+    i18n: switchI18n,
 }
 
 export function SwitchDocs() {

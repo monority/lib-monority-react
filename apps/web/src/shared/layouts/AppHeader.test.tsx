@@ -1,3 +1,4 @@
+import { LocaleProvider } from '@/shared/i18n'
 import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
@@ -7,58 +8,54 @@ import { AppHeader } from './AppHeader'
 function renderHeader(homeNav = false) {
     return render(
         <MemoryRouter>
-            <ThemeProvider>
-                <AppHeader homeNav={homeNav} />
-            </ThemeProvider>
+            <LocaleProvider>
+                <ThemeProvider>
+                    <AppHeader homeNav={homeNav} />
+                </ThemeProvider>
+            </LocaleProvider>
         </MemoryRouter>
     )
 }
 
 describe('AppHeader', () => {
-    it('expose le moodboard dans la navigation principale', () => {
+    it('exposes docs in the main navigation', () => {
         renderHeader()
 
-        const nav = screen.getByRole('navigation', { name: 'Navigation principale' })
-        expect(within(nav).getByRole('link', { name: 'Moodboard' })).toHaveAttribute(
-            'href',
-            '/moodboard'
-        )
+        const nav = screen.getByRole('navigation', { name: 'Main navigation' })
         expect(within(nav).getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/docs')
-        expect(within(nav).queryByRole('link', { name: 'Showcase' })).toBeNull()
         expect(within(nav).queryByRole('link', { name: 'Playground' })).toBeNull()
+        expect(within(nav).queryByRole('link', { name: 'Showcase' })).toBeNull()
     })
 
-    it('expose un seul bouton de bascule Light/Dark, sans sélecteur d accent', () => {
+    it('exposes an accessible theme dropdown without an accent selector', () => {
         renderHeader()
 
         expect(screen.queryByLabelText('Accent')).not.toBeInTheDocument()
         expect(screen.queryByRole('group', { name: 'Theme' })).not.toBeInTheDocument()
 
-        const toggle = screen.getByRole('button', { name: /thème/i })
+        const toggle = screen.getByRole('button', { name: /theme/i })
         expect(toggle).toBeInTheDocument()
     })
 
-    it('bascule entre light et dark au clic', () => {
+    it('changes theme through the dropdown menu', () => {
         renderHeader()
 
-        // Thème initial : light → le bouton propose de passer en sombre.
-        const toggle = screen.getByRole('button', { name: /thème/i })
-        expect(toggle).toHaveTextContent('Dark')
-
+        const toggle = screen.getByRole('button', { name: /theme/i })
         fireEvent.click(toggle)
-        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Light')
 
-        fireEvent.click(screen.getByRole('button', { name: /thème/i }))
-        expect(screen.getByRole('button', { name: /thème/i })).toHaveTextContent('Dark')
+        const darkOption = screen.getByRole('menuitem', { name: /dark/i })
+        fireEvent.click(darkOption)
+
+        expect(screen.getByRole('button', { name: /theme/i })).toHaveTextContent('Dark')
     })
 
-    it('conserve la variante home pour la page d accueil', () => {
+    it('keeps the home variant on the landing page', () => {
         const { container } = renderHeader(true)
         expect(container.querySelector('.app-header--home')).toBeInTheDocument()
         expect(container.querySelector('.app-header__theme')).toBeInTheDocument()
     })
 
-    it('nomme chaque thème du preset plutôt que de retomber sur un label générique', () => {
+    it('names every preset theme instead of falling back to a generic label', () => {
         for (const { label } of DESIGN_PRESETS.themes) {
             expect(label).not.toBe('')
             expect(`Theme: ${label}`).not.toBe('Theme: Systeme')
@@ -67,12 +64,10 @@ describe('AppHeader', () => {
         expect(DESIGN_PRESETS.themes.map((t) => t.label)).toContain('Slate')
     })
 
-    it('affiche la section temporaire des changements et le déclencheur de log', () => {
+    it('does not display temporary changes or changelog logs in the clean header', () => {
         renderHeader()
 
-        expect(screen.getByText(/Vague 7/i)).toBeInTheDocument()
-        expect(
-            screen.getByRole('button', { name: /journal des derniers changements/i })
-        ).toBeInTheDocument()
+        expect(screen.queryByText(/Wave 7/i)).not.toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: /latest changes/i })).not.toBeInTheDocument()
     })
 })

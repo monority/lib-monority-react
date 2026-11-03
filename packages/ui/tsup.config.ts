@@ -4,6 +4,7 @@ import { defineConfig } from 'tsup'
 export default defineConfig({
     entry: {
         index: 'src/index.ts',
+        logoMark: 'src/components/brand/logo/index.ts',
         button: 'src/components/actions/button/index.ts',
         buttonLink: 'src/components/actions/button-link/index.ts',
         input: 'src/components/forms/input/index.ts',
@@ -94,6 +95,7 @@ export default defineConfig({
         providers: 'src/providers/index.ts',
         primitives: 'src/primitives/index.ts',
         lib: 'src/lib/index.ts',
+        icons: 'src/icons/index.ts',
         'get-theme-script': 'src/providers/get-theme-script.ts',
     },
     format: ['esm'],

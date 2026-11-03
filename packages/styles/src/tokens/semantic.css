@@ -8,16 +8,17 @@
     /* Valeurs literales, dependantes des neutres, echelles et alias */
     :where(:root, [data-theme]) {
         /* Fonds */
-        --mr-bg-canvas: oklch(0.955 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-surface: oklch(0.985 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-raised: oklch(0.995 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
-        --mr-bg-sunken: var(--mr-bg-canvas);
+        --mr-bg-canvas: oklch(1 0 0);
+        --mr-bg-surface: oklch(1 0 0);
+        --mr-bg-raised: oklch(1 0 0);
+        --mr-bg-sunken: oklch(0.965 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-bg-overlay: var(--mr-bg-raised);
         --mr-bg-inverse: var(--mr-text-primary);
 
         /* Textes */
         --mr-text-primary: oklch(0.22 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-secondary: oklch(0.52 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
+        --mr-text-tertiary: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
         --mr-text-on-inverse: var(--mr-bg-canvas);
         --mr-text-disabled: oklch(0.6 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
@@ -29,7 +30,7 @@
         --mr-border-subtle: oklch(0.86 var(--mr-ref-neutral-chroma) var(--mr-ref-neutral-hue));
 
         /* Statuts et tons de retour (danger 25, succes 155, avertissement 80, info 255) :
-         * Roles : subtle (fond), border (bordure), text (texte, point, icone, rail).
+         * Roles : solid (plein), subtle (fond), border (bordure), text (texte, point, icone, rail).
          * Conformes WCAG AA >= 4.5:1 pour le texte sur subtle et sur canevas. */
         --mr-danger-solid: oklch(0.52 0.2 25);
         --mr-danger-on-solid: var(--mr-bg-canvas);
@@ -37,14 +38,20 @@
         --mr-danger-border: oklch(0.82 0.12 25);
         --mr-danger-text: oklch(0.42 0.18 25);
 
+        --mr-success-solid: oklch(0.52 0.18 155);
+        --mr-success-on-solid: var(--mr-bg-canvas);
         --mr-success-subtle: oklch(0.945 0.065 155);
         --mr-success-border: oklch(0.82 0.12 155);
         --mr-success-text: oklch(0.38 0.15 155);
 
+        --mr-warning-solid: oklch(0.65 0.18 80);
+        --mr-warning-on-solid: var(--mr-bg-canvas);
         --mr-warning-subtle: oklch(0.945 0.07 80);
         --mr-warning-border: oklch(0.82 0.13 80);
         --mr-warning-text: oklch(0.4 0.15 80);
 
+        --mr-info-solid: oklch(0.52 0.18 255);
+        --mr-info-on-solid: var(--mr-bg-canvas);
         --mr-info-subtle: oklch(0.945 0.065 255);
         --mr-info-border: oklch(0.82 0.12 255);
         --mr-info-text: oklch(0.38 0.15 255);
@@ -86,22 +93,22 @@
          * space-3 (12px = 0.75rem) pour sm (28px = 1.75rem),
          * space-4 (16px = 1.0rem) pour md (32px = 2.0rem),
          * space-5 (20px = 1.25rem) pour lg (40px = 2.5rem). */
-        --mr-space-1: 0.25rem;
-        --mr-space-2: 0.5rem;
-        --mr-space-3: 0.75rem;
-        --mr-space-4: 1rem;
-        --mr-space-5: 1.25rem;
-        --mr-space-6: 1.5rem;
-        --mr-space-7: 1.75rem;
-        --mr-space-8: 2rem;
+        --mr-space-1: calc(0.25rem * var(--mr-ref-space-scale));
+        --mr-space-2: calc(0.5rem * var(--mr-ref-space-scale));
+        --mr-space-3: calc(0.75rem * var(--mr-ref-space-scale));
+        --mr-space-4: calc(1rem * var(--mr-ref-space-scale));
+        --mr-space-5: calc(1.25rem * var(--mr-ref-space-scale));
+        --mr-space-6: calc(1.5rem * var(--mr-ref-space-scale));
+        --mr-space-7: calc(1.75rem * var(--mr-ref-space-scale));
+        --mr-space-8: calc(2rem * var(--mr-ref-space-scale));
 
-        /* Tailles de controle : N fois 0.25rem (grille de 4px).
+        /* Tailles de controle : N fois 0.25rem (grille de 4px) avec levier de densite.
          * sm: 1.75rem (28px = 7x4px), conforme cible tactile WCAG 2.5.8 (>= 24px)
          * md: 2rem (32px = 8x4px)
          * lg: 2.5rem (40px = 10x4px) */
-        --mr-size-control-sm: 1.75rem;
-        --mr-size-control-md: 2rem;
-        --mr-size-control-lg: 2.5rem;
+        --mr-size-control-sm: calc(1.75rem * var(--mr-ref-control-scale));
+        --mr-size-control-md: calc(2rem * var(--mr-ref-control-scale));
+        --mr-size-control-lg: calc(2.5rem * var(--mr-ref-control-scale));
 
         /* Tailles de conteneur (largeurs maximales) */
         --mr-size-container-sm: 40rem;
@@ -242,12 +249,12 @@
         --mr-control-accent-hover: color-mix(
             in oklch,
             var(--mr-control-accent),
-            var(--mr-text-primary) var(--mr-state-hover-mix)
+            var(--mr-bg-canvas) var(--mr-state-hover-mix)
         );
         --mr-control-accent-active: color-mix(
             in oklch,
             var(--mr-control-accent),
-            var(--mr-text-primary) var(--mr-state-active-mix)
+            var(--mr-bg-canvas) var(--mr-state-active-mix)
         );
         --mr-control-accent-border: transparent;
         --mr-control-accent-subtle: var(--mr-accent-subtle);

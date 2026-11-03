@@ -1,8 +1,10 @@
 import { Rating } from '@monority/ui/rating'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { RatingBasicExample, RatingReadOnlyExample, RatingSizesExample } from './Rating.examples'
+import { ratingI18n } from './Rating.messages'
 
 function RatingPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -10,6 +12,8 @@ function RatingPlaygroundDemo(props: {
     readOnly: boolean
     disabled: boolean
 }) {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [score, setScore] = useState(4)
     return (
         <div
@@ -29,7 +33,7 @@ function RatingPlaygroundDemo(props: {
                 onChange={setScore}
             />
             <span style={{ fontSize: 'var(--mr-font-size-sm)', color: 'var(--mr-text-primary)' }}>
-                Note selectionnee :{' '}
+                {isFr ? 'Note sélectionnée : ' : 'Selected score: '}
                 <strong>
                     {score} / {props.max}
                 </strong>
@@ -65,7 +69,7 @@ const ratingPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -76,19 +80,19 @@ const ratingPlayground = (
             {
                 name: 'max',
                 type: 'number',
-                label: 'Etoiles max',
+                label: 'Max stars',
                 defaultValue: 5,
             },
             {
                 name: 'readOnly',
                 type: 'boolean',
-                label: 'Lecture seule (readOnly)',
+                label: 'Read-only',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -98,58 +102,57 @@ const ratingPlayground = (
 
 const docData: DocPageData = {
     title: 'Rating',
-    description:
-        'Composant de notation par étoiles interactif pour formulaires ou en affichage statique en lecture seule.',
+    description: 'Interactive star rating component for form feedback or static read-only display.',
     importCode: "import { Rating } from '@monority/ui/rating'",
     usageCode: `<Rating value={score} onChange={setScore} />`,
     preview: () => <RatingBasicExample />,
     playground: ratingPlayground,
     examples: [
-        { title: 'Tailles sm, md, lg', content: <RatingSizesExample /> },
-        { title: 'Mode lecture seule (readOnly)', content: <RatingReadOnlyExample /> },
+        { title: 'Sizes', content: <RatingSizesExample /> },
+        { title: 'Read-only mode', content: <RatingReadOnlyExample /> },
     ],
     props: [
         {
             name: 'value',
             type: 'number',
             defaultValue: '-',
-            description: 'Valeur controlee de la note.',
+            description: 'Controlled score value.',
         },
         {
             name: 'defaultValue',
             type: 'number',
             defaultValue: '0',
-            description: 'Valeur initiale incontrolee.',
+            description: 'Initial uncontrolled score value.',
         },
         {
             name: 'max',
             type: 'number',
             defaultValue: '5',
-            description: "Nombre maximum d'etoiles.",
+            description: 'Maximum number of stars.',
         },
         {
             name: 'size',
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
-            description: 'Taille des etoiles.',
+            description: 'Star icon size density.',
         },
         {
             name: 'readOnly',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Passe le composant en lecture seule non-interactive.',
+            description: 'Renders in non-interactive read-only state.',
         },
         {
             name: 'disabled',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Desactive le composant.',
+            description: 'Disables user interaction and dims presentation.',
         },
         {
             name: 'onChange',
             type: '(value: number) => void',
             defaultValue: '-',
-            description: 'Rappel declenche lors du changement de note.',
+            description: 'Callback fired when score changes.',
         },
     ],
     cssHooks: [
@@ -175,30 +178,31 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['ArrowRight', 'ArrowUp'],
-            action: 'Augmente la note d une etoile.',
-            context: 'Controle de notation (rating)',
+            action: 'Increments the rating by one star.',
+            context: 'Rating control',
         },
         {
             key: ['ArrowLeft', 'ArrowDown'],
-            action: 'Diminue la note d une etoile.',
-            context: 'Controle de notation (rating)',
+            action: 'Decrements the rating by one star.',
+            context: 'Rating control',
         },
         {
             key: 'Home',
-            action: 'Attribue la premiere note disponible (1 etoile).',
-            context: 'Controle de notation (rating)',
+            action: 'Selects the first available star (1 star).',
+            context: 'Rating control',
         },
         {
             key: 'End',
-            action: 'Attribue la note maximale disponible.',
-            context: 'Controle de notation (rating)',
+            action: 'Selects the maximum star rating.',
+            context: 'Rating control',
         },
     ],
     a11y: [
-        'Accessible au clavier via le motif radiogroup et elements radio.',
-        'Navigation par fleches directionnelles (droite/gauche et haut/bas).',
-        'Libelle accessible clair specifiant chaque note (ex: "4 etoiles sur 5").',
+        'Keyboard accessible via radiogroup pattern and radio items.',
+        'Directional arrow navigation (right/left and up/down).',
+        'Clear accessible label specifying score (e.g., "4 out of 5 stars").',
     ],
+    i18n: ratingI18n,
 }
 
 export function RatingDocs() {

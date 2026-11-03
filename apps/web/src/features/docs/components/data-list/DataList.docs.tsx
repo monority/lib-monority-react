@@ -1,5 +1,6 @@
-﻿import { DataList } from '@monority/ui/data-list'
+import { DataList } from '@monority/ui/data-list'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -7,17 +8,27 @@ import {
     DataListSplitExample,
     DataListWithRenderExample,
 } from './DataList.examples'
+import { dataListI18n } from './DataList.messages'
 
 function DataListPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [columns, setColumns] = useState<'auto' | 'split'>('split')
     const [itemCount, setItemCount] = useState<'2' | '3' | '4'>('3')
 
-    const baseItems = [
-        { label: 'Identifiant client', value: 'USR-89421' },
-        { label: 'Plan d’abonnement', value: 'Enterprise Edition' },
-        { label: 'Statut du compte', value: 'Actif (vérifié)' },
-        { label: 'Dernière connexion', value: 'Aujourd’hui à 14:32' },
-    ]
+    const baseItems = isFr
+        ? [
+              { label: 'Identifiant client', value: 'USR-89421' },
+              { label: 'Plan d’abonnement', value: 'Enterprise Edition' },
+              { label: 'Statut du compte', value: 'Actif (vérifié)' },
+              { label: 'Dernière connexion', value: 'Aujourd’hui à 14:32' },
+          ]
+        : [
+              { label: 'Customer ID', value: 'USR-89421' },
+              { label: 'Subscription tier', value: 'Enterprise Edition' },
+              { label: 'Account status', value: 'Active (verified)' },
+              { label: 'Last login', value: 'Today at 14:32' },
+          ]
 
     const selectedItems = baseItems.slice(0, Number(itemCount))
 
@@ -33,22 +44,28 @@ ${selectedItems.map((item) => `    { label: '${item.label}', value: '${item.valu
             controls={[
                 {
                     type: 'select',
-                    label: 'Disposition colonnes',
+                    label: isFr ? 'Disposition colonnes' : 'Column layout',
                     value: columns,
                     options: [
-                        { value: 'split', label: 'Split (étiquette à gauche)' },
-                        { value: 'auto', label: 'Auto (empilé)' },
+                        {
+                            value: 'split',
+                            label: isFr ? 'Split (étiquette à gauche)' : 'Split (label on left)',
+                        },
+                        {
+                            value: 'auto',
+                            label: isFr ? 'Auto (empilé)' : 'Auto (stacked)',
+                        },
                     ],
                     onChange: (v) => setColumns(v as 'auto' | 'split'),
                 },
                 {
                     type: 'select',
-                    label: 'Nombre d’éléments',
+                    label: isFr ? 'Nombre d’éléments' : 'Item count',
                     value: itemCount,
                     options: [
-                        { value: '2', label: '2 lignes' },
-                        { value: '3', label: '3 lignes' },
-                        { value: '4', label: '4 lignes' },
+                        { value: '2', label: isFr ? '2 lignes' : '2 rows' },
+                        { value: '3', label: isFr ? '3 lignes' : '3 rows' },
+                        { value: '4', label: isFr ? '4 lignes' : '4 rows' },
                     ],
                     onChange: (v) => setItemCount(v as '2' | '3' | '4'),
                 },
@@ -66,7 +83,7 @@ const docData: DocPageData = {
     title: 'DataList',
     description:
         'A structured key-value panel for metadata, system facts, and compact read-only records.',
-    importCode: "import { DataList } from '@monority/ui'",
+    importCode: "import { DataList } from '@monority/ui/data-list'",
     usageCode: `<DataList items={[
   { label: 'Email', value: 'john@example.com' },
   { label: 'Role', value: 'Developer' },
@@ -138,6 +155,7 @@ const docData: DocPageData = {
     ],
     tokens: ['--mr-border-subtle', '--mr-bg-raised', '--mr-text-secondary', '--mr-text-primary'],
     a11y: ['Uses native definition list semantics.', 'Keep labels concise and values scannable.'],
+    i18n: dataListI18n,
 }
 
 export function DataListDocs() {

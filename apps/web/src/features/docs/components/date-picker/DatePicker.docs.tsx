@@ -10,54 +10,55 @@ import {
     DatePickerWithHintExample,
     DatePickerWithMinMaxExample,
 } from './DatePicker.examples'
+import { datePickerI18n } from './DatePicker.messages'
 
 const docData: DocPageData = {
     title: 'DatePicker',
     description:
         'Date input with integrated popover calendar, format validation, and accessible keyboard navigation.',
     importCode: "import { DatePicker } from '@monority/ui/date-picker'",
-    usageCode: `<DatePicker label="Date de livraison" placeholder="JJ/MM/AAAA" />`,
+    usageCode: `<DatePicker label="Delivery date" placeholder="YYYY-MM-DD" />`,
     preview: () => <DatePickerBasicExample />,
     playgroundConfig: {
         controls: [
             {
                 name: 'size',
                 type: 'select',
-                label: 'Taille (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
-                    { value: 'sm', label: 'Petite (sm)' },
-                    { value: 'md', label: 'Moyenne (md)' },
-                    { value: 'lg', label: 'Grande (lg)' },
+                    { value: 'sm', label: 'Small (sm)' },
+                    { value: 'md', label: 'Medium (md)' },
+                    { value: 'lg', label: 'Large (lg)' },
                 ],
             },
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Nuance (tone)',
+                label: 'Tone',
                 defaultValue: 'neutral',
                 options: [
-                    { value: 'neutral', label: 'Neutre (neutral)' },
-                    { value: 'accent', label: 'Accent (accent)' },
-                    { value: 'danger', label: 'Danger (danger)' },
+                    { value: 'neutral', label: 'Neutral' },
+                    { value: 'accent', label: 'Accent' },
+                    { value: 'danger', label: 'Danger' },
                 ],
             },
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libellé',
-                defaultValue: 'Date d’échéance',
+                label: 'Label',
+                defaultValue: 'Due date',
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Désactivé (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
             {
                 name: 'showPickers',
                 type: 'boolean',
-                label: 'Sélecteurs mois/année',
+                label: 'Month & year selectors',
                 defaultValue: true,
             },
         ],
@@ -65,7 +66,7 @@ const docData: DocPageData = {
   size="${p.size}"
   tone="${p.tone}"
   label="${p.label}"${p.disabled ? '\n  disabled' : ''}${p.showPickers ? '\n  showPickers' : ''}
-  placeholder="JJ/MM/AAAA"
+  placeholder="YYYY-MM-DD"
 />`,
         render: (props) => (
             <div style={{ width: '100%', maxWidth: 320 }}>
@@ -75,7 +76,7 @@ const docData: DocPageData = {
                     label={props.label as string}
                     disabled={props.disabled as boolean}
                     showPickers={props.showPickers as boolean}
-                    placeholder="JJ/MM/AAAA"
+                    placeholder="YYYY-MM-DD"
                 />
             </div>
         ),
@@ -109,28 +110,28 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'Tab / Shift + Tab',
-            action: 'Atteint le champ de date ou navigue entre les boutons du calendrier.',
-            context: 'Formulaire / Calendrier',
+            action: 'Focuses date field or navigates between calendar buttons.',
+            context: 'Form / Calendar',
         },
         {
-            key: 'Enter / Espace',
-            action: 'Ouvre le popover du calendrier ou valide la date sélectionnée.',
-            context: 'Champ de saisie / Boutons',
+            key: 'Enter / Space',
+            action: 'Opens calendar popover or confirms selected date.',
+            context: 'Input / Buttons',
         },
         {
-            key: 'Flèches directionnelles',
-            action: 'Navigue entre les jours de la grille lorsque le calendrier est ouvert.',
-            context: 'Calendrier popover',
+            key: 'Arrow Keys',
+            action: 'Navigates day grid while calendar popover is open.',
+            context: 'Calendar popover',
         },
         {
             key: 'PageUp / PageDown',
-            action: 'Recule ou avance d’un mois.',
-            context: 'Calendrier popover',
+            action: 'Moves backward or forward by one month.',
+            context: 'Calendar popover',
         },
         {
             key: 'Escape',
-            action: 'Ferme le popover du calendrier et restitue le focus au champ d’entrée.',
-            context: 'Calendrier popover',
+            action: 'Closes calendar popover and returns focus to input field.',
+            context: 'Calendar popover',
         },
     ],
     cssHooks: ['.mr-datepicker', '[data-tone]', '[data-size]', '[data-disabled]', '[data-invalid]'],
@@ -149,6 +150,7 @@ const docData: DocPageData = {
         'Visible focus ring.',
         'Associated label for screen readers.',
     ],
+    i18n: datePickerI18n,
 }
 
 export function DatePickerDocs() {

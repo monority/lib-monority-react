@@ -9,7 +9,7 @@ import type {
     DrawerTitleProps,
 } from './Drawer.types'
 
-const subcomponents = createSlideSubcomponents('mr-drawer', 'Fermer le panneau')
+const subcomponents = createSlideSubcomponents('mr-drawer', 'Close panel')
 
 export function Drawer({
     ref,
@@ -34,7 +34,7 @@ export function Drawer({
             onClose={onClose}
             className={className}
             classPrefix="mr-drawer"
-            closeLabel="Fermer le panneau"
+            closeLabel="Close panel"
             wrapBodyWhenNoHeader={false}
             {...props}
         >

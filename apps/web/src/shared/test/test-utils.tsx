@@ -1,3 +1,4 @@
+import { LocaleProvider } from '@/shared/i18n'
 import { AppProviders } from '@/shared/providers/AppProviders'
 import { render } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
@@ -12,7 +13,9 @@ export function renderWithProviders(ui: ReactElement, options: RenderWithProvide
     const Wrapper = ({ children }: { children: ReactNode }) => {
         return (
             <MemoryRouter initialEntries={options.initialEntries}>
-                <AppProviders>{children}</AppProviders>
+                <LocaleProvider>
+                    <AppProviders>{children}</AppProviders>
+                </LocaleProvider>
             </MemoryRouter>
         )
     }

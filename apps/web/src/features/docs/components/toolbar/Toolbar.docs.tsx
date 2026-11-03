@@ -1,21 +1,32 @@
-﻿import { Button } from '@monority/ui/button'
+import { Button } from '@monority/ui/button'
 import { Divider } from '@monority/ui/divider'
 import { Toolbar } from '@monority/ui/toolbar'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { ToolbarWithButtonsExample, ToolbarWithDividerExample } from './Toolbar.examples'
+import { toolbarI18n } from './Toolbar.messages'
 
 function ToolbarPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [density, setDensity] = useState<'md' | 'sm'>('md')
     const [showDivider, setShowDivider] = useState(true)
 
-    const snippet = `<Toolbar aria-label="Outils d’édition">
-  <Button size="${density}" variant="ghost">Gras</Button>
-  <Button size="${density}" variant="ghost">Italique</Button>
-  <Button size="${density}" variant="ghost">Souligné</Button>${showDivider ? '\n  <Divider orientation="vertical" />' : ''}
-  <Button size="${density}" variant="secondary">Insérer un lien</Button>
-  <Button size="${density}" variant="primary">Publier</Button>
+    const labelToolbar = isFr ? 'Outils d’édition' : 'Editing tools'
+    const btnBold = isFr ? 'Gras' : 'Bold'
+    const btnItalic = isFr ? 'Italique' : 'Italic'
+    const btnUnderline = isFr ? 'Souligné' : 'Underline'
+    const btnLink = isFr ? 'Insérer un lien' : 'Insert link'
+    const btnPublish = isFr ? 'Publier' : 'Publish'
+
+    const snippet = `<Toolbar aria-label="${labelToolbar}">
+  <Button size="${density}" variant="ghost">${btnBold}</Button>
+  <Button size="${density}" variant="ghost">${btnItalic}</Button>
+  <Button size="${density}" variant="ghost">${btnUnderline}</Button>${showDivider ? '\n  <Divider orientation="vertical" />' : ''}
+  <Button size="${density}" variant="secondary">${btnLink}</Button>
+  <Button size="${density}" variant="primary">${btnPublish}</Button>
 </Toolbar>`
 
     return (
@@ -23,17 +34,17 @@ function ToolbarPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Taille des contrôles',
+                    label: isFr ? 'Taille des contrôles' : 'Control size',
                     value: density,
                     options: [
-                        { value: 'md', label: 'Medium (md)' },
-                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: isFr ? 'Moyenne (md)' : 'Medium (md)' },
+                        { value: 'sm', label: isFr ? 'Petite (sm)' : 'Small (sm)' },
                     ],
                     onChange: (v) => setDensity(v as 'md' | 'sm'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Séparateur vertical',
+                    label: isFr ? 'Séparateur vertical' : 'Vertical divider',
                     value: showDivider,
                     onChange: setShowDivider,
                 },
@@ -48,22 +59,22 @@ function ToolbarPlayground() {
                     minHeight: 96,
                 }}
             >
-                <Toolbar aria-label="Outils d’édition">
+                <Toolbar aria-label={labelToolbar}>
                     <Button size={density} variant="ghost">
-                        Gras
+                        {btnBold}
                     </Button>
                     <Button size={density} variant="ghost">
-                        Italique
+                        {btnItalic}
                     </Button>
                     <Button size={density} variant="ghost">
-                        Souligné
+                        {btnUnderline}
                     </Button>
                     {showDivider && <Divider orientation="vertical" />}
                     <Button size={density} variant="secondary">
-                        Insérer un lien
+                        {btnLink}
                     </Button>
                     <Button size={density} variant="primary">
-                        Publier
+                        {btnPublish}
                     </Button>
                 </Toolbar>
             </div>
@@ -74,7 +85,7 @@ function ToolbarPlayground() {
 const docData: DocPageData = {
     title: 'Toolbar',
     description: 'Toolbar wrapper for grouping action controls in a horizontal layout.',
-    importCode: "import { Toolbar } from '@monority/ui'",
+    importCode: "import { Toolbar } from '@monority/ui/toolbar'",
     usageCode: `<Toolbar>
   <Button>Save</Button>
   <Button variant="ghost">Cancel</Button>
@@ -94,6 +105,7 @@ const docData: DocPageData = {
         'aria-label for the toolbar.',
         'Focus management.',
     ],
+    i18n: toolbarI18n,
 }
 
 export function ToolbarDocs() {

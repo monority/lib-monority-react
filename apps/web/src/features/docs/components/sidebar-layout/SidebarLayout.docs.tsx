@@ -1,33 +1,129 @@
+import { Avatar } from '@monority/ui/avatar'
+import { Badge } from '@monority/ui/badge'
+import { Button } from '@monority/ui/button'
+import { Card } from '@monority/ui/card'
+import { Input } from '@monority/ui/input'
 import { SidebarLayout } from '@monority/ui/sidebar-layout'
+import { StatCard } from '@monority/ui/stat-card'
+import { Text } from '@monority/ui/text'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     SidebarLayoutWidthsExample,
     SidebarLayoutWithContentExample,
 } from './SidebarLayout.examples'
+import { sidebarLayoutI18n } from './SidebarLayout.messages'
+
+type NavItem = {
+    id: string
+    label: string
+    badge?: { label: string; variant?: 'primary' | 'default'; tone?: 'accent' | 'neutral' }
+}
+
+const rowStyle = { display: 'flex', alignItems: 'center', gap: 'var(--mr-space-2)' } as const
+
+function WorkspaceNavItem({
+    item,
+    active,
+    onSelect,
+}: {
+    item: NavItem
+    active: boolean
+    onSelect: (id: string) => void
+}) {
+    return (
+        <Button
+            variant={active ? 'secondary' : 'ghost'}
+            size="sm"
+            fullWidth
+            aria-current={active ? 'page' : undefined}
+            onClick={() => onSelect(item.id)}
+            style={{ paddingInline: 'var(--mr-space-3)' }}
+        >
+            <span
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    inlineSize: '100%',
+                    gap: 'var(--mr-space-3)',
+                }}
+            >
+                <span>{item.label}</span>
+                {item.badge ? (
+                    <Badge
+                        variant={item.badge.variant ?? 'default'}
+                        tone={item.badge.tone}
+                        size="sm"
+                    >
+                        {item.badge.label}
+                    </Badge>
+                ) : null}
+            </span>
+        </Button>
+    )
+}
 
 function SidebarLayoutPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [sidebarWidth, setSidebarWidth] = useState<'sm' | 'md' | 'lg'>('md')
     const [showHeader, setShowHeader] = useState(true)
+    const [activeNav, setActiveNav] = useState('overview')
 
-    const snippet = `<SidebarLayout
+    const navItems: NavItem[] = isFr
+        ? [
+              { id: 'overview', label: 'Tableau de bord' },
+              { id: 'deploy', label: 'Déploiements', badge: { label: '8', variant: 'primary' } },
+              { id: 'analytics', label: 'Analytique', badge: { label: 'Live', tone: 'accent' } },
+              { id: 'alerts', label: 'Alertes & Logs', badge: { label: '3', tone: 'neutral' } },
+              { id: 'team', label: 'Équipe & Rôles' },
+          ]
+        : [
+              { id: 'overview', label: 'Dashboard' },
+              { id: 'deploy', label: 'Deployments', badge: { label: '8', variant: 'primary' } },
+              { id: 'analytics', label: 'Analytics', badge: { label: 'Live', tone: 'accent' } },
+              { id: 'alerts', label: 'Alerts & Logs', badge: { label: '3', tone: 'neutral' } },
+              { id: 'team', label: 'Team & Roles' },
+          ]
+
+    const snippet = `// collapsible automatically inserts a toggle button in the header.
+<SidebarLayout
   sidebarWidth="${sidebarWidth}"
+  collapsible
   sidebar={
-    <nav aria-label="Menu latéral">
-      <div style={{ fontWeight: 600, marginBottom: 8 }}>Espace de travail</div>
-      <div style={{ color: 'var(--mr-text-secondary)' }}>• Tableau de bord</div>
-      <div style={{ color: 'var(--mr-text-secondary)' }}>• Équipe & Rôles</div>
-      <div style={{ color: 'var(--mr-text-secondary)' }}>• Paramètres</div>
+    <nav aria-label="${isFr ? 'Espace de travail' : 'Workspace'}">
+      <Input size="sm" placeholder="${isFr ? 'Rechercher...' : 'Search...'}" />
+      {items.map((item) => (
+        <Button
+          key={item.id}
+          variant={item.id === active ? 'secondary' : 'ghost'}
+          size="sm"
+          fullWidth
+          aria-current={item.id === active ? 'page' : undefined}
+          onClick={() => setActive(item.id)}
+        >
+          {item.label}
+          {item.badge ? <Badge size="sm">{item.badge}</Badge> : null}
+        </Button>
+      ))}
     </nav>
-  }${showHeader ? '\n  header={<div>En-tête de page applicative</div>}' : ''}
+  }${
+      showHeader
+          ? `
+  header={
+    <>
+      <Text size="sm" tone="strong">${isFr ? 'Infrastructure / Télémétrie Edge' : 'Infrastructure / Edge Telemetry'}</Text>
+      <Badge tone="success" size="sm">${isFr ? 'Opérationnel' : 'Operational'}</Badge>
+      <Button variant="primary" size="sm">${isFr ? 'Déployer' : 'Deploy'}</Button>
+    </>
+  }`
+          : ''
+  }
 >
-  <div>
-    <h3 style={{ margin: '0 0 8px' }}>Zone de contenu principale</h3>
-    <p style={{ margin: 0, color: 'var(--mr-text-secondary)' }}>
-      La colonne latérale reste contextuelle tandis que le contenu principal est mis en valeur.
-    </p>
-  </div>
+  <StatCard label="${isFr ? 'Trafic Réseau' : 'Network Traffic'}" value="14.8 GB/s" trend="+12.4%" trendTone="success" />
 </SidebarLayout>`
 
     return (
@@ -35,18 +131,18 @@ function SidebarLayoutPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Largeur barre latérale',
+                    label: isFr ? 'Largeur barre latérale' : 'Sidebar width',
                     value: sidebarWidth,
                     options: [
-                        { value: 'sm', label: 'Étroite (sm)' },
-                        { value: 'md', label: 'Standard (md)' },
-                        { value: 'lg', label: 'Large (lg)' },
+                        { value: 'sm', label: isFr ? 'Étroite (sm)' : 'Narrow (sm)' },
+                        { value: 'md', label: isFr ? 'Standard (md)' : 'Standard (md)' },
+                        { value: 'lg', label: isFr ? 'Large (lg)' : 'Wide (lg)' },
                     ],
                     onChange: (v) => setSidebarWidth(v as 'sm' | 'md' | 'lg'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Afficher en-tête',
+                    label: isFr ? 'Afficher en-tête' : 'Show header',
                     value: showHeader,
                     onChange: setShowHeader,
                 },
@@ -56,59 +152,177 @@ function SidebarLayoutPlayground() {
             <div
                 style={{
                     width: '100%',
-                    minHeight: 220,
-                    border: '1px solid var(--mr-border-subtle, #e2e8f0)',
-                    borderRadius: 8,
+                    minHeight: 380,
+                    border: '1px solid var(--mr-border-subtle)',
+                    borderRadius: 'var(--mr-radius-md)',
                     overflow: 'hidden',
+                    background: 'var(--mr-bg-surface)',
                 }}
             >
                 <SidebarLayout
                     sidebarWidth={sidebarWidth}
+                    collapsible
                     sidebar={
                         <nav
-                            aria-label="Menu latéral"
+                            aria-label={isFr ? 'Espace de travail' : 'Workspace'}
                             style={{
-                                padding: 12,
+                                padding: 'var(--mr-space-3)',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: 8,
-                                fontSize: '0.875rem',
+                                height: '100%',
+                                gap: 'var(--mr-space-3)',
+                                boxSizing: 'border-box',
                             }}
                         >
-                            <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                                Espace de travail
+                            <div style={rowStyle}>
+                                <Avatar name="Monority Cloud" size="sm">
+                                    MC
+                                </Avatar>
+                                <div style={{ minWidth: 0, flex: 1 }}>
+                                    <Text
+                                        tone="strong"
+                                        size="sm"
+                                        style={{ display: 'block', lineHeight: 1.2 }}
+                                    >
+                                        Monority Cloud
+                                    </Text>
+                                    <Text tone="muted" size="sm">
+                                        Workspace Pro
+                                    </Text>
+                                </div>
+                                <Badge variant="default" tone="accent" size="sm">
+                                    v2.4
+                                </Badge>
                             </div>
-                            <div style={{ color: 'var(--mr-text-secondary, #64748b)' }}>
-                                • Tableau de bord
+
+                            <Input size="sm" placeholder={isFr ? 'Rechercher...' : 'Search...'} />
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 'var(--mr-space-1)',
+                                    flex: 1,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        fontSize: 'var(--mr-font-size-xs)',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: 'var(--mr-tracking-label)',
+                                        color: 'var(--mr-text-tertiary)',
+                                        fontWeight: 'var(--mr-font-weight-semibold)',
+                                        marginBlock: 'var(--mr-space-1)',
+                                    }}
+                                >
+                                    {isFr ? 'Plateforme' : 'Platform'}
+                                </div>
+                                {navItems.map((item) => (
+                                    <WorkspaceNavItem
+                                        key={item.id}
+                                        item={item}
+                                        active={item.id === activeNav}
+                                        onSelect={setActiveNav}
+                                    />
+                                ))}
                             </div>
-                            <div style={{ color: 'var(--mr-text-secondary, #64748b)' }}>
-                                • Équipe & Rôles
-                            </div>
-                            <div style={{ color: 'var(--mr-text-secondary, #64748b)' }}>
-                                • Paramètres
+
+                            <div
+                                style={{
+                                    ...rowStyle,
+                                    paddingTop: 'var(--mr-space-2)',
+                                    borderTop: '1px solid var(--mr-border-subtle)',
+                                }}
+                            >
+                                <Avatar name="Jane Doe" size="sm" status="online">
+                                    JD
+                                </Avatar>
+                                <div style={{ minWidth: 0, flex: 1 }}>
+                                    <Text size="sm" tone="strong" style={{ display: 'block' }}>
+                                        Jane Doe
+                                    </Text>
+                                    <Text size="sm" tone="muted">
+                                        Lead Engineer
+                                    </Text>
+                                </div>
                             </div>
                         </nav>
                     }
                     header={
                         showHeader ? (
-                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
-                                En-tête applicatif
+                            <div
+                                style={{
+                                    ...rowStyle,
+                                    justifyContent: 'space-between',
+                                    flex: 1,
+                                    minWidth: 0,
+                                }}
+                            >
+                                <Text size="sm" tone="strong">
+                                    {isFr
+                                        ? 'Infrastructure / Télémétrie Edge'
+                                        : 'Infrastructure / Edge Telemetry'}
+                                </Text>
+                                <div style={rowStyle}>
+                                    <Badge variant="default" tone="success" size="sm">
+                                        {isFr ? 'Opérationnel' : 'Operational'}
+                                    </Badge>
+                                    <Button variant="primary" size="sm">
+                                        {isFr ? 'Déployer' : 'Deploy'}
+                                    </Button>
+                                </div>
                             </div>
                         ) : undefined
                     }
                 >
-                    <div>
-                        <h4 style={{ margin: '0 0 8px' }}>Zone de travail principale</h4>
-                        <p
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 'var(--mr-space-4)',
+                            padding: 'var(--mr-space-4)',
+                        }}
+                    >
+                        <div
                             style={{
-                                margin: 0,
-                                color: 'var(--mr-text-secondary, #64748b)',
-                                fontSize: '0.875rem',
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                                gap: 'var(--mr-space-3)',
                             }}
                         >
-                            La colonne latérale reste contextuelle tandis que le contenu principal
-                            s'adapte à la largeur disponible.
-                        </p>
+                            <StatCard
+                                label={isFr ? 'Trafic Réseau' : 'Network Traffic'}
+                                value="14.8 GB/s"
+                                trend="+12.4%"
+                                trendTone="success"
+                            />
+                            <StatCard
+                                label={isFr ? 'Temps Réponse' : 'Response Time'}
+                                value="18 ms"
+                                trend="-2.1 ms"
+                                trendTone="success"
+                            />
+                            <StatCard
+                                label={isFr ? 'Taux d’Erreurs' : 'Error Rate'}
+                                value="0.002%"
+                                trend="Stable"
+                                trendTone="neutral"
+                            />
+                        </div>
+                        <Card padding="md">
+                            <Text tone="strong" size="sm">
+                                {isFr ? 'Services de Bordure (Edge Clusters)' : 'Edge Clusters'}
+                            </Text>
+                            <Text
+                                tone="muted"
+                                size="sm"
+                                style={{ display: 'block', marginTop: 'var(--mr-space-1)' }}
+                            >
+                                {isFr
+                                    ? 'Tous les nœuds de distribution de contenu répondent avec une latence inférieure à 25 ms.'
+                                    : 'All content delivery edge nodes are responding with sub-25ms latency.'}
+                            </Text>
+                        </Card>
                     </div>
                 </SidebarLayout>
             </div>
@@ -120,8 +334,9 @@ const docData: DocPageData = {
     title: 'SidebarLayout',
     description:
         'Two-column app-shell layout with framed sidebar rail, optional header, and readable content panel.',
-    importCode: "import { SidebarLayout } from '@monority/ui'",
+    importCode: "import { SidebarLayout } from '@monority/ui/sidebar-layout'",
     usageCode: `<SidebarLayout
+  collapsible
   sidebar={
     <nav aria-label="Project navigation">
       <div>Workspace</div>
@@ -157,20 +372,28 @@ const docData: DocPageData = {
             defaultValue: '-',
             description: 'Sidebar width preset.',
         },
+        {
+            name: 'collapsible',
+            type: 'boolean',
+            defaultValue: 'false',
+            description: 'Enables sidebar collapsible toggle with smooth animation.',
+        },
     ],
     cssHooks: [
         '.mr-sidebar-layout',
         '.mr-sidebar-layout__sidebar',
         '.mr-sidebar-layout__main',
+        '.mr-sidebar-layout__toggle',
         '[data-collapsed]',
     ],
     tokens: ['--mr-sidebar-width', '--mr-bg-surface', '--mr-border-subtle', '--mr-space-*'],
     a11y: [
-        'Navigation landmark.',
-        'aria-label on sidebar nav.',
-        'Skip link for keyboard users.',
-        'Collapse toggle with aria-label.',
+        'Navigation landmark with aria-label on sidebar nav.',
+        'Accessible toggle button with aria-expanded and aria-label.',
+        'Keyboard focus preservation during toggle animations.',
+        'Native responsive collapse support.',
     ],
+    i18n: sidebarLayoutI18n,
 }
 
 export function SidebarLayoutDocs() {

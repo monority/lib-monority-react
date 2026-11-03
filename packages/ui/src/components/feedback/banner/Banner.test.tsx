@@ -99,7 +99,7 @@ describe('Banner', () => {
         )
         const closeBtn = view.querySelector('.mr-banner__close') as HTMLButtonElement
         expect(closeBtn).not.toBeNull()
-        expect(closeBtn.getAttribute('aria-label')).toBe("Fermer l'annonce")
+        expect(closeBtn.getAttribute('aria-label')).toBe('Dismiss announcement')
 
         act(() => {
             closeBtn.click()

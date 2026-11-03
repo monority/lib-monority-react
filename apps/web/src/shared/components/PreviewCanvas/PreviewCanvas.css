@@ -4,7 +4,7 @@
     width: 100%;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
+    background: var(--mr-bg-canvas);
     overflow: hidden;
 }
 

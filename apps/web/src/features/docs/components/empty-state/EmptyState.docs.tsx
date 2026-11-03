@@ -8,6 +8,7 @@ import {
     EmptyStateWithIconExample,
     EmptyStateWithSecondaryActionExample,
 } from './EmptyState.examples'
+import { emptyStateI18n } from './EmptyState.messages'
 
 function EmptyStatePlaygroundDemo(props: {
     title: string
@@ -47,20 +48,20 @@ const emptyStatePlayground = (
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre principal',
-                defaultValue: 'Aucun projet trouve',
+                label: 'Main heading',
+                defaultValue: 'No projects found',
             },
             {
                 name: 'description',
                 type: 'text',
-                label: 'Description explicative',
-                defaultValue: 'Creez votre premier projet ou modifiez vos criteres de filtre.',
+                label: 'Description',
+                defaultValue: 'Create your first project or adjust your filter criteria.',
             },
             {
                 name: 'actionLabel',
                 type: 'text',
-                label: 'Libelle du bouton d action',
-                defaultValue: 'Nouveau projet',
+                label: 'Action button label',
+                defaultValue: 'New project',
             },
         ]}
         render={(props) => <EmptyStatePlaygroundDemo {...props} />}
@@ -136,6 +137,7 @@ const docData: DocPageData = {
         'Icon is decorative; aria-hidden should be applied when present.',
         'Action buttons maintain normal focus and activation order.',
     ],
+    i18n: emptyStateI18n,
 }
 
 export function EmptyStateDocs() {

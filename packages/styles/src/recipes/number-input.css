@@ -42,7 +42,8 @@
         padding-block: 0;
         border: 1px solid var(--mr-border-control);
         border-radius: var(--mr-radius-md);
-        background-color: var(--mr-bg-sunken);
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
         color: var(--mr-text-primary);
         font-family: inherit;
         font-size: var(--mr-font-size-md);
@@ -54,7 +55,7 @@
         vertical-align: middle;
         appearance: textfield;
         -moz-appearance: textfield;
-        transition: border-color var(--mr-duration-state);
+        transition: border-color var(--mr-duration-state), box-shadow var(--mr-duration-state);
     }
 
     /* Neutralisation des steppers natifs du navigateur */
@@ -232,6 +233,8 @@
     :where(.mr-number-input):disabled {
         cursor: not-allowed;
         color: var(--mr-text-disabled);
+        background-color: var(--mr-bg-sunken);
+        box-shadow: none;
         border-color: color-mix(
             in oklch,
             var(--mr-border-control),

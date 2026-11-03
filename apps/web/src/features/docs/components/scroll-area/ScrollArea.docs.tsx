@@ -1,7 +1,8 @@
-﻿import { ScrollArea } from '@monority/ui/scroll-area'
+import { ScrollArea } from '@monority/ui/scroll-area'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { scrollAreaI18n } from './ScrollArea.messages'
 import {
     ScrollAreaBothExample,
     ScrollAreaHideScrollbarExample,
@@ -24,18 +25,20 @@ function ScrollAreaPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Direction de défilement',
+                    name: 'orientation',
+                    label: 'Scroll orientation',
                     value: orientation,
                     options: [
                         { value: 'vertical', label: 'Vertical' },
                         { value: 'horizontal', label: 'Horizontal' },
-                        { value: 'both', label: 'Les deux (both)' },
+                        { value: 'both', label: 'Both (both)' },
                     ],
                     onChange: (v) => setOrientation(v as 'vertical' | 'horizontal' | 'both'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Masquer la barre visuelle',
+                    name: 'hideScrollbar',
+                    label: 'Hide scrollbar',
                     value: hideScrollbar,
                     onChange: setHideScrollbar,
                 },
@@ -74,7 +77,7 @@ function ScrollAreaPlayground() {
                                         fontSize: '0.85rem',
                                     }}
                                 >
-                                    Carte {i + 1}
+                                    Card {i + 1}
                                 </div>
                             ))}
                         </div>
@@ -92,8 +95,8 @@ function ScrollAreaPlayground() {
                                         fontSize: '0.85rem',
                                     }}
                                 >
-                                    Journal d’événement système #{100 + i} — Déploiement synchronisé
-                                    avec succès
+                                    System event log #{100 + i} — Deployment synchronized
+                                    successfully
                                 </div>
                             ))}
                         </div>
@@ -108,7 +111,7 @@ const docData: DocPageData = {
     title: 'ScrollArea',
     description:
         'A styled scrollable container with custom scrollbar styling and orientation control.',
-    importCode: "import { ScrollArea } from '@monority/ui'",
+    importCode: "import { ScrollArea } from '@monority/ui/scroll-area'",
     usageCode: `<ScrollArea orientation="vertical" style={{ maxHeight: 200 }}>
   <p>Recent release activity...</p>
 </ScrollArea>`,
@@ -146,6 +149,7 @@ const docData: DocPageData = {
         'Scrollbar is styled but remains accessible.',
         'hideScrollbar removes the visual scrollbar, so make sure the content still reads as scrollable.',
     ],
+    i18n: scrollAreaI18n,
 }
 
 export function ScrollAreaDocs() {

@@ -4,8 +4,9 @@
     :where(.mr-metric-grid) {
         display: grid;
         box-sizing: border-box;
-        gap: var(--mr-space-4);
+        gap: var(--mr-grid-gap, var(--mr-space-4));
         grid-template-columns: repeat(auto-fit, minmax(calc(var(--mr-space-6) * 10), 1fr));
         inline-size: 100%;
+        align-items: stretch;
     }
 }

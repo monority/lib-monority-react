@@ -1,78 +1,58 @@
 import { HomePage } from '@/features/home/HomePage'
 import { NotFoundPage } from '@/shared/NotFoundPage'
-import type { RouteObject } from 'react-router-dom'
+import { LocaleProvider, getBrowserLocale, readStoredLocale } from '@/shared/i18n'
+import { Navigate, Outlet, type RouteObject } from 'react-router-dom'
 
-interface AppRouteDefinition {
-    key: string
-    label: string
-    path: string
-    includeInPrimaryNavigation?: boolean
+function LocaleRoot() {
+    return (
+        <LocaleProvider>
+            <Outlet />
+        </LocaleProvider>
+    )
 }
 
-const appRouteDefinitions: AppRouteDefinition[] = [
-    {
-        key: 'home',
-        label: 'Accueil',
-        path: '/',
-        includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'docs',
-        label: 'Docs',
-        path: '/docs/*',
-        includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'moodboard',
-        label: 'Moodboard',
-        path: '/moodboard',
-        includeInPrimaryNavigation: true,
-    },
-    {
-        key: 'not-found',
-        label: 'Not Found',
-        path: '*',
-    },
-]
+function EnglishHomeRoute() {
+    const shouldRedirectToFrench = !readStoredLocale() && getBrowserLocale() === 'fr'
+    if (shouldRedirectToFrench) {
+        return <Navigate to="/fr" replace />
+    }
+    return <HomePage />
+}
+
+function createLocaleRoutes(prefix: '' | '/fr'): RouteObject[] {
+    const path = (routePath: string) =>
+        routePath === '/' ? prefix || '/' : `${prefix}${routePath}`
+
+    return [
+        {
+            path: path('/'),
+            element: prefix ? <HomePage /> : <EnglishHomeRoute />,
+        },
+        {
+            path: path('/docs/*'),
+            lazy: async () => {
+                const { DocsPage } = await import('@/features/docs/DocsPage')
+                return { Component: DocsPage }
+            },
+        },
+        {
+            path: path('/playground'),
+            element: <Navigate to={path('/docs')} replace />,
+        },
+        {
+            path: path('/moodboard'),
+            element: <Navigate to={path('/docs')} replace />,
+        },
+        {
+            path: path('/*'),
+            element: <NotFoundPage />,
+        },
+    ]
+}
 
 export const appRoutes: RouteObject[] = [
-    // Home — standalone
-    { index: true, element: <HomePage /> },
-
-    // Design Studio / Moodboard
     {
-        path: '/moodboard',
-        lazy: async () => {
-            const { MoodboardPage } = await import('@/features/moodboard/MoodboardPage')
-            return { Component: MoodboardPage }
-        },
+        element: <LocaleRoot />,
+        children: [...createLocaleRoutes(''), ...createLocaleRoutes('/fr')],
     },
-
-    // Docs — lazy load avec son propre layout
-    {
-        path: '/docs/*',
-        lazy: async () => {
-            const { DocsPage } = await import('@/features/docs/DocsPage')
-            return { Component: DocsPage }
-        },
-    },
-
-    // 404
-    { path: '*', element: <NotFoundPage /> },
-]
-
-export const primaryNavigationItems = appRouteDefinitions
-    .filter((route) => route.includeInPrimaryNavigation)
-    .map(({ label, path }) => ({
-        label,
-        to: path === '/docs/*' ? '/docs' : path,
-    }))
-
-export const homeSectionNavigationItems = [
-    { label: 'Features', href: '#features' },
-    { label: 'Why', href: '#why' },
-    { label: 'Tokens', href: '#tokens' },
-    { label: 'Proof', href: '#proof' },
-    { label: 'Start', href: '#cta' },
-    { label: 'Footer', href: '#footer' },
 ]

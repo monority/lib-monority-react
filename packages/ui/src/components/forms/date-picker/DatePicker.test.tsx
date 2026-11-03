@@ -320,4 +320,18 @@ describe('DatePicker', () => {
         expect(trigger?.getAttribute('data-invalid')).toBe('true')
         expect(view.querySelector('.mr-datepicker')?.getAttribute('data-invalid')).toBe('true')
     })
+
+    // 23. Locale and dialogAriaLabel customization
+    it('formats date according to locale and sets custom dialog aria-label', () => {
+        const testDate = new Date(2026, 9, 27)
+        const view = render(
+            <DatePicker defaultValue={testDate} locale="fr-FR" dialogAriaLabel="Choisir une date" />
+        )
+        const trigger = view.querySelector('input[type="text"]') as HTMLInputElement
+        expect(trigger?.value).toBe('27/10/2026')
+
+        act(() => trigger?.click())
+        const dialog = document.querySelector('[role="dialog"]')
+        expect(dialog?.getAttribute('aria-label')).toBe('Choisir une date')
+    })
 })

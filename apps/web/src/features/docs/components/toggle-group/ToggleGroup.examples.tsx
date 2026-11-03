@@ -123,11 +123,11 @@ export function ToggleGroupCompoundExample() {
     return (
         <Stack gap="xs">
             <ToggleGroup type="single" value={value} onValueChange={(v) => setValue(v as string)}>
-                <ToggleGroup.Item value="left">Gauche</ToggleGroup.Item>
-                <ToggleGroup.Item value="center">Centre</ToggleGroup.Item>
-                <ToggleGroup.Item value="right">Droite</ToggleGroup.Item>
+                <ToggleGroup.Item value="left">Left</ToggleGroup.Item>
+                <ToggleGroup.Item value="center">Center</ToggleGroup.Item>
+                <ToggleGroup.Item value="right">Right</ToggleGroup.Item>
             </ToggleGroup>
-            <Text.Small tone="muted">Alignement actif : {value}</Text.Small>
+            <Text.Small tone="muted">Active alignment: {value}</Text.Small>
         </Stack>
     )
 }

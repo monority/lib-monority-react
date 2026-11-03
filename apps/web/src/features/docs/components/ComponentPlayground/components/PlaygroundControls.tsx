@@ -1,3 +1,4 @@
+import { useMessages } from '@/shared/i18n'
 import type { PlaygroundControl } from '../ComponentPlayground.types'
 import { getControlKey } from '../utils/controlDefaults'
 import { PlaygroundControlItem } from './PlaygroundControlItem'
@@ -15,8 +16,10 @@ export function PlaygroundControls({
     values,
     baseId,
     onChange,
-    title = 'Propriétés dynamiques',
+    title,
 }: PlaygroundControlsProps) {
+    const messages = useMessages().docs.playground
+
     if (controls.length === 0) {
         return null
     }
@@ -24,7 +27,9 @@ export function PlaygroundControls({
     return (
         <div className="component-playground__controls-panel">
             <div className="component-playground__controls-header">
-                <span className="component-playground__controls-title">{title}</span>
+                <span className="component-playground__controls-title">
+                    {title ?? messages.properties}
+                </span>
             </div>
             <div className="component-playground__controls-grid">
                 {controls.map((ctrl, idx) => {

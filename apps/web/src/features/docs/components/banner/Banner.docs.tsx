@@ -7,6 +7,7 @@ import {
     BannerWithActionsExample,
     BannerWithEyebrowExample,
 } from './Banner.examples'
+import { bannerI18n } from './Banner.messages'
 
 function BannerPlaygroundDemo(props: {
     tone: 'info' | 'success' | 'warning' | 'danger'
@@ -51,25 +52,26 @@ const bannerPlayground = (
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre du bandeau',
-                defaultValue: 'Maintenance planifiee du cluster',
+                label: 'Banner title',
+                defaultValue: 'Planned cluster maintenance',
             },
             {
                 name: 'description',
                 type: 'text',
                 label: 'Description',
-                defaultValue: 'Une coupure de quelques minutes interviendra dimanche a 03h00 UTC.',
+                defaultValue:
+                    'A brief interruption of several minutes will take place on Sunday at 03:00 UTC.',
             },
             {
                 name: 'eyebrow',
                 type: 'text',
-                label: 'Sur-titre (eyebrow)',
+                label: 'Eyebrow',
                 defaultValue: 'Infrastructure',
             },
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'info',
                 options: [
                     { value: 'info', label: 'Info' },
@@ -138,6 +140,7 @@ const docData: DocPageData = {
         'Renders a static section: add role="alert" yourself for time-sensitive messages.',
         'Use semantic headings within the banner content.',
     ],
+    i18n: bannerI18n,
 }
 
 export function BannerDocs() {

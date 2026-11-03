@@ -151,6 +151,39 @@ test.describe('Accessibility & Keyboard E2E audits', () => {
         expect(results.violations).toEqual([])
     })
 
+    test('audits WCAG 2.1 AA on Accordion playground', async ({ page }, testInfo) => {
+        test.skip(testInfo.project.name !== 'desktop', 'desktop accessibility scan only')
+
+        await page.goto('/docs/accordion')
+        const playground = page.locator('.component-playground').first()
+        await expect(playground).toBeVisible()
+
+        const results = await new AxeBuilder({ page }).include('.component-playground').analyze()
+        expect(results.violations).toEqual([])
+    })
+
+    test('audits WCAG 2.1 AA on Collapsible playground', async ({ page }, testInfo) => {
+        test.skip(testInfo.project.name !== 'desktop', 'desktop accessibility scan only')
+
+        await page.goto('/docs/collapsible')
+        const playground = page.locator('.component-playground').first()
+        await expect(playground).toBeVisible()
+
+        const results = await new AxeBuilder({ page }).include('.component-playground').analyze()
+        expect(results.violations).toEqual([])
+    })
+
+    test('audits WCAG 2.1 AA on Calendar playground', async ({ page }, testInfo) => {
+        test.skip(testInfo.project.name !== 'desktop', 'desktop accessibility scan only')
+
+        await page.goto('/docs/calendar')
+        const playground = page.locator('.component-playground').first()
+        await expect(playground).toBeVisible()
+
+        const results = await new AxeBuilder({ page }).include('.component-playground').analyze()
+        expect(results.violations).toEqual([])
+    })
+
     test('combobox opens with ArrowDown and closes with Escape', async ({ page }) => {
         await page.goto('/docs/combobox')
         const input = page.locator('.component-playground .mr-combobox__input').first()

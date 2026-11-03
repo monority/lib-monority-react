@@ -2,6 +2,7 @@ import { RadioGroup } from '@monority/ui/radio-group'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { radioGroupI18n } from './RadioGroup.messages'
 import {
     RadioGroupBasicExample,
     RadioGroupChoiceCardExample,
@@ -23,17 +24,17 @@ function RadioGroupPlaygroundDemo(props: {
         {
             value: 'starter',
             label: 'Starter',
-            description: 'Pour les projets personnels et prototypes.',
+            description: 'For personal projects and prototypes.',
         },
         {
             value: 'pro',
-            label: 'Professionnel',
-            description: 'Equipes en croissance avec collaboration avancee.',
+            label: 'Professional',
+            description: 'Growing teams with advanced collaboration.',
         },
         {
             value: 'enterprise',
-            label: 'Entreprise',
-            description: 'Support dedie, SLA et securite renforcee.',
+            label: 'Enterprise',
+            description: 'Dedicated support, SLA, and enhanced security.',
         },
     ]
 
@@ -73,7 +74,7 @@ const radioGroupPlayground = (
                 p.tone !== 'accent' ? `  tone="${p.tone}"` : '',
                 p.disabled ? '  disabled' : '',
                 p.invalid ? '  invalid' : '',
-                `  items={[\n    { value: 'starter', label: 'Starter', description: 'Projets personnels.' },\n    { value: 'pro', label: 'Professionnel', description: 'Equipes en croissance.' },\n    { value: 'enterprise', label: 'Entreprise', description: 'Support dedie SLA.' }\n  ]}`,
+                `  items={[\n    { value: 'starter', label: 'Starter', description: 'Personal projects.' },\n    { value: 'pro', label: 'Professional', description: 'Growing teams.' },\n    { value: 'enterprise', label: 'Enterprise', description: 'Dedicated SLA support.' }\n  ]}`,
                 '  value={value}',
                 '  onChange={setValue}',
             ]
@@ -86,19 +87,19 @@ const radioGroupPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle du groupe',
-                defaultValue: 'Offre d abonnement',
+                label: 'Group label',
+                defaultValue: 'Subscription plan',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Facturation annuelle avec 2 mois offerts.',
+                label: 'Hint (hint)',
+                defaultValue: 'Annual billing with 2 months free.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -109,7 +110,7 @@ const radioGroupPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'accent',
                 options: [
                     { value: 'accent', label: 'Accent' },
@@ -120,13 +121,13 @@ const radioGroupPlayground = (
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
             {
                 name: 'invalid',
                 type: 'boolean',
-                label: 'Invalide (invalid)',
+                label: 'Invalid (invalid)',
                 defaultValue: false,
             },
         ]}
@@ -259,23 +260,23 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['ArrowDown', 'ArrowRight'],
-            action: 'Selectionne et focalise l option radio suivante.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Selects and focuses the next radio option.',
+            context: 'Radio group (radiogroup)',
         },
         {
             key: ['ArrowUp', 'ArrowLeft'],
-            action: 'Selectionne et focalise l option radio precedente.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Selects and focuses the previous radio option.',
+            context: 'Radio group (radiogroup)',
         },
         {
             key: 'Space',
-            action: 'Active et coche l option radio actuellement focalisee.',
-            context: 'Option radio cible',
+            action: 'Activates and checks the currently focused radio option.',
+            context: 'Focused radio option',
         },
         {
             key: 'Tab',
-            action: 'Transfere le focus vers le composant suivant hors du groupe radio.',
-            context: 'Groupe radio (radiogroup)',
+            action: 'Moves focus to the next component outside the radio group.',
+            context: 'Radio group (radiogroup)',
         },
     ],
     a11y: [
@@ -287,6 +288,7 @@ const docData: DocPageData = {
         'Descriptions linked via aria-describedby.',
         'aria-invalid and data-invalid set on radiogroup when invalid prop is applied.',
     ],
+    i18n: radioGroupI18n,
 }
 
 export function RadioGroupDocs() {

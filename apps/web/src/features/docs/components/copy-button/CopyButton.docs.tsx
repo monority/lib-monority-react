@@ -1,5 +1,6 @@
-﻿import { CopyButton } from '@monority/ui/copy-button'
+import { CopyButton } from '@monority/ui/copy-button'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
@@ -8,11 +9,14 @@ import {
     CopyButtonSizesExample,
     CopyButtonVariantsExample,
 } from './CopyButton.examples'
+import { copyButtonI18n } from './CopyButton.messages'
 
 function CopyButtonPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [variant, setVariant] = useState<'subtle' | 'outline' | 'solid'>('subtle')
     const [size, setSize] = useState<'sm' | 'md' | 'lg'>('md')
-    const [label, setLabel] = useState('Copier le lien')
+    const [label, setLabel] = useState(isFr ? 'Copier le lien' : 'Copy link')
     const [disabled, setDisabled] = useState(false)
 
     const snippet = `<CopyButton
@@ -27,7 +31,7 @@ function CopyButtonPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Variante',
+                    label: isFr ? 'Variante' : 'Variant',
                     value: variant,
                     options: [
                         { value: 'subtle', label: 'Subtle' },
@@ -38,24 +42,24 @@ function CopyButtonPlayground() {
                 },
                 {
                     type: 'select',
-                    label: 'Size',
+                    label: isFr ? 'Taille' : 'Size',
                     value: size,
                     options: [
-                        { value: 'sm', label: 'Small (sm)' },
-                        { value: 'md', label: 'Medium (md)' },
-                        { value: 'lg', label: 'Large (lg)' },
+                        { value: 'sm', label: isFr ? 'Petite (sm)' : 'Small (sm)' },
+                        { value: 'md', label: isFr ? 'Moyenne (md)' : 'Medium (md)' },
+                        { value: 'lg', label: isFr ? 'Grande (lg)' : 'Large (lg)' },
                     ],
                     onChange: (v) => setSize(v as 'sm' | 'md' | 'lg'),
                 },
                 {
                     type: 'text',
-                    label: 'Label',
+                    label: isFr ? 'Libellé' : 'Label',
                     value: label,
                     onChange: setLabel,
                 },
                 {
                     type: 'boolean',
-                    label: 'Disabled',
+                    label: isFr ? 'Désactivé' : 'Disabled',
                     value: disabled,
                     onChange: setDisabled,
                 },
@@ -148,15 +152,16 @@ const docData: DocPageData = {
         '--mr-space-2',
     ],
     keyboardNavigation: [
-        { key: 'Enter', action: 'Copie la valeur dans le presse-papiers' },
-        { key: 'Space', action: 'Copie la valeur dans le presse-papiers' },
-        { key: 'Tab', action: 'Déplace le focus sur le bouton' },
+        { key: 'Enter', action: 'Copies value to clipboard.' },
+        { key: 'Space', action: 'Copies value to clipboard.' },
+        { key: 'Tab', action: 'Moves focus to the button.' },
     ],
     a11y: [
         'Native button element with keyboard activation (Space and Enter).',
         'Clear feedback text upon successful copy.',
         'Accessible focus indicators via focus-visible.',
     ],
+    i18n: copyButtonI18n,
 }
 
 export function CopyButtonDocs() {

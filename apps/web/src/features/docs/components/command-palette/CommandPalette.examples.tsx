@@ -124,12 +124,12 @@ export function CommandPaletteCompoundExample() {
                             </CommandPalette.ItemDescription>
                             <CommandPalette.Shortcut>Ctrl+D</CommandPalette.Shortcut>
                         </CommandPalette.Item>
-                        <CommandPalette.Item value="moodboard" onSelect={() => setOpen(false)}>
-                            <CommandPalette.ItemLabel>Moodboard Studio</CommandPalette.ItemLabel>
+                        <CommandPalette.Item value="installation" onSelect={() => setOpen(false)}>
+                            <CommandPalette.ItemLabel>Installation</CommandPalette.ItemLabel>
                             <CommandPalette.ItemDescription>
-                                Personnalisation et thèmes
+                                Démarrer avec @monority/ui
                             </CommandPalette.ItemDescription>
-                            <CommandPalette.Shortcut>Ctrl+M</CommandPalette.Shortcut>
+                            <CommandPalette.Shortcut>Ctrl+I</CommandPalette.Shortcut>
                         </CommandPalette.Item>
                     </CommandPalette.Group>
                     <CommandPalette.Separator />

@@ -1,26 +1,27 @@
-﻿import { Breadcrumb } from '@monority/ui/breadcrumb'
+import { Breadcrumb } from '@monority/ui/breadcrumb'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { breadcrumbI18n } from './Breadcrumb.messages'
 import { BreadcrumbManyItemsExample, BreadcrumbSingleItemExample } from './Breadcrumb.examples'
 
 function BreadcrumbPlayground() {
     const [depth, setDepth] = useState<'2' | '3' | '4'>('3')
 
     const allItems = [
-        { label: 'Accueil', href: '#' },
-        { label: 'Composants', href: '#' },
+        { label: 'Home', href: '#' },
+        { label: 'Components', href: '#' },
         { label: 'Navigation', href: '#' },
         { label: 'Breadcrumb' },
     ]
 
     const items =
         depth === '2'
-            ? [{ label: 'Accueil', href: '#' }, { label: 'Breadcrumb' }]
+            ? [{ label: 'Home', href: '#' }, { label: 'Breadcrumb' }]
             : depth === '3'
               ? [
-                    { label: 'Accueil', href: '#' },
-                    { label: 'Composants', href: '#' },
+                    { label: 'Home', href: '#' },
+                    { label: 'Components', href: '#' },
                     { label: 'Breadcrumb' },
                 ]
               : allItems
@@ -36,12 +37,13 @@ ${items.map((i) => `    { label: '${i.label}'${i.href ? `, href: '${i.href}'` : 
             controls={[
                 {
                     type: 'select',
-                    label: 'Profondeur d’arborescence',
+                    name: 'depth',
+                    label: 'Hierarchy depth',
                     value: depth,
                     options: [
-                        { value: '2', label: '2 niveaux' },
-                        { value: '3', label: '3 niveaux' },
-                        { value: '4', label: '4 niveaux' },
+                        { value: '2', label: '2 levels' },
+                        { value: '3', label: '3 levels' },
+                        { value: '4', label: '4 levels' },
                     ],
                     onChange: (v) => setDepth(v as '2' | '3' | '4'),
                 },
@@ -115,6 +117,7 @@ const docData: DocPageData = {
         'Separators are hidden from screen readers via aria-hidden.',
         'Semantic <ol> / <li> structure for ordered navigation.',
     ],
+    i18n: breadcrumbI18n,
 }
 
 export function BreadcrumbDocs() {

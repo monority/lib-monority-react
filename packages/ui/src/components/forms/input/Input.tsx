@@ -65,7 +65,7 @@ export function Input({
     iconTrailing,
     showPasswordToggle = false,
     clearable = false,
-    clearAriaLabel = 'Effacer le texte',
+    clearAriaLabel = 'Clear text',
     onClear,
     value,
     defaultValue,

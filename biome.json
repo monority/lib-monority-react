@@ -63,7 +63,8 @@
             ".turbo",
             "coverage",
             "docs/design/reference",
-            "apps/web/test-results"
+            "apps/web/test-results",
+            ".unipi"
         ]
     },
     "css": {

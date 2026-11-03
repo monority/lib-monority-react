@@ -7,6 +7,7 @@ import {
     SkeletonCircleExample,
     SkeletonListExample,
 } from './Skeleton.examples'
+import { skeletonI18n } from './Skeleton.messages'
 
 function SkeletonPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -69,7 +70,7 @@ const skeletonPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -80,7 +81,7 @@ const skeletonPlayground = (
             {
                 name: 'lines',
                 type: 'number',
-                label: 'Nombre de lignes (lines)',
+                label: 'Line count (lines)',
                 defaultValue: 3,
                 min: 1,
                 max: 6,
@@ -88,13 +89,13 @@ const skeletonPlayground = (
             {
                 name: 'rounded',
                 type: 'boolean',
-                label: 'Bords arrondis (rounded)',
+                label: 'Rounded edges (rounded)',
                 defaultValue: true,
             },
             {
                 name: 'circle',
                 type: 'boolean',
-                label: 'Forme circulaire (avatar)',
+                label: 'Circular avatar (circle)',
                 defaultValue: false,
             },
         ]}
@@ -153,6 +154,7 @@ const docData: DocPageData = {
         'Skeleton blocks are aria-hidden because they are decorative placeholders.',
         'Use aria-busy on the parent region while real content is loading.',
     ],
+    i18n: skeletonI18n,
 }
 
 export function SkeletonDocs() {

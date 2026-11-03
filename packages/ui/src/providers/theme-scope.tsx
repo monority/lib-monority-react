@@ -10,7 +10,7 @@ export type ThemeScopeTheme =
     | 'night'
     | 'high-contrast'
 export type ThemeScopeBrand = 'studio'
-export type ThemeScopeDensity = 'comfortable' | 'compact'
+export type ThemeScopeDensity = 'comfortable' | 'compact' | 'spacious' | 'default'
 
 type ThemeScopeBaseProps = Omit<
     ComponentPropsWithoutRef<'div'>,
@@ -27,8 +27,9 @@ export type ThemeScopeProps = ThemeScopeBaseProps &
 
 /** Limite un thème, une marque et une densité à un sous-arbre React. */
 export function ThemeScope({ brand, children, density, theme, ...props }: ThemeScopeProps) {
+    const resolvedDensity = density === 'default' ? 'comfortable' : density
     return (
-        <div data-brand={brand} data-density={density} data-theme={theme} {...props}>
+        <div data-brand={brand} data-density={resolvedDensity} data-theme={theme} {...props}>
             {children}
         </div>
     )

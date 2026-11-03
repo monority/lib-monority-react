@@ -1,7 +1,8 @@
-﻿import { Container } from '@monority/ui/container'
+import { Container } from '@monority/ui/container'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { containerI18n } from './Container.messages'
 import { ContainerSizesExample } from './Container.examples'
 
 function ContainerPlayground() {
@@ -9,7 +10,7 @@ function ContainerPlayground() {
 
     const snippet = `<Container size="${size}">
   <div className="content">
-    Contenu centré et contraint en largeur (${size}).
+    Centered content constrained by width (${size}).
   </div>
 </Container>`
 
@@ -18,7 +19,8 @@ function ContainerPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Taille max (size)',
+                    name: 'size',
+                    label: 'Max width (size)',
                     value: size,
                     options: [
                         { value: 'sm', label: 'Small (sm)' },
@@ -52,7 +54,7 @@ function ContainerPlayground() {
                             color: 'var(--mr-text-primary, #0f172a)',
                         }}
                     >
-                        Conteneur calibré sur la largeur maximale <strong>{size}</strong>
+                        Container constrained to max width <strong>{size}</strong>
                     </div>
                 </Container>
             </div>
@@ -63,7 +65,7 @@ function ContainerPlayground() {
 const docData: DocPageData = {
     title: 'Container',
     description: 'Width-constrained container for centering page content.',
-    importCode: "import { Container } from '@monority/ui'",
+    importCode: "import { Container } from '@monority/ui/container'",
     usageCode: `<Container size="md">
   <p>Constrained content goes here.</p>
 </Container>`,
@@ -86,6 +88,7 @@ const docData: DocPageData = {
         '--mr-space-*',
     ],
     a11y: ['Structural layout component.', 'No interactive semantics by default.'],
+    i18n: containerI18n,
 }
 
 export function ContainerDocs() {

@@ -178,11 +178,9 @@ describe('Step 24 · CommandPalette Home/End parity with menus', () => {
         expect(items[0]?.getAttribute('aria-selected')).toBe('true')
     })
 
-    it('uses the corrected French default empty label', () => {
+    it('uses the English default empty label', () => {
         render(<CommandPalette open items={[]} />)
-        expect(document.body.querySelector('.mr-command__empty')?.textContent).toBe(
-            'Aucun résultat.'
-        )
+        expect(document.body.querySelector('.mr-command__empty')?.textContent).toBe('No results.')
     })
 })
 

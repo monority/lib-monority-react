@@ -1,29 +1,37 @@
-﻿import { Button } from '@monority/ui/button'
+import { Button } from '@monority/ui/button'
 import { Stepper } from '@monority/ui/stepper'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import { StepperCompoundExample, StepperVerticalExample } from './Stepper.examples'
+import { stepperI18n } from './Stepper.messages'
 
 function StepperPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [activeStep, setActiveStep] = useState(1)
     const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')
 
-    const steps = [
-        { title: 'Panier', description: 'Articles et remises' },
-        { title: 'Livraison', description: 'Adresse et point relais' },
-        { title: 'Paiement', description: 'Sélection du mode' },
-        { title: 'Confirmation', description: 'Reçu et suivi' },
-    ]
+    const steps = isFr
+        ? [
+              { title: 'Panier', description: 'Articles et remises' },
+              { title: 'Livraison', description: 'Adresse et point relais' },
+              { title: 'Paiement', description: 'Sélection du mode' },
+              { title: 'Confirmation', description: 'Reçu et suivi' },
+          ]
+        : [
+              { title: 'Cart', description: 'Items and discounts' },
+              { title: 'Shipping', description: 'Address and delivery' },
+              { title: 'Payment', description: 'Payment method' },
+              { title: 'Confirmation', description: 'Receipt and tracking' },
+          ]
 
     const snippet = `<Stepper
   activeStep={${activeStep}}
   orientation="${orientation}"
   steps={[
-    { title: 'Panier', description: 'Articles et remises' },
-    { title: 'Livraison', description: 'Adresse et point relais' },
-    { title: 'Paiement', description: 'Sélection du mode' },
-    { title: 'Confirmation', description: 'Reçu et suivi' },
+${steps.map((s) => `    { title: '${s.title}', description: '${s.description}' }`).join(',\n')}
   ]}
 />`
 
@@ -32,23 +40,35 @@ function StepperPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Orientation',
+                    label: isFr ? 'Orientation' : 'Orientation',
                     value: orientation,
                     options: [
-                        { value: 'horizontal', label: 'Horizontal' },
-                        { value: 'vertical', label: 'Vertical' },
+                        { value: 'horizontal', label: isFr ? 'Horizontal' : 'Horizontal' },
+                        { value: 'vertical', label: isFr ? 'Vertical' : 'Vertical' },
                     ],
                     onChange: (v) => setOrientation(v as 'horizontal' | 'vertical'),
                 },
                 {
                     type: 'select',
-                    label: 'Étape active',
+                    label: isFr ? 'Étape active' : 'Active step',
                     value: String(activeStep),
                     options: [
-                        { value: '0', label: 'Étape 1 : Panier' },
-                        { value: '1', label: 'Étape 2 : Livraison' },
-                        { value: '2', label: 'Étape 3 : Paiement' },
-                        { value: '3', label: 'Étape 4 : Confirmation' },
+                        {
+                            value: '0',
+                            label: isFr ? 'Étape 1 : Panier' : 'Step 1: Cart',
+                        },
+                        {
+                            value: '1',
+                            label: isFr ? 'Étape 2 : Livraison' : 'Step 2: Shipping',
+                        },
+                        {
+                            value: '2',
+                            label: isFr ? 'Étape 3 : Paiement' : 'Step 3: Payment',
+                        },
+                        {
+                            value: '3',
+                            label: isFr ? 'Étape 4 : Confirmation' : 'Step 4: Confirmation',
+                        },
                     ],
                     onChange: (v) => setActiveStep(Number(v)),
                 },
@@ -73,7 +93,7 @@ function StepperPlayground() {
                         disabled={activeStep === 0}
                         onClick={() => setActiveStep((s) => Math.max(0, s - 1))}
                     >
-                        Précédent
+                        {isFr ? 'Précédent' : 'Previous'}
                     </Button>
                     <Button
                         size="sm"
@@ -81,7 +101,7 @@ function StepperPlayground() {
                         disabled={activeStep === steps.length - 1}
                         onClick={() => setActiveStep((s) => Math.min(steps.length - 1, s + 1))}
                     >
-                        Suivant
+                        {isFr ? 'Suivant' : 'Next'}
                     </Button>
                 </div>
             </div>
@@ -92,15 +112,15 @@ function StepperPlayground() {
 const docData: DocPageData = {
     title: 'Stepper',
     description:
-        'Indicateur visuel d avancement pas a pas guidant l utilisateur a travers un flux sequentiel multi-etapes.',
+        'Visual step-by-step progress indicator guiding users through a sequential multi-step workflow.',
     importCode: "import { Stepper } from '@monority/ui/stepper'",
     usageCode: `const [step, setStep] = useState(1)
 
 const steps = [
-  { title: 'Panier', description: 'Articles et remises' },
-  { title: 'Livraison', description: 'Adresse et relais' },
-  { title: 'Paiement', description: 'Carte bancaire ou virement' },
-  { title: 'Confirmation', description: 'Recu et suivi commande' },
+  { title: 'Cart', description: 'Items and discounts' },
+  { title: 'Shipping', description: 'Address and delivery' },
+  { title: 'Payment', description: 'Credit card or transfer' },
+  { title: 'Confirmation', description: 'Receipt and order tracking' },
 ]
 
 return (
@@ -113,7 +133,7 @@ return (
         disabled={step === 0}
         onClick={() => setStep((s) => Math.max(0, s - 1))}
       >
-        Precedent
+        Previous
       </Button>
       <Button
         size="sm"
@@ -121,7 +141,7 @@ return (
         disabled={step === steps.length - 1}
         onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
       >
-        Suivant
+        Next
       </Button>
     </Stack>
   </Stack>
@@ -129,35 +149,35 @@ return (
     preview: () => <StepperPlayground />,
     examples: [
         {
-            title: 'Disposition verticale',
+            title: 'Vertical layout',
             content: <StepperVerticalExample />,
             code: `<Card padding="md">
   <Stepper
     orientation="vertical"
     activeStep={1}
     steps={[
-      { title: 'Creation du compte', description: 'Email verifie avec succes' },
-      { title: 'Configuration du profil', description: 'En cours de saisie' },
-      { title: 'Invitation de l equipe', description: 'Etape a venir' },
+      { title: 'Account creation', description: 'Email verified successfully' },
+      { title: 'Profile setup', description: 'In progress' },
+      { title: 'Team invitation', description: 'Upcoming step' },
     ]}
   />
 </Card>`,
         },
         {
-            title: 'Composition declarative (Stepper.Step)',
+            title: 'Declarative compound composition (Stepper.Step)',
             content: <StepperCompoundExample />,
             code: `<Stepper activeStep={1}>
   <Stepper.Step>
-    <Stepper.Title>Cahier des charges</Stepper.Title>
-    <Stepper.Description>Approuve</Stepper.Description>
+    <Stepper.Title>Specifications</Stepper.Title>
+    <Stepper.Description>Approved</Stepper.Description>
   </Stepper.Step>
   <Stepper.Step>
-    <Stepper.Title>Developpement</Stepper.Title>
-    <Stepper.Description>En cours de revue</Stepper.Description>
+    <Stepper.Title>Development</Stepper.Title>
+    <Stepper.Description>In review</Stepper.Description>
   </Stepper.Step>
   <Stepper.Step>
-    <Stepper.Title>Deploiement CDN</Stepper.Title>
-    <Stepper.Description>En attente</Stepper.Description>
+    <Stepper.Title>CDN deployment</Stepper.Title>
+    <Stepper.Description>Pending</Stepper.Description>
   </Stepper.Step>
 </Stepper>`,
         },
@@ -173,19 +193,19 @@ return (
             name: 'steps',
             type: 'StepItemData[]',
             defaultValue: '-',
-            description: 'Tableau des etapes avec title, description, status.',
+            description: 'Array of step items with title, description, status.',
         },
         {
             name: 'activeStep',
             type: 'number',
             defaultValue: '0',
-            description: 'Index base 0 de l etape actuellement active.',
+            description: 'Zero-based index of the currently active step.',
         },
         {
             name: 'orientation',
             type: "'horizontal' | 'vertical'",
             defaultValue: "'horizontal'",
-            description: 'Orientation d alignement du stepper.',
+            description: 'Alignment direction of the stepper.',
         },
     ],
     cssHooks: [
@@ -216,6 +236,7 @@ return (
         'Indicators and connectors have aria-hidden="true".',
         'Contrast meets WCAG AA standards across all status indicators.',
     ],
+    i18n: stepperI18n,
 }
 
 export function StepperDocs() {

@@ -1,7 +1,8 @@
-﻿import { ColorSwatch } from '@monority/ui/color-swatch'
+import { ColorSwatch } from '@monority/ui/color-swatch'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { colorSwatchI18n } from './ColorSwatch.messages'
 import {
     ColorSwatchShapesExample,
     ColorSwatchSizesExample,
@@ -25,12 +26,12 @@ function ColorSwatchPlayground() {
 
     const label =
         colorType === 'accent'
-            ? 'Couleur d’accent'
+            ? 'Primary accent'
             : colorType === 'success'
-              ? 'Succès opérationnel'
+              ? 'Operational success'
               : colorType === 'danger'
-                ? 'Erreur critique'
-                : 'Avertissement'
+                ? 'Critical error'
+                : 'Warning alert'
 
     const snippet = `<ColorSwatch
   value="${colorValue}"
@@ -44,18 +45,20 @@ function ColorSwatchPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Teinte',
+                    name: 'colorType',
+                    label: 'Shade',
                     value: colorType,
                     options: [
-                        { value: 'accent', label: 'Accent principal' },
-                        { value: 'success', label: 'Succès (#10b981)' },
+                        { value: 'accent', label: 'Primary accent' },
+                        { value: 'success', label: 'Success (#10b981)' },
                         { value: 'danger', label: 'Danger (#ef4444)' },
-                        { value: 'custom', label: 'Alerte (#f59e0b)' },
+                        { value: 'custom', label: 'Warning (#f59e0b)' },
                     ],
                     onChange: (v) => setColorType(v as 'accent' | 'success' | 'danger' | 'custom'),
                 },
                 {
                     type: 'select',
+                    name: 'size',
                     label: 'Size',
                     value: size,
                     options: [
@@ -67,18 +70,20 @@ function ColorSwatchPlayground() {
                 },
                 {
                     type: 'select',
-                    label: 'Forme (shape)',
+                    name: 'shape',
+                    label: 'Shape',
                     value: shape,
                     options: [
-                        { value: 'rounded', label: 'Arrondi (rounded)' },
-                        { value: 'circle', label: 'Cercle (circle)' },
-                        { value: 'square', label: 'Carré (square)' },
+                        { value: 'rounded', label: 'Rounded' },
+                        { value: 'circle', label: 'Circle' },
+                        { value: 'square', label: 'Square' },
                     ],
                     onChange: (v) => setShape(v as 'square' | 'rounded' | 'circle'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Afficher la valeur brute',
+                    name: 'showValue',
+                    label: 'Display raw value',
                     value: showValue,
                     onChange: setShowValue,
                 },
@@ -173,6 +178,7 @@ const docData: DocPageData = {
         'Preview element has aria-hidden="true" when accompanied by text or label.',
         'Automatically adds role="img" when only aria-label is provided without visible text.',
     ],
+    i18n: colorSwatchI18n,
 }
 
 export function ColorSwatchDocs() {

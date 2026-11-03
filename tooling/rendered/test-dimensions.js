@@ -1369,16 +1369,23 @@ export async function testControlDimensions(browser) {
                 <span class="mr-datepicker__icon"><svg width="14" height="14"></svg></span>
               </div>
             </div>
+            <!-- DOM reel : DatePicker rend un Calendar avec classPrefix="mr-datepicker" (double classe). -->
             <div id="dp-popover" class="mr-datepicker__popover" data-size="md">
-              <div class="mr-datepicker__header">
-                <button type="button" class="mr-datepicker__nav-btn" aria-label="Previous month">&lt;</button>
-                <span class="mr-datepicker__month-label">Octobre 2026</span>
-                <button type="button" class="mr-datepicker__nav-btn" aria-label="Next month">&gt;</button>
-              </div>
-              <div class="mr-datepicker__grid" role="grid">
-                <button type="button" class="mr-datepicker__day" id="dp-day-1">1</button>
-                <button type="button" class="mr-datepicker__day" data-selected="true" id="dp-day-selected">6</button>
-                <button type="button" class="mr-datepicker__day" data-today="true" id="dp-day-today">15</button>
+              <div class="mr-calendar">
+                <div class="mr-calendar__month mr-datepicker__month">
+                  <div class="mr-calendar__header mr-datepicker__header">
+                    <button type="button" class="mr-calendar__nav-btn mr-datepicker__nav-btn mr-calendar__nav-btn--prev" aria-label="Previous month">&lt;</button>
+                    <span class="mr-calendar__month-label mr-datepicker__month-label">Octobre 2026</span>
+                    <button type="button" class="mr-calendar__nav-btn mr-datepicker__nav-btn mr-calendar__nav-btn--next" aria-label="Next month">&gt;</button>
+                  </div>
+                  <div class="mr-calendar__grid mr-datepicker__grid" role="grid">
+                    <div class="mr-calendar__week mr-datepicker__week" role="row">
+                      <button type="button" role="gridcell" class="mr-calendar__day mr-datepicker__day" id="dp-day-1">1</button>
+                      <button type="button" role="gridcell" class="mr-calendar__day mr-datepicker__day" data-selected="true" id="dp-day-selected">6</button>
+                      <button type="button" role="gridcell" class="mr-calendar__day mr-datepicker__day" data-today="true" id="dp-day-today">15</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </body>

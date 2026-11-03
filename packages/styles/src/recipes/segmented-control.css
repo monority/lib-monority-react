@@ -90,7 +90,7 @@
 
     :where(.mr-segmented-control__item[disabled]),
     :where(.mr-segmented-control[data-disabled='true']) :where(.mr-segmented-control__item) {
-        opacity: var(--mr-opacity-disabled);
+        opacity: 0.5;
         cursor: not-allowed;
     }
 

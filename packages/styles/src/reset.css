@@ -30,6 +30,12 @@
         max-inline-size: 100%;
     }
 
+    :where(.mr-icon) {
+        display: inline-block;
+        flex-shrink: 0;
+        vertical-align: middle;
+    }
+
     :where(
             [class^='mr-'][hidden],
             [class*=' mr-'][hidden],

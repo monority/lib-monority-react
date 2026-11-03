@@ -1,4 +1,10 @@
-import { buildAbsoluteUrl, siteConfig } from '@/shared/seo/site-config'
+import {
+    getLocaleFromPath,
+    localizePath,
+    stripLocaleFromPath,
+    SUPPORTED_LOCALES,
+} from '@/shared/i18n/locales'
+import { buildAbsoluteUrl, ogLocales, siteConfig } from '@/shared/seo/site-config'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -65,13 +71,16 @@ export function usePageSeo({
     const location = useLocation()
 
     useEffect(() => {
+        const locale = getLocaleFromPath(location.pathname)
         const resolvedTitle = title
             ? `${title} | ${siteConfig.titleSuffix}`
             : siteConfig.defaultTitle
         const resolvedPath = canonicalPath ?? location.pathname
         const canonicalUrl = buildAbsoluteUrl(resolvedPath)
         const socialImage = image.startsWith('http') ? image : buildAbsoluteUrl(image)
+        const basePath = stripLocaleFromPath(resolvedPath)
 
+        document.documentElement.lang = locale
         document.title = resolvedTitle
 
         upsertMeta('meta[name="description"]', {
@@ -108,7 +117,7 @@ export function usePageSeo({
         })
         upsertMeta('meta[property="og:locale"]', {
             property: 'og:locale',
-            content: siteConfig.locale,
+            content: ogLocales[locale],
         })
         upsertMeta('meta[name="twitter:card"]', {
             name: 'twitter:card',
@@ -129,6 +138,19 @@ export function usePageSeo({
         upsertLink('link[rel="canonical"]', {
             rel: 'canonical',
             href: canonicalUrl,
+        })
+
+        SUPPORTED_LOCALES.forEach((alternateLocale) => {
+            upsertLink(`link[rel="alternate"][hreflang="${alternateLocale}"]`, {
+                rel: 'alternate',
+                hreflang: alternateLocale,
+                href: buildAbsoluteUrl(localizePath(basePath, alternateLocale)),
+            })
+        })
+        upsertLink('link[rel="alternate"][hreflang="x-default"]', {
+            rel: 'alternate',
+            hreflang: 'x-default',
+            href: buildAbsoluteUrl(localizePath(basePath, 'en')),
         })
 
         if (structuredData) {

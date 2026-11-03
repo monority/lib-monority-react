@@ -1,16 +1,24 @@
 import { Button } from '@monority/ui/button'
 import { InfiniteScroll } from '@monority/ui/infinite-scroll'
 import { useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
 import {
     InfiniteScrollEndMessageExample,
     InfiniteScrollErrorExample,
 } from './InfiniteScroll.examples'
+import { infiniteScrollI18n } from './InfiniteScroll.messages'
 
 function InfiniteScrollPlayground() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null)
-    const [items, setItems] = useState(['Entrée 1', 'Entrée 2', 'Entrée 3', 'Entrée 4'])
+    const [items, setItems] = useState(
+        isFr
+            ? ['Entrée 1', 'Entrée 2', 'Entrée 3', 'Entrée 4']
+            : ['Entry 1', 'Entry 2', 'Entry 3', 'Entry 4']
+    )
     const [isLoading, setIsLoading] = useState(false)
 
     return (
@@ -20,17 +28,28 @@ function InfiniteScrollPlayground() {
                 {
                     type: 'select',
                     prop: 'state',
-                    label: 'État du chargement',
+                    label: isFr ? 'État du chargement' : 'Loading state',
                     defaultValue: 'normal',
                     options: [
-                        { value: 'normal', label: 'Normal (hasMore: true)' },
-                        { value: 'end', label: 'Fin de liste (hasMore: false)' },
-                        { value: 'error', label: 'Erreur réseau (error)' },
+                        {
+                            value: 'normal',
+                            label: isFr ? 'Normal (hasMore: true)' : 'Normal (hasMore: true)',
+                        },
+                        {
+                            value: 'end',
+                            label: isFr
+                                ? 'Fin de liste (hasMore: false)'
+                                : 'End of list (hasMore: false)',
+                        },
+                        {
+                            value: 'error',
+                            label: isFr ? 'Erreur réseau (error)' : 'Network error (error)',
+                        },
                     ],
                 },
             ]}
             renderCode={(props) => `<InfiniteScroll
-  hasMore={${props.state === 'normal'}}${props.state === 'end' ? '\n  endMessage={<span>Fin des résultats</span>}' : ''}${props.state === 'error' ? '\n  error={<span>Erreur de chargement</span>}\n  onRetry={() => {}}' : ''}
+  hasMore={${props.state === 'normal'}}${props.state === 'end' ? `\n  endMessage={<span>${isFr ? 'Fin des résultats' : 'All items loaded'}</span>}` : ''}${props.state === 'error' ? `\n  error={<span>${isFr ? 'Erreur de chargement' : 'Loading failed'}</span>}\n  onRetry={() => {}}` : ''}
   onLoadMore={() => fetchMore()}
 >
   {items.map((item) => (
@@ -46,7 +65,10 @@ function InfiniteScrollPlayground() {
                     if (isLoading || isEnd || isError) return
                     setIsLoading(true)
                     setTimeout(() => {
-                        setItems((prev) => [...prev, `Entrée ${prev.length + 1}`])
+                        setItems((prev) => [
+                            ...prev,
+                            `${isFr ? 'Entrée' : 'Entry'} ${prev.length + 1}`,
+                        ])
                         setIsLoading(false)
                     }, 400)
                 }
@@ -79,7 +101,9 @@ function InfiniteScrollPlayground() {
                                             color: 'var(--mr-text-secondary)',
                                         }}
                                     >
-                                        Chargement des entrées...
+                                        {isFr
+                                            ? 'Chargement des entrées...'
+                                            : 'Loading more entries...'}
                                     </div>
                                 }
                                 endMessage={
@@ -91,7 +115,9 @@ function InfiniteScrollPlayground() {
                                             color: 'var(--mr-text-secondary)',
                                         }}
                                     >
-                                        Toutes les entrées ont été chargées.
+                                        {isFr
+                                            ? 'Toutes les entrées ont été chargées.'
+                                            : 'All entries have been loaded.'}
                                     </div>
                                 }
                                 error={
@@ -105,14 +131,16 @@ function InfiniteScrollPlayground() {
                                                     marginBottom: 4,
                                                 }}
                                             >
-                                                Échec de synchronisation.
+                                                {isFr
+                                                    ? 'Échec de synchronisation.'
+                                                    : 'Synchronization failed.'}
                                             </span>
                                             <Button
                                                 size="sm"
                                                 variant="secondary"
                                                 onClick={() => {}}
                                             >
-                                                Réessayer
+                                                {isFr ? 'Réessayer' : 'Retry'}
                                             </Button>
                                         </div>
                                     ) : undefined
@@ -210,7 +238,10 @@ const docData: DocPageData = {
     ],
     cssHooks: [
         '.mr-infinite-scroll',
-        '.mr-infinite-scroll__sentinel, .mr-infinite-scroll__loader, .mr-infinite-scroll__end, .mr-infinite-scroll__error',
+        '.mr-infinite-scroll__sentinel',
+        '.mr-infinite-scroll__loader',
+        '.mr-infinite-scroll__end',
+        '.mr-infinite-scroll__error',
     ],
     tokens: ['--mr-space-*'],
     a11y: [
@@ -218,6 +249,7 @@ const docData: DocPageData = {
         'Sentinel is aria-hidden',
         'Loading/error states announced via aria-live',
     ],
+    i18n: infiniteScrollI18n,
 }
 
 export function InfiniteScrollDocs() {

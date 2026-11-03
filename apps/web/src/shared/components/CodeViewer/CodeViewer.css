@@ -2,10 +2,24 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     border: 1px solid var(--mr-border-subtle);
     border-radius: var(--mr-radius-md);
-    background: var(--mr-bg-surface);
+    background-color: var(--mr-bg-sunken);
+    background-image: radial-gradient(
+        color-mix(in oklch, var(--mr-border-subtle) 35%, transparent) 1px,
+        transparent 1px
+    );
+    background-size: 16px 16px;
     overflow: hidden;
+}
+
+:where([data-theme='light'], :root:not([data-theme])) .code-viewer {
+    /* 98% : garde le fond distinct du canevas blanc tout en laissant
+       --mr-text-secondary (attrs, tags) au-dessus de WCAG AA 4,5:1
+       (4,70:1 sur le fond rendu L=0,9457) ; a 96% il tombait a 4,44:1. */
+    background-color: color-mix(in oklch, var(--mr-bg-sunken) 98%, black);
 }
 
 .code-viewer__header {
@@ -15,7 +29,7 @@
     gap: var(--mr-space-3);
     padding: var(--mr-space-1) var(--mr-space-3);
     border-block-end: 1px solid var(--mr-border-subtle);
-    background: var(--mr-bg-sunken);
+    background: color-mix(in oklch, var(--mr-bg-surface) 65%, var(--mr-bg-sunken));
     min-block-size: 2.25rem;
 }
 
@@ -29,11 +43,28 @@
 
 .code-viewer__body {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     overflow-x: auto;
+    box-sizing: border-box;
 }
 
 .code-viewer__body pre {
     margin: 0;
     border: 0;
     border-radius: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+:where([data-theme='light'], :root:not([data-theme])) .code-viewer__body pre {
+    background-color: transparent;
+}
+
+.code-viewer__body code,
+.code-viewer__body pre code.hljs {
+    overflow: visible;
+    overflow-x: visible;
 }

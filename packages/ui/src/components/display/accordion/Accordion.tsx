@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn'
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
 import { Collapsible } from '../collapsible/Collapsible'
 import type {
     AccordionContentProps,
@@ -45,11 +45,14 @@ function AccordionItem({
         }
     }, [disabled, accordionContext, isOpen, value])
 
-    const itemContextValue: AccordionItemContextValue = {
-        value,
-        isOpen,
-        isDisabled: disabled,
-    }
+    const itemContextValue = useMemo<AccordionItemContextValue>(
+        () => ({
+            value,
+            isOpen,
+            isDisabled: disabled,
+        }),
+        [value, isOpen, disabled]
+    )
 
     return (
         <AccordionItemContext.Provider value={itemContextValue}>
@@ -187,12 +190,15 @@ export function Accordion({
         [openValues, allowMultiple, isControlled, onChange, onValueChange]
     )
 
-    const contextValue: AccordionContextValue = {
-        openValues,
-        toggle,
-        collapsible,
-        size,
-    }
+    const contextValue = useMemo<AccordionContextValue>(
+        () => ({
+            openValues,
+            toggle,
+            collapsible,
+            size,
+        }),
+        [openValues, toggle, collapsible, size]
+    )
 
     return (
         <AccordionContext.Provider value={contextValue}>

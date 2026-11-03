@@ -1,4 +1,5 @@
 import './AppShell.css'
+import { useMessages } from '@/shared/i18n'
 import { AppHeader } from './AppHeader'
 
 interface AppShellProps {
@@ -11,10 +12,12 @@ interface AppShellProps {
  * reached through the header, the URL, or in-page links.
  */
 export function AppShell({ children }: AppShellProps) {
+    const messages = useMessages()
+
     return (
         <div className="app-shell">
             <a className="app-skip-link" href="#main-content">
-                Aller au contenu principal
+                {messages.common.skipToContent}
             </a>
 
             <AppHeader />

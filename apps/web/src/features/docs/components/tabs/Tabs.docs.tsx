@@ -2,6 +2,7 @@ import { Tabs } from '@monority/ui/tabs'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { tabsI18n } from './Tabs.messages'
 import {
     TabsBasicExample,
     TabsCompoundExample,
@@ -19,9 +20,9 @@ function TabsPlaygroundDemo(props: {
 }) {
     const [value, setValue] = useState('overview')
     const items = [
-        { value: 'overview', label: 'Vue d ensemble' },
-        { value: 'deployments', label: 'Deploiements' },
-        { value: 'settings', label: 'Configuration' },
+        { value: 'overview', label: 'Overview' },
+        { value: 'deployments', label: 'Deployments' },
+        { value: 'settings', label: 'Settings' },
     ]
 
     return (
@@ -43,7 +44,7 @@ function TabsPlaygroundDemo(props: {
                 size={props.size}
                 fullWidth={props.fullWidth}
                 disabled={props.disabled}
-                aria-label="Navigation du projet"
+                aria-label="Project navigation"
             />
             <div
                 style={{
@@ -55,7 +56,7 @@ function TabsPlaygroundDemo(props: {
                     fontSize: 'var(--mr-font-size-sm)',
                 }}
             >
-                Panneau actif : <strong>{value}</strong>
+                Active panel: <strong>{value}</strong>
             </div>
         </div>
     )
@@ -79,7 +80,7 @@ const tabsPlayground = (
                 p.size !== 'md' ? `  size="${p.size}"` : '',
                 p.fullWidth ? '  fullWidth' : '',
                 p.disabled ? '  disabled' : '',
-                '  aria-label="Navigation du projet"',
+                '  aria-label="Project navigation"',
             ]
                 .filter(Boolean)
                 .join('\n')
@@ -90,7 +91,7 @@ const tabsPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'neutral',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -101,7 +102,7 @@ const tabsPlayground = (
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -112,13 +113,13 @@ const tabsPlayground = (
             {
                 name: 'fullWidth',
                 type: 'boolean',
-                label: 'Pleine largeur (fullWidth)',
+                label: 'Full width',
                 defaultValue: false,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -228,28 +229,28 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: ['ArrowRight', 'ArrowLeft'],
-            action: 'Deplace le focus horizontalement entre les onglets interactifs.',
-            context: 'Liste des onglets (tablist)',
+            action: 'Moves focus horizontally between interactive tabs.',
+            context: 'Tab list (tablist)',
         },
         {
             key: 'Home',
-            action: 'Positionne le focus sur le premier onglet disponible.',
-            context: 'Liste des onglets (tablist)',
+            action: 'Moves focus to the first available tab.',
+            context: 'Tab list (tablist)',
         },
         {
             key: 'End',
-            action: 'Positionne le focus sur le dernier onglet disponible.',
-            context: 'Liste des onglets (tablist)',
+            action: 'Moves focus to the last available tab.',
+            context: 'Tab list (tablist)',
         },
         {
             key: ['Enter', 'Space'],
-            action: 'Active et selectionne l onglet focalise.',
-            context: 'Onglet cible',
+            action: 'Activates and selects the focused tab.',
+            context: 'Target tab',
         },
         {
             key: 'Tab',
-            action: 'Passe le focus au panneau de contenu associe ou a l element interactif suivant.',
-            context: 'Onglet actif',
+            action: 'Moves focus to the associated content panel or to the next interactive element.',
+            context: 'Active tab',
         },
     ],
     a11y: [
@@ -258,6 +259,7 @@ const docData: DocPageData = {
         'Roving tabIndex keeps the active tab in the keyboard flow.',
         'Arrow keys, Home, and End move across tabs.',
     ],
+    i18n: tabsI18n,
 }
 
 export function TabsDocs() {

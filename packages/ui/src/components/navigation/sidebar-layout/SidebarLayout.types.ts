@@ -8,6 +8,11 @@ export interface SidebarLayoutProps extends HTMLAttributes<HTMLDivElement> {
     header?: ReactNode
     children?: ReactNode
     sidebarWidth?: SidebarWidth
+    /**
+     * Rend la barre laterale repliable. En mode props (`sidebar` / `header`), un
+     * `SidebarLayout.Toggle` est insere automatiquement en tete du header : ne pas en
+     * ajouter un second dans `header`. En mode compose, placer le Toggle soi-meme.
+     */
     collapsible?: boolean
     open?: boolean
     defaultOpen?: boolean

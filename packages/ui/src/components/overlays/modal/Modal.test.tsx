@@ -87,9 +87,7 @@ describe('Modal', () => {
 
         act(() => {
             document.body.querySelector<HTMLDivElement>('.mr-modal__backdrop')?.click()
-            document.body
-                .querySelector<HTMLButtonElement>('[aria-label="Fermer la fenetre"]')
-                ?.click()
+            document.body.querySelector<HTMLButtonElement>('[aria-label="Close window"]')?.click()
         })
 
         expect(onClose).toHaveBeenCalledTimes(2)

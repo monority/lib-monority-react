@@ -13,6 +13,23 @@
 
         /* Levier de mise a l'echelle des rayons */
         --mr-ref-radius-scale: 1;
+
+        /* Levier de mise a l'echelle des espacements */
+        --mr-ref-space-scale: 1;
+
+        /* Levier de mise a l'echelle de la hauteur des controles */
+        --mr-ref-control-scale: 1;
+    }
+
+    /* Adaptation a la densite de mise en page */
+    :where([data-density='compact']) {
+        --mr-ref-control-scale: 0.875;
+        --mr-ref-space-scale: 0.85;
+    }
+
+    :where([data-density='spacious']) {
+        --mr-ref-control-scale: 1.15;
+        --mr-ref-space-scale: 1.15;
     }
 
     /* Levier de luminosite d'accent par defaut (theme clair : noir/anthracite neutre), redefini par theme */

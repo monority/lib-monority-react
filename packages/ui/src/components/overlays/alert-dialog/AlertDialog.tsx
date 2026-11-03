@@ -21,8 +21,8 @@ export function AlertDialog({
     open,
     title,
     description,
-    confirmLabel = 'Confirmer',
-    cancelLabel = 'Annuler',
+    confirmLabel = 'Confirm',
+    cancelLabel = 'Cancel',
     tone = 'default',
     onConfirm,
     onCancel,
@@ -167,7 +167,7 @@ function AlertDialogFooter({ ref, className, children, ...props }: AlertDialogFo
 function AlertDialogCancel({
     ref,
     className,
-    children = 'Annuler',
+    children = 'Cancel',
     variant = 'ghost',
     ...props
 }: AlertDialogCancelProps) {
@@ -186,7 +186,7 @@ function AlertDialogCancel({
 function AlertDialogConfirm({
     ref,
     className,
-    children = 'Confirmer',
+    children = 'Confirm',
     variant = 'primary',
     ...props
 }: AlertDialogConfirmProps) {

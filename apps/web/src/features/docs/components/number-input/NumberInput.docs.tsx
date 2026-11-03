@@ -2,6 +2,7 @@ import { NumberInput } from '@monority/ui/number-input'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { numberInputI18n } from './NumberInput.messages'
 import {
     NumberInputBasicPreview,
     NumberInputControlledExample,
@@ -74,19 +75,19 @@ const numberInputPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Nombre de licences',
+                label: 'Label (label)',
+                defaultValue: 'Number of licenses',
             },
             {
                 name: 'hint',
                 type: 'text',
-                label: 'Indication (hint)',
-                defaultValue: 'Minimum 1, maximum 20 utilisateurs.',
+                label: 'Hint (hint)',
+                defaultValue: 'Minimum 1, maximum 20 users.',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size (size)',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -97,7 +98,7 @@ const numberInputPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'neutral',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -108,25 +109,25 @@ const numberInputPlayground = (
             {
                 name: 'min',
                 type: 'number',
-                label: 'Valeur minimale (min)',
+                label: 'Minimum value (min)',
                 defaultValue: 1,
             },
             {
                 name: 'max',
                 type: 'number',
-                label: 'Valeur maximale (max)',
+                label: 'Maximum value (max)',
                 defaultValue: 20,
             },
             {
                 name: 'step',
                 type: 'number',
-                label: 'Pas d incrementation (step)',
+                label: 'Increment step (step)',
                 defaultValue: 1,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled (disabled)',
                 defaultValue: false,
             },
         ]}
@@ -246,28 +247,28 @@ const docData: DocPageData = {
     keyboardNavigation: [
         {
             key: 'ArrowUp',
-            action: 'Incremente la valeur selon le pas (step).',
-            context: 'Champ numerique',
+            action: 'Increments the value according to the step.',
+            context: 'Number field',
         },
         {
             key: 'ArrowDown',
-            action: 'Decremente la valeur selon le pas (step).',
-            context: 'Champ numerique',
+            action: 'Decrements the value according to the step.',
+            context: 'Number field',
         },
         {
             key: 'Home',
-            action: 'Reinitialise a la valeur minimale (min) si definie.',
-            context: 'Champ numerique',
+            action: 'Resets to the minimum value (min) when set.',
+            context: 'Number field',
         },
         {
             key: 'End',
-            action: 'Definit la valeur sur le maximum (max) si defini.',
-            context: 'Champ numerique',
+            action: 'Sets the value to the maximum (max) when set.',
+            context: 'Number field',
         },
         {
             key: 'Tab',
-            action: 'Navigue vers les boutons du stepper ou le controle suivant.',
-            context: 'Champ numerique',
+            action: 'Moves focus to the stepper buttons or the next control.',
+            context: 'Number field',
         },
     ],
     a11y: [
@@ -275,6 +276,7 @@ const docData: DocPageData = {
         'Supports ArrowUp and ArrowDown keyboard stepping.',
         'Proper aria-invalid and aria-describedby associations for hints and errors.',
     ],
+    i18n: numberInputI18n,
 }
 
 export function NumberInputDocs() {

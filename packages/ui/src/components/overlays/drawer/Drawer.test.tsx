@@ -104,9 +104,7 @@ describe('Drawer', () => {
             </Drawer>
         )
         act(() => {
-            document.body
-                .querySelector<HTMLButtonElement>('[aria-label="Fermer le panneau"]')
-                ?.click()
+            document.body.querySelector<HTMLButtonElement>('[aria-label="Close panel"]')?.click()
         })
         expect(onClose).toHaveBeenCalledTimes(1)
     })

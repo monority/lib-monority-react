@@ -24,6 +24,8 @@ export interface DatePickerProps
     defaultValue?: Date | string
     onChange?: (date: Date | null) => void
     // Calendar options
+    locale?: string
+    dialogAriaLabel?: string
     minDate?: Date
     maxDate?: Date
     disabledDates?: Date[] | ((date: Date) => boolean)

@@ -134,6 +134,7 @@ const spacingBase = {
     '4': 16,
     '5': 20,
     '6': 24,
+    '7': 28,
     '8': 32,
     '10': 40,
     '12': 48,
@@ -287,6 +288,8 @@ export function resolveDesignConfig(config: DesignConfig): ResolvedDesignConfig 
                       : config.radius === 'rounded'
                         ? '1.6'
                         : '1',
+            '--mr-ref-space-scale': String(factor),
+            '--mr-ref-control-scale': String(densityScale),
             '--mr-size-control-sm': `${Math.round(28 * densityScale)}px`,
             '--mr-size-control-md': `${Math.round(32 * densityScale)}px`,
             '--mr-size-control-lg': `${Math.round(40 * densityScale)}px`,

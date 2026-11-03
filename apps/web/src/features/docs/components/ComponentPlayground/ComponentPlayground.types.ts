@@ -67,4 +67,6 @@ export interface ComponentPlaygroundProps<
     initialValues?: Partial<T>
     onReset?: () => void
     className?: string
+    /** Maps a stable control key (name/prop/index) to a localized label. */
+    labelOverrides?: Record<string, string>
 }

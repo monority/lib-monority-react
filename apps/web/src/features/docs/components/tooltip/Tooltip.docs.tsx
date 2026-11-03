@@ -3,16 +3,17 @@ import { Tooltip } from '@monority/ui/tooltip'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { tooltipI18n } from './Tooltip.messages'
 import { TooltipOnIconButtonExample, TooltipWithRichContentExample } from './Tooltip.examples'
 
 function TooltipPlayground() {
     const [side, setSide] = useState<'top' | 'bottom' | 'left' | 'right'>('top')
     const [arrow, setArrow] = useState(true)
-    const [content, setContent] = useState('Consulter les détails du jeton')
+    const [content, setContent] = useState('View token details')
 
     const snippet = `<Tooltip side="${side}"${arrow ? '\n  arrow' : ''}>
   <Tooltip.Trigger>
-    <Button variant="secondary">Survolez-moi</Button>
+    <Button variant="secondary">Hover me</Button>
   </Tooltip.Trigger>
   <Tooltip.Content>${content}</Tooltip.Content>
 </Tooltip>`
@@ -25,22 +26,22 @@ function TooltipPlayground() {
                     label: 'Position (side)',
                     value: side,
                     options: [
-                        { value: 'top', label: 'Haut (top)' },
-                        { value: 'bottom', label: 'Bas (bottom)' },
-                        { value: 'left', label: 'Gauche (left)' },
-                        { value: 'right', label: 'Droite (right)' },
+                        { value: 'top', label: 'Top' },
+                        { value: 'bottom', label: 'Bottom' },
+                        { value: 'left', label: 'Left' },
+                        { value: 'right', label: 'Right' },
                     ],
                     onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
                 },
                 {
                     type: 'boolean',
-                    label: 'Flèche indicatrice (arrow)',
+                    label: 'Arrow indicator',
                     value: arrow,
                     onChange: setArrow,
                 },
                 {
                     type: 'text',
-                    label: 'Texte d’infobulle',
+                    label: 'Tooltip text',
                     value: content,
                     onChange: setContent,
                 },
@@ -57,7 +58,7 @@ function TooltipPlayground() {
             >
                 <Tooltip side={side} arrow={arrow}>
                     <Tooltip.Trigger>
-                        <Button variant="secondary">Survolez-moi</Button>
+                        <Button variant="secondary">Hover me</Button>
                     </Tooltip.Trigger>
                     <Tooltip.Content>{content}</Tooltip.Content>
                 </Tooltip>
@@ -129,8 +130,8 @@ const docData: DocPageData = {
         '--mr-shadow-sm',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Déplace le focus sur le déclencheur et affiche l’infobulle' },
-        { key: 'Escape', action: 'Masque immédiatement l’infobulle sans déplacer le focus' },
+        { key: 'Tab', action: 'Moves focus to the trigger and shows the tooltip' },
+        { key: 'Escape', action: 'Hides the tooltip immediately without moving focus' },
     ],
     a11y: [
         'Tooltip ARIA pattern (role="tooltip").',
@@ -140,6 +141,7 @@ const docData: DocPageData = {
         'Positioned above the trigger via CSS; no viewport collision engine.',
         'The tooltip itself is passive and not interactive.',
     ],
+    i18n: tooltipI18n,
 }
 
 export function TooltipDocs() {

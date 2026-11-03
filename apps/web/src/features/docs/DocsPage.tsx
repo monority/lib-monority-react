@@ -1,4 +1,5 @@
 import { AppHeader } from '@/shared/layouts/AppHeader'
+import { localizePath, stripLocaleFromPath, useLocale, useMessages } from '@/shared/i18n'
 import { type ComponentType, Suspense, lazy } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { DocsLayout } from './DocsLayout'
@@ -33,16 +34,20 @@ function getDocComponent(slug: string) {
 }
 
 function LoadingFallback() {
+    const messages = useMessages().docs.hero
+
     return (
         <div className="docs-page">
-            <HeroHeader kicker="Component" title="Loading..." />
+            <HeroHeader kicker={messages.kicker} title={messages.loading} />
         </div>
     )
 }
 
 export function DocsPage() {
     const location = useLocation()
-    const slug = location.pathname.replace(/^\/docs\/?/, '') || undefined
+    const { locale } = useLocale()
+    const messages = useMessages().docs.hero
+    const slug = stripLocaleFromPath(location.pathname).replace(/^\/docs\/?/, '') || undefined
 
     const DocComponent = slug ? getDocComponent(slug) : null
 
@@ -61,12 +66,12 @@ export function DocsPage() {
                 ) : (
                     <div className="docs-page">
                         <HeroHeader
-                            kicker="Component"
-                            title="Not Found"
-                            description="No documentation found for this component."
+                            kicker={messages.kicker}
+                            title={messages.notFoundTitle}
+                            description={messages.notFoundDescription}
                             actions={
-                                <Link to="/docs" className="docs-text-link">
-                                    Back to the component list
+                                <Link to={localizePath('/docs', locale)} className="docs-text-link">
+                                    {messages.backToComponents}
                                 </Link>
                             }
                         />

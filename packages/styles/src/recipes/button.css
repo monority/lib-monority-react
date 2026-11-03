@@ -93,6 +93,21 @@
         inline-size: 100%;
     }
 
+    :where(.mr-btn) > :where(.mr-btn__label) {
+        display: inline-flex;
+        align-items: center;
+        gap: inherit;
+    }
+
+    :where(.mr-btn)[data-full-width] > :where(.mr-btn__label) {
+        display: flex;
+        flex: 1 1 0%;
+        inline-size: 100%;
+        align-items: center;
+        justify-content: inherit;
+        gap: inherit;
+    }
+
     /* Variante primary (action principale neutre) : repos */
     :where(.mr-btn)[data-variant='primary'],
     :where(.mr-btn):not([data-variant]) {

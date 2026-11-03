@@ -6,6 +6,7 @@ import {
     CalloutTonesExample,
     CalloutWithChildrenExample,
 } from './Callout.examples'
+import { calloutI18n } from './Callout.messages'
 
 function CalloutPlaygroundDemo(props: {
     tone: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
@@ -35,20 +36,19 @@ const calloutPlayground = (
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre de l encart',
-                defaultValue: 'Synchronisation des donnees',
+                label: 'Callout title',
+                defaultValue: 'Data synchronization',
             },
             {
                 name: 'description',
                 type: 'text',
                 label: 'Description',
-                defaultValue:
-                    'La reindexation s execute en arriere-plan sans interruption de service.',
+                defaultValue: 'Reindexing runs in the background without service interruption.',
             },
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'info',
                 options: [
                     { value: 'neutral', label: 'Neutral' },
@@ -131,6 +131,7 @@ const docData: DocPageData = {
         'For time-critical errors use role="alert" or role="status".',
         'Heading structure is preserved.',
     ],
+    i18n: calloutI18n,
 }
 
 export function CalloutDocs() {

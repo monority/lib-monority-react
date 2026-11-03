@@ -3,6 +3,7 @@ import { Modal } from '@monority/ui/modal'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { modalI18n } from './Modal.messages'
 import { ModalBasicExample, ModalScrollableExample, ModalWithFormExample } from './Modal.examples'
 
 function ModalPlaygroundDemo(props: {
@@ -21,7 +22,7 @@ function ModalPlaygroundDemo(props: {
             }}
         >
             <Button onClick={() => setOpen(true)} variant="primary">
-                Ouvrir la modale
+                Open the modal
             </Button>
             <Modal
                 open={open}
@@ -37,7 +38,7 @@ function ModalPlaygroundDemo(props: {
                         }}
                     >
                         <Button variant="secondary" onClick={() => setOpen(false)}>
-                            Annuler
+                            Cancel
                         </Button>
                         <Button onClick={() => setOpen(false)}>{props.confirmLabel}</Button>
                     </div>
@@ -50,8 +51,7 @@ function ModalPlaygroundDemo(props: {
                         fontSize: 'var(--mr-font-size-sm)',
                     }}
                 >
-                    Exemple de contenu interactif a l interieur du corps de la boite de dialogue
-                    modale.
+                    Example of interactive content inside the modal dialog body.
                 </p>
             </Modal>
         </div>
@@ -67,26 +67,26 @@ const modalPlayground = (
         componentName="Modal"
         importCode="import { Modal } from '@monority/ui/modal'"
         getCode={(p) => {
-            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { Modal } from '@monority/ui/modal'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)}>Ouvrir la modale</Button>\n  <Modal\n    open={open}\n    title="${p.title}"\n    description="${p.description}"\n    onClose={() => setOpen(false)}\n    footer={\n      <div style={{ display: 'flex', gap: 'var(--mr-space-2)', justifyContent: 'flex-end' }}>\n        <Button variant="secondary" onClick={() => setOpen(false)}>Annuler</Button>\n        <Button onClick={() => setOpen(false)}>${p.confirmLabel}</Button>\n      </div>\n    }\n  >\n    <p>Contenu principal du dialogue modale.</p>\n  </Modal>\n</>`
+            return `import { useState } from 'react'\nimport { Button } from '@monority/ui/button'\nimport { Modal } from '@monority/ui/modal'\n\nconst [open, setOpen] = useState(false)\n\n<>\n  <Button onClick={() => setOpen(true)}>Open the modal</Button>\n  <Modal\n    open={open}\n    title="${p.title}"\n    description="${p.description}"\n    onClose={() => setOpen(false)}\n    footer={\n      <div style={{ display: 'flex', gap: 'var(--mr-space-2)', justifyContent: 'flex-end' }}>\n        <Button variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>\n        <Button onClick={() => setOpen(false)}>${p.confirmLabel}</Button>\n      </div>\n    }\n  >\n    <p>Main content of the modal dialog.</p>\n  </Modal>\n</>`
         }}
         controls={[
             {
                 name: 'title',
                 type: 'text',
-                label: 'Titre du dialogue',
-                defaultValue: 'Validation de la publication',
+                label: 'Dialog title',
+                defaultValue: 'Release validation',
             },
             {
                 name: 'description',
                 type: 'text',
-                label: 'Description du dialogue',
-                defaultValue: 'Verifiez les elements avant d enregistrer.',
+                label: 'Dialog description',
+                defaultValue: 'Check the details before saving.',
             },
             {
                 name: 'confirmLabel',
                 type: 'text',
-                label: 'Bouton de confirmation',
-                defaultValue: 'Confirmer',
+                label: 'Confirm button',
+                defaultValue: 'Confirm',
             },
         ]}
         render={(props) => <ModalPlaygroundDemo {...props} />}
@@ -162,18 +162,18 @@ return (
     keyboardNavigation: [
         {
             key: 'Escape',
-            action: 'Ferme la boite de dialogue modale et restitue le focus a l element appelant.',
-            context: 'Modale ouverte',
+            action: 'Closes the modal dialog and returns focus to the calling element.',
+            context: 'Modal open',
         },
         {
             key: 'Tab',
-            action: 'Fait circuler le focus entre les elements interactifs pieges dans la modale.',
-            context: 'Modale ouverte',
+            action: 'Cycles focus among the interactive elements trapped inside the modal.',
+            context: 'Modal open',
         },
         {
             key: ['Shift', 'Tab'],
-            action: 'Fait circuler le focus en sens inverse dans la modale.',
-            context: 'Modale ouverte',
+            action: 'Cycles focus backward inside the modal.',
+            context: 'Modal open',
         },
     ],
     a11y: [
@@ -182,6 +182,7 @@ return (
         'Focus is trapped while the modal is open and Escape closes it.',
         'The close button uses a hardcoded French label; override the DOM if i18n is needed.',
     ],
+    i18n: modalI18n,
 }
 
 export function ModalDocs() {

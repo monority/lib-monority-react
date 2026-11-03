@@ -1,0 +1,136 @@
+.mr-hero {
+    inline-size: 100%;
+    max-inline-size: var(--mr-size-container-lg);
+    margin-inline: auto;
+    padding-block: var(--mr-space-4) var(--mr-space-2);
+    display: grid;
+    grid-template-columns: minmax(0, 1.22fr) minmax(18rem, 0.85fr);
+    align-items: center;
+    gap: var(--mr-space-7);
+    box-sizing: border-box;
+}
+
+.mr-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    gap: var(--mr-space-4);
+    min-inline-size: 0;
+}
+
+.mr-hero__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mr-space-2);
+}
+
+.mr-hero__badge {
+    border-color: var(--mr-accent-border);
+}
+
+.mr-hero__title {
+    font-size: clamp(2.25rem, 3.8vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: var(--mr-text-primary);
+    text-wrap: balance;
+    margin: 0;
+}
+
+.mr-hero__description {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.6;
+    max-inline-size: 36rem;
+    text-wrap: pretty;
+    margin: 0;
+}
+
+.mr-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--mr-space-3);
+    padding-block-start: var(--mr-space-2);
+}
+
+.mr-hero__install-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    block-size: var(--mr-size-control-lg);
+    max-inline-size: 100%;
+    padding-inline: var(--mr-space-4);
+    border-radius: var(--mr-radius-md);
+    border: 1px solid var(--mr-border-control);
+    background-color: var(--mr-bg-sunken);
+    color: var(--mr-text-primary);
+    font-family: var(--mr-font-family-mono);
+    font-size: var(--mr-font-size-md);
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color var(--mr-duration-state) var(--mr-ease-default), background-color
+        var(--mr-duration-state) var(--mr-ease-default), color var(--mr-duration-state)
+        var(--mr-ease-default);
+}
+
+.mr-hero__install-btn:hover {
+    border-color: var(--mr-border-default);
+    background-color: var(--mr-bg-surface);
+}
+
+.mr-hero__install-btn:focus-visible {
+    outline: var(--mr-focus-ring-width) solid var(--mr-focus-ring);
+    outline-offset: var(--mr-focus-ring-offset);
+}
+
+.mr-hero__install-prompt {
+    color: var(--mr-text-tertiary);
+}
+
+.mr-hero__install-icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--mr-text-tertiary);
+    transition: color var(--mr-duration-state) var(--mr-ease-default);
+}
+
+.mr-hero__install-icon--copied {
+    color: var(--mr-success-solid);
+}
+
+.mr-hero__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 0;
+}
+
+@media (max-width: 960px) {
+    .mr-hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--mr-space-5);
+        padding-block: var(--mr-space-3) var(--mr-space-1);
+    }
+
+    .mr-hero__content {
+        align-items: center;
+        text-align: center;
+    }
+
+    .mr-hero__description {
+        text-wrap: balance;
+    }
+
+    .mr-hero__actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .mr-hero__install-btn {
+        font-size: var(--mr-font-size-sm);
+        padding-inline: var(--mr-space-3);
+    }
+}

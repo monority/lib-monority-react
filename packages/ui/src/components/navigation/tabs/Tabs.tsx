@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn'
-import { createContext, useCallback, useContext, useId, useState } from 'react'
+import { createContext, useCallback, useContext, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import type {
     TabsContentProps,
@@ -116,15 +116,18 @@ export function Tabs({
         ]
     )
 
-    const contextValue: TabsContextValue = {
-        value: resolvedValue,
-        setValue: handleChange,
-        tone: resolvedTone,
-        size: resolvedSize,
-        disabled,
-        fullWidth,
-        instanceId,
-    }
+    const contextValue = useMemo<TabsContextValue>(
+        () => ({
+            value: resolvedValue,
+            setValue: handleChange,
+            tone: resolvedTone,
+            size: resolvedSize,
+            disabled,
+            fullWidth,
+            instanceId,
+        }),
+        [resolvedValue, handleChange, resolvedTone, resolvedSize, disabled, fullWidth, instanceId]
+    )
 
     if (children) {
         return (

@@ -20,11 +20,23 @@ export function Table<T extends Record<string, unknown> = Record<string, unknown
     className,
     tableClassName,
     children,
+    tabIndex = 0,
+    role = 'region',
+    'aria-label': ariaLabel = 'Table de données',
     ...props
 }: TableProps<T>) {
+    const finalAriaLabel = props['aria-labelledby'] ? undefined : ariaLabel
+
     if (children) {
         return (
-            <div ref={ref} className={cn('mr-table', className)} {...props}>
+            <div
+                ref={ref}
+                className={cn('mr-table', className)}
+                tabIndex={tabIndex}
+                role={role}
+                aria-label={finalAriaLabel}
+                {...props}
+            >
                 <table className={cn('mr-table__table', tableClassName)}>{children}</table>
             </div>
         )
@@ -32,14 +44,28 @@ export function Table<T extends Record<string, unknown> = Record<string, unknown
 
     if (rows.length === 0) {
         return (
-            <div ref={ref} className={cn('mr-table', className)} {...props}>
+            <div
+                ref={ref}
+                className={cn('mr-table', className)}
+                tabIndex={tabIndex}
+                role={role}
+                aria-label={finalAriaLabel}
+                {...props}
+            >
                 {emptyState || <EmptyState title="No data" />}
             </div>
         )
     }
 
     return (
-        <div ref={ref} className={cn('mr-table', className)} {...props}>
+        <div
+            ref={ref}
+            className={cn('mr-table', className)}
+            tabIndex={tabIndex}
+            role={role}
+            aria-label={finalAriaLabel}
+            {...props}
+        >
             <table className={cn('mr-table__table', tableClassName)}>
                 <thead className="mr-table__head">
                     <tr className="mr-table__header-row">

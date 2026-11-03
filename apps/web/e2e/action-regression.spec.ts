@@ -96,7 +96,14 @@ test('progress strié et animé applique le dégradé linéaire et l’animation
     })
 
     expect(style.backgroundImage).toContain('linear-gradient')
-    expect(style.animationName).toBe('mr-progress-stripes')
+    const isReduced = await page.evaluate(
+        () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+    if (isReduced) {
+        expect(style.animationName).toBe('none')
+    } else {
+        expect(style.animationName).toBe('mr-progress-stripes')
+    }
 })
 
 test('echelle z-index canonique est definie sur root et appliquee aux overlays', async ({

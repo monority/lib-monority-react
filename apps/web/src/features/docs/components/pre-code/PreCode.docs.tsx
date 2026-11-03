@@ -1,6 +1,7 @@
 import { PreCode } from '@monority/ui/pre-code'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { preCodeI18n } from './PreCode.messages'
 import { PreCodeScrollExample, PreCodeSizesExample, PreCodeWrapExample } from './PreCode.examples'
 
 const demoSnippet = `import { Button } from '@monority/ui/button'
@@ -8,7 +9,7 @@ const demoSnippet = `import { Button } from '@monority/ui/button'
 export function App() {
   return (
     <Button variant="primary" size="md">
-      Commander le composant
+      Order component
     </Button>
   )
 }`
@@ -20,18 +21,20 @@ function PreCodePlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'size',
                     prop: 'size',
-                    label: 'Taille (size)',
+                    label: 'Size',
                     defaultValue: 'md',
                     options: [
-                        { value: 'sm', label: 'Petite (sm)' },
-                        { value: 'md', label: 'Moyenne (md)' },
+                        { value: 'sm', label: 'Small (sm)' },
+                        { value: 'md', label: 'Medium (md)' },
                     ],
                 },
                 {
                     type: 'boolean',
+                    name: 'wrap',
                     prop: 'wrap',
-                    label: 'Retour à la ligne (wrap)',
+                    label: 'Line wrap (wrap)',
                     defaultValue: false,
                 },
             ]}
@@ -102,34 +105,23 @@ const docData: DocPageData = {
             description: 'Additional class for the inner <code> element.',
         },
     ],
-    cssHooks: [
-        '.mr-pre-code',
-        '.mr-pre-code--sm',
-        '.mr-pre-code--md',
-        '.mr-pre-code--wrap',
-        '[data-size]',
-        '[data-wrap]',
-    ],
+    cssHooks: ['.mr-pre-code', '[data-size]', '[data-wrap]'],
     tokens: [
-        '--mr-font-mono',
-        '--mr-font-size-xs',
+        '--mr-font-family-mono',
         '--mr-font-size-sm',
         '--mr-space-3',
         '--mr-space-4',
-        '--mr-radius-sm',
-        '--mr-radius-md',
-        '--mr-bg-surface-strong',
+        '--mr-radius-lg',
+        '--mr-bg-sunken',
+        '--mr-border-subtle',
         '--mr-text-primary',
-        '--mr-code-bg',
-        '--mr-code-fg',
-        '--mr-code-scrollbar',
-        '--mr-code-shadow',
     ],
     a11y: [
         'Renders native <pre><code> markup.',
         'Default mode scrolls long lines horizontally without widening the page.',
         'Use wrap when line wrapping is preferred.',
     ],
+    i18n: preCodeI18n,
 }
 
 export function PreCodeDocs() {

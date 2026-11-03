@@ -8,8 +8,10 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
     interval?: number
     showArrows?: boolean
     showDots?: boolean
+    showCounter?: boolean
     loop?: boolean
     orientation?: 'horizontal' | 'vertical'
+    arrowsPosition?: 'outside' | 'inside'
     slideClassName?: string
 }
 
@@ -31,4 +33,13 @@ export interface CarouselButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 
 export interface CarouselDotsProps extends HTMLAttributes<HTMLDivElement> {
     ref?: Ref<HTMLDivElement>
+}
+
+export interface CarouselCounterProps extends HTMLAttributes<HTMLDivElement> {
+    ref?: Ref<HTMLDivElement>
+    format?: (current: number, total: number) => ReactNode
+}
+
+export interface CarouselPlayPauseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    ref?: Ref<HTMLButtonElement>
 }

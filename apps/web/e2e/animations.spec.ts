@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Component Animations Contract', () => {
+    test.beforeEach(async ({ page: _page }, testInfo) => {
+        test.skip(
+            testInfo.project.name === 'mobile-reduced-motion',
+            'animations contract asserts enter/exit keyframes under active motion'
+        )
+    })
+
     test('Modal exhibits distinct enter and exit animations with data-state', async ({ page }) => {
         await page.goto('/docs/modal')
 
@@ -497,5 +504,54 @@ test.describe('Component Animations Contract', () => {
 
         const secondOpen = await panels.nth(1).getAttribute('data-state')
         expect(secondOpen).toBe('open')
+    })
+
+    test('Select exhibits animated chevron rotation and floating dropdown enter animation', async ({
+        page,
+    }) => {
+        await page.goto('/docs/select')
+        const select = page.getByTestId('select-basic')
+        const wrapper = page.locator('.mr-select-wrapper').filter({ has: select })
+
+        // Initial closed state: chevron has transform transition
+        const initialChevron = await wrapper.evaluate((el) => {
+            const s = window.getComputedStyle(el, '::after')
+            return {
+                transform: s.transform,
+                transition: s.transition,
+            }
+        })
+        expect(initialChevron.transition).toContain('transform')
+
+        // Click select to open
+        await select.click()
+        await expect(wrapper).toHaveAttribute('data-open', 'true')
+
+        // Dropdown is visible and animated with mr-floating-enter
+        const dropdown = page.locator('.mr-select__dropdown')
+        await expect(dropdown).toBeVisible()
+
+        const dropdownAnim = await dropdown.evaluate((el) => {
+            const s = window.getComputedStyle(el)
+            return {
+                animationName: s.animationName,
+            }
+        })
+        expect(dropdownAnim.animationName).toBe('mr-floating-enter')
+
+        // Chevron is rotated to open angle
+        const openChevron = await wrapper.evaluate((el) => {
+            const s = window.getComputedStyle(el, '::after')
+            return s.transform
+        })
+        expect(openChevron).not.toBe(initialChevron.transform)
+
+        // Select an item to close
+        const optionItem = page
+            .locator('.mr-select__dropdown-item')
+            .filter({ hasText: 'Production Europe' })
+        await optionItem.click()
+        await expect(dropdown).toHaveCount(0)
+        await expect(wrapper).not.toHaveAttribute('data-open', 'true')
     })
 })

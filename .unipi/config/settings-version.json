@@ -1,0 +1,19 @@
+{
+  "migrated_version": "3.0.0",
+  "finalized": false,
+  "appliedAt": "2026-10-26T11:17:49.417Z",
+  "log": [
+    {
+      "action": "skipped:missing",
+      "from": "C:\\dev\\Projects\\lib-monority-react\\.unipi\\config\\compactor.json"
+    },
+    {
+      "action": "skipped:missing",
+      "from": "C:\\dev\\Projects\\lib-monority-react\\.unipi\\fusion-preset.json"
+    },
+    {
+      "action": "skipped:missing",
+      "from": "C:\\dev\\Projects\\lib-monority-react\\.unipi\\config\\background-tasks.json"
+    }
+  ]
+}

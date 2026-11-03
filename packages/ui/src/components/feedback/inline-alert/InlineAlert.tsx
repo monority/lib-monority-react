@@ -1,4 +1,5 @@
 import { Button } from '@/components/actions/button/Button'
+import { IconAlertCircle, IconAlertTriangle, IconCheckCircle, IconInfo } from '@/icons'
 import { cn } from '@/lib/cn'
 import type {
     InlineAlertActionProps,
@@ -17,69 +18,10 @@ const roleByTone: Record<InlineAlertTone, string> = {
 }
 
 const defaultIcons: Record<InlineAlertTone, React.ReactElement> = {
-    info: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M10 9v5M10 6h.01" />
-        </svg>
-    ),
-    success: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M6.5 10l2.5 2.5 4.5-4.5" />
-        </svg>
-    ),
-    warning: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M10 3L2 17h16L10 3zM10 8v4M10 14h.01" />
-        </svg>
-    ),
-    danger: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <circle cx="10" cy="10" r="8" />
-            <path d="M10 7v4M10 13h.01" />
-        </svg>
-    ),
+    info: <IconInfo size={20} />,
+    success: <IconCheckCircle size={20} />,
+    warning: <IconAlertTriangle size={20} />,
+    danger: <IconAlertCircle size={20} />,
 }
 
 function InlineAlertIcon({ className, children, ref, ...props }: InlineAlertIconProps) {

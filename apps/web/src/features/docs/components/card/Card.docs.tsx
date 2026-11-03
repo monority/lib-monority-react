@@ -1,29 +1,30 @@
-﻿import { Badge } from '@monority/ui/badge'
+import { Badge } from '@monority/ui/badge'
 import { Card } from '@monority/ui/card'
 import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { cardI18n } from './Card.messages'
 import { CardInteractiveExample, CardPaddingExample } from './Card.examples'
 
 function CardPlayground() {
     const [padding, setPadding] = useState<'sm' | 'md' | 'lg'>('md')
     const [interactive, setInteractive] = useState(false)
-    const [title, setTitle] = useState('Santé du projet')
+    const [title, setTitle] = useState('Project health')
     const [description, setDescription] = useState(
-        'Version stable déployée en production sans anomalie signalée.'
+        'Stable release deployed to production with zero reported anomalies.'
     )
     const [showBadge, setShowBadge] = useState(true)
 
     const snippet = `<Card padding="${padding}"${interactive ? '\n  interactive' : ''}>
   <Card.Header>
-    <Card.Title>${title}</Card.Title>${showBadge ? '\n    <Badge variant="default">En ligne</Badge>' : ''}
+    <Card.Title>${title}</Card.Title>${showBadge ? '\n    <Badge variant="default">Live</Badge>' : ''}
   </Card.Header>
   <Card.Description>
     ${description}
   </Card.Description>
   <Card.Footer>
-    <Text tone="muted" size="sm">Mis à jour il y a 5 min</Text>
+    <Text tone="muted" size="sm">Updated 5 min ago</Text>
   </Card.Footer>
 </Card>`
 
@@ -32,6 +33,7 @@ function CardPlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'padding',
                     label: 'Padding',
                     value: padding,
                     options: [
@@ -43,25 +45,29 @@ function CardPlayground() {
                 },
                 {
                     type: 'boolean',
+                    name: 'interactive',
                     label: 'Interactive',
                     value: interactive,
                     onChange: setInteractive,
                 },
                 {
                     type: 'text',
-                    label: 'Titre',
+                    name: 'title',
+                    label: 'Title',
                     value: title,
                     onChange: setTitle,
                 },
                 {
                     type: 'text',
+                    name: 'description',
                     label: 'Description',
                     value: description,
                     onChange: setDescription,
                 },
                 {
                     type: 'boolean',
-                    label: 'Badge en-tête',
+                    name: 'showBadge',
+                    label: 'Header badge',
                     value: showBadge,
                     onChange: setShowBadge,
                 },
@@ -72,12 +78,12 @@ function CardPlayground() {
                 <Card padding={padding} interactive={interactive}>
                     <Card.Header>
                         <Card.Title>{title}</Card.Title>
-                        {showBadge && <Badge variant="default">En ligne</Badge>}
+                        {showBadge && <Badge variant="default">Live</Badge>}
                     </Card.Header>
                     <Card.Description>{description}</Card.Description>
                     <Card.Footer>
                         <Text tone="muted" size="sm">
-                            Mis à jour il y a 5 min
+                            Updated 5 min ago
                         </Text>
                     </Card.Footer>
                 </Card>
@@ -143,6 +149,7 @@ const docData: DocPageData = {
         '--mr-elevation-raised',
     ],
     a11y: ['Card is layout only.', 'Use a real button or link for primary actions inside a card.'],
+    i18n: cardI18n,
 }
 
 export function CardDocs() {

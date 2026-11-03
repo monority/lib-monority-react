@@ -1,6 +1,7 @@
 import { Button } from '@monority/ui/button'
 import { Progress } from '@monority/ui/progress'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useLocale } from '../../../../shared/i18n'
 
 export function ProgressBasicExample() {
     return <Progress value={68} label="Release migration" />
@@ -73,21 +74,33 @@ export function ProgressAnimatedExample() {
 }
 
 export function ProgressStripedExample() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     return (
         <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
-            <Progress value={65} striped label="Stries statiques (striped)" />
+            <Progress
+                value={65}
+                striped
+                label={isFr ? 'Stries statiques (striped)' : 'Static stripes (striped)'}
+            />
             <Progress
                 value={85}
                 striped
                 animated
                 tone="accent"
-                label="Stries animées en flux continu (striped + animated)"
+                label={
+                    isFr
+                        ? 'Stries animées en flux continu (striped + animated)'
+                        : 'Animated continuous stripes (striped + animated)'
+                }
             />
         </div>
     )
 }
 
 export function ProgressRealisticServerExample() {
+    const { locale } = useLocale()
+    const isFr = locale === 'fr'
     const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle')
     const [progress, setProgress] = useState(0)
     const timersRef = useRef<number[]>([])
@@ -103,19 +116,19 @@ export function ProgressRealisticServerExample() {
         clearTimers()
         setStatus('running')
 
-        /* 1. Règle d'or : Démarrage instantané (0ms) à 20% pour valider l'action utilisateur */
+        // 1. Instant start at 20% to acknowledge user interaction
         setProgress(20)
 
-        /* 2. Montée rapide */
+        // 2. Fast ramp up
         const t1 = window.setTimeout(() => setProgress(45), 250)
         const t2 = window.setTimeout(() => setProgress(72), 550)
         const t3 = window.setTimeout(() => setProgress(84), 900)
 
-        /* 3. Stagnation vers 85-88% pendant l'attente serveur, les stries maintiennent la perception d'activité */
+        // 3. Plateau around 85-88% while waiting for server response
         const t4 = window.setTimeout(() => setProgress(86), 1400)
         const t5 = window.setTimeout(() => setProgress(88), 1900)
 
-        /* 4. Téléportation finale de 88% à 100% au tout dernier moment à la réponse du serveur */
+        // 4. Final jump from 88% to 100% when server responds
         const t6 = window.setTimeout(() => {
             setProgress(100)
             setStatus('done')
@@ -134,17 +147,20 @@ export function ProgressRealisticServerExample() {
         return () => clearTimers()
     }, [clearTimers])
 
+    const getLabel = () => {
+        if (status === 'idle') return isFr ? 'Prêt pour déploiement' : 'Ready for deployment'
+        if (status === 'running')
+            return isFr
+                ? 'Synchronisation des conteneurs en cours...'
+                : 'Container synchronization in progress...'
+        return isFr ? 'Déploiement achevé avec succès' : 'Deployment completed successfully'
+    }
+
     return (
         <div style={{ display: 'grid', gap: 'var(--mr-space-4)' }}>
             <Progress
                 value={progress}
-                label={
-                    status === 'idle'
-                        ? 'Prêt pour déploiement'
-                        : status === 'running'
-                          ? 'Synchronisation des conteneurs en cours...'
-                          : 'Déploiement achevé avec succès'
-                }
+                label={getLabel()}
                 tone={status === 'done' ? 'success' : 'accent'}
                 striped={status === 'running'}
                 animated={status === 'running'}
@@ -156,7 +172,13 @@ export function ProgressRealisticServerExample() {
                     variant="primary"
                     size="sm"
                 >
-                    {status === 'running' ? 'Opération en cours...' : 'Lancer déploiement réaliste'}
+                    {status === 'running'
+                        ? isFr
+                            ? 'Opération en cours...'
+                            : 'Operation in progress...'
+                        : isFr
+                          ? 'Lancer déploiement réaliste'
+                          : 'Run realistic deployment'}
                 </Button>
                 {status !== 'idle' && (
                     <Button
@@ -165,7 +187,7 @@ export function ProgressRealisticServerExample() {
                         variant="ghost"
                         size="sm"
                     >
-                        Réinitialiser
+                        {isFr ? 'Réinitialiser' : 'Reset'}
                     </Button>
                 )}
             </div>

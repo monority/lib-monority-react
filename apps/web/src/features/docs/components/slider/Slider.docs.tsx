@@ -12,6 +12,7 @@ import {
     SliderWithErrorExample,
     SliderWithStepsExample,
 } from './Slider.examples'
+import { sliderI18n } from './Slider.messages'
 
 function SliderPlaygroundDemo(props: {
     size: 'sm' | 'md' | 'lg'
@@ -75,13 +76,13 @@ const sliderPlayground = (
             {
                 name: 'label',
                 type: 'text',
-                label: 'Libelle (label)',
-                defaultValue: 'Volume audio',
+                label: 'Label',
+                defaultValue: 'Audio volume',
             },
             {
                 name: 'size',
                 type: 'select',
-                label: 'Dimension (size)',
+                label: 'Size',
                 defaultValue: 'md',
                 options: [
                     { value: 'sm', label: 'Small' },
@@ -92,7 +93,7 @@ const sliderPlayground = (
             {
                 name: 'tone',
                 type: 'select',
-                label: 'Tonalite visuelle',
+                label: 'Visual tone',
                 defaultValue: 'accent',
                 options: [
                     { value: 'accent', label: 'Accent' },
@@ -103,25 +104,25 @@ const sliderPlayground = (
             {
                 name: 'min',
                 type: 'number',
-                label: 'Valeur min',
+                label: 'Min value',
                 defaultValue: 0,
             },
             {
                 name: 'max',
                 type: 'number',
-                label: 'Valeur max',
+                label: 'Max value',
                 defaultValue: 100,
             },
             {
                 name: 'step',
                 type: 'number',
-                label: 'Pas (step)',
+                label: 'Step',
                 defaultValue: 5,
             },
             {
                 name: 'disabled',
                 type: 'boolean',
-                label: 'Desactive (disabled)',
+                label: 'Disabled',
                 defaultValue: false,
             },
         ]}
@@ -132,47 +133,47 @@ const sliderPlayground = (
 const docData: DocPageData = {
     title: 'Slider',
     description:
-        'Curseur de sélection numérique interactif prenant en charge les variantes de tailles, les tonalités sémantiques, le mode intervalle à double curseur et la granularité personnalisée.',
+        'Interactive numeric slider supporting size variants, semantic tones, dual-handle range mode, and customizable granularity.',
     importCode: "import { Slider } from '@monority/ui/slider'",
     usageCode: `import { useState } from 'react'
 import { Slider } from '@monority/ui/slider'
 
 const [value, setValue] = useState(50)
 
-// Curseur simple
-<Slider label="Luminosité" value={value} onValueChange={setValue} />
+// Single slider
+<Slider label="Brightness" value={value} onValueChange={setValue} />
 
-// Curseur d'intervalle (range)
+// Dual-thumb range slider
 <Slider label="Budget" range defaultValue={[25, 75]} />`,
     preview: () => <SliderBasicExample />,
     playground: sliderPlayground,
     examples: [
         {
-            title: 'Tailles (sm, md, lg)',
+            title: 'Sizes',
             content: <SliderSizesExample />,
         },
         {
-            title: 'Tonalités sémantiques (neutral, accent, danger)',
+            title: 'Semantic tones',
             content: <SliderTonesExample />,
         },
         {
-            title: 'Mode intervalle double curseur (range)',
+            title: 'Dual-thumb range mode',
             content: <SliderDualRangeExample />,
         },
         {
-            title: 'Paliers et granularité (step)',
+            title: 'Steps and granularity',
             content: <SliderWithStepsExample />,
         },
         {
-            title: 'Contrôlé avec synchronisation d’état',
+            title: 'Controlled with state synchronization',
             content: <SliderControlledExample />,
         },
         {
-            title: 'Désactivé',
+            title: 'Disabled',
             content: <SliderDisabledExample />,
         },
         {
-            title: 'État d’erreur',
+            title: 'Error state',
             content: <SliderWithErrorExample />,
         },
     ],
@@ -181,85 +182,85 @@ const [value, setValue] = useState(50)
             name: 'label',
             type: 'string',
             defaultValue: '-',
-            description: 'Libellé textuel associé au champ du curseur.',
+            description: 'Text label associated with slider field.',
         },
         {
             name: 'hint',
             type: 'string',
             defaultValue: '-',
-            description: 'Texte d’aide affiché sous le curseur.',
+            description: 'Help text displayed below slider.',
         },
         {
             name: 'error',
             type: 'string',
             defaultValue: '-',
-            description: 'Message d’erreur visuel passant le composant en état invalide.',
+            description: 'Visual error message marking field invalid.',
         },
         {
             name: 'size',
             type: "'sm' | 'md' | 'lg'",
             defaultValue: "'md'",
-            description: 'Variante de taille ajustant la hauteur de piste et les marges.',
+            description: 'Size variant adjusting track height and thumb.',
         },
         {
             name: 'tone',
             type: "'neutral' | 'accent' | 'danger'",
             defaultValue: "'accent'",
-            description: 'Tonalité chromatique de la piste active.',
+            description: 'Color tone of the active track.',
         },
         {
             name: 'value',
             type: 'number | [number, number]',
             defaultValue: '-',
-            description: 'Valeur contrôlée.',
+            description: 'Controlled slider value.',
         },
         {
             name: 'defaultValue',
             type: 'number | [number, number]',
             defaultValue: '0 | [min, max]',
-            description: 'Valeur initiale incontrôlée.',
+            description: 'Initial uncontrolled slider value.',
         },
         {
             name: 'range',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Active le mode intervalle à deux poignées (double curseur).',
+            description: 'Enables dual-handle range selection mode.',
         },
         {
             name: 'min',
             type: 'number',
             defaultValue: '0',
-            description: 'Borne inférieure autorisée.',
+            description: 'Lower bound allowed.',
         },
         {
             name: 'max',
             type: 'number',
             defaultValue: '100',
-            description: 'Borne supérieure autorisée.',
+            description: 'Upper bound allowed.',
         },
         {
             name: 'step',
             type: 'number',
             defaultValue: '1',
-            description: 'Pas de déplacement du curseur.',
+            description: 'Step increment of the slider.',
         },
         {
             name: 'showValue',
             type: 'boolean',
             defaultValue: 'true',
-            description: 'Affiche la valeur numérique courante dans un élément <output>.',
+            description: 'Displays current numerical value in an <output> element.',
         },
         {
             name: 'disabled',
             type: 'boolean',
             defaultValue: 'false',
-            description: 'Désactive le curseur et empêche les interactions.',
+            description: 'Disables slider interaction.',
         },
         {
             name: 'onValueChange',
             type: '((val: number) => void) | ((val: [number, number]) => void)',
             defaultValue: '-',
-            description: 'Rappel déclenché lors du déplacement avec la nouvelle valeur.',
+            description: 'Callback fired on value change.',
         },
     ],
     cssHooks: [
@@ -292,36 +293,37 @@ const [value, setValue] = useState(50)
     keyboardNavigation: [
         {
             key: ['ArrowRight', 'ArrowUp'],
-            action: 'Incremente la valeur selon le pas (step).',
-            context: 'Curseur focalise',
+            action: 'Increments value by step.',
+            context: 'Focused slider thumb',
         },
         {
             key: ['ArrowLeft', 'ArrowDown'],
-            action: 'Decremente la valeur selon le pas (step).',
-            context: 'Curseur focalise',
+            action: 'Decrements value by step.',
+            context: 'Focused slider thumb',
         },
         {
             key: 'Home',
-            action: 'Positionne le curseur sur la borne minimale (min).',
-            context: 'Curseur focalise',
+            action: 'Sets value to minimum bound.',
+            context: 'Focused slider thumb',
         },
         {
             key: 'End',
-            action: 'Positionne le curseur sur la borne maximale (max).',
-            context: 'Curseur focalise',
+            action: 'Sets value to maximum bound.',
+            context: 'Focused slider thumb',
         },
         {
             key: ['PageUp', 'PageDown'],
-            action: 'Effectue un saut de valeur plus important (10% de l echelle).',
-            context: 'Curseur focalise',
+            action: 'Jumps value by a larger increment (10% of range).',
+            context: 'Focused slider thumb',
         },
     ],
     a11y: [
-        'Éléments natifs <input type="range"> garantissant les rôles ARIA implicites.',
-        'Prise en charge complète de la navigation clavier (flèches, Début, Fin).',
-        'Sortie visuelle associée <output htmlFor="..."> pour le retour de lecture.',
-        'Anneau de focus visible et distinct au clavier.',
+        'Native <input type="range"> elements guaranteeing implicit ARIA roles.',
+        'Full keyboard navigation support (arrows, Home, End, PageUp, PageDown).',
+        'Associated <output htmlFor="..."> element for screen reader and visual feedback.',
+        'Visible focus ring complying with contrast requirements.',
     ],
+    i18n: sliderI18n,
 }
 
 export function SliderDocs() {

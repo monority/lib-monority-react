@@ -27,8 +27,8 @@ function registrySlugs(): string[] {
 }
 
 describe('Step 26 - every public export has docs or a redirect', () => {
-    // Entrées de librairie sans page de composant : helpers purs et script de tête.
-    const NON_COMPONENT_SUBPATHS = new Set(['lib', 'get-theme-script'])
+    // Entrées de librairie sans page de composant : helpers purs, icônes et script de tête.
+    const NON_COMPONENT_SUBPATHS = new Set(['lib', 'get-theme-script', 'icons'])
 
     it('no exported subpath is a dead docs route', () => {
         const pkg = readJson(join(root, 'packages', 'ui', 'package.json'))
@@ -45,7 +45,7 @@ describe('Step 26 - every public export has docs or a redirect', () => {
 })
 
 describe('Step 26 - every registry slug has a docs folder', () => {
-    it('registry slugs resolve to a docs directory with the four required files', () => {
+    it('registry slugs resolve to a docs directory with the five required files', () => {
         const missing: string[] = []
         for (const slug of registrySlugs()) {
             const dir = join(componentsDir, slug)
@@ -58,6 +58,7 @@ describe('Step 26 - every registry slug has a docs folder', () => {
                 const needs = [
                     `${pascal}.docs.tsx`,
                     `${pascal}.examples.tsx`,
+                    `${pascal}.messages.ts`,
                     `${pascal}.meta.ts`,
                     'index.ts',
                 ]
@@ -68,6 +69,27 @@ describe('Step 26 - every registry slug has a docs folder', () => {
             }
         }
         expect(missing, 'registry slugs without docs').toEqual([])
+    })
+
+    it('every docs file wires i18n overlay dictionary', () => {
+        const missingI18n: string[] = []
+        for (const slug of registrySlugs()) {
+            const dir = join(componentsDir, slug)
+            const pascal = slug
+                .split('-')
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join('')
+            const docsPath = join(dir, `${pascal}.docs.tsx`)
+            try {
+                const text = readFileSync(docsPath, 'utf8')
+                if (!text.includes('i18n:')) {
+                    missingI18n.push(`${slug}: missing i18n in .docs.tsx`)
+                }
+            } catch {
+                missingI18n.push(`${slug}: cannot read .docs.tsx`)
+            }
+        }
+        expect(missingI18n, 'docs without i18n overlay').toEqual([])
     })
 })
 

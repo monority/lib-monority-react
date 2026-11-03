@@ -37,6 +37,7 @@ export function InputOTP({
     inputMode = 'numeric',
     className,
     children,
+    'aria-label': ariaLabel = 'Verification code',
     ...props
 }: InputOTPProps) {
     const id = useId()
@@ -124,7 +125,7 @@ export function InputOTP({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     className="mr-input-otp__native-input"
-                    aria-label="Code de verification"
+                    aria-label={ariaLabel}
                 />
                 {children ? (
                     children

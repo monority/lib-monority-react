@@ -7,6 +7,7 @@ import {
     AsyncStateNoticeErrorExample,
     AsyncStateNoticeToggleExample,
 } from './AsyncStateNotice.examples'
+import { asyncStateNoticeI18n } from './AsyncStateNotice.messages'
 
 function AsyncStateNoticePlaygroundDemo(props: {
     stateMode: 'idle' | 'loading' | 'error'
@@ -30,7 +31,7 @@ function AsyncStateNoticePlaygroundDemo(props: {
                         textAlign: 'center',
                     }}
                 >
-                    Aucun processus asynchrone en cours (etat inactif).
+                    No background asynchronous process running (idle state).
                 </div>
             ) : null}
         </div>
@@ -54,25 +55,25 @@ const asyncStateNoticePlayground = (
             {
                 name: 'stateMode',
                 type: 'select',
-                label: 'Etat asynchrone',
+                label: 'Async state',
                 defaultValue: 'loading',
                 options: [
-                    { value: 'idle', label: 'Inactif (idle)' },
-                    { value: 'loading', label: 'Chargement (loading)' },
-                    { value: 'error', label: 'Erreur (error)' },
+                    { value: 'idle', label: 'Idle (idle)' },
+                    { value: 'loading', label: 'Loading (loading)' },
+                    { value: 'error', label: 'Error (error)' },
                 ],
             },
             {
                 name: 'loadingMessage',
                 type: 'text',
-                label: 'Message de chargement',
-                defaultValue: 'Synchronisation des donnees...',
+                label: 'Loading message',
+                defaultValue: 'Synchronizing data...',
             },
             {
                 name: 'errorMessage',
                 type: 'text',
-                label: 'Message d erreur',
-                defaultValue: 'Echec de transmission avec l API.',
+                label: 'Error message',
+                defaultValue: 'API transmission failed.',
             },
         ]}
         render={(props) => <AsyncStateNoticePlaygroundDemo {...props} />}
@@ -132,6 +133,7 @@ const docData: DocPageData = {
             description: 'Custom loading content.',
         },
     ],
+    i18n: asyncStateNoticeI18n,
 }
 
 export function AsyncStateNoticeDocs() {

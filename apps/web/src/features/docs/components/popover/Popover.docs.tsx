@@ -5,6 +5,7 @@ import { Text } from '@monority/ui/text'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { popoverI18n } from './Popover.messages'
 import { PopoverAlignmentExample, PopoverWithFormExample } from './Popover.examples'
 
 function PopoverPlayground() {
@@ -13,15 +14,15 @@ function PopoverPlayground() {
 
     const snippet = `<Popover side="${side}" align="${align}">
   <Popover.Trigger>
-    <Button variant="secondary">Paramètres rapides</Button>
+    <Button variant="secondary">Quick settings</Button>
   </Popover.Trigger>
   <Popover.Content>
     <Stack gap="sm">
-      <Text.Strong size="sm">Configuration du projet</Text.Strong>
+      <Text.Strong size="sm">Project configuration</Text.Strong>
       <Text tone="muted" size="sm">
-        Ajustez la visibilité et les permissions de l’espace de travail en temps réel.
+        Adjust workspace visibility and permissions in real time.
       </Text>
-      <Button size="sm" variant="primary">Sauvegarder</Button>
+      <Button size="sm" variant="primary">Save</Button>
     </Stack>
   </Popover.Content>
 </Popover>`
@@ -31,24 +32,24 @@ function PopoverPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Côté (side)',
+                    label: 'Side',
                     value: side,
                     options: [
-                        { value: 'bottom', label: 'Bas (bottom)' },
-                        { value: 'top', label: 'Haut (top)' },
-                        { value: 'left', label: 'Gauche (left)' },
-                        { value: 'right', label: 'Droite (right)' },
+                        { value: 'bottom', label: 'Bottom' },
+                        { value: 'top', label: 'Top' },
+                        { value: 'left', label: 'Left' },
+                        { value: 'right', label: 'Right' },
                     ],
                     onChange: (v) => setSide(v as 'top' | 'bottom' | 'left' | 'right'),
                 },
                 {
                     type: 'select',
-                    label: 'Alignement (align)',
+                    label: 'Align',
                     value: align,
                     options: [
-                        { value: 'start', label: 'Début (start)' },
-                        { value: 'center', label: 'Centre (center)' },
-                        { value: 'end', label: 'Fin (end)' },
+                        { value: 'start', label: 'Start' },
+                        { value: 'center', label: 'Center' },
+                        { value: 'end', label: 'End' },
                     ],
                     onChange: (v) => setAlign(v as 'start' | 'center' | 'end'),
                 },
@@ -65,17 +66,16 @@ function PopoverPlayground() {
             >
                 <Popover side={side} align={align}>
                     <Popover.Trigger>
-                        <Button variant="secondary">Paramètres rapides</Button>
+                        <Button variant="secondary">Quick settings</Button>
                     </Popover.Trigger>
                     <Popover.Content>
                         <Stack gap="sm" style={{ maxWidth: 260 }}>
-                            <Text.Strong size="sm">Configuration du projet</Text.Strong>
+                            <Text.Strong size="sm">Project configuration</Text.Strong>
                             <Text tone="muted" size="sm">
-                                Ajustez la visibilité et les permissions de l’espace de travail en
-                                temps réel.
+                                Adjust workspace visibility and permissions in real time.
                             </Text>
                             <Button size="sm" variant="primary">
-                                Sauvegarder
+                                Save
                             </Button>
                         </Stack>
                     </Popover.Content>
@@ -163,10 +163,10 @@ const docData: DocPageData = {
         '--mr-border-subtle',
     ],
     keyboardNavigation: [
-        { key: 'Enter', action: 'Ouvre le popover' },
-        { key: 'Space', action: 'Ouvre le popover' },
-        { key: 'Tab', action: 'Déplace le focus dans les éléments interactifs du popover' },
-        { key: 'Escape', action: 'Ferme le popover et replace le focus sur le déclencheur' },
+        { key: 'Enter', action: 'Opens the popover' },
+        { key: 'Space', action: 'Opens the popover' },
+        { key: 'Tab', action: 'Moves focus through the interactive elements of the popover' },
+        { key: 'Escape', action: 'Closes the popover and returns focus to the trigger' },
     ],
     a11y: [
         'Content uses role="dialog" with aria-modal="false".',
@@ -175,6 +175,7 @@ const docData: DocPageData = {
         'Focus moves into the panel when opened.',
         'Clicking outside closes the popover.',
     ],
+    i18n: popoverI18n,
 }
 
 export function PopoverDocs() {

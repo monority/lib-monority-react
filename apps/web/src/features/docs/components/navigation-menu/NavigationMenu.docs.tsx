@@ -2,6 +2,7 @@ import { NavigationMenu } from '@monority/ui/navigation-menu'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { navigationMenuI18n } from './NavigationMenu.messages'
 import {
     NavigationMenuDisabledExample,
     NavigationMenuWithIconsExample,
@@ -9,33 +10,31 @@ import {
 } from './NavigationMenu.examples'
 
 function NavigationMenuPlayground() {
-    const [activeSection, setActiveSection] = useState<'none' | 'components' | 'solutions'>(
-        'components'
-    )
+    const [activeSection, setActiveSection] = useState<'none' | 'components' | 'solutions'>('none')
 
     const snippet = `<NavigationMenu value="${activeSection === 'none' ? '' : activeSection}">
   <NavigationMenu.List>
     <NavigationMenu.Item>
-      <NavigationMenu.Link href="#">Accueil</NavigationMenu.Link>
+      <NavigationMenu.Link href="#">Home</NavigationMenu.Link>
     </NavigationMenu.Item>
     <NavigationMenu.Item value="components">
-      <NavigationMenu.Trigger>Composants</NavigationMenu.Trigger>
+      <NavigationMenu.Trigger>Components</NavigationMenu.Trigger>
       <NavigationMenu.Content>
-        <NavigationMenu.Link href="#" description="Champs, boutons et contrôles de saisie">
-          Formulaires
+        <NavigationMenu.Link href="#" description="Fields, buttons, and input controls">
+          Forms
         </NavigationMenu.Link>
-        <NavigationMenu.Link href="#" description="Tableaux, graphiques et métriques">
-          Visualisation
+        <NavigationMenu.Link href="#" description="Tables, charts, and metrics">
+          Visualization
         </NavigationMenu.Link>
       </NavigationMenu.Content>
     </NavigationMenu.Item>
     <NavigationMenu.Item value="solutions">
       <NavigationMenu.Trigger>Solutions</NavigationMenu.Trigger>
       <NavigationMenu.Content>
-        <NavigationMenu.Link href="#" description="Pour les équipes produit et scale-ups">
-          Entreprise
+        <NavigationMenu.Link href="#" description="For product teams and high-scale applications">
+          Enterprise
         </NavigationMenu.Link>
-        <NavigationMenu.Link href="#" description="Licence permissive MIT pour la communauté">
+        <NavigationMenu.Link href="#" description="Permissive MIT license for the community">
           Open Source
         </NavigationMenu.Link>
       </NavigationMenu.Content>
@@ -51,11 +50,12 @@ function NavigationMenuPlayground() {
             controls={[
                 {
                     type: 'select',
-                    label: 'Sous-menu ouvert',
+                    name: 'activeSection',
+                    label: 'Open submenu',
                     value: activeSection,
                     options: [
-                        { value: 'none', label: 'Aucun (fermé)' },
-                        { value: 'components', label: 'Composants' },
+                        { value: 'none', label: 'None (closed)' },
+                        { value: 'components', label: 'Components' },
                         { value: 'solutions', label: 'Solutions' },
                     ],
                     onChange: (v) => setActiveSection(v as 'none' | 'components' | 'solutions'),
@@ -81,22 +81,22 @@ function NavigationMenuPlayground() {
                 >
                     <NavigationMenu.List>
                         <NavigationMenu.Item>
-                            <NavigationMenu.Link href="#">Accueil</NavigationMenu.Link>
+                            <NavigationMenu.Link href="#">Home</NavigationMenu.Link>
                         </NavigationMenu.Item>
                         <NavigationMenu.Item value="components">
-                            <NavigationMenu.Trigger>Composants</NavigationMenu.Trigger>
+                            <NavigationMenu.Trigger>Components</NavigationMenu.Trigger>
                             <NavigationMenu.Content>
                                 <NavigationMenu.Link
                                     href="#"
-                                    description="Champs, boutons et contrôles de saisie"
+                                    description="Fields, buttons, and input controls"
                                 >
-                                    Formulaires
+                                    Forms
                                 </NavigationMenu.Link>
                                 <NavigationMenu.Link
                                     href="#"
-                                    description="Tableaux, graphiques et métriques"
+                                    description="Tables, charts, and metrics"
                                 >
-                                    Visualisation
+                                    Visualization
                                 </NavigationMenu.Link>
                             </NavigationMenu.Content>
                         </NavigationMenu.Item>
@@ -105,13 +105,13 @@ function NavigationMenuPlayground() {
                             <NavigationMenu.Content>
                                 <NavigationMenu.Link
                                     href="#"
-                                    description="Pour les équipes produit et scale-ups"
+                                    description="For product teams and high-scale applications"
                                 >
-                                    Entreprise
+                                    Enterprise
                                 </NavigationMenu.Link>
                                 <NavigationMenu.Link
                                     href="#"
-                                    description="Licence permissive MIT pour la communauté"
+                                    description="Permissive MIT license for the community"
                                 >
                                     Open Source
                                 </NavigationMenu.Link>
@@ -130,124 +130,54 @@ function NavigationMenuPlayground() {
 const docData: DocPageData = {
     title: 'NavigationMenu',
     description:
-        'A surfaced product navigation menu for top-level sections, grouped destinations, and richer submenu content.',
+        'A comprehensive application navigation menu with dropdown submenus, interactive indicators, and full keyboard navigation support.',
     importCode: "import { NavigationMenu } from '@monority/ui/navigation-menu'",
     usageCode: `<NavigationMenu>
   <NavigationMenu.List>
     <NavigationMenu.Item>
-      <NavigationMenu.Link href="/overview">Overview</NavigationMenu.Link>
+      <NavigationMenu.Link href="/">Home</NavigationMenu.Link>
     </NavigationMenu.Item>
-    <NavigationMenu.Item value="components">
-      <NavigationMenu.Trigger>Components</NavigationMenu.Trigger>
+    <NavigationMenu.Item value="products">
+      <NavigationMenu.Trigger>Products</NavigationMenu.Trigger>
       <NavigationMenu.Content>
-        <NavigationMenu.Link
-          href="/components/inputs"
-          description="Fields and validation patterns"
-        >
-          Inputs
-        </NavigationMenu.Link>
-        <NavigationMenu.Link
-          href="/components/navigation"
-          description="Menus, tabs, and shells"
-        >
-          Navigation
+        <NavigationMenu.Link href="/ui" description="Reusable React component system">
+          Design System
         </NavigationMenu.Link>
       </NavigationMenu.Content>
-    </NavigationMenu.Item>
-    <NavigationMenu.Item>
-      <NavigationMenu.Link href="/changelog">Changelog</NavigationMenu.Link>
     </NavigationMenu.Item>
   </NavigationMenu.List>
 </NavigationMenu>`,
     preview: () => <NavigationMenuPlayground />,
     examples: [
         {
+            title: 'With icons',
+            content: <NavigationMenuWithIconsExample />,
+            code: `const items = [
+  { label: 'Dashboard', href: '/dashboard' },
+  {
+    label: 'Workspace',
+    items: [
+      { label: 'Projects', href: '/projects', description: 'Active repositories and worktrees' },
+      { label: 'Deployments', href: '/deploys', description: 'Production releases and logs' },
+    ],
+  },
+]
+
+<NavigationMenu items={items} />`,
+        },
+        {
             title: 'With sub-items',
             content: <NavigationMenuWithSubItemsExample />,
             code: `<NavigationMenu>
   <NavigationMenu.List>
-    <NavigationMenu.Item>
-      <NavigationMenu.Link href="/overview">Overview</NavigationMenu.Link>
-    </NavigationMenu.Item>
     <NavigationMenu.Item value="components">
       <NavigationMenu.Trigger>Components</NavigationMenu.Trigger>
       <NavigationMenu.Content>
-        <NavigationMenu.Link
-          href="/components/inputs"
-          description="Fields, validation, and entry patterns."
-        >
-          Inputs
+        <NavigationMenu.Link href="/docs/button" description="Interactive button primitive">
+          Button
         </NavigationMenu.Link>
-        <NavigationMenu.Link
-          href="/components/navigation"
-          description="Menus, tabs, pagination, and shells."
-        >
-          Navigation
-        </NavigationMenu.Link>
-        <NavigationMenu.Link
-          href="/components/feedback"
-          description="Banners, callouts, toasts, and empty states."
-        >
-          Feedback
-        </NavigationMenu.Link>
-      </NavigationMenu.Content>
-    </NavigationMenu.Item>
-    <NavigationMenu.Item value="resources">
-      <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-      <NavigationMenu.Content>
-        <NavigationMenu.Link
-          href="/guidelines"
-          description="Layout, spacing, and content hierarchy rules."
-        >
-          Guidelines
-        </NavigationMenu.Link>
-        <NavigationMenu.Link
-          href="/examples"
-          description="Reference compositions for product surfaces."
-        >
-          Examples
-        </NavigationMenu.Link>
-      </NavigationMenu.Content>
-    </NavigationMenu.Item>
-    <NavigationMenu.Item>
-      <NavigationMenu.Link href="/changelog">Changelog</NavigationMenu.Link>
-    </NavigationMenu.Item>
-  </NavigationMenu.List>
-</NavigationMenu>`,
-        },
-        {
-            title: 'With icons',
-            content: <NavigationMenuWithIconsExample />,
-            code: `<NavigationMenu>
-  <NavigationMenu.List>
-    <NavigationMenu.Item>
-      <NavigationMenu.Link href="/library" icon={<Text.Span>L</Text.Span>}>
-        Library
-      </NavigationMenu.Link>
-    </NavigationMenu.Item>
-    <NavigationMenu.Item>
-      <NavigationMenu.Link href="/themes" icon={<Text.Span>T</Text.Span>}>
-        Themes
-      </NavigationMenu.Link>
-    </NavigationMenu.Item>
-    <NavigationMenu.Item value="settings">
-      <NavigationMenu.Trigger icon={<Text.Span>S</Text.Span>}>
-        Settings
-      </NavigationMenu.Trigger>
-      <NavigationMenu.Content>
-        <NavigationMenu.Link
-          href="/settings/brand"
-          icon={<Text.Span>B</Text.Span>}
-          description="Logos, color roles, and typography."
-        >
-          Brand
-        </NavigationMenu.Link>
-        <NavigationMenu.Link
-          href="/settings/publishing"
-          icon={<Text.Span>P</Text.Span>}
-          description="Release flow, versions, and package visibility."
-        >
-          Publishing
+        <NavigationMenu.Link href="/docs/modal" description="Accessible modal overlay">
+          Modal
         </NavigationMenu.Link>
       </NavigationMenu.Content>
     </NavigationMenu.Item>
@@ -347,12 +277,12 @@ const docData: DocPageData = {
         '--mr-accent-solid',
     ],
     keyboardNavigation: [
-        { key: 'Tab', action: 'Navigue entre les liens et déclencheurs de menu' },
-        { key: 'Enter', action: 'Ouvre le sous-menu ou active le lien sélectionné' },
-        { key: 'Space', action: 'Ouvre le sous-menu' },
+        { key: 'Tab', action: 'Navigates between links and menu triggers' },
+        { key: 'Enter', action: 'Opens the submenu or activates the selected link' },
+        { key: 'Space', action: 'Opens the submenu' },
         {
             key: 'Escape',
-            action: 'Ferme le sous-menu ouvert et replace le focus sur le déclencheur',
+            action: 'Closes the open submenu and returns focus to the trigger',
         },
     ],
     a11y: [
@@ -363,6 +293,7 @@ const docData: DocPageData = {
         'Disabled items have aria-disabled and are not focusable (tabIndex=-1).',
         'Focus-visible outlines are provided for keyboard navigation.',
     ],
+    i18n: navigationMenuI18n,
 }
 
 export function NavigationMenuDocs() {

@@ -38,7 +38,7 @@ function TopbarNav({
     ref,
     className,
     children,
-    'aria-label': ariaLabel = 'Navigation principale',
+    'aria-label': ariaLabel = 'Main navigation',
     ...props
 }: TopbarNavProps) {
     return (

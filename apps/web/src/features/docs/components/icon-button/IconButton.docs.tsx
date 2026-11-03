@@ -1,7 +1,8 @@
-﻿import { IconButton } from '@monority/ui/icon-button'
+import { IconButton } from '@monority/ui/icon-button'
 import { useState } from 'react'
 import { ComponentPlayground } from '../ComponentPlayground'
 import { DocPage, type DocPageData } from '../DocPage'
+import { iconButtonI18n } from './IconButton.messages'
 import {
     IconButtonSizesExample,
     IconButtonStatesExample,
@@ -46,8 +47,7 @@ function IconButtonPlayground() {
             </svg>
         )
 
-    const label =
-        iconType === 'search' ? 'Rechercher' : iconType === 'close' ? 'Fermer' : 'Supprimer'
+    const label = iconType === 'search' ? 'Search' : iconType === 'close' ? 'Close' : 'Delete'
     const iconName =
         iconType === 'search'
             ? '<SearchIcon />'
@@ -68,6 +68,7 @@ function IconButtonPlayground() {
             controls={[
                 {
                     type: 'select',
+                    name: 'tone',
                     label: 'Tone',
                     value: tone,
                     options: [
@@ -79,6 +80,7 @@ function IconButtonPlayground() {
                 },
                 {
                     type: 'select',
+                    name: 'size',
                     label: 'Size',
                     value: size,
                     options: [
@@ -90,23 +92,26 @@ function IconButtonPlayground() {
                 },
                 {
                     type: 'select',
-                    label: 'Icône',
+                    name: 'iconType',
+                    label: 'Icon',
                     value: iconType,
                     options: [
-                        { value: 'search', label: 'Recherche' },
-                        { value: 'close', label: 'Fermer' },
-                        { value: 'trash', label: 'Supprimer' },
+                        { value: 'search', label: 'Search' },
+                        { value: 'close', label: 'Close' },
+                        { value: 'trash', label: 'Delete' },
                     ],
                     onChange: (v) => setIconType(v as 'search' | 'close' | 'trash'),
                 },
                 {
                     type: 'boolean',
+                    name: 'disabled',
                     label: 'Disabled',
                     value: disabled,
                     onChange: setDisabled,
                 },
                 {
                     type: 'boolean',
+                    name: 'loading',
                     label: 'Loading',
                     value: loading,
                     onChange: setLoading,
@@ -189,15 +194,16 @@ const docData: DocPageData = {
     cssHooks: ['.mr-btn', '[data-tone]', '[data-size]'],
     tokens: ['--mr-radius-md', '--mr-space-2', '--mr-space-3', '--mr-border-base'],
     keyboardNavigation: [
-        { key: 'Enter', action: 'Active le bouton' },
-        { key: 'Space', action: 'Active le bouton' },
-        { key: 'Tab', action: 'Déplace le focus vers le bouton' },
+        { key: 'Enter', action: 'Activates the button' },
+        { key: 'Space', action: 'Activates the button' },
+        { key: 'Tab', action: 'Moves focus to the button' },
     ],
     a11y: [
         'Requires a descriptive label prop mapped to aria-label.',
         'Icon contents should have aria-hidden="true" to avoid screen reader clutter.',
         'Visible focus indicator conforms to WCAG 2.4.7.',
     ],
+    i18n: iconButtonI18n,
 }
 
 export function IconButtonDocs() {
