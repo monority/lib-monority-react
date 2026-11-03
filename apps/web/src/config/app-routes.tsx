@@ -36,13 +36,6 @@ function createLocaleRoutes(prefix: '' | '/fr'): RouteObject[] {
             },
         },
         {
-            path: path('/logo3d'),
-            lazy: async () => {
-                const { Logo3DPage } = await import('@/features/logo3d/Logo3DPage')
-                return { Component: Logo3DPage }
-            },
-        },
-        {
             path: path('/playground'),
             element: <Navigate to={path('/docs')} replace />,
         },

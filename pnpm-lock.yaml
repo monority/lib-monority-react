@@ -32,9 +32,6 @@ importers:
       '@fontsource-variable/geist-mono':
         specifier: ^5.2.0
         version: 5.2.8
-      '@monority/logo3d':
-        specifier: workspace:*
-        version: link:../../packages/logo3d
       '@monority/ui':
         specifier: workspace:*
         version: link:../../packages/ui
