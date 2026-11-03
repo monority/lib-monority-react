@@ -1,12 +1,23 @@
 import { useControllableState } from '@/internal/use-controllable-state'
 import { cn } from '@/lib/cn'
-import { createContext, useContext, useId } from 'react'
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useId,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react'
 import type {
     SegmentedControlItemProps,
     SegmentedControlOption,
     SegmentedControlProps,
     SegmentedControlSize,
 } from './SegmentedControl.types'
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 interface SegmentedControlContextValue {
     value: string
@@ -51,6 +62,13 @@ export function SegmentedControlItem({
     )
 }
 
+interface IndicatorRect {
+    left: number
+    top: number
+    width: number
+    height: number
+}
+
 export function SegmentedControl({
     ref,
     options,
@@ -75,6 +93,78 @@ export function SegmentedControl({
         defaultValue: initialDefault,
         onChange,
     })
+
+    const containerRef = useRef<HTMLDivElement | null>(null)
+    const [indicatorRect, setIndicatorRect] = useState<IndicatorRect | null>(null)
+    const [isReady, setIsReady] = useState(false)
+
+    const setRefs = useCallback(
+        (node: HTMLDivElement | null) => {
+            containerRef.current = node
+            if (typeof ref === 'function') {
+                ref(node)
+            } else if (ref && typeof ref === 'object' && 'current' in ref) {
+                ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+            }
+        },
+        [ref]
+    )
+
+    const updateIndicator = useCallback(() => {
+        const container = containerRef.current
+        if (!container) return
+
+        const activeItem = container.querySelector<HTMLElement>(
+            '.mr-segmented-control__item[data-selected="true"]'
+        )
+        if (!activeItem) {
+            setIndicatorRect(null)
+            return
+        }
+
+        const nextRect: IndicatorRect = {
+            left: activeItem.offsetLeft,
+            top: activeItem.offsetTop,
+            width: activeItem.offsetWidth,
+            height: activeItem.offsetHeight,
+        }
+
+        setIndicatorRect((prev) => {
+            if (
+                prev &&
+                prev.left === nextRect.left &&
+                prev.top === nextRect.top &&
+                prev.width === nextRect.width &&
+                prev.height === nextRect.height
+            ) {
+                return prev
+            }
+            return nextRect
+        })
+    }, [])
+
+    useIsomorphicLayoutEffect(() => {
+        updateIndicator()
+    }, [value, size, fullWidth, updateIndicator])
+
+    useEffect(() => {
+        const raf = requestAnimationFrame(() => {
+            setIsReady(true)
+        })
+        return () => cancelAnimationFrame(raf)
+    }, [])
+
+    useEffect(() => {
+        const container = containerRef.current
+        if (!container || typeof ResizeObserver === 'undefined') return
+
+        const observer = new ResizeObserver(() => {
+            updateIndicator()
+        })
+        observer.observe(container)
+
+        return () => observer.disconnect()
+    }, [updateIndicator])
 
     const contextValue: SegmentedControlContextValue = {
         value,
@@ -108,18 +198,34 @@ export function SegmentedControl({
         }
     }
 
+    const indicatorStyle = indicatorRect
+        ? {
+              transform: `translate3d(${indicatorRect.left}px, ${indicatorRect.top}px, 0)`,
+              width: `${indicatorRect.width}px`,
+              height: `${indicatorRect.height}px`,
+          }
+        : undefined
+
     return (
         <SegmentedControlContext.Provider value={contextValue}>
             <div
-                ref={ref}
+                ref={setRefs}
                 role="radiogroup"
                 data-size={size}
                 data-full-width={fullWidth ? true : undefined}
                 data-disabled={disabled ? true : undefined}
+                data-ready={isReady && indicatorRect !== null ? true : undefined}
                 className={cn('mr-segmented-control', className)}
                 onKeyDown={handleKeyDown}
                 {...props}
             >
+                {indicatorRect !== null && (
+                    <span
+                        className="mr-segmented-control__indicator"
+                        aria-hidden="true"
+                        style={indicatorStyle}
+                    />
+                )}
                 {options
                     ? options.map((option: SegmentedControlOption) => (
                           <SegmentedControlItem

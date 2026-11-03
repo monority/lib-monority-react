@@ -554,4 +554,36 @@ test.describe('Component Animations Contract', () => {
         await expect(dropdown).toHaveCount(0)
         await expect(wrapper).not.toHaveAttribute('data-open', 'true')
     })
+
+    test('SegmentedControl sliding indicator transitions smoothly when switching options', async ({
+        page,
+    }) => {
+        await page.goto('/docs/segmented-control')
+
+        const control = page.locator('.component-playground .mr-segmented-control').first()
+        await expect(control).toBeVisible()
+
+        const indicator = control.locator('.mr-segmented-control__indicator')
+        await expect(indicator).toBeVisible()
+
+        const initialTransform = await indicator.evaluate((el) => {
+            const s = window.getComputedStyle(el)
+            return {
+                transform: s.transform,
+                transition: s.transition,
+            }
+        })
+        expect(initialTransform.transition).toContain('transform')
+
+        const items = control.locator('.mr-segmented-control__item')
+        const nextItem = items.nth(1)
+        await nextItem.click()
+
+        await page.waitForTimeout(250)
+
+        const nextTransform = await indicator.evaluate(
+            (el) => window.getComputedStyle(el).transform
+        )
+        expect(nextTransform).not.toBe(initialTransform.transform)
+    })
 })

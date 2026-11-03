@@ -154,4 +154,12 @@ describe('SegmentedControl', () => {
         })
         expect(onChange).toHaveBeenCalledWith('preview')
     })
+
+    it('renders animated sliding indicator with aria-hidden', () => {
+        const view = render(<SegmentedControl options={sampleOptions} defaultValue="week" />)
+
+        const indicator = view.querySelector('.mr-segmented-control__indicator')
+        expect(indicator !== null).toBe(true)
+        expect(indicator?.getAttribute('aria-hidden')).toBe('true')
+    })
 })

@@ -2,6 +2,7 @@
  * Controle de bascule de segments compact avec curseur/selection distincte. */
 @layer mr.components {
     :where(.mr-segmented-control) {
+        position: relative;
         display: inline-flex;
         align-items: center;
         box-sizing: border-box;
@@ -30,8 +31,31 @@
         block-size: var(--mr-size-control-lg);
     }
 
+    /* Indicateur glissant actif (pastille animee) */
+    :where(.mr-segmented-control__indicator) {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        box-sizing: border-box;
+        border-radius: var(--mr-radius-sm);
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        will-change: transform, width;
+    }
+
+    :where(.mr-segmented-control[data-ready='true']) :where(.mr-segmented-control__indicator) {
+        opacity: 1;
+        transition: transform var(--mr-duration-state) var(--mr-ease-spring), width
+            var(--mr-duration-state) var(--mr-ease-spring), height var(--mr-duration-state)
+            var(--mr-ease-spring), opacity var(--mr-duration-instant) var(--mr-ease-out);
+    }
+
     :where(.mr-segmented-control__item) {
         position: relative;
+        z-index: 1;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -51,10 +75,16 @@
         line-height: 1;
         cursor: pointer;
         white-space: nowrap;
-        transition: color var(--mr-duration-state) var(--mr-ease-out), background-color
-            var(--mr-duration-state) var(--mr-ease-out), box-shadow var(--mr-duration-state)
-            var(--mr-ease-out), transform var(--mr-duration-instant) var(--mr-ease-spring);
+        transition: color var(--mr-duration-state) var(--mr-ease-out), transform
+            var(--mr-duration-instant) var(--mr-ease-spring);
         outline: none;
+    }
+
+    /* Fallback SSR / non pret : l'item actif affiche directement son arriere-plan */
+    :where(.mr-segmented-control:not([data-ready='true']))
+        :where(.mr-segmented-control__item[data-selected='true']) {
+        background-color: var(--mr-bg-surface);
+        box-shadow: var(--mr-shadow-sm);
     }
 
     /* Effet tactile a l'appui */
@@ -77,10 +107,8 @@
     }
 
     :where(.mr-segmented-control__item[data-selected='true']) {
-        background-color: var(--mr-bg-surface);
         color: var(--mr-text-primary);
         font-weight: var(--mr-font-weight-semibold);
-        box-shadow: var(--mr-shadow-sm);
     }
 
     :where(.mr-segmented-control__item:focus-visible) {
@@ -95,6 +123,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+        :where(.mr-segmented-control__indicator) {
+            transition: none;
+        }
+
         :where(.mr-segmented-control__item) {
             transition: none;
         }
@@ -102,5 +134,13 @@
         :where(.mr-segmented-control__item:active:not([disabled])) {
             transform: none;
         }
+    }
+
+    :where([data-motion='reduce']) :where(.mr-segmented-control__indicator) {
+        transition: none;
+    }
+
+    :where([data-motion='reduce']) :where(.mr-segmented-control__item) {
+        transition: none;
     }
 }
