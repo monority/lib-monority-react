@@ -27,9 +27,7 @@
         "registry": "https://registry.npmjs.org/"
     },
     "type": "module",
-    "sideEffects": [
-        "**/*.css"
-    ],
+    "sideEffects": ["**/*.css"],
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -583,10 +581,7 @@
             "default": "./dist/get-theme-script.js"
         }
     },
-    "files": [
-        "dist",
-        "README.md"
-    ],
+    "files": ["dist", "README.md"],
     "scripts": {
         "dev": "tsup --watch",
         "build": "node --max-old-space-size=8192 ./node_modules/tsup/dist/cli-default.js",
