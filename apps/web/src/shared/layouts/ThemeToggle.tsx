@@ -6,7 +6,7 @@ import {
     type ThemeNameType,
     useTheme,
 } from '@monority/ui'
-import { useMessages, type Messages } from '../i18n'
+import { type Messages, useMessages } from '../i18n'
 
 type ThemeLabelKey = keyof Messages['nav']['theme']['names']
 

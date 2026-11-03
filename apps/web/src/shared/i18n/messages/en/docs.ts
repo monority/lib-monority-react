@@ -15,6 +15,11 @@ export const docs = {
         label: 'Table of contents',
         title: 'On this page',
     },
+    pager: {
+        ariaLabel: 'Documentation pagination',
+        previous: 'Previous',
+        next: 'Next',
+    },
     hero: {
         kicker: 'Component',
         loading: 'Loading...',
@@ -69,5 +74,56 @@ export const docs = {
     guides: {
         introduction: 'Introduction',
         installation: 'Installation',
+    },
+    categories: {
+        actions: {
+            title: 'Actions',
+            description:
+                'Buttons, icon triggers, copy controls, and toggleable command primitives.',
+        },
+        forms: {
+            title: 'Forms & Inputs',
+            description:
+                'Accessible form controls, pickers, structured fields, and validation states.',
+        },
+        navigation: {
+            title: 'Navigation',
+            description:
+                'Tabs, segmented controls, breadcrumbs, pagination, topbars, and app shells.',
+        },
+        overlays: {
+            title: 'Overlays',
+            description:
+                'Dialogs, sheets, drawers, menus, command palettes, popovers, and tooltips.',
+        },
+        display: {
+            title: 'Display',
+            description: 'Cards, accordions, collapsibles, carousels, avatars, and color swatches.',
+        },
+        data: {
+            title: 'Data',
+            description: 'Structured tables, data lists, metric grids, stat cards, and timelines.',
+        },
+        feedback: {
+            title: 'Feedback & Status',
+            description: 'Badges, callouts, banners, alerts, skeletons, progress bars, and toasts.',
+        },
+        layout: {
+            title: 'Layout',
+            description: 'Grids, stacks, containers, sections, resizable panels, and scroll areas.',
+        },
+        typography: {
+            title: 'Typography',
+            description:
+                'Semantic titles, body text, keyboard shortcut keys, and formatted code blocks.',
+        },
+        brand: {
+            title: 'Brand',
+            description: 'Official geometric Monority UI brand mark primitive.',
+        },
+        experimental: {
+            title: 'Experimental',
+            description: 'Progressive loading and specialized interaction primitives.',
+        },
     },
 }

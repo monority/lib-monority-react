@@ -1,6 +1,13 @@
 export const common = {
     appName: 'Monority UI',
     skipToContent: 'Skip to main content',
+    code: {
+        copy: 'Copy',
+        copied: 'Copied!',
+        copyAriaLabel: 'Copy code',
+        sourceRegionLabel: 'Code source',
+        packageManagerAriaLabel: 'Package manager',
+    },
     footer: {
         navigation: 'Footer navigation',
         documentation: 'Documentation',

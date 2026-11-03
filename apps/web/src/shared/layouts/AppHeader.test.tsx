@@ -1,5 +1,5 @@
-import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
 import { LocaleProvider } from '@/shared/i18n'
+import { DESIGN_PRESETS, ThemeProvider } from '@monority/ui'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'

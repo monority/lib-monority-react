@@ -3,6 +3,13 @@ import type { common as enCommon } from '../en/common'
 export const common = {
     appName: 'Monority UI',
     skipToContent: 'Aller au contenu principal',
+    code: {
+        copy: 'Copier',
+        copied: 'Copié',
+        copyAriaLabel: 'Copier le code',
+        sourceRegionLabel: 'Code source',
+        packageManagerAriaLabel: 'Gestionnaire de paquets',
+    },
     footer: {
         navigation: 'Navigation de pied de page',
         documentation: 'Documentation',
